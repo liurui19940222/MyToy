@@ -1,5 +1,8 @@
 #include "ModelFile.h"
 
+#ifndef GL_TRIANGLES
+#define GL_TRIANGLES                      0x0004
+#endif
 
 CModelFile::CModelFile()
 {
@@ -43,6 +46,11 @@ int CModelFile::GetVertexNum()
 int CModelFile::GetTriangleNum()
 {
 	return triangleNum;
+}
+
+int CModelFile::GetGLMode()
+{
+	return GL_TRIANGLES;
 }
 
 void CModelFile::Release()

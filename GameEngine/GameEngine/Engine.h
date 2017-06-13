@@ -47,9 +47,9 @@ public:
 
 	void Destroy(Object* obj);
 
-	CImageFile* CreateImage(char* filename, EImageFormat format);
+	CBitImage* CreateImage(char* filename);
 
-	void ReleaseImage(CImageFile* image);
+	void ReleaseImage(CBitImage* image);
 
 	CGameObject* CreateGameObject();
 

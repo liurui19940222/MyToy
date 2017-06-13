@@ -35,7 +35,7 @@ void CRenderer::OnRender()
 	glNormalPointer(GL_FLOAT, 0, model->GetNormalArray());
 	glTexCoordPointer(2, GL_FLOAT, 0, model->GetUVArray());
 	glDrawArrays(GL_TRIANGLES, 0, model->GetVertexNum());
-	
+
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glPopMatrix();

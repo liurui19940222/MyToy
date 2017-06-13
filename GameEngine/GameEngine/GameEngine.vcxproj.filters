@@ -222,6 +222,15 @@
     <ClInclude Include="TextTest.h">
       <Filter>Application\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="BitImage.h">
+      <Filter>File\Image\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageTest.h">
+      <Filter>Application\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshQuad.h">
+      <Filter>Component\MeshProvide\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -326,6 +335,15 @@
     <ClCompile Include="TextTest.cpp">
       <Filter>Application\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="BitImage.cpp">
+      <Filter>File\Image\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageTest.cpp">
+      <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshQuad.cpp">
+      <Filter>Component\MeshProvide\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="dinput8.lib">
@@ -338,6 +356,9 @@
       <Filter>Library</Filter>
     </Library>
     <Library Include="lib\freetype.lib">
+      <Filter>Library</Filter>
+    </Library>
+    <Library Include="lib\FreeImage.lib">
       <Filter>Library</Filter>
     </Library>
   </ItemGroup>

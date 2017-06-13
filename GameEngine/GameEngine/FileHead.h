@@ -2,10 +2,7 @@
 #define _FILE_HEAD_
 
 #include"SourceFile.h"
-#include"ImageFile.h"
-#include"BitmapFile.h"
-#include"TgaFile.h"
-#include"PngFile.h"
+#include"BitImage.h"
 
 #include"ModelFile.h"
 #include"3DSFile.h"

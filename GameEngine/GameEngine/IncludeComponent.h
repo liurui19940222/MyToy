@@ -2,6 +2,7 @@
 #define _INCLUDE_COMPONENT_H_
 
 #include"MeshCube.h"
+#include"MeshQuad.h"
 #include"Renderer.h"
 #include"SpriteAnimation.h"
 #include"TextRenderer.h"

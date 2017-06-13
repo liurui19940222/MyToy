@@ -36,6 +36,8 @@ public:
 
 	virtual void ReleaseMesh() override;
 
+	virtual int GetGLMode() override;
+
 	virtual void Release();
 };
 

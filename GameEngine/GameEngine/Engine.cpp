@@ -120,31 +120,19 @@ void CEngine::Destroy(Object* obj)
 	delete(obj);
 }
 
-CImageFile* CEngine::CreateImage(char* filename, EImageFormat format)
+CBitImage* CEngine::CreateImage(char* filename)
 {
-	CImageFile* file = NULL;
-	switch (format)
-	{
-	case PNG:
-		file = new CPngFile;
-		break;
-	case BMP:
-		file = new CBitmapFile;
-		break;
-	case TGA:
-		file = new CTgaFile;
-		break;
-	}
-	if (file == NULL)
-		return NULL;
-	file->LoadFromFile(filename);
+	CBitImage* file = new CBitImage(filename);
 	return file;
 }
 
-void CEngine::ReleaseImage(CImageFile* image)
+void CEngine::ReleaseImage(CBitImage* image)
 {
 	if (image)
+	{
+		image->Release();
 		delete(image);
+	}
 }
 
 CGameObject* CEngine::CreateGameObject()

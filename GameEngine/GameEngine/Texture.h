@@ -36,13 +36,13 @@ public:
 	CTexture();
 	~CTexture();
 
-	static CTexture* Create(char* filename, EImageFormat format);
+	static CTexture* Create(char* filename);
 
-	static CTexture* Create(CImageFile* image);
+	static CTexture* Create(CBitImage* image);
 
-	static CTexture* Create(char* filename, EImageFormat format, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
+	static CTexture* Create(char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
 
-	static CTexture* Create(CImageFile* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
+	static CTexture* Create(CBitImage* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
 
 	static CTexture* Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
 

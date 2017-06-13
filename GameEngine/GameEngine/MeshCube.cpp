@@ -1,7 +1,12 @@
 #include "MeshCube.h"
 
+#ifndef GL_QUADS
+#define GL_QUADS                          0x0007
+#endif
+
 void CMeshCube::OnInitialize()
 {
+	//front
 	normals[0] = Vector3(0, 0, 1);
 	vertices[0] = Vector3(-0.5f, 0.5f, 0.5f);
 	vertices[1] = Vector3(-0.5f, -0.5f, 0.5f);
@@ -75,5 +80,7 @@ Vector2* CMeshCube::GetUVArray() { return 0; }
 int CMeshCube::GetVertexNum() { return 36; }
 
 int CMeshCube::GetTriangleNum() { return 36; }
+
+int CMeshCube::GetGLMode() { return GL_QUADS; }
 
 void CMeshCube::ReleaseMesh() {}

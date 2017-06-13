@@ -29,31 +29,31 @@ CTexture* CTexture::Init(CTexture* texture, ETexWrapMode wrapMode, ETexFilterMod
 	return texture;
 }
 
-CTexture* CTexture::Create(char* filename, EImageFormat format)
+CTexture* CTexture::Create(char* filename)
 {
-	CImageFile* image = CApplication::GetEngine()->CreateImage(filename, format);
+	CBitImage* image = CApplication::GetEngine()->CreateImage(filename);
 	CTexture* texture = Create(image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
 	CApplication::GetEngine()->ReleaseImage(image);
 	return texture;
 }
 
-CTexture* CTexture::Create(CImageFile* image)
+CTexture* CTexture::Create(CBitImage* image)
 {
 	return Create(image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
 }
 
-CTexture* CTexture::Create(char* filename, EImageFormat format, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
+CTexture* CTexture::Create(char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
 {
-	CImageFile* image = CApplication::GetEngine()->CreateImage(filename, format);
+	CBitImage* image = CApplication::GetEngine()->CreateImage(filename);
 	CTexture* texture = Create(image, wrapMode, filterMode, envMode, mipmaps);
 	CApplication::GetEngine()->ReleaseImage(image);
 	return texture;
 }
 
-CTexture* CTexture::Create(CImageFile* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
+CTexture* CTexture::Create(CBitImage* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
 {
 	CTexture* texture = CApplication::GetEngine()->CreateObject<CTexture>();
-	Init(texture, wrapMode, filterMode, envMode, mipmaps, image->GetWidth(), image->GetHeight(), image->GetFormat(), image->GetInternalFormat(), image->GetData());
+	Init(texture, wrapMode, filterMode, envMode, mipmaps, image->GetWidth(), image->GetHeight(), image->GetFormat(), image->GetInternalFormat(), image->GetBytes());
 	return texture;
 }
 

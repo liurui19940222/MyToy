@@ -27,6 +27,8 @@ public:
 
 	virtual int GetTriangleNum() override;
 
+	virtual int GetGLMode() override;
+
 	virtual void ReleaseMesh() override;
 };
 

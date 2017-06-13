@@ -83,6 +83,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Atlas.h" />
+    <ClInclude Include="BitImage.h" />
     <ClInclude Include="BitmapFile.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
@@ -96,7 +97,9 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="GUISystem.h" />
+    <ClInclude Include="ImageTest.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="MeshQuad.h" />
     <ClInclude Include="RelationshipTest.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MeshCube.h" />
@@ -122,6 +125,7 @@
     <ClCompile Include="3DSFile.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Atlas.cpp" />
+    <ClCompile Include="BitImage.cpp" />
     <ClCompile Include="BitmapFile.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -134,8 +138,10 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="GUISystem.cpp" />
+    <ClCompile Include="ImageTest.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MeshQuad.cpp" />
     <ClCompile Include="RelationshipTest.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="MeshCube.cpp" />
@@ -157,6 +163,7 @@
   <ItemGroup>
     <Library Include="dinput8.lib" />
     <Library Include="dxguid.lib" />
+    <Library Include="lib\FreeImage.lib" />
     <Library Include="lib\freetype.lib" />
     <Library Include="lib\lib3ds.lib" />
   </ItemGroup>

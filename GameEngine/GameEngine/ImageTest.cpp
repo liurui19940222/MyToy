@@ -1,0 +1,57 @@
+#include "ImageTest.h"
+
+void CImageTest::OnStart()
+{
+	Engine->SetClearColor(Color::black());
+	Engine->SetDrawGrid(false);
+	MainCamera->SetPosition(Vector3(0, 7, 10));
+	MainCamera->SetEulerAngles(Vector3(30, 180, 0));
+
+	CBitImage* image = Engine->CreateImage("textures/model.png");
+	CModelFile* model = new C3DSFile();
+	model->LoadFromFile("models/model.3DS");
+	CTexture* texture = CTexture::Create(image);
+	go = Engine->CreateGameObject();
+	go->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f));
+	go->SetEulerAngles(Vector3(0, 180, 0));
+	CRenderer* renderer = go->AddComponent<CRenderer>();
+	renderer->SetModel(model);
+	renderer->SetTexture(texture);
+
+	CGameObject* quadGo = Engine->CreateGameObject();
+	quadGo->SetPosition(Vector3(0, -3.5f, 0));
+	quadGo->SetLocalScale(Vector3(7, 7, 7));
+	quadGo->SetEulerAngles(Vector3(-90, 0, 0));
+	CMeshQuad* quadMesh = Engine->CreateObject<CMeshQuad>();
+	quadGo->AddComponent<CRenderer>()->SetModel(quadMesh);
+}
+
+void CImageTest::OnUpdate()
+{
+	Vector3 euler = go->GetEulerAngles();
+	euler.y += CTime::deltaTime * 50;
+	go->SetEulerAngles(euler);
+}
+
+void CImageTest::OnRender()
+{
+
+}
+
+void CImageTest::OnClose()
+{
+
+}
+
+void CImageTest::GetApplicationInfo(SApplicationInfo* info)
+{
+	if (info)
+	{
+		info->windowWidth = 800;
+		info->windowHeight = 600;
+		info->windowBits = 32;
+		info->isFullScreen = false;
+		info->appName = L"GameEngineTest";
+		info->className = L"MainClass";
+	}
+}

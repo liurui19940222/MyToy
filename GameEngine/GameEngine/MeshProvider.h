@@ -20,6 +20,8 @@ public:
 
 	virtual int GetTriangleNum() = 0;
 
+	virtual int GetGLMode() = 0;
+
 	virtual void ReleaseMesh() = 0;
 };
 
