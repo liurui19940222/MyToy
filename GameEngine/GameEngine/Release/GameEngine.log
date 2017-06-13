@@ -1,0 +1,64 @@
+﻿生成启动时间为 2017/1/10 0:59:17。
+     1>项目“D:\VSProject\GameEngine\GameEngine\GameEngine.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         E:\Program Files (x86)\VS2013\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CApplication.cpp CCamera.cpp CDebug.cpp CEditorTool.cpp CEngine.cpp CEngineDefine.cpp CGameObject.cpp CInput.cpp CMath.cpp CPngFile.cpp CQuad.cpp CTime.cpp GameMain.cpp
+         CApplication.cpp
+         CCamera.cpp
+         CDebug.cpp
+         CEditorTool.cpp
+         CEngine.cpp
+         E:\Program Files (x86)\VS2013\VC\include\dx\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         CEngineDefine.cpp
+     1>CEngineDefine.cpp(58): warning C4244: “=”: 从“float”转换到“byte”，可能丢失数据
+     1>CEngineDefine.cpp(59): warning C4244: “=”: 从“float”转换到“byte”，可能丢失数据
+     1>CEngineDefine.cpp(60): warning C4244: “=”: 从“float”转换到“byte”，可能丢失数据
+     1>CEngineDefine.cpp(61): warning C4244: “=”: 从“float”转换到“byte”，可能丢失数据
+         CGameObject.cpp
+         CInput.cpp
+         E:\Program Files (x86)\VS2013\VC\include\dx\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>CInput.cpp(93): warning C4244: “参数”: 从“LONG”转换到“float”，可能丢失数据
+     1>CInput.cpp(115): warning C4244: “=”: 从“LONG”转换到“float”，可能丢失数据
+     1>CInput.cpp(119): warning C4244: “=”: 从“LONG”转换到“float”，可能丢失数据
+     1>CInput.cpp(123): warning C4244: “=”: 从“LONG”转换到“float”，可能丢失数据
+         CMath.cpp
+     1>CMath.cpp(28): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>CMath.cpp(583): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+     1>CMath.cpp(588): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+         CPngFile.cpp
+         CQuad.cpp
+         CTime.cpp
+     1>CTime.cpp(53): warning C4244: “+=”: 从“double”转换到“DWORD”，可能丢失数据
+         GameMain.cpp
+         E:\Program Files (x86)\VS2013\VC\include\dx\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>GameMain.cpp(63): warning C4305: “参数”: 从“double”到“float”截断
+     1>GameMain.cpp(70): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+     1>GameMain.cpp(71): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+     1>GameMain.cpp(72): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+     1>GameMain.cpp(73): warning C4244: “参数”: 从“int”转换到“GLfloat”，可能丢失数据
+       Link:
+         E:\Program Files (x86)\VS2013\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\VSProject\GameEngine\Release\GameEngine.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\VSProject\GameEngine\Release\GameEngine.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\VSProject\GameEngine\Release\GameEngine.lib" /MACHINE:X86 /SAFESEH Release\CApplication.obj
+         Release\CCamera.obj
+         Release\CDebug.obj
+         Release\CEditorTool.obj
+         Release\CEngine.obj
+         Release\CEngineDefine.obj
+         Release\CGameObject.obj
+         Release\CInput.obj
+         Release\CMath.obj
+         Release\CPngFile.obj
+         Release\CQuad.obj
+         Release\CTime.obj
+         Release\GameMain.obj
+         dinput8.lib
+         dxguid.lib
+         正在生成代码
+         已完成代码的生成
+     1>dinput8.lib(dilib1.obj) : error LNK2026: 模块对于 SAFESEH 映像是不安全的。
+     1>dinput8.lib(dilib2.obj) : error LNK2026: 模块对于 SAFESEH 映像是不安全的。
+     1>dinput8.lib(DINPUT8.dll) : error LNK2026: 模块对于 SAFESEH 映像是不安全的。
+     1>D:\VSProject\GameEngine\Release\GameEngine.exe : fatal error LNK1281: 无法生成 SAFESEH 映像。
+     1>已完成生成项目“D:\VSProject\GameEngine\GameEngine\GameEngine.vcxproj”(Build 个目标)的操作 - 失败。
+
+生成失败。
+
+已用时间 00:00:08.87

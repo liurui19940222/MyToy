@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{d894f521-944d-4eb4-a770-e5f48aa5a110}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{1287ac7d-6c2e-48b9-bf2d-7b65eaecafe1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library">
+      <UniqueIdentifier>{a4800c8f-2e98-4d00-9aa7-dbb8c9693364}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File">
+      <UniqueIdentifier>{98510535-1af2-494a-ae52-9322ff706fce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File\Image">
+      <UniqueIdentifier>{b2c02725-31c0-4412-9511-54d1ffdefac1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File\Model">
+      <UniqueIdentifier>{ec46f043-f91a-4bfd-9551-88bd6190310f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{ee3c1d53-6f33-4274-bd9e-ae5afe9ce171}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Interface">
+      <UniqueIdentifier>{5d8c646e-6a25-47fd-afbb-a3e06e889898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUISystem">
+      <UniqueIdentifier>{7bf9203e-61c6-4737-a0c0-4b8c80e04acc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Font">
+      <UniqueIdentifier>{e40fe839-289b-4a44-9fb7-52e78385a2e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\头文件">
+      <UniqueIdentifier>{9ab7b995-c796-4310-a95c-e383dc70289d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\源文件">
+      <UniqueIdentifier>{38f5a082-d996-4774-aace-6bb049fb8f8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\头文件">
+      <UniqueIdentifier>{59c97dc7-611f-472a-9e22-02fc230fc3d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\源文件">
+      <UniqueIdentifier>{d3d2e4fa-45f5-48fe-85a9-40c21c41bc4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\头文件">
+      <UniqueIdentifier>{aa605d98-aced-412b-9a03-f4aca1fa2b4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\源文件">
+      <UniqueIdentifier>{03258bed-9e4a-4f95-895d-37b20ff2e751}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Interface\头文件">
+      <UniqueIdentifier>{0c6f04e0-919c-43b3-8d20-7682012e22e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File\头文件">
+      <UniqueIdentifier>{434fce0c-35c8-41f9-9978-18a2ae661886}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File\源文件">
+      <UniqueIdentifier>{bef21b9f-faf5-455d-a873-adb31738f76e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File\Image\头文件">
+      <UniqueIdentifier>{2a30784a-3c35-4fe8-91b1-a957b49f3f5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File\Image\源文件">
+      <UniqueIdentifier>{e3e92511-25bf-4e1e-acd5-5cc1307cc4a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File\Model\头文件">
+      <UniqueIdentifier>{f3106fce-dc87-4062-8900-3ae75399bb1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File\Model\源文件">
+      <UniqueIdentifier>{22c9ddb6-ed8f-458c-a49d-2029d7eea100}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Font\头文件">
+      <UniqueIdentifier>{b8dad28a-d1c1-4fac-9bb8-4a796ed8cb55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Font\源文件">
+      <UniqueIdentifier>{06f7cab7-8bf8-4dee-93c4-09a0d5595632}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUISystem\头文件">
+      <UniqueIdentifier>{27398dff-5ba8-41c7-8f3f-8788a22ea1df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUISystem\源文件">
+      <UniqueIdentifier>{146dd979-c013-4769-8cc6-0fd1b87552de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{5a55850a-5563-45a3-a33b-a59243d84e49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Application\源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Component\MeshProvide">
+      <UniqueIdentifier>{e7feb4b4-7a93-487d-af62-47d5697fa1b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\MeshProvide\头文件">
+      <UniqueIdentifier>{39e3d893-87e7-4bfe-8f6c-31c9dc5fb89a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\MeshProvide\源文件">
+      <UniqueIdentifier>{09e2a2c2-ebb9-4823-82c5-45fb3f0e0fd0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Debug.h">
+      <Filter>Common\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorTool.h">
+      <Filter>Common\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineDefine.h">
+      <Filter>Common\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicFactory.h">
+      <Filter>Common\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Common\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Common\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Component\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Component\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteAnimation.h">
+      <Filter>Component\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRenderer.h">
+      <Filter>Component\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRenderer.h">
+      <Filter>Component\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IncludeComponent.h">
+      <Filter>Component\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Component\Interface\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FileHead.h">
+      <Filter>File\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFile.h">
+      <Filter>File\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BitmapFile.h">
+      <Filter>File\Image\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageFile.h">
+      <Filter>File\Image\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PngFile.h">
+      <Filter>File\Image\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TgaFile.h">
+      <Filter>File\Image\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DSFile.h">
+      <Filter>File\Model\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelFile.h">
+      <Filter>File\Model\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Atlas.h">
+      <Filter>Font\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>Font\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TrueTypeFont.h">
+      <Filter>Font\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUISystem.h">
+      <Filter>GUISystem\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshProvider.h">
+      <Filter>Component\Interface\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshCube.h">
+      <Filter>Component\MeshProvide\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Core\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Core\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Core\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Core\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Core\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWindow.h">
+      <Filter>Core\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Core\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Core\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Core\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RelationshipTest.h">
+      <Filter>Application\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TextTest.h">
+      <Filter>Application\头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Common\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorTool.cpp">
+      <Filter>Common\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineDefine.cpp">
+      <Filter>Common\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>Common\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Common\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Component\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Component\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteAnimation.cpp">
+      <Filter>Component\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp">
+      <Filter>Component\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRenderer.cpp">
+      <Filter>Component\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFile.cpp">
+      <Filter>File\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BitmapFile.cpp">
+      <Filter>File\Image\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageFile.cpp">
+      <Filter>File\Image\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PngFile.cpp">
+      <Filter>File\Image\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TgaFile.cpp">
+      <Filter>File\Image\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DSFile.cpp">
+      <Filter>File\Model\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelFile.cpp">
+      <Filter>File\Model\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Atlas.cpp">
+      <Filter>Font\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>Font\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TrueTypeFont.cpp">
+      <Filter>Font\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUISystem.cpp">
+      <Filter>GUISystem\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshCube.cpp">
+      <Filter>Component\MeshProvide\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Core\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Core\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Core\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Core\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Core\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Core\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWindow.cpp">
+      <Filter>Core\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Core\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Core\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RelationshipTest.cpp">
+      <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TextTest.cpp">
+      <Filter>Application\源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="dinput8.lib">
+      <Filter>Library</Filter>
+    </Library>
+    <Library Include="dxguid.lib">
+      <Filter>Library</Filter>
+    </Library>
+    <Library Include="lib\lib3ds.lib">
+      <Filter>Library</Filter>
+    </Library>
+    <Library Include="lib\freetype.lib">
+      <Filter>Library</Filter>
+    </Library>
+  </ItemGroup>
+</Project>
