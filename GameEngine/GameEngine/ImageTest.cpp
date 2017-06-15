@@ -8,9 +8,9 @@ void CImageTest::OnStart()
 	MainCamera->SetEulerAngles(Vector3(30, 180, 0));
 
 	CBitImage* image = Engine->CreateImage("textures/model.png");
+	CTexture* texture = CTexture::Create(image);
 	CModelFile* model = new C3DSFile();
 	model->LoadFromFile("models/model.3DS");
-	CTexture* texture = CTexture::Create(image);
 	go = Engine->CreateGameObject();
 	go->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f));
 	go->SetEulerAngles(Vector3(0, 180, 0));
@@ -18,12 +18,16 @@ void CImageTest::OnStart()
 	renderer->SetModel(model);
 	renderer->SetTexture(texture);
 
+	CBitImage* ground_image = Engine->CreateImage("textures/dlg01.bmp");
+	CTexture* ground_texture = CTexture::Create(ground_image);
 	CGameObject* quadGo = Engine->CreateGameObject();
 	quadGo->SetPosition(Vector3(0, -3.5f, 0));
 	quadGo->SetLocalScale(Vector3(7, 7, 7));
 	quadGo->SetEulerAngles(Vector3(-90, 0, 0));
 	CMeshQuad* quadMesh = Engine->CreateObject<CMeshQuad>();
-	quadGo->AddComponent<CRenderer>()->SetModel(quadMesh);
+	CRenderer* ground_renderer = quadGo->AddComponent<CRenderer>();
+	ground_renderer->SetModel(quadMesh);
+	ground_renderer->SetTexture(ground_texture);
 }
 
 void CImageTest::OnUpdate()
