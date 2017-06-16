@@ -91,7 +91,7 @@ void CTextRenderer::OnRender()
 		float left = primitives[i]->left * 0.01f;
 		float adv_x = primitives[i]->advance_x * 0.01f;
 		start_x += left;
-		if (start_x + adv_x + interval_x >= rect.half_size_x)
+		if (text[i] == *L"\n" || start_x + adv_x + interval_x >= rect.half_size_x)
 		{
 			start_x = -rect.half_size_x;
 			start_y -= interval_y;
@@ -105,6 +105,7 @@ void CTextRenderer::OnRender()
 	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
 
+	glDisable(GL_DEPTH_TEST);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glColor3f(0, 1, 0);
 	glBegin(GL_QUADS);
@@ -114,6 +115,8 @@ void CTextRenderer::OnRender()
 	glVertex3f(rect.half_size_x, rect.half_size_y, 0);
 	glEnd();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glEnable(GL_DEPTH_TEST);
+
 	glPopMatrix();
 }
 
@@ -181,7 +184,7 @@ void CTextRenderer::Rebuild()
 	{
 		CCharacterInfo* chInfo = font->GetCharacter(text[i], font_size);
 		SBitmapData bitmap;
-		chInfo->GetBitmap(&bitmap);
+		chInfo->GetBitmap(&bitmap, color);
 
 		primitives.push_back(new CCharacterPrimitive(chInfo->left_padding, chInfo->top, chInfo->advance_x, bitmap.width, bitmap.height, bitmap.buffer));
 	}

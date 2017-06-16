@@ -87,7 +87,7 @@ void CAtlas::EndPush(int width, int height, int max_height)
 	}
 }
 
-bool CAtlas::Get(Rect2D* rect_in_atlas, uint32* out_pixels)
+bool CAtlas::Get(Rect2D* rect_in_atlas, uint32* out_pixels, Color color)
 {
 	if (!rect_in_atlas || !out_pixels)
 		return false;
@@ -99,11 +99,13 @@ bool CAtlas::Get(Rect2D* rect_in_atlas, uint32* out_pixels)
 	int height = rect_in_atlas->height;
 	int start_x = rect_in_atlas->x;
 	int start_y = rect_in_atlas->y;
+	uint color_rgba = Color32(color).ToInt32();
 	for (int y = start_y, index_y = 0; y < start_y + height; y++, index_y++)
 	{
 		for (int x = start_x, index_x = 0; x < start_x + width; x++, index_x++)
 		{
-			out_pixels[index_x + index_y * width] = bitmap.buffer[x + y * m_width];
+			Color32 c = bitmap.buffer[x + y * m_width];
+			out_pixels[index_x + index_y * width] = (c * color).ToInt32();
 		}
 	}
 

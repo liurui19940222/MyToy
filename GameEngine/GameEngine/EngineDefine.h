@@ -10,6 +10,7 @@
 #define Engine CApplication::GetEngine()
 #define Application CApplication::GetInstance()
 #define MainCamera Engine->GetCamera()
+#define FontManager CFontManager::GetInstance()
 #define CH_MAP_BITMAP_SIZE_W 512
 #define CH_MAP_BITMAP_SIZE_H 512
 
@@ -29,13 +30,15 @@ struct Color32
 
 	Color32(Color color);
 
-	Color32(int color);
+	Color32(uint color);
 
 	int ToInt32();
 
 	bool operator==(const Color32& value) const;
 
 	bool operator!=(const Color32& value) const;
+
+	Color32 operator*(const Color& color) const;
 };
 
 struct Color

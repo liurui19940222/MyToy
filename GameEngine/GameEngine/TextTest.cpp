@@ -7,12 +7,12 @@ void CTextTest::OnStart()
 	MainCamera->SetPosition(Vector3(0, 0, 10));
 	MainCamera->SetEulerAngles(Vector3(0, 180, 0));
 
-	CTrueTypeFont* font = CFontManager::GetInstance()->LoadFont(1, "fonts/msyh.ttf");
+	CTrueTypeFont* font = FontManager->LoadFont(1, "fonts/msyh.ttf");
 	go = Engine->CreateGameObject();
 	go->SetPosition(Vector3(1, 2, 0));
 	CTextRenderer* text = go->AddComponent<CTextRenderer>();
-	text->Init(font, NULL, 10, 0, 0.5f, Color::red(), EAlignment::LEFT_CENTER, SRect2D{ 0, 0, 5, 1 });
-	text->SetText(L"Sams Publishing & Pearson Education Inc., CD-ROM and software copyright (C) 2003 Sams Publishing & Pearson Education Inc., ");
+	text->Init(font, NULL, 10, 0, 0.5f, Color::cyan(), EAlignment::LEFT_CENTER, SRect2D{ 0, 0, 5, 1 });
+	text->SetText(L"Sams Publishing\n & Pearson Education Inc., \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson Education Inc., ");
 	//text->SetText(L"使用FreeImage写通用图像加载器 - cbbbc");
 
 	CAtlas* atlas = (*font->GetAtlases(10))[0];

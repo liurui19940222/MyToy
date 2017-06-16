@@ -26,7 +26,7 @@ public:
 
 	bool TryPush(int width, int height, int max_height);
 
-	bool Get(Rect2D* rect_in_atlas, uint32* out_pixels);
+	bool Get(Rect2D* rect_in_atlas, uint32* out_pixels, Color color);
 
 	int GetWidth();
 

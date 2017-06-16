@@ -23,7 +23,7 @@ public:
 
 	CCharacterInfo(int code);
 
-	bool GetBitmap(SBitmapData* out_bitmap);
+	bool GetBitmap(SBitmapData* out_bitmap, Color color);
 };
 
 //某个字号的所有字体

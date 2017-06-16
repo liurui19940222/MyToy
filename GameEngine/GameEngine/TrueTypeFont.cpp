@@ -9,7 +9,7 @@
 
 CCharacterInfo::CCharacterInfo(int code) : code(code) {}
 
-bool CCharacterInfo::GetBitmap(SBitmapData* out_bitmap)
+bool CCharacterInfo::GetBitmap(SBitmapData* out_bitmap, Color color)
 {
 	if (!out_bitmap)
 		return false;
@@ -18,7 +18,7 @@ bool CCharacterInfo::GetBitmap(SBitmapData* out_bitmap)
 	out_bitmap->height = this->rect.height;
 	out_bitmap->buffer = (uint32*)malloc(sizeof(uint32) * rect.width * rect.height);
 	memset(out_bitmap->buffer, 0, sizeof(uint32) * rect.width * rect.height);
-	atlas->Get(&rect, out_bitmap->buffer);
+	atlas->Get(&rect, out_bitmap->buffer, color);
 
 	return true;
 }

@@ -70,7 +70,7 @@ Color32::Color32(Color color)
 	this->b = color.b * 255 + 0.5f;
 }
 
-Color32::Color32(int color)
+Color32::Color32(uint color)
 {
 	this->b = color;
 	this->g = color >> 8;
@@ -91,6 +91,11 @@ bool Color32::operator==(const Color32& value) const
 bool Color32::operator!=(const Color32& value) const
 {
 	return this->r != value.r || this->g != value.g || this->b != value.b || this->a != value.a;
+}
+
+Color32 Color32::operator*(const Color& color) const
+{
+	return Color32(this->r * color.r, this->g * color.g, this->b * color.b, this->a * color.a);
 }
 
 LPWSTR AnsiToUnicode(LPCSTR lpcstr)   //参数lpcstr类型也可是char*
