@@ -17,6 +17,7 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd)
 	CTime::SetTargetFrameCount(60);
 	m_camera = new CCamera;
 	m_camera->SetPosition(Vector3(0, 4, -10));
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 }
 
 void CEngine::SetupProjection(int width, int height)

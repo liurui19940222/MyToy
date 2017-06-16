@@ -16,6 +16,7 @@ class CTextTest : public CGameWindow
 {
 	CGameObject* go;
 	CGameObject* textureGo;
+	CTextRenderer* text;
 
 public:
 	virtual void OnStart();

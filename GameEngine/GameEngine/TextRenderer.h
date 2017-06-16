@@ -8,6 +8,7 @@
 class CCharacterPrimitive
 {
 public:
+	Vector3 position;
 	int left;
 	int top;
 	int advance_x;
@@ -26,6 +27,18 @@ public:
 	void Release();
 };
 
+class CTextOneLineData
+{
+public:
+	CTextOneLineData();
+
+	float line_width;
+
+	vector<CCharacterPrimitive*> primitives;
+
+	void Release();
+};
+
 class CTextRenderer : public CComponent, public DynamicCreate<CTextRenderer>
 {
 private:
@@ -37,9 +50,14 @@ private:
 	Color color;
 	SRect2D rect;
 	EAlignment alignment;
+	EAlignmentHorizontal alignment_h;
+	EAlignmentVertical alignment_v;
 	vector<CCharacterPrimitive*> primitives;
+	vector<CTextOneLineData*> lineDatas;
 
 	void ClearPrimitive();
+
+	void ClearLineData();
 
 public:
 	CTextRenderer();
@@ -69,6 +87,10 @@ public:
 	void SetAlignment(EAlignment alignment);
 
 	void SetRect(SRect2D rect);
+
+	float GetOffsetX(float line_width);
+
+	float GetOffsetY();
 
 	void Rebuild();
 

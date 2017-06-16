@@ -107,15 +107,33 @@ struct Rect2D
 
 enum EAlignment
 {
-	LEFT_TOP,
-	LEFT_CENTER,
-	LEFT_BOTTOM,
-	CENTER_TOP,
-	CENTER_MIDDLE,
-	CENTER_BOTTOM,
-	RIGHT_TOP,
-	RIGHT_MIDDLE,
-	RIGHT_BOTTOM,
+	LEFT_TOP		= 1 << 16 | 1,
+	LEFT_MIDDLE		= 1 << 16 | 2,
+	LEFT_BOTTOM		= 1 << 16 | 3,
+	CENTER_TOP		= 2 << 16 | 1,
+	CENTER_MIDDLE	= 2 << 16 | 2,
+	CENTER_BOTTOM	= 2 << 16 | 3,
+	RIGHT_TOP		= 3 << 16 | 1,
+	RIGHT_MIDDLE	= 3 << 16 | 2,
+	RIGHT_BOTTOM	= 3 << 16 | 3,
+};
+
+#define _GetHorizontal(alignment) (EAlignmentHorizontal)(alignment >> 16)
+#define _GetVertical(alignment) (EAlignmentVertical)(alignment & 0xffff)
+#define _GetAlignment(h, v) (EAlignment)(h << 16 | v)
+
+enum EAlignmentHorizontal
+{
+	LEFT = 1,
+	CENTER = 2,
+	RIGHT = 3,
+};
+
+enum EAlignmentVertical
+{
+	TOP = 1,
+	MIDDLE = 2,
+	BOTTOM = 3,
 };
 
 #endif

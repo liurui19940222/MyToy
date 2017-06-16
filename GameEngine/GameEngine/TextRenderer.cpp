@@ -48,6 +48,20 @@ void CCharacterPrimitive::Release()
 		free(pixels);
 }
 
+CTextOneLineData::CTextOneLineData() : line_width(0)
+{
+
+}
+
+void CTextOneLineData::Release()
+{
+	for (int i = 0; i < primitives.size(); ++i)
+	{
+		primitives[i]->Release();
+	}
+	primitives.clear();
+}
+
 CTextRenderer::CTextRenderer()
 {
 }
@@ -79,27 +93,17 @@ void CTextRenderer::OnRender()
 	glEnable(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	static float start_x = 0;
-	static float start_y = 0;
+	static float offset_x;
+	static float offset_y;
 
-	start_x = -rect.half_size_x;
-	start_y = +rect.half_size_y;
-
-	for (size_t i = 0; i < primitives.size(); ++i)
+	offset_y = GetOffsetY();
+	for (size_t i = 0; i < lineDatas.size(); ++i)
 	{
-		float top = primitives[i]->top * 0.01f;
-		float left = primitives[i]->left * 0.01f;
-		float adv_x = primitives[i]->advance_x * 0.01f;
-		start_x += left;
-		if (text[i] == *L"\n" || start_x + adv_x + interval_x >= rect.half_size_x)
+		offset_x = GetOffsetX(lineDatas[i]->line_width);
+		for (size_t j = 0; j < lineDatas[i]->primitives.size(); ++j)
 		{
-			start_x = -rect.half_size_x;
-			start_y -= interval_y;
+			lineDatas[i]->primitives[j]->Render(lineDatas[i]->primitives[j]->position + Vector3(offset_x, offset_y, 0), Vector3{ 1.0f, -1.0f, 1 });
 		}
-		if (start_y - top < -rect.half_size_y)
-			break;
-		primitives[i]->Render(Vector3{ start_x, start_y - top, 0 }, Vector3{ 1.0f, -1.0f, 1 });
-		start_x += adv_x + interval_x;
 	}
 
 	glDisable(GL_BLEND);
@@ -123,6 +127,7 @@ void CTextRenderer::OnRender()
 void CTextRenderer::OnDestroy()
 {
 	ClearPrimitive();
+	ClearLineData();
 }
 
 void CTextRenderer::SetFont(CTrueTypeFont* font)
@@ -165,16 +170,39 @@ void CTextRenderer::SetFontSize(int size)
 void CTextRenderer::SetColor(Color color)
 {
 	this->color = color;
+	Rebuild();
 }
 
 void CTextRenderer::SetAlignment(EAlignment alignment)
 {
 	this->alignment = alignment;
+	this->alignment_h = _GetHorizontal(alignment);
+	this->alignment_v = _GetVertical(alignment);
 }
 
 void CTextRenderer::SetRect(SRect2D rect)
 {
 	this->rect = rect;
+}
+
+float CTextRenderer::GetOffsetX(float line_width)
+{
+	if (alignment_h == EAlignmentHorizontal::LEFT)
+		return 0;
+	else if (alignment_h == EAlignmentHorizontal::CENTER)
+		return (rect.half_size_x * 2 - line_width) * 0.5f;
+	else if (alignment_h == EAlignmentHorizontal::RIGHT)
+		return rect.half_size_x * 2 - line_width;
+}
+
+float CTextRenderer::GetOffsetY()
+{
+	if (alignment_v == EAlignmentVertical::TOP)
+		return 0;
+	else if (alignment_v == EAlignmentVertical::MIDDLE)
+		return -(rect.half_size_y * 2 - interval_y * lineDatas.size()) * 0.5f;
+	else if (alignment_v == EAlignmentVertical::BOTTOM)
+		return -(rect.half_size_y * 2 - interval_y * lineDatas.size());
 }
 
 void CTextRenderer::Rebuild()
@@ -188,6 +216,45 @@ void CTextRenderer::Rebuild()
 
 		primitives.push_back(new CCharacterPrimitive(chInfo->left_padding, chInfo->top, chInfo->advance_x, bitmap.width, bitmap.height, bitmap.buffer));
 	}
+
+	ClearLineData();
+
+	static float start_x = 0;
+	static float start_y = 0;
+	start_x = -rect.half_size_x;
+	start_y = +rect.half_size_y;
+	CTextOneLineData* lineData = new CTextOneLineData();
+	lineDatas.push_back(lineData);
+	for (size_t i = 0; i < primitives.size(); ++i)
+	{
+		if (text[i] == *L"\n")
+		{
+			start_x = -rect.half_size_x;
+			start_y -= interval_y;
+			lineData = new CTextOneLineData();
+			lineDatas.push_back(lineData);
+			continue;
+		}
+		float top = primitives[i]->top * 0.01f;
+		float left = primitives[i]->left * 0.01f;
+		float adv_x = primitives[i]->advance_x * 0.01f;
+		start_x += left;
+
+		if (start_x + adv_x + interval_x >= rect.half_size_x)
+		{
+			start_x = -rect.half_size_x;
+			start_y -= interval_y;
+			
+			lineData = new CTextOneLineData();
+			lineDatas.push_back(lineData);
+		}
+		if (start_y - top < -rect.half_size_y)
+			break;
+		primitives[i]->position = Vector3{ start_x, start_y - top, 0 };
+		start_x += adv_x + interval_x;
+		lineData->line_width += left + adv_x + interval_x;
+		lineData->primitives.push_back(primitives[i]);
+	}
 }
 
 void CTextRenderer::Init(CTrueTypeFont* font, const wchar_t* text, int font_size, float interval_x, float interval_y, Color color, EAlignment alignment, SRect2D rect)
@@ -197,20 +264,26 @@ void CTextRenderer::Init(CTrueTypeFont* font, const wchar_t* text, int font_size
 	this->interval_x = interval_x;
 	this->interval_y = interval_y;
 	this->color = color;
-	this->alignment = alignment;
 	this->text = text;
 	this->rect = rect;
-	Rebuild();
+	SetAlignment(alignment);
+	if (lstrlenW(text) > 0)
+		Rebuild();
 }
 
 void CTextRenderer::ClearPrimitive()
 {
-	if (primitives.size() > 0)
+	primitives.clear();
+}
+
+void CTextRenderer::ClearLineData()
+{
+	if (lineDatas.size() > 0)
 	{
-		for (int i = 0; i < primitives.size(); ++i)
+		for (int i = 0; i < lineDatas.size(); ++i)
 		{
-			primitives[i]->Release();
+			lineDatas[i]->Release();
 		}
-		primitives.clear();
+		lineDatas.clear();
 	}
 }
