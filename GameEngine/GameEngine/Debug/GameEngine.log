@@ -1,4 +1,25 @@
 ﻿  main.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Texture.cpp
+  TextTest.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  SpriteAnimation.cpp
+  RelationshipTest.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Input.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\github\mytoy\gameengine\gameengine\input.cpp(93): warning C4244: “参数”: 从“LONG”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\input.cpp(115): warning C4244: “=”: 从“LONG”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\input.cpp(119): warning C4244: “=”: 从“LONG”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\input.cpp(123): warning C4244: “=”: 从“LONG”转换到“float”，可能丢失数据
+  ImageTest.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  GameWindow.cpp
+  GameObject.cpp
+  Engine.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\github\mytoy\gameengine\gameengine\engine.cpp(90): warning C4305: “参数”: 从“double”到“float”截断
+  Application.cpp
+  正在生成代码...
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.pdb (Full PDB)

@@ -198,9 +198,6 @@
     <ClInclude Include="Engine.h">
       <Filter>Core\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Font.h">
-      <Filter>Core\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Core\头文件</Filter>
     </ClInclude>
@@ -309,9 +306,6 @@
       <Filter>Core\源文件</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp">
-      <Filter>Core\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Font.cpp">
       <Filter>Core\源文件</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">

@@ -1,6 +1,6 @@
 #include "GameObject.h"
 #include "TextRenderer.h"
-
+//#include "BitImage.h"
 
 CCharacterPrimitive::CCharacterPrimitive(int left_padding, int top, int advance_x, int width, int height, uint32* pixels) :left(left_padding), top(top), advance_x(advance_x), pixels(pixels)
 {
@@ -15,7 +15,11 @@ CCharacterPrimitive::CCharacterPrimitive(int left_padding, int top, int advance_
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	//CBitImage::Create(width, height, 32, (BYTE*)pixels)->Save("F://font.png", FREE_IMAGE_FORMAT::FIF_PNG);
 }
 
 void CCharacterPrimitive::Render(Vector3 pos, Vector3 size)
@@ -78,8 +82,8 @@ void CTextRenderer::OnRender()
 	static float start_x = 0;
 	static float start_y = 0;
 
-	start_x = gameObject->GetPosition().x - rect.half_size_x;
-	start_y = gameObject->GetPosition().y + rect.half_size_y;
+	start_x = -rect.half_size_x;
+	start_y = +rect.half_size_y;
 
 	for (size_t i = 0; i < primitives.size(); ++i)
 	{
@@ -87,14 +91,15 @@ void CTextRenderer::OnRender()
 		float left = primitives[i]->left * 0.01f;
 		float adv_x = primitives[i]->advance_x * 0.01f;
 		start_x += left;
-		primitives[i]->Render(Vector3{ start_x, start_y - top, gameObject->GetPosition().z }, Vector3{ 1.0f, -1.0f, 1 });
-		start_x += adv_x + interval_x;
-
-		if (start_x >= gameObject->GetPosition().x + rect.half_size_x)
+		if (start_x + adv_x + interval_x >= rect.half_size_x)
 		{
-			start_x = gameObject->GetPosition().x - rect.half_size_x;
-			start_y -= primitives[i]->height_y + interval_y;
+			start_x = -rect.half_size_x;
+			start_y -= interval_y;
 		}
+		if (start_y - top < -rect.half_size_y)
+			break;
+		primitives[i]->Render(Vector3{ start_x, start_y - top, 0 }, Vector3{ 1.0f, -1.0f, 1 });
+		start_x += adv_x + interval_x;
 	}
 
 	glDisable(GL_BLEND);

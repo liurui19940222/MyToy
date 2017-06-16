@@ -4,7 +4,6 @@
 #include"Object.h"
 #include"GLHead.h"
 #include"Camera.h"
-#include"Font.h"
 #include"Texture.h"
 #include"IncludeComponent.h"
 #include<map>

@@ -34,6 +34,10 @@ public:
 	int GetInternalFormat();
 
 	BYTE* GetBytes();
+
+	bool Save(const char* path, FREE_IMAGE_FORMAT fif);
+
+	static CBitImage* Create(int width, int height, int bpp, BYTE* data);
 };
 
 #endif

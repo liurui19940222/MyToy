@@ -85,3 +85,31 @@ void CBitImage::Release()
 		m_pFI = NULL;
 	}
 }
+
+bool CBitImage::Save(const char* path, FREE_IMAGE_FORMAT fif)
+{
+	if (m_pFI)
+	{
+		return FreeImage_Save(fif, m_pFI, path);
+	}
+	return false;
+}
+
+CBitImage* CBitImage::Create(int width, int height, int bpp, BYTE* data)
+{
+	CBitImage* image = new CBitImage();
+	image->m_pFI = FreeImage_Allocate(width, height, bpp);
+	BYTE* bytes = FreeImage_GetBits(image->m_pFI);
+	int pixelSize = bpp >> 3;
+	memcpy(bytes, data, width * height * pixelSize);
+	BYTE temp = 0;
+
+	//swap r with b
+	for (int i = 0; i < width * height * pixelSize; i += pixelSize)
+	{
+		temp = bytes[i];
+		bytes[i] = bytes[i + 2];
+		bytes[i + 2] = temp;
+	}
+	return image;
+}
