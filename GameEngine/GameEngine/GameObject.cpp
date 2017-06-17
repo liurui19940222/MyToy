@@ -117,10 +117,6 @@ void CGameObject::SetLocalPosition(Vector3 pos)
 		0, 0, 1, localPosition.z,
 		0, 0, 0, 1
 		);
-	if (parent)
-	{
-		SetPosition(parent->position);
-	}
 }
 
 void CGameObject::SetLocalEulerAngles(Vector3 euler)
@@ -156,7 +152,8 @@ Vector3 CGameObject::GetLocalEulerAngles()
 
 Vector3 CGameObject::GetPosition()
 {
-	return this->position;
+	GetModelToWorldMat();
+	return position;
 }
 
 Vector3 CGameObject::GetEulerAngles()
@@ -184,7 +181,11 @@ Matrix4x4 CGameObject::GetModelToWorldMat()
 	SetLocalPosition(localPosition);
 	SetLocalEulerAngles(localEulerAngles);
 	SetLocalScale(localScale);
-	return (moveMat * rotMat * scaleMat  * localMoveMat).Transpose();
+	modelToWorldMat = (moveMat * rotMat * scaleMat  * localMoveMat).Transpose();
+	position.x = modelToWorldMat.Get(3, 0);
+	position.y = modelToWorldMat.Get(3, 1);
+	position.z = modelToWorldMat.Get(3, 2);
+	return modelToWorldMat;
 } 
 
 void CGameObject::LookAt(Vector3 targetPos)

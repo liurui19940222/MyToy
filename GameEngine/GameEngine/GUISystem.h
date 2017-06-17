@@ -16,44 +16,67 @@ namespace GUISystem{
 	typedef void(*OnMouseExit) (Vector2 mousePos);
 	typedef void(*OnMouseMove) (Vector2 mousePos, Vector2 oldMousePos);
 
-	class CGUIWidget
+	class CGUIWidget : public CComponent, public DynamicCreate<CGUIWidget>
 	{
 	public:
-		bool Overlay(Vector2 pos);
-		bool isCollide();
-		SRect2D GetRect();
-		int GetLayer();
-		CGUIWidget* SetCollide(bool isCollide);
-		CGUIWidget* SetFillColor(Color fillColor);
-		CGUIWidget* SetRect(SRect2D rect);
-		CGUIWidget* SetLayer(int layer);
 
-		bool operator>(CGUIWidget* widget);
+		inline bool Overlay(Vector2 pos);
+		inline bool isCollide();
+		inline SRect2D GetRect();
+		inline int GetLayer();
+		inline float GetWidth();
+		inline float GetHeight();
+		inline CGUIWidget* SetCollide(bool isCollide);
+		inline CGUIWidget* SetFillColor(Color fillColor);
+		inline CGUIWidget* SetRect(SRect2D rect);
+		inline CGUIWidget* SetLayer(int layer);
+		inline CGUIWidget* SetWidth(float width);
+		inline CGUIWidget* SetHeight(float height);
 
-		bool operator<(CGUIWidget* widget);
+		inline bool operator>(CGUIWidget* widget);
+		inline bool operator<(CGUIWidget* widget);
 
 	protected:
-		bool collide;
-		bool fill;
-		Color fillColor;
-		SRect2D rect;
-		int layer;
+
+		float m_width;
+		float m_height;
+		bool m_collide;
+		bool m_fill;
+		Color m_fillColor;
+		SRect2D m_rect;
+		int m_layer;
 
 		OnMouseDown* onMouseDown;
 		OnMouseUp* onMouseUp;
 		OnMouseEnter* onMouseEnter;
 		OnMouseExit* onMouseExit;
 		OnMouseMove* onMouseMove;
+
+		virtual void OnStart() override;
+		virtual void OnDestroy() override;
+
+		virtual void OnUIUpdate();
+		virtual void OnUIRender();
+		virtual void OnUIDrawDebug();
 	};
 
 	class CGUISystem
 	{
 	private:
-		static CGUISystem* instance;
+		float m_resolutionX, m_resolutionY;
+		static CGUISystem* m_instance;
 		priority_queue<CGUIWidget*> widgets;
 
 	public:
+		static CGUISystem* GetInstance();
 
+		void InitGUI(float resolution_x, float resolution_y);
+
+		void OnUpdate();
+
+		void OnRender();
+
+		void Quit();
 	};
 
 }

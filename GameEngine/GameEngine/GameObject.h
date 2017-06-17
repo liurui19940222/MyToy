@@ -35,6 +35,7 @@ protected:
 	Matrix4x4 moveMat;
 	Matrix4x4 localMoveMat;
 	Matrix4x4 rotMat;
+	Matrix4x4 modelToWorldMat;
 
 	void UpdatePosition();
 	void UpdateEulerAngles();

@@ -4,6 +4,9 @@
 #include"Input.h"
 #include"Time.h"
 #include"Debug.h"
+#include"GUISystem.h"
+
+using namespace GUISystem;
 
 CEngine::CEngine() : clearColor(0, 0, 0, 0) { }
 

@@ -14,7 +14,7 @@ void CImageTest::OnStart()
 	go = Engine->CreateGameObject();
 	go->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f));
 	go->SetEulerAngles(Vector3(0, 180, 0));
-	CRenderer* renderer = go->AddComponent<CRenderer>();
+	CMeshRenderer* renderer = go->AddComponent<CMeshRenderer>();
 	renderer->SetModel(model);
 	renderer->SetTexture(texture);
 
@@ -25,7 +25,7 @@ void CImageTest::OnStart()
 	quadGo->SetLocalScale(Vector3(7, 7, 7));
 	quadGo->SetEulerAngles(Vector3(-90, 0, 0));
 	CMeshQuad* quadMesh = Engine->CreateObject<CMeshQuad>();
-	CRenderer* ground_renderer = quadGo->AddComponent<CRenderer>();
+	CMeshRenderer* ground_renderer = quadGo->AddComponent<CMeshRenderer>();
 	ground_renderer->SetModel(quadMesh);
 	ground_renderer->SetTexture(ground_texture);
 }

@@ -10,6 +10,11 @@ CEngineDefine::~CEngineDefine()
 {
 }
 
+SRect2D::SRect2D() {}
+
+SRect2D::SRect2D(float center_x, float center_y, float half_size_x, float half_size_y) : 
+	center_x(center_x), center_y(center_y), half_size_x(half_size_x), half_size_y(half_size_y) {}
+
 Color::Color(){}
 
 Color::Color(float r, float g, float b, float a)

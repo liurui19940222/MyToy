@@ -84,6 +84,10 @@ struct SRect2D
 	float center_y;
 	float half_size_x;
 	float half_size_y;
+
+	SRect2D();
+
+	SRect2D(float center_x, float center_y, float half_size_x, float half_size_y);
 };
 
 class CEngineDefine

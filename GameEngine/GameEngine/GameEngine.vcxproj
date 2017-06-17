@@ -106,7 +106,7 @@
     <ClInclude Include="MeshProvider.h" />
     <ClInclude Include="ModelFile.h" />
     <ClInclude Include="PngFile.h" />
-    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="SpriteAnimation.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="TextRenderer.h" />
@@ -147,7 +147,7 @@
     <ClCompile Include="MeshCube.cpp" />
     <ClCompile Include="ModelFile.cpp" />
     <ClCompile Include="PngFile.cpp" />
-    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="SpriteAnimation.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TextRenderer.cpp" />

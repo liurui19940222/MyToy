@@ -129,9 +129,6 @@
     <ClInclude Include="Component.h">
       <Filter>Component\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Component\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="SpriteAnimation.h">
       <Filter>Component\头文件</Filter>
     </ClInclude>
@@ -231,6 +228,9 @@
     <ClInclude Include="GUITest.h">
       <Filter>Application\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>Component\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -249,9 +249,6 @@
       <Filter>Common\源文件</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
-      <Filter>Component\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
       <Filter>Component\源文件</Filter>
     </ClCompile>
     <ClCompile Include="SpriteAnimation.cpp">
@@ -343,6 +340,9 @@
     </ClCompile>
     <ClCompile Include="GUITest.cpp">
       <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>Component\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

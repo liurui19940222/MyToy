@@ -9,7 +9,7 @@ void CRelationshipTest::OnStart()
 	InitLight();
 	CMeshCube* cube = Engine->CreateObject<CMeshCube>();
 	go = Engine->CreateGameObject();
-	go->AddComponent<CRenderer>()->SetModel(cube);
+	go->AddComponent<CMeshRenderer>()->SetModel(cube);
 	go->SetPosition(Vector3(0, 0.7f, -5));
 
 	for (int i = 0; i < 4; i++)
@@ -17,7 +17,7 @@ void CRelationshipTest::OnStart()
 		childs.push_back(Engine->CreateGameObject());
 		childs[i]->SetParent(go);
 		childs[i]->SetLocalScale(Vector3(1.5, 0.1f, 0.5f));
-		childs[i]->AddComponent<CRenderer>()->SetModel(cube);
+		childs[i]->AddComponent<CMeshRenderer>()->SetModel(cube);
 	}
 
 	childs[0]->SetLocalPosition(Vector3(1, 0, 0));
