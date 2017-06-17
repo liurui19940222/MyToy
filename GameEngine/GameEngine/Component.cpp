@@ -16,6 +16,8 @@ void CComponent::OnUpdate(){}
 
 void CComponent::OnRender(){}
 
+void CComponent::OnDrawDebug(){}
+
 void CComponent::OnDestroy(){}
 
 CGameObject* CComponent::GetGameObject()

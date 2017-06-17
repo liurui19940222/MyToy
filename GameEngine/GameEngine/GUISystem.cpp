@@ -2,11 +2,3 @@
 
 using namespace GUISystem;
 
-CGUISystem::CGUISystem()
-{
-}
-
-
-CGUISystem::~CGUISystem()
-{
-}

@@ -66,6 +66,7 @@ public:
 	virtual void OnStart() override;
 	virtual void OnUpdate() override;
 	virtual void OnRender() override;
+	virtual void OnDrawDebug() override;
 	virtual void OnDestroy() override;
 
 	void SetFont(CTrueTypeFont* font);

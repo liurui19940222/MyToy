@@ -1,4 +1,6 @@
-#include "EditorTool.h"
+#include"EditorTool.h"
+#include"Engine.h"
+#include"Application.h"
 #include<Windows.h>
 #include<gl\GL.h>
 #include<gl\GLU.h>
@@ -10,6 +12,20 @@ CEditorTool::CEditorTool()
 
 CEditorTool::~CEditorTool()
 {
+}
+
+void CEditorTool::DrawQuad(Vector3 position, float size)
+{
+	glPushMatrix();
+	glTranslatef(position.x, position.y, position.z);
+	static float halfSize = size * 0.5f;
+	glBegin(GL_QUADS);
+	glVertex3f(-halfSize, halfSize, 0);
+	glVertex3f(-halfSize, -halfSize, 0);
+	glVertex3f(halfSize, -halfSize, 0);
+	glVertex3f(halfSize, halfSize, 0);
+	glEnd();
+	glPopMatrix();
 }
 
 void CEditorTool::DrawGrid(Vector3 cameraPos, Vector3 pos, Color color)
@@ -37,4 +53,32 @@ void CEditorTool::DrawGrid(Vector3 cameraPos, Vector3 pos, Color color)
 	glEnd();
 	glPopMatrix();
 	glDisable(GL_FOG);
+}
+
+void CEditorTool::DrawRect(SRect2D rect, Matrix4x4& modelToWorldMatrix)
+{
+	static Vector3 vertices[4];
+	vertices[0].x = -rect.half_size_x; vertices[0].y = rect.half_size_y; vertices[0].z = 0;
+	vertices[1].x = -rect.half_size_x; vertices[1].y = -rect.half_size_y; vertices[1].z = 0;
+	vertices[2].x = rect.half_size_x; vertices[2].y = -rect.half_size_y; vertices[2].z = 0;
+	vertices[3].x = rect.half_size_x; vertices[3].y = rect.half_size_y; vertices[3].z = 0;
+	glPushMatrix();
+	glMultMatrixf((float*)&modelToWorldMatrix);
+
+	glDisable(GL_DEPTH_TEST);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	static Color color;
+	color = Color::white() - Engine->GetClearColor();
+	glColor3f(color.r, color.g, color.b);
+	glBegin(GL_QUADS);
+	for (int i = 0; i < 4; ++i) glVertex3fv((float*)&vertices[i]);
+	glEnd();
+	glColor3f(color.r, color.g, color.b);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	for (int i = 0; i < 4; ++i) DrawQuad(vertices[i], 0.1f);
+
+	glEnable(GL_DEPTH_TEST);
+
+	glPopMatrix();
 }

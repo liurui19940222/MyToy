@@ -1,6 +1,5 @@
 #include "EngineDefine.h"
-
-
+#include "Math.h"
 
 CEngineDefine::CEngineDefine()
 {
@@ -19,6 +18,7 @@ Color::Color(float r, float g, float b, float a)
 	this->r = r;
 	this->g = g;
 	this->b = b;
+	Shrink();
 }
 
 Color::Color(Color32 color32)
@@ -38,9 +38,47 @@ Color::Color(int color)
 	this->a = color32.a / 255.0f;
 }
 
+void Color::Shrink()
+{
+	r = CMath::Clamp(r, 0.0f, 1.0f);
+	g = CMath::Clamp(g, 0.0f, 1.0f);
+	b = CMath::Clamp(b, 0.0f, 1.0f);
+	a = CMath::Clamp(a, 0.0f, 1.0f);
+}
+
 int Color::ToInt32()
 {
 	return _RGBA32((byte)(r * 255), (byte)(g * 255), (byte)(b * 255), (byte)(a * 255));
+}
+
+Color Color::operator+(const Color& value) const
+{
+	return Color(r + value.r, g + value.g, b + value.b, a + value.a);
+}
+
+Color Color::operator-(const Color& value) const
+{
+	return Color(r - value.r, g - value.g, b - value.b, a - value.a);
+}
+
+Color Color::operator*(const Color& value) const
+{
+	return Color(r * value.r, g * value.g, b * value.b, a * value.a);
+}
+
+Color Color::operator/(const Color& value) const
+{
+	return (*this) * 1 / value;
+}
+
+bool Color::operator==(const Color& value) const
+{
+	return r == value.r && g == value.g && b == value.b && a == value.a;
+}
+
+bool Color::operator!=(const Color& value) const
+{
+	return r != value.r || g != value.g || b != value.b || a != value.a;
 }
 
 Color Color::red(){ return Color(1, 0, 0, 1); }

@@ -3,6 +3,7 @@
 
 #include"EngineDefine.h"
 #include"Math.h"
+#include"Component.h"
 #include<queue>
 
 using namespace std;
@@ -15,21 +16,21 @@ namespace GUISystem{
 	typedef void(*OnMouseExit) (Vector2 mousePos);
 	typedef void(*OnMouseMove) (Vector2 mousePos, Vector2 oldMousePos);
 
-	class CWidget
+	class CGUIWidget
 	{
 	public:
 		bool Overlay(Vector2 pos);
 		bool isCollide();
 		SRect2D GetRect();
 		int GetLayer();
-		CWidget* SetCollide(bool isCollide);
-		CWidget* SetFillColor(Color fillColor);
-		CWidget* SetRect(SRect2D rect);
-		CWidget* SetLayer(int layer);
+		CGUIWidget* SetCollide(bool isCollide);
+		CGUIWidget* SetFillColor(Color fillColor);
+		CGUIWidget* SetRect(SRect2D rect);
+		CGUIWidget* SetLayer(int layer);
 
-		bool operator>(CWidget* widget);
+		bool operator>(CGUIWidget* widget);
 
-		bool operator<(CWidget* widget);
+		bool operator<(CGUIWidget* widget);
 
 	protected:
 		bool collide;
@@ -49,11 +50,10 @@ namespace GUISystem{
 	{
 	private:
 		static CGUISystem* instance;
-		priority_queue<CWidget*> widgets;
+		priority_queue<CGUIWidget*> widgets;
 
 	public:
-		CGUISystem();
-		~CGUISystem();
+
 	};
 
 }

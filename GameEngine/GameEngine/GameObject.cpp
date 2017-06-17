@@ -227,6 +227,15 @@ void CGameObject::OnRender()
 	}
 }
 
+void CGameObject::OnDrawDebug()
+{
+	vector<CComponent*>::iterator it = components.begin();
+	while (it != components.end())
+	{
+		(*it++)->OnDrawDebug();
+	}
+}
+
 void CGameObject::OnDestroy()
 {
 	vector<CComponent*>::iterator it = components.begin();

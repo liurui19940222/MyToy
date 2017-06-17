@@ -211,6 +211,23 @@ public:
 	static int Random(int min, int max);
 	static void EualrAnglesToUVN(const Vector3* eualrAngles, Vector3* u, Vector3* v, Vector3* n);
 
+	template<typename T>
+	static T Min(T a, T b)
+	{
+		return (a < b ? a : b);
+	}
+
+	template<typename T>
+	static T Max(T a, T b)
+	{
+		return (a > b ? a : b);
+	}
+
+	template<typename T>
+	static T Clamp(T value, T min, T max)
+	{
+		return Max(Min(value, max), min);
+	}
 };
 
 #endif

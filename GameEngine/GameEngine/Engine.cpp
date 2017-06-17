@@ -93,7 +93,10 @@ void CEngine::Render()
 	map<int, CGameObject*>::iterator it = m_gameObjects.begin();
 	while (it != m_gameObjects.end())
 	{
-		(*it++).second->OnRender();
+		(*it).second->OnRender();
+		if (drawDebug)
+			(*it).second->OnDrawDebug();
+		it++;
 	}
 }
 
@@ -167,8 +170,19 @@ CEngine* CEngine::SetDrawGrid(bool drawGrid)
 	return this;
 }
 
+CEngine* CEngine::SetDrawDebug(bool drawDebug)
+{
+	this->drawDebug = drawDebug;
+	return this;
+}
+
 CEngine* CEngine::SetClearColor(Color clearColor)
 {
 	this->clearColor = clearColor;
 	return this;
+}
+
+Color CEngine::GetClearColor()
+{
+	return this->clearColor;
 }

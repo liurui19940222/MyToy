@@ -4,6 +4,7 @@ void CTextTest::OnStart()
 {
 	Engine->SetClearColor(Color::black());
 	Engine->SetDrawGrid(false);
+	Engine->SetDrawDebug(true);
 	MainCamera->SetPosition(Vector3(0, 0, 10));
 	MainCamera->SetEulerAngles(Vector3(0, 180, 0));
 
@@ -11,7 +12,7 @@ void CTextTest::OnStart()
 	go = Engine->CreateGameObject();
 	go->SetPosition(Vector3(0, 0, 0));
 	text = go->AddComponent<CTextRenderer>();
-	text->Init(font, NULL, 10, 0, 0.5f, Color::white(), EAlignment::CENTER_MIDDLE, SRect2D{ 0, 0, 5, 1 });
+	text->Init(font, NULL, 10, 0, 0.5f, Color::red(), EAlignment::CENTER_MIDDLE, SRect2D{ 0, 0, 5, 1 });
 	text->SetText(L"Sams Publishing & Pearson Education Inc., \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson");
 	//text->SetText(L"дasdfsdf\nͨ564654564");
 

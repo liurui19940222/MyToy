@@ -228,6 +228,9 @@
     <ClInclude Include="MeshQuad.h">
       <Filter>Component\MeshProvide\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="GUITest.h">
+      <Filter>Application\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -337,6 +340,9 @@
     </ClCompile>
     <ClCompile Include="MeshQuad.cpp">
       <Filter>Component\MeshProvide\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITest.cpp">
+      <Filter>Application\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

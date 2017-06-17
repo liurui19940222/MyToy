@@ -96,6 +96,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="GUISystem.h" />
+    <ClInclude Include="GUITest.h" />
     <ClInclude Include="ImageTest.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="MeshQuad.h" />
@@ -136,6 +137,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="GUISystem.cpp" />
+    <ClCompile Include="GUITest.cpp" />
     <ClCompile Include="ImageTest.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />

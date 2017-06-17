@@ -67,6 +67,7 @@ public:
 	virtual void OnStart();
 	virtual void OnUpdate();
 	virtual void OnRender();
+	virtual void OnDrawDebug();
 	virtual void OnDestroy();
 
 	template<typename T>

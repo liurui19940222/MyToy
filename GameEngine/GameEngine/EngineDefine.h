@@ -5,7 +5,6 @@
 #include<gl\GL.h>
 #include<gl\GLU.h>
 
-
 #define _RGBA32(r, g, b, a) (a << 24) + (b << 16) + (g << 8) + r
 #define Engine CApplication::GetEngine()
 #define Application CApplication::GetInstance()
@@ -22,7 +21,7 @@ typedef unsigned int uint;
 struct Color;
 struct Color32
 {
-	byte a, r, g, b;
+	byte r, g, b, a;
 
 	Color32();
 
@@ -43,7 +42,7 @@ struct Color32
 
 struct Color
 {
-	float a, r, g, b;
+	float r, g, b, a;
 
 	Color();
 
@@ -54,6 +53,20 @@ struct Color
 	Color(int color);
 
 	int ToInt32();
+
+	void Shrink();
+
+	Color operator+(const Color& value) const;
+
+	Color operator-(const Color& value) const;
+
+	Color operator*(const Color& value) const;
+
+	Color operator/(const Color& value) const;
+
+	bool operator==(const Color& value) const;
+
+	bool operator!=(const Color& value) const;
 
 	static Color red();
 	static Color blue();

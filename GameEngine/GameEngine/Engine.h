@@ -56,11 +56,18 @@ public:
 
 	CEngine* SetDrawGrid(bool drawGrid);
 
+	CEngine* SetDrawDebug(bool drawDebug);
+
 	CEngine* SetClearColor(Color clearColor);
+
+	Color GetClearColor();
 
 private:
 	//是否显示网格
 	bool drawGrid;
+
+	//是否绘制调试图形
+	bool drawDebug;
 
 	//清屏的颜色
 	Color clearColor;

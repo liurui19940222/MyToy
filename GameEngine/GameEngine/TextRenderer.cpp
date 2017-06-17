@@ -109,19 +109,12 @@ void CTextRenderer::OnRender()
 	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
 
-	glDisable(GL_DEPTH_TEST);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glColor3f(0, 1, 0);
-	glBegin(GL_QUADS);
-	glVertex3f(-rect.half_size_x, rect.half_size_y, 0);
-	glVertex3f(-rect.half_size_x, -rect.half_size_y, 0);
-	glVertex3f(rect.half_size_x, -rect.half_size_y, 0);
-	glVertex3f(rect.half_size_x, rect.half_size_y, 0);
-	glEnd();
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	glEnable(GL_DEPTH_TEST);
-
 	glPopMatrix();
+}
+
+void CTextRenderer::OnDrawDebug()
+{
+	CEditorTool::DrawRect(rect, gameObject->GetModelToWorldMat());
 }
 
 void CTextRenderer::OnDestroy()
