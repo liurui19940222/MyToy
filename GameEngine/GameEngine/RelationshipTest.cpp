@@ -4,7 +4,7 @@ void CRelationshipTest::OnStart()
 {
 	Engine->SetClearColor(Color::black());
 	Engine->SetDrawGrid(false);
-	MainCamera->SetPosition(Vector3(0, 0, 3));
+	MainCamera->SetPosition(Vector3(0, 0, 10));
 	MainCamera->SetEulerAngles(Vector3(0, 180, 0));
 	InitLight();
 	CMeshCube* cube = Engine->CreateObject<CMeshCube>();
@@ -59,6 +59,8 @@ void CRelationshipTest::OnUpdate()
 			go = NULL;
 		}
 	}
+
+	MainCamera->SetPosition(cameraPos);
 }
 
 void CRelationshipTest::OnRender()
