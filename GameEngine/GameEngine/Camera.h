@@ -6,7 +6,7 @@
 class CCamera : public CGameObject
 {
 public:
-	CCamera();
+	CCamera(string name);
 	~CCamera();
 
 	virtual void OnUpdate();

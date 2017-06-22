@@ -12,6 +12,7 @@ using namespace std;
 
 class GUITest : public CGameWindow
 {
+	CGameObject* go;
 public:
 	virtual void OnStart();
 

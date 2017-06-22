@@ -85,10 +85,6 @@ void CTextRenderer::OnRender()
 {
 	if (!font || !text) return;
 
-	glPushMatrix();
-
-	glMultMatrixf((float*)&gameObject->GetModelToWorldMat());
-
 	glEnable(GL_BLEND);
 	glEnable(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -108,8 +104,6 @@ void CTextRenderer::OnRender()
 
 	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
-
-	glPopMatrix();
 }
 
 void CTextRenderer::OnDrawDebug()

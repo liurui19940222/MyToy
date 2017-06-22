@@ -8,6 +8,7 @@
 #include"IncludeComponent.h"
 #include<map>
 #include<vector>
+#include<string>
 
 using namespace std;
 
@@ -51,6 +52,8 @@ public:
 	void ReleaseImage(CBitImage* image);
 
 	CGameObject* CreateGameObject();
+
+	CGameObject* CreateGameObject(string name);
 
 	void DestroyGameObject(CGameObject* go);
 

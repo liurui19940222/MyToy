@@ -6,7 +6,7 @@
 #include"Debug.h"
 #include"GUISystem.h"
 
-using namespace GUISystem;
+using namespace guisystem;
 
 CEngine::CEngine() : clearColor(0, 0, 0, 0) { }
 
@@ -18,7 +18,7 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd)
 	CInput::Init(instance, hwnd);
 	CTime::InitTime();
 	CTime::SetTargetFrameCount(60);
-	m_camera = new CCamera;
+	m_camera = new CCamera("MainCamera");
 	m_camera->SetPosition(Vector3(0, 4, -10));
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 }
@@ -29,7 +29,7 @@ void CEngine::SetupProjection(int width, int height)
 	{
 		height = 1;
 	}
-
+	GUISystem->InitGUI(width, height);
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -74,6 +74,7 @@ void CEngine::EndOrtho()
 void CEngine::Update()
 {
 	CInput::GetState();
+	GUISystem->OnUpdate();
 
 	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -89,22 +90,29 @@ void CEngine::Update()
 
 void CEngine::Render()
 {
-	m_camera->OnRender();
-	if (drawGrid)
-		CEditorTool::DrawGrid(MainCamera->GetPosition(), Vector3(0, 0, 0), Color(0, 0, 0.8, 1));
+	MainCamera->OnRender();
+
+	if (drawGrid) CEditorTool::DrawGrid(MainCamera->GetPosition(), Vector3(0, 0, 0), Color(0, 0, 0.8, 1));
 
 	map<int, CGameObject*>::iterator it = m_gameObjects.begin();
 	while (it != m_gameObjects.end())
 	{
+		(*it).second->BeginRender();
 		(*it).second->OnRender();
-		if (drawDebug)
-			(*it).second->OnDrawDebug();
+		(*it).second->EndRender();
+		if (drawDebug) (*it).second->OnDrawDebug();
 		it++;
 	}
+
+	BeginOrtho();
+	GUISystem->OnRender();
+	if (drawDebug) GUISystem->OnDrawDebug();
+	EndOrtho();
 }
 
 void CEngine::Quit()
 {
+	GUISystem->Quit();
 	CInput::ShutDown();
 	delete m_camera;
 
@@ -144,7 +152,12 @@ void CEngine::ReleaseImage(CBitImage* image)
 
 CGameObject* CEngine::CreateGameObject()
 {
-	CGameObject* go = new CGameObject;
+	return CreateGameObject("NewGameObject");
+}
+
+CGameObject* CEngine::CreateGameObject(string name)
+{
+	CGameObject* go = new CGameObject(name);
 	m_gameObjects.insert(make_pair(go->GetInstanceId(), go));
 	go->OnStart();
 	return go;

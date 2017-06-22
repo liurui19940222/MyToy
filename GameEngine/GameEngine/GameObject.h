@@ -13,7 +13,7 @@ using namespace std;
 class CGameObject : Object
 {
 protected:
-	CGameObject();
+	CGameObject(string name);
 	~CGameObject();
 
 	vector<CComponent*> components;
@@ -37,7 +37,6 @@ protected:
 	Matrix4x4 rotMat;
 	Matrix4x4 modelToWorldMat;
 
-	void UpdatePosition();
 	void UpdateEulerAngles();
 	void UpdateScale();
 	void SetEulerAngles(Vector3 euler, bool updateLocal);
@@ -64,6 +63,9 @@ public:
 	Vector3 GetRight();
 	Vector3 GetForward();
 	Matrix4x4 GetModelToWorldMat();
+
+	void BeginRender();
+	void EndRender();
 
 	virtual void OnStart();
 	virtual void OnUpdate();

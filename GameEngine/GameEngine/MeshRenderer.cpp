@@ -20,9 +20,6 @@ void CMeshRenderer::OnRender()
 {
 	if (!model) return;
 
-	glPushMatrix();
-
-	glMultMatrixf((float*)&gameObject->GetModelToWorldMat());
 	if (texture)
 	{
 		glEnable(GL_TEXTURE_2D);
@@ -38,7 +35,7 @@ void CMeshRenderer::OnRender()
 
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
-	glPopMatrix();
+
 	if (texture)
 	{
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);

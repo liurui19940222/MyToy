@@ -8,13 +8,20 @@ void CTextTest::OnStart()
 	MainCamera->SetPosition(Vector3(0, 0, 10));
 	MainCamera->SetEulerAngles(Vector3(0, 180, 0));
 
-	CTrueTypeFont* font = FontManager->LoadFont(1, "fonts/msyh.ttf");
+	CTrueTypeFont* font = FontManager->LoadFont(1, "C:/Windows/Fonts/StencilStd.otf");
 	go = Engine->CreateGameObject();
 	go->SetPosition(Vector3(0, 0, 0));
 	text = go->AddComponent<CTextRenderer>();
-	text->Init(font, NULL, 10, 0, 0.5f, Color::red(), EAlignment::CENTER_MIDDLE, SRect2D{ 0, 0, 5, 1 });
+	text->Init(font, NULL, 10, 0, 0.5f, Color::cyan(), EAlignment::CENTER_MIDDLE, SRect2D{ 0, 0, 5, 1 });
 	text->SetText(L"Sams Publishing & Pearson Education Inc., \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson");
 	//text->SetText(L"дasdfsdf\nͨ564654564");
+
+	//CBitImage* image = Engine->CreateImage("textures/model.png");
+	//CTexture* texture = CTexture::Create(image);
+	//CGameObject* texGo = Engine->CreateGameObject();
+	//texGo->AddComponent<CSpriteRenderer>()->SetTexture(texture);
+	//texGo->SetLocalScale(Vector3(0.1, 0.1, 0));
+	//texGo->SetPosition(Vector3(0, -1, 0));
 
 	//CAtlas* atlas = (*font->GetAtlases(10))[0];
 	//CTexture* tex = CTexture::Create((UCHAR*)(atlas->GetPixels()), atlas->GetWidth(), atlas->GetHeight());

@@ -3,14 +3,15 @@
 void CRelationshipTest::OnStart()
 {
 	Engine->SetClearColor(Color::black());
-	Engine->SetDrawGrid(false);
+	Engine->SetDrawGrid(true);
 	MainCamera->SetPosition(Vector3(0, 0, 10));
 	MainCamera->SetEulerAngles(Vector3(0, 180, 0));
+	cameraPos = MainCamera->GetPosition();
 	InitLight();
 	CMeshCube* cube = Engine->CreateObject<CMeshCube>();
 	go = Engine->CreateGameObject();
 	go->AddComponent<CMeshRenderer>()->SetModel(cube);
-	go->SetPosition(Vector3(0, 0.7f, -5));
+	go->SetPosition(Vector3(0, 0.7f, 0));
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -30,8 +31,8 @@ void CRelationshipTest::OnStart()
 
 void CRelationshipTest::OnUpdate()
 {
-	cameraPos.x = CInput::GetAxis("Horizontal") * CTime::deltaTime * moveSpeed;
-	cameraPos.z = CInput::GetAxis("Vertical") * CTime::deltaTime * moveSpeed;
+	cameraPos.x += CInput::GetAxis("Horizontal") * CTime::deltaTime * moveSpeed;
+	cameraPos.z -= CInput::GetAxis("Vertical") * CTime::deltaTime * moveSpeed;
 
 	if (go)
 	{

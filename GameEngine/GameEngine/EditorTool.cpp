@@ -18,7 +18,7 @@ void CEditorTool::DrawQuad(Vector3 position, float size)
 {
 	glPushMatrix();
 	glTranslatef(position.x, position.y, position.z);
-	static float halfSize = size * 0.5f;
+	float halfSize = size * 0.5f;
 	glBegin(GL_QUADS);
 	glVertex3f(-halfSize, halfSize, 0);
 	glVertex3f(-halfSize, -halfSize, 0);
@@ -76,7 +76,7 @@ void CEditorTool::DrawRect(SRect2D rect, Matrix4x4& modelToWorldMatrix)
 	glColor3f(color.r, color.g, color.b);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	for (int i = 0; i < 4; ++i) DrawQuad(vertices[i], 0.1f);
+	for (int i = 0; i < 4; ++i) DrawQuad(vertices[i], 0.03f * (rect.half_size_x + rect.half_size_y));
 
 	glEnable(GL_DEPTH_TEST);
 

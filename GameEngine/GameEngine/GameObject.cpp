@@ -2,17 +2,20 @@
 #include "DynamicFactory.h"
 #include "Application.h"
 
-CGameObject::CGameObject() : Object()
+CGameObject::CGameObject(string name) : Object(name)
 {
 	SetPosition(Vector3(0, 0, 0));
 	SetEulerAngles(Vector3(0, 0, 0));
 	SetLocalScale(Vector3(1, 1, 1));
+	SetLocalPosition(Vector3(0, 0, 0));
+	SetLocalEulerAngles(Vector3(0, 0, 0));
+
 	right = Vector3::Right();
 	up = Vector3::Up();
 	forward = Vector3::Forward();
 }
 
-CGameObject::~CGameObject(){ }
+CGameObject::~CGameObject() { }
 
 
 void CGameObject::SetPosition(Vector3 pos)
@@ -24,15 +27,7 @@ void CGameObject::SetPosition(Vector3 pos)
 		0, 1, 0, position.y,
 		0, 0, 1, position.z,
 		0, 0, 0, 1
-		);
-
-	if (childs.size() > 0)
-	{
-		for (vector<CGameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
-		{
-			(*it)->UpdatePosition();
-		}
-	}
+	);
 }
 
 void CGameObject::SetEulerAngles(Vector3 euler)
@@ -76,6 +71,8 @@ void CGameObject::SetEulerAngles(Vector3 euler, bool updateLocal)
 	this->forward = Vector3::Forward() * rotMat.Transpose();
 	this->right = Vector3::Cross(this->forward, Vector3(0, 1, 0));
 	this->up = Vector3::Cross(this->right, this->forward);
+
+	GetModelToWorldMat();
 }
 
 void CGameObject::SetLocalScale(Vector3 s)
@@ -97,7 +94,7 @@ void CGameObject::SetLocalScale(Vector3 s)
 		0, scale.y, 0, 0,
 		0, 0, scale.z, 0,
 		0, 0, 0, 1
-		);
+	);
 
 	if (childs.size() > 0)
 	{
@@ -116,7 +113,9 @@ void CGameObject::SetLocalPosition(Vector3 pos)
 		0, 1, 0, localPosition.y,
 		0, 0, 1, localPosition.z,
 		0, 0, 0, 1
-		);
+	);
+
+	GetModelToWorldMat();
 }
 
 void CGameObject::SetLocalEulerAngles(Vector3 euler)
@@ -133,6 +132,7 @@ void CGameObject::SetLocalEulerAngles(Vector3 euler)
 	{
 		SetEulerAngles(euler, false);
 	}
+	GetModelToWorldMat();
 }
 
 Vector3 CGameObject::GetLocalScale()
@@ -152,7 +152,6 @@ Vector3 CGameObject::GetLocalEulerAngles()
 
 Vector3 CGameObject::GetPosition()
 {
-	GetModelToWorldMat();
 	return position;
 }
 
@@ -178,15 +177,12 @@ Vector3 CGameObject::GetForward()
 
 Matrix4x4 CGameObject::GetModelToWorldMat()
 {
-	SetLocalPosition(localPosition);
-	SetLocalEulerAngles(localEulerAngles);
-	SetLocalScale(localScale);
 	modelToWorldMat = (moveMat * rotMat * scaleMat  * localMoveMat).Transpose();
 	position.x = modelToWorldMat.Get(3, 0);
 	position.y = modelToWorldMat.Get(3, 1);
 	position.z = modelToWorldMat.Get(3, 2);
 	return modelToWorldMat;
-} 
+}
 
 void CGameObject::LookAt(Vector3 targetPos)
 {
@@ -198,7 +194,7 @@ void CGameObject::LookAt(Vector3 targetPos)
 		this->up.x, this->up.y, this->up.z, 0,
 		this->forward.x, this->forward.y, this->forward.z, 0,
 		0, 0, 0, 1
-		);
+	);
 }
 
 void CGameObject::OnStart()
@@ -211,7 +207,7 @@ void CGameObject::OnStart()
 }
 
 void CGameObject::OnUpdate()
-{ 
+{
 	vector<CComponent*>::iterator it = components.begin();
 	while (it != components.end())
 	{
@@ -219,8 +215,20 @@ void CGameObject::OnUpdate()
 	}
 }
 
+void CGameObject::BeginRender()
+{
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glPushMatrix();
+	glMultMatrixf((float*)&GetModelToWorldMat());
+}
+
+void CGameObject::EndRender()
+{
+	glPopMatrix();
+}
+
 void CGameObject::OnRender()
-{ 
+{
 	vector<CComponent*>::iterator it = components.begin();
 	while (it != components.end())
 	{
@@ -244,12 +252,6 @@ void CGameObject::OnDestroy()
 	{
 		(*it++)->OnDestroy();
 	}
-}
-
-void CGameObject::UpdatePosition()
-{
-	//if (parent)
-	//	SetLocalPosition(localPosition);
 }
 
 void CGameObject::UpdateEulerAngles()
@@ -308,7 +310,15 @@ void CGameObject::SetParent(CGameObject* parent)
 		this->parent->RemoveChild(this);
 	}
 	if (parent)
+	{
 		parent->AddChild(this);
+		SetPosition(parent->position);
+		SetLocalPosition(localPosition);
+		SetLocalEulerAngles(localEulerAngles);
+		SetLocalScale(localScale);
+	}
 	else
+	{
 		this->parent = NULL;
+	}	
 }

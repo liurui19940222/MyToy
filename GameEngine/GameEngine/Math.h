@@ -66,11 +66,11 @@ public:
 	Vector3(Vector4& v4);
 	Vector3(float px, float py, float pz);
 
-	inline float Magnitude();
+	float Magnitude();
 
-	inline float MagnitudeSqrt();
+	float MagnitudeSqrt();
 
-	inline Vector3 Normalization();
+	Vector3 Normalization();
 
 	Vector3 operator+(const Vector3& vec) const;
 

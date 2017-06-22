@@ -26,9 +26,7 @@ void CSpriteRenderer::OnRender()
 	if (!texture) return;
 	static float width = (texture->GetWidth() >> 1) * 0.01f;
 	static float height = (texture->GetHeight() >> 1) * 0.01f;
-	glPushMatrix();
 
-	glMultMatrixf((float*)&gameObject->GetModelToWorldMat());
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_TEXTURE_2D);
@@ -45,7 +43,6 @@ void CSpriteRenderer::OnRender()
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
-	glPopMatrix();
 }
 
 void CSpriteRenderer::OnDestroy()

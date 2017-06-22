@@ -15,6 +15,15 @@ SRect2D::SRect2D() {}
 SRect2D::SRect2D(float center_x, float center_y, float half_size_x, float half_size_y) : 
 	center_x(center_x), center_y(center_y), half_size_x(half_size_x), half_size_y(half_size_y) {}
 
+bool SRect2D::Overlay(Vector2 pos)
+{
+	if (pos.x < center_x - half_size_x) return false;
+	else if (pos.x > center_x + half_size_x) return false;
+	else if (pos.y > center_y + half_size_y) return false;
+	else if (pos.y < center_y - half_size_y) return false;
+	return true;
+}
+
 Color::Color(){}
 
 Color::Color(float r, float g, float b, float a)

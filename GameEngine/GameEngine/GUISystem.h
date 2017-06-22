@@ -4,11 +4,12 @@
 #include"EngineDefine.h"
 #include"Math.h"
 #include"Component.h"
-#include<queue>
+#include"PriorityQueue.h"
 
 using namespace std;
+using namespace container;
 
-namespace GUISystem{
+namespace guisystem {
 
 	typedef void(*OnMouseDown) (Vector2 mousePos);
 	typedef void(*OnMouseUp) (Vector2 mousePos);
@@ -18,23 +19,26 @@ namespace GUISystem{
 
 	class CGUIWidget : public CComponent, public DynamicCreate<CGUIWidget>
 	{
+		friend class CGUISystem;
+
 	public:
 
-		inline bool Overlay(Vector2 pos);
-		inline bool isCollide();
-		inline SRect2D GetRect();
-		inline int GetLayer();
-		inline float GetWidth();
-		inline float GetHeight();
-		inline CGUIWidget* SetCollide(bool isCollide);
-		inline CGUIWidget* SetFillColor(Color fillColor);
-		inline CGUIWidget* SetRect(SRect2D rect);
-		inline CGUIWidget* SetLayer(int layer);
-		inline CGUIWidget* SetWidth(float width);
-		inline CGUIWidget* SetHeight(float height);
+		bool Overlay(Vector2 pos);
+		bool isCollide();
+		SRect2D GetRect();
+		int GetLayer();
+		float GetWidth();
+		float GetHeight();
+		CGUIWidget* SetCollide(bool isCollide);
+		CGUIWidget* SetFill(bool isFill);
+		CGUIWidget* SetFillColor(Color fillColor);
+		CGUIWidget* SetRect(SRect2D rect);
+		CGUIWidget* SetLayer(int layer);
+		CGUIWidget* SetWidth(float width);
+		CGUIWidget* SetHeight(float height);
 
-		inline bool operator>(CGUIWidget* widget);
-		inline bool operator<(CGUIWidget* widget);
+		bool operator>(CGUIWidget* widget);
+		bool operator<(CGUIWidget* widget);
 
 	protected:
 
@@ -52,12 +56,13 @@ namespace GUISystem{
 		OnMouseExit* onMouseExit;
 		OnMouseMove* onMouseMove;
 
-		virtual void OnStart() override;
-		virtual void OnDestroy() override;
-
 		virtual void OnUIUpdate();
 		virtual void OnUIRender();
 		virtual void OnUIDrawDebug();
+
+	private:
+		virtual void OnStart() override;
+		virtual void OnDestroy() override;
 	};
 
 	class CGUISystem
@@ -65,16 +70,22 @@ namespace GUISystem{
 	private:
 		float m_resolutionX, m_resolutionY;
 		static CGUISystem* m_instance;
-		priority_queue<CGUIWidget*> widgets;
+		CPriorityQueue<CGUIWidget*> widgets;
 
 	public:
 		static CGUISystem* GetInstance();
 
 		void InitGUI(float resolution_x, float resolution_y);
 
+		void AddWidget(CGUIWidget* widget);
+
+		void DestroyWidget(CGUIWidget* widget);
+
 		void OnUpdate();
 
 		void OnRender();
+
+		void OnDrawDebug();
 
 		void Quit();
 	};

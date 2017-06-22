@@ -10,6 +10,7 @@
 #define Application CApplication::GetInstance()
 #define MainCamera Engine->GetCamera()
 #define FontManager CFontManager::GetInstance()
+#define GUISystem guisystem::CGUISystem::GetInstance()
 #define CH_MAP_BITMAP_SIZE_W 512
 #define CH_MAP_BITMAP_SIZE_H 512
 
@@ -18,6 +19,7 @@ typedef unsigned short uint16;
 typedef unsigned int uint32;
 typedef unsigned int uint;
 
+class Vector2;
 struct Color;
 struct Color32
 {
@@ -88,6 +90,8 @@ struct SRect2D
 	SRect2D();
 
 	SRect2D(float center_x, float center_y, float half_size_x, float half_size_y);
+
+	bool Overlay(Vector2 pos);
 };
 
 class CEngineDefine

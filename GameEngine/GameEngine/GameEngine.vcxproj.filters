@@ -106,6 +106,9 @@
     <Filter Include="Component\MeshProvide\源文件">
       <UniqueIdentifier>{09e2a2c2-ebb9-4823-82c5-45fb3f0e0fd0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Container">
+      <UniqueIdentifier>{a99bae24-83a5-44fa-b3bf-dbe911d2b9bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -230,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="MeshRenderer.h">
       <Filter>Component\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PriorityQueue.h">
+      <Filter>Container</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

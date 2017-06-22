@@ -8,3 +8,6 @@
 *.obj
 *.log
 *.tlog
+*.obj
+*.log
+*.tlog

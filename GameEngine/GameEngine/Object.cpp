@@ -7,6 +7,10 @@ Object::Object()
 	instanceId = ++id;
 }
 
+Object::Object(std::string name) : Object()
+{
+	this->name = name;
+}
 
 Object::~Object()
 {

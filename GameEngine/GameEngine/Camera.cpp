@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 
-CCamera::CCamera(){ }
+CCamera::CCamera(string name) : CGameObject(name){ }
 
 CCamera::~CCamera(){ }
 

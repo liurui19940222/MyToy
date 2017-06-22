@@ -1,37 +1,31 @@
 #include "GUITest.h"
+#include "GUISystem.h"
 
-CGameObject* child = NULL;
-Vector3 pos;
+using namespace guisystem;
 
 void GUITest::OnStart()
 {
 	Engine->SetClearColor(Color::black());
 	Engine->SetDrawGrid(false);
+	Engine->SetDrawDebug(true);
 	MainCamera->SetPosition(Vector3(0, 0, 10));
 	MainCamera->SetEulerAngles(Vector3(0, 180, 0));
 
-	CGameObject* go = Engine->CreateGameObject();
-	child = Engine->CreateGameObject();
-	child->SetParent(go);
-	child->SetLocalPosition(Vector3(2, 0, 0));
-	child->AddComponent<CMeshRenderer>()->SetModel(Engine->CreateObject<CMeshCube>());
+	go = Engine->CreateGameObject("cube");
+	CGUIWidget* widget = go->AddComponent<CGUIWidget>();
+	go->SetPosition(Vector3(400, 300, 0));
+	widget->SetWidth(200)->SetHeight(40);
+	widget->SetFillColor(Color(0, 1, 1, 0.5f))->SetFill(true);
 }
 
 void GUITest::OnUpdate()
 {
-	float radius = 1;
-	pos = child->GetPosition();
-	pos.x += CTime::deltaTime;
-	child->SetPosition(pos);
+
 }
 
 void GUITest::OnRender()
 {
-	//Engine->BeginOrtho();
-	//
-	//CEditorTool::DrawQuad(Vector3(400, 300, 0), 400);
 
-	//Engine->EndOrtho();
 }
 
 void GUITest::OnClose()
