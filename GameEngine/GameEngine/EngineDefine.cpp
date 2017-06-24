@@ -65,6 +65,26 @@ int Color::ToInt32()
 	return _RGBA32((byte)(r * 255), (byte)(g * 255), (byte)(b * 255), (byte)(a * 255));
 }
 
+Color Color::operator+(float value) const
+{
+	return Color(r + value, g + value, b + value, a + value);
+}
+
+Color Color::operator-(float value) const
+{
+	return Color(r - value, g - value, b - value, a - value);
+}
+
+Color Color::operator*(float value) const
+{
+	return Color(r * value, g * value, b * value, a * value);
+}
+
+Color Color::operator/(float value) const
+{
+	return (*this) * 1 / value;
+}
+
 Color Color::operator+(const Color& value) const
 {
 	return Color(r + value.r, g + value.g, b + value.b, a + value.a);

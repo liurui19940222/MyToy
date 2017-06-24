@@ -2,6 +2,9 @@
 #define PRIORITY_QUEUE_H
 
 #include<iostream>
+#include<functional>
+
+using namespace std::tr1;
 
 namespace container {
 	template<typename T>
@@ -18,8 +21,13 @@ namespace container {
 	class CPriorityQueue
 	{
 	public:
-		typedef int(*Comparator) (T, T);
-		typedef void(*ForeachCall) (T);
+		//typedef int(*Comparator) (T, T);
+		//typedef bool(*ForeachCallResult) (T);
+		//typedef void(*ForeachCall) (T);
+
+		typedef function<int(T, T)> Comparator;
+		typedef function<bool(T)> ForeachCallResult;
+		typedef function<void(T)> ForeachCall;
 
 		CPriorityQueue() : CPriorityQueue([](T a, T b) {
 			if (a > b) return 1;
@@ -141,6 +149,19 @@ namespace container {
 			}
 		}
 
+		//正序遍历队列
+		void ForeachR(ForeachCallResult call)
+		{
+			if (m_count <= 0)
+				return;
+			CTwoWayNode<T>* p = m_head;
+			while (p)
+			{
+				if (!call(p->value)) break;
+				p = p->next;
+			}
+		}
+
 		//逆序遍历队列
 		void ForeachInverse(ForeachCall call)
 		{
@@ -150,6 +171,19 @@ namespace container {
 			while (p)
 			{
 				call(p->value);
+				p = p->prev;
+			}
+		}
+
+		//逆序遍历队列
+		void ForeachInverse(ForeachCallResult call)
+		{
+			if (m_count <= 0)
+				return;
+			CTwoWayNode<T>* p = m_trailer;
+			while (p)
+			{
+				if (!call(p->value)) break;
 				p = p->prev;
 			}
 		}

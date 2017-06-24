@@ -1,3 +1,11 @@
-﻿  GUISystem.cpp
+﻿  Input.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\github\mytoy\gameengine\gameengine\input.cpp(98): warning C4244: “参数”: 从“LONG”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\input.cpp(120): warning C4244: “=”: 从“LONG”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\input.cpp(124): warning C4244: “=”: 从“LONG”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\input.cpp(128): warning C4244: “=”: 从“LONG”转换到“float”，可能丢失数据
+  GUITest.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  正在生成代码...
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.pdb (Full PDB)

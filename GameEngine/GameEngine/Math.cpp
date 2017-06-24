@@ -52,6 +52,16 @@ Vector2 Vector2::operator/(const float value) const
 	return Vector2(this->x / value, this->y / value);
 }
 
+bool Vector2::operator==(const Vector2& vec) const
+{
+	return this->x == vec.x && this->y == vec.y;
+}
+
+bool Vector2::operator!=(const Vector2& vec) const
+{
+	return this->x != vec.x || this->y != vec.y;
+}
+
 Vector2 Vector2::operator-() const
 {
 	return Vector2(-x, -y);
@@ -139,6 +149,16 @@ Vector3 Vector3::operator*(const float value) const
 Vector3 Vector3::operator/(const float value) const
 {
 	return Vector3(x / value, y / value, z / value);
+}
+
+bool Vector3::operator==(const Vector3& vec) const
+{
+	return this->x == vec.x && this->y == vec.y && this->z == vec.z;
+}
+
+bool Vector3::operator!=(const Vector3& vec) const
+{
+	return this->x != vec.x || this->y != vec.y || this->z != vec.z;
 }
 
 Vector3 Vector3::operator*(Matrix4x4& mat) const

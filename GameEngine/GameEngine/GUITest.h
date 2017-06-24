@@ -7,12 +7,16 @@
 #include"GameObject.h"
 #include"Camera.h"
 #include"FileHead.h"
+#include"GUISystem.h"
 
 using namespace std;
+using namespace guisystem;
 
 class GUITest : public CGameWindow
 {
 	CGameObject* go;
+	CTextRenderer* text;
+	CGUIWidget* widget;
 public:
 	virtual void OnStart();
 

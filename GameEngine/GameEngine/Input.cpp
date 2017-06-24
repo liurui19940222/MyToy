@@ -32,6 +32,11 @@ void CInput::GetState()
 		if (!(keyboard[i] & 0x80) && keyboardHold[i] != 0)
 			keyboardHold[i] = 2;
 	}
+	for (int i = 0; i < 4; i++)
+	{
+		if (!(mouseStateData.rgbButtons[i]) && mouseStateDataHold.rgbButtons[i] != 0)
+			mouseStateDataHold.rgbButtons[i] = 2;
+	}
 }
 
 bool CInput::GetKey(byte key)
@@ -66,9 +71,9 @@ bool CInput::GetKeyUp(byte key)
 
 bool CInput::GetMouseDown(EMouseKey key)
 {
-	if (mouseStateData.rgbButtons[(int)key])
+	if (mouseStateData.rgbButtons[(int)key] && !mouseStateDataHold.rgbButtons[(int)key])
 	{
-		mouseStateData.rgbButtons[(int)key] = 1;
+		mouseStateDataHold.rgbButtons[(int)key] = 1;
 		return true;
 	}
 	return false;
@@ -76,7 +81,7 @@ bool CInput::GetMouseDown(EMouseKey key)
 
 bool CInput::GetMouseUp(EMouseKey key)
 {
-	if (mouseStateDataHold.rgbButtons[(int)key] && !CInput::GetMouseDown(key))
+	if (mouseStateDataHold.rgbButtons[(int)key] && !mouseStateData.rgbButtons[(int)key] || mouseStateDataHold.rgbButtons[(int)key] == 2)
 	{
 		mouseStateDataHold.rgbButtons[(int)key] = 0;
 		return true;
@@ -90,7 +95,7 @@ Vector2 CInput::InputMousePosition()
 	GetCursorPos(&p);
 	int left = CApplication::GetInstance()->GetWindowRect()->left;
 	int top = CApplication::GetInstance()->GetWindowRect()->top;
-	return Vector2(p.x - CApplication::GetInstance()->GetWindowRect()->left, p.y - CApplication::GetInstance()->GetWindowRect()->top);
+	return Vector2(p.x - CApplication::GetInstance()->GetWindowRect()->left, Application->GetWindowRect()->bottom - p.y);
 }
 
 float CInput::GetAxis(string axis)

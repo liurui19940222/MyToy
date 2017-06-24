@@ -1,11 +1,16 @@
 #include "GUISystem.h"
 #include "Engine.h"
 #include "Application.h"
+#include "Input.h"
 
 using namespace guisystem;
 using namespace container;
 
 #pragma region CGUIWidget
+
+CGUIWidget::CGUIWidget() :
+	m_collide(false), m_enable(true), m_fill(false), m_fillColor(Color::white()),
+	m_height(0), m_width(0), m_layer(0), m_rect(), m_state(EWidgetState::Normal) {}
 
 bool CGUIWidget::Overlay(Vector2 pos)
 {
@@ -36,6 +41,16 @@ float CGUIWidget::GetWidth()
 float CGUIWidget::GetHeight()
 {
 	return m_height;
+}
+
+EWidgetState CGUIWidget::GetState()
+{
+	return m_state;
+}
+
+bool CGUIWidget::IsState(EWidgetState state)
+{
+	return m_state == state;
 }
 
 CGUIWidget* CGUIWidget::SetCollide(bool isCollide)
@@ -84,6 +99,102 @@ CGUIWidget* CGUIWidget::SetHeight(float height)
 	return this;
 }
 
+CGUIWidget* CGUIWidget::SetEnable(bool enable)
+{
+	m_enable = enable;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::AddOnMouseDownListener(OnMouseDownEvent down)
+{
+	onMouseDown = down;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::AddOnMouseUpListener(OnMouseUpEvent up)
+{
+	onMouseUp = up;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::AddOnMouseEnterListener(OnMouseEnterEvent enter)
+{
+	onMouseEnter = enter;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::AddOnMouseExitListener(OnMouseExitEvent exit)
+{
+	onMouseExit = exit;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::AddOnMouseOverListener(OnMouseOverEvent over)
+{
+	onMouseOver = over;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::RemoveOnMouseDownListener(OnMouseDownEvent down)
+{
+	onMouseDown = NULL;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::RemoveOnMouseUpListener(OnMouseUpEvent up)
+{
+	onMouseUp = NULL;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::RemoveOnMouseEnterListener(OnMouseEnterEvent enter)
+{
+	onMouseEnter = NULL;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::RemoveOnMouseExitListener(OnMouseExitEvent exit)
+{
+	onMouseExit = NULL;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::RemoveOnMouseOverListener(OnMouseOverEvent over)
+{
+	onMouseOver = NULL;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::RemoveAllOnMouseDownListener(OnMouseDownEvent down)
+{
+	onMouseDown = NULL;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::RemoveAllOnMouseUpListener(OnMouseUpEvent up)
+{
+	onMouseUp = NULL;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::RemoveAllOnMouseEnterListener(OnMouseEnterEvent enter)
+{
+	onMouseEnter = NULL;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::RemoveAllOnMouseExitListener(OnMouseExitEvent exit)
+{
+	onMouseExit = NULL;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::RemoveAllOnMouseOverListener(OnMouseOverEvent over)
+{
+	onMouseOver = NULL;
+	return this;
+}
+
 bool CGUIWidget::operator>(CGUIWidget* widget)
 {
 	return m_layer > widget->m_layer;
@@ -92,6 +203,36 @@ bool CGUIWidget::operator>(CGUIWidget* widget)
 bool CGUIWidget::operator<(CGUIWidget* widget)
 {
 	return m_layer < widget->m_layer;
+}
+
+void CGUIWidget::SetState(EWidgetState state)
+{
+	m_state = state;
+}
+
+void CGUIWidget::OnMouseDown(Vector2 mousePos)
+{
+	if (onMouseDown) onMouseDown(mousePos);
+}
+
+void CGUIWidget::OnMouseUp(Vector2 mousePos)
+{
+	if (onMouseUp) onMouseUp(mousePos);
+}
+
+void CGUIWidget::OnMouseEnter(Vector2 mousePos)
+{
+	if (onMouseEnter) onMouseEnter(mousePos);
+}
+
+void CGUIWidget::OnMouseExit(Vector2 mousePos)
+{
+	if (onMouseExit) onMouseExit(mousePos);
+}
+
+void CGUIWidget::OnMouseOver(Vector2 mousePos)
+{
+	if (onMouseOver) onMouseOver(mousePos);
 }
 
 void CGUIWidget::OnStart()
@@ -106,7 +247,7 @@ void CGUIWidget::OnDestroy()
 
 void CGUIWidget::OnUIUpdate()
 {
-	
+
 }
 
 void CGUIWidget::OnUIRender()
@@ -119,7 +260,17 @@ void CGUIWidget::OnUIRender()
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	if (m_fill) glColor4f(m_fillColor.r, m_fillColor.g, m_fillColor.b, m_fillColor.a);
+	if (m_fill)
+	{
+		if (m_state == EWidgetState::Normal)
+			glColor4f(m_fillColor.r, m_fillColor.g, m_fillColor.b, m_fillColor.a);
+		else if (m_state == EWidgetState::Hover)
+			glColor4f(m_fillColor.r + 0.3f, m_fillColor.g + 0.3f, m_fillColor.b + 0.3f, m_fillColor.a + 0.3f);
+		else if (m_state == EWidgetState::Pressed)
+			glColor4f(m_fillColor.r - 0.3f, m_fillColor.g - 0.3f, m_fillColor.b - 0.3f, m_fillColor.a);
+		else if (m_state == EWidgetState::Disabled)
+			glColor4f(0.35f, 0.35f, 0.35f, m_fillColor.a);
+	}
 
 	glBegin(GL_QUADS);
 	for (int i = 0; i < 4; ++i) glVertex3fv((float*)&vertices[i]);
@@ -164,6 +315,49 @@ void CGUISystem::DestroyWidget(CGUIWidget* dwidget)
 
 void CGUISystem::OnUpdate()
 {
+	Vector2 mousePos = CInput::InputMousePosition();
+	widgets.ForeachR([this, &mousePos](CGUIWidget* widget) {
+		if (!widget->IsState(EWidgetState::Disabled))
+		{
+			if (widget->Overlay(mousePos))
+			{
+				if (widget != m_curOverlay)
+				{
+					if (m_curOverlay)
+					{
+						m_curOverlay->SetState(EWidgetState::Normal);
+						m_curOverlay->OnMouseExit(mousePos);
+					}
+					widget->OnMouseEnter(mousePos);
+				}
+
+				if (CInput::GetMouseDown(EMouseKey::Left))
+				{
+					widget->SetState(EWidgetState::Pressed);
+					widget->OnMouseDown(mousePos);
+					m_lastDown = widget;
+				}
+				else
+				{
+					if (widget->IsState(EWidgetState::Pressed))
+					{
+						widget->OnMouseUp(mousePos);
+					}
+					widget->SetState(EWidgetState::Hover);
+					widget->OnMouseOver(mousePos);
+				}
+
+				m_curOverlay = widget;
+				return false;
+			}
+			else if(widget->IsState(EWidgetState::Hover) || widget->IsState(EWidgetState::Pressed))
+			{
+				widget->SetState(EWidgetState::Normal);
+				widget->OnMouseExit(mousePos);
+			}
+		}
+		return true;
+	});
 	widgets.Foreach([](CGUIWidget* widget) {
 		widget->OnUIUpdate();
 	});

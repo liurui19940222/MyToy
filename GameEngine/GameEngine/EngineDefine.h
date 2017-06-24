@@ -58,6 +58,14 @@ struct Color
 
 	void Shrink();
 
+	Color operator+(float value) const;
+
+	Color operator-(float value) const;
+
+	Color operator*(float value) const;
+
+	Color operator/(float value) const;
+
 	Color operator+(const Color& value) const;
 
 	Color operator-(const Color& value) const;
