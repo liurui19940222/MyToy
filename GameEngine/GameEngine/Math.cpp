@@ -136,6 +136,11 @@ Vector3 Vector3::operator+(const Vector3& vec) const
 	return Vector3(x + vec.x, y + vec.y, z + vec.z);
 }
 
+Vector3 Vector3::operator+=(const Vector3& vec) const
+{
+	return *this + vec;
+}
+
 Vector3 Vector3::operator-(const Vector3& vec) const
 {
 	return Vector3(x - vec.x, y - vec.y, z - vec.z);

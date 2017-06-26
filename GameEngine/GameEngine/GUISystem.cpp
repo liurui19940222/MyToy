@@ -10,7 +10,11 @@ using namespace container;
 
 CGUIWidget::CGUIWidget() :
 	m_collide(false), m_enable(true), m_fill(false), m_fillColor(Color::white()),
-	m_height(0), m_width(0), m_layer(0), m_rect(), m_state(EWidgetState::Normal) {}
+	m_height(0), m_width(0), m_layer(0), m_rect(), m_state(EWidgetState::Normal),
+	m_pivot(0.5f, 0.5f)
+{
+
+}
 
 bool CGUIWidget::Overlay(Vector2 pos)
 {
@@ -53,6 +57,24 @@ bool CGUIWidget::IsState(EWidgetState state)
 	return m_state == state;
 }
 
+Vector2 CGUIWidget::GetPivot()
+{
+	return m_pivot;
+}
+
+Vector3 CGUIWidget::GetAnchorPosition()
+{
+	return m_anchorPos;
+}
+
+CGUIWidget* CGUIWidget::GetParentWidget()
+{
+	CGUIWidget* widget = NULL;
+	if (gameObject->GetParent() && (widget = gameObject->GetParent()->GetComponent<CGUIWidget>()))
+		return widget;
+	return NULL;
+}
+
 CGUIWidget* CGUIWidget::SetCollide(bool isCollide)
 {
 	m_collide = isCollide;
@@ -79,9 +101,19 @@ CGUIWidget* CGUIWidget::SetRect(SRect2D rect)
 	return this;
 }
 
+CGUIWidget* CGUIWidget::SetAlignment(EAlignment alignment)
+{
+	this->m_alignment = alignment;
+	this->m_alignment_h = _GetHorizontal(alignment);
+	this->m_alignment_v = _GetVertical(alignment);
+	SetAnchorPosition(m_anchorPos);
+	return this;
+}
+
 CGUIWidget* CGUIWidget::SetLayer(int layer)
 {
 	this->m_layer = layer;
+	GUISystem->UpdateWidgetLayer(this);
 	return this;
 }
 
@@ -105,104 +137,148 @@ CGUIWidget* CGUIWidget::SetEnable(bool enable)
 	return this;
 }
 
+CGUIWidget* CGUIWidget::SetPivot(Vector2 pivot)
+{
+	m_pivot = pivot;
+	return this;
+}
+
+CGUIWidget* CGUIWidget::SetAnchorPosition(Vector3 anchorPos)
+{
+	m_anchorPos = anchorPos;
+	CGUIWidget* parent = GetParentWidget();
+	Vector3 offset;
+	offset.x = m_width * (0.5f - m_pivot.x);
+	offset.y = m_height * (0.5f - m_pivot.y);
+	if (parent)
+	{
+		gameObject->SetLocalPosition(GetCenterPositionInParent() + anchorPos + offset);
+	}
+	else
+	{
+		gameObject->SetPosition(GetCenterPositionInParent() + anchorPos + offset);
+	}
+	return this;
+}
+
 CGUIWidget* CGUIWidget::AddOnMouseDownListener(OnMouseDownEvent down)
 {
-	onMouseDown = down;
+	onMouseDown.push_back(down);
 	return this;
 }
 
 CGUIWidget* CGUIWidget::AddOnMouseUpListener(OnMouseUpEvent up)
 {
-	onMouseUp = up;
+	onMouseUp.push_back(up);
 	return this;
 }
 
 CGUIWidget* CGUIWidget::AddOnMouseEnterListener(OnMouseEnterEvent enter)
 {
-	onMouseEnter = enter;
+	onMouseEnter.push_back(enter);
 	return this;
 }
 
 CGUIWidget* CGUIWidget::AddOnMouseExitListener(OnMouseExitEvent exit)
 {
-	onMouseExit = exit;
+	onMouseExit.push_back(exit);
 	return this;
 }
 
 CGUIWidget* CGUIWidget::AddOnMouseOverListener(OnMouseOverEvent over)
 {
-	onMouseOver = over;
+	onMouseOver.push_back(over);
 	return this;
 }
 
-CGUIWidget* CGUIWidget::RemoveOnMouseDownListener(OnMouseDownEvent down)
+CGUIWidget* CGUIWidget::RemoveAllOnMouseDownListener()
 {
-	onMouseDown = NULL;
+	onMouseDown.clear();
 	return this;
 }
 
-CGUIWidget* CGUIWidget::RemoveOnMouseUpListener(OnMouseUpEvent up)
+CGUIWidget* CGUIWidget::RemoveAllOnMouseUpListener()
 {
-	onMouseUp = NULL;
+	onMouseUp.clear();
 	return this;
 }
 
-CGUIWidget* CGUIWidget::RemoveOnMouseEnterListener(OnMouseEnterEvent enter)
+CGUIWidget* CGUIWidget::RemoveAllOnMouseEnterListener()
 {
-	onMouseEnter = NULL;
+	onMouseEnter.clear();
 	return this;
 }
 
-CGUIWidget* CGUIWidget::RemoveOnMouseExitListener(OnMouseExitEvent exit)
+CGUIWidget* CGUIWidget::RemoveAllOnMouseExitListener()
 {
-	onMouseExit = NULL;
+	onMouseExit.clear();
 	return this;
 }
 
-CGUIWidget* CGUIWidget::RemoveOnMouseOverListener(OnMouseOverEvent over)
+CGUIWidget* CGUIWidget::RemoveAllOnMouseOverListener()
 {
-	onMouseOver = NULL;
+	onMouseOver.clear();
 	return this;
 }
 
-CGUIWidget* CGUIWidget::RemoveAllOnMouseDownListener(OnMouseDownEvent down)
-{
-	onMouseDown = NULL;
-	return this;
-}
-
-CGUIWidget* CGUIWidget::RemoveAllOnMouseUpListener(OnMouseUpEvent up)
-{
-	onMouseUp = NULL;
-	return this;
-}
-
-CGUIWidget* CGUIWidget::RemoveAllOnMouseEnterListener(OnMouseEnterEvent enter)
-{
-	onMouseEnter = NULL;
-	return this;
-}
-
-CGUIWidget* CGUIWidget::RemoveAllOnMouseExitListener(OnMouseExitEvent exit)
-{
-	onMouseExit = NULL;
-	return this;
-}
-
-CGUIWidget* CGUIWidget::RemoveAllOnMouseOverListener(OnMouseOverEvent over)
-{
-	onMouseOver = NULL;
-	return this;
-}
-
-bool CGUIWidget::operator>(CGUIWidget* widget)
+bool CGUIWidget::operator>(CGUIWidget* widget) const
 {
 	return m_layer > widget->m_layer;
 }
 
-bool CGUIWidget::operator<(CGUIWidget* widget)
+bool CGUIWidget::operator<(CGUIWidget* widget) const
 {
 	return m_layer < widget->m_layer;
+}
+
+Vector3 CGUIWidget::GetCenterPositionInParent()
+{
+	Vector2 parentSize = GetParentSize() * 0.5f;
+	Vector3 pos;
+	if (GetParentWidget())
+	{
+		if (m_alignment_h == EAlignmentHorizontal::LEFT)
+			pos.x = -parentSize.x;
+		else if (m_alignment_h == EAlignmentHorizontal::CENTER)
+			pos.x = 0;
+		else if (m_alignment_h == EAlignmentHorizontal::RIGHT)
+			pos.x = parentSize.x;
+
+		if (m_alignment_v == EAlignmentVertical::TOP)
+			pos.y = parentSize.y;
+		else if (m_alignment_v == EAlignmentVertical::MIDDLE)
+			pos.y = 0;
+		else if (m_alignment_v == EAlignmentVertical::BOTTOM)
+			pos.y = -parentSize.y;
+	}
+	else
+	{
+		if (m_alignment_h == EAlignmentHorizontal::LEFT)
+			pos.x = 0;
+		else if (m_alignment_h == EAlignmentHorizontal::CENTER)
+			pos.x = parentSize.x;
+		else if (m_alignment_h == EAlignmentHorizontal::RIGHT)
+			pos.x = parentSize.x * 2;
+
+		if (m_alignment_v == EAlignmentVertical::TOP)
+			pos.y = parentSize.y * 2;
+		else if (m_alignment_v == EAlignmentVertical::MIDDLE)
+			pos.y = parentSize.y;
+		else if (m_alignment_v == EAlignmentVertical::BOTTOM)
+			pos.y = 0;
+	}
+
+	return pos;
+}
+
+Vector2 CGUIWidget::GetParentSize()
+{
+	CGUIWidget* parent = NULL;
+	if ((parent = GetParentWidget()))
+	{
+		return Vector2(parent->m_width, parent->m_height);
+	}
+	return Vector2(GUISystem->GetResolutionX(), GUISystem->GetResolutionY());
 }
 
 void CGUIWidget::SetState(EWidgetState state)
@@ -212,32 +288,44 @@ void CGUIWidget::SetState(EWidgetState state)
 
 void CGUIWidget::OnMouseDown(Vector2 mousePos)
 {
-	if (onMouseDown) onMouseDown(mousePos);
+	if (onMouseDown.size() > 0)
+		for (auto it = onMouseDown.begin(); it != onMouseDown.end(); ++it)
+			(*it)(mousePos);
 }
 
 void CGUIWidget::OnMouseUp(Vector2 mousePos)
 {
-	if (onMouseUp) onMouseUp(mousePos);
+	if (onMouseUp.size() > 0)
+		for (auto it = onMouseUp.begin(); it != onMouseUp.end(); ++it)
+			(*it)(mousePos);
 }
 
 void CGUIWidget::OnMouseEnter(Vector2 mousePos)
 {
-	if (onMouseEnter) onMouseEnter(mousePos);
+	if (onMouseEnter.size() > 0)
+		for (auto it = onMouseEnter.begin(); it != onMouseEnter.end(); ++it)
+			(*it)(mousePos);
 }
 
 void CGUIWidget::OnMouseExit(Vector2 mousePos)
 {
-	if (onMouseExit) onMouseExit(mousePos);
+	if (onMouseExit.size() > 0)
+		for (auto it = onMouseExit.begin(); it != onMouseExit.end(); ++it)
+			(*it)(mousePos);
 }
 
 void CGUIWidget::OnMouseOver(Vector2 mousePos)
 {
-	if (onMouseOver) onMouseOver(mousePos);
+	if (onMouseOver.size() > 0)
+		for (auto it = onMouseOver.begin(); it != onMouseOver.end(); ++it)
+			(*it)(mousePos);
 }
 
 void CGUIWidget::OnStart()
 {
 	GUISystem->AddWidget(this);
+	SetAlignment(EAlignment::CENTER_MIDDLE);
+	SetAnchorPosition(Vector3::Zero());
 }
 
 void CGUIWidget::OnDestroy()
@@ -299,8 +387,12 @@ CGUISystem* CGUISystem::GetInstance()
 
 void CGUISystem::InitGUI(float resolution_x, float resolution_y)
 {
-	m_resolutionX = resolution_x;
-	m_resolutionY = resolution_y;
+	SetResolution(resolution_x, resolution_y);
+	widgets.SetComparator([](CGUIWidget* a, CGUIWidget* b) {
+		if (a->m_layer > b->m_layer) return 1;
+		if (a->m_layer < b->m_layer) return -1;
+		return 0;
+	});
 }
 
 void CGUISystem::AddWidget(CGUIWidget* widget)
@@ -308,9 +400,33 @@ void CGUISystem::AddWidget(CGUIWidget* widget)
 	widgets.Enqueue(widget);
 }
 
+void CGUISystem::UpdateWidgetLayer(CGUIWidget* widget)
+{
+	widgets.Remove(widget);
+	widgets.Enqueue(widget);
+}
+
 void CGUISystem::DestroyWidget(CGUIWidget* dwidget)
 {
 	widgets.Remove(dwidget);
+}
+
+void CGUISystem::SetResolution(float resolution_x, float resolution_y)
+{
+	m_resolutionX = resolution_x;
+	m_resolutionY = resolution_y;
+	m_centerPos.x = resolution_x * 0.5f;
+	m_centerPos.y = resolution_y * 0.5f;
+}
+
+float CGUISystem::GetResolutionX()
+{
+	return m_resolutionX;
+}
+
+float CGUISystem::GetResolutionY()
+{
+	return m_resolutionY;
 }
 
 void CGUISystem::OnUpdate()
@@ -337,23 +453,33 @@ void CGUISystem::OnUpdate()
 					widget->OnMouseDown(mousePos);
 					m_lastDown = widget;
 				}
-				else
+				else if (CInput::GetMouseUp(EMouseKey::Left))
 				{
 					if (widget->IsState(EWidgetState::Pressed))
 					{
+						widget->SetState(EWidgetState::Hover);
 						widget->OnMouseUp(mousePos);
 					}
+				}
+				else if (!widget->IsState(EWidgetState::Pressed))
+				{
 					widget->SetState(EWidgetState::Hover);
-					widget->OnMouseOver(mousePos);
+					if (widget->m_lastOverPos != mousePos)
+					{
+						widget->OnMouseOver(mousePos);
+						widget->m_lastOverPos = mousePos;
+					}
 				}
 
 				m_curOverlay = widget;
 				return false;
 			}
-			else if(widget->IsState(EWidgetState::Hover) || widget->IsState(EWidgetState::Pressed))
+			else if (widget->IsState(EWidgetState::Hover) || widget->IsState(EWidgetState::Pressed))
 			{
 				widget->SetState(EWidgetState::Normal);
 				widget->OnMouseExit(mousePos);
+				if (widget == m_curOverlay)
+					m_curOverlay = NULL;
 			}
 		}
 		return true;
@@ -381,10 +507,12 @@ void CGUISystem::OnDrawDebug()
 
 void CGUISystem::Quit()
 {
-	widgets.Foreach([](CGUIWidget* widget) {
-		Engine->DestroyGameObject(widget->gameObject);
-	});
 	widgets.Clear();
+}
+
+Vector3 CGUISystem::GetCenterPosition()
+{
+	return m_centerPos;
 }
 
 #pragma endregion

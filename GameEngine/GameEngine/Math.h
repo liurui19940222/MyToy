@@ -78,6 +78,8 @@ public:
 
 	Vector3 operator+(const Vector3& vec) const;
 
+	Vector3 operator+=(const Vector3& vec) const;
+
 	Vector3 operator-(const Vector3& vec) const;
 
 	Vector3 operator*(const float value) const;

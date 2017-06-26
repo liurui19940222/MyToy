@@ -37,6 +37,8 @@ namespace container {
 
 		CPriorityQueue(Comparator comparator) : m_comparator(comparator), m_count(0), m_head(NULL), m_trailer(NULL) {}
 
+		void SetComparator(Comparator comparator) { m_comparator = comparator; }
+
 		//加入队首
 		T Enqueue(T value)
 		{

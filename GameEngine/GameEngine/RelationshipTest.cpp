@@ -31,8 +31,8 @@ void CRelationshipTest::OnStart()
 
 void CRelationshipTest::OnUpdate()
 {
-	cameraPos.x += CInput::GetAxis("Horizontal") * CTime::deltaTime * moveSpeed;
-	cameraPos.z -= CInput::GetAxis("Vertical") * CTime::deltaTime * moveSpeed;
+	float h = CInput::GetAxis("Horizontal") * CTime::deltaTime * moveSpeed;
+	float v = CInput::GetAxis("Vertical") * CTime::deltaTime * moveSpeed;
 
 	if (go)
 	{
@@ -61,7 +61,11 @@ void CRelationshipTest::OnUpdate()
 		}
 	}
 
-	MainCamera->SetPosition(cameraPos);
+	//MainCamera->SetPosition(cameraPos);
+	Vector3 pos = go->GetPosition();
+	pos.x += h * CTime::deltaTime * 10;
+	pos.y += v * CTime::deltaTime * 10;
+	go->SetPosition(pos);
 }
 
 void CRelationshipTest::OnRender()

@@ -8,6 +8,10 @@ byte CInput::keyboard[256];
 byte CInput::keyboardHold[256];
 DIMOUSESTATE CInput::mouseStateData;
 DIMOUSESTATE CInput::mouseStateDataHold;
+bool CInput::isMouseKeyDown[3];
+bool CInput::isMouseKeyUp[3];
+bool CInput::isKeyboardDown[256];
+bool CInput::isKeyboardUp[256];
 
 void CInput::Init(HINSTANCE instance, HWND hwnd)
 {
@@ -31,11 +35,20 @@ void CInput::GetState()
 	{
 		if (!(keyboard[i] & 0x80) && keyboardHold[i] != 0)
 			keyboardHold[i] = 2;
+
+		isKeyboardDown[i] = GetKeyDownState(i);
+		isKeyboardUp[i] = GetKeyUpState(i);
 	}
 	for (int i = 0; i < 4; i++)
 	{
 		if (!(mouseStateData.rgbButtons[i]) && mouseStateDataHold.rgbButtons[i] != 0)
 			mouseStateDataHold.rgbButtons[i] = 2;
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		isMouseKeyDown[i] = GetMouseDownState((EMouseKey)i);
+		isMouseKeyUp[i] = GetMouseUpState((EMouseKey)i);
 	}
 }
 
@@ -51,6 +64,16 @@ bool CInput::GetKey(byte key)
 
 bool CInput::GetKeyDown(byte key)
 {
+	return isKeyboardDown[key];
+}
+
+bool CInput::GetKeyUp(byte key)
+{
+	return isKeyboardUp[key];
+}
+
+bool CInput::GetKeyDownState(byte key)
+{
 	if ((keyboard[key] & 0x80) && keyboardHold[key] != 1)
 	{
 		keyboardHold[key] = 1;
@@ -59,7 +82,7 @@ bool CInput::GetKeyDown(byte key)
 	return false;
 }
 
-bool CInput::GetKeyUp(byte key)
+bool CInput::GetKeyUpState(byte key)
 {
 	if ((keyboardHold[key] == 1 && !(keyboard[key] & 0x80)) || keyboardHold[key] == 2)
 	{
@@ -71,6 +94,16 @@ bool CInput::GetKeyUp(byte key)
 
 bool CInput::GetMouseDown(EMouseKey key)
 {
+	return isMouseKeyDown[(EMouseKey)key];
+}
+
+bool CInput::GetMouseUp(EMouseKey key)
+{
+	return isMouseKeyUp[(EMouseKey)key];
+}
+
+bool CInput::GetMouseDownState(EMouseKey key)
+{
 	if (mouseStateData.rgbButtons[(int)key] && !mouseStateDataHold.rgbButtons[(int)key])
 	{
 		mouseStateDataHold.rgbButtons[(int)key] = 1;
@@ -79,7 +112,7 @@ bool CInput::GetMouseDown(EMouseKey key)
 	return false;
 }
 
-bool CInput::GetMouseUp(EMouseKey key)
+bool CInput::GetMouseUpState(EMouseKey key)
 {
 	if (mouseStateDataHold.rgbButtons[(int)key] && !mouseStateData.rgbButtons[(int)key] || mouseStateDataHold.rgbButtons[(int)key] == 2)
 	{
@@ -93,8 +126,8 @@ Vector2 CInput::InputMousePosition()
 {
 	POINT p;
 	GetCursorPos(&p);
-	int left = CApplication::GetInstance()->GetWindowRect()->left;
-	int top = CApplication::GetInstance()->GetWindowRect()->top;
+	int left = Application->GetWindowRect()->left;
+	int top = Application->GetWindowRect()->top;
 	return Vector2(p.x - CApplication::GetInstance()->GetWindowRect()->left, Application->GetWindowRect()->bottom - p.y);
 }
 

@@ -29,7 +29,15 @@ private:
 	static byte keyboardHold[256];
 	static DIMOUSESTATE mouseStateData;
 	static DIMOUSESTATE mouseStateDataHold;
+	static bool isMouseKeyDown[3];
+	static bool isMouseKeyUp[3];
+	static bool isKeyboardDown[256];
+	static bool isKeyboardUp[256];
 
+	static bool GetMouseDownState(EMouseKey key);
+	static bool GetMouseUpState(EMouseKey key);
+	static bool GetKeyDownState(byte key);
+	static bool GetKeyUpState(byte key);
 public:
 	static void Init(HINSTANCE instance, HWND hwnd);
 	static void GetState();

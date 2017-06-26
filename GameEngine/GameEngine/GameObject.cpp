@@ -9,7 +9,7 @@ CGameObject::CGameObject(string name) : Object(name)
 	SetLocalScale(Vector3(1, 1, 1));
 	SetLocalPosition(Vector3(0, 0, 0));
 	SetLocalEulerAngles(Vector3(0, 0, 0));
-
+	parent = NULL;
 	right = Vector3::Right();
 	up = Vector3::Up();
 	forward = Vector3::Forward();
@@ -28,6 +28,14 @@ void CGameObject::SetPosition(Vector3 pos)
 		0, 0, 1, position.z,
 		0, 0, 0, 1
 	);
+
+	if (childs.size() > 0)
+	{
+		for (vector<CGameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
+		{
+			(*it)->UpdatePosition();
+		}
+	}
 }
 
 void CGameObject::SetEulerAngles(Vector3 euler)
@@ -108,6 +116,7 @@ void CGameObject::SetLocalScale(Vector3 s)
 void CGameObject::SetLocalPosition(Vector3 pos)
 {
 	localPosition = pos;
+
 	localMoveMat = Matrix4x4(
 		1, 0, 0, localPosition.x,
 		0, 1, 0, localPosition.y,
@@ -173,6 +182,11 @@ Vector3 CGameObject::GetRight()
 Vector3 CGameObject::GetForward()
 {
 	return this->forward;
+}
+
+CGameObject* CGameObject::GetParent()
+{
+	return this->parent;
 }
 
 Matrix4x4 CGameObject::GetModelToWorldMat()
@@ -251,6 +265,14 @@ void CGameObject::OnDestroy()
 	while (it != components.end())
 	{
 		(*it++)->OnDestroy();
+	}
+}
+
+void CGameObject::UpdatePosition()
+{
+	if (parent)
+	{
+		SetPosition(parent->GetPosition());
 	}
 }
 

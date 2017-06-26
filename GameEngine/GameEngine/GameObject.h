@@ -37,6 +37,7 @@ protected:
 	Matrix4x4 rotMat;
 	Matrix4x4 modelToWorldMat;
 
+	void UpdatePosition();
 	void UpdateEulerAngles();
 	void UpdateScale();
 	void SetEulerAngles(Vector3 euler, bool updateLocal);
@@ -62,6 +63,7 @@ public:
 	Vector3 GetUp();
 	Vector3 GetRight();
 	Vector3 GetForward();
+	CGameObject* GetParent();
 	Matrix4x4 GetModelToWorldMat();
 
 	void BeginRender();
