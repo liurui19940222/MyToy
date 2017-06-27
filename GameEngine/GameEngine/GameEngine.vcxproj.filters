@@ -237,6 +237,9 @@
     <ClInclude Include="PriorityQueue.h">
       <Filter>Container</Filter>
     </ClInclude>
+    <ClInclude Include="GUIImage.h">
+      <Filter>GUISystem\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -349,6 +352,9 @@
     </ClCompile>
     <ClCompile Include="MeshRenderer.cpp">
       <Filter>Component\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIImage.cpp">
+      <Filter>GUISystem\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

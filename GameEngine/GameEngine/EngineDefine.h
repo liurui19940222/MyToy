@@ -40,6 +40,8 @@ struct Color32
 	bool operator!=(const Color32& value) const;
 
 	Color32 operator*(const Color& color) const;
+
+	static Color32 Hex(int hexColor);
 };
 
 struct Color
@@ -78,6 +80,7 @@ struct Color
 
 	bool operator!=(const Color& value) const;
 
+	static Color Hex(int hex);
 	static Color red();
 	static Color blue();
 	static Color green();

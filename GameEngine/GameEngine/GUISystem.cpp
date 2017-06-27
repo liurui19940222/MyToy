@@ -140,6 +140,7 @@ CGUIWidget* CGUIWidget::SetEnable(bool enable)
 CGUIWidget* CGUIWidget::SetPivot(Vector2 pivot)
 {
 	m_pivot = pivot;
+	SetAnchorPosition(m_anchorPos);
 	return this;
 }
 
@@ -150,14 +151,8 @@ CGUIWidget* CGUIWidget::SetAnchorPosition(Vector3 anchorPos)
 	Vector3 offset;
 	offset.x = m_width * (0.5f - m_pivot.x);
 	offset.y = m_height * (0.5f - m_pivot.y);
-	if (parent)
-	{
-		gameObject->SetLocalPosition(GetCenterPositionInParent() + anchorPos + offset);
-	}
-	else
-	{
-		gameObject->SetPosition(GetCenterPositionInParent() + anchorPos + offset);
-	}
+	gameObject->SetPosition(GetCenterPositionInParent());
+	gameObject->SetLocalPosition(anchorPos + offset);
 	return this;
 }
 
@@ -250,6 +245,8 @@ Vector3 CGUIWidget::GetCenterPositionInParent()
 			pos.y = 0;
 		else if (m_alignment_v == EAlignmentVertical::BOTTOM)
 			pos.y = -parentSize.y;
+
+		pos += gameObject->GetParent()->GetPosition();
 	}
 	else
 	{
@@ -340,16 +337,16 @@ void CGUIWidget::OnUIUpdate()
 
 void CGUIWidget::OnUIRender()
 {
-	static Vector3 vertices[4];
-	vertices[0].x = -m_rect.half_size_x; vertices[0].y = m_rect.half_size_y; vertices[0].z = 0;
-	vertices[1].x = -m_rect.half_size_x; vertices[1].y = -m_rect.half_size_y; vertices[1].z = 0;
-	vertices[2].x = m_rect.half_size_x; vertices[2].y = -m_rect.half_size_y; vertices[2].z = 0;
-	vertices[3].x = m_rect.half_size_x; vertices[3].y = m_rect.half_size_y; vertices[3].z = 0;
+	m_vertices[0].x = -m_rect.half_size_x; m_vertices[0].y = m_rect.half_size_y; m_vertices[0].z = 0;
+	m_vertices[1].x = -m_rect.half_size_x; m_vertices[1].y = -m_rect.half_size_y; m_vertices[1].z = 0;
+	m_vertices[2].x = m_rect.half_size_x; m_vertices[2].y = -m_rect.half_size_y; m_vertices[2].z = 0;
+	m_vertices[3].x = m_rect.half_size_x; m_vertices[3].y = m_rect.half_size_y; m_vertices[3].z = 0;
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	if (m_fill)
 	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		if (m_state == EWidgetState::Normal)
 			glColor4f(m_fillColor.r, m_fillColor.g, m_fillColor.b, m_fillColor.a);
 		else if (m_state == EWidgetState::Hover)
@@ -358,13 +355,12 @@ void CGUIWidget::OnUIRender()
 			glColor4f(m_fillColor.r - 0.3f, m_fillColor.g - 0.3f, m_fillColor.b - 0.3f, m_fillColor.a);
 		else if (m_state == EWidgetState::Disabled)
 			glColor4f(0.35f, 0.35f, 0.35f, m_fillColor.a);
+
+		glBegin(GL_QUADS);
+		for (int i = 0; i < 4; ++i) glVertex3fv((float*)&m_vertices[i]);
+		glEnd();
+		glDisable(GL_BLEND);
 	}
-
-	glBegin(GL_QUADS);
-	for (int i = 0; i < 4; ++i) glVertex3fv((float*)&vertices[i]);
-	glEnd();
-
-	glDisable(GL_BLEND);
 }
 
 void CGUIWidget::OnUIDrawDebug()

@@ -94,6 +94,7 @@ namespace guisystem {
 		Vector2 m_lastOverPos;
 		Vector3 m_anchorPos;
 		Vector2 m_pivot;
+		Vector3 m_vertices[4];
 		EAlignment m_alignment;
 		EAlignmentHorizontal m_alignment_h;
 		EAlignmentVertical m_alignment_v;

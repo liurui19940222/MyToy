@@ -8,6 +8,7 @@
 #include"Camera.h"
 #include"FileHead.h"
 #include"GUISystem.h"
+#include"GUIImage.h"
 
 using namespace std;
 using namespace guisystem;

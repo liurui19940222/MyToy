@@ -40,6 +40,14 @@ public:
 
 	bool operator!=(const Vector2& vec) const;
 
+	void operator+=(const Vector2& vec);
+
+	void operator-=(const Vector2& vec);
+
+	void operator*=(const float value);
+
+	void operator/=(const float value);
+
 	Vector2 operator-() const;
 
 	static float Dot(Vector2 &vec1, Vector2 &vec2);
@@ -78,21 +86,27 @@ public:
 
 	Vector3 operator+(const Vector3& vec) const;
 
-	Vector3 operator+=(const Vector3& vec) const;
-
 	Vector3 operator-(const Vector3& vec) const;
 
 	Vector3 operator*(const float value) const;
 
 	Vector3 operator/(const float value) const;
 
-	bool operator==(const Vector3& vec) const;
-
-	bool operator!=(const Vector3& vec) const;
-
 	Vector3 operator*(Matrix4x4& mat) const;
 
 	Vector3 operator-() const;
+
+	void operator+=(const Vector3& vec);
+
+	void operator-=(const Vector3& vec);
+
+	void operator*=(const float value);
+
+	void operator/=(const float value);
+
+	bool operator==(const Vector3& vec) const;
+
+	bool operator!=(const Vector3& vec) const;
 
 	static float Dot(Vector3 &vec1, Vector3 &vec2);
 

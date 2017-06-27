@@ -115,6 +115,11 @@ bool Color::operator!=(const Color& value) const
 	return r != value.r || g != value.g || b != value.b || a != value.a;
 }
 
+Color Color::Hex(int hex)
+{
+	return Color32::Hex(hex);
+}
+
 Color Color::red(){ return Color(1, 0, 0, 1); }
 Color Color::blue(){ return Color(0, 0, 1, 1); }
 Color Color::green(){ return Color(0, 1, 0, 1); }
@@ -128,10 +133,10 @@ Color32::Color32(){}
 
 Color32::Color32(byte r, byte g, byte b, byte a)
 {
-	this->a = a;
 	this->r = r;
 	this->g = g;
 	this->b = b;
+	this->a = a;
 }
 
 Color32::Color32(Color color)
@@ -144,9 +149,9 @@ Color32::Color32(Color color)
 
 Color32::Color32(uint color)
 {
-	this->b = color;
-	this->g = color >> 8;
-	this->r = color >> 16;
+	this->r = color & 0xFF;
+	this->g = (color >> 8) & 0xFF;
+	this->b = (color >> 16) & 0xFF;
 	this->a = color >> 24;
 }
 
@@ -168,6 +173,11 @@ bool Color32::operator!=(const Color32& value) const
 Color32 Color32::operator*(const Color& color) const
 {
 	return Color32(this->r * color.r, this->g * color.g, this->b * color.b, this->a * color.a);
+}
+
+Color32 Color32::Hex(int hexColor)
+{
+	return Color32(hexColor >> 24, hexColor >> 16 & 0xFF, hexColor >> 8 & 0xFF, hexColor & 0xFF);
 }
 
 LPWSTR AnsiToUnicode(LPCSTR lpcstr)   //参数lpcstr类型也可是char*

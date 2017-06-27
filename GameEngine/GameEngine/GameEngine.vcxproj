@@ -95,6 +95,7 @@
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />
+    <ClInclude Include="GUIImage.h" />
     <ClInclude Include="GUISystem.h" />
     <ClInclude Include="GUITest.h" />
     <ClInclude Include="ImageTest.h" />
@@ -137,6 +138,7 @@
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
+    <ClCompile Include="GUIImage.cpp" />
     <ClCompile Include="GUISystem.cpp" />
     <ClCompile Include="GUITest.cpp" />
     <ClCompile Include="ImageTest.cpp" />

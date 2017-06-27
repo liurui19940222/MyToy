@@ -62,6 +62,29 @@ bool Vector2::operator!=(const Vector2& vec) const
 	return this->x != vec.x || this->y != vec.y;
 }
 
+void Vector2::operator+=(const Vector2& vec)
+{
+	x += vec.x;
+	y += vec.y;
+}
+
+void Vector2::operator-=(const Vector2& vec)
+{
+	x -= vec.x;
+	y -= vec.y;
+}
+
+void Vector2::operator*=(const float value)
+{
+	x *= value;
+	y *= value;
+}
+
+void Vector2::operator/=(const float value)
+{
+	(*this) *= (1.0f / value);
+}
+
 Vector2 Vector2::operator-() const
 {
 	return Vector2(-x, -y);
@@ -136,9 +159,30 @@ Vector3 Vector3::operator+(const Vector3& vec) const
 	return Vector3(x + vec.x, y + vec.y, z + vec.z);
 }
 
-Vector3 Vector3::operator+=(const Vector3& vec) const
+void Vector3::operator+=(const Vector3& vec)
 {
-	return *this + vec;
+	x += vec.x;
+	y += vec.y;
+	z += vec.z;
+}
+
+void Vector3::operator-=(const Vector3& vec)
+{
+	x -= vec.x;
+	y -= vec.y;
+	z -= vec.z;
+}
+
+void Vector3::operator*=(const float value)
+{
+	x *= value;
+	y *= value;
+	z *= value;
+}
+
+void Vector3::operator/=(const float value)
+{
+	*(this) *= (1.0f / value);
 }
 
 Vector3 Vector3::operator-(const Vector3& vec) const

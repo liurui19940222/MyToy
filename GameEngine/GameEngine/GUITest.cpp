@@ -7,30 +7,35 @@ void Down2(Vector2 pos) { CDebug::Log(L"down2"); }
 
 void GUITest::OnStart()
 {
-	Engine->SetClearColor(Color::black());
+	Engine->SetClearColor(Color::Hex(0x18253BFF));
 	Engine->SetDrawGrid(false);
 	Engine->SetDrawDebug(false);
 	MainCamera->SetPosition(Vector3(0, 0, 10));
 	MainCamera->SetEulerAngles(Vector3(0, 180, 0));
 
+	CTexture* tex = CTexture::Create("F://monthad_1.png");
+
 	go = Engine->CreateGameObject("widget");
 	widget = go->AddComponent<CGUIWidget>();
 	widget->SetWidth(400)->SetHeight(300);
 	widget->SetFillColor(Color(1, 1, 1, 1))->SetFill(true);
-	widget->SetLayer(-1);
-
+	widget->SetAlignment(EAlignment::RIGHT_TOP);
+	widget->SetPivot(Vector2(1, 1));
+	//widget->SetTexture(tex);
 
 	go2 = Engine->CreateGameObject("widget2");
 	go2->SetParent(go);
 	widget2 = go2->AddComponent<CGUIWidget>();
 	widget2->SetWidth(100)->SetHeight(100);
 	widget2->SetFillColor(Color(1, 0, 0, 1))->SetFill(true);
+	widget2->SetLayer(2);
+	widget2->SetPivot(Vector2(1, 0));
 
 	FontManager->LoadFont(1, "fonts/msyh.ttf");
 	CGameObject* texGo = Engine->CreateGameObject("Text");
 	texGo->SetPosition(Vector3(-4.75f, 4.05f, 0));
 	text = texGo->AddComponent<CTextRenderer>();
-	text->Init(FontManager->GetFont(1), NULL, 8, 0, 0.5f, Color::white(), EAlignment::LEFT_TOP, SRect2D(0, 0, 2, 1));
+	text->Init(FontManager->GetFont(1), NULL, 8, 0, 0.5f, Color::green(), EAlignment::LEFT_TOP, SRect2D(0, 0, 2, 1));
 }
 
 void GUITest::OnUpdate()
@@ -145,6 +150,10 @@ void GUITest::OnUpdate()
 	Vector3 euler = go2->GetEulerAngles();
 	euler.z += CTime::deltaTime * 30;
 	go2->SetEulerAngles(euler);
+
+	//euler = go->GetEulerAngles();
+	//euler.z -= CTime::deltaTime * 30;
+	//go->SetEulerAngles(euler);
 }
 
 void GUITest::OnRender()
