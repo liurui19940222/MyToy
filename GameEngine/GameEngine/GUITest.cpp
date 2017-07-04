@@ -16,12 +16,12 @@ void GUITest::OnStart()
 	CTexture* tex = CTexture::Create("F://monthad_1.png");
 
 	go = Engine->CreateGameObject("widget");
-	widget = go->AddComponent<CGUIWidget>();
-	widget->SetWidth(400)->SetHeight(300);
-	widget->SetFillColor(Color(1, 1, 1, 1))->SetFill(true);
+	widget = go->AddComponent<CGUIImage>();
+	//widget->SetWidth(400)->SetHeight(300);
+	widget->SetTexture(tex);
+	//widget->SetFill(true)->SetFillColor(Color::blue());
 	widget->SetAlignment(EAlignment::RIGHT_TOP);
 	widget->SetPivot(Vector2(1, 1));
-	//widget->SetTexture(tex);
 
 	go2 = Engine->CreateGameObject("widget2");
 	go2->SetParent(go);
@@ -29,7 +29,8 @@ void GUITest::OnStart()
 	widget2->SetWidth(100)->SetHeight(100);
 	widget2->SetFillColor(Color(1, 0, 0, 1))->SetFill(true);
 	widget2->SetLayer(2);
-	widget2->SetPivot(Vector2(1, 0));
+	widget2->SetAlignment(EAlignment::CENTER_MIDDLE);
+	widget2->SetPivot(Vector2(1, 1));
 
 	FontManager->LoadFont(1, "fonts/msyh.ttf");
 	CGameObject* texGo = Engine->CreateGameObject("Text");
@@ -43,7 +44,7 @@ void GUITest::OnUpdate()
 	Vector2 pos = CInput::InputMousePosition();
 	wchar_t buffer[128];
 	swprintf_s(buffer, L"MousePosition X:%g Y:%g\nWidgetState:%d\nAnchor X:%g Y:%g\nPivot X:%g Y:%g", 
-		pos.x, pos.y, widget->GetState(), widget2->GetAnchorPosition().x, widget2->GetAnchorPosition().y, widget2->GetPivot().x, widget2->GetPivot().y);
+		pos.x, pos.y, widget2->GetState(), widget2->GetAnchorPosition().x, widget2->GetAnchorPosition().y, widget2->GetPivot().x, widget2->GetPivot().y);
 	text->SetText(buffer);
 
 	float h = CInput::GetAxis("Horizontal");
@@ -61,7 +62,8 @@ void GUITest::OnUpdate()
 	}
 	if (CInput::GetKeyDown(DIK_R))
 	{
-		widget2->SetAnchorPosition(Vector3::Zero());
+		//widget2->SetAnchorPosition(Vector3::Zero());
+		widget2->RefreshAnchor();
 	}
 	if (controlDown)
 	{
@@ -145,11 +147,11 @@ void GUITest::OnUpdate()
 	Vector3 anchor_pos = widget2->GetAnchorPosition();
 	anchor_pos.x += h * CTime::deltaTime * 50;
 	anchor_pos.y += v * CTime::deltaTime * 50;
-	widget2->SetAnchorPosition(anchor_pos);
+	//widget2->SetAnchorPosition(anchor_pos);
 
-	Vector3 euler = go2->GetEulerAngles();
-	euler.z += CTime::deltaTime * 30;
-	go2->SetEulerAngles(euler);
+	//Vector3 euler = go2->GetEulerAngles();
+	//euler.z += CTime::deltaTime * 30;
+	//go2->SetEulerAngles(euler);
 
 	//euler = go->GetEulerAngles();
 	//euler.z -= CTime::deltaTime * 30;

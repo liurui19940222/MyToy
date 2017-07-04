@@ -5,8 +5,9 @@
 #include"MeshProvider.h"
 #include"Object.h"
 
-class CMeshQuad : public Object, public IMeshProvider, public DynamicCreate<CMeshQuad>
+class CMeshQuad : public Object, public IMeshProvider
 {
+	REFLECT_CLASS(CMeshQuad)
 	Vector3 vertices[6];
 	Vector3 normals[2];
 	Vector2 uvs[6];

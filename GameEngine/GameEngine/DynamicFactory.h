@@ -11,6 +11,9 @@
 #include <map>
 #include <string>
 #include <typeinfo>
+#include <iostream>
+
+using namespace std;
 
 // 动态对象基类
 class DynamicObject
@@ -25,7 +28,7 @@ class DynamicFactory
 {
 public:
 
-	typedef DynamicObject* (*CreateFunction)();
+	typedef void* (*CreateFunction)();
 
 	static DynamicFactory & Instance()
 	{
@@ -43,7 +46,7 @@ public:
 		return _create_function_map.insert(std::make_pair(type_name, func)).second;
 	}
 
-	DynamicObject * Create(const std::string & type_name)
+	void * Create(const std::string & type_name)
 	{
 		if (type_name.empty())
 		{
@@ -62,12 +65,12 @@ public:
 	template<typename T>
 	T * Create()
 	{
-		DynamicObject * obj = Create(typeid(T).name());
+		void * obj = Create(typeid(T).name());
 		if (!obj)
 		{
 			return NULL;
 		}
-		T * real_obj = dynamic_cast<T*>(obj);
+		T * real_obj = (T*)(obj);
 		if (!real_obj)
 		{
 			delete obj;
@@ -82,43 +85,23 @@ public:
 };
 
 // 动态对象创建器
-template<typename T>
-class DynamicCreate : public DynamicObject
-{
-public:
-	static DynamicObject * CreateObject()
-	{
-		return new T();
-	}
+#define REFLECT_CLASS(class_name)\
+public:\
+	static void * CreateObject()\
+	{\
+		return new class_name();\
+	}\
+	struct Registor\
+	{\
+		Registor()\
+		{\
+			DynamicFactory::Instance().Regist(#class_name, CreateObject);\
+			DynamicFactory::Instance().Regist(typeid(##class_name##).name(), CreateObject);\
+			cout << #class_name"注册成功" << endl;\
+		}\
+	};\
+	static Registor s_registor;\
 
-	struct Registor
-	{
-		Registor()
-		{
-			if (!DynamicFactory::Instance().Regist(typeid(T).name(), CreateObject))
-			{
-				assert(false);
-			}
-		}
-
-		inline void do_nothing()const { }
-	};
-
-	static Registor s_registor;
-
-public:
-	DynamicCreate()
-	{
-		s_registor.do_nothing();
-	}
-
-	virtual ~DynamicCreate()
-	{
-		s_registor.do_nothing();
-	}
-};
-
-template <typename T> 
-typename DynamicCreate<T>::Registor DynamicCreate<T>::s_registor;
+#define IMPL_CLASS(class_name) class_name::Registor class_name::s_registor;
 
 #endif

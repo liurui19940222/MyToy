@@ -1,6 +1,8 @@
 #include"MeshRenderer.h"
 #include"GameObject.h"
 
+IMPL_CLASS(CMeshRenderer)
+
 CMeshRenderer::CMeshRenderer()
 {
 

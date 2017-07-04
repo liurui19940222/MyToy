@@ -4,8 +4,9 @@
 #include"Component.h"
 #include"Texture.h"
 
-class CSpriteRenderer : public CComponent, public DynamicCreate<CSpriteRenderer>
+class CSpriteRenderer : public CComponent
 {
+	REFLECT_CLASS(CSpriteRenderer)
 private:
 	CTexture* texture;
 

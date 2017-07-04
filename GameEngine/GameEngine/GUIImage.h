@@ -8,6 +8,7 @@ using namespace guisystem;
 
 class CGUIImage : public CGUIWidget
 {
+	REFLECT_CLASS(CGUIImage)
 private:
 	Vector2 m_uvs[4];
 	CTexture* m_texture;

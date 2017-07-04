@@ -233,6 +233,7 @@ void CGameObject::BeginRender()
 {
 	glColor3f(1.0f, 1.0f, 1.0f);
 	glPushMatrix();
+	Matrix4x4 d = this->GetModelToWorldMat();
 	glMultMatrixf((float*)&GetModelToWorldMat());
 }
 

@@ -1,6 +1,8 @@
 #include"SpriteRenderer.h"
 #include"GameObject.h"
 
+IMPL_CLASS(CSpriteRenderer)
+
 CSpriteRenderer::CSpriteRenderer()
 {
 }

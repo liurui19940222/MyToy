@@ -7,7 +7,7 @@ Object::Object()
 	instanceId = ++id;
 }
 
-Object::Object(std::string name) : Object()
+Object::Object(std::string& name) : Object()
 {
 	this->name = name;
 }
@@ -29,4 +29,14 @@ void Object::OnRelease()
 void Object::OnInitialize()
 {
 
+}
+
+void Object::SetName(string& name)
+{
+	this->name = name;
+}
+
+string& Object::GetName()
+{
+	return name;
 }

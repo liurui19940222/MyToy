@@ -4,6 +4,8 @@
 #define GL_QUADS                          0x0007
 #endif
 
+IMPL_CLASS(CMeshCube)
+
 void CMeshCube::OnInitialize()
 {
 	//front

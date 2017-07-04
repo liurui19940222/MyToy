@@ -82,7 +82,7 @@ Color Color::operator*(float value) const
 
 Color Color::operator/(float value) const
 {
-	return (*this) * 1 / value;
+	return (*this) * (1 / value);
 }
 
 Color Color::operator+(const Color& value) const
@@ -102,7 +102,7 @@ Color Color::operator*(const Color& value) const
 
 Color Color::operator/(const Color& value) const
 {
-	return (*this) * 1 / value;
+	return Color(r / value.r, g / value.g, b / value.b, a / value.a);
 }
 
 bool Color::operator==(const Color& value) const

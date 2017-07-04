@@ -39,8 +39,9 @@ public:
 	void Release();
 };
 
-class CTextRenderer : public CComponent, public DynamicCreate<CTextRenderer>
+class CTextRenderer : public CComponent
 {
+	REFLECT_CLASS(CTextRenderer)
 private:
 	const wchar_t* text;
 	CTrueTypeFont* font;

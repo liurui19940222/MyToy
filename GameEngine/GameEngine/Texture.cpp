@@ -1,6 +1,8 @@
 #include "Texture.h"
 #include "Application.h"
 
+IMPL_CLASS(CTexture)
+
 CTexture::CTexture() : Object()
 {
 }

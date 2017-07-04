@@ -3,16 +3,18 @@
 
 #include<string>
 
+using namespace std;
+
 class Object
 {
 protected:
 	int instanceId;
-	std::string name;
+	string name;
 
 public:
 	Object();
 
-	Object(std::string name);
+	Object(std::string& name);
 
 	~Object();
 
@@ -21,6 +23,10 @@ public:
 	virtual void OnInitialize();
 
 	virtual void OnRelease();
+
+	void SetName(string& name);
+
+	string& GetName();
 };
 
 #endif

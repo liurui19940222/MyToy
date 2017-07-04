@@ -3,6 +3,8 @@
 #include"Application.h"
 #include"Time.h"
 
+IMPL_CLASS(CSpriteAnimation)
+
 CSpriteAnimation::CSpriteAnimation() : speed(1), timer(0)
 {
 }

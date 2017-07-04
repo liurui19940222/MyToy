@@ -7,8 +7,9 @@
 #include"Component.h"
 #include"SpriteRenderer.h"
 
-class CSpriteAnimation : public CComponent, public IAnimation, public DynamicCreate<CSpriteAnimation>
+class CSpriteAnimation : public CComponent, public IAnimation
 {
+	REFLECT_CLASS(CSpriteAnimation)
 private:
 	CSpriteRenderer* renderer;
 

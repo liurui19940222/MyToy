@@ -18,7 +18,7 @@ class GUITest : public CGameWindow
 	CGameObject* go;
 	CGameObject* go2;
 	CTextRenderer* text;
-	CGUIWidget* widget;
+	CGUIImage* widget;
 	CGUIWidget* widget2;
 public:
 	virtual void OnStart();

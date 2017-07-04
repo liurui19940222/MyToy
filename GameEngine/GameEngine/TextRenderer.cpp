@@ -55,12 +55,14 @@ CTextOneLineData::CTextOneLineData() : line_width(0)
 
 void CTextOneLineData::Release()
 {
-	for (int i = 0; i < primitives.size(); ++i)
+	for (size_t i = 0; i < primitives.size(); ++i)
 	{
 		primitives[i]->Release();
 	}
 	primitives.clear();
 }
+
+IMPL_CLASS(CTextRenderer)
 
 CTextRenderer::CTextRenderer()
 {
@@ -267,7 +269,7 @@ void CTextRenderer::ClearLineData()
 {
 	if (lineDatas.size() > 0)
 	{
-		for (int i = 0; i < lineDatas.size(); ++i)
+		for (size_t i = 0; i < lineDatas.size(); ++i)
 		{
 			lineDatas[i]->Release();
 		}

@@ -2,11 +2,13 @@
 #include "Engine.h"
 #include "Application.h"
 #include "Input.h"
-
+#include "Object.h"
 using namespace guisystem;
 using namespace container;
 
 #pragma region CGUIWidget
+
+IMPL_CLASS(CGUIWidget)
 
 CGUIWidget::CGUIWidget() :
 	m_collide(false), m_enable(true), m_fill(false), m_fillColor(Color::white()),
@@ -106,7 +108,7 @@ CGUIWidget* CGUIWidget::SetAlignment(EAlignment alignment)
 	this->m_alignment = alignment;
 	this->m_alignment_h = _GetHorizontal(alignment);
 	this->m_alignment_v = _GetVertical(alignment);
-	SetAnchorPosition(m_anchorPos);
+	RefreshAnchor();
 	return this;
 }
 
@@ -140,7 +142,7 @@ CGUIWidget* CGUIWidget::SetEnable(bool enable)
 CGUIWidget* CGUIWidget::SetPivot(Vector2 pivot)
 {
 	m_pivot = pivot;
-	SetAnchorPosition(m_anchorPos);
+	RefreshAnchor();
 	return this;
 }
 
@@ -153,6 +155,12 @@ CGUIWidget* CGUIWidget::SetAnchorPosition(Vector3 anchorPos)
 	offset.y = m_height * (0.5f - m_pivot.y);
 	gameObject->SetPosition(GetCenterPositionInParent());
 	gameObject->SetLocalPosition(anchorPos + offset);
+	return this;
+}
+
+CGUIWidget* CGUIWidget::RefreshAnchor()
+{
+	SetAnchorPosition(m_anchorPos);
 	return this;
 }
 
@@ -230,6 +238,7 @@ Vector3 CGUIWidget::GetCenterPositionInParent()
 {
 	Vector2 parentSize = GetParentSize() * 0.5f;
 	Vector3 pos;
+
 	if (GetParentWidget())
 	{
 		if (m_alignment_h == EAlignmentHorizontal::LEFT)
@@ -413,6 +422,9 @@ void CGUISystem::SetResolution(float resolution_x, float resolution_y)
 	m_resolutionY = resolution_y;
 	m_centerPos.x = resolution_x * 0.5f;
 	m_centerPos.y = resolution_y * 0.5f;
+	widgets.Foreach([](CGUIWidget* widget) {
+		widget->RefreshAnchor();
+	});
 }
 
 float CGUISystem::GetResolutionX()

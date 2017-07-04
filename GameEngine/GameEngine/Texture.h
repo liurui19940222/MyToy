@@ -23,8 +23,9 @@ enum ETexEnvMode
 	Replace = 0x1E01,
 };
 
-class CTexture : public Object, public DynamicCreate<CTexture>
+class CTexture : public Object
 {
+	REFLECT_CLASS(CTexture)
 private:
 	UINT texId;
 	int width;

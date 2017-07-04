@@ -37,8 +37,9 @@ namespace guisystem {
 		MouseOver,
 	};
 
-	class CGUIWidget : public CComponent, public DynamicCreate<CGUIWidget>
+	class CGUIWidget : public CComponent
 	{
+		REFLECT_CLASS(CGUIWidget)
 		friend class CGUISystem;
 
 	public:
@@ -66,6 +67,7 @@ namespace guisystem {
 		CGUIWidget* SetEnable(bool enable);
 		CGUIWidget* SetPivot(Vector2 pivot);
 		CGUIWidget* SetAnchorPosition(Vector3 anchorPos);
+		CGUIWidget* RefreshAnchor();
 
 		CGUIWidget* AddOnMouseDownListener(OnMouseDownEvent down);
 		CGUIWidget* AddOnMouseUpListener(OnMouseUpEvent up);

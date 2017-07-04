@@ -1,6 +1,7 @@
 d:\github\mytoy\gameengine\gameengine\debug\vc140.pdb
 d:\github\mytoy\gameengine\gameengine\debug\vc140.idb
 d:\github\mytoy\gameengine\gameengine\debug\input.obj
+d:\github\mytoy\gameengine\gameengine\debug\main.obj
 d:\github\mytoy\gameengine\gameengine\debug\meshquad.obj
 d:\github\mytoy\gameengine\gameengine\debug\relationshiptest.obj
 d:\github\mytoy\gameengine\gameengine\debug\math.obj
@@ -33,8 +34,16 @@ d:\github\mytoy\gameengine\gameengine\debug\enginedefine.obj
 d:\github\mytoy\gameengine\gameengine\debug\fontmanager.obj
 d:\github\mytoy\gameengine\gameengine\debug\gameobject.obj
 d:\github\mytoy\gameengine\gameengine\debug\gamewindow.obj
+d:\github\mytoy\gameengine\gameengine\debug\guiimage.obj
 d:\github\mytoy\gameengine\gameengine\debug\guisystem.obj
+d:\github\mytoy\gameengine\gameengine\debug\guitest.obj
 d:\github\mytoy\gameengine\gameengine\debug\imagetest.obj
+d:\github\mytoy\gameengine\debug\gameengine.ilk
+d:\github\mytoy\gameengine\debug\gameengine.exe
+d:\github\mytoy\gameengine\debug\gameengine.pdb
 d:\github\mytoy\gameengine\gameengine\debug\gameengine.tlog\cl.command.1.tlog
 d:\github\mytoy\gameengine\gameengine\debug\gameengine.tlog\cl.read.1.tlog
 d:\github\mytoy\gameengine\gameengine\debug\gameengine.tlog\cl.write.1.tlog
+d:\github\mytoy\gameengine\gameengine\debug\gameengine.tlog\link.command.1.tlog
+d:\github\mytoy\gameengine\gameengine\debug\gameengine.tlog\link.read.1.tlog
+d:\github\mytoy\gameengine\gameengine\debug\gameengine.tlog\link.write.1.tlog

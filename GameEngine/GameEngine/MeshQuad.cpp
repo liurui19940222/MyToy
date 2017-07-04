@@ -4,6 +4,8 @@
 #define GL_QUADS                          0x0007
 #endif
 
+IMPL_CLASS(CMeshQuad)
+
 void CMeshQuad::OnInitialize()
 {
 	normals[0] = Vector3(0, 0, 1);

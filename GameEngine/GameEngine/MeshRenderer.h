@@ -7,8 +7,9 @@
 #include"Component.h"
 #include"DynamicFactory.h"
 
-class CMeshRenderer : public CComponent, public DynamicCreate<CMeshRenderer>
+class CMeshRenderer : public CComponent
 {
+	REFLECT_CLASS(CMeshRenderer)
 private:
 	IMeshProvider* model;
 	CTexture* texture;

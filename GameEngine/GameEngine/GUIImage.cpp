@@ -1,7 +1,10 @@
 #include "GUIImage.h"
 
+IMPL_CLASS(CGUIImage)
+
 CGUIImage::CGUIImage() : CGUIWidget(), m_texture(NULL) 
 {
+	SetFill(false);
 	m_uvs[0].x = 0; m_uvs[0].y = 1;
 	m_uvs[1].x = 0; m_uvs[1].y = 0;
 	m_uvs[2].x = 1; m_uvs[2].y = 0;
@@ -21,8 +24,8 @@ void CGUIImage::OnUIRender()
 		glBegin(GL_QUADS);
 		for (int i = 0; i < 4; ++i)
 		{
-			glVertex3fv((float*)&m_vertices[i]);
 			glTexCoord2fv((float*)&m_uvs[i]);
+			glVertex3fv((float*)&m_vertices[i]);
 		}
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
