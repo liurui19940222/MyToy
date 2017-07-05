@@ -101,7 +101,12 @@ public:\
 		}\
 	};\
 	static Registor s_registor;\
+	virtual string GetClassName();\
 
-#define IMPL_CLASS(class_name) class_name::Registor class_name::s_registor;
+#define IMPL_CLASS(class_name)\
+class_name::Registor class_name::s_registor;\
+string class_name::GetClassName() { return typeid(##class_name##).name(); }\
+
+#define IS_TYPE(T, p) dynamic_cast<T*>(p) != NULL
 
 #endif

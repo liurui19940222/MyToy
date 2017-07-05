@@ -14,6 +14,7 @@ CTexture::~CTexture()
 
 CTexture* CTexture::Init(CTexture* texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data)
 {
+	texture->envMode = envMode;
 	texture->width = width;
 	texture->height = height;
 	glGenTextures(1, &texture->texId);
@@ -22,7 +23,6 @@ CTexture* CTexture::Init(CTexture* texture, ETexWrapMode wrapMode, ETexFilterMod
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMode);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMode);
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, envMode);
 	if (mipmaps)
 		gluBuild2DMipmaps(GL_TEXTURE_2D, internalFormat, width, height, format, GL_UNSIGNED_BYTE, data);
 	else
@@ -71,9 +71,33 @@ CTexture* CTexture::Create(UCHAR* pixels, int width, int height)
 	return Create(pixels, width, height, ETexWrapMode::Repeat, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
 }
 
-void CTexture::Bind()
+CTexture* CTexture::Bind()
 {
 	glBindTexture(GL_TEXTURE_2D, texId);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, envMode);
+	return this;
+}
+
+CTexture* CTexture::SetEnvMode(ETexEnvMode mode)
+{
+	envMode = mode;
+	return this;
+}
+
+CTexture* CTexture::SetWrapMode(ETexWrapMode mode)
+{
+	glBindTexture(GL_TEXTURE_2D, texId);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, mode);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, mode);
+	return this;
+}
+
+CTexture* CTexture::SetFilterMode(ETexFilterMode mode)
+{
+	glBindTexture(GL_TEXTURE_2D, texId);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mode);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mode);
+	return this;
 }
 
 int CTexture::GetWidth()

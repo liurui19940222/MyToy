@@ -6,9 +6,10 @@ void CImageTest::OnStart()
 	Engine->SetDrawGrid(false);
 	MainCamera->SetPosition(Vector3(0, 7, 10));
 	MainCamera->SetEulerAngles(Vector3(30, 180, 0));
-
+	InitLight();
 	CBitImage* image = Engine->CreateImage("textures/model.png");
 	CTexture* texture = CTexture::Create(image);
+	texture->SetEnvMode(ETexEnvMode::Modulate);
 	CModelFile* model = new C3DSFile();
 	model->LoadFromFile("models/model.3DS");
 	go = Engine->CreateGameObject();
@@ -58,4 +59,14 @@ void CImageTest::GetApplicationInfo(SApplicationInfo* info)
 		info->appName = L"GameEngineTest";
 		info->className = L"MainClass";
 	}
+}
+
+void CImageTest::InitLight()
+{
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+	glLightfv(GL_LIGHT0, GL_POSITION, direction);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
 }

@@ -23,8 +23,8 @@ public:
 	virtual void OnInitialize();
 
 	virtual void OnRelease();
-
-	void SetName(string& name);
+public:
+	void SetName(const string& name);
 
 	string& GetName();
 };

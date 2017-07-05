@@ -21,6 +21,8 @@ enum ETexFilterMode
 enum ETexEnvMode
 {
 	Replace = 0x1E01,
+	Modulate = 0x2100,
+	Add = 0x0104,
 };
 
 class CTexture : public Object
@@ -30,6 +32,7 @@ private:
 	UINT texId;
 	int width;
 	int height;
+	ETexEnvMode envMode;
 
 	static CTexture* Init(CTexture* texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data);
 
@@ -38,23 +41,18 @@ public:
 	~CTexture();
 
 	static CTexture* Create(char* filename);
-
 	static CTexture* Create(CBitImage* image);
-
 	static CTexture* Create(char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-
 	static CTexture* Create(CBitImage* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-
 	static CTexture* Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-
 	static CTexture* Create(UCHAR* pixels, int width, int height);
 
 	int GetWidth();
-
 	int GetHeight();
-
-	void Bind();
-
+	CTexture* Bind();
+	CTexture* SetEnvMode(ETexEnvMode mode);
+	CTexture* SetWrapMode(ETexWrapMode mode);
+	CTexture* SetFilterMode(ETexFilterMode mode);
 	virtual void OnRelease() override;
 };
 

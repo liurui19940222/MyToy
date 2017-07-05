@@ -31,7 +31,7 @@ void Object::OnInitialize()
 
 }
 
-void Object::SetName(string& name)
+void Object::SetName(const string& name)
 {
 	this->name = name;
 }

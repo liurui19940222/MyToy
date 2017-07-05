@@ -21,7 +21,7 @@ CGUIWidget::CGUIWidget() :
 bool CGUIWidget::Overlay(Vector2 pos)
 {
 	//因为rect被定义在模型空间，所以要用pos减去世界空间位置
-	return m_rect.Overlay(pos - gameObject->GetPosition());
+	return m_rect.Overlay(pos - gameObject->GetRealPosition());
 }
 
 bool CGUIWidget::isCollide()
@@ -149,7 +149,6 @@ CGUIWidget* CGUIWidget::SetPivot(Vector2 pivot)
 CGUIWidget* CGUIWidget::SetAnchorPosition(Vector3 anchorPos)
 {
 	m_anchorPos = anchorPos;
-	CGUIWidget* parent = GetParentWidget();
 	Vector3 offset;
 	offset.x = m_width * (0.5f - m_pivot.x);
 	offset.y = m_height * (0.5f - m_pivot.y);
@@ -238,7 +237,10 @@ Vector3 CGUIWidget::GetCenterPositionInParent()
 {
 	Vector2 parentSize = GetParentSize() * 0.5f;
 	Vector3 pos;
-
+	if (gameObject->GetName() == "widget2")
+	{
+		int j = 0;
+	}
 	if (GetParentWidget())
 	{
 		if (m_alignment_h == EAlignmentHorizontal::LEFT)

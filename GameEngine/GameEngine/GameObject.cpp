@@ -164,6 +164,11 @@ Vector3 CGameObject::GetPosition()
 	return position;
 }
 
+Vector3 CGameObject::GetRealPosition()
+{
+	return realPosition;
+}
+
 Vector3 CGameObject::GetEulerAngles()
 {
 	return this->eulerAngles;
@@ -192,9 +197,9 @@ CGameObject* CGameObject::GetParent()
 Matrix4x4 CGameObject::GetModelToWorldMat()
 {
 	modelToWorldMat = (moveMat * rotMat * scaleMat  * localMoveMat).Transpose();
-	position.x = modelToWorldMat.Get(3, 0);
-	position.y = modelToWorldMat.Get(3, 1);
-	position.z = modelToWorldMat.Get(3, 2);
+	realPosition.x = modelToWorldMat.Get(3, 0);
+	realPosition.y = modelToWorldMat.Get(3, 1);
+	realPosition.z = modelToWorldMat.Get(3, 2);
 	return modelToWorldMat;
 }
 

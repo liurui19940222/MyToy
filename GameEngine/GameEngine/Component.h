@@ -9,6 +9,7 @@ class CGameObject;
 
 class CComponent : public Object
 {
+	REFLECT_CLASS(CComponent)
 public:
 	CGameObject* gameObject;
 

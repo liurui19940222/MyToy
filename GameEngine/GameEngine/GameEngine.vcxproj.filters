@@ -198,9 +198,6 @@
     <ClInclude Include="Engine.h">
       <Filter>Core\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Core\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="GameWindow.h">
       <Filter>Core\头文件</Filter>
     </ClInclude>
@@ -239,6 +236,12 @@
     </ClInclude>
     <ClInclude Include="GUIImage.h">
       <Filter>GUISystem\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Core\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FontRenderer.h">
+      <Filter>Font\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -355,6 +358,9 @@
     </ClCompile>
     <ClCompile Include="GUIImage.cpp">
       <Filter>GUISystem\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FontRenderer.cpp">
+      <Filter>Font\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

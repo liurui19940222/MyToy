@@ -1,5 +1,6 @@
 #include "Component.h"
 
+IMPL_CLASS(CComponent)
 
 CComponent::CComponent() : Object()
 {

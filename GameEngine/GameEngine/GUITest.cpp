@@ -14,7 +14,6 @@ void GUITest::OnStart()
 	MainCamera->SetEulerAngles(Vector3(0, 180, 0));
 
 	CTexture* tex = CTexture::Create("F://monthad_1.png");
-
 	go = Engine->CreateGameObject("widget");
 	widget = go->AddComponent<CGUIImage>();
 	//widget->SetWidth(400)->SetHeight(300);
@@ -147,7 +146,7 @@ void GUITest::OnUpdate()
 	Vector3 anchor_pos = widget2->GetAnchorPosition();
 	anchor_pos.x += h * CTime::deltaTime * 50;
 	anchor_pos.y += v * CTime::deltaTime * 50;
-	//widget2->SetAnchorPosition(anchor_pos);
+	widget2->SetAnchorPosition(anchor_pos);
 
 	//Vector3 euler = go2->GetEulerAngles();
 	//euler.z += CTime::deltaTime * 30;
