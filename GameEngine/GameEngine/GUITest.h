@@ -9,6 +9,7 @@
 #include"FileHead.h"
 #include"GUISystem.h"
 #include"GUIImage.h"
+#include"GUILable.h"
 
 using namespace std;
 using namespace guisystem;
@@ -19,7 +20,7 @@ class GUITest : public CGameWindow
 	CGameObject* go2;
 	CTextRenderer* text;
 	CGUIImage* widget;
-	CGUIWidget* widget2;
+	CGUILable* widget2;
 public:
 	virtual void OnStart();
 

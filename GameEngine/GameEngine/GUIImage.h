@@ -4,21 +4,22 @@
 #include"GUISystem.h"
 #include"Texture.h"
 
-using namespace guisystem;
+namespace guisystem {
 
-class CGUIImage : public CGUIWidget
-{
-	REFLECT_CLASS(CGUIImage)
-private:
-	Vector2 m_uvs[4];
-	CTexture* m_texture;
+	class CGUIImage : public CGUIWidget
+	{
+		REFLECT_CLASS(CGUIImage)
+	private:
+		Vector2 m_uvs[4];
+		CTexture* m_texture;
 
-protected:
-	virtual void OnUIRender() override;
+	protected:
+		virtual void OnUIRender() override;
 
-public:
-	CGUIImage();
-	CGUIImage* SetTexture(CTexture* texture);
-};
+	public:
+		CGUIImage();
+		CGUIImage* SetTexture(CTexture* texture);
+	};
 
+}
 #endif

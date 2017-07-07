@@ -1,5 +1,7 @@
 #include "GUIImage.h"
 
+using namespace guisystem;
+
 IMPL_CLASS(CGUIImage)
 
 CGUIImage::CGUIImage() : CGUIWidget(), m_texture(NULL)
@@ -13,8 +15,6 @@ CGUIImage::CGUIImage() : CGUIWidget(), m_texture(NULL)
 
 void CGUIImage::OnUIRender()
 {
-	CGUIWidget::OnUIRender();
-
 	if (m_texture)
 	{
 		glEnable(GL_BLEND);
@@ -47,6 +47,8 @@ void CGUIImage::OnUIRender()
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);
 	}
+
+	CGUIWidget::OnUIRender();
 }
 
 CGUIImage* CGUIImage::SetTexture(CTexture* texture)

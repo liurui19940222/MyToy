@@ -45,7 +45,7 @@ namespace guisystem {
 	public:
 
 		bool Overlay(Vector2 pos);
-		bool isCollide();
+		bool IsCollide();
 		SRect2D GetRect();
 		int GetLayer();
 		float GetWidth();
@@ -56,18 +56,18 @@ namespace guisystem {
 		Vector3 GetAnchorPosition();
 		CGUIWidget();
 		CGUIWidget* GetParentWidget();
-		CGUIWidget* SetCollide(bool isCollide);
-		CGUIWidget* SetFill(bool isFill);
-		CGUIWidget* SetFillColor(Color fillColor);
-		CGUIWidget* SetRect(SRect2D rect);
-		CGUIWidget* SetAlignment(EAlignment alignment);
-		CGUIWidget* SetLayer(int layer);
-		CGUIWidget* SetWidth(float width);
-		CGUIWidget* SetHeight(float height);
-		CGUIWidget* SetEnable(bool enable);
-		CGUIWidget* SetPivot(Vector2 pivot);
-		CGUIWidget* SetAnchorPosition(Vector3 anchorPos);
-		CGUIWidget* RefreshAnchor();
+		virtual CGUIWidget* SetCollide(bool isCollide);
+		virtual CGUIWidget* SetFill(bool isFill);
+		virtual CGUIWidget* SetFillColor(Color fillColor);
+		virtual CGUIWidget* SetRect(SRect2D rect);
+		virtual CGUIWidget* SetAlignment(EAlignment alignment);
+		virtual CGUIWidget* SetLayer(int layer);
+		virtual CGUIWidget* SetWidth(float width);
+		virtual CGUIWidget* SetHeight(float height);
+		virtual CGUIWidget* SetEnable(bool enable);
+		virtual CGUIWidget* SetPivot(Vector2 pivot);
+		virtual CGUIWidget* SetAnchorPosition(Vector3 anchorPos);
+		virtual CGUIWidget* RefreshAnchor();
 
 		CGUIWidget* AddOnMouseDownListener(OnMouseDownEvent down);
 		CGUIWidget* AddOnMouseUpListener(OnMouseUpEvent up);

@@ -178,7 +178,7 @@ namespace container {
 		}
 
 		//ÄæĞò±éÀú¶ÓÁĞ
-		void ForeachInverse(ForeachCallResult call)
+		void ForeachInverseR(ForeachCallResult call)
 		{
 			if (m_count <= 0)
 				return;

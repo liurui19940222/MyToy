@@ -24,7 +24,7 @@ bool CGUIWidget::Overlay(Vector2 pos)
 	return m_rect.Overlay(pos - gameObject->GetRealPosition());
 }
 
-bool CGUIWidget::isCollide()
+bool CGUIWidget::IsCollide()
 {
 	return m_collide;
 }
@@ -443,7 +443,7 @@ void CGUISystem::OnUpdate()
 {
 	Vector2 mousePos = CInput::InputMousePosition();
 	widgets.ForeachR([this, &mousePos](CGUIWidget* widget) {
-		if (!widget->IsState(EWidgetState::Disabled))
+		if (!widget->IsState(EWidgetState::Disabled) && widget->IsCollide())
 		{
 			if (widget->Overlay(mousePos))
 			{
@@ -501,11 +501,13 @@ void CGUISystem::OnUpdate()
 
 void CGUISystem::OnRender()
 {
-	widgets.Foreach([](CGUIWidget* widget) {
+	glDisable(GL_DEPTH_TEST);
+	widgets.ForeachInverse([](CGUIWidget* widget) {
 		widget->gameObject->BeginRender();
 		widget->OnUIRender();
 		widget->gameObject->EndRender();
 	});
+	glEnable(GL_DEPTH_TEST);
 }
 
 void CGUISystem::OnDrawDebug()

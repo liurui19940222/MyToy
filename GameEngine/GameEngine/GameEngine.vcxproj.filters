@@ -243,6 +243,9 @@
     <ClInclude Include="FontRenderer.h">
       <Filter>Font\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="GUILable.h">
+      <Filter>GUISystem\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -361,6 +364,9 @@
     </ClCompile>
     <ClCompile Include="FontRenderer.cpp">
       <Filter>Font\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUILable.cpp">
+      <Filter>GUISystem\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

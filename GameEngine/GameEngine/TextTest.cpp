@@ -12,7 +12,7 @@ void CTextTest::OnStart()
 	go = Engine->CreateGameObject();
 	go->SetPosition(Vector3(0, 0, 0));
 	text = go->AddComponent<CTextRenderer>();
-	text->Init(font, NULL, 10, 0, 0.5f, Color::cyan(), EAlignment::CENTER_MIDDLE, SRect2D{ 0, 0, 5, 1 });
+	text->SetFont(font)->SetFontSize(10)->SetTextRect(SRect2D{ 0, 0, 5, 1 });
 	text->SetText(L"Sams Publishing & Pearson Education Inc., \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson");
 	//text->SetText(L"дasdfsdf\nͨ564654564");
 
@@ -35,39 +35,39 @@ void CTextTest::OnUpdate()
 {
 	if (CInput::GetKeyDown(DIK_NUMPAD1))
 	{
-		text->SetAlignment(EAlignment::LEFT_BOTTOM);
+		text->SetTextAlignment(EAlignment::LEFT_BOTTOM);
 	}
 	if (CInput::GetKeyDown(DIK_NUMPAD2))
 	{
-		text->SetAlignment(EAlignment::CENTER_BOTTOM);
+		text->SetTextAlignment(EAlignment::CENTER_BOTTOM);
 	}
 	if (CInput::GetKeyDown(DIK_NUMPAD3))
 	{
-		text->SetAlignment(EAlignment::RIGHT_BOTTOM);
+		text->SetTextAlignment(EAlignment::RIGHT_BOTTOM);
 	}
 	if (CInput::GetKeyDown(DIK_NUMPAD4))
 	{
-		text->SetAlignment(EAlignment::LEFT_MIDDLE);
+		text->SetTextAlignment(EAlignment::LEFT_MIDDLE);
 	}
 	if (CInput::GetKeyDown(DIK_NUMPAD5))
 	{
-		text->SetAlignment(EAlignment::CENTER_MIDDLE);
+		text->SetTextAlignment(EAlignment::CENTER_MIDDLE);
 	}
 	if (CInput::GetKeyDown(DIK_NUMPAD6))
 	{
-		text->SetAlignment(EAlignment::RIGHT_MIDDLE);
+		text->SetTextAlignment(EAlignment::RIGHT_MIDDLE);
 	}
 	if (CInput::GetKeyDown(DIK_NUMPAD7))
 	{
-		text->SetAlignment(EAlignment::LEFT_TOP);
+		text->SetTextAlignment(EAlignment::LEFT_TOP);
 	}
 	if (CInput::GetKeyDown(DIK_NUMPAD8))
 	{
-		text->SetAlignment(EAlignment::CENTER_TOP);
+		text->SetTextAlignment(EAlignment::CENTER_TOP);
 	}
 	if (CInput::GetKeyDown(DIK_NUMPAD9))
 	{
-		text->SetAlignment(EAlignment::RIGHT_TOP);
+		text->SetTextAlignment(EAlignment::RIGHT_TOP);
 	}
 	
 	if (CInput::GetKeyDown(DIK_1))
