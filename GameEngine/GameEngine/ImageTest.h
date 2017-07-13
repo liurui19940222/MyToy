@@ -15,7 +15,7 @@ class CImageTest : public CGameWindow
 	CGameObject* go;
 	CGameObject* go2;
 	float direction[3] = { -55.0f, -22.5f, 0.0f };
-	float diffuse[3] = { 0.3f, 0.3f, 0.3f };
+	float diffuse[3] = { 0.5f, 0.5f, 0.5f };
 	float specular[3] = { 1, 1, 1 };
 public:
 	virtual void OnStart();

@@ -21,8 +21,9 @@ void C3DSFile::LoadFromFile(const char* filename)
 	Lib3dsPoint* points = lib3dsfile->meshes->pointL;
 	Lib3dsTexel* texels = lib3dsfile->meshes->texelL;
 	Lib3dsFace* face = NULL;
-	int index = 0;
-	for (int i = 0; i < triangleNum; i++)
+	Vector3* normalBuffer = (Vector3*)malloc(lib3dsfile->meshes->points * sizeof(Vector3));
+	memset(normalBuffer, 0, lib3dsfile->meshes->points * sizeof(Vector3));
+	for (int i = 0, index = 0; i < triangleNum; i++)
 	{
 		face = &lib3dsfile->meshes->faceL[i];
 		memcpy(&triangleArray[i].verties[0], &(points[face->points[0]].pos), sizeof(Vector3));
@@ -43,9 +44,24 @@ void C3DSFile::LoadFromFile(const char* filename)
 		//memcpy(&normalArray[index++], &face->normal, sizeof(Vector3));
 		//memcpy(&normalArray[index++], &face->normal, sizeof(Vector3));
 		//memcpy(&normalArray[index++], &face->normal, sizeof(Vector3));
-		memcpy(&normalArray[index++], &normal, sizeof(Vector3));
-		memcpy(&normalArray[index++], &normal, sizeof(Vector3));
-		memcpy(&normalArray[index++], &normal, sizeof(Vector3));
+		//memcpy(&normalArray[index++], &normal, sizeof(Vector3));
+		//memcpy(&normalArray[index++], &normal, sizeof(Vector3));
+		//memcpy(&normalArray[index++], &normal, sizeof(Vector3));
+		normalBuffer[face->points[0]] += normal;
+		normalBuffer[face->points[1]] += normal;
+		normalBuffer[face->points[2]] += normal;
+	}
+	for (int i = 0; i < lib3dsfile->meshes->points; i++)
+	{
+		normalBuffer[i] = normalBuffer[i].Normalization();
+	}
+	for (int i = 0, index = 0; i < triangleNum; i++)
+	{
+		face = &lib3dsfile->meshes->faceL[i];
+
+		memcpy(&normalArray[index++], &(normalBuffer[face->points[0]]), sizeof(Vector3));
+		memcpy(&normalArray[index++], &(normalBuffer[face->points[1]]), sizeof(Vector3));
+		memcpy(&normalArray[index++], &(normalBuffer[face->points[2]]), sizeof(Vector3));
 	}
 	vertexArray = (Vector3*)triangleArray;
 	lib3ds_file_free(lib3dsfile);
