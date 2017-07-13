@@ -21,7 +21,8 @@ void C3DSFile::LoadFromFile(const char* filename)
 	Lib3dsPoint* points = lib3dsfile->meshes->pointL;
 	Lib3dsTexel* texels = lib3dsfile->meshes->texelL;
 	Lib3dsFace* face = NULL;
-	for (int i = 0, index = 0; i < triangleNum; i++)
+	int index = 0;
+	for (int i = 0; i < triangleNum; i++)
 	{
 		face = &lib3dsfile->meshes->faceL[i];
 		memcpy(&triangleArray[i].verties[0], &(points[face->points[0]].pos), sizeof(Vector3));
@@ -37,9 +38,14 @@ void C3DSFile::LoadFromFile(const char* filename)
 			triangleArray[i].verties[j].z = temp;
 		}
 
-		memcpy(&normalArray[index++], &face->normal, sizeof(Vector3));
-		memcpy(&normalArray[index++], &face->normal, sizeof(Vector3));
-		memcpy(&normalArray[index++], &face->normal, sizeof(Vector3));
+		Vector3 normal = Vector3::Cross(triangleArray[i].verties[1] - triangleArray[i].verties[0], triangleArray[i].verties[2] - triangleArray[i].verties[0]).Normalization();
+
+		//memcpy(&normalArray[index++], &face->normal, sizeof(Vector3));
+		//memcpy(&normalArray[index++], &face->normal, sizeof(Vector3));
+		//memcpy(&normalArray[index++], &face->normal, sizeof(Vector3));
+		memcpy(&normalArray[index++], &normal, sizeof(Vector3));
+		memcpy(&normalArray[index++], &normal, sizeof(Vector3));
+		memcpy(&normalArray[index++], &normal, sizeof(Vector3));
 	}
 	vertexArray = (Vector3*)triangleArray;
 	lib3ds_file_free(lib3dsfile);

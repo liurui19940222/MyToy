@@ -206,7 +206,7 @@ Matrix4x4 CGameObject::GetModelToWorldMat()
 void CGameObject::LookAt(Vector3 targetPos)
 {
 	this->forward = (targetPos - this->position).Normalization();
-	this->right = Vector3::Cross(this->forward, Vector3(0, 1, 0));
+	this->right = Vector3::Cross(this->forward, Vector3(0, 1, 0)).Normalization();
 	this->up = Vector3::Cross(this->right, this->forward);
 	rotMat = Matrix4x4(
 		right.x, right.y, right.z, 0,
