@@ -6,7 +6,7 @@
 #define PI 3.141592653
 
 class Vector3;
-class Vector4;
+union Vector4;
 class Matrix4x4;
 
 class Vector2
@@ -129,13 +129,18 @@ public:
 	static Vector3 Forward();
 };
 
-class Vector4
+union Vector4
 {
-public:
-	float x;
-	float y;
-	float z;
-	float w;
+	float m[4];
+	struct
+	{
+		float x;
+		float y;
+		float z;
+		float w;
+	};
+
+	float& operator[](size_t);
 
 	Vector4();
 	Vector4(Vector3& v);
@@ -149,7 +154,7 @@ class Matrix4x4
 public:
 	Matrix4x4();
 
-	Matrix4x4(float m00, float m01, float m02, float m03, float m10, float m11, float m12, float m13, float m20, float m21, float m22, float m23, float m30, float m31, float m32, float m33);
+	Matrix4x4(float x0, float x1, float x2, float x3, float y0, float y1, float y2, float y3, float z0, float z1, float z2, float z3, float w0, float w1, float w2, float w3);
 
 	void Set(int x, int y, float value);
 
@@ -165,16 +170,36 @@ public:
 
 	Matrix4x4 operator*(Matrix4x4& matrix);
 
-	Matrix4x4 Identity();
+	Matrix4x4 operator*(float value);
+
+	Matrix4x4 operator/(float value);
+
+	Vector4& operator[](size_t index);
 
 	Matrix4x4 Transpose();
 
+	Matrix4x4 Inverse();
+
 	Vector3 EulerAngles();
+
+	static Matrix4x4 Identity();
 
 	static Matrix4x4 Rotate(float pitch, float yaw, float roll);
 
+	static Matrix4x4 RotateUVN(Vector3& targetPos, Vector3& selfPos);
+
+	static Matrix4x4 Translate(Vector3& translate);
+
+	static Matrix4x4 Scale(Vector3& scale);
+
+	static Matrix4x4 Ortho(float left, float right, float bottom, float top, float zNear, float zFar);
+
+	static Matrix4x4 Perspective(float fov, float aspect, float near, float far);
+
+	static Matrix4x4 LookAt(Vector3& eye, Vector3& center, Vector3& up);
+
 private:
-	float m[4][4];
+	Vector4 m[4];
 };
 
 class ParameterizedLine2D

@@ -196,10 +196,15 @@ CGameObject* CGameObject::GetParent()
 
 Matrix4x4 CGameObject::GetModelToWorldMat()
 {
-	modelToWorldMat = (moveMat * rotMat * scaleMat  * localMoveMat).Transpose();
-	realPosition.x = modelToWorldMat.Get(3, 0);
-	realPosition.y = modelToWorldMat.Get(3, 1);
-	realPosition.z = modelToWorldMat.Get(3, 2);
+	if (name == "testGo")
+	{
+		int i = 0;
+	}
+	else if (name == "child")
+	{
+		int j = 0;
+	}
+	modelToWorldMat = (localMoveMat.Transpose() * scaleMat * rotMat * moveMat.Transpose());
 	return modelToWorldMat;
 }
 
@@ -238,7 +243,6 @@ void CGameObject::BeginRender()
 {
 	glColor3f(1.0f, 1.0f, 1.0f);
 	glPushMatrix();
-	Matrix4x4 d = this->GetModelToWorldMat();
 	glMultMatrixf((float*)&GetModelToWorldMat());
 }
 
@@ -348,5 +352,5 @@ void CGameObject::SetParent(CGameObject* parent)
 	else
 	{
 		this->parent = NULL;
-	}	
+	}
 }

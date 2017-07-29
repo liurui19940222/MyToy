@@ -287,6 +287,11 @@ Vector4::Vector4(float px, float py, float pz) : x(px), y(py), z(pz), w(1) { }
 
 Vector4::Vector4(float px, float py, float pz, float pw) : x(px), y(py), z(pz), w(pw) { }
 
+float& Vector4::operator[](size_t index)
+{
+	return m[index];
+}
+
 #pragma endregion
 
 #pragma region Matrix4x4
@@ -296,12 +301,12 @@ Matrix4x4::Matrix4x4()
 	memset(m, 0, sizeof(float) * 16);
 }
 
-Matrix4x4::Matrix4x4(float m00, float m01, float m02, float m03, float m10, float m11, float m12, float m13, float m20, float m21, float m22, float m23, float m30, float m31, float m32, float m33)
+Matrix4x4::Matrix4x4(float x0, float x1, float x2, float x3, float y0, float y1, float y2, float y3, float z0, float z1, float z2, float z3, float w0, float w1, float w2, float w3)
 {
-	m[0][0] = m00; m[1][0] = m10; m[2][0] = m20; m[3][0] = m30;
-	m[0][1] = m01; m[1][1] = m11; m[2][1] = m21; m[3][1] = m31;
-	m[0][2] = m02; m[1][2] = m12; m[2][2] = m22; m[3][2] = m32;
-	m[0][3] = m03; m[1][3] = m13; m[2][3] = m23; m[3][3] = m33;
+	m[0].x = x0; m[0].y = y0; m[0].z = z0; m[0].w = w0;
+	m[1].x = x1; m[1].y = y1; m[1].z = z1; m[1].w = w1;
+	m[2].x = x2; m[2].y = y2; m[2].z = z2; m[2].w = w2;
+	m[3].x = x3; m[3].y = y3; m[3].z = z3; m[3].w = w3;
 }
 
 void Matrix4x4::Set(int x, int y, float value)
@@ -316,22 +321,21 @@ float Matrix4x4::Get(int x, int y)
 
 Vector3 Matrix4x4::Multiply(Vector3& v3)
 {
-
 	float x = 0, y = 0, z = 0;
-	x = v3.x * m[0][0] + v3.y * m[0][1] + v3.z * m[0][2] + m[0][3];
-	y = v3.x * m[1][0] + v3.y * m[1][1] + v3.z * m[1][2] + m[1][3];
-	z = v3.x * m[2][0] + v3.y * m[2][1] + v3.z * m[2][2] + m[2][3];
+	x = v3.x * m[0][0] + v3.y * m[1][0] + v3.z * m[2][0] + m[3][0];
+	y = v3.x * m[0][1] + v3.y * m[1][1] + v3.z * m[2][1] + m[3][1];
+	z = v3.x * m[0][2] + v3.y * m[1][2] + v3.z * m[2][2] + m[3][2];
 	return Vector3(x, y, z);
 }
 
 Vector4 Matrix4x4::Multiply(Vector4& v)
 {
 	return Vector4(
-		m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z + m[0][3] * v.w,
-		m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z + m[1][3] * v.w,
-		m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z + m[2][3] * v.w,
-		m[3][0] * v.x + m[3][1] * v.y + m[3][2] * v.z + m[3][3] * v.w
-		);
+		m[0][0] * v.x + m[1][0] * v.y + m[2][0] * v.z + m[3][0] * v.w,
+		m[0][1] * v.x + m[1][1] * v.y + m[2][1] * v.z + m[3][1] * v.w,
+		m[0][2] * v.x + m[1][2] * v.y + m[2][2] * v.z + m[3][2] * v.w,
+		m[0][3] * v.x + m[1][3] * v.y + m[2][3] * v.z + m[3][3] * v.w
+	);
 }
 
 Matrix4x4 Matrix4x4::Multiply(Matrix4x4& mat)
@@ -339,22 +343,37 @@ Matrix4x4 Matrix4x4::Multiply(Matrix4x4& mat)
 	Matrix4x4 temp;
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
-			temp.Set(j, i, mat.Get(0, i) * m[j][0]+ mat.Get(1, i) * m[j][1] + mat.Get(2, i) * m[j][2] + mat.Get(3, i) * m[j][3]);
+			temp[j][i] = mat[i][0] * m[0][j] + mat[i][1] * m[1][j] + mat[i][2] * m[2][j] + mat[i][3] * m[3][j];
 
 	return temp;
 }
 
 Matrix4x4 Matrix4x4::Multiply(float value)
 {
-	return Matrix4x4(m[0][0] * value, m[1][0] * value, m[2][0] * value, m[3][0] * value,
-		m[0][1] * value, m[1][1] * value, m[2][1] * value, m[3][1] * value,
-		m[0][2] * value, m[1][2] * value, m[2][2] * value, m[3][2] * value,
-		m[0][3] * value, m[1][3] * value, m[2][3] * value, m[3][3] * value);
+	return Matrix4x4(m[0][0] * value, m[0][1] * value, m[0][2] * value, m[0][3] * value,
+		m[1][0] * value, m[1][1] * value, m[1][2] * value, m[1][3] * value,
+		m[2][0] * value, m[2][1] * value, m[2][2] * value, m[2][3] * value,
+		m[3][0] * value, m[3][1] * value, m[3][2] * value, m[3][3] * value);
 }
 
 Matrix4x4 Matrix4x4::operator*(Matrix4x4& matrix)
 {
 	return Multiply(matrix);
+}
+
+Matrix4x4 Matrix4x4::operator*(float value)
+{
+	return Multiply(value);
+}
+
+Matrix4x4 Matrix4x4::operator/(float value)
+{
+	return Multiply(1.0f / value);
+}
+
+Vector4& Matrix4x4::operator[](size_t index)
+{
+	return m[index];
 }
 
 Matrix4x4 Matrix4x4::Identity()
@@ -374,30 +393,160 @@ Matrix4x4 Matrix4x4::Rotate(float pitch, float yaw, float roll)
 	float cos_x = cos(pitch * PI / 180.0f);
 	float cos_y = cos(yaw * PI / 180.0f);
 	float cos_z = cos(roll * PI / 180.0f);
-	x.Set(0, 0, 1); x.Set(1, 0, 0); x.Set(2, 0, 0); x.Set(3, 0, 0);
-	x.Set(0, 1, 0); x.Set(1, 1, cos_x); x.Set(2, 1, -sin_x); x.Set(3, 1, 0);
-	x.Set(0, 2, 0); x.Set(1, 2, sin_x); x.Set(2, 2, cos_x); x.Set(3, 2, 0);
-	x.Set(0, 3, 0); x.Set(1, 3, 0); x.Set(2, 3, 0); x.Set(3, 3, 1);
+	x[0][0] = 1; x[0][1] = 0;		x[0][2] = 0;		x[0][3] = 0;
+	x[1][0] = 0; x[1][1] = cos_x;	x[1][2] = sin_x;	x[1][3] = 0;
+	x[2][0] = 0; x[2][1] = -sin_x;	x[2][2] = cos_x;	x[2][3] = 0;
+	x[3][0] = 0; x[3][1] = 0;		x[3][2] = 0;		x[3][3] = 1;
 
-	y.Set(0, 0, cos_y); y.Set(1, 0, 0); y.Set(2, 0, sin_y); y.Set(3, 0, 0);
-	y.Set(0, 1, 0); y.Set(1, 1, 1); y.Set(2, 1, 0); y.Set(3, 1, 0);
-	y.Set(0, 2, -sin_y); y.Set(1, 2, 0); y.Set(2, 2, cos_y); y.Set(3, 2, 0);
-	y.Set(0, 3, 0); y.Set(1, 3, 0); y.Set(2, 3, 0); y.Set(3, 3, 1);
+	y[0][0] = cos_y;	y[0][1] = 0; y[0][2] = -sin_y;	y[0][3] = 0;
+	y[1][0] = 0;		y[1][1] = 1; y[1][2] = 0;		y[1][3] = 0;
+	y[2][0] = sin_y;	y[2][1] = 0; y[2][2] = cos_y;	y[2][3] = 0;
+	y[3][0] = 0;		y[3][1] = 0; y[3][2] = 0;		y[3][3] = 1;
 
-	z.Set(0, 0, cos_z); z.Set(1, 0, -sin_z); z.Set(2, 0, 0); z.Set(3, 0, 0);
-	z.Set(0, 1, sin_z); z.Set(1, 1, cos_z); z.Set(2, 1, 0); z.Set(3, 1, 0);
-	z.Set(0, 2, 0); z.Set(1, 2, 0); z.Set(2, 2, 1); z.Set(3, 2, 0);
-	z.Set(0, 3, 0); z.Set(1, 3, 0); z.Set(2, 3, 0); z.Set(3, 3, 1);
+	z[0][0] = cos_z;	z[0][1] = sin_z;	z[0][2] = 0; z[0][3] = 0;
+	z[1][0] = -sin_z;	z[1][1] = cos_z;	z[1][2] = 0; z[1][3] = 0;
+	z[2][0] = 0;		z[2][1] = 0;		z[2][2] = 1; z[2][3] = 0;
+	z[3][0] = 0;		z[3][1] = 0;		z[3][2] = 0; z[3][3] = 1;
 
-	return (z * x * y).Transpose();
+	return z * x * y;
+}
+
+Matrix4x4 Matrix4x4::Ortho(float left, float right, float bottom, float top, float zNear, float zFar)
+{
+	Matrix4x4 Result = Identity();
+	Result[0][0] = 2 / (right - left);
+	Result[1][1] = 2 / (top - bottom);
+	Result[2][2] = -2 / (zFar - zNear);
+	Result[3][0] = -(right + left) / (right - left);
+	Result[3][1] = -(top + bottom) / (top - bottom);
+	Result[3][2] = -(zFar + zNear) / (zFar - zNear);
+	return Result;
+}
+
+Matrix4x4 Matrix4x4::Perspective(float fov, float aspect, float near, float far)
+{
+	Matrix4x4 Result;
+	float range = tan(CMath::DegToRad(fov / 2.0f)) * near;
+	float left = -range * aspect;
+	float right = range * aspect;
+	float bottom = -range;
+	float top = range;
+
+	Result[0][0] = (2.0f * near) / (right - left);
+	Result[1][1] = (2.0f * near) / (top - bottom);
+	Result[2][2] = -(far + near) / (far - near);
+	Result[2][3] = -1.0f;
+	Result[3][2] = -(2.0f * far * near) / (far - near);
+	return Result;
+}
+
+Matrix4x4 Matrix4x4::LookAt(Vector3& eye, Vector3& center, Vector3& up)
+{
+	Vector3 f = (center - eye).Normalization();
+	Vector3 u = up.Normalization();
+	Vector3 s = Vector3::Cross(f, u).Normalization();
+	u = Vector3::Cross(s, f);
+
+	Matrix4x4 Result = Matrix4x4::Identity();
+	Result[0][0] = s.x; Result[1][0] = s.y; Result[2][0] = s.z; Result[3][0] = -Vector3::Dot(s, eye);
+	Result[0][1] = u.x; Result[1][1] = u.y; Result[2][1] = u.z; Result[3][1] = -Vector3::Dot(u, eye);
+	Result[0][2] = -f.x; Result[1][2] = -f.y; Result[2][2] = -f.z; Result[3][2] = Vector3::Dot(f, eye);
+	return Result;
+}
+
+Matrix4x4 Matrix4x4::RotateUVN(Vector3& targetPos, Vector3& selfPos)
+{
+	Vector3 forward = (targetPos - selfPos).Normalization();
+	Vector3 right = Vector3::Cross(forward, Vector3(0, 1, 0)).Normalization();
+	Vector3 up = Vector3::Cross(right, forward);
+	return Matrix4x4(
+		-right.x, -right.y, -right.z, 0,
+		up.x, up.y, up.z, 0,
+		forward.x, forward.y, forward.z, 0,
+		0, 0, 0, 1
+	);
+}
+
+Matrix4x4 Matrix4x4::Translate(Vector3& translate)
+{
+	return Matrix4x4(
+		1, 0, 0, translate.x,
+		0, 1, 0, translate.y,
+		0, 0, 1, translate.z,
+		0, 0, 0, 1
+	);
+}
+
+Matrix4x4 Matrix4x4::Scale(Vector3& scale)
+{
+	return Matrix4x4(
+		scale.x, 0, 0, 0,
+		0, scale.y, 0, 0,
+		0, 0, scale.z, 0,
+		0, 0, 0, 1
+	);
 }
 
 Matrix4x4 Matrix4x4::Transpose()
 {
-	return Matrix4x4(m[0][0], m[1][0], m[2][0], m[3][0],
-		m[0][1], m[1][1], m[2][1], m[3][1],
-		m[0][2], m[1][2], m[2][2], m[3][2],
-		m[0][3], m[1][3], m[2][3], m[3][3]);
+	return Matrix4x4(m[0][0], m[0][1], m[0][2], m[0][3],
+					 m[1][0], m[1][1], m[1][2], m[1][3],
+					 m[2][0], m[2][1], m[2][2], m[2][3],
+					 m[3][0], m[3][1], m[3][2], m[3][3]);
+}
+
+Matrix4x4 Matrix4x4::Inverse()
+{
+	// Calculate all mat2 determinants
+	float SubFactor00 = this->m[2][2] * this->m[3][3] - this->m[3][2] * this->m[2][3];
+	float SubFactor01 = this->m[2][1] * this->m[3][3] - this->m[3][1] * this->m[2][3];
+	float SubFactor02 = this->m[2][1] * this->m[3][2] - this->m[3][1] * this->m[2][2];
+	float SubFactor03 = this->m[2][0] * this->m[3][3] - this->m[3][0] * this->m[2][3];
+	float SubFactor04 = this->m[2][0] * this->m[3][2] - this->m[3][0] * this->m[2][2];
+	float SubFactor05 = this->m[2][0] * this->m[3][1] - this->m[3][0] * this->m[2][1];
+	float SubFactor06 = this->m[1][2] * this->m[3][3] - this->m[3][2] * this->m[1][3];
+	float SubFactor07 = this->m[1][1] * this->m[3][3] - this->m[3][1] * this->m[1][3];
+	float SubFactor08 = this->m[1][1] * this->m[3][2] - this->m[3][1] * this->m[1][2];
+	float SubFactor09 = this->m[1][0] * this->m[3][3] - this->m[3][0] * this->m[1][3];
+	float SubFactor10 = this->m[1][0] * this->m[3][2] - this->m[3][0] * this->m[1][2];
+	float SubFactor11 = this->m[1][1] * this->m[3][3] - this->m[3][1] * this->m[1][3];
+	float SubFactor12 = this->m[1][0] * this->m[3][1] - this->m[3][0] * this->m[1][1];
+	float SubFactor13 = this->m[1][2] * this->m[2][3] - this->m[2][2] * this->m[1][3];
+	float SubFactor14 = this->m[1][1] * this->m[2][3] - this->m[2][1] * this->m[1][3];
+	float SubFactor15 = this->m[1][1] * this->m[2][2] - this->m[2][1] * this->m[1][2];
+	float SubFactor16 = this->m[1][0] * this->m[2][3] - this->m[2][0] * this->m[1][3];
+	float SubFactor17 = this->m[1][0] * this->m[2][2] - this->m[2][0] * this->m[1][2];
+	float SubFactor18 = this->m[1][0] * this->m[2][1] - this->m[2][0] * this->m[1][1];
+
+	Matrix4x4 Inverse(
+		+this->m[1][1] * SubFactor00 - this->m[1][2] * SubFactor01 + this->m[1][3] * SubFactor02,
+		-this->m[1][0] * SubFactor00 + this->m[1][2] * SubFactor03 - this->m[1][3] * SubFactor04,
+		+this->m[1][0] * SubFactor01 - this->m[1][1] * SubFactor03 + this->m[1][3] * SubFactor05,
+		-this->m[1][0] * SubFactor02 + this->m[1][1] * SubFactor04 - this->m[1][2] * SubFactor05,
+
+		-this->m[0][1] * SubFactor00 + this->m[0][2] * SubFactor01 - this->m[0][3] * SubFactor02,
+		+this->m[0][0] * SubFactor00 - this->m[0][2] * SubFactor03 + this->m[0][3] * SubFactor04,
+		-this->m[0][0] * SubFactor01 + this->m[0][1] * SubFactor03 - this->m[0][3] * SubFactor05,
+		+this->m[0][0] * SubFactor02 - this->m[0][1] * SubFactor04 + this->m[0][2] * SubFactor05,
+
+		+this->m[0][1] * SubFactor06 - this->m[0][2] * SubFactor07 + this->m[0][3] * SubFactor08,
+		-this->m[0][0] * SubFactor06 + this->m[0][2] * SubFactor09 - this->m[0][3] * SubFactor10,
+		+this->m[0][0] * SubFactor11 - this->m[0][1] * SubFactor09 + this->m[0][3] * SubFactor12,
+		-this->m[0][0] * SubFactor08 + this->m[0][1] * SubFactor10 - this->m[0][2] * SubFactor12,
+
+		-this->m[0][1] * SubFactor13 + this->m[0][2] * SubFactor14 - this->m[0][3] * SubFactor15,
+		+this->m[0][0] * SubFactor13 - this->m[0][2] * SubFactor16 + this->m[0][3] * SubFactor17,
+		-this->m[0][0] * SubFactor14 + this->m[0][1] * SubFactor16 - this->m[0][3] * SubFactor18,
+		+this->m[0][0] * SubFactor15 - this->m[0][1] * SubFactor17 + this->m[0][2] * SubFactor18);
+
+	float Determinant =
+		+this->m[0][0] * Inverse[0][0]
+		+ this->m[0][1] * Inverse[1][0]
+		+ this->m[0][2] * Inverse[2][0]
+		+ this->m[0][3] * Inverse[3][0];
+
+	Inverse = Inverse / Determinant;
+	return Inverse;
 }
 
 Vector3 Matrix4x4::EulerAngles()
@@ -405,7 +554,7 @@ Vector3 Matrix4x4::EulerAngles()
 	Vector3 euler;
 
 	float h = 0, p = 0, b = 0;
-	float sp = -Get(1, 2);
+	float sp = -m[1][2];
 	if (sp <= -1.0f)
 	{
 		p = -1.570796f;
@@ -421,12 +570,12 @@ Vector3 Matrix4x4::EulerAngles()
 	if (sp > 0.9999f)
 	{
 		b = 0;
-		h = atan2(-Get(2, 0), Get(0, 0));
+		h = atan2(-m[0][2], m[0][0]);
 	}
 	else
 	{
-		h = atan2(Get(0, 2), Get(2, 2));
-		b = atan2(Get(1, 0), Get(1, 1));
+		h = atan2(m[2][0], m[2][2]);
+		b = atan2(m[0][1], m[1][1]);
 	}
 
 	euler.y = CMath::RadToDeg(h);

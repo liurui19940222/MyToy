@@ -7,26 +7,27 @@ void CRelationshipTest::OnStart()
 	MainCamera->SetPosition(Vector3(0, 0, 10));
 	MainCamera->SetEulerAngles(Vector3(0, 180, 0));
 	cameraPos = MainCamera->GetPosition();
-	InitLight();
+	//InitLight();
 	CMeshCube* cube = Engine->CreateObject<CMeshCube>();
-	go = Engine->CreateGameObject();
+	go = Engine->CreateGameObject("testGo");
 	go->AddComponent<CMeshRenderer>()->SetModel(cube);
 	go->SetPosition(Vector3(0, 0.7f, 0));
-
-	for (int i = 0; i < 4; i++)
+	go->SetLocalScale(Vector3::One() * 1);
+	for (int i = 0; i < 1; i++)
 	{
-		childs.push_back(Engine->CreateGameObject());
+		string name = "child";
+		childs.push_back(Engine->CreateGameObject(name));
 		childs[i]->SetParent(go);
 		childs[i]->SetLocalScale(Vector3(1.5, 0.1f, 0.5f));
 		childs[i]->AddComponent<CMeshRenderer>()->SetModel(cube);
 	}
 
 	childs[0]->SetLocalPosition(Vector3(1, 0, 0));
-	childs[1]->SetLocalPosition(Vector3(-1, 0, 0));
-	childs[2]->SetLocalPosition(Vector3(1, 0, 0));
-	childs[3]->SetLocalPosition(Vector3(-1, 0, 0));
-	childs[2]->SetLocalEulerAngles(Vector3(0, 90, 0));
-	childs[3]->SetLocalEulerAngles(Vector3(0, 90, 0));
+	//childs[1]->SetLocalPosition(Vector3(-1, 0, 0));
+	//childs[2]->SetLocalPosition(Vector3(1, 0, 0));
+	//childs[3]->SetLocalPosition(Vector3(-1, 0, 0));
+	//childs[2]->SetLocalEulerAngles(Vector3(0, 90, 0));
+	//childs[3]->SetLocalEulerAngles(Vector3(0, 90, 0));
 }
 
 void CRelationshipTest::OnUpdate()
@@ -65,6 +66,7 @@ void CRelationshipTest::OnUpdate()
 	Vector3 pos = go->GetPosition();
 	pos.x += h * CTime::deltaTime * 10;
 	pos.y += v * CTime::deltaTime * 10;
+	//go->SetLocalScale(Vector3::One() * (1 + sin(CTime::time) * 5));
 	go->SetPosition(pos);
 }
 
