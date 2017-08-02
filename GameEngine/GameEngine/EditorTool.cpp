@@ -84,6 +84,36 @@ void CEditorTool::DrawRect(SRect2D rect, Matrix4x4& modelToWorldMatrix)
 	glPopMatrix();
 }
 
+void CEditorTool::DrawVector(const Vector3& vector, const Vector3& pos, const Color& color)
+{
+	glDisable(GL_DEPTH_TEST);
+	glPushMatrix();
+	float width;
+	glGetFloatv(GL_LINE_WIDTH, &width);
+	glLineWidth(3);
+	glTranslatef(pos.x, pos.y, pos.z);
+	glColor3f(color.r, color.g, color.b);
+	glBegin(GL_LINES);
+	glVertex3f(0, 0, 0);
+	glVertex3f(vector.x, vector.y, vector.z);
+	glEnd();
+	glLineWidth(width);
+	glPopMatrix();
+	glEnable(GL_DEPTH_TEST);
+}
+
+void CEditorTool::DrawAxis(const Vector3& forward, const Vector3& right, const Vector3& up, const Vector3& pos)
+{
+	DrawVector(forward, pos, Color::blue());
+	DrawVector(right, pos, Color::red());
+	DrawVector(up, pos, Color::green());
+}
+
+void CEditorTool::DrawAxis(const CGameObject* go)
+{
+	DrawAxis(go->GetForward(), go->GetRight(), go->GetUp(), go->GetPosition());
+}
+
 void CEditorTool::PrintTree(bool showDepth)
 {
 	Engine->ForeachGameObject([showDepth](CGameObject* go, int depth) {

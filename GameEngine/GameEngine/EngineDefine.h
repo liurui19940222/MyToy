@@ -29,7 +29,7 @@ struct Color32
 
 	Color32(byte r, byte g, byte b, byte a);
 
-	Color32(Color color);
+	Color32(const Color& color);
 
 	Color32(uint color);
 
@@ -52,7 +52,7 @@ struct Color
 
 	Color(float r, float g, float b, float a);
 
-	Color(Color32 color32);
+	Color(const Color32& color32);
 
 	Color(int color);
 
@@ -102,7 +102,7 @@ struct SRect2D
 
 	SRect2D(float center_x, float center_y, float half_size_x, float half_size_y);
 
-	bool Overlay(Vector2 pos);
+	bool Overlay(const Vector2& pos) const;
 };
 
 class CEngineDefine

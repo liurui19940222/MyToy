@@ -101,10 +101,10 @@ void CEngine::Render()
 		if (drawDebug) go->OnDrawDebug();
 	});
 
-	BeginOrtho();
-	GUISystem->OnRender();
-	if (drawDebug) GUISystem->OnDrawDebug();
-	EndOrtho();
+	//BeginOrtho();
+	//GUISystem->OnRender();
+	//if (drawDebug) GUISystem->OnDrawDebug();
+	//EndOrtho();
 }
 
 void CEngine::Quit()

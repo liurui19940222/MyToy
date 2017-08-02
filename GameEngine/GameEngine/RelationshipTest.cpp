@@ -1,7 +1,9 @@
 #include "RelationshipTest.h"
+#include "RenderCamera.h"
 
 void CRelationshipTest::OnStart()
 {
+	CRenderCamera* batch = new CRenderCamera;
 	Engine->SetClearColor(Color::black());
 	Engine->SetDrawGrid(true);
 	MainCamera->SetPosition(Vector3(0, 0, 10));
@@ -11,7 +13,7 @@ void CRelationshipTest::OnStart()
 	CMeshCube* cube = Engine->CreateObject<CMeshCube>();
 	go = Engine->CreateGameObject("testGo");
 	go->AddComponent<CMeshRenderer>()->SetModel(cube);
-	go->SetPosition(Vector3(0, 0.7f, 0));
+	go->SetPosition(Vector3(0, 0.0, 0));
 	go->SetLocalScale(Vector3::One() * 1);
 
 	for (int i = 0; i < 4; i++)
@@ -52,6 +54,8 @@ void CRelationshipTest::OnUpdate()
 		//euler.y += CInput::GetAxis("MouseX") * CTime::deltaTime;
 		//euler.x += CInput::GetAxis("MouseY") * CTime::deltaTime;
 		euler.y += CTime::deltaTime * 300;
+		//euler.y -= CTime::deltaTime * h * 100;
+		//euler.x += CTime::deltaTime * v * 100;
 
 		go->SetLocalEulerAngles(euler);
 	}
@@ -83,7 +87,7 @@ void CRelationshipTest::OnUpdate()
 
 void CRelationshipTest::OnRender()
 {
-
+	CEditorTool::DrawAxis(go);
 }
 
 void CRelationshipTest::OnClose()

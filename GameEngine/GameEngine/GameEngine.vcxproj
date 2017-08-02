@@ -111,6 +111,8 @@
     <ClInclude Include="ModelFile.h" />
     <ClInclude Include="PngFile.h" />
     <ClInclude Include="MeshRenderer.h" />
+    <ClInclude Include="RenderCamera.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="SpriteAnimation.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="TextRenderer.h" />
@@ -155,6 +157,8 @@
     <ClCompile Include="ModelFile.cpp" />
     <ClCompile Include="PngFile.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
+    <ClCompile Include="RenderCamera.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SpriteAnimation.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TextRenderer.cpp" />

@@ -109,6 +109,15 @@
     <Filter Include="Container">
       <UniqueIdentifier>{a99bae24-83a5-44fa-b3bf-dbe911d2b9bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{b31b7bba-898f-4472-8d52-16fbc4fd2abb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\头文件">
+      <UniqueIdentifier>{854fd6b8-1f40-41e2-8b6a-98f6ffacb398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\源文件">
+      <UniqueIdentifier>{74236a92-6ee8-4ad3-b0c8-3b4b3b9a1cde}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -246,6 +255,12 @@
     <ClInclude Include="GUILable.h">
       <Filter>GUISystem\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Render\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderCamera.h">
+      <Filter>Render\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -367,6 +382,12 @@
     </ClCompile>
     <ClCompile Include="GUILable.cpp">
       <Filter>GUISystem\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Render\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderCamera.cpp">
+      <Filter>Render\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

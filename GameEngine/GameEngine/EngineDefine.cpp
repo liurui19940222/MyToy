@@ -15,7 +15,7 @@ SRect2D::SRect2D() {}
 SRect2D::SRect2D(float center_x, float center_y, float half_size_x, float half_size_y) : 
 	center_x(center_x), center_y(center_y), half_size_x(half_size_x), half_size_y(half_size_y) {}
 
-bool SRect2D::Overlay(Vector2 pos)
+bool SRect2D::Overlay(const Vector2& pos) const
 {
 	if (pos.x < center_x - half_size_x) return false;
 	else if (pos.x > center_x + half_size_x) return false;
@@ -35,7 +35,7 @@ Color::Color(float r, float g, float b, float a)
 	Shrink();
 }
 
-Color::Color(Color32 color32)
+Color::Color(const Color32& color32)
 {
 	this->a = color32.a / 255.0f;
 	this->r = color32.r / 255.0f;
@@ -139,7 +139,7 @@ Color32::Color32(byte r, byte g, byte b, byte a)
 	this->a = a;
 }
 
-Color32::Color32(Color color)
+Color32::Color32(const Color& color)
 {
 	this->a = color.a * 255 + 0.5f;
 	this->r = color.r * 255 + 0.5f;
