@@ -9,8 +9,12 @@
 #include<map>
 #include<vector>
 #include<string>
+#include<functional>
 
 using namespace std;
+
+typedef function<bool(CGameObject*, int)> ForeachGoCallbackR;
+typedef function<void(CGameObject*, int)> ForeachGoCallback;
 
 class CEngine
 {
@@ -55,7 +59,19 @@ public:
 
 	CGameObject* CreateGameObject(string name);
 
+	void AddGameObject(CGameObject* go);
+
+	void RemoveGameObject(CGameObject* go);
+
 	void DestroyGameObject(CGameObject* go);
+
+	void ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback);
+
+	void ForeachGameObjectR(ForeachGoCallbackR callback);
+
+	void ForeachGameObject(CGameObject* go, ForeachGoCallback callback);
+
+	void ForeachGameObject(ForeachGoCallback callback);
 
 	CEngine* SetDrawGrid(bool drawGrid);
 
@@ -80,7 +96,11 @@ private:
 
 	map<int, Object*> m_objects;
 
-	map<int, CGameObject*> m_gameObjects;
+	//所有的根节点(没有父物体的)GameObject
+	vector<CGameObject*> m_gameObjects;
+
+	bool ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback, int depth);
+	void ForeachGameObject(CGameObject* go, ForeachGoCallback callback, int depth);
 };
 
 #endif

@@ -10,7 +10,7 @@ using namespace guisystem;
 
 CEngine::CEngine() : clearColor(0, 0, 0, 0) { }
 
-CEngine::~CEngine(){ }
+CEngine::~CEngine() { }
 
 void CEngine::InitEngine(HINSTANCE instance, HWND hwnd)
 {
@@ -81,11 +81,9 @@ void CEngine::Update()
 	glLoadIdentity();
 	glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 
-	map<int, CGameObject*>::iterator it = m_gameObjects.begin();
-	while (it != m_gameObjects.end())
-	{
-		(*it++).second->OnUpdate();
-	}
+	ForeachGameObject([](CGameObject* go, int depth) {
+		go->OnUpdate();
+	});
 }
 
 void CEngine::Render()
@@ -94,15 +92,14 @@ void CEngine::Render()
 
 	if (drawGrid) CEditorTool::DrawGrid(MainCamera->GetPosition(), Vector3(0, 0, 0), Color(0, 0, 0.8, 1));
 
-	map<int, CGameObject*>::iterator it = m_gameObjects.begin();
-	while (it != m_gameObjects.end())
-	{
-		(*it).second->BeginRender();
-		(*it).second->OnRender();
-		(*it).second->EndRender();
-		if (drawDebug) (*it).second->OnDrawDebug();
-		it++;
-	}
+	vector<CGameObject*>::iterator it = m_gameObjects.begin();
+
+	ForeachGameObject([this](CGameObject* go, int depth) {
+		go->BeginRender();
+		go->OnRender();
+		go->EndRender();
+		if (drawDebug) go->OnDrawDebug();
+	});
 
 	BeginOrtho();
 	GUISystem->OnRender();
@@ -116,11 +113,9 @@ void CEngine::Quit()
 	CInput::ShutDown();
 	delete m_camera;
 
-	map<int, CGameObject*>::iterator it = m_gameObjects.begin();
-	while (it != m_gameObjects.end())
-	{
-		(*it++).second->OnRelease();
-	}
+	ForeachGameObject([](CGameObject* go, int depth) {
+		go->OnRelease();
+	});
 }
 
 CCamera* CEngine::GetCamera()
@@ -158,9 +153,37 @@ CGameObject* CEngine::CreateGameObject()
 CGameObject* CEngine::CreateGameObject(string name)
 {
 	CGameObject* go = new CGameObject(name);
-	m_gameObjects.insert(make_pair(go->GetInstanceId(), go));
+	AddGameObject(go);
 	go->OnStart();
 	return go;
+}
+
+void CEngine::AddGameObject(CGameObject* go)
+{
+	auto it = m_gameObjects.begin();
+	while (it != m_gameObjects.end())
+	{
+		if ((*it) == go)
+		{
+			return;
+		}
+		it++;
+	}
+	m_gameObjects.push_back(go);
+}
+
+void CEngine::RemoveGameObject(CGameObject* go)
+{
+	auto it = m_gameObjects.begin();
+	while (it != m_gameObjects.end())
+	{
+		if ((*it) == go)
+		{
+			m_gameObjects.erase(it);
+			return;
+		}
+		it++;
+	}
 }
 
 void CEngine::DestroyGameObject(CGameObject* go)
@@ -175,9 +198,62 @@ void CEngine::DestroyGameObject(CGameObject* go)
 
 	if (go->parent)
 		go->parent->RemoveChild(go);
-	m_gameObjects.erase(go->GetInstanceId());
+	RemoveGameObject(go);
 	go->OnRelease();
 	delete go;
+}
+
+void CEngine::ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback)
+{
+	if (go == NULL || callback == NULL) return;
+	ForeachGameObjectR(go, callback, 0);
+}
+
+void CEngine::ForeachGameObjectR(ForeachGoCallbackR callback)
+{
+	if (m_gameObjects.size() == 0 || callback == NULL) return;
+	auto it = m_gameObjects.begin();
+	while (it != m_gameObjects.end())
+	{
+		if (!ForeachGameObjectR(*it++, callback, 0))
+			break;
+	}
+}
+
+void CEngine::ForeachGameObject(CGameObject* go, ForeachGoCallback callback)
+{
+	if (go == NULL || callback == NULL) return;
+	ForeachGameObject(go, callback, 0);
+}
+
+void CEngine::ForeachGameObject(ForeachGoCallback callback)
+{
+	if (m_gameObjects.size() == 0 || callback == NULL) return;
+	auto it = m_gameObjects.begin();
+	while (it != m_gameObjects.end())
+	{
+		ForeachGameObject(*it++, callback, 0);
+	}
+}
+
+bool CEngine::ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback, int depth)
+{
+	if (!callback(go, depth)) return false;
+	for (auto it = go->childs.begin(); it != go->childs.end(); ++it)
+	{
+		if (!ForeachGameObjectR(*it, callback, depth + 1))
+			return false;
+	}
+	return true;
+}
+
+void CEngine::ForeachGameObject(CGameObject* go, ForeachGoCallback callback, int depth)
+{
+	callback(go, depth);
+	for (auto it = go->childs.begin(); it != go->childs.end(); ++it)
+	{
+		ForeachGameObject(*it, callback, depth + 1);
+	}
 }
 
 CEngine* CEngine::SetDrawGrid(bool drawGrid)

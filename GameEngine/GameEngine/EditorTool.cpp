@@ -1,9 +1,10 @@
-#include"EditorTool.h"
-#include"Engine.h"
-#include"Application.h"
 #include<Windows.h>
 #include<gl\GL.h>
 #include<gl\GLU.h>
+#include"EditorTool.h"
+#include"Engine.h"
+#include"Application.h"
+#include"Debug.h"
 
 CEditorTool::CEditorTool()
 {
@@ -81,4 +82,32 @@ void CEditorTool::DrawRect(SRect2D rect, Matrix4x4& modelToWorldMatrix)
 	glEnable(GL_DEPTH_TEST);
 
 	glPopMatrix();
+}
+
+void CEditorTool::PrintTree(bool showDepth)
+{
+	Engine->ForeachGameObject([showDepth](CGameObject* go, int depth) {
+		PrintTree(go, depth, showDepth);
+	});
+}
+
+void CEditorTool::PrintTree(CGameObject* go, bool showDepth)
+{
+	Engine->ForeachGameObject(go, [showDepth](CGameObject* go, int depth) {
+		PrintTree(go, depth, showDepth);
+	});
+}
+
+void CEditorTool::PrintTree(CGameObject* go, int depth, bool showDepth)
+{
+	string str;
+	for (int i = 0; i < depth; i++)
+	{
+		str += "   ";
+	}
+	if (showDepth)
+		str = str + go->GetName() + " " + (char)('0' + depth);
+	else
+		str = str + go->GetName();
+	CDebug::Log(str.c_str());
 }

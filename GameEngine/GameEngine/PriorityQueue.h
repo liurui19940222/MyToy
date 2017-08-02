@@ -21,10 +21,6 @@ namespace container {
 	class CPriorityQueue
 	{
 	public:
-		//typedef int(*Comparator) (T, T);
-		//typedef bool(*ForeachCallResult) (T);
-		//typedef void(*ForeachCall) (T);
-
 		typedef function<int(T, T)> Comparator;
 		typedef function<bool(T)> ForeachCallResult;
 		typedef function<void(T)> ForeachCall;

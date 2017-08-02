@@ -5,7 +5,7 @@ void CRelationshipTest::OnStart()
 	Engine->SetClearColor(Color::black());
 	Engine->SetDrawGrid(true);
 	MainCamera->SetPosition(Vector3(0, 0, 10));
-	MainCamera->SetEulerAngles(Vector3(0, 180, 0));
+	MainCamera->SetLocalEulerAngles(Vector3(0, 180, 0));
 	cameraPos = MainCamera->GetPosition();
 	//InitLight();
 	CMeshCube* cube = Engine->CreateObject<CMeshCube>();
@@ -13,9 +13,11 @@ void CRelationshipTest::OnStart()
 	go->AddComponent<CMeshRenderer>()->SetModel(cube);
 	go->SetPosition(Vector3(0, 0.7f, 0));
 	go->SetLocalScale(Vector3::One() * 1);
-	for (int i = 0; i < 1; i++)
+
+	for (int i = 0; i < 4; i++)
 	{
 		string name = "child";
+		name += i + '0';
 		childs.push_back(Engine->CreateGameObject(name));
 		childs[i]->SetParent(go);
 		childs[i]->SetLocalScale(Vector3(1.5, 0.1f, 0.5f));
@@ -23,11 +25,20 @@ void CRelationshipTest::OnStart()
 	}
 
 	childs[0]->SetLocalPosition(Vector3(1, 0, 0));
-	//childs[1]->SetLocalPosition(Vector3(-1, 0, 0));
-	//childs[2]->SetLocalPosition(Vector3(1, 0, 0));
-	//childs[3]->SetLocalPosition(Vector3(-1, 0, 0));
-	//childs[2]->SetLocalEulerAngles(Vector3(0, 90, 0));
-	//childs[3]->SetLocalEulerAngles(Vector3(0, 90, 0));
+	childs[1]->SetLocalPosition(Vector3(-1, 0, 0));
+	childs[2]->SetLocalPosition(Vector3(1, 0, 0));
+	childs[3]->SetLocalPosition(Vector3(-1, 0, 0));
+	childs[2]->SetLocalEulerAngles(Vector3(0, 90, 0));
+	childs[3]->SetLocalEulerAngles(Vector3(0, 90, 0));
+
+	CGameObject* go2 = Engine->CreateGameObject("testGo2");
+	go2->SetParent(childs[0]);
+
+	Engine->CreateGameObject("root1");
+	Engine->CreateGameObject("root2");
+	Engine->CreateGameObject("root3");
+
+	CEditorTool::PrintTree();
 }
 
 void CRelationshipTest::OnUpdate()
@@ -37,12 +48,12 @@ void CRelationshipTest::OnUpdate()
 
 	if (go)
 	{
-		Vector3 euler = go->GetEulerAngles();
+		Vector3 euler = go->GetLocalEulerAngles();
 		//euler.y += CInput::GetAxis("MouseX") * CTime::deltaTime;
 		//euler.x += CInput::GetAxis("MouseY") * CTime::deltaTime;
 		euler.y += CTime::deltaTime * 300;
 
-		go->SetEulerAngles(euler);
+		go->SetLocalEulerAngles(euler);
 	}
 	if (CInput::GetKeyDown(DIK_V))
 	{
@@ -66,7 +77,7 @@ void CRelationshipTest::OnUpdate()
 	Vector3 pos = go->GetPosition();
 	pos.x += h * CTime::deltaTime * 10;
 	pos.y += v * CTime::deltaTime * 10;
-	//go->SetLocalScale(Vector3::One() * (1 + sin(CTime::time) * 5));
+	//go->SetLocalScale(Vector3::One() * (1 + sin(CTime::time * 2) * 1));
 	go->SetPosition(pos);
 }
 

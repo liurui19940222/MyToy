@@ -5,7 +5,6 @@
 CGameObject::CGameObject(string name) : Object(name)
 {
 	SetPosition(Vector3(0, 0, 0));
-	SetEulerAngles(Vector3(0, 0, 0));
 	SetLocalScale(Vector3(1, 1, 1));
 	SetLocalPosition(Vector3(0, 0, 0));
 	SetLocalEulerAngles(Vector3(0, 0, 0));
@@ -16,7 +15,6 @@ CGameObject::CGameObject(string name) : Object(name)
 }
 
 CGameObject::~CGameObject() { }
-
 
 void CGameObject::SetPosition(Vector3 pos)
 {
@@ -36,81 +34,22 @@ void CGameObject::SetPosition(Vector3 pos)
 			(*it)->UpdatePosition();
 		}
 	}
-}
 
-void CGameObject::SetEulerAngles(Vector3 euler)
-{
-	SetEulerAngles(euler, true);
-}
-
-void CGameObject::SetEulerAngles(Vector3 euler, bool updateLocal)
-{
-	this->eulerAngles.x = fmod(euler.x, 360.0f);
-	this->eulerAngles.y = fmod(euler.y, 360.0f);
-	this->eulerAngles.z = fmod(euler.z, 360.0f);
-
-	float thetaX = CMath::DegToRad(this->eulerAngles.x);
-	float thetaY = CMath::DegToRad(this->eulerAngles.y);
-	float thetaZ = CMath::DegToRad(this->eulerAngles.z);
-
-	rotMat = Matrix4x4::Rotate(euler.x, euler.y, euler.z);
-
-	if (updateLocal)
-	{
-		if (parent)
-		{
-			Matrix4x4 localMat = parent->rotMat.Transpose() * rotMat;
-			this->localEulerAngles = localMat.EulerAngles();
-		}
-		else
-		{
-			this->localEulerAngles = euler;
-		}
-	}
-
-	if (childs.size() > 0)
-	{
-		for (vector<CGameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
-		{
-			(*it)->UpdateEulerAngles();
-		}
-	}
-
-	this->forward = Vector3::Forward() * rotMat.Transpose();
-	this->right = Vector3::Cross(this->forward, Vector3(0, 1, 0));
-	this->up = Vector3::Cross(this->right, this->forward);
-
-	GetModelToWorldMat();
+	ComputeModelToWorldMat();
 }
 
 void CGameObject::SetLocalScale(Vector3 s)
 {
-	if (parent)
-	{
-		this->scale.x = parent->scale.x * s.x;
-		this->scale.y = parent->scale.y * s.y;
-		this->scale.z = parent->scale.z * s.z;
-		this->localScale = s;
-	}
-	else
-	{
-		this->scale = this->localScale = s;
-	}
+	this->localScale = s;
 
-	scaleMat = Matrix4x4(
-		scale.x, 0, 0, 0,
-		0, scale.y, 0, 0,
-		0, 0, scale.z, 0,
+	localScaleMat = Matrix4x4(
+		localScale.x, 0, 0, 0,
+		0, localScale.y, 0, 0,
+		0, 0, localScale.z, 0,
 		0, 0, 0, 1
 	);
 
-	if (childs.size() > 0)
-	{
-		for (vector<CGameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
-		{
-			(*it)->UpdateScale();
-		}
-	}
+	ComputeModelToWorldMat();
 }
 
 void CGameObject::SetLocalPosition(Vector3 pos)
@@ -124,24 +63,20 @@ void CGameObject::SetLocalPosition(Vector3 pos)
 		0, 0, 0, 1
 	);
 
-	GetModelToWorldMat();
+	ComputeModelToWorldMat();
 }
 
 void CGameObject::SetLocalEulerAngles(Vector3 euler)
 {
-	localEulerAngles = euler;
-	if (parent)
-	{
-		Matrix4x4 rot = Matrix4x4::Rotate(euler.x, euler.y, euler.z);
-		Matrix4x4 worldMat = parent->rotMat * rot;
-		Vector3 e = worldMat.EulerAngles();
-		SetEulerAngles(worldMat.EulerAngles(), false);
-	}
-	else
-	{
-		SetEulerAngles(euler, false);
-	}
-	GetModelToWorldMat();
+	euler.x = fmod(euler.x, 360.0f);
+	euler.y = fmod(euler.y, 360.0f);
+	euler.z = fmod(euler.z, 360.0f);
+	this->localEulerAngles = euler;
+	this->localRotateMat = Matrix4x4::Rotate(euler.x, euler.y, euler.z);
+	this->forward = Vector3::Forward() * localRotateMat.Transpose();
+	this->right = Vector3::Cross(this->forward, Vector3(0, 1, 0));
+	this->up = Vector3::Cross(this->right, this->forward);
+	ComputeModelToWorldMat();
 }
 
 Vector3 CGameObject::GetLocalScale()
@@ -169,11 +104,6 @@ Vector3 CGameObject::GetRealPosition()
 	return realPosition;
 }
 
-Vector3 CGameObject::GetEulerAngles()
-{
-	return this->eulerAngles;
-}
-
 Vector3 CGameObject::GetUp()
 {
 	return this->up;
@@ -194,31 +124,21 @@ CGameObject* CGameObject::GetParent()
 	return this->parent;
 }
 
-Matrix4x4 CGameObject::GetModelToWorldMat()
+Matrix4x4 CGameObject::ComputeModelToWorldMat()
 {
-	if (name == "testGo")
-	{
-		int i = 0;
-	}
-	else if (name == "child")
-	{
-		int j = 0;
-	}
-	modelToWorldMat = (localMoveMat.Transpose() * scaleMat * rotMat * moveMat.Transpose());
+	if (!parent)
+		modelToWorldMat = moveMat * localRotateMat * localScaleMat;
+	else
+		modelToWorldMat = parent->GetModelToWorldMat() * localRotateMat * localScaleMat * localMoveMat;
+	realPosition.x = modelToWorldMat[0][3];
+	realPosition.x = modelToWorldMat[1][3];
+	realPosition.x = modelToWorldMat[2][3];
 	return modelToWorldMat;
 }
 
-void CGameObject::LookAt(Vector3 targetPos)
+Matrix4x4 CGameObject::GetModelToWorldMat()
 {
-	this->forward = (targetPos - this->position).Normalization();
-	this->right = Vector3::Cross(this->forward, Vector3(0, 1, 0)).Normalization();
-	this->up = Vector3::Cross(this->right, this->forward);
-	rotMat = Matrix4x4(
-		right.x, right.y, right.z, 0,
-		this->up.x, this->up.y, this->up.z, 0,
-		this->forward.x, this->forward.y, this->forward.z, 0,
-		0, 0, 0, 1
-	);
+	return modelToWorldMat;
 }
 
 void CGameObject::OnStart()
@@ -294,12 +214,6 @@ void CGameObject::UpdateEulerAngles()
 	}
 }
 
-void CGameObject::UpdateScale()
-{
-	if (parent)
-		SetLocalScale(this->localScale);
-}
-
 void CGameObject::AddChild(CGameObject* child)
 {
 	child->parent = this;
@@ -310,6 +224,7 @@ void CGameObject::AddChild(CGameObject* child)
 			return;
 		}
 	}
+	Engine->RemoveGameObject(child);
 	childs.push_back(child);
 }
 
@@ -321,6 +236,7 @@ void CGameObject::RemoveChild(CGameObject* child)
 		{
 			(*it)->parent = NULL;
 			childs.erase(it);
+			Engine->AddGameObject(*it);
 			return;
 		}
 	}

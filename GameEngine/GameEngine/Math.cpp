@@ -343,7 +343,7 @@ Matrix4x4 Matrix4x4::Multiply(Matrix4x4& mat)
 	Matrix4x4 temp;
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
-			temp[j][i] = mat[i][0] * m[0][j] + mat[i][1] * m[1][j] + mat[i][2] * m[2][j] + mat[i][3] * m[3][j];
+			temp[j][i] = mat[j][0] * m[0][i] + mat[j][1] * m[1][i] + mat[j][2] * m[2][i] + mat[j][3] * m[3][i];
 
 	return temp;
 }
@@ -570,12 +570,12 @@ Vector3 Matrix4x4::EulerAngles()
 	if (sp > 0.9999f)
 	{
 		b = 0;
-		h = atan2(-m[0][2], m[0][0]);
+		h = atan2(-m[2][0], m[0][0]);
 	}
 	else
 	{
-		h = atan2(m[2][0], m[2][2]);
-		b = atan2(m[0][1], m[1][1]);
+		h = atan2(m[0][2], m[2][2]);
+		b = atan2(m[2][0], m[1][1]);
 	}
 
 	euler.y = CMath::RadToDeg(h);

@@ -6,7 +6,7 @@ void CTextTest::OnStart()
 	Engine->SetDrawGrid(false);
 	Engine->SetDrawDebug(true);
 	MainCamera->SetPosition(Vector3(0, 0, 10));
-	MainCamera->SetEulerAngles(Vector3(0, 180, 0));
+	MainCamera->SetLocalEulerAngles(Vector3(0, 180, 0));
 
 	CTrueTypeFont* font = FontManager->LoadFont(1, "C:/Windows/Fonts/StencilStd.otf");
 	go = Engine->CreateGameObject();
@@ -89,10 +89,10 @@ void CTextTest::OnUpdate()
 
 	float h = CInput::GetAxis("Horizontal");
 	float v = CInput::GetAxis("Vertical");
-	Vector3 euler = go->GetEulerAngles();
+	Vector3 euler = go->GetLocalEulerAngles();
 	euler.y += h * CTime::deltaTime * 60;
 	euler.x += v * CTime::deltaTime * 60;
-	go->SetEulerAngles(euler);
+	go->SetLocalEulerAngles(euler);
 }
 
 void CTextTest::OnRender()

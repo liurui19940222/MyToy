@@ -32,12 +32,14 @@ d:\github\mytoy\gameengine\gameengine\debug\editortool.obj
 d:\github\mytoy\gameengine\gameengine\debug\engine.obj
 d:\github\mytoy\gameengine\gameengine\debug\enginedefine.obj
 d:\github\mytoy\gameengine\gameengine\debug\fontmanager.obj
+d:\github\mytoy\gameengine\gameengine\debug\fontrenderer.obj
 d:\github\mytoy\gameengine\gameengine\debug\gameobject.obj
 d:\github\mytoy\gameengine\gameengine\debug\gamewindow.obj
 d:\github\mytoy\gameengine\gameengine\debug\guiimage.obj
 d:\github\mytoy\gameengine\gameengine\debug\guisystem.obj
 d:\github\mytoy\gameengine\gameengine\debug\guitest.obj
 d:\github\mytoy\gameengine\gameengine\debug\imagetest.obj
+d:\github\mytoy\gameengine\gameengine\debug\guilable.obj
 d:\github\mytoy\gameengine\debug\gameengine.ilk
 d:\github\mytoy\gameengine\debug\gameengine.exe
 d:\github\mytoy\gameengine\debug\gameengine.pdb

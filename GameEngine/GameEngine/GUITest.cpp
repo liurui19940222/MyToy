@@ -11,7 +11,7 @@ void GUITest::OnStart()
 	Engine->SetDrawGrid(false);
 	Engine->SetDrawDebug(true);
 	MainCamera->SetPosition(Vector3(0, 0, 10));
-	MainCamera->SetEulerAngles(Vector3(0, 180, 0));
+	MainCamera->SetLocalEulerAngles(Vector3(0, 180, 0));
 
 	CTexture* tex = CTexture::Create("F://monthad_1.png");
 	CTexture* tex2 = CTexture::Create("F://avatar_15.png");
@@ -169,13 +169,13 @@ void GUITest::OnUpdate()
 		widget2->SetHeight(height);
 	}
 
-	//Vector3 euler = go2->GetEulerAngles();
+	//Vector3 euler = go2->GetLocalEulerAngles();
 	//euler.z += CTime::deltaTime * 30;
-	//go2->SetEulerAngles(euler);
+	//go2->SetLocalEulerAngles(euler);
 
-	//euler = go->GetEulerAngles();
+	//euler = go->GetLocalEulerAngles();
 	//euler.z -= CTime::deltaTime * 30;
-	//go->SetEulerAngles(euler);
+	//go->SetLocalEulerAngles(euler);
 }
 
 void GUITest::OnRender()
