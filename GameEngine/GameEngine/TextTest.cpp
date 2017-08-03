@@ -2,11 +2,10 @@
 
 void CTextTest::OnStart()
 {
-	Engine->SetClearColor(Color::black());
 	Engine->SetDrawGrid(false);
 	Engine->SetDrawDebug(true);
-	MainCamera->SetPosition(Vector3(0, 0, 10));
-	MainCamera->SetLocalEulerAngles(Vector3(0, 180, 0));
+	MainCameraGo->SetPosition(Vector3(0, 0, 10));
+	MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
 
 	CTrueTypeFont* font = FontManager->LoadFont(1, "C:/Windows/Fonts/StencilStd.otf");
 	go = Engine->CreateGameObject();

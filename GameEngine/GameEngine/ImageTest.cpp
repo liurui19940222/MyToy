@@ -2,10 +2,9 @@
 
 void CImageTest::OnStart()
 {
-	Engine->SetClearColor(Color::black());
 	Engine->SetDrawGrid(false);
-	MainCamera->SetPosition(Vector3(0, 7, 10));
-	MainCamera->SetLocalEulerAngles(Vector3(30, 180, 0));
+	MainCameraGo->SetPosition(Vector3(0, 7, 10));
+	MainCameraGo->SetLocalEulerAngles(Vector3(30, 180, 0));
 	InitLight();
 	CBitImage* image = Engine->CreateImage("textures/model.png");
 	CTexture* texture = CTexture::Create(image);

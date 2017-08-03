@@ -6,7 +6,6 @@
 #include<Windows.h>
 #include<windowsx.h>
 #include<string>
-//#include<rmxfguid.h>
 #include<dinput.h>
 #include"Math.h"
 

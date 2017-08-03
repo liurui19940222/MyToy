@@ -1,7 +1,5 @@
 #include "RenderCamera.h"
 
-#pragma comment(lib, "glew32.lib")
-
 CRenderCamera::CRenderCamera() : m_projectionType(EProjectionType::Perspective) , m_cameraClearFlag(ECameraClearFlag::SolidColor)
 , m_fov(0) , m_near(0) , m_far(0) , m_left(0) , m_right(0)
 , m_top(0) , m_bottom(0), m_depth(0)
@@ -34,6 +32,11 @@ CRenderCamera* CRenderCamera::Ortho(float left, float right, float bottom, float
 	return this;
 }
 
+CRenderCamera* CRenderCamera::Ortho(float halfSize, float aspect)
+{
+	return Ortho(-halfSize * aspect, halfSize * aspect, -halfSize, halfSize, 0.01f, 1000.0f);
+}
+
 CRenderCamera* CRenderCamera::LookAt(const Vector3& eye, const Vector3& center, const Vector3& up)
 {
 	m_eyePos = eye;
@@ -60,5 +63,5 @@ int CRenderCamera::GetDepth() const { return m_depth; }
 const Vector3& CRenderCamera::GetEyePosition() const { return m_eyePos; }
 const Vector3& CRenderCamera::GetCenterPosition() const { return m_centerPos; }
 const Vector3& CRenderCamera::GetUp() const { return m_up; }
-const Matrix4x4& CRenderCamera::GetViewMatrix() const { return m_viewMat; }
-const Matrix4x4& CRenderCamera::GetProjectionMatrix() const { return m_projectionMat; }
+Matrix4x4 CRenderCamera::GetViewMatrix() const { return m_viewMat; }
+Matrix4x4 CRenderCamera::GetProjectionMatrix() const { return m_projectionMat; }

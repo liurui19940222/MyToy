@@ -142,18 +142,6 @@ void CGameObject::OnUpdate()
 	}
 }
 
-void CGameObject::BeginRender()
-{
-	glColor3f(1.0f, 1.0f, 1.0f);
-	glPushMatrix();
-	glMultMatrixf((float*)&GetModelToWorldMat());
-}
-
-void CGameObject::EndRender()
-{
-	glPopMatrix();
-}
-
 void CGameObject::OnRender()
 {
 	vector<CComponent*>::iterator it = components.begin();

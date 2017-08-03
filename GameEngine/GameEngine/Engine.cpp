@@ -5,21 +5,25 @@
 #include"Time.h"
 #include"Debug.h"
 #include"GUISystem.h"
+#include"GameObject.h"
 
 using namespace guisystem;
 
-CEngine::CEngine() : clearColor(0, 0, 0, 0) { }
+CEngine::CEngine() { }
 
 CEngine::~CEngine() { }
 
 void CEngine::InitEngine(HINSTANCE instance, HWND hwnd)
 {
+	glewInit();
 	CDebug::Init(hwnd);
 	CInput::Init(instance, hwnd);
 	CTime::InitTime();
 	CTime::SetTargetFrameCount(60);
-	m_camera = new CCamera("MainCamera");
-	m_camera->SetPosition(Vector3(0, 4, -10));
+	m_cameras.SetComparator(CompareCamera);
+	m_camera = CreateGameObject("MainCamera")->AddComponent<CCamera>();
+	m_camera->gameObject->SetPosition(Vector3(0, 4, -10));
+	m_camera->Perspective(54.0f, (GLfloat)Application->GetWindowWidth() / (GLfloat)Application->GetWindowHeight(), 1.0f, 1000.0f);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 }
 
@@ -31,10 +35,6 @@ void CEngine::SetupProjection(int width, int height)
 	}
 	GUISystem->InitGUI(width, height);
 	glViewport(0, 0, width, height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	gluPerspective(54.0f, (GLfloat)width / (GLfloat)height, 1.0f, 1000.0f);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -76,11 +76,6 @@ void CEngine::Update()
 	CInput::GetState();
 	GUISystem->OnUpdate();
 
-	glEnable(GL_DEPTH_TEST);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	glLoadIdentity();
-	glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
-
 	ForeachGameObject([](CGameObject* go, int depth) {
 		go->OnUpdate();
 	});
@@ -88,19 +83,18 @@ void CEngine::Update()
 
 void CEngine::Render()
 {
-	MainCamera->OnRender();
+	m_cameras.Foreach([this](CCamera* camera) {
+		camera->BeginOneFrame();
+		vector<CGameObject*>::iterator it = m_gameObjects.begin();
 
-	if (drawGrid) CEditorTool::DrawGrid(MainCamera->GetPosition(), Vector3(0, 0, 0), Color(0, 0, 0.8, 1));
-
-	vector<CGameObject*>::iterator it = m_gameObjects.begin();
-
-	ForeachGameObject([this](CGameObject* go, int depth) {
-		go->BeginRender();
-		go->OnRender();
-		go->EndRender();
-		if (drawDebug) go->OnDrawDebug();
+		ForeachGameObject([this](CGameObject* go, int depth) {
+			go->OnRender();
+			if (drawDebug) go->OnDrawDebug();
+		});
+		camera->EndTheFrame();
 	});
 
+	if (drawGrid) CEditorTool::DrawGrid(MainCameraGo->GetPosition(), Vector3(0, 0, 0), Color(0, 0, 0.8, 1));
 	//BeginOrtho();
 	//GUISystem->OnRender();
 	//if (drawDebug) GUISystem->OnDrawDebug();
@@ -186,6 +180,16 @@ void CEngine::RemoveGameObject(CGameObject* go)
 	}
 }
 
+void CEngine::AddCamera(CCamera* camera)
+{
+	m_cameras.Enqueue(camera);
+}
+
+void CEngine::RemoveCamera(CCamera* camera)
+{
+	m_cameras.Remove(camera);
+}
+
 void CEngine::DestroyGameObject(CGameObject* go)
 {
 	CGameObject* temp = NULL;
@@ -268,13 +272,11 @@ CEngine* CEngine::SetDrawDebug(bool drawDebug)
 	return this;
 }
 
-CEngine* CEngine::SetClearColor(Color clearColor)
+int CompareCamera(CCamera* a, CCamera* b)
 {
-	this->clearColor = clearColor;
-	return this;
-}
-
-Color CEngine::GetClearColor()
-{
-	return this->clearColor;
+	if (a->GetDepth() > b->GetDepth())
+		return 1;
+	else if (a->GetDepth() < b->GetDepth())
+		return -1;
+	return 0;
 }

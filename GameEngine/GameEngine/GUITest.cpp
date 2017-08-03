@@ -7,11 +7,11 @@ void Down2(Vector2 pos) { CDebug::Log(L"down2"); }
 
 void GUITest::OnStart()
 {
-	Engine->SetClearColor(Color::Hex(0x18253BFF));
 	Engine->SetDrawGrid(false);
 	Engine->SetDrawDebug(true);
-	MainCamera->SetPosition(Vector3(0, 0, 10));
-	MainCamera->SetLocalEulerAngles(Vector3(0, 180, 0));
+	MainCamera->SetCameraClearColor(Color::Hex(0x18253BFF));
+	MainCameraGo->SetPosition(Vector3(0, 0, 10));
+	MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
 
 	CTexture* tex = CTexture::Create("F://monthad_1.png");
 	CTexture* tex2 = CTexture::Create("F://avatar_15.png");

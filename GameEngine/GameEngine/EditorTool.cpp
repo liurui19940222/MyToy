@@ -1,10 +1,10 @@
 #include<Windows.h>
-#include<gl\GL.h>
-#include<gl\GLU.h>
+#include<gl\glew.h>
 #include"EditorTool.h"
 #include"Engine.h"
 #include"Application.h"
 #include"Debug.h"
+#include"GameObject.h"
 
 CEditorTool::CEditorTool()
 {
@@ -37,6 +37,7 @@ void CEditorTool::DrawGrid(Vector3 cameraPos, Vector3 pos, Color color)
 	static float cellLen = 0;
 
 	glEnable(GL_FOG);
+	glEnable(GL_DEPTH_TEST);
 	glFogf(GL_FOG_DENSITY, 0.03f);
 	glPushMatrix();
 	glColor3f(color.r, color.g, color.b);
@@ -53,6 +54,7 @@ void CEditorTool::DrawGrid(Vector3 cameraPos, Vector3 pos, Color color)
 	}
 	glEnd();
 	glPopMatrix();
+	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_FOG);
 }
 
@@ -69,7 +71,7 @@ void CEditorTool::DrawRect(SRect2D rect, Matrix4x4& modelToWorldMatrix)
 	glDisable(GL_DEPTH_TEST);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	static Color color;
-	color = Color::white() - Engine->GetClearColor();
+	color = Color::white() - MainCamera->GetCameraClearColor();
 	glColor3f(color.r, color.g, color.b);
 	glBegin(GL_QUADS);
 	for (int i = 0; i < 4; ++i) glVertex3fv((float*)&vertices[i]);

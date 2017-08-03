@@ -2,6 +2,7 @@
 #include"EngineDefine.h"
 #include"Application.h"
 #include"Time.h"
+#include"GameObject.h"
 
 IMPL_CLASS(CSpriteAnimation)
 

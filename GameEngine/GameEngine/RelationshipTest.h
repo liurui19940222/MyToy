@@ -10,12 +10,16 @@
 #include"GameObject.h"
 #include"Camera.h"
 #include"FileHead.h"
+#include"Shader.h"
+#include"MeshBuffer.h"
+#include"RenderCamera.h"
 
 using namespace std;
 
 class CRelationshipTest : public CGameWindow
 {
 private:
+	Matrix4x4 model;
 
 	int window_width = 800;
 	int window_height = 600;

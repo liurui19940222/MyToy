@@ -118,6 +118,12 @@
     <Filter Include="Render\源文件">
       <UniqueIdentifier>{74236a92-6ee8-4ad3-b0c8-3b4b3b9a1cde}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{9853b6b4-ddbe-4782-bb29-26c5af0affa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Interface\源文件">
+      <UniqueIdentifier>{dfe603ac-4b06-460d-a543-469e44a14539}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -261,6 +267,18 @@
     <ClInclude Include="RenderCamera.h">
       <Filter>Render\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="RenderBuffer.h">
+      <Filter>Render\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshBuffer.h">
+      <Filter>Render\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameBuffer.h">
+      <Filter>Render\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GLHead.h">
+      <Filter>Common\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -389,6 +407,15 @@
     <ClCompile Include="RenderCamera.cpp">
       <Filter>Render\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="MeshBuffer.cpp">
+      <Filter>Render\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameBuffer.cpp">
+      <Filter>Render\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshProvider.cpp">
+      <Filter>Component\Interface\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="dinput8.lib">
@@ -406,5 +433,25 @@
     <Library Include="lib\FreeImage.lib">
       <Filter>Library</Filter>
     </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\basic.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\basic.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\color.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\color.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\texture.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\texture.vert">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

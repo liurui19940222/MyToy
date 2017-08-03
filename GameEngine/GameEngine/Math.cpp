@@ -376,12 +376,12 @@ Vector3 Matrix4x4::operator*(Vector3& v)
 
 Matrix4x4 Matrix4x4::operator*(float value)
 {
-	return Multiply(value);
+	return std::move(Multiply(value));
 }
 
 Matrix4x4 Matrix4x4::operator/(float value)
 {
-	return Multiply(1.0f / value);
+	return std::move(Multiply(1.0f / value));
 }
 
 Vector4& Matrix4x4::operator[](size_t index)
@@ -605,7 +605,7 @@ void Matrix4x4::Identity(Matrix4x4& mat)
 
 void Matrix4x4::Rotate(Matrix4x4& mat, float pitch, float yaw, float roll)
 {
-	Matrix4x4 x, y, z;
+	static Matrix4x4 x, y, z;
 	float sin_x = sin(pitch * PI / 180.0f);
 	float sin_y = sin(yaw * PI / 180.0f);
 	float sin_z = sin(roll * PI / 180.0f);

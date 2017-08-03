@@ -2,10 +2,8 @@
 #define _CIMAGE_FILE_
 
 #include <Windows.h>
-#include <gl\GL.h>
-#include <gl\GLU.h>
+#include <gl\glew.h>
 #include <string>  
-//#include <libpng\png.h>
 #include "Debug.h"
 #include "SourceFile.h"
 

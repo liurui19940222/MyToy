@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "Input.h"
 #include "Object.h"
+#include "GameObject.h"
 using namespace guisystem;
 using namespace container;
 
@@ -503,9 +504,7 @@ void CGUISystem::OnRender()
 {
 	glDisable(GL_DEPTH_TEST);
 	widgets.ForeachInverse([](CGUIWidget* widget) {
-		widget->gameObject->BeginRender();
 		widget->OnUIRender();
-		widget->gameObject->EndRender();
 	});
 	glEnable(GL_DEPTH_TEST);
 }

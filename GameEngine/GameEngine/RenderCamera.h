@@ -41,9 +41,10 @@ protected:
 public:
 	CRenderCamera();
 
-	CRenderCamera* Perspective(float fov, float aspect, float znear, float zfar);
-	CRenderCamera* Ortho(float left, float right, float bottom, float top, float znear, float zfar);
-	CRenderCamera* LookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
+	virtual CRenderCamera* Perspective(float fov, float aspect, float znear, float zfar);
+	virtual CRenderCamera* Ortho(float left, float right, float bottom, float top, float znear, float zfar);
+	virtual CRenderCamera* Ortho(float halfSize, float aspect);
+	virtual CRenderCamera* LookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
 	CRenderCamera* SetCameraClearFlag(ECameraClearFlag flag);
 	CRenderCamera* SetCameraClearColor(const Color& color);
 
@@ -62,8 +63,8 @@ public:
 	const Vector3& GetEyePosition() const;
 	const Vector3& GetCenterPosition() const;
 	const Vector3& GetUp() const;
-	const Matrix4x4& GetViewMatrix() const;
-	const Matrix4x4& GetProjectionMatrix() const;
+	Matrix4x4 GetViewMatrix() const;
+	Matrix4x4 GetProjectionMatrix() const;
 };
 
 #endif

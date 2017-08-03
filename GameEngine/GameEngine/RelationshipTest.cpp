@@ -3,17 +3,22 @@
 
 void CRelationshipTest::OnStart()
 {
+	float width = Application->GetWindowWidth();
+	float height = Application->GetWindowHeight();
+	model = Matrix4x4::Identity();
 	CRenderCamera* batch = new CRenderCamera;
-	Engine->SetClearColor(Color::black());
 	Engine->SetDrawGrid(true);
-	MainCamera->SetPosition(Vector3(0, 0, 10));
-	MainCamera->SetLocalEulerAngles(Vector3(0, 180, 0));
-	cameraPos = MainCamera->GetPosition();
+	MainCamera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
+	MainCamera->SetCameraClearColor(Color::Hex(0x314D79FF));
+	MainCameraGo->SetPosition(Vector3(0, 7, 10));
+	MainCameraGo->SetLocalEulerAngles(Vector3(-30, 180, 0));
+	cameraPos = MainCameraGo->GetPosition();
+	CTexture* texture = CTexture::Create("dlg01.bmp");
 	//InitLight();
 	CMeshCube* cube = Engine->CreateObject<CMeshCube>();
 	go = Engine->CreateGameObject("testGo");
-	go->AddComponent<CMeshRenderer>()->SetModel(cube);
-	go->SetPosition(Vector3(0, 0.0, 0));
+	go->AddComponent<CMeshRenderer>()->SetModel(cube)->SetTexture(texture);
+	go->SetPosition(Vector3(0, 1.0, 0));
 	go->SetLocalScale(Vector3::One() * 1);
 
 	for (int i = 0; i < 4; i++)
@@ -51,11 +56,7 @@ void CRelationshipTest::OnUpdate()
 	if (go)
 	{
 		Vector3 euler = go->GetLocalEulerAngles();
-		//euler.y += CInput::GetAxis("MouseX") * CTime::deltaTime;
-		//euler.x += CInput::GetAxis("MouseY") * CTime::deltaTime;
 		euler.y += CTime::deltaTime * 300;
-		//euler.y -= CTime::deltaTime * h * 100;
-		//euler.x += CTime::deltaTime * v * 100;
 
 		go->SetLocalEulerAngles(euler);
 	}
@@ -77,11 +78,9 @@ void CRelationshipTest::OnUpdate()
 		}
 	}
 
-	//MainCamera->SetPosition(cameraPos);
 	Vector3 pos = go->GetPosition();
 	pos.x += h * CTime::deltaTime * 10;
 	pos.y += v * CTime::deltaTime * 10;
-	//go->SetLocalScale(Vector3::One() * (1 + sin(CTime::time * 2) * 1));
 	go->SetPosition(pos);
 }
 

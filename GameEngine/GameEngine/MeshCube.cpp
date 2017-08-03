@@ -13,6 +13,7 @@ void CMeshCube::OnInitialize()
 	vertices[0] = Vector3(-0.5f, 0.5f, 0.5f);
 	vertices[1] = Vector3(-0.5f, -0.5f, 0.5f);
 	vertices[2] = Vector3(0.5f, -0.5f, 0.5f);
+
 	normals[1] = Vector3(0, 0, 1);
 	vertices[3] = Vector3(0.5f, -0.5f, 0.5f);
 	vertices[4] = Vector3(0.5f, 0.5f, 0.5f);
@@ -67,22 +68,22 @@ void CMeshCube::OnInitialize()
 	vertices[33] = Vector3(-0.5f, -0.5f, -0.5f);
 	vertices[34] = Vector3(-0.5f, -0.5f, 0.5f);
 	vertices[35] = Vector3(0.5f, -0.5f, 0.5f);
+
+	for (int i = 0; i < VERTEX_NUM; ++i)
+	{
+		uvs[i].x = vertices[i].x + 0.5f;
+		uvs[i].y = vertices[i].y + 0.5f;
+	}
+
+	m_buffer.MakeBuffer(vertices, NULL, normals, uvs, VERTEX_NUM);
 }
 
 Vector3* CMeshCube::GetVertexArray() { return vertices; }
 
-STriangle* CMeshCube::GetTriangleArray() { return 0; }
-
 Vector3* CMeshCube::GetNormalArray() { return normals; }
 
-Vector3* CMeshCube::GetTangentArray() { return 0; }
+Vector2* CMeshCube::GetUVArray() { return uvs; }
 
-Vector2* CMeshCube::GetUVArray() { return 0; }
+int CMeshCube::GetVertexNum() { return VERTEX_NUM; }
 
-int CMeshCube::GetVertexNum() { return 36; }
-
-int CMeshCube::GetTriangleNum() { return 36; }
-
-int CMeshCube::GetGLMode() { return GL_QUADS; }
-
-void CMeshCube::ReleaseMesh() {}
+int CMeshCube::GetTriangleNum() { return VERTEX_NUM / 3; }

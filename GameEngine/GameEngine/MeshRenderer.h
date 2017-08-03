@@ -6,19 +6,20 @@
 #include"FileHead.h"
 #include"Component.h"
 #include"DynamicFactory.h"
+#include"Shader.h"
 
 class CMeshRenderer : public CComponent
 {
 	REFLECT_CLASS(CMeshRenderer)
 private:
-	IMeshProvider* model;
+	MeshProvider* model;
 	CTexture* texture;
 
 public:
 	CMeshRenderer();
 	~CMeshRenderer();
 
-	CMeshRenderer* SetModel(IMeshProvider* model);
+	CMeshRenderer* SetModel(MeshProvider* model);
 
 	CMeshRenderer* SetTexture(CTexture* texture);
 

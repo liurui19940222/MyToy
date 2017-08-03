@@ -8,6 +8,8 @@
 
 using namespace std;
 
+map<string, CShader*> CShader::m_store;
+
 CShader::CShader() : m_vtfilename(NULL), m_fgfilename(NULL), m_program(0)
 {
 
@@ -103,12 +105,12 @@ void CShader::ShowShaderLog(GLuint shader)
 		glGetShaderInfoLog(shader, len, NULL, log);
 		OutputDebugStringA(log);
 		OutputDebugStringA("\n");
-		char* title = NULL;
+		string title = log;
 		if (shader == m_vt)
-			title = "vertex shader error";
+			title = "vertex shader error\n" + title;
 		else if (shader == m_fg)
-			title = "fragment shader error";
-		CDebug::Box(title);
+			title = "fragment shader error\n" + title;
+		CDebug::Box(title.c_str());
 		free(log);
 	}
 }
@@ -167,6 +169,15 @@ void CShader::SetUniformParam(const char* paramName, float value)
 	}
 }
 
+void CShader::SetUniformParam(const char* paramName, const Color& value)
+{
+	GLuint location = UniformParamLocation(paramName);
+	if (location >= 0)
+	{
+		glUniform4f(location, value.r, value.g, value.b, value.a);
+	}
+}
+
 void CShader::SetUniformParam(const char* paramName, const Vector2& value)
 {
 	GLuint location = UniformParamLocation(paramName);
@@ -192,4 +203,22 @@ void CShader::SetUniformParam(const char* paramName, const Matrix4x4& value)
 	{
 		glUniformMatrix4fv(location, 1, GL_FALSE, (float*)&value);
 	}
+}
+
+CShader* CShader::Get(const string& shaderName)
+{
+	CShader* shader = NULL;
+	auto it = m_store.find(shaderName);
+	if (it == m_store.end())
+	{
+		string vt = "Shader/" + shaderName + ".vert";
+		string fg = "Shader/" + shaderName + ".frag";
+		shader = new CShader(vt.c_str(), fg.c_str());
+		m_store.insert(make_pair(shaderName, shader));
+	}
+	else
+	{
+		shader = it->second;;
+	}
+	return shader;
 }

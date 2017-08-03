@@ -5,7 +5,7 @@
 #include"MeshProvider.h"
 #include"Object.h"
 
-class CMeshQuad : public Object, public IMeshProvider
+class CMeshQuad : public Object, public MeshProvider
 {
 	REFLECT_CLASS(CMeshQuad)
 	Vector3 vertices[6];

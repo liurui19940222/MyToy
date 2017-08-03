@@ -6,15 +6,19 @@
 #include"Camera.h"
 #include"Texture.h"
 #include"IncludeComponent.h"
+#include"PriorityQueue.h"
 #include<map>
 #include<vector>
 #include<string>
 #include<functional>
 
 using namespace std;
+using namespace container;
 
 typedef function<bool(CGameObject*, int)> ForeachGoCallbackR;
 typedef function<void(CGameObject*, int)> ForeachGoCallback;
+
+int CompareCamera(CCamera* a, CCamera* b);
 
 class CEngine
 {
@@ -63,6 +67,10 @@ public:
 
 	void RemoveGameObject(CGameObject* go);
 
+	void AddCamera(CCamera* camera);
+
+	void RemoveCamera(CCamera* camera);
+
 	void DestroyGameObject(CGameObject* go);
 
 	void ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback);
@@ -77,10 +85,6 @@ public:
 
 	CEngine* SetDrawDebug(bool drawDebug);
 
-	CEngine* SetClearColor(Color clearColor);
-
-	Color GetClearColor();
-
 private:
 	//是否显示网格
 	bool drawGrid;
@@ -88,16 +92,17 @@ private:
 	//是否绘制调试图形
 	bool drawDebug;
 
-	//清屏的颜色
-	Color clearColor;
-
 	//主摄像机
 	CCamera* m_camera;
 
+	//所有的Object
 	map<int, Object*> m_objects;
 
 	//所有的根节点(没有父物体的)GameObject
 	vector<CGameObject*> m_gameObjects;
+
+	//相机
+	CPriorityQueue<CCamera*> m_cameras;
 
 	bool ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback, int depth);
 	void ForeachGameObject(CGameObject* go, ForeachGoCallback callback, int depth);

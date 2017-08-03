@@ -216,7 +216,7 @@ public:
 
 	static Matrix4x4 Ortho(float left, float right, float bottom, float top, float zNear, float zFar);
 
-	static Matrix4x4 Perspective(float fov, float aspect, float near, float far);
+	static Matrix4x4 Perspective(float fov, float aspect, float znear, float zfar);
 
 	static Matrix4x4 LookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
 

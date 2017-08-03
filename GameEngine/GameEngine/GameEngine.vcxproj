@@ -94,14 +94,17 @@
     <ClInclude Include="EngineDefine.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="FontRenderer.h" />
+    <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />
+    <ClInclude Include="GLHead.h" />
     <ClInclude Include="GUIImage.h" />
     <ClInclude Include="GUILable.h" />
     <ClInclude Include="GUISystem.h" />
     <ClInclude Include="GUITest.h" />
     <ClInclude Include="ImageTest.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="MeshBuffer.h" />
     <ClInclude Include="MeshQuad.h" />
     <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="RelationshipTest.h" />
@@ -111,6 +114,7 @@
     <ClInclude Include="ModelFile.h" />
     <ClInclude Include="PngFile.h" />
     <ClInclude Include="MeshRenderer.h" />
+    <ClInclude Include="RenderBuffer.h" />
     <ClInclude Include="RenderCamera.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SpriteAnimation.h" />
@@ -141,6 +145,7 @@
     <ClCompile Include="EngineDefine.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="FontRenderer.cpp" />
+    <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="GUIImage.cpp" />
@@ -150,6 +155,8 @@
     <ClCompile Include="ImageTest.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MeshBuffer.cpp" />
+    <ClCompile Include="MeshProvider.cpp" />
     <ClCompile Include="MeshQuad.cpp" />
     <ClCompile Include="RelationshipTest.cpp" />
     <ClCompile Include="Math.cpp" />
@@ -177,6 +184,14 @@
     <Library Include="lib\FreeImage.lib" />
     <Library Include="lib\freetype.lib" />
     <Library Include="lib\lib3ds.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\basic.frag" />
+    <None Include="Shader\basic.vert" />
+    <None Include="Shader\color.frag" />
+    <None Include="Shader\color.vert" />
+    <None Include="Shader\texture.frag" />
+    <None Include="Shader\texture.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
