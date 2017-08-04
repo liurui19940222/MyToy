@@ -7,7 +7,7 @@ void CImageTest::OnStart()
 	MainCameraGo->SetLocalEulerAngles(Vector3(30, 180, 0));
 	InitLight();
 	CBitImage* image = Engine->CreateImage("textures/model.png");
-	CTexture* texture = CTexture::Create(image);
+	CTexture* texture = CTexture2D::Create(image);
 	texture->SetEnvMode(ETexEnvMode::Modulate);
 	CModelFile* model = new C3DSFile();
 	model->LoadFromFile("models/model.3DS");
@@ -19,7 +19,7 @@ void CImageTest::OnStart()
 	renderer->SetTexture(texture);
 
 	CBitImage* ground_image = Engine->CreateImage("textures/dlg01.bmp");
-	CTexture* ground_texture = CTexture::Create(ground_image);
+	CTexture* ground_texture = CTexture2D::Create(ground_image);
 	CGameObject* quadGo = Engine->CreateGameObject();
 	quadGo->SetPosition(Vector3(0, -3.5f, 0));
 	quadGo->SetLocalScale(Vector3(7, 7, 7));

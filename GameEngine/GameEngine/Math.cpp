@@ -25,7 +25,7 @@ Vector2 Vector2::Normalization() const
 
 void Vector2::Rotate(float angle)
 {
-	angle = angle / 180 * PI;
+	angle = angle / 180 * CMath::PI;
 	float tx = x*cos(angle) - y*sin(angle);
 	float ty = x*sin(angle) + y*cos(angle);
 	x = tx;
@@ -108,25 +108,12 @@ Vector2 Vector2::Projection(const Vector2 &u, const Vector2 &v)
 	return v * Dot(u, v) / (mag * mag);
 }
 
-Vector2 Vector2::Zero()
-{
-	return Vector2(0, 0);
-}
-
-Vector2 Vector2::One()
-{
-	return Vector2(1, 1);
-}
-
-Vector2 Vector2::Up()
-{
-	return Vector2(0, 1);
-}
-
-Vector2 Vector2::Left()
-{
-	return Vector2(-1, 0);
-}
+const Vector2 Vector2::zero(0.0f, 0.0f);
+const Vector2 Vector2::one(1.0f, 1.0f);
+const Vector2 Vector2::up(0.0f, 1.0f);
+const Vector2 Vector2::down(0.0f, -1.0f);
+const Vector2 Vector2::left(-1.0f, 0.0f);
+const Vector2 Vector2::right(1.0f, 0.0f);
 
 #pragma endregion
 
@@ -246,35 +233,14 @@ Vector3 Vector3::Projection(const Vector3 &u, const Vector3 &v)
 	return v * Dot(u, v) / (mag * mag);
 }
 
-Vector3 Vector3::Zero()
-{
-	return Vector3(0, 0, 0);
-}
-
-Vector3 Vector3::One()
-{
-	return Vector3(1, 1, 1);
-}
-
-Vector3 Vector3::Up()
-{
-	return Vector3(0, 1, 0);
-}
-
-Vector3 Vector3::Left()
-{
-	return Vector3(-1, 0, 0);
-}
-
-Vector3 Vector3::Right()
-{
-	return Vector3(1, 0, 0);
-}
-
-Vector3 Vector3::Forward()
-{
-	return Vector3(0, 0, 1);
-}
+const Vector3 Vector3::zero(0.0f, 0.0f, 0.0f);
+const Vector3 Vector3::one(1.0f, 1.0f, 1.0f);
+const Vector3 Vector3::up(0.0f, 1.0f, 0.0f);
+const Vector3 Vector3::down(0.0f, -1.0f, 0.0f);
+const Vector3 Vector3::left(-1.0f, 0.0f, 0.0f);
+const Vector3 Vector3::right(1.0f, 0.0f, 0.0f);
+const Vector3 Vector3::forward(0.0f, 0.0f, 1.0f);
+const Vector3 Vector3::back(0.0f, 0.0f, -1.0f);
 
 #pragma endregion
 
@@ -307,6 +273,15 @@ float const & Vector4::operator[](size_t index) const
 Matrix4x4::Matrix4x4()
 {
 	Zero(*this);
+}
+
+Matrix4x4::Matrix4x4(float oblique)
+{
+	Zero(*this);
+	m[0][0] = oblique;
+	m[1][1] = oblique;
+	m[2][2] = oblique;
+	m[3][3] = oblique;
 }
 
 Matrix4x4::Matrix4x4(float x0, float x1, float x2, float x3, float y0, float y1, float y2, float y3, float z0, float z1, float z2, float z3, float w0, float w1, float w2, float w3)
@@ -536,9 +511,9 @@ Vector3 Matrix4x4::EulerAngles()
 		b = atan2(m[2][0], m[1][1]);
 	}
 
-	euler.y = CMath::RadToDeg(h);
-	euler.x = CMath::RadToDeg(p);
-	euler.z = CMath::RadToDeg(b);
+	euler.y = CMath::RadToDeg * h;
+	euler.x = CMath::RadToDeg * p;
+	euler.z = CMath::RadToDeg * b;
 	if (euler.x < 0) euler.x = 360 + euler.x;
 	if (euler.y < 0) euler.y = 360 + euler.y;
 	if (euler.z < 0) euler.z = 360 + euler.z;
@@ -606,12 +581,12 @@ void Matrix4x4::Identity(Matrix4x4& mat)
 void Matrix4x4::Rotate(Matrix4x4& mat, float pitch, float yaw, float roll)
 {
 	static Matrix4x4 x, y, z;
-	float sin_x = sin(pitch * PI / 180.0f);
-	float sin_y = sin(yaw * PI / 180.0f);
-	float sin_z = sin(roll * PI / 180.0f);
-	float cos_x = cos(pitch * PI / 180.0f);
-	float cos_y = cos(yaw * PI / 180.0f);
-	float cos_z = cos(roll * PI / 180.0f);
+	float sin_x = sin(pitch * CMath::DegToRad);
+	float sin_y = sin(yaw * CMath::DegToRad);
+	float sin_z = sin(roll * CMath::DegToRad);
+	float cos_x = cos(pitch * CMath::DegToRad);
+	float cos_y = cos(yaw * CMath::DegToRad);
+	float cos_z = cos(roll * CMath::DegToRad);
 	x[0][0] = 1; x[0][1] = 0;		x[0][2] = 0;		x[0][3] = 0;
 	x[1][0] = 0; x[1][1] = cos_x;	x[1][2] = sin_x;	x[1][3] = 0;
 	x[2][0] = 0; x[2][1] = -sin_x;	x[2][2] = cos_x;	x[2][3] = 0;
@@ -670,7 +645,7 @@ void Matrix4x4::Ortho(Matrix4x4& mat, float left, float right, float bottom, flo
 void Matrix4x4::Perspective(Matrix4x4& mat, float fov, float aspect, float near, float far)
 {
 	mat.MakeZero();
-	float range = tan(CMath::DegToRad(fov / 2.0f)) * near;
+	float range = tan(CMath::DegToRad * (fov / 2.0f)) * near;
 	float left = -range * aspect;
 	float right = range * aspect;
 	float bottom = -range;
@@ -821,20 +796,6 @@ bool Plane3D::IntersetLine(const ParameterizedLine3D& line, Vector3* intersetPoi
 
 #pragma region Math
 
-CMath::CMath() { }
-
-CMath::~CMath() { }
-
-float CMath::DegToRad(float angle)
-{
-	return PI / 180 * angle;
-}
-
-float CMath::RadToDeg(float radian)
-{
-	return 180 / PI * radian;
-}
-
 float CMath::Random()
 {
 	static float max_rec = 1 / (float)RAND_MAX;
@@ -859,31 +820,6 @@ int CMath::Random(int max)
 int CMath::Random(int min, int max)
 {
 	return (int)(Random((float)min, (float)max) + 0.5f);
-}
-
-void CMath::EualrAnglesToUVN(const Vector3* eualrAngles, Vector3* u, Vector3* v, Vector3* n)
-{
-	float phi = eualrAngles->y;
-	float theta = eualrAngles->z;
-
-	float sin_phi = sin(CMath::DegToRad(phi));
-	float cos_phi = cos(CMath::DegToRad(phi));
-	float sin_theta = sin(CMath::DegToRad(theta));
-	float cos_theta = cos(CMath::DegToRad(theta));
-
-	float r = sin_phi;
-
-	n->x = cos_theta * r;
-	n->y = sin_theta * r;
-	n->z = cos_phi;
-
-	v->x = 0;
-	v->y = 1;
-	v->z = 0;
-
-	*n = (*n).Normalization();
-	*u = Vector3::Cross(*v, *n);
-	*v = Vector3::Cross(*n, *u);
 }
 
 #pragma endregion

@@ -51,10 +51,10 @@ void CMeshRenderer::OnRender()
 		glEnable(GL_TEXTURE_2D);
 		texture->Bind();
 	}
-	CShader* shader = CShader::Get("textures/texture");
+	CShader* shader = CShader::Get("texture");
 	shader->Run();
 	shader->SetUniformParam("MVP", MainCamera->GetProjectionMatrix() * MainCamera->GetViewMatrix() * gameObject->GetModelToWorldMat());
-	shader->SetUniformParam("Color", Color::red());
+	shader->SetUniformParam("Color", Color::white);
 	shader->SetUniformParam("MainTex", 0);
 	model->GetBuffer()->BindBuffer();
 	glDrawArrays(model->GetGLMode(), 0, model->GetVertexNum());

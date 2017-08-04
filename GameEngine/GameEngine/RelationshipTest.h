@@ -19,7 +19,7 @@ using namespace std;
 class CRelationshipTest : public CGameWindow
 {
 private:
-	Matrix4x4 model;
+	Matrix4x4 model = { 1 };
 
 	int window_width = 800;
 	int window_height = 600;
@@ -33,6 +33,7 @@ private:
 	float diffuse[3] = { 0, 1, 0 };
 	float specular[3] = { 1, 1, 1 };
 
+	int max = 999;
 public:
 
 	virtual void OnStart();

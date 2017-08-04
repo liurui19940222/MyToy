@@ -9,9 +9,9 @@ CGameObject::CGameObject(string name) : Object(name)
 	SetLocalPosition(Vector3(0, 0, 0));
 	SetLocalEulerAngles(Vector3(0, 0, 0));
 	parent = NULL;
-	right = Vector3::Right();
-	up = Vector3::Up();
-	forward = Vector3::Forward();
+	right = Vector3::right;
+	up = Vector3::up;
+	forward = Vector3::forward;
 }
 
 CGameObject::~CGameObject() { }

@@ -28,31 +28,30 @@ enum ETexEnvMode
 class CTexture : public Object
 {
 	REFLECT_CLASS(CTexture)
-private:
-	UINT texId;
-	int width;
-	int height;
-	ETexEnvMode envMode;
-
-	static CTexture* Init(CTexture* texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data);
+protected:
+	UINT m_texId;
+	int m_width;
+	int m_height;
+	int m_format;
+	int m_internalFormat;
+	ETexEnvMode m_envMode;
+	ETexFilterMode m_filterMode;
+	ETexWrapMode m_wrapMode;
 
 public:
-	CTexture();
-	~CTexture();
-
-	static CTexture* Create(char* filename);
-	static CTexture* Create(CBitImage* image);
-	static CTexture* Create(char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-	static CTexture* Create(CBitImage* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-	static CTexture* Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-	static CTexture* Create(UCHAR* pixels, int width, int height);
-
-	int GetWidth();
-	int GetHeight();
+	int GetWidth() const;
+	int GetHeight() const;
+	int GetFormat() const;
+	int GetInternalFormat() const;
+	UINT GetTextureId() const;
+	ETexEnvMode GetEnvMode() const;
+	ETexFilterMode GetFilterMode() const;
+	ETexWrapMode GetWrapMode() const;
 	CTexture* Bind();
 	CTexture* SetEnvMode(ETexEnvMode mode);
 	CTexture* SetWrapMode(ETexWrapMode mode);
 	CTexture* SetFilterMode(ETexFilterMode mode);
+
 	virtual void OnRelease() override;
 };
 

@@ -13,8 +13,8 @@ void GUITest::OnStart()
 	MainCameraGo->SetPosition(Vector3(0, 0, 10));
 	MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
 
-	CTexture* tex = CTexture::Create("F://monthad_1.png");
-	CTexture* tex2 = CTexture::Create("F://avatar_15.png");
+	CTexture* tex = CTexture2D::Create("F://monthad_1.png");
+	CTexture* tex2 = CTexture2D::Create("F://avatar_15.png");
 	go = Engine->CreateGameObject("widget");
 	widget = go->AddComponent<CGUIImage>();
 	//widget->SetWidth(400)->SetHeight(300);
@@ -37,7 +37,7 @@ void GUITest::OnStart()
 	widget2->SetPivot(Vector2(0.5f, 0.5f));
 	widget2->SetCollide(false);
 	CTrueTypeFont* font = FontManager->LoadFont(1, "fonts/msyh.ttf");
-	widget2->SetColor(Color::red())->SetFont(font)->SetFontSize(5)->SetIntervalY(25)->SetText(L"Sams Publishing & Pearson Education Inc., \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson");
+	widget2->SetColor(Color::red)->SetFont(font)->SetFontSize(5)->SetIntervalY(25)->SetText(L"Sams Publishing & Pearson Education Inc., \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson");
 
 
 

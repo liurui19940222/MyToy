@@ -1,2 +1,37 @@
-﻿  GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
+﻿cl : 命令行 warning D9028: 最小重新生成失败，正在转换为标准生成
+  Application.cpp
+  Camera.cpp
+  EditorTool.cpp
+  Engine.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\github\mytoy\gameengine\gameengine\engine.cpp(36): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\engine.cpp(97): warning C4305: “参数”: 从“double”到“float”截断
+  GUISystem.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  GUITest.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  GameObject.cpp
+  GameWindow.cpp
+  ImageTest.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Input.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\github\mytoy\gameengine\gameengine\input.cpp(131): warning C4244: “参数”: 从“LONG”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\input.cpp(153): warning C4244: “=”: 从“LONG”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\input.cpp(157): warning C4244: “=”: 从“LONG”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\input.cpp(161): warning C4244: “=”: 从“LONG”转换到“float”，可能丢失数据
+  MeshRenderer.cpp
+  RelationshipTest.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\github\mytoy\gameengine\gameengine\relationshiptest.cpp(6): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\relationshiptest.cpp(7): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+  SpriteAnimation.cpp
+  TextTest.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Texture.cpp
+  Texture2D.cpp
+  main.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  正在生成代码...
+  GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.pdb (Full PDB)

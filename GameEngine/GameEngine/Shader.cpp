@@ -22,7 +22,7 @@ CShader::CShader(const char* vtfilename, const char* fgfilename) : CShader()
 
 bool CShader::MakeShader(const char* vtfilename, const char* fgfilename)
 {
-	Release();
+	OnRelease();
 	m_vtfilename = vtfilename;
 	m_fgfilename = fgfilename;
 	if (m_vt == 0)
@@ -111,7 +111,7 @@ void CShader::ShowShaderLog(GLuint shader)
 		else if (shader == m_fg)
 			title = "fragment shader error\n" + title;
 		CDebug::Box(title.c_str());
-		free(log);
+		std::free(log);
 	}
 }
 
@@ -126,11 +126,11 @@ void CShader::ShowProgramLog()
 		OutputDebugStringA(log);
 		OutputDebugStringA("\n");
 		CDebug::Box(log);
-		free(log);
+		std::free(log);
 	}
 }
 
-void CShader::Release()
+void CShader::OnRelease()
 {
 	if (m_program)
 	{
@@ -205,6 +205,30 @@ void CShader::SetUniformParam(const char* paramName, const Matrix4x4& value)
 	}
 }
 
+map<string, EShaderParamType> CShader::GetAllOfUniformParams()
+{
+	map<string, EShaderParamType> list;
+	GLint maxUniformLen;
+	GLint numUniforms;
+	GLint index;
+	glGetProgramiv(m_program, GL_ACTIVE_UNIFORMS, &numUniforms);
+	glGetProgramiv(m_program, GL_ACTIVE_UNIFORM_MAX_LENGTH,
+		&maxUniformLen);
+	char *uniformName = (char*)malloc(sizeof(char) * maxUniformLen);
+	for (index = 0; index < numUniforms; index++)
+	{
+		string name;
+		GLint size;
+		GLenum type;
+		glGetActiveUniform(m_program, index, maxUniformLen, NULL,
+			&size, &type, uniformName);
+		name = uniformName;
+		list.insert(make_pair(name, (EShaderParamType)type));
+	}
+	std::free(uniformName);
+	return list;
+}
+
 CShader* CShader::Get(const string& shaderName)
 {
 	CShader* shader = NULL;
@@ -214,6 +238,7 @@ CShader* CShader::Get(const string& shaderName)
 		string vt = "Shader/" + shaderName + ".vert";
 		string fg = "Shader/" + shaderName + ".frag";
 		shader = new CShader(vt.c_str(), fg.c_str());
+		shader->SetName(shaderName);
 		m_store.insert(make_pair(shaderName, shader));
 	}
 	else
@@ -221,4 +246,9 @@ CShader* CShader::Get(const string& shaderName)
 		shader = it->second;;
 	}
 	return shader;
+}
+
+CShader* CShader::GetDefault()
+{
+	return Get("basic");
 }

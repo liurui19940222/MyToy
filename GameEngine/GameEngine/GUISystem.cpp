@@ -12,7 +12,7 @@ using namespace container;
 IMPL_CLASS(CGUIWidget)
 
 CGUIWidget::CGUIWidget() :
-	m_collide(false), m_enable(true), m_fill(false), m_fillColor(Color::white()),
+	m_collide(false), m_enable(true), m_fill(false), m_fillColor(Color::white),
 	m_height(0), m_width(0), m_layer(0), m_rect(), m_state(EWidgetState::Normal),
 	m_pivot(0.5f, 0.5f)
 {
@@ -334,7 +334,7 @@ void CGUIWidget::OnStart()
 {
 	GUISystem->AddWidget(this);
 	SetAlignment(EAlignment::CENTER_MIDDLE);
-	SetAnchorPosition(Vector3::Zero());
+	SetAnchorPosition(Vector3::zero);
 }
 
 void CGUIWidget::OnDestroy()

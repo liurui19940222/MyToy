@@ -56,7 +56,7 @@ struct Color
 
 	Color(int color);
 
-	int ToInt32();
+	int ToInt32() const;
 
 	void Shrink();
 
@@ -81,14 +81,15 @@ struct Color
 	bool operator!=(const Color& value) const;
 
 	static Color Hex(int hex);
-	static Color red();
-	static Color blue();
-	static Color green();
-	static Color black();
-	static Color cyan();
-	static Color purple();
-	static Color white();
-	static Color orange();
+
+	static const Color red;
+	static const Color blue;
+	static const Color green;
+	static const Color black;
+	static const Color cyan;
+	static const Color purple;
+	static const Color white;
+	static const Color orange;
 };
 
 struct SRect2D
@@ -103,14 +104,6 @@ struct SRect2D
 	SRect2D(float center_x, float center_y, float half_size_x, float half_size_y);
 
 	bool Overlay(const Vector2& pos) const;
-};
-
-class CEngineDefine
-{
-public:
-	CEngineDefine();
-	~CEngineDefine();
-
 };
 
 LPWSTR AnsiToUnicode(LPCSTR lpcstr);

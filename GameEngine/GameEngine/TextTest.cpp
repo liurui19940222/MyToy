@@ -71,19 +71,19 @@ void CTextTest::OnUpdate()
 	
 	if (CInput::GetKeyDown(DIK_1))
 	{
-		text->SetColor(Color::orange());
+		text->SetColor(Color::orange);
 	}
 	if (CInput::GetKeyDown(DIK_2))
 	{
-		text->SetColor(Color::cyan());
+		text->SetColor(Color::cyan);
 	}
 	if (CInput::GetKeyDown(DIK_3))
 	{
-		text->SetColor(Color::green());
+		text->SetColor(Color::green);
 	}
 	if (CInput::GetKeyDown(DIK_4))
 	{
-		text->SetColor(Color::red());
+		text->SetColor(Color::red);
 	}
 
 	float h = CInput::GetAxis("Horizontal");

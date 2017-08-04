@@ -179,8 +179,6 @@ int CApplication::GameLoop()
 
 	while (!isExiting)
 	{
-		
-
 		engine->Update();
 		window->OnUpdate();
 		engine->Render();
@@ -194,16 +192,21 @@ int CApplication::GameLoop()
 				isExiting = true;
 				break;
 			}
-
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
 
 		CTime::UpdateTime();
-
 		CTime::Lock();
 	}
 
+	QuitApp();
+
+	return (int)msg.wParam;
+}
+
+void CApplication::QuitApp()
+{
 	window->OnClose();
 	engine->Quit();
 
@@ -214,8 +217,6 @@ int CApplication::GameLoop()
 		ChangeDisplaySettings(NULL, 0);
 		ShowCursor(TRUE);
 	}
-
-	return (int)msg.wParam;
 }
 
 int CApplication::GetWindowWidth()

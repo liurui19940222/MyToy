@@ -222,9 +222,6 @@
     <ClInclude Include="Object.h">
       <Filter>Core\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Core\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="RelationshipTest.h">
       <Filter>Application\头文件</Filter>
     </ClInclude>
@@ -278,6 +275,15 @@
     </ClInclude>
     <ClInclude Include="GLHead.h">
       <Filter>Common\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Render\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Render\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Render\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -343,9 +349,6 @@
     </ClCompile>
     <ClCompile Include="MeshCube.cpp">
       <Filter>Component\MeshProvide\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Core\源文件</Filter>
     </ClCompile>
     <ClCompile Include="Application.cpp">
       <Filter>Core\源文件</Filter>
@@ -415,6 +418,15 @@
     </ClCompile>
     <ClCompile Include="MeshProvider.cpp">
       <Filter>Component\Interface\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Render\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Render\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Render\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

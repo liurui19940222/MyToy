@@ -13,13 +13,13 @@ void CRelationshipTest::OnStart()
 	MainCameraGo->SetPosition(Vector3(0, 7, 10));
 	MainCameraGo->SetLocalEulerAngles(Vector3(-30, 180, 0));
 	cameraPos = MainCameraGo->GetPosition();
-	CTexture* texture = CTexture::Create("dlg01.bmp");
+	CTexture* texture = CTexture2D::Create("textures/dlg01.bmp");
 	//InitLight();
 	CMeshCube* cube = Engine->CreateObject<CMeshCube>();
 	go = Engine->CreateGameObject("testGo");
 	go->AddComponent<CMeshRenderer>()->SetModel(cube)->SetTexture(texture);
 	go->SetPosition(Vector3(0, 1.0, 0));
-	go->SetLocalScale(Vector3::One() * 1);
+	go->SetLocalScale(Vector3::one * 1);
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -44,8 +44,14 @@ void CRelationshipTest::OnStart()
 	Engine->CreateGameObject("root1");
 	Engine->CreateGameObject("root2");
 	Engine->CreateGameObject("root3");
-
 	CEditorTool::PrintTree();
+	vector<int> list = { 10, 5, 6};
+	map<string, EShaderParamType> params = CShader::Get("texture")->GetAllOfUniformParams();
+	auto it = params.begin();
+	while (it != params.end())
+	{
+		CDebug::Log(it++->first.c_str());
+	}
 }
 
 void CRelationshipTest::OnUpdate()
@@ -56,7 +62,7 @@ void CRelationshipTest::OnUpdate()
 	if (go)
 	{
 		Vector3 euler = go->GetLocalEulerAngles();
-		euler.y += CTime::deltaTime * 300;
+		euler.y += CTime::deltaTime * 30;
 
 		go->SetLocalEulerAngles(euler);
 	}

@@ -3,7 +3,6 @@
 
 #include<math.h>
 #include<string>
-#define PI 3.141592653
 
 class Vector3;
 union Vector4;
@@ -56,13 +55,12 @@ public:
 
 	static Vector2 Projection(const Vector2 &u, const Vector2 &v);
 
-	static Vector2 Zero();
-
-	static Vector2 One();
-
-	static Vector2 Up();
-
-	static Vector2 Left();
+	static const Vector2 zero;
+	static const Vector2 one;
+	static const Vector2 up;
+	static const Vector2 down;
+	static const Vector2 left;
+	static const Vector2 right;
 };
 
 class Vector3
@@ -116,17 +114,14 @@ public:
 
 	static Vector3 Projection(const Vector3 &u, const Vector3 &v);
 
-	static Vector3 Zero();
-
-	static Vector3 One();
-
-	static Vector3 Up();
-
-	static Vector3 Left();
-
-	static Vector3 Right();
-
-	static Vector3 Forward();
+	static const Vector3 zero;
+	static const Vector3 one;
+	static const Vector3 up;
+	static const Vector3 down;
+	static const Vector3 left;
+	static const Vector3 right;
+	static const Vector3 forward;
+	static const Vector3 back;
 };
 
 union Vector4
@@ -155,6 +150,8 @@ class Matrix4x4
 {
 public:
 	Matrix4x4();
+
+	Matrix4x4(float oblique);
 
 	Matrix4x4(float x0, float x1, float x2, float x3, float y0, float y1, float y2, float y3, float z0, float z1, float z2, float z3, float w0, float w1, float w2, float w3);
 
@@ -290,34 +287,114 @@ struct STriangle
 class CMath
 {
 public:
-	CMath();
-	~CMath();
+	static constexpr float EPSILON = FLT_EPSILON;
+	static constexpr float PI = 3.141592653f;
+	static constexpr float TWO_PI = PI * 2.0f;
+	static constexpr float HALF_PI = PI * 0.5f;
+	static constexpr float QUARTER_PI = PI * 0.25f;
+	static constexpr float DegToRad = PI / 180.0f;
+	static constexpr float RadToDeg = 180.0f / PI;
 
-	static float DegToRad(float angle);
-	static float RadToDeg(float radian);
 	static float Random();
 	static float Random(float max);
 	static float Random(float min, float max);
 	static int Random(int max);
 	static int Random(int min, int max);
-	static void EualrAnglesToUVN(const Vector3* eualrAngles, Vector3* u, Vector3* v, Vector3* n);
 
 	template<typename T>
-	static T Min(T a, T b)
+	inline static T Floor(T value)
+	{
+		return (T)((int)value);
+	}
+
+	template<typename T>
+	inline static T Ceil(T value)
+	{
+		return (T)((int)(value + (1 - EPSILON)));
+	}
+
+	template<typename T>
+	inline static T Abs(T value)
+	{
+		return value > 0 ? value : -value;
+	}
+
+	template<typename T>
+	inline static T Min(T a, T b)
 	{
 		return (a < b ? a : b);
 	}
 
 	template<typename T>
-	static T Max(T a, T b)
+	inline static T Max(T a, T b)
 	{
 		return (a > b ? a : b);
 	}
 
 	template<typename T>
-	static T Clamp(T value, T min, T max)
+	inline static T Clamp(T value, T min, T max)
 	{
 		return Max(Min(value, max), min);
+	}
+
+	template<typename T>
+	inline static T Clamp01(T value)
+	{
+		return Max(Min(value, T(1)), T(0));
+	}
+
+	template<typename T>
+	inline static T Lerp(T a, T b, T t)
+	{
+		return (b - a) * t + b;
+	}
+
+	template<typename T>
+	inline static T Smooth(T a, T b, T t)
+	{
+		return -(b - a) * t * (t - 2) + a;
+	}
+
+	template<typename T>
+	inline static T Sin(T t)
+	{
+		return sin(t);
+	}
+
+	template<typename T>
+	inline static T Asin(T t)
+	{
+		return asin(t);
+	}
+
+	template<typename T>
+	inline static T Cos(T t)
+	{
+		return cos(t);
+	}
+
+	template<typename T>
+	inline static T Acos(T t)
+	{
+		return acos(t);
+	}
+
+	template<typename T>
+	inline static T Tan(T t)
+	{
+		return tan(t);
+	}
+
+	template<typename T>
+	inline static T Atan(T t)
+	{
+		return atan(t);
+	}
+
+	template<typename T>
+	inline static T Pow(T base, T exponent)
+	{
+		return pow(base, exponent);
 	}
 };
 

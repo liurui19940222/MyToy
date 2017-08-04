@@ -5,6 +5,7 @@
 #include"GLHead.h"
 #include"Camera.h"
 #include"Texture.h"
+#include"Texture2D.h"
 #include"IncludeComponent.h"
 #include"PriorityQueue.h"
 #include<map>

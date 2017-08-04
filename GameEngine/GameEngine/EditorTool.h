@@ -14,11 +14,11 @@ public:
 	CEditorTool();
 	~CEditorTool();
 
-	static void DrawQuad(Vector3 position, float size);
+	static void DrawQuad(const Vector3& position, float size);
 
-	static void DrawGrid(Vector3 cameraPos, Vector3 pos, Color color);
+	static void DrawGrid(const Vector3& cameraPos, const Vector3& pos, const Color& color);
 
-	static void DrawRect(SRect2D rect, Matrix4x4& modelToWorldMatrix);
+	static void DrawRect(const SRect2D& rect, const Matrix4x4& modelToWorldMatrix);
 
 	static void DrawVector(const Vector3& vector, const Vector3& pos, const Color& color);
 

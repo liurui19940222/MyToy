@@ -15,7 +15,7 @@ CEditorTool::~CEditorTool()
 {
 }
 
-void CEditorTool::DrawQuad(Vector3 position, float size)
+void CEditorTool::DrawQuad(const Vector3& position, float size)
 {
 	glPushMatrix();
 	glTranslatef(position.x, position.y, position.z);
@@ -29,7 +29,7 @@ void CEditorTool::DrawQuad(Vector3 position, float size)
 	glPopMatrix();
 }
 
-void CEditorTool::DrawGrid(Vector3 cameraPos, Vector3 pos, Color color)
+void CEditorTool::DrawGrid(const Vector3& cameraPos, const Vector3& pos, const Color& color)
 {
 	static float cellSize = 1.0f;
 	static float cellCount = 10000.0f;
@@ -58,7 +58,7 @@ void CEditorTool::DrawGrid(Vector3 cameraPos, Vector3 pos, Color color)
 	glDisable(GL_FOG);
 }
 
-void CEditorTool::DrawRect(SRect2D rect, Matrix4x4& modelToWorldMatrix)
+void CEditorTool::DrawRect(const SRect2D& rect, const Matrix4x4& modelToWorldMatrix)
 {
 	static Vector3 vertices[4];
 	vertices[0].x = -rect.half_size_x; vertices[0].y = rect.half_size_y; vertices[0].z = 0;
@@ -71,7 +71,7 @@ void CEditorTool::DrawRect(SRect2D rect, Matrix4x4& modelToWorldMatrix)
 	glDisable(GL_DEPTH_TEST);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	static Color color;
-	color = Color::white() - MainCamera->GetCameraClearColor();
+	color = Color::white - MainCamera->GetCameraClearColor();
 	glColor3f(color.r, color.g, color.b);
 	glBegin(GL_QUADS);
 	for (int i = 0; i < 4; ++i) glVertex3fv((float*)&vertices[i]);
@@ -106,9 +106,9 @@ void CEditorTool::DrawVector(const Vector3& vector, const Vector3& pos, const Co
 
 void CEditorTool::DrawAxis(const Vector3& forward, const Vector3& right, const Vector3& up, const Vector3& pos)
 {
-	DrawVector(forward, pos, Color::blue());
-	DrawVector(right, pos, Color::red());
-	DrawVector(up, pos, Color::green());
+	DrawVector(forward, pos, Color::blue);
+	DrawVector(right, pos, Color::red);
+	DrawVector(up, pos, Color::green);
 }
 
 void CEditorTool::DrawAxis(const CGameObject* go)

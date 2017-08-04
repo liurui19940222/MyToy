@@ -3,90 +3,23 @@
 
 IMPL_CLASS(CTexture)
 
-CTexture::CTexture() : Object()
-{
-}
-
-
-CTexture::~CTexture()
-{
-}
-
-CTexture* CTexture::Init(CTexture* texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data)
-{
-	texture->envMode = envMode;
-	texture->width = width;
-	texture->height = height;
-	glGenTextures(1, &texture->texId);
-	glBindTexture(GL_TEXTURE_2D, texture->texId);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMode);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMode);
-	if (mipmaps)
-		gluBuild2DMipmaps(GL_TEXTURE_2D, internalFormat, width, height, format, GL_UNSIGNED_BYTE, data);
-	else
-		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-
-	return texture;
-}
-
-CTexture* CTexture::Create(char* filename)
-{
-	CBitImage* image = CApplication::GetEngine()->CreateImage(filename);
-	CTexture* texture = Create(image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
-	CApplication::GetEngine()->ReleaseImage(image);
-	return texture;
-}
-
-CTexture* CTexture::Create(CBitImage* image)
-{
-	return Create(image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
-}
-
-CTexture* CTexture::Create(char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
-{
-	CBitImage* image = CApplication::GetEngine()->CreateImage(filename);
-	CTexture* texture = Create(image, wrapMode, filterMode, envMode, mipmaps);
-	CApplication::GetEngine()->ReleaseImage(image);
-	return texture;
-}
-
-CTexture* CTexture::Create(CBitImage* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
-{
-	CTexture* texture = CApplication::GetEngine()->CreateObject<CTexture>();
-	Init(texture, wrapMode, filterMode, envMode, mipmaps, image->GetWidth(), image->GetHeight(), image->GetFormat(), image->GetInternalFormat(), image->GetBytes());
-	return texture;
-}
-
-CTexture* CTexture::Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
-{
-	CTexture* texture = CApplication::GetEngine()->CreateObject<CTexture>();
-	Init(texture, wrapMode, filterMode, envMode, mipmaps, width, height, GL_RGBA, GL_RGBA, pixels);
-	return texture;
-}
-
-CTexture* CTexture::Create(UCHAR* pixels, int width, int height)
-{
-	return Create(pixels, width, height, ETexWrapMode::Repeat, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
-}
-
 CTexture* CTexture::Bind()
 {
-	glBindTexture(GL_TEXTURE_2D, texId);
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, envMode);
+	glBindTexture(GL_TEXTURE_2D, m_texId);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, m_envMode);
 	return this;
 }
 
 CTexture* CTexture::SetEnvMode(ETexEnvMode mode)
 {
-	envMode = mode;
+	m_envMode = mode;
 	return this;
 }
 
 CTexture* CTexture::SetWrapMode(ETexWrapMode mode)
 {
-	glBindTexture(GL_TEXTURE_2D, texId);
+	m_wrapMode = mode;
+	glBindTexture(GL_TEXTURE_2D, m_texId);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, mode);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, mode);
 	return this;
@@ -94,23 +27,23 @@ CTexture* CTexture::SetWrapMode(ETexWrapMode mode)
 
 CTexture* CTexture::SetFilterMode(ETexFilterMode mode)
 {
-	glBindTexture(GL_TEXTURE_2D, texId);
+	m_filterMode = mode;
+	glBindTexture(GL_TEXTURE_2D, m_texId);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mode);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mode);
 	return this;
 }
 
-int CTexture::GetWidth()
-{
-	return width;
-}
-
-int CTexture::GetHeight()
-{
-	return height;
-}
+int CTexture::GetWidth() const { return m_width; }
+int CTexture::GetHeight() const { return m_height; }
+int CTexture::GetFormat() const { return m_format; }
+int CTexture::GetInternalFormat() const { return m_internalFormat; }
+UINT CTexture::GetTextureId() const { return m_texId; }
+ETexEnvMode CTexture::GetEnvMode() const { return m_envMode; }
+ETexFilterMode CTexture::GetFilterMode() const { return m_filterMode; }
+ETexWrapMode CTexture::GetWrapMode() const { return m_wrapMode; }
 
 void CTexture::OnRelease()
 {
-	glDeleteTextures(1, &texId);
+	glDeleteTextures(1, &m_texId);
 }

@@ -8,74 +8,65 @@ IMPL_CLASS(CMeshCube)
 
 void CMeshCube::OnInitialize()
 {
+	/*
 	//front
-	normals[0] = Vector3(0, 0, 1);
-	vertices[0] = Vector3(-0.5f, 0.5f, 0.5f);
-	vertices[1] = Vector3(-0.5f, -0.5f, 0.5f);
-	vertices[2] = Vector3(0.5f, -0.5f, 0.5f);
-
-	normals[1] = Vector3(0, 0, 1);
-	vertices[3] = Vector3(0.5f, -0.5f, 0.5f);
-	vertices[4] = Vector3(0.5f, 0.5f, 0.5f);
-	vertices[5] = Vector3(-0.5f, 0.5f, 0.5f);
+	vertices[0] = Vector3(-0.5f, 0.5f, -0.5f);
+	vertices[1] = Vector3(-0.5f, -0.5f, -0.5f);
+	vertices[2] = Vector3(0.5f, -0.5f, -0.5f);
+	vertices[3] = Vector3(-0.5f, 0.5f, -0.5f);
+	vertices[4] = Vector3(0.5f, -0.5f, -0.5f);
+	vertices[5] = Vector3(0.5f, 0.5f, -0.5f);
 
 	//back
-	normals[2] = Vector3(0, 0, -1);
-	vertices[6] = Vector3(0.5f, 0.5f, -0.5f);
-	vertices[7] = Vector3(0.5f, -0.5f, -0.5f);
-	vertices[8] = Vector3(-0.5f, -0.5f, -0.5f);
-	normals[3] = Vector3(0, 0, 1);
-	vertices[9] = Vector3(-0.5f, -0.5f, -0.5f);
-	vertices[10] = Vector3(-0.5f, 0.5f, -0.5f);
-	vertices[11] = Vector3(0.5f, 0.5f, -0.5f);
+	vertices[6] = Vector3(0.5f, 0.5f, 0.5f);
+	vertices[7] = Vector3(0.5f, -0.5f, 0.5f);
+	vertices[8] = Vector3(-0.5f, -0.5f, 0.5f);
+	vertices[9] = Vector3(0.5f, 0.5f, 0.5f);
+	vertices[10] = Vector3(-0.5f, -0.5f, 0.5f);
+	vertices[11] = Vector3(-0.5f, 0.5f, 0.5f);
 
 	//left
-	normals[4] = Vector3(-1, 0, 0);
 	vertices[12] = Vector3(-0.5f, 0.5f, 0.5f);
 	vertices[13] = Vector3(-0.5f, -0.5f, 0.5f);
 	vertices[14] = Vector3(-0.5f, -0.5f, -0.5f);
-	normals[5] = Vector3(-1, 0, 0);
-	vertices[15] = Vector3(-0.5f, -0.5f, -0.5f);
-	vertices[16] = Vector3(-0.5f, 0.5f, -0.5f);
-	vertices[17] = Vector3(-0.5f, 0.5f, 0.5f);
+	vertices[15] = Vector3(-0.5f, 0.5f, 0.5f);
+	vertices[16] = Vector3(-0.5f, -0.5f, -0.5f);
+	vertices[17] = Vector3(-0.5f, 0.5f, -0.5f);
 
 	//right
-	normals[6] = Vector3(1, 0, 0);
 	vertices[18] = Vector3(0.5f, 0.5f, -0.5f);
 	vertices[19] = Vector3(0.5f, -0.5f, -0.5f);
 	vertices[20] = Vector3(0.5f, -0.5f, 0.5f);
-	normals[7] = Vector3(1, 0, 0);
-	vertices[21] = Vector3(0.5f, -0.5f, 0.5f);
-	vertices[22] = Vector3(0.5f, 0.5f, 0.5f);
-	vertices[23] = Vector3(0.5f, 0.5f, -0.5f);
+	vertices[21] = Vector3(0.5f, 0.5f, -0.5f);
+	vertices[22] = Vector3(0.5f, -0.5f, 0.5f);
+	vertices[23] = Vector3(0.5f, 0.5f, 0.5f);
 
 	//top
-	normals[8] = Vector3(0, 1, 0);
 	vertices[24] = Vector3(-0.5f, 0.5f, 0.5f);
 	vertices[25] = Vector3(-0.5f, 0.5f, -0.5f);
 	vertices[26] = Vector3(0.5f, 0.5f, -0.5f);
-	normals[9] = Vector3(0, 1, 0);
-	vertices[27] = Vector3(0.5f, 0.5f, -0.5f);
-	vertices[28] = Vector3(0.5f, 0.5f, 0.5f);
-	vertices[29] = Vector3(-0.5f, 0.5f, 0.5f);
+	vertices[27] = Vector3(-0.5f, 0.5f, 0.5f);
+	vertices[28] = Vector3(0.5f, 0.5f, -0.5f);
+	vertices[29] = Vector3(0.5f, 0.5f, 0.5f);
 
 	//bottom
-	normals[10] = Vector3(0, -1, 0);
-	vertices[30] = Vector3(0.5f, -0.5f, 0.5f);
-	vertices[31] = Vector3(0.5f, -0.5f, -0.5f);
-	vertices[32] = Vector3(-0.5f, -0.5f, -0.5f);
-	normals[11] = Vector3(0, -1, 0);
+	vertices[30] = Vector3(-0.5f, -0.5f, -0.5f);
+	vertices[31] = Vector3(-0.5f, -0.5f, 0.5f);
+	vertices[32] = Vector3(0.5f, -0.5f, -0.5f);
 	vertices[33] = Vector3(-0.5f, -0.5f, -0.5f);
-	vertices[34] = Vector3(-0.5f, -0.5f, 0.5f);
-	vertices[35] = Vector3(0.5f, -0.5f, 0.5f);
-
-	for (int i = 0; i < VERTEX_NUM; ++i)
+	vertices[34] = Vector3(0.5f, -0.5f, 0.5f);
+	vertices[35] = Vector3(0.5f, -0.5f, -0.5f);
+	*/
+	for (int i = 0; i < VERTEX_NUM;)
 	{
-		uvs[i].x = vertices[i].x + 0.5f;
-		uvs[i].y = vertices[i].y + 0.5f;
+		uvs[i++] = Vector2(0.0f, 1.0f);
+		uvs[i++] = Vector2(0.0f, 0.0f);
+		uvs[i++] = Vector2(1.0f, 0.0f);
+		uvs[i++] = Vector2(0.0f, 1.0f);
+		uvs[i++] = Vector2(1.0f, 0.0f);
+		uvs[i++] = Vector2(1.0f, 1.0f);
 	}
-
-	m_buffer.MakeBuffer(vertices, NULL, normals, uvs, VERTEX_NUM);
+	m_buffer.MakeBuffer(vertices, NULL, NULL, uvs, VERTEX_NUM);
 }
 
 Vector3* CMeshCube::GetVertexArray() { return vertices; }

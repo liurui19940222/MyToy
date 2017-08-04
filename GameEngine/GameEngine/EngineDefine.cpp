@@ -1,16 +1,7 @@
 #include "EngineDefine.h"
 #include "Math.h"
 
-CEngineDefine::CEngineDefine()
-{
-}
-
-
-CEngineDefine::~CEngineDefine()
-{
-}
-
-SRect2D::SRect2D() {}
+SRect2D::SRect2D() : center_x(0), center_y(0), half_size_x(0), half_size_y(0) {}
 
 SRect2D::SRect2D(float center_x, float center_y, float half_size_x, float half_size_y) : 
 	center_x(center_x), center_y(center_y), half_size_x(half_size_x), half_size_y(half_size_y) {}
@@ -60,7 +51,7 @@ void Color::Shrink()
 	a = CMath::Clamp(a, 0.0f, 1.0f);
 }
 
-int Color::ToInt32()
+int Color::ToInt32() const
 {
 	return _RGBA32((byte)(r * 255), (byte)(g * 255), (byte)(b * 255), (byte)(a * 255));
 }
@@ -120,14 +111,14 @@ Color Color::Hex(int hex)
 	return Color32::Hex(hex);
 }
 
-Color Color::red(){ return Color(1, 0, 0, 1); }
-Color Color::blue(){ return Color(0, 0, 1, 1); }
-Color Color::green(){ return Color(0, 1, 0, 1); }
-Color Color::black(){ return Color(0, 0, 0, 1); }
-Color Color::cyan(){ return Color(0, 1, 1, 1); }
-Color Color::purple(){ return Color(1, 0, 1, 1); }
-Color Color::white(){ return Color(1, 1, 1, 1); }
-Color Color::orange(){ return Color(1, 0.5f, 0, 1); }
+const Color Color::red(1.0f, 0.0f, 0.0f, 1.0f);
+const Color Color::blue(0.0f, 0.0f, 1.0f, 1.0f);
+const Color Color::green(0.0f, 1.0f, 0.0f, 1.0f);
+const Color Color::black(0.0f, 0.0f, 0.0f, 1.0f);
+const Color Color::cyan(0.0f, 1.0f, 1.0f, 1.0f);
+const Color Color::purple(1.0f, 0.0f, 1.0f, 1.0f);
+const Color Color::white(1.0f, 1.0f, 1.0f, 1.0f);
+const Color Color::orange(1.0f, 0.5f, 0.0f, 1.0f);
 
 Color32::Color32(){}
 

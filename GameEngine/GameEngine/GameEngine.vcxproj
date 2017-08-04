@@ -104,6 +104,7 @@
     <ClInclude Include="GUITest.h" />
     <ClInclude Include="ImageTest.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="MeshBuffer.h" />
     <ClInclude Include="MeshQuad.h" />
     <ClInclude Include="PriorityQueue.h" />
@@ -122,6 +123,7 @@
     <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="TextTest.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TgaFile.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="ImageFile.h" />
@@ -155,6 +157,7 @@
     <ClCompile Include="ImageTest.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="MeshBuffer.cpp" />
     <ClCompile Include="MeshProvider.cpp" />
     <ClCompile Include="MeshQuad.cpp" />
@@ -171,6 +174,7 @@
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="TextTest.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TgaFile.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="ImageFile.cpp" />
