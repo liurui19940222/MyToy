@@ -1,5 +1,7 @@
 #include "BitImage.h"
 
+IMPL_CLASS(CBitImage)
+
 #ifndef GL_BGR_EXT
 #define GL_BGR_EXT                        0x80E0
 #endif
@@ -20,12 +22,12 @@ CBitImage::CBitImage(const char* filename)
 
 CBitImage::~CBitImage()
 {
-	Release();
+	ReleaseSource();
 }
 
 void CBitImage::LoadFromFile(const char* filename)
 {
-	Release();
+	ReleaseSource();
 	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
 
 	fif = FreeImage_GetFileType(filename);
@@ -78,7 +80,7 @@ BYTE* CBitImage::GetBytes()
 	return FreeImage_GetBits(m_pFI);
 }
 
-void CBitImage::Release()
+void CBitImage::ReleaseSource()
 {
 	if (m_pFI) {
 		FreeImage_Unload(m_pFI);
@@ -90,7 +92,7 @@ bool CBitImage::Save(const char* path, FREE_IMAGE_FORMAT fif)
 {
 	if (m_pFI)
 	{
-		return FreeImage_Save(fif, m_pFI, path);
+		return FreeImage_Save(fif, m_pFI, path) == 1;
 	}
 	return false;
 }

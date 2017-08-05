@@ -1,14 +1,6 @@
 #include "3DSFile.h"
 
-
-C3DSFile::C3DSFile()
-{
-}
-
-
-C3DSFile::~C3DSFile()
-{
-}
+IMPL_CLASS(C3DSFile)
 
 void C3DSFile::LoadFromFile(const char* filename)
 {
@@ -51,7 +43,7 @@ void C3DSFile::LoadFromFile(const char* filename)
 		normalBuffer[face->points[1]] += normal;
 		normalBuffer[face->points[2]] += normal;
 	}
-	for (int i = 0; i < lib3dsfile->meshes->points; i++)
+	for (size_t i = 0; i < lib3dsfile->meshes->points; i++)
 	{
 		normalBuffer[i] = normalBuffer[i].Normalization();
 	}
@@ -66,4 +58,6 @@ void C3DSFile::LoadFromFile(const char* filename)
 	vertexArray = (Vector3*)triangleArray;
 	lib3ds_file_free(lib3dsfile);
 	lib3dsfile = NULL;
+
+	m_buffer.MakeBuffer(vertexArray, NULL, normalArray, uvArray, vertexNum);
 }

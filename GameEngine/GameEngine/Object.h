@@ -24,6 +24,7 @@ public:
 
 	virtual void OnRelease();
 public:
+
 	void SetName(const string& name);
 
 	string& GetName();

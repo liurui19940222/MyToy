@@ -16,7 +16,7 @@ public:
 	GLubyte* data;
 };
 
-class CImageFile : public CSourceFile
+class CImageFile : public ISourceFile
 {
 protected:
 	SImageInfo info;

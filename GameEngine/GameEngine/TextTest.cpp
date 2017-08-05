@@ -8,7 +8,7 @@ void CTextTest::OnStart()
 	MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
 
 	CTrueTypeFont* font = FontManager->LoadFont(1, "C:/Windows/Fonts/StencilStd.otf");
-	go = Engine->CreateGameObject();
+	go = Maker->Instantiate();
 	go->SetPosition(Vector3(0, 0, 0));
 	text = go->AddComponent<CTextRenderer>();
 	text->SetFont(font)->SetFontSize(10)->SetTextRect(SRect2D{ 0, 0, 5, 1 });

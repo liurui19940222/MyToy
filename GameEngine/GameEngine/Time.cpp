@@ -50,5 +50,5 @@ void CTime::UpdateTime()
 void CTime::Lock()
 {
 	while ((GetTickCount() - frameStartTick) < oneFrameTime);
-	frameStartTick += oneFrameTime;
+	frameStartTick += (DWORD)oneFrameTime;
 }

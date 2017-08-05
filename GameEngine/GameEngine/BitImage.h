@@ -3,10 +3,12 @@
 
 #include"SourceFile.h"
 #include"EngineDefine.h"
+#include"DynamicFactory.h"
 #include<freeimage\FreeImage.h>
 
-class CBitImage : public CSourceFile
+class CBitImage : public ISourceFile
 {
+	REFLECT_CLASS(CBitImage)
 	FIBITMAP* m_pFI;
 
 	int m_format;
@@ -21,7 +23,7 @@ public:
 
 	virtual void LoadFromFile(const char* filename) override;
 
-	virtual void Release() override;
+	virtual void ReleaseSource() override;
 
 	uint GetWidth();
 

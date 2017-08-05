@@ -11,16 +11,19 @@ void CMaterial::OnInitialize()
 CMaterial* CMaterial::SetColor(const Color& color)
 {
 	m_color = color;
+	return this;
 }
 
 CMaterial* CMaterial::SetShader(CShader* shader)
 {
 	m_shader = shader;
+	return this;
 }
 
 CMaterial* CMaterial::SetMainTexture(CTexture* texture)
 {
 	m_mainTexture = texture;
+	return this;
 }
 
 CMaterial* CMaterial::Bind()
@@ -32,4 +35,5 @@ CMaterial* CMaterial::Bind()
 	}
 	SetParam("Color", m_color);
 	m_shader->Run();
+	return this;
 }

@@ -29,6 +29,7 @@ public:
 	inline CMaterial* SetParam(const char* paramName, T t)
 	{
 		if (m_shader) m_shader->SetUniformParam(paramName, t);
+		return this;
 	}
 };
 

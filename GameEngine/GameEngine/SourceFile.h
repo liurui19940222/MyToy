@@ -1,15 +1,12 @@
 #ifndef _CSOURCE_FILE_
 #define _CSOURCE_FILE_
 
-class CSourceFile
+class ISourceFile
 {
 public:
-	CSourceFile();
-	~CSourceFile();
-
 	virtual void LoadFromFile(const char* filename) = 0;
 
-	virtual void Release() = 0;
+	virtual void ReleaseSource() = 0;
 };
 
 #endif

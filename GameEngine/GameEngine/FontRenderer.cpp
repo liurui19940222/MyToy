@@ -163,6 +163,7 @@ float CFontRenderer::GetOffsetX(float line_width)
 		return (rect.half_size_x * 2 - line_width) * 0.5f;
 	else if (alignment_h == EAlignmentHorizontal::RIGHT)
 		return rect.half_size_x * 2 - line_width;
+	return 0;
 }
 
 float CFontRenderer::GetOffsetY()
@@ -173,6 +174,7 @@ float CFontRenderer::GetOffsetY()
 		return -(rect.half_size_y * 2 - interval_y * (lineDatas.size() - 1) ) * 0.5f;
 	else if (alignment_v == EAlignmentVertical::BOTTOM)
 		return -(rect.half_size_y * 2 - interval_y * (lineDatas.size()));
+	return 0;
 }
 
 void CFontRenderer::Rebuild()

@@ -2,6 +2,13 @@
 #include "DynamicFactory.h"
 #include "Application.h"
 
+IMPL_CLASS(CGameObject)
+
+CGameObject::CGameObject() : CGameObject("NewGameObject")
+{
+	
+}
+
 CGameObject::CGameObject(string name) : Object(name)
 {
 	SetPosition(Vector3(0, 0, 0));
@@ -18,19 +25,20 @@ CGameObject::~CGameObject() { }
 
 void CGameObject::SetPosition(const Vector3& pos)
 {
-	position = pos;
+	//position = pos;
 
-	moveMat.MakeTranslate(pos);
+	//moveMat.MakeTranslate(pos);
 
-	if (childs.size() > 0)
-	{
-		for (vector<CGameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
-		{
-			(*it)->UpdatePosition();
-		}
-	}
+	//if (childs.size() > 0)
+	//{
+	//	for (vector<CGameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
+	//	{
+	//		(*it)->UpdatePosition();
+	//	}
+	//}
 
-	ComputeModelToWorldMat();
+	//ComputeModelToWorldMat();
+	SetLocalPosition(pos);
 }
 
 void CGameObject::SetLocalScale(const Vector3& s)
@@ -110,9 +118,9 @@ CGameObject* CGameObject::GetParent() const
 Matrix4x4 CGameObject::ComputeModelToWorldMat()
 {
 	if (!parent)
-		modelToWorldMat = moveMat * localRotateMat * localScaleMat;
+		modelToWorldMat = localMoveMat * localRotateMat * localScaleMat;
 	else
-		modelToWorldMat = parent->GetModelToWorldMat() * localRotateMat * localScaleMat * localMoveMat;
+		modelToWorldMat = parent->GetModelToWorldMat() * localMoveMat * localRotateMat * localScaleMat;
 	realPosition.x = modelToWorldMat[0][3];
 	realPosition.x = modelToWorldMat[1][3];
 	realPosition.x = modelToWorldMat[2][3];
@@ -195,7 +203,7 @@ void CGameObject::AddChild(CGameObject* child)
 			return;
 		}
 	}
-	Engine->RemoveGameObject(child);
+	Maker->RemoveGameObject(child);
 	childs.push_back(child);
 }
 
@@ -205,9 +213,9 @@ void CGameObject::RemoveChild(CGameObject* child)
 	{
 		if (*it == child)
 		{
+			Maker->AddGameObject(*it);
 			(*it)->parent = NULL;
 			childs.erase(it);
-			Engine->AddGameObject(*it);
 			return;
 		}
 	}
@@ -218,6 +226,7 @@ void CGameObject::RemoveAllChilds()
 	for (vector<CGameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
 	{
 		(*it)->parent = NULL;
+		Maker->AddGameObject(*it);
 	}
 	childs.clear();
 }

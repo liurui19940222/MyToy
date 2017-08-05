@@ -84,7 +84,6 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Atlas.h" />
     <ClInclude Include="BitImage.h" />
-    <ClInclude Include="BitmapFile.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Debug.h" />
@@ -104,6 +103,7 @@
     <ClInclude Include="GUITest.h" />
     <ClInclude Include="ImageTest.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Maker.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MeshBuffer.h" />
     <ClInclude Include="MeshQuad.h" />
@@ -113,10 +113,10 @@
     <ClInclude Include="MeshCube.h" />
     <ClInclude Include="MeshProvider.h" />
     <ClInclude Include="ModelFile.h" />
-    <ClInclude Include="PngFile.h" />
     <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="RenderBuffer.h" />
     <ClInclude Include="RenderCamera.h" />
+    <ClInclude Include="Resources.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SpriteAnimation.h" />
     <ClInclude Include="SpriteRenderer.h" />
@@ -124,7 +124,6 @@
     <ClInclude Include="TextTest.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture2D.h" />
-    <ClInclude Include="TgaFile.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="ImageFile.h" />
     <ClInclude Include="FileHead.h" />
@@ -138,7 +137,6 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Atlas.cpp" />
     <ClCompile Include="BitImage.cpp" />
-    <ClCompile Include="BitmapFile.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Debug.cpp" />
@@ -157,6 +155,7 @@
     <ClCompile Include="ImageTest.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Maker.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MeshBuffer.cpp" />
     <ClCompile Include="MeshProvider.cpp" />
@@ -165,9 +164,9 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="MeshCube.cpp" />
     <ClCompile Include="ModelFile.cpp" />
-    <ClCompile Include="PngFile.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="RenderCamera.cpp" />
+    <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SpriteAnimation.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
@@ -175,10 +174,8 @@
     <ClCompile Include="TextTest.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Texture2D.cpp" />
-    <ClCompile Include="TgaFile.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="ImageFile.cpp" />
-    <ClCompile Include="SourceFile.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="TrueTypeFont.cpp" />
   </ItemGroup>

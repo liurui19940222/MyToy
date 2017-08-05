@@ -118,16 +118,20 @@ void CEditorTool::DrawAxis(const CGameObject* go)
 
 void CEditorTool::PrintTree(bool showDepth)
 {
-	Engine->ForeachGameObject([showDepth](CGameObject* go, int depth) {
+	CDebug::Log("---------------the scene's tree---------------");
+	Maker->ForeachGameObject([showDepth](CGameObject* go, int depth) {
 		PrintTree(go, depth, showDepth);
 	});
+	CDebug::Log("----------------------------------------------");
 }
 
 void CEditorTool::PrintTree(CGameObject* go, bool showDepth)
 {
-	Engine->ForeachGameObject(go, [showDepth](CGameObject* go, int depth) {
+	CDebug::Log("---------------the scene's tree---------------");
+	Maker->ForeachGameObject(go, [showDepth](CGameObject* go, int depth) {
 		PrintTree(go, depth, showDepth);
 	});
+	CDebug::Log("----------------------------------------------");
 }
 
 void CEditorTool::PrintTree(CGameObject* go, int depth, bool showDepth)

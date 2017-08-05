@@ -5,7 +5,7 @@
 #include "Math.h"
 #include "SourceFile.h"
 
-class CModelFile : public CSourceFile, public MeshProvider
+class CModelFile : public ISourceFile, public MeshProvider
 {
 protected:
 	Vector3* vertexArray;
@@ -17,8 +17,6 @@ protected:
 	int triangleNum;
 
 public:
-	CModelFile();
-	~CModelFile();
 
 	virtual Vector3* GetVertexArray() override;
 
@@ -38,7 +36,7 @@ public:
 
 	virtual int GetGLMode() override;
 
-	virtual void Release();
+	virtual void ReleaseSource() override;
 };
 
 #endif

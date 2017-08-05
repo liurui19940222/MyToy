@@ -15,8 +15,8 @@ void CRelationshipTest::OnStart()
 	cameraPos = MainCameraGo->GetPosition();
 	CTexture* texture = CTexture2D::Create("textures/dlg01.bmp");
 	//InitLight();
-	CMeshCube* cube = Engine->CreateObject<CMeshCube>();
-	go = Engine->CreateGameObject("testGo");
+	CMeshCube* cube = Maker->Instantiate<CMeshCube>();
+	go = Maker->Instantiate("testGo");
 	go->AddComponent<CMeshRenderer>()->SetModel(cube)->SetTexture(texture);
 	go->SetPosition(Vector3(0, 1.0, 0));
 	go->SetLocalScale(Vector3::one * 1);
@@ -25,7 +25,7 @@ void CRelationshipTest::OnStart()
 	{
 		string name = "child";
 		name += i + '0';
-		childs.push_back(Engine->CreateGameObject(name));
+		childs.push_back(Maker->Instantiate(name));
 		childs[i]->SetParent(go);
 		childs[i]->SetLocalScale(Vector3(1.5, 0.1f, 0.5f));
 		childs[i]->AddComponent<CMeshRenderer>()->SetModel(cube);
@@ -38,27 +38,25 @@ void CRelationshipTest::OnStart()
 	childs[2]->SetLocalEulerAngles(Vector3(0, 90, 0));
 	childs[3]->SetLocalEulerAngles(Vector3(0, 90, 0));
 
-	CGameObject* go2 = Engine->CreateGameObject("testGo2");
+	go2 = Maker->Instantiate("testGo2");
 	go2->SetParent(childs[0]);
+	go2->SetLocalScale(Vector3(2, 1.5, 1));
+	go2->SetLocalPosition(Vector3(0, 0, 6));
+	go2->AddComponent<CMeshRenderer>()->SetModel(cube);
 
-	Engine->CreateGameObject("root1");
-	Engine->CreateGameObject("root2");
-	Engine->CreateGameObject("root3");
+	Maker->Instantiate("root1");
+	Maker->Instantiate("root2");
+	Maker->Instantiate("root3");
 	CEditorTool::PrintTree();
-	vector<int> list = { 10, 5, 6};
-	map<string, EShaderParamType> params = CShader::Get("texture")->GetAllOfUniformParams();
-	auto it = params.begin();
-	while (it != params.end())
-	{
-		CDebug::Log(it++->first.c_str());
-	}
 }
 
 void CRelationshipTest::OnUpdate()
 {
+	if (!go) return;
 	float h = CInput::GetAxis("Horizontal") * CTime::deltaTime * moveSpeed;
 	float v = CInput::GetAxis("Vertical") * CTime::deltaTime * moveSpeed;
 
+	
 	if (go)
 	{
 		Vector3 euler = go->GetLocalEulerAngles();
@@ -70,8 +68,9 @@ void CRelationshipTest::OnUpdate()
 	{
 		if (childs.size() > 0)
 		{
-			Engine->DestroyGameObject(childs[0]);
+			Maker->Destroy(childs[0]);
 			childs.erase(childs.begin());
+			CEditorTool::PrintTree();
 		}
 	}
 
@@ -79,19 +78,26 @@ void CRelationshipTest::OnUpdate()
 	{
 		if (go)
 		{
-			Engine->DestroyGameObject(go);
+			Maker->Destroy(go);
 			go = NULL;
+			CEditorTool::PrintTree();
+			return;
 		}
 	}
 
-	Vector3 pos = go->GetPosition();
-	pos.x += h * CTime::deltaTime * 10;
-	pos.y += v * CTime::deltaTime * 10;
-	go->SetPosition(pos);
+	//Vector3 pos = go->GetPosition();
+	//pos.x += h * CTime::deltaTime * 10;
+	//pos.y += v * CTime::deltaTime * 10;
+	//go->SetPosition(pos);
+	Vector3 euler = go2->GetLocalEulerAngles();
+	euler.y += h * CTime::deltaTime * 10;
+	euler.x += v * CTime::deltaTime * 10;
+	go2->SetLocalEulerAngles(euler);
 }
 
 void CRelationshipTest::OnRender()
 {
+	if(go)
 	CEditorTool::DrawAxis(go);
 }
 

@@ -4,15 +4,6 @@
 #define GL_TRIANGLES                      0x0004
 #endif
 
-CModelFile::CModelFile()
-{
-}
-
-
-CModelFile::~CModelFile()
-{
-}
-
 Vector3* CModelFile::GetVertexArray()
 {
 	return vertexArray;
@@ -53,7 +44,7 @@ int CModelFile::GetGLMode()
 	return GL_TRIANGLES;
 }
 
-void CModelFile::Release()
+void CModelFile::ReleaseSource()
 {
 	if (this->vertexArray)
 		free(vertexArray);
@@ -67,4 +58,7 @@ void CModelFile::Release()
 		free(triangleArray);
 }
 
-void CModelFile::ReleaseMesh() { Release(); }
+void CModelFile::ReleaseMesh() 
+{
+	MeshProvider::ReleaseMesh();
+}

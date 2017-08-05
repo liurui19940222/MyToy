@@ -27,6 +27,7 @@ private:
 	float moveSpeed = 50;
 	Vector3 cameraPos;
 	CGameObject* go;
+	CGameObject* go2;
 	vector<CGameObject*> childs;
 
 	float direction[3] = { -55.0f, -22.5f, 0.0f };

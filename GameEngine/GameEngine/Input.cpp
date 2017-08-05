@@ -150,15 +150,15 @@ float CInput::GetAxis(string axis)
 	}
 	else if (axis == "MouseX")
 	{
-		value = mouseStateData.lX;
+		value = (float)mouseStateData.lX;
 	}
 	else if (axis == "MouseY")
 	{
-		value = mouseStateData.lY;
+		value = (float)mouseStateData.lY;
 	}
 	else if (axis == "Scroll")
 	{
-		value = mouseStateData.lZ;
+		value = (float)mouseStateData.lZ;
 	}
 	return value;
 }

@@ -18,9 +18,9 @@ private:
 	static CTexture2D* Init(CTexture2D* texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data);
 
 public:
-	static CTexture2D* Create(char* filename);
+	static CTexture2D* Create(const char* filename);
 	static CTexture2D* Create(CBitImage* image);
-	static CTexture2D* Create(char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
+	static CTexture2D* Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
 	static CTexture2D* Create(CBitImage* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
 	static CTexture2D* Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
 	static CTexture2D* Create(UCHAR* pixels, int width, int height);

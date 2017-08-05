@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="资源文件">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{d894f521-944d-4eb4-a770-e5f48aa5a110}</UniqueIdentifier>
     </Filter>
@@ -168,16 +164,7 @@
     <ClInclude Include="SourceFile.h">
       <Filter>File\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="BitmapFile.h">
-      <Filter>File\Image\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="ImageFile.h">
-      <Filter>File\Image\头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="PngFile.h">
-      <Filter>File\Image\头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="TgaFile.h">
       <Filter>File\Image\头文件</Filter>
     </ClInclude>
     <ClInclude Include="3DSFile.h">
@@ -285,6 +272,12 @@
     <ClInclude Include="Material.h">
       <Filter>Render\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>File\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Maker.h">
+      <Filter>Core\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -314,19 +307,7 @@
     <ClCompile Include="TextRenderer.cpp">
       <Filter>Component\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFile.cpp">
-      <Filter>File\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="BitmapFile.cpp">
-      <Filter>File\Image\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="ImageFile.cpp">
-      <Filter>File\Image\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="PngFile.cpp">
-      <Filter>File\Image\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="TgaFile.cpp">
       <Filter>File\Image\源文件</Filter>
     </ClCompile>
     <ClCompile Include="3DSFile.cpp">
@@ -427,6 +408,12 @@
     </ClCompile>
     <ClCompile Include="Material.cpp">
       <Filter>Render\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>File\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Maker.cpp">
+      <Filter>Core\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

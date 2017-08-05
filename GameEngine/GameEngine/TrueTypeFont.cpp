@@ -54,7 +54,7 @@ CCharacterInfo* CTrueTypeFontSize::GetCharacter(int code)
 
 		chInfo->left_padding = (*ft_face)->glyph->bitmap_left;
 		chInfo->top = max_height - (*ft_face)->glyph->bitmap_top;
-		chInfo->advance_x = (*ft_face)->glyph->advance.x / 64.0f;
+		chInfo->advance_x = (int)((*ft_face)->glyph->advance.x / 64.0f);
 		CAtlas* atlas = GetEnoughAtlas(width, height, max_height);
 		atlas->Push(width, height, max_height, (*ft_face)->glyph->bitmap.buffer, RGB{ 255, 255, 255 }, &(chInfo->rect));
 		chInfo->atlas = atlas;

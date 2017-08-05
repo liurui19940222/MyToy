@@ -15,7 +15,7 @@ void GUITest::OnStart()
 
 	CTexture* tex = CTexture2D::Create("F://monthad_1.png");
 	CTexture* tex2 = CTexture2D::Create("F://avatar_15.png");
-	go = Engine->CreateGameObject("widget");
+	go = Maker->Instantiate("widget");
 	widget = go->AddComponent<CGUIImage>();
 	//widget->SetWidth(400)->SetHeight(300);
 	widget->SetTexture(tex);
@@ -24,10 +24,10 @@ void GUITest::OnStart()
 	widget->SetPivot(Vector2(0.5f, 0.5f));
 	widget->SetCollide(true);
 
-	CGameObject* go3 = Engine->CreateGameObject();
+	CGameObject* go3 = Maker->Instantiate();
 	go3->AddComponent<CGUIImage>()->SetTexture(tex2)->SetLayer(2)->SetCollide(true);
 
-	go2 = Engine->CreateGameObject("widget2");
+	go2 = Maker->Instantiate("widget2");
 	go2->SetParent(go);
 	widget2 = go2->AddComponent<CGUILable>();
 	widget2->SetWidth(300)->SetHeight(300);

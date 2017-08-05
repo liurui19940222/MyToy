@@ -7,11 +7,4 @@
 #include"ModelFile.h"
 #include"3DSFile.h"
 
-enum EImageFormat
-{
-	PNG,
-	BMP,
-	TGA,
-};
-
 #endif
