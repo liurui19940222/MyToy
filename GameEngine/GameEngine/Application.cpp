@@ -2,26 +2,7 @@
 #include "Camera.h"
 #include "Application.h"
 #include "Time.h"
-
-CApplication::CApplication(){ }
-
-CApplication::~CApplication(){ }
-
-CApplication* CApplication::instance = NULL;
-
-CApplication* CApplication::GetInstance()
-{
-	if (instance == NULL)
-	{
-		instance = new CApplication;
-	}
-	return instance;
-}
-
-CCamera* CApplication::GetCamera()
-{
-	return CApplication::GetInstance()->engine->GetCamera();
-}
+#include "Debug.h"
 
 CEngine* CApplication::GetEngine()
 {
@@ -116,11 +97,12 @@ int CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR 
 	if (!hwnd)
 		return 0;
 
+	engine = new CEngine;
+	engine->InitEngine(hInstance, hwnd);
+
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
 
-	engine = new CEngine;
-	engine->InitEngine(hInstance, hwnd);
 	window->OnStart();
 
 	return 0;
@@ -153,11 +135,7 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 	case WM_SIZE:
 		height = HIWORD(lParam);
 		width = LOWORD(lParam);
-
-		engine->SetupProjection(width, height);
-		appInfo.windowWidth = width;
-		appInfo.windowHeight = height;
-
+		SetWindowSize(width, height);
 		break;
 	case WM_MOVE:
 		p.x = LOWORD(lParam);
@@ -171,6 +149,14 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 		break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+}
+
+void CApplication::SetWindowSize(int width, int height)
+{
+	CDebug::Log("width:%d\theight:%d\n", width, height);
+	engine->SetupProjection(width, height);
+	appInfo.windowWidth = width;
+	appInfo.windowHeight = height;
 }
 
 int CApplication::GameLoop()

@@ -384,15 +384,6 @@ void CGUIWidget::OnUIDrawDebug()
 
 #pragma region CGUISystem
 
-CGUISystem* CGUISystem::m_instance = NULL;
-
-CGUISystem* CGUISystem::GetInstance()
-{
-	if (m_instance == NULL)
-		m_instance = new CGUISystem();
-	return m_instance;
-}
-
 void CGUISystem::InitGUI(float resolution_x, float resolution_y)
 {
 	SetResolution(resolution_x, resolution_y);

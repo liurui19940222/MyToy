@@ -9,10 +9,6 @@
 
 using namespace guisystem;
 
-CEngine::CEngine() { }
-
-CEngine::~CEngine() { }
-
 void CEngine::InitEngine(HINSTANCE instance, HWND hwnd)
 {
 	glewInit();
@@ -35,9 +31,12 @@ void CEngine::SetupProjection(int width, int height)
 	}
 	GUISystem->InitGUI((float)width, (float)height);
 	glViewport(0, 0, width, height);
-
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	if (m_camera != NULL)
+	{
+		m_camera->Perspective(54.0f, (float)width / (float)height, 1.0f, 1000.0f);
+	}
 }
 
 void CEngine::SetupPixelFormat(HDC hDC)

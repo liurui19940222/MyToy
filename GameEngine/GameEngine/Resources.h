@@ -6,19 +6,16 @@
 #include<string>
 #include"SourceFile.h"
 #include"DynamicFactory.h"
+#include"Singleton.h"
 
 using namespace std;
 
-class CResources
+class CResources : public CSingleton<CResources>
 {
 private:
-	static CResources* m_instance;
-
 	map<string, ISourceFile*> m_sources;
 
 public:
-	static CResources* GetInstance();
-
 	template<typename T>
 	T* Load(string path)
 	{

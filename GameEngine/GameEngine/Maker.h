@@ -7,13 +7,14 @@
 #include"Object.h"
 #include"GameObject.h"
 #include"DynamicFactory.h"
+#include"Singleton.h"
 
 using namespace std;
 
 typedef function<bool(CGameObject*, int)> ForeachGoCallbackR;
 typedef function<void(CGameObject*, int)> ForeachGoCallback;
 
-class CMaker
+class CMaker : public CSingleton<CMaker>
 {
 private:
 	friend class CGameObject;
@@ -24,8 +25,6 @@ private:
 	//所有Object但不包括GameObject
 	map<int, Object*> m_objects;
 
-	static CMaker* m_instance;
-
 	void AddGameObject(CGameObject* go);
 	void RemoveGameObject(CGameObject* go);
 	void DestroyGameObject(CGameObject* go);
@@ -33,8 +32,6 @@ private:
 	void ForeachGameObject(CGameObject* go, ForeachGoCallback callback, int depth);
 
 public:
-	static CMaker* GetInstance();
-
 	template<typename T>
 	T* Instantiate()
 	{

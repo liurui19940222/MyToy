@@ -5,7 +5,7 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-	Application->CreateApp(hInstance, hPrevInstance, lpCmdLine, nShowCmd, new CRelationshipTest);
+	Application->CreateApp(hInstance, hPrevInstance, lpCmdLine, nShowCmd, new CImageTest);
 
 	return Application->GameLoop();
 }

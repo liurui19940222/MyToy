@@ -1,14 +1,5 @@
 #include "Maker.h"
 
-CMaker* CMaker::m_instance = NULL;
-
-CMaker* CMaker::GetInstance()
-{
-	if (m_instance == NULL)
-		m_instance = new CMaker();
-	return m_instance;
-}
-
 CGameObject* CMaker::Instantiate()
 {
 	return Instantiate("NewGameObject");

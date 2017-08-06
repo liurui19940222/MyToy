@@ -22,22 +22,16 @@ void CMeshQuad::OnInitialize()
 	uvs[3] = Vector2(1.0f, 0.0f);
 	uvs[4] = Vector2(1.0f, 1.0f);
 	uvs[5] = Vector2(0.0f, 1.0f);
+
+	m_buffer.MakeBuffer(vertices, NULL, NULL, uvs, VERTEX_NUM);
 }
 
 Vector3* CMeshQuad::GetVertexArray() { return vertices; }
 
-STriangle* CMeshQuad::GetTriangleArray() { return 0; }
-
 Vector3* CMeshQuad::GetNormalArray() { return normals; }
-
-Vector3* CMeshQuad::GetTangentArray() { return 0; }
 
 Vector2* CMeshQuad::GetUVArray() { return uvs; }
 
-int CMeshQuad::GetVertexNum() { return 6; }
+int CMeshQuad::GetVertexNum() { return VERTEX_NUM; }
 
-int CMeshQuad::GetTriangleNum() { return 2; }
-
-int CMeshQuad::GetGLMode() { return GL_QUADS; }
-
-void CMeshQuad::ReleaseMesh() {}
+int CMeshQuad::GetTriangleNum() { return VERTEX_NUM / 3; }

@@ -23,9 +23,6 @@ int CompareCamera(CCamera* a, CCamera* b);
 class CEngine
 {
 public:
-	CEngine();
-	~CEngine();
-
 	void InitEngine(HINSTANCE instance, HWND hwnd);
 
 	void SetupProjection(int width, int height);
@@ -60,7 +57,7 @@ private:
 	bool drawDebug;
 
 	//主摄像机
-	CCamera* m_camera;
+	CCamera* m_camera = NULL;
 
 	//相机
 	CPriorityQueue<CCamera*> m_cameras;

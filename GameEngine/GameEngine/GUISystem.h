@@ -7,6 +7,7 @@
 #include"Math.h"
 #include"Component.h"
 #include"PriorityQueue.h"
+#include"Singleton.h"
 
 using namespace std;
 using namespace std::tr1;
@@ -125,19 +126,16 @@ namespace guisystem {
 		virtual void OnDestroy() override;
 	};
 
-	class CGUISystem
+	class CGUISystem : public CSingleton<CGUISystem>
 	{
 	private:
 		float m_resolutionX, m_resolutionY;
-		static CGUISystem* m_instance;
 		CPriorityQueue<CGUIWidget*> widgets;
 		CGUIWidget* m_curOverlay;
 		CGUIWidget* m_lastDown;
 		Vector3 m_centerPos;
 
 	public:
-		static CGUISystem* GetInstance();
-
 		void InitGUI(float resolution_x, float resolution_y);
 
 		void AddWidget(CGUIWidget* widget);

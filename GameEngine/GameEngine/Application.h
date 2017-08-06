@@ -21,16 +21,15 @@ struct SApplicationInfo
 #include"Camera.h"
 #include"Engine.h"
 #include"GameWindow.h"
+#include"Singleton.h"
 
 class CGameWindow;
 
 LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-class CApplication
+class CApplication : public CSingleton<CApplication>
 {
 public:
-	CApplication();
-	~CApplication();
 
 	int CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd, CGameWindow* window);
 
@@ -50,10 +49,6 @@ public:
 
 	void QuitApp();
 
-	static CApplication* GetInstance();
-
-	static CCamera* GetCamera();
-
 	static CEngine* GetEngine();
 
 private:
@@ -64,8 +59,6 @@ private:
 	HWND hwnd;
 	bool isExiting;
 	RECT clientRect;
-
-	static CApplication* instance;
 };
 
 #endif

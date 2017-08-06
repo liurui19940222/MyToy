@@ -25,20 +25,20 @@ CGameObject::~CGameObject() { }
 
 void CGameObject::SetPosition(const Vector3& pos)
 {
-	//position = pos;
+	position = pos;
 
-	//moveMat.MakeTranslate(pos);
+	moveMat.MakeTranslate(pos);
 
-	//if (childs.size() > 0)
-	//{
-	//	for (vector<CGameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
-	//	{
-	//		(*it)->UpdatePosition();
-	//	}
-	//}
+	if (childs.size() > 0)
+	{
+		for (vector<CGameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
+		{
+			(*it)->UpdatePosition();
+		}
+	}
 
-	//ComputeModelToWorldMat();
-	SetLocalPosition(pos);
+	ComputeModelToWorldMat();
+	//SetLocalPosition(pos);
 }
 
 void CGameObject::SetLocalScale(const Vector3& s)
@@ -118,9 +118,9 @@ CGameObject* CGameObject::GetParent() const
 Matrix4x4 CGameObject::ComputeModelToWorldMat()
 {
 	if (!parent)
-		modelToWorldMat = localMoveMat * localRotateMat * localScaleMat;
+		modelToWorldMat = moveMat * localRotateMat * localScaleMat;
 	else
-		modelToWorldMat = parent->GetModelToWorldMat() * localMoveMat * localRotateMat * localScaleMat;
+		modelToWorldMat = parent->GetModelToWorldMat()  * localRotateMat * localScaleMat* localMoveMat;
 	realPosition.x = modelToWorldMat[0][3];
 	realPosition.x = modelToWorldMat[1][3];
 	realPosition.x = modelToWorldMat[2][3];

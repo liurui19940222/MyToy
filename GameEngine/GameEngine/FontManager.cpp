@@ -1,14 +1,5 @@
 #include "FontManager.h"
 
-CFontManager * CFontManager::instance = nullptr;
-
-CFontManager* CFontManager::GetInstance()
-{
-	if (!instance)
-		instance = new CFontManager;
-	return instance;
-}
-
 CTrueTypeFont* CFontManager::LoadFont(int fontId, const char* file_name)
 {
 	if (fontMap.find(fontId) == fontMap.end())

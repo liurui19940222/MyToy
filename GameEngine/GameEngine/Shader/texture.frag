@@ -8,6 +8,6 @@ in vec2 uv;
 
 void main()
 {
-	vec3 c = texture(MainTex, uv).rgb * Color;
+	vec3 c = texture(MainTex, uv).rgb * Color.rgb;
 	FragColor = vec4(c, 1.0);
 }

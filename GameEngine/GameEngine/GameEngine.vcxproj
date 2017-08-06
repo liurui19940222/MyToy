@@ -118,6 +118,7 @@
     <ClInclude Include="RenderCamera.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="SpriteAnimation.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="TextRenderer.h" />
