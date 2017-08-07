@@ -16,9 +16,8 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 int CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd, CGameWindow* window)
 {
+	mHIntance = hInstance;
 	WNDCLASSEX windowClass;
-	DWORD      dwExStyle;
-	DWORD      dwStyle;
 	RECT       windowRect;
 
 	this->window = window;
@@ -45,44 +44,13 @@ int CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR 
 	if (!RegisterClassEx(&windowClass))
 		return 0;
 
-	if (appInfo.isFullScreen)
-	{
-		DEVMODE dmScreenSettings;
-		memset(&dmScreenSettings, 0, sizeof(dmScreenSettings));
-		dmScreenSettings.dmSize = sizeof(dmScreenSettings);
-		dmScreenSettings.dmPelsWidth = appInfo.windowWidth;
-		dmScreenSettings.dmPelsHeight = appInfo.windowHeight;
-		dmScreenSettings.dmBitsPerPel = appInfo.windowBits;
-		dmScreenSettings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
-
-		if (ChangeDisplaySettings(&dmScreenSettings, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL)
-		{
-			MessageBox(NULL, L"Display mode failed", NULL, MB_OK);
-			appInfo.isFullScreen = FALSE;
-		}
-	}
-
-	if (appInfo.isFullScreen)
-	{
-		dwExStyle = WS_EX_APPWINDOW;
-		dwStyle = WS_POPUP;
-		ShowCursor(FALSE);
-	}
-	else
-	{
-		dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
-		dwStyle = WS_OVERLAPPEDWINDOW;
-	}
-
-	AdjustWindowRectEx(&windowRect, dwStyle, FALSE, dwExStyle);
-
 	int x = (GetSystemMetrics(0) - appInfo.windowWidth) >> 1;
 	int y = (GetSystemMetrics(1) - appInfo.windowHeight) >> 1;
-
+	
 	hwnd = CreateWindowEx(NULL,
 		appInfo.className,
 		appInfo.appName,
-		dwStyle | WS_CLIPCHILDREN |
+		WS_CLIPCHILDREN |
 		WS_CLIPSIBLINGS,
 		x, y,
 		windowRect.right - windowRect.left,
@@ -92,10 +60,15 @@ int CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR 
 		hInstance,
 		NULL);
 
-	hdc = GetDC(hwnd);
-
 	if (!hwnd)
 		return 0;
+	oldWindowPosX = (GetSystemMetrics(0) - appInfo.windowWidth) >> 1;
+	oldWindowPosY = (GetSystemMetrics(1) - appInfo.windowHeight) >> 1;
+	oldWindowRawWidth = appInfo.windowWidth;
+	oldWindowRawHeight = appInfo.windowHeight;
+
+	ChangeDisplayMode((EDisplayMode)appInfo.isFullScreen);
+	hdc = GetDC(hwnd);
 
 	engine = new CEngine;
 	engine->InitEngine(hInstance, hwnd);
@@ -153,10 +126,89 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 
 void CApplication::SetWindowSize(int width, int height)
 {
-	CDebug::Log("width:%d\theight:%d\n", width, height);
+	//CDebug::Log("change w:%d\th:%d", width, height);
 	engine->SetupProjection(width, height);
 	appInfo.windowWidth = width;
 	appInfo.windowHeight = height;
+}
+
+void CApplication::ToggleFullOrWindow()
+{
+	appInfo.isFullScreen = appInfo.isFullScreen == TRUE ? FALSE : TRUE;
+	ChangeDisplayMode((EDisplayMode)appInfo.isFullScreen);
+}
+
+void CApplication::ChangeDisplayMode(EDisplayMode mode)
+{
+	if (mDisplayMode == mode)
+		return;
+	mDisplayMode = mode;
+	appInfo.isFullScreen = (int)mode;
+	if (mode == EDisplayMode::FullScreen)
+	{
+		RECT  rectProgram;
+		GetWindowRect(hwnd, &rectProgram);
+		oldWindowRawWidth = rectProgram.right - rectProgram.left;
+		oldWindowRawHeight = rectProgram.bottom - rectProgram.top;
+		oldWindowPosX = rectProgram.left;
+		oldWindowPosY = rectProgram.top;
+	}
+	else
+	{
+		appInfo.windowWidth = oldWindowRawWidth;
+		appInfo.windowHeight = oldWindowRawHeight;
+	}
+	RECT windowRect;
+	DWORD dwExStyle;
+	DWORD dwStyle;
+	windowRect.left = (long)0;
+	windowRect.right = (long)appInfo.windowWidth;
+	windowRect.top = (long)0;
+	windowRect.bottom = (long)appInfo.windowHeight;
+	if (mode == EDisplayMode::FullScreen)
+	{
+		DEVMODE dmScreenSettings;
+		memset(&dmScreenSettings, 0, sizeof(dmScreenSettings));
+		dmScreenSettings.dmSize = sizeof(dmScreenSettings);
+		dmScreenSettings.dmPelsWidth = oldWindowRawWidth;
+		dmScreenSettings.dmPelsHeight = oldWindowRawHeight;
+		dmScreenSettings.dmBitsPerPel = appInfo.windowBits;
+		dmScreenSettings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
+
+		if (ChangeDisplaySettings(&dmScreenSettings, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL)
+		{
+			MessageBox(NULL, L"Display mode failed", NULL, MB_OK);
+			appInfo.isFullScreen = FALSE;
+		}
+		else
+		{
+			mChangedDisplayMode = true;
+		}
+		dwExStyle = WS_EX_APPWINDOW;
+		dwStyle = WS_POPUP | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+		ShowCursor(FALSE);
+
+		AdjustWindowRectEx(&windowRect, dwStyle, FALSE, dwExStyle);
+		ShowWindow(hwnd, SW_MAXIMIZE);
+		UpdateWindow(hwnd);
+
+		SetWindowLong(hwnd, GWL_STYLE, dwStyle);
+		MoveWindow(hwnd, 0, 0, oldWindowRawWidth, oldWindowRawHeight, false);
+	}
+	else
+	{
+		if(mChangedDisplayMode)
+			ChangeDisplaySettings(NULL, 0);
+		ShowCursor(TRUE);
+		dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
+		dwStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+		AdjustWindowRectEx(&windowRect, dwStyle, FALSE, dwExStyle);
+		ShowWindow(hwnd, SW_SHOW);
+		UpdateWindow(hwnd);
+		SetWindowLong(hwnd, GWL_STYLE, dwStyle);
+
+		MoveWindow(hwnd, oldWindowPosX, oldWindowPosY, oldWindowRawWidth, oldWindowRawHeight, false);
+	}
 }
 
 int CApplication::GameLoop()
@@ -215,7 +267,7 @@ int CApplication::GetWindowHeight()
 	return appInfo.windowHeight;
 }
 
-const RECT* CApplication::GetWindowRect()
+const RECT* CApplication::GetRect()
 {
 	return &clientRect;
 }

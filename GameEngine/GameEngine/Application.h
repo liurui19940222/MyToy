@@ -14,6 +14,13 @@ struct SApplicationInfo
 	WCHAR* className;
 };
 
+enum class EDisplayMode
+{
+	None = -1,
+	Window = 0,
+	FullScreen = 1,
+};
+
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "glew32.lib")
@@ -41,9 +48,11 @@ public:
 
 	int GetWindowHeight();
 
-	const RECT* GetWindowRect();
+	const RECT* GetRect();
 
 	void ToggleFullOrWindow();
+
+	void ChangeDisplayMode(EDisplayMode mode);
 
 	int GameLoop();
 
@@ -52,11 +61,18 @@ public:
 	static CEngine* GetEngine();
 
 private:
+	int oldWindowRawWidth = 0;
+	int oldWindowRawHeight = 0;
+	int oldWindowPosX = 0;
+	int oldWindowPosY = 0;
+	bool mChangedDisplayMode = false;
+	EDisplayMode mDisplayMode = EDisplayMode::None;
 	CEngine* engine;
 	CGameWindow* window;
 	SApplicationInfo appInfo;
 	HDC hdc;
 	HWND hwnd;
+	HINSTANCE mHIntance;
 	bool isExiting;
 	RECT clientRect;
 };

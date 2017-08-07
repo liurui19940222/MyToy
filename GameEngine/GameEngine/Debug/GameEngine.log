@@ -1,17 +1,6 @@
-﻿  GUISystem.cpp
+﻿  Engine.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  正在生成代码...
-  正在编译...
-  main.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  GUITest.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  GUILable.cpp
-  GUIImage.cpp
-d:\github\mytoy\gameengine\gameengine\guiimage.cpp(58): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-d:\github\mytoy\gameengine\gameengine\guiimage.cpp(59): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-  Engine.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  正在生成代码...
+d:\github\mytoy\gameengine\gameengine\engine.cpp(115): warning C4305: “参数”: 从“unsigned int”到“byte”截断
+d:\github\mytoy\gameengine\gameengine\engine.cpp(115): warning C4309: “参数”: 截断常量值
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.pdb (Full PDB)

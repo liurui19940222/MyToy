@@ -74,6 +74,7 @@ void CEngine::Update()
 {
 	CInput::GetState();
 	GUISystem->OnUpdate();
+	CheckShortcuts();
 
 	Maker->ForeachGameObject([](CGameObject* go, int depth) {
 		go->OnUpdate();
@@ -107,6 +108,14 @@ void CEngine::Quit()
 	Maker->ForeachGameObject([](CGameObject* go, int depth) {
 		go->OnRelease();
 	});
+}
+
+void CEngine::CheckShortcuts()
+{
+	if (CInput::GetKey(DIK_LALT) && CInput::GetKeyDown(DIKEYBOARD_RETURN))
+	{
+		Application->ToggleFullOrWindow();
+	}
 }
 
 CCamera* CEngine::GetCamera()

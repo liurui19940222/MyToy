@@ -121,6 +121,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SpriteAnimation.h" />
     <ClInclude Include="SpriteRenderer.h" />
+    <ClInclude Include="TestApp.h" />
     <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="TextTest.h" />
     <ClInclude Include="Texture.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SpriteAnimation.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
+    <ClCompile Include="TestApp.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="TextTest.cpp" />
     <ClCompile Include="Texture.cpp" />

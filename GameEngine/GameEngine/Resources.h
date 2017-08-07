@@ -23,7 +23,7 @@ public:
 		ISourceFile* sourceFile = NULL;
 		if (it == m_sources.end())
 		{
-			sourceFile = (ISourceFile*)DynamicFactory::Instance().Create<T>();
+			sourceFile = new T();
 			sourceFile->LoadFromFile(path.c_str());
 			m_sources.insert(make_pair(path, sourceFile));
 		}

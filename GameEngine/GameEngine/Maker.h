@@ -35,7 +35,7 @@ public:
 	template<typename T>
 	T* Instantiate()
 	{
-		Object* obj = DynamicFactory::Instance().Create<T>();
+		Object* obj = new T();
 		obj->OnInitialize();
 		if (IS_TYPE(CGameObject, obj))
 		{

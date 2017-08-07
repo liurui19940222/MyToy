@@ -39,6 +39,9 @@ public:
 
 	void Quit();
 
+	//¼ì²é¿ì½Ý¼ü
+	void CheckShortcuts();
+
 	CCamera* GetCamera();
 
 	void AddCamera(CCamera* camera);
