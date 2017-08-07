@@ -7,18 +7,19 @@ void CRelationshipTest::OnStart()
 	float height = Application->GetWindowHeight();
 	model = Matrix4x4::Identity();
 	CRenderCamera* batch = new CRenderCamera;
+	Engine->SetDrawDebug(true);
 	Engine->SetDrawGrid(true);
 	MainCamera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
 	MainCamera->SetCameraClearColor(Color::Hex(0x314D79FF));
-	MainCameraGo->SetPosition(Vector3(0, 7, 10));
+	MainCameraGo->SetLocalPosition(Vector3(0, 7, 10));
 	MainCameraGo->SetLocalEulerAngles(Vector3(-30, 180, 0));
-	cameraPos = MainCameraGo->GetPosition();
+	cameraPos = MainCameraGo->GetLocalPosition();
 	CTexture* texture = CTexture2D::Create("textures/dlg01.bmp");
 	//InitLight();
 	CMeshCube* cube = Maker->Instantiate<CMeshCube>();
 	go = Maker->Instantiate("testGo");
-	go->AddComponent<CMeshRenderer>()->SetModel(cube)->SetTexture(texture);
-	go->SetPosition(Vector3(0, 1.0, 0));
+	go->AddComponent<CMeshRenderer>()->SetModel(cube);
+	go->SetLocalPosition(Vector3(0, 1.0, 0));
 	go->SetLocalScale(Vector3::one * 1);
 
 	for (int i = 0; i < 4; i++)
@@ -33,8 +34,8 @@ void CRelationshipTest::OnStart()
 
 	childs[0]->SetLocalPosition(Vector3(1, 0, 0));
 	childs[1]->SetLocalPosition(Vector3(-1, 0, 0));
-	childs[2]->SetLocalPosition(Vector3(1, 0, 0));
-	childs[3]->SetLocalPosition(Vector3(-1, 0, 0));
+	childs[2]->SetLocalPosition(Vector3(0, 0, 1));
+	childs[3]->SetLocalPosition(Vector3(0, 0, -1));
 	childs[2]->SetLocalEulerAngles(Vector3(0, 90, 0));
 	childs[3]->SetLocalEulerAngles(Vector3(0, 90, 0));
 
@@ -62,7 +63,7 @@ void CRelationshipTest::OnUpdate()
 		Vector3 euler = go->GetLocalEulerAngles();
 		euler.y += CTime::deltaTime * 30;
 
-		go->SetLocalEulerAngles(euler);
+		//go->SetLocalEulerAngles(euler);
 	}
 	if (CInput::GetKeyDown(DIK_V))
 	{
@@ -85,10 +86,10 @@ void CRelationshipTest::OnUpdate()
 		}
 	}
 
-	//Vector3 pos = go->GetPosition();
+	//Vector3 pos = go->GetLocalPosition();
 	//pos.x += h * CTime::deltaTime * 10;
 	//pos.y += v * CTime::deltaTime * 10;
-	//go->SetPosition(pos);
+	//go->SetLocalPosition(pos);
 	Vector3 euler = go2->GetLocalEulerAngles();
 	euler.y += h * CTime::deltaTime * 10;
 	euler.x += v * CTime::deltaTime * 10;
@@ -97,8 +98,7 @@ void CRelationshipTest::OnUpdate()
 
 void CRelationshipTest::OnRender()
 {
-	if(go)
-	CEditorTool::DrawAxis(go);
+
 }
 
 void CRelationshipTest::OnClose()

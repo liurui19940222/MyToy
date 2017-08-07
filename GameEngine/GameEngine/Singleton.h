@@ -11,12 +11,16 @@ class CSingleton
 protected:
 	CSingleton() {}
 	virtual ~CSingleton() {}
+	virtual void OnInitialize() {}
 
 public:
 	static T* GetInstance()
 	{
 		if (m_instance == NULL)
+		{
 			m_instance = new T();
+			m_instance->OnInitialize();
+		}
 		return m_instance;
 	}
 };

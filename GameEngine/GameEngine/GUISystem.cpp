@@ -153,7 +153,7 @@ CGUIWidget* CGUIWidget::SetAnchorPosition(Vector3 anchorPos)
 	Vector3 offset;
 	offset.x = m_width * (0.5f - m_pivot.x);
 	offset.y = m_height * (0.5f - m_pivot.y);
-	gameObject->SetPosition(GetCenterPositionInParent());
+	gameObject->SetLocalPosition(GetCenterPositionInParent());
 	gameObject->SetLocalPosition(anchorPos + offset);
 	return this;
 }
@@ -258,7 +258,7 @@ Vector3 CGUIWidget::GetCenterPositionInParent()
 		else if (m_alignment_v == EAlignmentVertical::BOTTOM)
 			pos.y = -parentSize.y;
 
-		pos += gameObject->GetParent()->GetPosition();
+		pos += gameObject->GetParent()->GetLocalPosition();
 	}
 	else
 	{

@@ -1,5 +1,5 @@
-#ifndef _RENDERER_H_
-#define _RENDERER_H_
+#ifndef _MESH_RENDERER_H_
+#define _MESH_RENDERER_H_
 
 #include"MeshProvider.h"
 #include"Texture.h"
@@ -7,27 +7,25 @@
 #include"Component.h"
 #include"DynamicFactory.h"
 #include"Shader.h"
+#include"Renderer.h"
+#include"Material.h"
 
-class CMeshRenderer : public CComponent
+class CMeshRenderer : public CComponent, public IRenderer
 {
 	REFLECT_CLASS(CMeshRenderer)
 private:
-	MeshProvider* model;
-	CTexture* texture;
+	CMeshProvider* m_mesh;
+	CMaterial* m_material;
 
 public:
-	CMeshRenderer();
-	~CMeshRenderer();
 
-	CMeshRenderer* SetModel(MeshProvider* model);
+	CMeshRenderer* SetModel(CMeshProvider* mesh);
 
-	CMeshRenderer* SetTexture(CTexture* texture);
+	CMeshRenderer* SetMaterial(CMaterial* material);
 
-	virtual void OnUpdate() override;
-
-	virtual void OnRender() override;
-
-	virtual void OnDestroy() override;
+	virtual void OnStart() override;
+	virtual void Render(Matrix4x4& modelMatrix) override;
+	virtual void RenderDebug(Matrix4x4& modelMatrix) override;
 };
 
 #endif

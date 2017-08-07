@@ -11,8 +11,6 @@ class CEditorTool
 	static void PrintTree(CGameObject* go, int depth, bool showDepth);
 
 public:
-	CEditorTool();
-	~CEditorTool();
 
 	static void DrawQuad(const Vector3& position, float size);
 
@@ -24,7 +22,7 @@ public:
 
 	static void DrawAxis(const Vector3& forward, const Vector3& right, const Vector3& up, const Vector3& pos);
 
-	static void DrawAxis(const CGameObject* go);
+	static void DrawAxis(Matrix4x4& modelToWorldMatrix, const Vector3& scale);
 
 	static void PrintTree(bool showDepth = false);
 

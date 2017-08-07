@@ -1,4 +1,11 @@
-#include "Maker.h"
+#include"Maker.h"
+#include"Texture2D.h"
+#include"Material.h"
+
+void CMaker::OnInitialize()
+{
+
+}
 
 CGameObject* CMaker::Instantiate()
 {
@@ -65,7 +72,7 @@ void CMaker::DestroyGameObject(CGameObject* go)
 		go->parent->RemoveChild(go);
 	Maker->RemoveGameObject(go);
 
-	ForeachGameObject(go, [](CGameObject* go, int depth) {
+	ForeachGameObject(go, [](CGameObject* go, int depth, Matrix4x4& mat) {
 		go->OnDestroy();
 		go->OnRelease();
 	});
@@ -74,7 +81,7 @@ void CMaker::DestroyGameObject(CGameObject* go)
 void CMaker::ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback)
 {
 	if (go == NULL || callback == NULL) return;
-	ForeachGameObjectR(go, callback, 0);
+	ForeachGameObjectR(go, callback, 0, go->GetModelToWorldMat());
 }
 
 void CMaker::ForeachGameObjectR(ForeachGoCallbackR callback)
@@ -83,15 +90,16 @@ void CMaker::ForeachGameObjectR(ForeachGoCallbackR callback)
 	auto it = m_gameObjects.begin();
 	while (it != m_gameObjects.end())
 	{
-		if (!ForeachGameObjectR(*it++, callback, 0))
+		if (!ForeachGameObjectR(*it, callback, 0, (*it)->GetModelToWorldMat()))
 			break;
+		it++;
 	}
 }
 
 void CMaker::ForeachGameObject(CGameObject* go, ForeachGoCallback callback)
 {
 	if (go == NULL || callback == NULL) return;
-	ForeachGameObject(go, callback, 0);
+	ForeachGameObject(go, callback, 0, go->GetModelToWorldMat());
 }
 
 void CMaker::ForeachGameObject(ForeachGoCallback callback)
@@ -100,26 +108,27 @@ void CMaker::ForeachGameObject(ForeachGoCallback callback)
 	auto it = m_gameObjects.begin();
 	while (it != m_gameObjects.end())
 	{
-		ForeachGameObject(*it++, callback, 0);
+		ForeachGameObject(*it, callback, 0, (*it)->GetModelToWorldMat());
+		it++;
 	}
 }
 
-bool CMaker::ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback, int depth)
+bool CMaker::ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback, int depth, Matrix4x4& modelMatrix)
 {
-	if (!callback(go, depth)) return false;
+	if (!callback(go, depth, modelMatrix)) return false;
 	for (auto it = go->childs.begin(); it != go->childs.end(); ++it)
 	{
-		if (!ForeachGameObjectR(*it, callback, depth + 1))
+		if (!ForeachGameObjectR(*it, callback, depth + 1, modelMatrix * (*it)->GetModelToWorldMat()))
 			return false;
 	}
 	return true;
 }
 
-void CMaker::ForeachGameObject(CGameObject* go, ForeachGoCallback callback, int depth)
+void CMaker::ForeachGameObject(CGameObject* go, ForeachGoCallback callback, int depth, Matrix4x4& modelMatrix)
 {
-	callback(go, depth);
+	callback(go, depth, modelMatrix);
 	for (auto it = go->childs.begin(); it != go->childs.end(); ++it)
 	{
-		ForeachGameObject(*it, callback, depth + 1);
+		ForeachGameObject(*it, callback, depth + 1, modelMatrix * (*it)->GetModelToWorldMat());
 	}
 }

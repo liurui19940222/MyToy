@@ -3,62 +3,40 @@
 #include"EngineDefine.h"
 #include"Engine.h"
 #include"Application.h"
+#include"EditorTool.h"
 
 IMPL_CLASS(CMeshRenderer)
 
-CMeshRenderer::CMeshRenderer()
+void CMeshRenderer::OnStart()
 {
-
+	m_material = CMaterial::GetDefaltMaterial();
 }
 
-
-CMeshRenderer::~CMeshRenderer()
+void CMeshRenderer::RenderDebug(Matrix4x4& modelMatrix)
 {
+	CEditorTool::DrawAxis(modelMatrix, gameObject->GetLocalScale());
 }
 
-void CMeshRenderer::OnUpdate()
+void CMeshRenderer::Render(Matrix4x4& modelMatrix)
 {
-
+	if (!m_mesh) return;
+	m_material->Bind();
+	m_material->SetParam("MVP", MainCamera->GetProjectionMatrix() * MainCamera->GetViewMatrix() * modelMatrix);
+	m_material->SetParam("Color", Color::white);
+	m_material->SetParam("MainTex", 0);
+	m_mesh->GetBuffer()->BindBuffer();
+	glDrawArrays(m_mesh->GetGLMode(), 0, m_mesh->GetVertexNum());
+	m_material->Unbind();
 }
 
-void CMeshRenderer::OnRender()
+CMeshRenderer* CMeshRenderer::SetModel(CMeshProvider* mesh)
 {
-	if (!model) return;
-
-	if (texture)
-	{
-		glEnable(GL_TEXTURE_2D);
-		texture->Bind();
-	}
-	CShader* shader = CShader::Get("texture");
-	shader->Run();
-	shader->SetUniformParam("MVP", MainCamera->GetProjectionMatrix() * MainCamera->GetViewMatrix() * gameObject->GetModelToWorldMat());
-	shader->SetUniformParam("Color", Color::white);
-	shader->SetUniformParam("MainTex", 0);
-	model->GetBuffer()->BindBuffer();
-	glDrawArrays(model->GetGLMode(), 0, model->GetVertexNum());
-	glUseProgram(0);
-	glBindVertexArray(0);
-	if (texture)
-	{
-		glDisable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-}
-
-void CMeshRenderer::OnDestroy()
-{
-
-}
-
-CMeshRenderer* CMeshRenderer::SetModel(MeshProvider* model)
-{
-	this->model = model;
+	this->m_mesh = mesh;
 	return this;
 }
 
-CMeshRenderer* CMeshRenderer::SetTexture(CTexture* texture)
+CMeshRenderer* CMeshRenderer::SetMaterial(CMaterial* material)
 {
-	this->texture = texture;
+	this->m_material = material;
 	return this;
 }

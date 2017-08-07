@@ -5,7 +5,7 @@
 #include"MeshProvider.h"
 #include"Object.h"
 
-class CMeshQuad : public Object, public MeshProvider
+class CMeshQuad : public Object, public CMeshProvider
 {
 	REFLECT_CLASS(CMeshQuad)
 	constexpr static int VERTEX_NUM = 6;

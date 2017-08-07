@@ -284,6 +284,9 @@
     <ClInclude Include="TestApp.h">
       <Filter>Application\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Component\Interface\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">

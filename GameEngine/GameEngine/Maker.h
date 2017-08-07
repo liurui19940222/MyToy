@@ -8,16 +8,18 @@
 #include"GameObject.h"
 #include"DynamicFactory.h"
 #include"Singleton.h"
+#include"Math.h"
 
 using namespace std;
 
-typedef function<bool(CGameObject*, int)> ForeachGoCallbackR;
-typedef function<void(CGameObject*, int)> ForeachGoCallback;
+typedef function<bool(CGameObject*, int, Matrix4x4&)> ForeachGoCallbackR;
+typedef function<void(CGameObject*, int, Matrix4x4&)> ForeachGoCallback;
 
 class CMaker : public CSingleton<CMaker>
 {
 private:
 	friend class CGameObject;
+	friend class CSingleton<CMaker>;
 
 	//所有的根节点(没有父物体的)GameObject
 	vector<CGameObject*> m_gameObjects;
@@ -28,9 +30,9 @@ private:
 	void AddGameObject(CGameObject* go);
 	void RemoveGameObject(CGameObject* go);
 	void DestroyGameObject(CGameObject* go);
-	bool ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback, int depth);
-	void ForeachGameObject(CGameObject* go, ForeachGoCallback callback, int depth);
-
+	bool ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback, int depth, Matrix4x4& modelMatrix);
+	void ForeachGameObject(CGameObject* go, ForeachGoCallback callback, int depth, Matrix4x4& modelMatrix);
+	virtual void OnInitialize() override;
 public:
 	template<typename T>
 	T* Instantiate()

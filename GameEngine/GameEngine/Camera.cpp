@@ -75,7 +75,7 @@ void CCamera::BeginOneFrame()
 	static Vector3 position;
 	static Vector3 forward;
 	static Vector3 up;
-	position = this->gameObject->GetPosition();
+	position = this->gameObject->GetLocalPosition();
 	forward = this->gameObject->GetForward();
 	up = this->gameObject->GetUp();
 	LookAt(position, position + forward, up);

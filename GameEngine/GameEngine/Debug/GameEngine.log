@@ -1,6 +1,3 @@
-﻿  Engine.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-d:\github\mytoy\gameengine\gameengine\engine.cpp(115): warning C4305: “参数”: 从“unsigned int”到“byte”截断
-d:\github\mytoy\gameengine\gameengine\engine.cpp(115): warning C4309: “参数”: 截断常量值
+﻿  Math.cpp
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.pdb (Full PDB)

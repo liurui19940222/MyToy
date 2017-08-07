@@ -11,7 +11,6 @@ CGameObject::CGameObject() : CGameObject("NewGameObject")
 
 CGameObject::CGameObject(string name) : Object(name)
 {
-	SetPosition(Vector3(0, 0, 0));
 	SetLocalScale(Vector3(1, 1, 1));
 	SetLocalPosition(Vector3(0, 0, 0));
 	SetLocalEulerAngles(Vector3(0, 0, 0));
@@ -22,24 +21,6 @@ CGameObject::CGameObject(string name) : Object(name)
 }
 
 CGameObject::~CGameObject() { }
-
-void CGameObject::SetPosition(const Vector3& pos)
-{
-	position = pos;
-
-	moveMat.MakeTranslate(pos);
-
-	if (childs.size() > 0)
-	{
-		for (vector<CGameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
-		{
-			(*it)->UpdatePosition();
-		}
-	}
-
-	ComputeModelToWorldMat();
-	//SetLocalPosition(pos);
-}
 
 void CGameObject::SetLocalScale(const Vector3& s)
 {
@@ -85,14 +66,9 @@ const Vector3& CGameObject::GetLocalEulerAngles() const
 	return localEulerAngles;
 }
 
-const Vector3& CGameObject::GetPosition() const
-{
-	return position;
-}
-
 const Vector3& CGameObject::GetRealPosition() const
 {
-	return realPosition;
+	return localPosition;
 }
 
 const Vector3& CGameObject::GetUp() const
@@ -115,15 +91,23 @@ CGameObject* CGameObject::GetParent() const
 	return this->parent;
 }
 
+IRenderer* CGameObject::GetRenderer()
+{
+	vector<CComponent*>::iterator it = components.begin();
+	while (it != components.end())
+	{
+		if (IS_TYPE(IRenderer, *it))
+		{
+			return dynamic_cast<IRenderer*>(*it);
+		}
+		it++;
+	}
+	return NULL;
+}
+
 Matrix4x4 CGameObject::ComputeModelToWorldMat()
 {
-	if (!parent)
-		modelToWorldMat = moveMat * localRotateMat * localScaleMat;
-	else
-		modelToWorldMat = parent->GetModelToWorldMat()  * localRotateMat * localScaleMat* localMoveMat;
-	realPosition.x = modelToWorldMat[0][3];
-	realPosition.x = modelToWorldMat[1][3];
-	realPosition.x = modelToWorldMat[2][3];
+	modelToWorldMat = localMoveMat * localRotateMat * localScaleMat;
 	return modelToWorldMat;
 }
 
@@ -174,14 +158,6 @@ void CGameObject::OnDestroy()
 	while (it != components.end())
 	{
 		(*it++)->OnDestroy();
-	}
-}
-
-void CGameObject::UpdatePosition()
-{
-	if (parent)
-	{
-		SetPosition(parent->GetPosition());
 	}
 }
 
@@ -240,7 +216,6 @@ void CGameObject::SetParent(CGameObject* parent)
 	if (parent)
 	{
 		parent->AddChild(this);
-		SetPosition(parent->position);
 		SetLocalPosition(localPosition);
 		SetLocalEulerAngles(localEulerAngles);
 		SetLocalScale(localScale);

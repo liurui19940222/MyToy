@@ -10,12 +10,12 @@ void CMeshQuad::OnInitialize()
 {
 	normals[0] = Vector3(0, 0, 1);
 	normals[1] = Vector3(0, 0, 1);
-	vertices[0] = Vector3(-0.5f, 0.5f, 0.5f);
-	vertices[1] = Vector3(-0.5f, -0.5f, 0.5f);
-	vertices[2] = Vector3(0.5f, -0.5f, 0.5f);
-	vertices[3] = Vector3(0.5f, -0.5f, 0.5f);
-	vertices[4] = Vector3(0.5f, 0.5f, 0.5f);
-	vertices[5] = Vector3(-0.5f, 0.5f, 0.5f);
+	vertices[0] = Vector3(-0.5f, 0.5f, 0.0f);
+	vertices[1] = Vector3(-0.5f, -0.5f, 0.0f);
+	vertices[2] = Vector3(0.5f, -0.5f, 0.0f);
+	vertices[3] = Vector3(0.5f, -0.5f, 0.0f);
+	vertices[4] = Vector3(0.5f, 0.5f, 0.0f);
+	vertices[5] = Vector3(-0.5f, 0.5f, 0.0f);
 	uvs[0] = Vector2(0.0f, 1.0f);
 	uvs[1] = Vector2(0.0f, 0.0f);
 	uvs[2] = Vector2(1.0f, 0.0f);

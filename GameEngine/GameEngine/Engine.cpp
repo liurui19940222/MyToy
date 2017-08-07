@@ -18,7 +18,7 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd)
 	CTime::SetTargetFrameCount(60);
 	m_cameras.SetComparator(CompareCamera);
 	m_camera = Maker->Instantiate("MainCamera")->AddComponent<CCamera>();
-	m_camera->gameObject->SetPosition(Vector3(0, 4, -10));
+	m_camera->gameObject->SetLocalPosition(Vector3(0, 4, -10));
 	m_camera->Perspective(54.0f, (GLfloat)Application->GetWindowWidth() / (GLfloat)Application->GetWindowHeight(), 1.0f, 1000.0f);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 }
@@ -76,7 +76,7 @@ void CEngine::Update()
 	GUISystem->OnUpdate();
 	CheckShortcuts();
 
-	Maker->ForeachGameObject([](CGameObject* go, int depth) {
+	Maker->ForeachGameObject([](CGameObject* go, int depth, Matrix4x4& mat) {
 		go->OnUpdate();
 	});
 }
@@ -85,14 +85,18 @@ void CEngine::Render()
 {
 	m_cameras.Foreach([this](CCamera* camera) {
 		camera->BeginOneFrame();
-		Maker->ForeachGameObject([this](CGameObject* go, int depth) {
-			go->OnRender();
-			if (drawDebug) go->OnDrawDebug();
+		IRenderer* renderer = NULL;
+		Maker->ForeachGameObject([this, &renderer](CGameObject* go, int depth, Matrix4x4& mat) {
+			if (renderer = go->GetRenderer())
+			{
+				renderer->Render(mat);
+				if (drawDebug) renderer->RenderDebug(mat);
+			}
 		});
 		camera->EndTheFrame();
 	});
 
-	if (drawGrid) CEditorTool::DrawGrid(MainCameraGo->GetPosition(), Vector3(0.0f, 0.0f, 0.0f), Color(0.0f, 0.0f, 0.8f, 1.0f));
+	if (drawGrid) CEditorTool::DrawGrid(MainCameraGo->GetLocalPosition(), Vector3(0.0f, 0.0f, 0.0f), Color(0.0f, 0.0f, 0.8f, 1.0f));
 	//BeginOrtho();
 	//GUISystem->OnRender();
 	//if (drawDebug) GUISystem->OnDrawDebug();
@@ -105,7 +109,7 @@ void CEngine::Quit()
 	CInput::ShutDown();
 	delete m_camera;
 
-	Maker->ForeachGameObject([](CGameObject* go, int depth) {
+	Maker->ForeachGameObject([](CGameObject* go, int depth, Matrix4x4& mat) {
 		go->OnRelease();
 	});
 }

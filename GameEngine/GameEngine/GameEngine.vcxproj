@@ -116,6 +116,7 @@
     <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="RenderBuffer.h" />
     <ClInclude Include="RenderCamera.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Singleton.h" />

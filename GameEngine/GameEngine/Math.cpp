@@ -678,6 +678,21 @@ void Matrix4x4::GetUVN(Matrix4x4& mat, Vector3* u, Vector3* v, Vector3* n)
 	n->x = mat[2][0]; n->y = mat[2][1]; n->z = mat[2][2];
 }
 
+void Matrix4x4::GetUVN(Matrix4x4& mat, const Vector3& scale, Vector3* u, Vector3* v, Vector3* n)
+{	
+	float rx = 1.0f / scale.x, ry = 1.0f / scale.y, rz = 1.0f / scale.z;
+	u->x = mat[0][0] * rx; u->y = mat[0][1] * rx; u->z = mat[0][2] * rx;
+	v->x = mat[1][0] * ry; v->y = mat[1][1] * ry; v->z = mat[1][2] * ry;
+	n->x = mat[2][0] * rz; n->y = mat[2][1] * rz; n->z = mat[2][2] * rz;
+}
+
+void Matrix4x4::GetPosition(Matrix4x4& mat, Vector3* position)
+{
+	position->x = mat[3][0];
+	position->y = mat[3][1];
+	position->z = mat[3][2];
+}
+
 #pragma endregion
 
 #pragma region ParameterizedLine2D

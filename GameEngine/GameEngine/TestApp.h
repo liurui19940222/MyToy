@@ -6,7 +6,9 @@ class CTestApp : public CGameWindow
 {
 	int window_width = 800;
 	int window_height = 600;
-	CGameObject* go;
+	CGameObject* go1;
+	CGameObject* go2;
+	CGameObject* go3;
 public:
 	virtual void OnStart();
 

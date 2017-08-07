@@ -6,14 +6,6 @@
 #include"Debug.h"
 #include"GameObject.h"
 
-CEditorTool::CEditorTool()
-{
-}
-
-
-CEditorTool::~CEditorTool()
-{
-}
 
 void CEditorTool::DrawQuad(const Vector3& position, float size)
 {
@@ -111,15 +103,18 @@ void CEditorTool::DrawAxis(const Vector3& forward, const Vector3& right, const V
 	DrawVector(up, pos, Color::green);
 }
 
-void CEditorTool::DrawAxis(const CGameObject* go)
+void CEditorTool::DrawAxis(Matrix4x4& modelToWorldMatrix, const Vector3& scale)
 {
-	DrawAxis(go->GetForward(), go->GetRight(), go->GetUp(), go->GetPosition());
+	static Vector3 forward, right, up, position;
+	Matrix4x4::GetUVN(modelToWorldMatrix, scale, &right, &up, &forward);
+	Matrix4x4::GetPosition(modelToWorldMatrix, &position);
+	DrawAxis(forward, right, up, position);
 }
 
 void CEditorTool::PrintTree(bool showDepth)
 {
 	CDebug::Log("---------------the scene's tree---------------");
-	Maker->ForeachGameObject([showDepth](CGameObject* go, int depth) {
+	Maker->ForeachGameObject([showDepth](CGameObject* go, int depth, Matrix4x4& mat) {
 		PrintTree(go, depth, showDepth);
 	});
 	CDebug::Log("----------------------------------------------");
@@ -128,7 +123,7 @@ void CEditorTool::PrintTree(bool showDepth)
 void CEditorTool::PrintTree(CGameObject* go, bool showDepth)
 {
 	CDebug::Log("---------------the scene's tree---------------");
-	Maker->ForeachGameObject(go, [showDepth](CGameObject* go, int depth) {
+	Maker->ForeachGameObject(go, [showDepth](CGameObject* go, int depth, Matrix4x4& mat) {
 		PrintTree(go, depth, showDepth);
 	});
 	CDebug::Log("----------------------------------------------");

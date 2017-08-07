@@ -60,5 +60,5 @@ void CModelFile::ReleaseSource()
 
 void CModelFile::ReleaseMesh() 
 {
-	MeshProvider::ReleaseMesh();
+	CMeshProvider::ReleaseMesh();
 }

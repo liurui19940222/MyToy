@@ -30,7 +30,7 @@ public:
 	virtual void ReleaseMesh() = 0;
 };
 
-class MeshProvider : public IMeshProvider
+class CMeshProvider : public IMeshProvider
 {
 protected:
 	CMeshBuffer m_buffer;

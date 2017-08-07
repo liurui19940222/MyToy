@@ -237,6 +237,10 @@ public:
 
 	static void GetUVN(Matrix4x4& mat, Vector3* u, Vector3* v, Vector3* n);
 
+	static void GetUVN(Matrix4x4& mat, const Vector3& scale, Vector3* u, Vector3* v, Vector3* n);
+
+	static void GetPosition(Matrix4x4& mat, Vector3* position);
+
 private:
 	Vector4 m[4];
 };

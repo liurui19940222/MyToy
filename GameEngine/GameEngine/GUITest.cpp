@@ -10,7 +10,7 @@ void GUITest::OnStart()
 	Engine->SetDrawGrid(false);
 	Engine->SetDrawDebug(true);
 	MainCamera->SetCameraClearColor(Color::Hex(0x18253BFF));
-	MainCameraGo->SetPosition(Vector3(0, 0, 10));
+	MainCameraGo->SetLocalPosition(Vector3(0, 0, 10));
 	MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
 
 	CTexture* tex = CTexture2D::Create("F://monthad_1.png");
@@ -44,7 +44,7 @@ void GUITest::OnStart()
 
 	//FontManager->LoadFont(2, "fonts/msyh.ttf");
 	//CGameObject* texGo = Engine->CreateGameObject("Text");
-	//texGo->SetPosition(Vector3(-4.75f, 4.05f, 0));
+	//texGo->SetLocalPosition(Vector3(-4.75f, 4.05f, 0));
 	//text = texGo->AddComponent<CTextRenderer>();
 	//text->Init(FontManager->GetFont(2), NULL, 8, 0, 0.5f, Color::green(), EAlignment::LEFT_TOP, SRect2D(0, 0, 2, 1));
 }

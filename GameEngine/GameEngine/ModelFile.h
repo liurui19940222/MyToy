@@ -5,7 +5,7 @@
 #include "Math.h"
 #include "SourceFile.h"
 
-class CModelFile : public ISourceFile, public MeshProvider
+class CModelFile : public ISourceFile, public CMeshProvider
 {
 protected:
 	Vector3* vertexArray;
