@@ -1,5 +1,5 @@
-#ifndef _CTEXTURE_
-#define _CTEXTURE_
+#ifndef _TEXTURE_H_
+#define _TEXTURE_H_
 
 #include"Object.h"
 #include"GLHead.h"
@@ -34,9 +34,9 @@ protected:
 	int m_height;
 	int m_format;
 	int m_internalFormat;
-	ETexEnvMode m_envMode;
-	ETexFilterMode m_filterMode;
-	ETexWrapMode m_wrapMode;
+	ETexEnvMode m_envMode = ETexEnvMode::Replace;
+	ETexFilterMode m_filterMode = ETexFilterMode::Linear;
+	ETexWrapMode m_wrapMode = ETexWrapMode::ClampToEdge;
 
 public:
 	int GetWidth() const;

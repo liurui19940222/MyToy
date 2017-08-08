@@ -257,9 +257,6 @@
     <ClInclude Include="MeshBuffer.h">
       <Filter>Render\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="FrameBuffer.h">
-      <Filter>Render\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="GLHead.h">
       <Filter>Common\头文件</Filter>
     </ClInclude>
@@ -286,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Component\Interface\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTexture.h">
+      <Filter>Render\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -403,9 +403,6 @@
     <ClCompile Include="MeshBuffer.cpp">
       <Filter>Render\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="FrameBuffer.cpp">
-      <Filter>Render\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="MeshProvider.cpp">
       <Filter>Component\Interface\源文件</Filter>
     </ClCompile>
@@ -426,6 +423,9 @@
     </ClCompile>
     <ClCompile Include="TestApp.cpp">
       <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTexture.cpp">
+      <Filter>Render\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

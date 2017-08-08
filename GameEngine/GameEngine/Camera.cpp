@@ -3,6 +3,7 @@
 #include "EngineDefine.h"
 #include "Engine.h"
 #include "Application.h"
+#include "RenderTexture.h"
 
 IMPL_CLASS(CCamera)
 
@@ -63,15 +64,31 @@ CRenderCamera* CCamera::LookAt(const Vector3& eye, const Vector3& center, const 
 	return this;
 }
 
+CRenderCamera* CCamera::SetDepth(int depth)
+{
+	CRenderCamera::SetDepth(depth);
+	Engine->RemoveCamera(this);
+	Engine->AddCamera(this);
+	return this;
+}
+
 void CCamera::BeginOneFrame()
 {
+	if (m_renderTexture)
+	{
+		m_renderTexture->BindBuffer();
+		glViewport(0, 0, m_renderTexture->GetWidth(), m_renderTexture->GetHeight());
+	}
+	else
+	{
+		glViewport(0, 0, Application->GetWindowWidth(), Application->GetWindowHeight());
+	}
 	if (m_cameraClearFlag == ECameraClearFlag::SolidColor)
 	{
 		glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	}
 	glLoadIdentity();
-	glEnable(GL_DEPTH_TEST);
 	static Vector3 position;
 	static Vector3 forward;
 	static Vector3 up;
@@ -83,6 +100,7 @@ void CCamera::BeginOneFrame()
 
 void CCamera::EndTheFrame()
 {
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glUseProgram(0);
 	glDisable(GL_DEPTH_TEST);
 }

@@ -3,6 +3,7 @@
 
 #include"Math.h"
 #include"EngineDefine.h"
+//#include"RenderTexture.h"
 
 enum EProjectionType
 {
@@ -16,11 +17,14 @@ enum ECameraClearFlag
 	DontClear,
 };
 
+class CRenderTexture;
+
 class CRenderCamera
 {
 protected:
 	EProjectionType m_projectionType;
 	ECameraClearFlag m_cameraClearFlag;
+	CRenderTexture* m_renderTexture;
 	float m_fov;
 	float m_aspect;
 	float m_near;
@@ -45,11 +49,14 @@ public:
 	virtual CRenderCamera* Ortho(float left, float right, float bottom, float top, float znear, float zfar);
 	virtual CRenderCamera* Ortho(float halfSize, float aspect);
 	virtual CRenderCamera* LookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
+	virtual CRenderCamera* SetDepth(int depth);
 	CRenderCamera* SetCameraClearFlag(ECameraClearFlag flag);
 	CRenderCamera* SetCameraClearColor(const Color& color);
+	CRenderCamera* SetRenderTexture(CRenderTexture* texture);
 
 	EProjectionType GetProjectionType() const;
 	ECameraClearFlag GetCameraClearFlag() const;
+	CRenderTexture* GetRenderTexture() const;
 	const Color& GetCameraClearColor() const;
 	float GetFov() const;
 	float GetAspect() const;

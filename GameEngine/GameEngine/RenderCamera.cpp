@@ -1,4 +1,5 @@
-#include "RenderCamera.h"
+#include"RenderCamera.h"
+#include"RenderTexture.h"
 
 CRenderCamera::CRenderCamera() : m_projectionType(EProjectionType::Perspective) , m_cameraClearFlag(ECameraClearFlag::SolidColor)
 , m_fov(0) , m_near(0) , m_far(0) , m_left(0) , m_right(0)
@@ -46,10 +47,18 @@ CRenderCamera* CRenderCamera::LookAt(const Vector3& eye, const Vector3& center, 
 	return this;
 }
 
+CRenderCamera* CRenderCamera::SetDepth(int depth)
+{
+	m_depth = depth;
+	return this;
+}
+
 CRenderCamera* CRenderCamera::SetCameraClearFlag(ECameraClearFlag flag) { m_cameraClearFlag = flag; return this; }
 CRenderCamera* CRenderCamera::SetCameraClearColor(const Color& color) { m_clearColor = color; return this; }
+CRenderCamera* CRenderCamera::SetRenderTexture(CRenderTexture* texture) { m_renderTexture = texture; return this; }
 EProjectionType CRenderCamera::GetProjectionType() const { return m_projectionType; }
 ECameraClearFlag CRenderCamera::GetCameraClearFlag() const { return m_cameraClearFlag; }
+CRenderTexture* CRenderCamera::GetRenderTexture() const { return m_renderTexture; }
 const Color& CRenderCamera::GetCameraClearColor() const { return m_clearColor; }
 float CRenderCamera::GetFov() const { return m_fov; }
 float CRenderCamera::GetAspect() const { return m_aspect; }

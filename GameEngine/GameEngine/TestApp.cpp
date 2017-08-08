@@ -2,6 +2,9 @@
 #include"Input.h"
 #include"Time.h"
 #include"MeshCube.h"
+#include"RenderTexture.h"
+#include"3DSFile.h"
+#include"Resources.h"
 
 void CTestApp::OnStart()
 {
@@ -11,16 +14,31 @@ void CTestApp::OnStart()
 	MainCamera->SetCameraClearColor(Color::Hex(0x314D79FF));
 	MainCameraGo->SetLocalPosition(Vector3(0, 0, 5));
 	MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
+	camera = Maker->Instantiate("Camera");
+	CRenderTexture* renderTexture = CRenderTexture::Create(400, 400, true);
+	CCamera* c = camera->AddComponent<CCamera>();
+	c->Perspective(54.0f, (float)Application->GetWindowWidth() / (float)Application->GetWindowHeight(), 0.1f, 1000.0f);
+	c->SetCameraClearFlag(ECameraClearFlag::SolidColor)->SetCameraClearColor(Color::black)->SetDepth(1)->SetRenderTexture(renderTexture);
+	c->SetName("camera");
+	camera->SetLocalPosition(Vector3(100, 3, -10));
 
+	model = Maker->Instantiate("model");
+	model->SetLocalPosition(Vector3(100, 0, 0));
+	model->SetLocalScale(Vector3(0.12f, 0.12f, 0.12f));
+	CMaterial* model_mat = Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("texture"));
+	model_mat->SetMainTexture(CTexture2D::Create("textures/model.png"));
+	model->AddComponent<CMeshRenderer>()->SetModel(Resources->Load<C3DSFile>("models/model.3DS"))->SetMaterial(model_mat);
+
+	CMaterial* material = Maker->Instantiate<CMaterial>();
+	material->SetMainTexture(renderTexture)->SetShader(CShader::Get("texture"));
 	CMeshProvider* quad = Maker->Instantiate<CMeshCube>();
 	go1 = Maker->Instantiate("parent");
-	go1->AddComponent<CMeshRenderer>()->SetModel(quad);
+	go1->AddComponent<CMeshRenderer>()->SetModel(quad)->SetMaterial(material);
 
 	go2 = Maker->Instantiate("child");
 	go2->AddComponent<CMeshRenderer>()->SetModel(quad);
 	go2->SetParent(go1);
 	go2->SetLocalPosition(Vector3::right * 1.4f);
-	//go2->SetLocalScale(Vector3(0.6f, 0.3f, 0.8f));
 	go2->SetLocalScale(Vector3::one * 0.5f);
 
 	go3 = Maker->Instantiate("grandchild");
@@ -63,6 +81,10 @@ void CTestApp::OnUpdate()
 		euler.y += CTime::deltaTime * 300;
 	}
 	go3->SetLocalEulerAngles(euler);
+
+	euler = model->GetLocalEulerAngles();
+	euler.y += CTime::deltaTime * 300;
+	model->SetLocalEulerAngles(euler);
 }
 
 void CTestApp::OnRender()

@@ -24,6 +24,8 @@ public:
 
 	static void DrawAxis(Matrix4x4& modelToWorldMatrix, const Vector3& scale);
 
+	static void DrawAxis(Matrix4x4& modelToWorldMatrix);
+
 	static void PrintTree(bool showDepth = false);
 
 	static void PrintTree(CGameObject* go, bool showDepth = false);

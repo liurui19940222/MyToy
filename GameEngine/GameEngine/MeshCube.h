@@ -48,7 +48,7 @@ class CMeshCube : public Object, public CMeshProvider
 		//bottom
 		{-0.5f, -0.5f, -0.5f},
 		{-0.5f, -0.5f, 0.5f},
-		{0.5f, -0.5f, -0.5f},
+		{0.5f, -0.5f, 0.5f},
 		{-0.5f, -0.5f, -0.5f},
 		{0.5f, -0.5f, 0.5f},
 		{0.5f, -0.5f, -0.5f},

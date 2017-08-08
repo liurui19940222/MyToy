@@ -9,6 +9,8 @@ class CTestApp : public CGameWindow
 	CGameObject* go1;
 	CGameObject* go2;
 	CGameObject* go3;
+	CGameObject* camera;
+	CGameObject* model;
 public:
 	virtual void OnStart();
 

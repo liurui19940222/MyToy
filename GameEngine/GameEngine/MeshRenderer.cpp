@@ -14,16 +14,14 @@ void CMeshRenderer::OnStart()
 
 void CMeshRenderer::RenderDebug(Matrix4x4& modelMatrix)
 {
-	CEditorTool::DrawAxis(modelMatrix, gameObject->GetLocalScale());
+	CEditorTool::DrawAxis(modelMatrix);
 }
 
-void CMeshRenderer::Render(Matrix4x4& modelMatrix)
+void CMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
 {
 	if (!m_mesh) return;
 	m_material->Bind();
-	m_material->SetParam("MVP", MainCamera->GetProjectionMatrix() * MainCamera->GetViewMatrix() * modelMatrix);
-	m_material->SetParam("Color", Color::white);
-	m_material->SetParam("MainTex", 0);
+	m_material->SetParam("MVP", projectionMatrix * viewMatrix * modelMatrix);
 	m_mesh->GetBuffer()->BindBuffer();
 	glDrawArrays(m_mesh->GetGLMode(), 0, m_mesh->GetVertexNum());
 	m_material->Unbind();

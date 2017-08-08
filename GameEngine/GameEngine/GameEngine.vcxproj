@@ -93,7 +93,7 @@
     <ClInclude Include="EngineDefine.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="FontRenderer.h" />
-    <ClInclude Include="FrameBuffer.h" />
+    <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="GLHead.h" />
@@ -148,7 +148,7 @@
     <ClCompile Include="EngineDefine.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="FontRenderer.cpp" />
-    <ClCompile Include="FrameBuffer.cpp" />
+    <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="GUIImage.cpp" />

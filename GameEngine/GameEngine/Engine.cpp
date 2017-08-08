@@ -33,9 +33,11 @@ void CEngine::SetupProjection(int width, int height)
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	if (m_camera != NULL)
+	if (m_cameras.Count() > 0)
 	{
-		m_camera->Perspective(54.0f, (float)width / (float)height, 1.0f, 1000.0f);
+		m_cameras.Foreach([&width, &height](CCamera* camera) {
+			camera->Perspective(camera->GetFov(), (float)width / (float)height, camera->GetNear(), camera->GetFar());
+		});
 	}
 }
 
@@ -76,20 +78,20 @@ void CEngine::Update()
 	GUISystem->OnUpdate();
 	CheckShortcuts();
 
-	Maker->ForeachGameObject([](CGameObject* go, int depth, Matrix4x4& mat) {
+	Maker->ForeachGameObject([](CGameObject* go, int depth) {
 		go->OnUpdate();
 	});
 }
 
 void CEngine::Render()
 {
-	m_cameras.Foreach([this](CCamera* camera) {
+	m_cameras.ForeachInverse([this](CCamera* camera) {
 		camera->BeginOneFrame();
 		IRenderer* renderer = NULL;
-		Maker->ForeachGameObject([this, &renderer](CGameObject* go, int depth, Matrix4x4& mat) {
+		Maker->ForeachGameObject([this, &renderer, &camera](CGameObject* go, int depth, Matrix4x4& mat) {
 			if (renderer = go->GetRenderer())
 			{
-				renderer->Render(mat);
+				renderer->Render(mat, camera->m_viewMat, camera->m_projectionMat);
 				if (drawDebug) renderer->RenderDebug(mat);
 			}
 		});
@@ -109,7 +111,7 @@ void CEngine::Quit()
 	CInput::ShutDown();
 	delete m_camera;
 
-	Maker->ForeachGameObject([](CGameObject* go, int depth, Matrix4x4& mat) {
+	Maker->ForeachGameObject([](CGameObject* go, int depth) {
 		go->OnRelease();
 	});
 }

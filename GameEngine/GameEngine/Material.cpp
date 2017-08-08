@@ -105,6 +105,7 @@ CMaterial* CMaterial::SetMainTexture(CTexture* texture)
 CMaterial* CMaterial::Bind()
 {
 	PushState();
+	m_shader->Run();
 	if (m_mainTexture && HasState(EPiplelineStateType::Texture2D))
 	{
 		glEnable(GL_TEXTURE_2D);
@@ -112,8 +113,6 @@ CMaterial* CMaterial::Bind()
 		SetParam("MainTex", 0);
 	}
 	SetParam("Color", m_color);
-	m_shader->Run();
-	PopState();
 	return this;
 }
 
@@ -126,6 +125,7 @@ CMaterial* CMaterial::Unbind()
 		glDisable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
+	PopState();
 	return this;
 }
 

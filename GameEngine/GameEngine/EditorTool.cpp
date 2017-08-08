@@ -111,10 +111,15 @@ void CEditorTool::DrawAxis(Matrix4x4& modelToWorldMatrix, const Vector3& scale)
 	DrawAxis(forward, right, up, position);
 }
 
+void CEditorTool::DrawAxis(Matrix4x4& modelToWorldMatrix)
+{
+	DrawAxis(modelToWorldMatrix, Vector3::one);
+}
+
 void CEditorTool::PrintTree(bool showDepth)
 {
 	CDebug::Log("---------------the scene's tree---------------");
-	Maker->ForeachGameObject([showDepth](CGameObject* go, int depth, Matrix4x4& mat) {
+	Maker->ForeachGameObject([showDepth](CGameObject* go, int depth) {
 		PrintTree(go, depth, showDepth);
 	});
 	CDebug::Log("----------------------------------------------");
@@ -123,7 +128,7 @@ void CEditorTool::PrintTree(bool showDepth)
 void CEditorTool::PrintTree(CGameObject* go, bool showDepth)
 {
 	CDebug::Log("---------------the scene's tree---------------");
-	Maker->ForeachGameObject(go, [showDepth](CGameObject* go, int depth, Matrix4x4& mat) {
+	Maker->ForeachGameObject(go, [showDepth](CGameObject* go, int depth) {
 		PrintTree(go, depth, showDepth);
 	});
 	CDebug::Log("----------------------------------------------");
