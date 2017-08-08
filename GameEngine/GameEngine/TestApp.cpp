@@ -5,9 +5,21 @@
 #include"RenderTexture.h"
 #include"3DSFile.h"
 #include"Resources.h"
+#include"include\rapidxml\rapidxml.hpp"
+#include<fstream>
+#include<sstream>
 
 void CTestApp::OnStart()
 {
+	//ifstream is("Config/engine.xml");
+	//stringstream ss;
+	//ss << is.rdbuf();
+	//int size = ss.str().size();
+	//rapidxml::xml_document<> doc;
+	//char* buf = (char*)malloc(size + 1);
+	//ss.read(buf, size);
+	//buf[size] = '\0';
+	//doc.parse<0>(buf);
 	Engine->SetDrawDebug(true);
 	Engine->SetDrawGrid(false);
 	MainCamera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
@@ -46,7 +58,6 @@ void CTestApp::OnStart()
 	go3->SetParent(go2);
 	go3->SetLocalPosition(Vector3::right * 1.4f);
 	go3->SetLocalScale(Vector3::one * 0.5f);
-
 	CEditorTool::PrintTree();
 }
 

@@ -11,10 +11,10 @@ private:
 	CTexture* texture;
 
 public:
-	CSpriteRenderer();
-	~CSpriteRenderer();
 
 	CSpriteRenderer* SetTexture(CTexture* texture);
+
+	virtual void OnStart() override;
 
 	virtual void OnUpdate() override;
 

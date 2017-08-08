@@ -3,19 +3,15 @@
 
 IMPL_CLASS(CSpriteRenderer)
 
-CSpriteRenderer::CSpriteRenderer()
-{
-}
-
-CSpriteRenderer::~CSpriteRenderer()
-{
-
-}
-
 CSpriteRenderer* CSpriteRenderer::SetTexture(CTexture* texture)
 {
 	this->texture = texture;
 	return this;
+}
+
+void CSpriteRenderer::OnStart()
+{
+	
 }
 
 void CSpriteRenderer::OnUpdate()
