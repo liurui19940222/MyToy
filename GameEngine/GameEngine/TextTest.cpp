@@ -2,29 +2,27 @@
 
 void CTextTest::OnStart()
 {
-	Engine->SetDrawGrid(false);
-	Engine->SetDrawDebug(true);
-	MainCameraGo->SetLocalPosition(Vector3(0, 0, 10));
-	MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
+	_MainCameraGo->SetLocalPosition(Vector3(0, 0, 10));
+	_MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
 
 	CTrueTypeFont* font = FontManager->LoadFont(1, "C:/Windows/Fonts/StencilStd.otf");
-	go = Maker->Instantiate();
+	go = _Maker->Instantiate();
 	go->SetLocalPosition(Vector3(0, 0, 0));
 	text = go->AddComponent<CTextRenderer>();
 	text->SetFont(font)->SetFontSize(10)->SetTextRect(SRect2D{ 0, 0, 5, 1 });
 	text->SetText(L"Sams Publishing & Pearson Education Inc., \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson");
 	//text->SetText(L"дasdfsdf\nͨ564654564");
 
-	//CBitImage* image = Engine->CreateImage("textures/model.png");
+	//CBitImage* image = _Engine->CreateImage("textures/model.png");
 	//CTexture* texture = CTexture::Create(image);
-	//CGameObject* texGo = Engine->CreateGameObject();
+	//CGameObject* texGo = _Engine->CreateGameObject();
 	//texGo->AddComponent<CSpriteRenderer>()->SetTexture(texture);
 	//texGo->SetLocalScale(Vector3(0.1, 0.1, 0));
 	//texGo->SetLocalPosition(Vector3(0, -1, 0));
 
 	//CAtlas* atlas = (*font->GetAtlases(10))[0];
 	//CTexture* tex = CTexture::Create((UCHAR*)(atlas->GetPixels()), atlas->GetWidth(), atlas->GetHeight());
-	//textureGo = Engine->CreateGameObject();
+	//textureGo = _Engine->CreateGameObject();
 	//textureGo->AddComponent<CSpriteRenderer>()->SetTexture(tex);
 	//textureGo->SetLocalScale(Vector3(0.25, 0.25, 0.25));
 	//textureGo->SetLocalPosition(Vector3(-1, 0, 0));

@@ -9,12 +9,12 @@ IMPL_CLASS(CCamera)
 
 void CCamera::OnStart()
 {
-	Engine->AddCamera(this);
+	_Engine->AddCamera(this);
 }
 
 void CCamera::OnDestroy()
 {
-	Engine->RemoveCamera(this);
+	_Engine->RemoveCamera(this);
 }
 
 void CCamera::OnUpdate()
@@ -67,8 +67,8 @@ CRenderCamera* CCamera::LookAt(const Vector3& eye, const Vector3& center, const 
 CRenderCamera* CCamera::SetDepth(int depth)
 {
 	CRenderCamera::SetDepth(depth);
-	Engine->RemoveCamera(this);
-	Engine->AddCamera(this);
+	_Engine->RemoveCamera(this);
+	_Engine->AddCamera(this);
 	return this;
 }
 
@@ -81,7 +81,7 @@ void CCamera::BeginOneFrame()
 	}
 	else
 	{
-		glViewport(0, 0, Application->GetWindowWidth(), Application->GetWindowHeight());
+		glViewport(0, 0, _Application->GetWindowWidth(), _Application->GetWindowHeight());
 	}
 	if (m_cameraClearFlag == ECameraClearFlag::SolidColor)
 	{

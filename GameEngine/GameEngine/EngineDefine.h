@@ -5,14 +5,6 @@
 #include<gl\glew.h>
 
 #define _RGBA32(r, g, b, a) (a << 24) + (b << 16) + (g << 8) + r
-#define Engine CApplication::GetEngine()
-#define Application CApplication::GetInstance()
-#define MainCamera Engine->GetCamera()
-#define MainCameraGo MainCamera->gameObject
-#define FontManager CFontManager::GetInstance()
-#define Resources CResources::GetInstance()
-#define Maker CMaker::GetInstance()
-#define GUISystem guisystem::CGUISystem::GetInstance()
 #define CH_MAP_BITMAP_SIZE_W 512
 #define CH_MAP_BITMAP_SIZE_H 512
 

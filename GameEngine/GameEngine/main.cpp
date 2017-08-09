@@ -6,7 +6,7 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-	Application->CreateApp(hInstance, hPrevInstance, lpCmdLine, nShowCmd, new CTestApp);
+	_Application->CreateApp(hInstance, hPrevInstance, lpCmdLine, nShowCmd, new CTestApp);
 
-	return Application->GameLoop();
+	return _Application->GameLoop();
 }

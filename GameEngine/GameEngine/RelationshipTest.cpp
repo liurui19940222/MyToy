@@ -3,21 +3,19 @@
 
 void CRelationshipTest::OnStart()
 {
-	float width = Application->GetWindowWidth();
-	float height = Application->GetWindowHeight();
+	float width = _Application->GetWindowWidth();
+	float height = _Application->GetWindowHeight();
 	model = Matrix4x4::Identity();
 	CRenderCamera* batch = new CRenderCamera;
-	Engine->SetDrawDebug(true);
-	Engine->SetDrawGrid(true);
-	MainCamera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
-	MainCamera->SetCameraClearColor(Color::Hex(0x314D79FF));
-	MainCameraGo->SetLocalPosition(Vector3(0, 7, 10));
-	MainCameraGo->SetLocalEulerAngles(Vector3(-30, 180, 0));
-	cameraPos = MainCameraGo->GetLocalPosition();
+	_MainCamera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
+	_MainCamera->SetCameraClearColor(Color::Hex(0x314D79FF));
+	_MainCameraGo->SetLocalPosition(Vector3(0, 7, 10));
+	_MainCameraGo->SetLocalEulerAngles(Vector3(-30, 180, 0));
+	cameraPos = _MainCameraGo->GetLocalPosition();
 	CTexture* texture = CTexture2D::Create("textures/dlg01.bmp");
 	//InitLight();
-	CMeshCube* cube = Maker->Instantiate<CMeshCube>();
-	go = Maker->Instantiate("testGo");
+	CMeshCube* cube = _Maker->Instantiate<CMeshCube>();
+	go = _Maker->Instantiate("testGo");
 	go->AddComponent<CMeshRenderer>()->SetModel(cube);
 	go->SetLocalPosition(Vector3(0, 1.0, 0));
 	go->SetLocalScale(Vector3::one * 1);
@@ -26,7 +24,7 @@ void CRelationshipTest::OnStart()
 	{
 		string name = "child";
 		name += i + '0';
-		childs.push_back(Maker->Instantiate(name));
+		childs.push_back(_Maker->Instantiate(name));
 		childs[i]->SetParent(go);
 		childs[i]->SetLocalScale(Vector3(1.5, 0.1f, 0.5f));
 		childs[i]->AddComponent<CMeshRenderer>()->SetModel(cube);
@@ -39,15 +37,15 @@ void CRelationshipTest::OnStart()
 	childs[2]->SetLocalEulerAngles(Vector3(0, 90, 0));
 	childs[3]->SetLocalEulerAngles(Vector3(0, 90, 0));
 
-	go2 = Maker->Instantiate("testGo2");
+	go2 = _Maker->Instantiate("testGo2");
 	go2->SetParent(childs[0]);
 	go2->SetLocalScale(Vector3(2, 1.5, 1));
 	go2->SetLocalPosition(Vector3(0, 0, 6));
 	go2->AddComponent<CMeshRenderer>()->SetModel(cube);
 
-	Maker->Instantiate("root1");
-	Maker->Instantiate("root2");
-	Maker->Instantiate("root3");
+	_Maker->Instantiate("root1");
+	_Maker->Instantiate("root2");
+	_Maker->Instantiate("root3");
 	CEditorTool::PrintTree();
 }
 
@@ -69,7 +67,7 @@ void CRelationshipTest::OnUpdate()
 	{
 		if (childs.size() > 0)
 		{
-			Maker->Destroy(childs[0]);
+			_Maker->Destroy(childs[0]);
 			childs.erase(childs.begin());
 			CEditorTool::PrintTree();
 		}
@@ -79,7 +77,7 @@ void CRelationshipTest::OnUpdate()
 	{
 		if (go)
 		{
-			Maker->Destroy(go);
+			_Maker->Destroy(go);
 			go = NULL;
 			CEditorTool::PrintTree();
 			return;

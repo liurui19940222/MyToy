@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "Time.h"
 #include "Debug.h"
+#include "Config.h"
 
 CEngine* CApplication::GetEngine()
 {
@@ -71,7 +72,7 @@ int CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR 
 	hdc = GetDC(hwnd);
 
 	engine = new CEngine;
-	engine->InitEngine(hInstance, hwnd);
+	_Engine->InitEngine(hInstance, hwnd);
 
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
@@ -92,7 +93,7 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 	{
 	case WM_CREATE:
 		hDC = GetDC(hWnd);
-		engine->SetupPixelFormat(hDC);
+		_Engine->SetupPixelFormat(hDC);
 		hRC = wglCreateContext(hDC);
 		wglMakeCurrent(hDC, hRC);
 		break;
@@ -127,7 +128,7 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 void CApplication::SetWindowSize(int width, int height)
 {
 	//CDebug::Log("change w:%d\th:%d", width, height);
-	engine->SetupProjection(width, height);
+	_Engine->SetupProjection(width, height);
 	appInfo.windowWidth = width;
 	appInfo.windowHeight = height;
 }
@@ -217,9 +218,9 @@ int CApplication::GameLoop()
 
 	while (!isExiting)
 	{
-		engine->Update();
+		_Engine->Update();
 		window->OnUpdate();
-		engine->Render();
+		_Engine->Render();
 		window->OnRender();
 		SwapBuffers(hdc);
 
@@ -246,7 +247,7 @@ int CApplication::GameLoop()
 void CApplication::QuitApp()
 {
 	window->OnClose();
-	engine->Quit();
+	_Engine->Quit();
 
 	delete engine;
 

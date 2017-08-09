@@ -10,6 +10,8 @@
 #include"Singleton.h"
 #include"Math.h"
 
+#define _Maker CMaker::GetInstance()
+
 using namespace std;
 
 typedef function<bool(CGameObject*, int)> ForeachGoCallbackR;

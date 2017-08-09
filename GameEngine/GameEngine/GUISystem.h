@@ -9,6 +9,8 @@
 #include"PriorityQueue.h"
 #include"Singleton.h"
 
+#define _GUISystem guisystem::CGUISystem::GetInstance()
+
 using namespace std;
 using namespace std::tr1;
 using namespace container;

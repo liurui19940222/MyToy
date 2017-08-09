@@ -116,7 +116,7 @@ CGUIWidget* CGUIWidget::SetAlignment(EAlignment alignment)
 CGUIWidget* CGUIWidget::SetLayer(int layer)
 {
 	this->m_layer = layer;
-	GUISystem->UpdateWidgetLayer(this);
+	_GUISystem->UpdateWidgetLayer(this);
 	return this;
 }
 
@@ -287,7 +287,7 @@ Vector2 CGUIWidget::GetParentSize()
 	{
 		return Vector2(parent->m_width, parent->m_height);
 	}
-	return Vector2(GUISystem->GetResolutionX(), GUISystem->GetResolutionY());
+	return Vector2(_GUISystem->GetResolutionX(), _GUISystem->GetResolutionY());
 }
 
 void CGUIWidget::SetState(EWidgetState state)
@@ -332,14 +332,14 @@ void CGUIWidget::OnMouseOver(Vector2 mousePos)
 
 void CGUIWidget::OnStart()
 {
-	GUISystem->AddWidget(this);
+	_GUISystem->AddWidget(this);
 	SetAlignment(EAlignment::CENTER_MIDDLE);
 	SetAnchorPosition(Vector3::zero);
 }
 
 void CGUIWidget::OnDestroy()
 {
-	GUISystem->DestroyWidget(this);
+	_GUISystem->DestroyWidget(this);
 }
 
 void CGUIWidget::OnUIUpdate()

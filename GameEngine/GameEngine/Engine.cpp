@@ -6,6 +6,8 @@
 #include"Debug.h"
 #include"GUISystem.h"
 #include"GameObject.h"
+#include"Config.h"
+#include"EngineSetting.h"
 
 using namespace guisystem;
 
@@ -16,10 +18,11 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd)
 	CInput::Init(instance, hwnd);
 	CTime::InitTime();
 	CTime::SetTargetFrameCount(60);
+	CEngineSetting::Init();
 	m_cameras.SetComparator(CompareCamera);
-	m_camera = Maker->Instantiate("MainCamera")->AddComponent<CCamera>();
+	m_camera = _Maker->Instantiate("MainCamera")->AddComponent<CCamera>();
 	m_camera->gameObject->SetLocalPosition(Vector3(0, 4, -10));
-	m_camera->Perspective(54.0f, (GLfloat)Application->GetWindowWidth() / (GLfloat)Application->GetWindowHeight(), 1.0f, 1000.0f);
+	m_camera->Perspective(54.0f, (GLfloat)_Application->GetWindowWidth() / (GLfloat)_Application->GetWindowHeight(), 1.0f, 1000.0f);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 }
 
@@ -29,14 +32,15 @@ void CEngine::SetupProjection(int width, int height)
 	{
 		height = 1;
 	}
-	GUISystem->InitGUI((float)width, (float)height);
+	_GUISystem->InitGUI((float)width, (float)height);
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	if (m_cameras.Count() > 0)
 	{
 		m_cameras.Foreach([&width, &height](CCamera* camera) {
-			camera->Perspective(camera->GetFov(), (float)width / (float)height, camera->GetNear(), camera->GetFar());
+			if (camera->GetRenderTexture() == NULL)
+				camera->Perspective(camera->GetFov(), (float)width / (float)height, camera->GetNear(), camera->GetFar());
 		});
 	}
 }
@@ -75,10 +79,10 @@ void CEngine::EndOrtho()
 void CEngine::Update()
 {
 	CInput::GetState();
-	GUISystem->OnUpdate();
+	_GUISystem->OnUpdate();
 	CheckShortcuts();
 
-	Maker->ForeachGameObject([](CGameObject* go, int depth) {
+	_Maker->ForeachGameObject([](CGameObject* go, int depth) {
 		go->OnUpdate();
 	});
 }
@@ -88,30 +92,30 @@ void CEngine::Render()
 	m_cameras.ForeachInverse([this](CCamera* camera) {
 		camera->BeginOneFrame();
 		IRenderer* renderer = NULL;
-		Maker->ForeachGameObject([this, &renderer, &camera](CGameObject* go, int depth, Matrix4x4& mat) {
+		_Maker->ForeachGameObject([this, &renderer, &camera](CGameObject* go, int depth, Matrix4x4& mat) {
 			if (renderer = go->GetRenderer())
 			{
 				renderer->Render(mat, camera->m_viewMat, camera->m_projectionMat);
-				if (drawDebug) renderer->RenderDebug(mat);
+				if (CEngineSetting::DrawGizmos) renderer->RenderDebug(mat);
 			}
 		});
 		camera->EndTheFrame();
 	});
 
-	if (drawGrid) CEditorTool::DrawGrid(MainCameraGo->GetLocalPosition(), Vector3(0.0f, 0.0f, 0.0f), Color(0.0f, 0.0f, 0.8f, 1.0f));
+	if (CEngineSetting::DrawGrid) CEditorTool::DrawGrid(_MainCameraGo->GetLocalPosition(), Vector3(0.0f, 0.0f, 0.0f), Color(0.0f, 0.0f, 0.8f, 1.0f));
 	//BeginOrtho();
-	//GUISystem->OnRender();
-	//if (drawDebug) GUISystem->OnDrawDebug();
+	//_GUISystem->OnRender();
+	//if (drawDebug) _GUISystem->OnDrawDebug();
 	//EndOrtho();
 }
 
 void CEngine::Quit()
 {
-	GUISystem->Quit();
+	_GUISystem->Quit();
 	CInput::ShutDown();
 	delete m_camera;
 
-	Maker->ForeachGameObject([](CGameObject* go, int depth) {
+	_Maker->ForeachGameObject([](CGameObject* go, int depth) {
 		go->OnRelease();
 	});
 }
@@ -120,7 +124,7 @@ void CEngine::CheckShortcuts()
 {
 	if (CInput::GetKey(DIK_LALT) && CInput::GetKeyDown(DIKEYBOARD_RETURN))
 	{
-		Application->ToggleFullOrWindow();
+		_Application->ToggleFullOrWindow();
 	}
 }
 
@@ -137,18 +141,6 @@ void CEngine::AddCamera(CCamera* camera)
 void CEngine::RemoveCamera(CCamera* camera)
 {
 	m_cameras.Remove(camera);
-}
-
-CEngine* CEngine::SetDrawGrid(bool drawGrid)
-{
-	this->drawGrid = drawGrid;
-	return this;
-}
-
-CEngine* CEngine::SetDrawDebug(bool drawDebug)
-{
-	this->drawDebug = drawDebug;
-	return this;
 }
 
 int CompareCamera(CCamera* a, CCamera* b)

@@ -70,7 +70,7 @@ void CMaker::DestroyGameObject(CGameObject* go)
 {
 	if (go->parent)
 		go->parent->RemoveChild(go);
-	Maker->RemoveGameObject(go);
+	_Maker->RemoveGameObject(go);
 
 	ForeachGameObject(go, [](CGameObject* go, int depth) {
 		go->OnDestroy();

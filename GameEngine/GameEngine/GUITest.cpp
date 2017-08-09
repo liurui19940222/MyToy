@@ -1,21 +1,15 @@
 #include "GUITest.h"
 #include "GUISystem.h"
 
-void Down1(Vector2 pos) { CDebug::Log(L"down1"); }
-
-void Down2(Vector2 pos) { CDebug::Log(L"down2"); }
-
 void GUITest::OnStart()
 {
-	Engine->SetDrawGrid(false);
-	Engine->SetDrawDebug(true);
-	MainCamera->SetCameraClearColor(Color::Hex(0x18253BFF));
-	MainCameraGo->SetLocalPosition(Vector3(0, 0, 10));
-	MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
+	_MainCamera->SetCameraClearColor(Color::Hex(0x18253BFF));
+	_MainCameraGo->SetLocalPosition(Vector3(0, 0, 10));
+	_MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
 
 	CTexture* tex = CTexture2D::Create("F://monthad_1.png");
 	CTexture* tex2 = CTexture2D::Create("F://avatar_15.png");
-	go = Maker->Instantiate("widget");
+	go = _Maker->Instantiate("widget");
 	widget = go->AddComponent<CGUIImage>();
 	//widget->SetWidth(400)->SetHeight(300);
 	widget->SetTexture(tex);
@@ -24,10 +18,10 @@ void GUITest::OnStart()
 	widget->SetPivot(Vector2(0.5f, 0.5f));
 	widget->SetCollide(true);
 
-	CGameObject* go3 = Maker->Instantiate();
+	CGameObject* go3 = _Maker->Instantiate();
 	go3->AddComponent<CGUIImage>()->SetTexture(tex2)->SetLayer(2)->SetCollide(true);
 
-	go2 = Maker->Instantiate("widget2");
+	go2 = _Maker->Instantiate("widget2");
 	go2->SetParent(go);
 	widget2 = go2->AddComponent<CGUILable>();
 	widget2->SetWidth(300)->SetHeight(300);
@@ -43,7 +37,7 @@ void GUITest::OnStart()
 
 
 	//FontManager->LoadFont(2, "fonts/msyh.ttf");
-	//CGameObject* texGo = Engine->CreateGameObject("Text");
+	//CGameObject* texGo = _Engine->CreateGameObject("Text");
 	//texGo->SetLocalPosition(Vector3(-4.75f, 4.05f, 0));
 	//text = texGo->AddComponent<CTextRenderer>();
 	//text->Init(FontManager->GetFont(2), NULL, 8, 0, 0.5f, Color::green(), EAlignment::LEFT_TOP, SRect2D(0, 0, 2, 1));

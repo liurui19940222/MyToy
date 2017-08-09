@@ -4,6 +4,8 @@
 #include<Windows.h>
 #include<windowsx.h>
 
+#define _Application CApplication::GetInstance()
+
 struct SApplicationInfo
 {
 	int windowWidth;

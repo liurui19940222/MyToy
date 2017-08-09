@@ -1,6 +1,8 @@
 #ifndef _RESOURCES_H_
 #define _RESOURCES_H_
 
+#define _Resources CResources::GetInstance()
+
 #include<Windows.h>
 #include<map>
 #include<string>

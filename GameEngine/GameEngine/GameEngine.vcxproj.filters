@@ -257,9 +257,6 @@
     <ClInclude Include="MeshBuffer.h">
       <Filter>Render\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="GLHead.h">
-      <Filter>Common\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Render\头文件</Filter>
     </ClInclude>
@@ -286,6 +283,15 @@
     </ClInclude>
     <ClInclude Include="RenderTexture.h">
       <Filter>Render\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Common\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Converter.h">
+      <Filter>Common\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineSetting.h">
+      <Filter>Common\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -427,6 +433,15 @@
     <ClCompile Include="RenderTexture.cpp">
       <Filter>Render\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Config.cpp">
+      <Filter>Common\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Converter.cpp">
+      <Filter>Common\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineSetting.cpp">
+      <Filter>Common\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="dinput8.lib">
@@ -464,5 +479,8 @@
     <None Include="Shader\texture.vert">
       <Filter>Shader</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Config\engine.xml" />
   </ItemGroup>
 </Project>

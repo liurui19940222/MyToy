@@ -99,7 +99,7 @@ void CSpriteAnimation::OnDestroy()
 		{
 			for (int i = 0; i < frameCount; i++)
 			{
-				Maker->Destroy(frames[i]);
+				_Maker->Destroy(frames[i]);
 			}
 			delete[] frames;
 		}

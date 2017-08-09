@@ -1,8 +1,8 @@
 #ifndef _TEXTURE_H_
 #define _TEXTURE_H_
 
+#include<gl\glew.h>
 #include"Object.h"
-#include"GLHead.h"
 #include"FileHead.h"
 #include"DynamicFactory.h"
 

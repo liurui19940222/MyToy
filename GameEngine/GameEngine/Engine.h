@@ -5,8 +5,8 @@
 #include<vector>
 #include<string>
 #include<functional>
+#include<gl\glew.h>
 #include"Object.h"
-#include"GLHead.h"
 #include"Camera.h"
 #include"Texture.h"
 #include"Texture2D.h"
@@ -14,6 +14,10 @@
 #include"PriorityQueue.h"
 #include"Resources.h"
 #include"Maker.h"
+
+#define _Engine CApplication::GetEngine()
+#define _MainCamera _Engine->GetCamera()
+#define _MainCameraGo _MainCamera->gameObject
 
 using namespace std;
 using namespace container;
@@ -47,18 +51,7 @@ public:
 	void AddCamera(CCamera* camera);
 
 	void RemoveCamera(CCamera* camera);
-
-	CEngine* SetDrawGrid(bool drawGrid);
-
-	CEngine* SetDrawDebug(bool drawDebug);
-
 private:
-	//是否显示网格
-	bool drawGrid;
-
-	//是否绘制调试图形
-	bool drawDebug;
-
 	//主摄像机
 	CCamera* m_camera = NULL;
 

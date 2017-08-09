@@ -43,7 +43,7 @@ void CRenderTexture::ReleaseBuffer()
 
 CRenderTexture* CRenderTexture::Create(int width, int height, bool depthBuffer)
 {
-	CRenderTexture* texture = Maker->Instantiate<CRenderTexture>();
+	CRenderTexture* texture = _Maker->Instantiate<CRenderTexture>();
 	texture->m_width = width;
 	texture->m_height = height;
 	texture->MakeBuffer(width, height, depthBuffer);

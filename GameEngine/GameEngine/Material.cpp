@@ -133,7 +133,7 @@ CMaterial* CMaterial::GetDefaltMaterial()
 {
 	if (m_defaultMaterial == NULL)
 	{
-		m_defaultMaterial = Maker->Instantiate<CMaterial>();
+		m_defaultMaterial = _Maker->Instantiate<CMaterial>();
 	}
 	return m_defaultMaterial;
 }

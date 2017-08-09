@@ -179,7 +179,7 @@ void CGameObject::AddChild(CGameObject* child)
 			return;
 		}
 	}
-	Maker->RemoveGameObject(child);
+	_Maker->RemoveGameObject(child);
 	childs.push_back(child);
 }
 
@@ -189,7 +189,7 @@ void CGameObject::RemoveChild(CGameObject* child)
 	{
 		if (*it == child)
 		{
-			Maker->AddGameObject(*it);
+			_Maker->AddGameObject(*it);
 			(*it)->parent = NULL;
 			childs.erase(it);
 			return;
@@ -202,7 +202,7 @@ void CGameObject::RemoveAllChilds()
 	for (vector<CGameObject*>::iterator it = childs.begin(); it != childs.end(); ++it)
 	{
 		(*it)->parent = NULL;
-		Maker->AddGameObject(*it);
+		_Maker->AddGameObject(*it);
 	}
 	childs.clear();
 }

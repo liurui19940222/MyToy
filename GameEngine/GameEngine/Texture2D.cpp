@@ -29,9 +29,9 @@ CTexture2D* CTexture2D::Init(CTexture2D* texture, ETexWrapMode wrapMode, ETexFil
 
 CTexture2D* CTexture2D::Create(const char* filename)
 {
-	CBitImage* image = Resources->Load<CBitImage>(filename);
+	CBitImage* image = _Resources->Load<CBitImage>(filename);
 	CTexture2D* texture = Create(image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
-	Resources->Unload(string(filename));
+	_Resources->Unload(string(filename));
 	return texture;
 }
 
@@ -42,22 +42,22 @@ CTexture2D* CTexture2D::Create(CBitImage* image)
 
 CTexture2D* CTexture2D::Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
 {
-	CBitImage* image = Resources->Load<CBitImage>(string(filename));
+	CBitImage* image = _Resources->Load<CBitImage>(string(filename));
 	CTexture2D* texture = Create(image, wrapMode, filterMode, envMode, mipmaps);
-	Resources->Unload(string(filename));
+	_Resources->Unload(string(filename));
 	return texture;
 }
 
 CTexture2D* CTexture2D::Create(CBitImage* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
 {
-	CTexture2D* texture = Maker->Instantiate<CTexture2D>();
+	CTexture2D* texture = _Maker->Instantiate<CTexture2D>();
 	Init(texture, wrapMode, filterMode, envMode, mipmaps, image->GetWidth(), image->GetHeight(), image->GetFormat(), image->GetInternalFormat(), image->GetBytes());
 	return texture;
 }
 
 CTexture2D* CTexture2D::Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
 {
-	CTexture2D* texture = Maker->Instantiate<CTexture2D>();
+	CTexture2D* texture = _Maker->Instantiate<CTexture2D>();
 	Init(texture, wrapMode, filterMode, envMode, mipmaps, width, height, GL_RGBA, GL_RGBA, pixels);
 	return texture;
 }

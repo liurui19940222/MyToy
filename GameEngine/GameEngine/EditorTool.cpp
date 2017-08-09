@@ -63,7 +63,7 @@ void CEditorTool::DrawRect(const SRect2D& rect, const Matrix4x4& modelToWorldMat
 	glDisable(GL_DEPTH_TEST);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	static Color color;
-	color = Color::white - MainCamera->GetCameraClearColor();
+	color = Color::white - _MainCamera->GetCameraClearColor();
 	glColor3f(color.r, color.g, color.b);
 	glBegin(GL_QUADS);
 	for (int i = 0; i < 4; ++i) glVertex3fv((float*)&vertices[i]);
@@ -119,7 +119,7 @@ void CEditorTool::DrawAxis(Matrix4x4& modelToWorldMatrix)
 void CEditorTool::PrintTree(bool showDepth)
 {
 	CDebug::Log("---------------the scene's tree---------------");
-	Maker->ForeachGameObject([showDepth](CGameObject* go, int depth) {
+	_Maker->ForeachGameObject([showDepth](CGameObject* go, int depth) {
 		PrintTree(go, depth, showDepth);
 	});
 	CDebug::Log("----------------------------------------------");
@@ -128,7 +128,7 @@ void CEditorTool::PrintTree(bool showDepth)
 void CEditorTool::PrintTree(CGameObject* go, bool showDepth)
 {
 	CDebug::Log("---------------the scene's tree---------------");
-	Maker->ForeachGameObject(go, [showDepth](CGameObject* go, int depth) {
+	_Maker->ForeachGameObject(go, [showDepth](CGameObject* go, int depth) {
 		PrintTree(go, depth, showDepth);
 	});
 	CDebug::Log("----------------------------------------------");

@@ -6,6 +6,7 @@
 
 #define _LoadFont(fontId, file_name) CFontManager::GetInstance()->LoadFont(fontId, file_name)
 #define _GetFont(fontId) CFontManager::GetInstance()->GetFont(fontId)
+#define FontManager CFontManager::GetInstance()
 
 class CFontManager : public CSingleton<CFontManager>
 {

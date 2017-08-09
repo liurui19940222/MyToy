@@ -53,9 +53,21 @@ CRenderCamera* CRenderCamera::SetDepth(int depth)
 	return this;
 }
 
+CRenderCamera* CRenderCamera::SetRenderTexture(CRenderTexture* texture)
+{
+	m_renderTexture = texture;
+	if (m_renderTexture)
+	{
+		if (m_projectionType == EProjectionType::Perspective)
+			Perspective(m_fov, (float)texture->GetWidth() / (float)texture->GetHeight(), m_near, m_far);
+		else if (m_projectionType == EProjectionType::Ortho)
+			Ortho(m_top, (float)texture->GetWidth() / (float)texture->GetHeight());
+	}
+	return this;
+}
+
 CRenderCamera* CRenderCamera::SetCameraClearFlag(ECameraClearFlag flag) { m_cameraClearFlag = flag; return this; }
 CRenderCamera* CRenderCamera::SetCameraClearColor(const Color& color) { m_clearColor = color; return this; }
-CRenderCamera* CRenderCamera::SetRenderTexture(CRenderTexture* texture) { m_renderTexture = texture; return this; }
 EProjectionType CRenderCamera::GetProjectionType() const { return m_projectionType; }
 ECameraClearFlag CRenderCamera::GetCameraClearFlag() const { return m_cameraClearFlag; }
 CRenderTexture* CRenderCamera::GetRenderTexture() const { return m_renderTexture; }
