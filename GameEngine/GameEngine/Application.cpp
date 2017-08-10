@@ -68,11 +68,11 @@ int CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR 
 	oldWindowRawWidth = appInfo.windowWidth;
 	oldWindowRawHeight = appInfo.windowHeight;
 
-	ChangeDisplayMode((EDisplayMode)appInfo.isFullScreen);
-	hdc = GetDC(hwnd);
-
 	engine = new CEngine;
 	_Engine->InitEngine(hInstance, hwnd);
+
+	ChangeDisplayMode((EDisplayMode)appInfo.isFullScreen);
+	hdc = GetDC(hwnd);
 
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
