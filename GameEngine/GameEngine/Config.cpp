@@ -6,6 +6,7 @@ void CConfig::OnInitialize()
 	ifstream is("Config/engine.xml");
 	stringstream ss;
 	ss << is.rdbuf();
+	is.close();
 	size_t size = ss.str().size();
 	char* buf = (char*)malloc(size + 1);
 	ss.read(buf, size);

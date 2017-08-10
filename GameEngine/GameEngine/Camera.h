@@ -9,6 +9,8 @@ class CCamera : public CComponent, public CRenderCamera
 {
 	REFLECT_CLASS(CCamera)
 	friend class CEngine;
+
+	void PrepareFixed();
 public:
 
 	virtual void OnStart() override;

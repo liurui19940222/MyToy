@@ -194,9 +194,6 @@
     <ClInclude Include="Application.h">
       <Filter>Core\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Core\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Engine.h">
       <Filter>Core\头文件</Filter>
     </ClInclude>
@@ -293,6 +290,15 @@
     <ClInclude Include="EngineSetting.h">
       <Filter>Common\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Component\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ColladaFile.h">
+      <Filter>Application\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ColladaTest.h">
+      <Filter>Application\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -347,9 +353,6 @@
       <Filter>Component\MeshProvide\源文件</Filter>
     </ClCompile>
     <ClCompile Include="Application.cpp">
-      <Filter>Core\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
       <Filter>Core\源文件</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp">
@@ -441,6 +444,15 @@
     </ClCompile>
     <ClCompile Include="EngineSetting.cpp">
       <Filter>Common\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Component\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ColladaFile.cpp">
+      <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ColladaTest.cpp">
+      <Filter>Application\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

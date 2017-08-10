@@ -33,7 +33,7 @@ void CEditorTool::DrawGrid(const Vector3& cameraPos, const Vector3& pos, const C
 	glFogf(GL_FOG_DENSITY, 0.03f);
 	glPushMatrix();
 	glColor3f(color.r, color.g, color.b);
-	glTranslatef(pos.x - length * 0.5f, pos.y, pos.z + length * 0.5f);
+	glTranslatef(pos.x - length * 0.5f + cameraPos.x, pos.y, pos.z + length * 0.5f + cameraPos.z);
 
 	glBegin(GL_LINES);
 	for (float i = 0; i <= cellCount; i++)

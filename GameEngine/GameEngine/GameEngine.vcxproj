@@ -85,6 +85,8 @@
     <ClInclude Include="Atlas.h" />
     <ClInclude Include="BitImage.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="ColladaFile.h" />
+    <ClInclude Include="ColladaTest.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Converter.h" />
@@ -143,6 +145,8 @@
     <ClCompile Include="Atlas.cpp" />
     <ClCompile Include="BitImage.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="ColladaFile.cpp" />
+    <ClCompile Include="ColladaTest.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Converter.cpp" />
