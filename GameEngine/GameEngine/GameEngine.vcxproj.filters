@@ -120,6 +120,15 @@
     <Filter Include="Component\Interface\源文件">
       <UniqueIdentifier>{dfe603ac-4b06-460d-a543-469e44a14539}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Animation">
+      <UniqueIdentifier>{532b1edd-0096-400b-a5ae-e605073ead3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animation\头文件">
+      <UniqueIdentifier>{cfe4ab32-64e0-42af-bd74-ff2573bb258f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animation\源文件">
+      <UniqueIdentifier>{b6895492-d2f4-438b-958c-2cb92fa675f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -293,11 +302,17 @@
     <ClInclude Include="Camera.h">
       <Filter>Component\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ColladaFile.h">
-      <Filter>Application\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="ColladaTest.h">
       <Filter>Application\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ColladaFile.h">
+      <Filter>File\Model\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinnedMeshRenderer.h">
+      <Filter>Component\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BoneAnimation.h">
+      <Filter>Animation\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -448,11 +463,14 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Component\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ColladaFile.cpp">
-      <Filter>Application\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="ColladaTest.cpp">
       <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ColladaFile.cpp">
+      <Filter>File\Model\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinnedMeshRenderer.cpp">
+      <Filter>Component\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -489,6 +507,12 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="Shader\texture.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\light.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\light.frag">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>

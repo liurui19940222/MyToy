@@ -21,7 +21,9 @@ void CMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix
 {
 	if (!m_mesh) return;
 	m_material->Bind();
-	m_material->SetParam("MVP", projectionMatrix * viewMatrix * modelMatrix);
+	m_material->SetParam("M", modelMatrix);
+	m_material->SetParam("V", viewMatrix);
+	m_material->SetParam("P", projectionMatrix);
 	m_mesh->GetBuffer()->BindBuffer();
 	glDrawArrays(m_mesh->GetGLMode(), 0, m_mesh->GetVertexNum());
 	m_material->Unbind();

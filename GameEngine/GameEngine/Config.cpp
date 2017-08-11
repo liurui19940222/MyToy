@@ -13,6 +13,7 @@ void CConfig::OnInitialize()
 	buf[size] = '\0';
 	xml_document<> doc;
 	doc.parse<0>(buf);
+	//free(buf);
 	xml_node<>* root = doc.first_node();
 	for (xml_node<> *it = root->first_node();
 		it; it = it->next_sibling())

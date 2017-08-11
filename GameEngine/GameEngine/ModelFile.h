@@ -8,13 +8,13 @@
 class CModelFile : public ISourceFile, public CMeshProvider
 {
 protected:
-	Vector3* vertexArray;
-	Vector3* normalArray;
-	Vector3* tangentArray;
-	Vector2* uvArray;
-	STriangle* triangleArray;
-	int vertexNum;
-	int triangleNum;
+	Vector3* m_vertexArray;
+	Vector3* m_normalArray;
+	Vector3* m_tangentArray;
+	Vector2* m_uvArray;
+	STriangle* m_triangleArray;
+	int m_vertexNum;
+	int m_triangleNum;
 
 public:
 

@@ -6,37 +6,37 @@
 
 Vector3* CModelFile::GetVertexArray()
 {
-	return vertexArray;
+	return m_vertexArray;
 }
 
 STriangle* CModelFile::GetTriangleArray()
 {
-	return triangleArray;
+	return m_triangleArray;
 }
 
 Vector3* CModelFile::GetNormalArray()
 {
-	return normalArray;
+	return m_normalArray;
 }
 
 Vector3* CModelFile::GetTangentArray()
 {
-	return tangentArray;
+	return m_tangentArray;
 }
 
 Vector2* CModelFile::GetUVArray()
 {
-	return uvArray;
+	return m_uvArray;
 }
 
 int CModelFile::GetVertexNum()
 {
-	return vertexNum;
+	return m_vertexNum;
 }
 
 int CModelFile::GetTriangleNum()
 {
-	return triangleNum;
+	return m_triangleNum;
 }
 
 int CModelFile::GetGLMode()
@@ -46,16 +46,16 @@ int CModelFile::GetGLMode()
 
 void CModelFile::ReleaseSource()
 {
-	if (this->vertexArray)
-		free(vertexArray);
-	if (this->triangleArray)
-		free(triangleArray);
-	if (this->normalArray)
-		free(normalArray);
-	if (this->uvArray)
-		free(uvArray);
-	if (this->tangentArray)
-		free(triangleArray);
+	if (this->m_vertexArray)
+		free(m_vertexArray);
+	if (this->m_triangleArray)
+		free(m_triangleArray);
+	if (this->m_normalArray)
+		free(m_normalArray);
+	if (this->m_uvArray)
+		free(m_uvArray);
+	if (this->m_tangentArray)
+		free(m_triangleArray);
 }
 
 void CModelFile::ReleaseMesh() 

@@ -5,12 +5,13 @@
 #include"Converter.h"
 #include"include\rapidxml\rapidxml.hpp"
 #include"ModelFile.h"
+#include"BoneAnimation.h"
 
 using namespace std;
 using namespace rapidxml;
 
 template<typename T>
-struct SValueArray
+struct ValueArray
 {
 	T* array;
 	int size;
@@ -18,6 +19,7 @@ struct SValueArray
 
 class CColladaFile : public CModelFile
 {
+private:
 
 	vector<xml_node<>*> GetNodesByName(xml_node<>* node, const string name);
 	xml_node<>* GetNodeByName(xml_node<>* node, const string name);
@@ -33,14 +35,13 @@ class CColladaFile : public CModelFile
 	template<typename TValue>
 	TValue* UnpackValues(string& str, size_t count)
 	{
-		int start_pos = 0;
-		TValue* valueArray = (TValue*)malloc(sizeof(TValue) * count);
-		int array_index = 0;
-		int str_size = 0;
+		int start_pos = 0, array_index = 0, str_size = 0, total_size = str.size();
 		bool begin = false;
-		for (size_t i = 0; i < str.size(); ++i)
+		TValue* valueArray = (TValue*)malloc(sizeof(TValue) * count);
+		memset(valueArray, 0, sizeof(TValue) * count);
+		for (size_t i = 0; i <= total_size; ++i)
 		{
-			if (str[i] != ' ' && str[i] != '\r' && str[i] != '\n')
+			if (str[i] != ' ' && str[i] != '\r' && str[i] != '\n' && i < total_size)
 			{
 				if (!begin)
 				{
@@ -54,8 +55,7 @@ class CColladaFile : public CModelFile
 				if (begin)
 				{
 					begin = false;
-					TValue value = CConverter::ToValue<TValue>(str.substr(start_pos, str_size));
-					valueArray[array_index++] = value;
+					valueArray[array_index++] = CConverter::ToValue<TValue>(str.substr(start_pos, str_size));
 					str_size = 0;
 				}
 			}

@@ -9,6 +9,7 @@
 #include"Resources.h"
 #include"Debug.h"
 #include"Config.h"
+#include"SkinnedMeshRenderer.h"
 
 class CColladaTest : public CGameWindow
 {

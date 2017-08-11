@@ -53,11 +53,6 @@ string CColladaFile::GetAttribute(xml_node<>* node, const string name)
 
 void CColladaFile::LoadFromFile(const char* filename)
 {
-	int* fff = UnpackValues<int>(string("89 2970 79 90 2971 80 80 2972 81 80 2973 81 81 2974 82 89 2975 79 80 2976 81 79 2977 84 82 2978 83 82 2979 83 81 2980 82 80 2981 81 84 2982 87 83 2983 85 88 2984 86 88 2985 86 87 2986 88 84 2987 87 85 2988 91 84 2989 87 87 2990 88 87 2991 88 86 2992 92 85 2993 91 91 2994 89 92 2995 90 85 2996 91 85 2997 91 86 2998 92 91 2999 89 83 3000 85 82 3001 83 79 3002 84 79 3003 84 88 3004 86 83 3005 85 255 3006 260 265 3007 261 264 3008 262 264 3009 262 256 3010 263 255 3011 260 256 3012 263 257 3013 264 254 3014 265 254 3015 265 255 3016 260 256 3017 263 262 3018 269 263 3019 267 258 3020 266 258 3021 266 259 3022 268 262 3023 269 261 3024 273 262 3025 269 259 3026 268 259 3027 268 260 3028 270 261 3029 273 260 3030 270 267 3031 271 266 3032 272 266 3033 272 261 3034 273 260 3035 270 263 3036 267 254 3037 265 257 3038 264 257 3039 264 258 3040 266 263 3041 267"), 24 * 8);
-	for (int i = 0; i < 24 * 8; ++i)
-	{
-		CDebug::Log("%d", fff[i]);
-	}
 	//加载xml
 	ifstream is(filename);
 	stringstream ss;
@@ -75,7 +70,7 @@ void CColladaFile::LoadFromFile(const char* filename)
 	xml_node<>* mesh = GetNodeByName(root, "library_geometries")->first_node()->first_node();
 
 	//读取source
-	map<string, SValueArray<float>> source_map;
+	map<string, ValueArray<float>> source_map;
 	vector<xml_node<>*> sources = GetNodesByName(mesh, "source");
 	for (auto it = sources.begin(); it != sources.end(); ++it)
 	{
@@ -83,12 +78,76 @@ void CColladaFile::LoadFromFile(const char* filename)
 		int count = GetAttribute<int>(float_array, "count");
 		string values = float_array->value();
 		float* v3 = UnpackValues<float>(values, count);
-		source_map.insert(make_pair(GetAttribute(float_array, "id"), SValueArray<float>{ v3, count }));
+		source_map.insert(make_pair("#" + GetAttribute(*it, "id"), ValueArray<float>{ v3, count }));
 	}
 
+	//根据下标读取实际的值
+	int m_triangleNum = 0;
 	vector<xml_node<>*> triangles = GetNodesByName(mesh, "triangles");
 	for (auto it = triangles.begin(); it != triangles.end(); ++it)
 	{
-		int count = GetAttribute<int>(*it, "count");
+		m_triangleNum += GetAttribute<int>(*it, "count");
 	}
+
+	int vertIndex = 0, normalIndex = 0, uvIndex = 0; //读取时已到达的索引
+	m_vertexArray = (Vector3*)malloc(sizeof(Vector3) * 3 * m_triangleNum);
+	m_normalArray = (Vector3*)malloc(sizeof(Vector3) * 3 * m_triangleNum);
+	m_uvArray = (Vector2*)malloc(sizeof(Vector2) * 3 * m_triangleNum);
+
+	for (auto it = triangles.begin(); it != triangles.end(); ++it)
+	{
+		int count = GetAttribute<int>(*it, "count");
+		vector<xml_node<>*> inputs = GetNodesByName(*it, "input");
+		string p = GetNodeByName(*it, "p")->value();
+
+		bool flags[3];
+		int offsets[3];
+		int step = 0;
+		string sourceIds[3];
+		for (auto it_input = inputs.begin(); it_input != inputs.end(); ++it_input, ++step)
+		{
+			string semantic = GetAttribute(*it_input, "semantic");
+			int offset = GetAttribute<int>(*it_input, "offset");
+			string source = GetAttribute(*it_input, "source");
+			int index = 0;
+			if (semantic == "VERTEX")
+			{
+				source = GetAttribute(GetNodeByName(mesh, "vertices")->first_node(), "source");
+			}
+			else if (semantic == "NORMAL")
+			{
+				index = 1;
+			}
+			else if (semantic == "TEXCOORD")
+			{
+				index = 2;
+			}
+			flags[index] = true;
+			offsets[index] = offset;
+			sourceIds[index] = source;
+		}
+		int* indices = UnpackValues<int>(p, (size_t)count * 3 * step);
+		for (int i = 0; i < count * 3 * step; i += step)
+		{
+			if (flags[0])
+			{
+				ValueArray<float> s = source_map[sourceIds[0]];
+				m_vertexArray[vertIndex++] = ((Vector3*)source_map[sourceIds[0]].array)[indices[i] + offsets[0]];
+			}
+			if (flags[1])
+			{
+				//这里根据下标取normal索引是有问题的，所以按顺序来取
+				m_normalArray[normalIndex++] = ((Vector3*)source_map[sourceIds[1]].array)[normalIndex];
+			}
+			if (flags[2])
+			{
+				m_uvArray[uvIndex++] = ((Vector2*)source_map[sourceIds[2]].array)[indices[i] + offsets[2]];
+			}
+		}
+		free(indices);
+	}
+	m_vertexNum = m_triangleNum * 3;
+	free(buffer);
+	//上传到缓冲区
+	m_buffer.MakeBuffer(m_vertexArray, NULL, m_normalArray, m_uvArray, m_vertexNum);
 }

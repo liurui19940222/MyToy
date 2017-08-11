@@ -84,6 +84,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Atlas.h" />
     <ClInclude Include="BitImage.h" />
+    <ClInclude Include="BoneAnimation.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColladaFile.h" />
     <ClInclude Include="ColladaTest.h" />
@@ -124,6 +125,7 @@
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SkinnedMeshRenderer.h" />
     <ClInclude Include="SpriteAnimation.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="TestApp.h" />
@@ -180,6 +182,7 @@
     <ClCompile Include="RenderCamera.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SkinnedMeshRenderer.cpp" />
     <ClCompile Include="SpriteAnimation.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TestApp.cpp" />
@@ -204,6 +207,8 @@
     <None Include="Shader\basic.vert" />
     <None Include="Shader\color.frag" />
     <None Include="Shader\color.vert" />
+    <None Include="Shader\light.frag" />
+    <None Include="Shader\light.vert" />
     <None Include="Shader\texture.frag" />
     <None Include="Shader\texture.vert" />
   </ItemGroup>
