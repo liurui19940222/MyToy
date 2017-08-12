@@ -51,6 +51,28 @@ string CColladaFile::GetAttribute(xml_node<>* node, const string name)
 	return string("");
 }
 
+void CColladaFile::ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth)
+{
+	string values = GetNodeByName(joint_node, "matrix")->value();
+	float* m = UnpackValues<float>(values, 16);
+	Joint joint{ Matrix4x4(m), GetAttribute(joint_node, "name"), parent_ref };
+	m_skeleton.m_joints.push_back(joint);
+	byte index = m_skeleton.m_joints.size() - 1;
+	string str;
+	for (int i = 0; i < depth; i++)
+	{
+		str += "   ";
+	}
+	CDebug::Log("%s p:%d", (str + GetAttribute(joint_node, "name")).c_str(), parent_ref);
+	for (xml_node<> *it = joint_node->first_node(); it; it = it->next_sibling())
+	{
+		if (GetNodeByName(it, "matrix") != NULL)
+		{
+			ReadJoint(it, index, depth + 1);
+		}
+	}
+}
+
 void CColladaFile::LoadFromFile(const char* filename)
 {
 	//加载xml
@@ -147,7 +169,19 @@ void CColladaFile::LoadFromFile(const char* filename)
 		free(indices);
 	}
 	m_vertexNum = m_triangleNum * 3;
-	free(buffer);
+
 	//上传到缓冲区
 	m_buffer.MakeBuffer(m_vertexArray, NULL, m_normalArray, m_uvArray, m_vertexNum);
+
+	//读取关节
+	xml_node<>* scene_root = GetNodeByName(root, "library_visual_scenes")->first_node();
+	for (xml_node<> *it = scene_root->first_node(); it; it = it->next_sibling())
+	{
+		if (GetNodeByName(it, "matrix") != NULL)
+		{
+			ReadJoint(it, 0xFF, 0);
+		}
+	}
+
+	free(buffer);
 }

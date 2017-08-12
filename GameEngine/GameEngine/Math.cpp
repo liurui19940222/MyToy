@@ -275,6 +275,17 @@ Matrix4x4::Matrix4x4()
 	Zero(*this);
 }
 
+Matrix4x4::Matrix4x4(float* array)
+{
+	if (array)
+	{
+		m[0].x = array[0]; m[0].y = array[4]; m[0].z = array[8]; m[0].w = array[12];
+		m[1].x = array[1]; m[1].y = array[5]; m[1].z = array[9]; m[1].w = array[13];
+		m[2].x = array[2]; m[2].y = array[6]; m[2].z = array[10]; m[2].w = array[14];
+		m[3].x = array[3]; m[3].y = array[7]; m[3].z = array[11]; m[3].w = array[15];
+	}
+}
+
 Matrix4x4::Matrix4x4(float oblique)
 {
 	Zero(*this);
@@ -305,19 +316,19 @@ float Matrix4x4::Get(int x, int y)
 Vector3 Matrix4x4::Multiply(const Vector3& v3)
 {
 	float x = 0, y = 0, z = 0;
-	x = m[0][0] * v3.x + m[0][1] * v3.y + m[0][2] * v3.z;
-	y = m[1][0] * v3.x + m[1][1] * v3.y + m[1][2] * v3.z;
-	z = m[2][0] * v3.x + m[2][1] * v3.y + m[2][2] * v3.z;
+	x = m[0][0] * v3.x + m[1][0] * v3.y + m[2][0] * v3.z;
+	y = m[0][1] * v3.x + m[1][1] * v3.y + m[2][1] * v3.z;
+	z = m[0][2] * v3.x + m[1][2] * v3.y + m[2][2] * v3.z;
 	return Vector3(x, y, z);
 }
 
 Vector4 Matrix4x4::Multiply(const Vector4& v)
 {
 	return Vector4(
-		m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z + m[0][3] * v.w,
-		m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z + m[1][3] * v.w,
-		m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z + m[2][3] * v.w,
-		m[3][0] * v.x + m[3][1] * v.y + m[3][2] * v.z + m[3][3] * v.w
+		m[0][0] * v.x + m[1][0] * v.y + m[2][0] * v.z + m[3][0] * v.w,
+		m[0][1] * v.x + m[1][1] * v.y + m[2][1] * v.z + m[3][1] * v.w,
+		m[0][2] * v.x + m[1][2] * v.y + m[2][2] * v.z + m[3][2] * v.w,
+		m[0][3] * v.x + m[1][3] * v.y + m[2][3] * v.z + m[3][3] * v.w
 	);
 }
 
@@ -344,7 +355,12 @@ Matrix4x4 Matrix4x4::operator*(Matrix4x4& matrix)
 	return Multiply(matrix);
 }
 
-Vector3 Matrix4x4::operator*(Vector3& v)
+Vector3 Matrix4x4::operator*(const Vector3& v)
+{
+	return Multiply(v);
+}
+
+Vector4 Matrix4x4::operator*(const Vector4& v)
 {
 	return Multiply(v);
 }
@@ -525,12 +541,12 @@ void Matrix4x4::MakeIdentity()
 	Identity(*this);
 }
 
-void Matrix4x4::MakeZero() 
+void Matrix4x4::MakeZero()
 {
 	Zero(*this);
 }
 
-void Matrix4x4::MakeRotate(float pitch, float yaw, float roll) 
+void Matrix4x4::MakeRotate(float pitch, float yaw, float roll)
 {
 	Rotate(*this, pitch, yaw, roll);
 }
@@ -550,12 +566,12 @@ void Matrix4x4::MakeScale(const Vector3& scale)
 	Scale(*this, scale);
 }
 
-void Matrix4x4::MakeOrtho(float left, float right, float bottom, float top, float zNear, float zFar) 
+void Matrix4x4::MakeOrtho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	Ortho(*this, left, right, bottom, top, zNear, zFar);
 }
 
-void Matrix4x4::MakePerspective(float fov, float aspect, float near, float far) 
+void Matrix4x4::MakePerspective(float fov, float aspect, float near, float far)
 {
 	Perspective(*this, fov, aspect, near, far);
 }
@@ -679,7 +695,7 @@ void Matrix4x4::GetUVN(Matrix4x4& mat, Vector3* u, Vector3* v, Vector3* n)
 }
 
 void Matrix4x4::GetUVN(Matrix4x4& mat, const Vector3& scale, Vector3* u, Vector3* v, Vector3* n)
-{	
+{
 	float rx = 1.0f / scale.x, ry = 1.0f / scale.y, rz = 1.0f / scale.z;
 	u->x = mat[0][0] * rx; u->y = mat[0][1] * rx; u->z = mat[0][2] * rx;
 	v->x = mat[1][0] * ry; v->y = mat[1][1] * ry; v->z = mat[1][2] * ry;

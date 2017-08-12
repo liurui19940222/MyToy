@@ -2,6 +2,7 @@
 #define _BONE_ANIMATION_H_
 
 #include<string>
+#include<vector>
 #include"Math.h"
 #include"EngineDefine.h"
 
@@ -16,8 +17,7 @@ struct Joint
 
 struct Skeleton
 {
-	uint m_jointCount;			//关节数目
-	Joint* m_aJoint;			//关节数组
+	vector<Joint> m_joints;
 };
 
 struct JointPose

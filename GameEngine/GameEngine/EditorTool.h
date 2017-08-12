@@ -3,6 +3,7 @@
 
 #include"Math.h"
 #include"EngineDefine.h"
+#include"BoneAnimation.h"
 
 class CGameObject;
 
@@ -25,6 +26,8 @@ public:
 	static void DrawAxis(Matrix4x4& modelToWorldMatrix, const Vector3& scale);
 
 	static void DrawAxis(Matrix4x4& modelToWorldMatrix);
+
+	static void DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton);
 
 	static void PrintTree(bool showDepth = false);
 

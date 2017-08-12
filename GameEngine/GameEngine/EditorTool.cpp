@@ -116,6 +116,63 @@ void CEditorTool::DrawAxis(Matrix4x4& modelToWorldMatrix)
 	DrawAxis(modelToWorldMatrix, Vector3::one);
 }
 
+struct JointVertex
+{
+	Vector4 m_pos;
+	byte m_parent = 0xFF;
+};
+
+void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton)
+{
+	glDisable(GL_DEPTH_TEST);
+	glPushMatrix();
+	glPointSize(3);
+	glScalef(2.5, 2.5, 2.5);
+	glMultMatrixf((float*)&(modelToWorldMatrix));
+	glColor3f(1, 1, 0);
+	JointVertex* vertices = (JointVertex*)malloc(sizeof(JointVertex) * skeleton.m_joints.size());
+	int index = 0;
+	for (Joint& joint : skeleton.m_joints)
+	{
+		Matrix4x4 matj = Matrix4x4::Identity();
+		Joint* p = &joint;
+		do {
+			matj = p->m_invBindPose * matj;
+			if (p->m_iParent == 0xFF)
+				break;
+			p = &skeleton.m_joints[p->m_iParent];
+		} while (true);
+		JointVertex v;
+		v.m_pos = matj * Vector4(0, 0, 0, 1);
+		v.m_parent = joint.m_iParent;
+		vertices[index++] = v;
+	}
+	
+	glBegin(GL_POINTS);
+	for (int i = 0; i < skeleton.m_joints.size() - 1; i++)
+	{
+		JointVertex vertex = vertices[i];
+		glVertex3f(vertex.m_pos.x, vertex.m_pos.y, vertex.m_pos.z);
+	}
+	glEnd();
+	glColor3f(0, 1, 0);
+	glBegin(GL_LINES);
+	for (int i = 0; i < skeleton.m_joints.size() - 1; i++)
+	{
+		JointVertex vertex = vertices[i];
+		if (vertex.m_parent != 0xFF)
+		{
+			JointVertex parent = vertices[vertex.m_parent];
+			glVertex3f(vertex.m_pos.x, vertex.m_pos.y, vertex.m_pos.z);
+			glVertex3f(parent.m_pos.x, parent.m_pos.y, parent.m_pos.z);
+		}
+	}
+	glEnd();
+	glPopMatrix();
+	free(vertices);
+	glEnable(GL_DEPTH_TEST);
+}
+
 void CEditorTool::PrintTree(bool showDepth)
 {
 	CDebug::Log("---------------the scene's tree---------------");

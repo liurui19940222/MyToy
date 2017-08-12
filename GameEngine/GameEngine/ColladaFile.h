@@ -25,6 +25,7 @@ private:
 	xml_node<>* GetNodeByName(xml_node<>* node, const string name);
 	xml_node<>* GetNodeById(xml_node<>* node, const string name);
 	string GetAttribute(xml_node<>* node, const string name);
+	void ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth);
 
 	template<typename T>
 	T GetAttribute(xml_node<>* node, const string name)
@@ -64,6 +65,8 @@ private:
 	}
 
 public:
+	Skeleton m_skeleton;
+
 	virtual void LoadFromFile(const char* filename) override;
 };
 

@@ -3,6 +3,11 @@
 
 #define DEBUG_BUFFER_SIZE 256
 #include<Windows.h>
+#include<string>
+#include"Math.h"
+#include"EngineDefine.h"
+
+using namespace std;
 
 class CDebug
 {
@@ -13,13 +18,14 @@ private:
 
 public:
 	static void Init(HWND hwnd);
-
+	static void Log(const string str, ...);
 	static void Log(const char* text, ...);
-
 	static void Log(const wchar_t* text, ...);
-
+	static void Log(Matrix4x4& mat);
+	static void Log(const Vector3& v);
+	static void Log(const Vector4& v);
+	static void Log(const Color& color);
 	static void Box(const char* text, ...);
-
 	static void Box(const wchar_t* text, ...);
 };
 
