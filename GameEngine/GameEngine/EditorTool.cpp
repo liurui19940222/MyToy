@@ -50,6 +50,43 @@ void CEditorTool::DrawGrid(const Vector3& cameraPos, const Vector3& pos, const C
 	glDisable(GL_FOG);
 }
 
+void CEditorTool::DrawCone(const Matrix4x4& matrix, const Color& color, float radius, float height)
+{
+	const int VERT_COUNT = 18;
+	float rad = CMath::DegToRad * ((float)360 / (float)VERT_COUNT);
+	float vertex_y = height * 0.5f;
+	Vector3 circle[VERT_COUNT];
+
+	for (int i = 0; i < VERT_COUNT; ++i)
+	{
+		float x = cos(rad * i) * radius;
+		float y = sin(rad * i) * radius;
+		circle[i].z = -vertex_y;
+		circle[i].x = x;
+		circle[i].y = y;
+	}
+	glColor3f(color.r, color.g, color.b);
+	glPushMatrix();
+	glMultMatrixf((float*)&matrix);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex3f(0, 0, -vertex_y);
+	for (int i = 0; i < VERT_COUNT; ++i)
+	{
+		glVertex3f(circle[i].x, circle[i].y, circle[i].z);
+	}
+	glVertex3f(circle[0].x, circle[0].y, circle[0].z);
+	glEnd();
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex3f(0, 0, vertex_y);
+	for (int i = 0; i < VERT_COUNT; ++i)
+	{
+		glVertex3f(circle[i].x, circle[i].y, circle[i].z);
+	}
+	glVertex3f(circle[0].x, circle[0].y, circle[0].z);
+	glEnd();
+	glPopMatrix();
+}
+
 void CEditorTool::DrawRect(const SRect2D& rect, const Matrix4x4& modelToWorldMatrix)
 {
 	static Vector3 vertices[4];
@@ -118,7 +155,8 @@ void CEditorTool::DrawAxis(Matrix4x4& modelToWorldMatrix)
 
 struct JointVertex
 {
-	Vector4 m_pos;
+	Matrix4x4 m_matrix;
+	Vector3 m_pos;
 	byte m_parent = 0xFF;
 };
 
@@ -129,7 +167,7 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 	glPointSize(3);
 	glScalef(2.5, 2.5, 2.5);
 	glMultMatrixf((float*)&(modelToWorldMatrix));
-	glColor3f(1, 1, 0);
+	glColor3f(1, 0, 0);
 	JointVertex* vertices = (JointVertex*)malloc(sizeof(JointVertex) * skeleton.m_joints.size());
 	int index = 0;
 	for (Joint& joint : skeleton.m_joints)
@@ -143,6 +181,7 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 			p = &skeleton.m_joints[p->m_iParent];
 		} while (true);
 		JointVertex v;
+		v.m_matrix = matj;
 		v.m_pos = matj * Vector4(0, 0, 0, 1);
 		v.m_parent = joint.m_iParent;
 		vertices[index++] = v;
@@ -155,14 +194,27 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 		glVertex3f(vertex.m_pos.x, vertex.m_pos.y, vertex.m_pos.z);
 	}
 	glEnd();
-	glColor3f(0, 1, 0);
-	glBegin(GL_LINES);
+
 	for (int i = 0; i < skeleton.m_joints.size() - 1; i++)
 	{
 		JointVertex vertex = vertices[i];
 		if (vertex.m_parent != 0xFF)
 		{
 			JointVertex parent = vertices[vertex.m_parent];
+			Vector3 position = (vertex.m_pos - parent.m_pos) * 0.5f + parent.m_pos;
+			float length = (vertex.m_pos - parent.m_pos).Magnitude();
+			CEditorTool::DrawCone(Matrix4x4::Translate(position) * Matrix4x4::RotateUVN(vertex.m_pos, parent.m_pos), Color::Hex(0x008B00FF), 0.08 * length, length);
+		}
+	}
+
+	glColor3f(0.8, 1, 0);
+	glBegin(GL_LINES);
+	for (int i = 0; i < skeleton.m_joints.size() - 1; i++)
+	{
+		JointVertex vertex = vertices[i];
+		if (vertex.m_parent != 0xFF)
+		{
+			JointVertex parent = vertices[vertex.m_parent]; 
 			glVertex3f(vertex.m_pos.x, vertex.m_pos.y, vertex.m_pos.z);
 			glVertex3f(parent.m_pos.x, parent.m_pos.y, parent.m_pos.z);
 		}

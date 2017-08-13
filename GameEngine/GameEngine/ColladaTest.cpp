@@ -1,5 +1,7 @@
 #include"ColladaTest.h"
 #include"ColladaFile.h"
+#include"MeshCube.h"
+#include"Maker.h"
 
 void CColladaTest::OnStart()
 {
@@ -12,6 +14,7 @@ void CColladaTest::OnStart()
 	model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 4);
 	model->SetLocalEulerAngles(Vector3(0, 180, 0));
 	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("light"));
+	//model->AddComponent<CMeshRenderer>()->SetModel(_Maker->Instantiate<CMeshCube>())->SetMaterial(model_mat);
 	model->AddComponent<CSkinnedMeshRenderer>()->SetModel(_Resources->Load<CColladaFile>("models/walk.dae"))->SetMaterial(model_mat);
 }
 
@@ -20,11 +23,26 @@ void CColladaTest::OnUpdate()
 	Vector3 euler = model->GetLocalEulerAngles();
 	euler.y += CTime::deltaTime * 50;
 	model->SetLocalEulerAngles(euler);
+
+	float h = CInput::GetAxis("Horizontal") * CTime::deltaTime * 20;
+	float v = CInput::GetAxis("Vertical") * CTime::deltaTime * 20;
+	Vector3 position = model->GetLocalPosition();
+	position.x += h;
+	position.y += v;
+	if (CInput::GetKey(DIK_NUMPAD2))
+	{
+		position.z += CTime::deltaTime * 20;
+	}
+	if (CInput::GetKey(DIK_NUMPAD8))
+	{
+		position.z -= CTime::deltaTime * 20;
+	}
+	model->SetLocalPosition(position);
 }
 
 void CColladaTest::OnRender()
 {
-
+	//CEditorTool::DrawCone(Matrix4x4::Translate(Vector3()) * Matrix4x4::RotateUVN(model->GetLocalPosition(), Vector3::zero), Color::red, 0.3, 2);
 }
 
 void CColladaTest::OnClose()

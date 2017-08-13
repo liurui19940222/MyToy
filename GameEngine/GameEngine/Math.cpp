@@ -622,13 +622,13 @@ void Matrix4x4::Rotate(Matrix4x4& mat, float pitch, float yaw, float roll)
 
 void Matrix4x4::RotateUVN(Matrix4x4& mat, const Vector3& targetPos, const Vector3& selfPos)
 {
-	Vector3 forward = (targetPos - selfPos).Normalization();
-	Vector3 right = Vector3::Cross(forward, Vector3(0, 1, 0)).Normalization();
-	Vector3 up = Vector3::Cross(right, forward);
-	mat[0][0] = -right.x;	mat[0][1] = -right.y;	mat[0][2] = -right.z;	mat[0][3] = 0;
-	mat[1][0] = up.x;		mat[1][1] = up.y;		mat[1][2] = up.z;		mat[1][3] = 0;
-	mat[2][0] = forward.x;	mat[2][1] = forward.y;	mat[2][2] = forward.z;	mat[2][3] = 0;
-	mat[3][0] = 0;			mat[3][1] = 0;			mat[3][2] = 0;			mat[3][3] = 1;
+	Vector3 n = (targetPos - selfPos).Normalization();
+	Vector3 u = Vector3::Cross(Vector3(0, 1, 0), n).Normalization();
+	Vector3 v = Vector3::Cross(n, u);
+	mat.MakeIdentity();
+	mat[0][0] = u.x; mat[0][1] = u.y; mat[0][2] = u.z;
+	mat[1][0] = v.x; mat[1][1] = v.y; mat[1][2] = v.z;
+	mat[2][0] = n.x; mat[2][1] = n.y; mat[2][2] = n.z;
 }
 
 void Matrix4x4::Translate(Matrix4x4& mat, const Vector3& translate)
