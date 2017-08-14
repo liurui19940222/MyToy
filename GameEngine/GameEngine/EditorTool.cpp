@@ -175,7 +175,7 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 		Matrix4x4 matj = Matrix4x4::Identity();
 		Joint* p = &joint;
 		do {
-			matj = p->m_invBindPose * matj;
+			matj = p->m_localMatrix * matj;
 			if (p->m_iParent == 0xFF)
 				break;
 			p = &skeleton.m_joints[p->m_iParent];

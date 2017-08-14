@@ -15,7 +15,8 @@ void CColladaTest::OnStart()
 	model->SetLocalEulerAngles(Vector3(0, 180, 0));
 	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("light"));
 	//model->AddComponent<CMeshRenderer>()->SetModel(_Maker->Instantiate<CMeshCube>())->SetMaterial(model_mat);
-	model->AddComponent<CSkinnedMeshRenderer>()->SetModel(_Resources->Load<CColladaFile>("models/walk.dae"))->SetMaterial(model_mat);
+	collada = _Resources->Load<CColladaFile>("models/walk.dae");
+	model->AddComponent<CSkinnedMeshRenderer>()->SetModel(collada)->SetMaterial(model_mat);
 }
 
 void CColladaTest::OnUpdate()
@@ -42,7 +43,9 @@ void CColladaTest::OnUpdate()
 
 void CColladaTest::OnRender()
 {
-	//CEditorTool::DrawCone(Matrix4x4::Translate(Vector3()) * Matrix4x4::RotateUVN(model->GetLocalPosition(), Vector3::zero), Color::red, 0.3, 2);
+	/*float t = CTime::time / 5;
+	t = CMath::Clamp01(t);
+	CEditorTool::DrawSkeleton(Matrix4x4::Lerp(Matrix4x4::Rotate(90, 0, 0) * Matrix4x4::Scale(Vector3::one * 1), Matrix4x4::Rotate(0, 90, 0) * Matrix4x4::Scale(Vector3::one * 0.4), t), collada->m_skeleton);*/
 }
 
 void CColladaTest::OnClose()

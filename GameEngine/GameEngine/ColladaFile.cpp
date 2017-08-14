@@ -55,7 +55,10 @@ void CColladaFile::ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth)
 {
 	string values = GetNodeByName(joint_node, "matrix")->value();
 	float* m = UnpackValues<float>(values, 16);
-	Joint joint{ Matrix4x4(m), GetAttribute(joint_node, "name"), parent_ref };
+	Joint joint;
+	joint.m_localMatrix = Matrix4x4(m);
+	joint.m_name = GetAttribute(joint_node, "name");
+	joint.m_iParent = parent_ref;
 	m_skeleton.m_joints.push_back(joint);
 	byte index = m_skeleton.m_joints.size() - 1;
 	string str;

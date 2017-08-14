@@ -1,8 +1,5 @@
-﻿  EditorTool.cpp
-d:\github\mytoy\gameengine\gameengine\editortool.cpp(191): warning C4018: “<”: 有符号/无符号不匹配
-d:\github\mytoy\gameengine\gameengine\editortool.cpp(198): warning C4018: “<”: 有符号/无符号不匹配
-d:\github\mytoy\gameengine\gameengine\editortool.cpp(206): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-d:\github\mytoy\gameengine\gameengine\editortool.cpp(210): warning C4305: “参数”: 从“double”到“GLfloat”截断
-d:\github\mytoy\gameengine\gameengine\editortool.cpp(212): warning C4018: “<”: 有符号/无符号不匹配
+﻿  ColladaTest.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\github\mytoy\gameengine\gameengine\colladatest.cpp(61): warning C4305: “参数”: 从“double”到“const float”截断
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.pdb (Full PDB)

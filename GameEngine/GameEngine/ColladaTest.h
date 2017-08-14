@@ -10,9 +10,11 @@
 #include"Debug.h"
 #include"Config.h"
 #include"SkinnedMeshRenderer.h"
+#include"ColladaFile.h"
 
 class CColladaTest : public CGameWindow
 {
+	CColladaFile* collada;
 	CGameObject* model;
 public:
 	virtual void OnStart();

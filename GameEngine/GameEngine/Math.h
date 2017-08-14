@@ -221,6 +221,8 @@ public:
 
 	static Matrix4x4 LookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
 
+	static Matrix4x4 Lerp(Matrix4x4& a, Matrix4x4& b, float t);
+
 	static void Zero(Matrix4x4& mat);
 
 	static void Identity(Matrix4x4& mat);
@@ -244,6 +246,8 @@ public:
 	static void GetUVN(Matrix4x4& mat, const Vector3& scale, Vector3* u, Vector3* v, Vector3* n);
 
 	static void GetPosition(Matrix4x4& mat, Vector3* position);
+
+	static void Lerp(Matrix4x4& mat, Matrix4x4& a, Matrix4x4& b, float t);
 
 private:
 	Vector4 m[4];
@@ -354,7 +358,7 @@ public:
 	template<typename T>
 	inline static T Lerp(T a, T b, T t)
 	{
-		return (b - a) * t + b;
+		return (b - a) * t + a;
 	}
 
 	template<typename T>

@@ -3,6 +3,7 @@
 
 #include<string>
 #include<vector>
+#include<map>
 #include"Math.h"
 #include"EngineDefine.h"
 
@@ -11,6 +12,7 @@ using namespace std;
 struct Joint
 {
 	Matrix4x4 m_invBindPose;	//绑定姿势之逆变换
+	Matrix4x4 m_localMatrix;	//模型矩阵
 	string m_name;				//关节名字
 	byte m_iParent;				//父索引，或0xFF代表根关节
 };
@@ -18,6 +20,19 @@ struct Joint
 struct Skeleton
 {
 	vector<Joint> m_joints;
+
+	inline void Add(Joint& joint)
+	{
+		m_joints.push_back(joint);
+	}
+
+	inline Joint* Get(string name)
+	{
+		for (Joint& joint : m_joints)
+			if (joint.m_name == name)
+				return &joint;
+		return NULL;
+	}
 };
 
 struct JointPose

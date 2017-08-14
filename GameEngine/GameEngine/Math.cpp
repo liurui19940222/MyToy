@@ -416,6 +416,13 @@ Matrix4x4 Matrix4x4::LookAt(const Vector3& eye, const Vector3& center, const Vec
 	return m;
 }
 
+Matrix4x4 Matrix4x4::Lerp(Matrix4x4& a, Matrix4x4& b, float t)
+{
+	Matrix4x4 m;
+	Lerp(m, a, b, t);
+	return m;
+}
+
 Matrix4x4 Matrix4x4::RotateUVN(const Vector3& targetPos, const Vector3& selfPos)
 {
 	Matrix4x4 m;
@@ -707,6 +714,17 @@ void Matrix4x4::GetPosition(Matrix4x4& mat, Vector3* position)
 	position->x = mat[3][0];
 	position->y = mat[3][1];
 	position->z = mat[3][2];
+}
+
+void Matrix4x4::Lerp(Matrix4x4& mat, Matrix4x4& a, Matrix4x4& b, float t)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			mat[i][j] = CMath::Lerp(a[i][j], b[i][j], t);
+		}
+	}
 }
 
 #pragma endregion
