@@ -84,7 +84,7 @@ private:
 
 public:
 	Skeleton m_skeleton;
-	JointWeight* m_jointWeight;
+	JointWeight m_jointWeight;
 
 	virtual void LoadFromFile(const char* filename) override;
 };

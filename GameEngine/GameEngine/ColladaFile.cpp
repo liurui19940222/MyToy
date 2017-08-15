@@ -130,6 +130,7 @@ void CColladaFile::ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth)
 	CDebug::Log("%s p:%d", (str + GetAttribute(joint_node, "name")).c_str(), parent_ref);
 	for (xml_node<> *it = joint_node->first_node(); it; it = it->next_sibling())
 	{
+		//if (GetNodeByName(it, "matrix") != NULL && GetAttribute(it, "type") == "JOINT")
 		if (GetNodeByName(it, "matrix") != NULL)
 		{
 			ReadJoint(it, index, depth + 1);
@@ -232,7 +233,26 @@ void CColladaFile::LoadFromFile(const char* filename)
 	int v_length = 0;
 	for (int i = 0; i < weights_count; i++)
 		v_length += vcount[i] * 2;
-	int* v = UnpackValues<int>(v_str, v_length);
+	int* v_array = UnpackValues<int>(v_str, v_length);
+	JointWeight* p_jointWeight = (JointWeight*)malloc(sizeof(JointWeight) * weights_count);
+
+	for (int i = 0, v = 0; i < weights_count; i++)
+	{
+		int num = vcount[i];
+		p_jointWeight[i].m_count = num;
+		p_jointWeight[i].m_jointIndices = (byte*)malloc(num);
+		p_jointWeight[i].m_weights = (float*)malloc(num * sizeof(float));
+		//string str = "";
+		//str += "index:" + CConverter::ToString(i) + "\tnum:" + CConverter::ToString(num);
+		for (int j = 0; j < num; j++)
+		{
+			p_jointWeight[i].m_jointIndices[j] = v_array[weights_offsets[0] + v];
+			p_jointWeight[i].m_weights[j] = weight_source[v_array[weights_offsets[1] + v]];
+			v += num;
+			//str += "\t" + CConverter::ToString(p_jointWeight[i].m_jointIndices[j]) + "\t" + CConverter::ToString(p_jointWeight[i].m_weights[j]);
+		}
+		//CDebug::Log(str);
+	}
 
 	//读取几何信息
 	xml_node<>* mesh = GetNodeByName(root, "library_geometries")->first_node()->first_node();
