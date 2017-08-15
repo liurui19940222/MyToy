@@ -43,9 +43,7 @@ void CColladaTest::OnUpdate()
 
 void CColladaTest::OnRender()
 {
-	/*float t = CTime::time / 5;
-	t = CMath::Clamp01(t);
-	CEditorTool::DrawSkeleton(Matrix4x4::Lerp(Matrix4x4::Rotate(90, 0, 0) * Matrix4x4::Scale(Vector3::one * 1), Matrix4x4::Rotate(0, 90, 0) * Matrix4x4::Scale(Vector3::one * 0.4), t), collada->m_skeleton);*/
+
 }
 
 void CColladaTest::OnClose()

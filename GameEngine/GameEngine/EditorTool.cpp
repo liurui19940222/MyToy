@@ -168,9 +168,9 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 	glScalef(2.5, 2.5, 2.5);
 	glMultMatrixf((float*)&(modelToWorldMatrix));
 	glColor3f(1, 0, 0);
-	JointVertex* vertices = (JointVertex*)malloc(sizeof(JointVertex) * skeleton.m_joints.size());
+	JointVertex* vertices = (JointVertex*)malloc(sizeof(JointVertex) * skeleton.GetSize());
 	int index = 0;
-	for (Joint& joint : skeleton.m_joints)
+	for (Joint& joint : skeleton.GetJoints())
 	{
 		Matrix4x4 matj = Matrix4x4::Identity();
 		Joint* p = &joint;
@@ -178,7 +178,7 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 			matj = p->m_localMatrix * matj;
 			if (p->m_iParent == 0xFF)
 				break;
-			p = &skeleton.m_joints[p->m_iParent];
+			p = skeleton.GetJoint(p->m_iParent);
 		} while (true);
 		JointVertex v;
 		v.m_matrix = matj;
@@ -188,14 +188,14 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 	}
 	
 	glBegin(GL_POINTS);
-	for (int i = 0; i < skeleton.m_joints.size() - 1; i++)
+	for (int i = 0; i < skeleton.GetSize() - 1; i++)
 	{
 		JointVertex vertex = vertices[i];
 		glVertex3f(vertex.m_pos.x, vertex.m_pos.y, vertex.m_pos.z);
 	}
 	glEnd();
 
-	for (int i = 0; i < skeleton.m_joints.size() - 1; i++)
+	for (int i = 0; i < skeleton.GetSize() - 1; i++)
 	{
 		JointVertex vertex = vertices[i];
 		if (vertex.m_parent != 0xFF)
@@ -209,7 +209,7 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 
 	glColor3f(0.8, 1, 0);
 	glBegin(GL_LINES);
-	for (int i = 0; i < skeleton.m_joints.size() - 1; i++)
+	for (int i = 0; i < skeleton.GetSize() - 1; i++)
 	{
 		JointVertex vertex = vertices[i];
 		if (vertex.m_parent != 0xFF)

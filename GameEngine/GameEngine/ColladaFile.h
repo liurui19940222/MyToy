@@ -20,12 +20,16 @@ struct ValueArray
 class CColladaFile : public CModelFile
 {
 private:
+	Matrix4x4 m_bindShapeMat;
 
 	vector<xml_node<>*> GetNodesByName(xml_node<>* node, const string name);
 	xml_node<>* GetNodeByName(xml_node<>* node, const string name);
 	xml_node<>* GetNodeById(xml_node<>* node, const string name);
 	string GetAttribute(xml_node<>* node, const string name);
+	vector<string> ReadSource(xml_node<>* node, const string id);
+	map<string, vector<string>> ReadSources(xml_node<>* node);
 	void ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth);
+	vector<string> UnpackValues(string& str, size_t count);
 
 	template<typename T>
 	T GetAttribute(xml_node<>* node, const string name)
@@ -64,8 +68,23 @@ private:
 		return valueArray;
 	}
 
+	template<typename T>
+	T* ReadSource(xml_node<>* node, const string id, int* count)
+	{
+		xml_node<>* source_node = GetNodeById(node, id);
+		xml_node<>* accessor_node = GetNodeByName(source_node, "technique_common")->first_node();
+		*count = GetAttribute<int>(accessor_node, "count");
+		string source_id = GetAttribute(accessor_node, "source");
+		source_id = source_id.substr(1, source_id.size());
+		xml_node<>* array_node = GetNodeById(source_node, source_id);
+		*count = GetAttribute<int>(array_node, "count");
+		string value = array_node->value();
+		return UnpackValues<T>(value, *count);
+	}
+
 public:
 	Skeleton m_skeleton;
+	JointWeight* m_jointWeight;
 
 	virtual void LoadFromFile(const char* filename) override;
 };

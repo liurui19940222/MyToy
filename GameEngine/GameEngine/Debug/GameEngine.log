@@ -1,5 +1,12 @@
-﻿  ColladaTest.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-d:\github\mytoy\gameengine\gameengine\colladatest.cpp(61): warning C4305: “参数”: 从“double”到“const float”截断
+﻿  ColladaFile.cpp
+d:\github\mytoy\gameengine\gameengine\colladafile.cpp(59): warning C4018: “<=”: 有符号/无符号不匹配
+d:\github\mytoy\gameengine\gameengine\colladafile.cpp(61): warning C4018: “<”: 有符号/无符号不匹配
+d:\github\mytoy\gameengine\gameengine\colladafile.h(47): warning C4018: “<=”: 有符号/无符号不匹配
+  d:\github\mytoy\gameengine\gameengine\colladafile.cpp(118): note: 参见对正在编译的函数 模板 实例化“TValue *CColladaFile::UnpackValues<float>(std::string &,std::size_t)”的引用
+          with
+          [
+              TValue=float
+          ]
+d:\github\mytoy\gameengine\gameengine\colladafile.h(49): warning C4018: “<”: 有符号/无符号不匹配
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.pdb (Full PDB)

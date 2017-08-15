@@ -19,20 +19,43 @@ struct Joint
 
 struct Skeleton
 {
+private:
 	vector<Joint> m_joints;
-
-	inline void Add(Joint& joint)
+public:
+	inline void AddJoint(Joint& joint)
 	{
 		m_joints.push_back(joint);
 	}
 
-	inline Joint* Get(string name)
+	inline Joint* GetJoint(string name)
 	{
 		for (Joint& joint : m_joints)
 			if (joint.m_name == name)
 				return &joint;
 		return NULL;
 	}
+
+	inline Joint* GetJoint(int index)
+	{
+		return &m_joints[index];
+	}
+
+	inline vector<Joint>& GetJoints()
+	{
+		return m_joints;
+	}
+
+	inline int GetSize()
+	{
+		return m_joints.size();
+	}
+};
+
+struct JointWeight
+{
+	byte* m_jointIndices;
+	float* m_weights;
+	byte m_count;
 };
 
 struct JointPose

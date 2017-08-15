@@ -34,7 +34,7 @@ xml_node<>* CColladaFile::GetNodeById(xml_node<>* node, const string name)
 	for (xml_node<> *it = node->first_node();
 		it; it = it->next_sibling())
 	{
-		if (GetAttribute(it, name) != "")
+		if (GetAttribute(it, "id") == name)
 			return it;
 	}
 	return NULL;
@@ -51,6 +51,67 @@ string CColladaFile::GetAttribute(xml_node<>* node, const string name)
 	return string("");
 }
 
+vector<string> CColladaFile::UnpackValues(string& str, size_t count)
+{
+	int start_pos = 0, array_index = 0, str_size = 0, total_size = str.size();
+	bool begin = false;
+	vector<string> list;
+	for (size_t i = 0; i <= total_size; ++i)
+	{
+		if (str[i] != ' ' && str[i] != '\r' && str[i] != '\n' && i < total_size)
+		{
+			if (!begin)
+			{
+				start_pos = i;
+				begin = true;
+			}
+			str_size++;
+		}
+		else
+		{
+			if (begin)
+			{
+				begin = false;
+				list.push_back(str.substr(start_pos, str_size));
+				str_size = 0;
+			}
+		}
+	}
+	return list;
+}
+
+vector<string> CColladaFile::ReadSource(xml_node<>* node, const string id)
+{
+	map<string, vector<string>> dic;
+	xml_node<>* source_node = GetNodeById(node, id);
+	xml_node<>* accessor_node = GetNodeByName(source_node, "technique_common")->first_node();
+	int count = GetAttribute<int>(accessor_node, "count");
+	string source_id = GetAttribute(accessor_node, "source");
+	source_id = source_id.substr(1, source_id.size());
+	xml_node<>* array_node = GetNodeById(source_node, source_id);
+	count = GetAttribute<int>(array_node, "count");
+	string value = array_node->value();
+	return  UnpackValues(value, count);
+}
+
+map<string, vector<string>> CColladaFile::ReadSources(xml_node<>* node)
+{
+	map<string, vector<string>> dic;
+	vector<xml_node<>*> nodes = GetNodesByName(node, "source");
+	for (xml_node<>* source_node : nodes)
+	{
+		xml_node<>* accessor_node = GetNodeByName(source_node, "technique_common")->first_node();
+		int count = GetAttribute<int>(accessor_node, "count");
+		string source_id = GetAttribute(accessor_node, "source");
+		source_id = source_id.substr(1, source_id.size());
+		xml_node<>* array_node = GetNodeById(source_node, source_id);
+		count = GetAttribute<int>(array_node, "count");
+		string value = array_node->value();
+		dic.insert(make_pair("#" + GetAttribute(array_node, "id"), UnpackValues(value, count)));
+	}
+	return dic;
+}
+
 void CColladaFile::ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth)
 {
 	string values = GetNodeByName(joint_node, "matrix")->value();
@@ -59,8 +120,8 @@ void CColladaFile::ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth)
 	joint.m_localMatrix = Matrix4x4(m);
 	joint.m_name = GetAttribute(joint_node, "name");
 	joint.m_iParent = parent_ref;
-	m_skeleton.m_joints.push_back(joint);
-	byte index = m_skeleton.m_joints.size() - 1;
+	m_skeleton.AddJoint(joint);
+	byte index = m_skeleton.GetSize() - 1;
 	string str;
 	for (int i = 0; i < depth; i++)
 	{
@@ -91,6 +152,88 @@ void CColladaFile::LoadFromFile(const char* filename)
 	xml_doc.parse<0>(buffer);
 
 	xml_node<>* root = xml_doc.first_node();
+
+	//读取关节
+	xml_node<>* scene_root = GetNodeByName(root, "library_visual_scenes")->first_node();
+	for (xml_node<> *it = scene_root->first_node(); it; it = it->next_sibling())
+	{
+		if (GetNodeByName(it, "matrix") != NULL)
+		{
+			ReadJoint(it, 0xFF, 0);
+		}
+	}
+
+	//读取蒙皮
+	xml_node<>* skin_node = GetNodeByName(root, "library_controllers")->first_node()->first_node();
+	string mat_value = GetNodeByName(skin_node, "bind_shape_matrix")->value();
+	float* p_mat = UnpackValues<float>(mat_value, 16);
+	m_bindShapeMat = p_mat;
+	free(p_mat);
+	xml_node<>* joint_node = GetNodeByName(skin_node, "joints");
+	vector<xml_node<>*> joint_inputs = GetNodesByName(joint_node, "input");
+	vector<string> joint_source;
+	vector<float> weight_source;
+	vector<Matrix4x4> matrix_source;
+	for (xml_node<>* input : joint_inputs)
+	{
+		string semantic = GetAttribute(input, "semantic");
+		string source_id = GetAttribute(input, "source");
+		source_id = source_id.substr(1, source_id.size());
+		int count = 0;
+		if (semantic == "JOINT")
+		{
+			joint_source = ReadSource(skin_node, source_id);
+		}
+		else if (semantic == "INV_BIND_MATRIX")
+		{
+			float* f = ReadSource<float>(skin_node, source_id, &count);
+			for (int i = 0; i < count; i += 16)
+			{
+				matrix_source.push_back(Matrix4x4(
+					f[i + 0], f[i + 1], f[i + 2], f[i + 3],
+					f[i + 4], f[i + 5], f[i + 6], f[i + 7],
+					f[i + 8], f[i + 9], f[i + 10], f[i + 11],
+					f[i + 12], f[i + 13], f[i + 14], f[i + 15]
+				));
+			}
+			free(f);
+		}
+	}
+
+	xml_node<>* vertex_weights_node = GetNodeByName(skin_node, "vertex_weights");
+	int weights_count = GetAttribute<int>(vertex_weights_node, "count");
+	vector<xml_node<>*> weights_inputs = GetNodesByName(vertex_weights_node, "input");
+	int weights_offsets[2];
+	for (xml_node<>* weights_input : weights_inputs)
+	{
+		string semantic = GetAttribute(weights_input, "semantic");
+		int offset = GetAttribute<int>(weights_input, "offset");
+		if (semantic == "JOINT")
+		{
+			weights_offsets[0] = offset;
+		}
+		else if (semantic == "WEIGHT")
+		{
+			string source_id = GetAttribute(weights_input, "source");
+			source_id = source_id.substr(1, source_id.size());
+			weights_offsets[1] = offset;
+			int count = 0;
+			float* f = ReadSource<float>(skin_node, source_id, &count);
+			for (int i = 0; i < count; ++i)
+			{
+				weight_source.push_back(f[i]);
+			}
+			free(f);
+		}
+	}
+	string vcount_str = GetNodeByName(vertex_weights_node, "vcount")->value();
+	string v_str = GetNodeByName(vertex_weights_node, "v")->value();
+	int* vcount = UnpackValues<int>(vcount_str, weights_count);
+	int v_length = 0;
+	for (int i = 0; i < weights_count; i++)
+		v_length += vcount[i] * 2;
+	int* v = UnpackValues<int>(v_str, v_length);
+
 	//读取几何信息
 	xml_node<>* mesh = GetNodeByName(root, "library_geometries")->first_node()->first_node();
 
@@ -175,16 +318,6 @@ void CColladaFile::LoadFromFile(const char* filename)
 
 	//上传到缓冲区
 	m_buffer.MakeBuffer(m_vertexArray, NULL, m_normalArray, m_uvArray, m_vertexNum);
-
-	//读取关节
-	xml_node<>* scene_root = GetNodeByName(root, "library_visual_scenes")->first_node();
-	for (xml_node<> *it = scene_root->first_node(); it; it = it->next_sibling())
-	{
-		if (GetNodeByName(it, "matrix") != NULL)
-		{
-			ReadJoint(it, 0xFF, 0);
-		}
-	}
 
 	free(buffer);
 }
