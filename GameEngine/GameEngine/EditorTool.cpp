@@ -172,17 +172,9 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 	int index = 0;
 	for (Joint& joint : skeleton.GetJoints())
 	{
-		Matrix4x4 matj = Matrix4x4::Identity();
-		Joint* p = &joint;
-		do {
-			matj = p->m_localMatrix * matj;
-			if (p->m_iParent == 0xFF)
-				break;
-			p = skeleton.GetJoint(p->m_iParent);
-		} while (true);
 		JointVertex v;
-		v.m_matrix = matj;
-		v.m_pos = matj * Vector4(0, 0, 0, 1);
+		v.m_matrix = joint.m_globalMatrix;
+		v.m_pos = joint.m_globalMatrix * Vector4(0, 0, 0, 1);
 		v.m_parent = joint.m_iParent;
 		vertices[index++] = v;
 	}

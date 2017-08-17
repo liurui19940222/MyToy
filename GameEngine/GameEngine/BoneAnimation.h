@@ -12,22 +12,28 @@ using namespace std;
 struct Joint
 {
 	Matrix4x4 m_invBindPose;	//绑定姿势之逆变换
-	Matrix4x4 m_localMatrix;	//模型矩阵
+	Matrix4x4 m_localMatrix;	//局部矩阵
+	Matrix4x4 m_globalMatrix;	//全局矩阵
 	string m_name;				//关节名字
 	byte m_iParent;				//父索引，或0xFF代表根关节
+
+	Joint() {
+		m_invBindPose.MakeIdentity();
+		m_localMatrix.MakeIdentity();
+		m_globalMatrix.MakeIdentity();
+	}
 };
 
 struct Skeleton
 {
-private:
 	vector<Joint> m_joints;
-public:
+
 	inline void AddJoint(Joint& joint)
 	{
 		m_joints.push_back(joint);
 	}
 
-	inline Joint* GetJoint(string name)
+	inline Joint* GetJoint(const string& name)
 	{
 		for (Joint& joint : m_joints)
 			if (joint.m_name == name)
@@ -38,6 +44,14 @@ public:
 	inline Joint* GetJoint(int index)
 	{
 		return &m_joints[index];
+	}
+
+	inline byte GetJointIndex(const string& name)
+	{
+		for (byte i = 0; i < m_joints.size(); ++i)
+			if (m_joints[i].m_name == name)
+				return i;
+		return -1;
 	}
 
 	inline vector<Joint>& GetJoints()
@@ -54,6 +68,7 @@ public:
 struct JointWeight
 {
 	byte* m_jointIndices;
+	Joint** m_joints;
 	float* m_weights;
 	byte m_count;
 };

@@ -191,10 +191,10 @@ void CColladaFile::LoadFromFile(const char* filename)
 			for (int i = 0; i < count; i += 16)
 			{
 				matrix_source.push_back(Matrix4x4(
-					f[i + 0], f[i + 1], f[i + 2], f[i + 3],
-					f[i + 4], f[i + 5], f[i + 6], f[i + 7],
-					f[i + 8], f[i + 9], f[i + 10], f[i + 11],
-					f[i + 12], f[i + 13], f[i + 14], f[i + 15]
+					f[i + 0], f[i + 4], f[i + 8], f[i + 12],
+					f[i + 1], f[i + 5], f[i + 9], f[i + 13],
+					f[i + 2], f[i + 6], f[i + 10], f[i + 14],
+					f[i + 3], f[i + 7], f[i + 11], f[i + 15]
 				));
 			}
 			free(f);
@@ -241,17 +241,42 @@ void CColladaFile::LoadFromFile(const char* filename)
 		int num = vcount[i];
 		p_jointWeight[i].m_count = num;
 		p_jointWeight[i].m_jointIndices = (byte*)malloc(num);
+		p_jointWeight[i].m_joints = (Joint**)malloc(num * 4);
 		p_jointWeight[i].m_weights = (float*)malloc(num * sizeof(float));
 		//string str = "";
 		//str += "index:" + CConverter::ToString(i) + "\tnum:" + CConverter::ToString(num);
 		for (int j = 0; j < num; j++)
 		{
-			p_jointWeight[i].m_jointIndices[j] = v_array[weights_offsets[0] + v];
+			p_jointWeight[i].m_joints[j] = m_skeleton.GetJoint(joint_source[v_array[weights_offsets[0] + v]]);
+			p_jointWeight[i].m_jointIndices[j] = m_skeleton.GetJointIndex(joint_source[v_array[weights_offsets[0] + v]]);
 			p_jointWeight[i].m_weights[j] = weight_source[v_array[weights_offsets[1] + v]];
-			v += num;
 			//str += "\t" + CConverter::ToString(p_jointWeight[i].m_jointIndices[j]) + "\t" + CConverter::ToString(p_jointWeight[i].m_weights[j]);
 		}
+		v += num * 2;
 		//CDebug::Log(str);
+	}
+
+	for (int i = 0; i < joint_source.size(); i++)
+	{
+		Joint& joint = *m_skeleton.GetJoint(joint_source[i]);
+		joint.m_invBindPose = matrix_source[i];
+	}
+
+	//计算骨骼的全局矩阵
+	for (Joint& joint : m_skeleton.GetJoints())
+	{
+		Matrix4x4 matj = Matrix4x4::Identity();
+		Matrix4x4 matInv = Matrix4x4::Identity();
+		Joint* p = &joint;
+		do {
+			matj = p->m_localMatrix * matj;
+			matInv = p->m_invBindPose * matInv;
+			if (p->m_iParent == 0xFF)
+				break;
+			p = m_skeleton.GetJoint(p->m_iParent);
+		} while (true);
+		joint.m_globalMatrix = matj;
+		//joint.m_invBindPose = matInv.Inverse();
 	}
 
 	//读取几何信息
@@ -276,12 +301,13 @@ void CColladaFile::LoadFromFile(const char* filename)
 	{
 		m_triangleNum += GetAttribute<int>(*it, "count");
 	}
+	m_vertexNum = m_triangleNum * 3;
 
 	int vertIndex = 0, normalIndex = 0, uvIndex = 0; //读取时已到达的索引
-	m_vertexArray = (Vector3*)malloc(sizeof(Vector3) * 3 * m_triangleNum);
-	m_normalArray = (Vector3*)malloc(sizeof(Vector3) * 3 * m_triangleNum);
-	m_uvArray = (Vector2*)malloc(sizeof(Vector2) * 3 * m_triangleNum);
-
+	m_vertexArray = (Vector3*)malloc(sizeof(Vector3) * m_vertexNum);
+	m_normalArray = (Vector3*)malloc(sizeof(Vector3) * m_vertexNum);
+	m_uvArray = (Vector2*)malloc(sizeof(Vector2) * m_vertexNum);
+	m_jointWeights = (JointWeight*)malloc(sizeof(JointWeight) * m_vertexNum);
 	for (auto it = triangles.begin(); it != triangles.end(); ++it)
 	{
 		int count = GetAttribute<int>(*it, "count");
@@ -319,8 +345,11 @@ void CColladaFile::LoadFromFile(const char* filename)
 		{
 			if (flags[0])
 			{
-				ValueArray<float> s = source_map[sourceIds[0]];
-				m_vertexArray[vertIndex++] = ((Vector3*)source_map[sourceIds[0]].array)[indices[i] + offsets[0]];
+				int vi = indices[i] + offsets[0];
+				JointWeight& w = p_jointWeight[vi];
+				Joint& joint = *(w.m_joints[0]);
+				Matrix4x4 mat = joint.m_invBindPose.Inverse() * joint.m_globalMatrix * joint.m_invBindPose;
+				m_vertexArray[vertIndex++] = mat * Vector4(((Vector3*)source_map[sourceIds[0]].array)[vi]);
 			}
 			if (flags[1])
 			{
@@ -334,7 +363,6 @@ void CColladaFile::LoadFromFile(const char* filename)
 		}
 		free(indices);
 	}
-	m_vertexNum = m_triangleNum * 3;
 
 	//上传到缓冲区
 	m_buffer.MakeBuffer(m_vertexArray, NULL, m_normalArray, m_uvArray, m_vertexNum);

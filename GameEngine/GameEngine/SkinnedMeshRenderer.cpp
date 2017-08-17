@@ -26,7 +26,7 @@ void CSkinnedMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix,
 	m_material->SetParam("V", viewMatrix);
 	m_material->SetParam("P", projectionMatrix);
 	m_mesh->GetBuffer()->BindBuffer();
-	//glDrawArrays(m_mesh->GetGLMode(), 0, m_mesh->GetVertexNum());
+	glDrawArrays(m_mesh->GetGLMode(), 0, m_mesh->GetVertexNum());
 	m_material->Unbind();
 
 	CColladaFile* collada = (CColladaFile*)m_mesh;
