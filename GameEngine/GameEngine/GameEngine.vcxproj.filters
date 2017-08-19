@@ -489,6 +489,9 @@
     <Library Include="lib\FreeImage.lib">
       <Filter>Library</Filter>
     </Library>
+    <Library Include="lib\assimp-vc140-mt.lib">
+      <Filter>Library</Filter>
+    </Library>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\basic.frag">

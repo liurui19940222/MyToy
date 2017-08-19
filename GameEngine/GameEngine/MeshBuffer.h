@@ -20,6 +20,7 @@ private:
 	GLuint m_vboColorHandle;
 	GLuint m_vboNormalHandle;
 	GLuint m_vboUVHandle;
+	GLuint m_vboMatrixHandle;
 
 public:
 	CMeshBuffer();

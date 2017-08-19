@@ -198,6 +198,7 @@
   <ItemGroup>
     <Library Include="dinput8.lib" />
     <Library Include="dxguid.lib" />
+    <Library Include="lib\assimp-vc140-mt.lib" />
     <Library Include="lib\FreeImage.lib" />
     <Library Include="lib\freetype.lib" />
     <Library Include="lib\lib3ds.lib" />

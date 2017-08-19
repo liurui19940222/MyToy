@@ -276,7 +276,7 @@ void CColladaFile::LoadFromFile(const char* filename)
 			p = m_skeleton.GetJoint(p->m_iParent);
 		} while (true);
 		joint.m_globalMatrix = matj;
-		//joint.m_invBindPose = matInv.Inverse();
+		joint.m_invBindPose = matInv;
 	}
 
 	//读取几何信息
@@ -308,6 +308,7 @@ void CColladaFile::LoadFromFile(const char* filename)
 	m_normalArray = (Vector3*)malloc(sizeof(Vector3) * m_vertexNum);
 	m_uvArray = (Vector2*)malloc(sizeof(Vector2) * m_vertexNum);
 	m_jointWeights = (JointWeight*)malloc(sizeof(JointWeight) * m_vertexNum);
+
 	for (auto it = triangles.begin(); it != triangles.end(); ++it)
 	{
 		int count = GetAttribute<int>(*it, "count");
@@ -348,8 +349,8 @@ void CColladaFile::LoadFromFile(const char* filename)
 				int vi = indices[i] + offsets[0];
 				JointWeight& w = p_jointWeight[vi];
 				Joint& joint = *(w.m_joints[0]);
-				Matrix4x4 mat = joint.m_invBindPose.Inverse() * joint.m_globalMatrix * joint.m_invBindPose;
-				m_vertexArray[vertIndex++] = mat * Vector4(((Vector3*)source_map[sourceIds[0]].array)[vi]);
+				m_jointWeights[vi] = w;
+				m_vertexArray[vertIndex++] = joint.m_globalMatrix * joint.m_invBindPose * Vector4(((Vector3*)source_map[sourceIds[0]].array)[vi]);
 			}
 			if (flags[1])
 			{
