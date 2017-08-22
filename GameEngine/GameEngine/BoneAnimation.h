@@ -6,16 +6,17 @@
 #include<map>
 #include"Math.h"
 #include"EngineDefine.h"
+#include"Debug.h"
 
 using namespace std;
 
 struct Joint
 {
+	string m_name;				//关节名字
+	byte m_iParent;				//父索引，或0xFF代表根关节
 	Matrix4x4 m_invBindPose;	//绑定姿势之逆变换
 	Matrix4x4 m_localMatrix;	//局部矩阵
 	Matrix4x4 m_globalMatrix;	//全局矩阵
-	string m_name;				//关节名字
-	byte m_iParent;				//父索引，或0xFF代表根关节
 
 	Joint() {
 		m_invBindPose.MakeIdentity();
@@ -38,6 +39,7 @@ struct Skeleton
 		for (Joint& joint : m_joints)
 			if (joint.m_name == name)
 				return &joint;
+
 		return NULL;
 	}
 

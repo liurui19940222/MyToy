@@ -1,5 +1,4 @@
 #include"ColladaFile.h"
-#include"Debug.h"
 #include<fstream>
 #include<sstream>
 
@@ -191,10 +190,10 @@ void CColladaFile::LoadFromFile(const char* filename)
 			for (int i = 0; i < count; i += 16)
 			{
 				matrix_source.push_back(Matrix4x4(
-					f[i + 0], f[i + 4], f[i + 8], f[i + 12],
-					f[i + 1], f[i + 5], f[i + 9], f[i + 13],
-					f[i + 2], f[i + 6], f[i + 10], f[i + 14],
-					f[i + 3], f[i + 7], f[i + 11], f[i + 15]
+					f[i + 0], f[i + 1], f[i + 2], f[i + 3],
+					f[i + 4], f[i + 5], f[i + 6], f[i + 7],
+					f[i + 8], f[i + 9], f[i + 10], f[i + 11],
+					f[i + 12], f[i + 13], f[i + 14], f[i + 15]
 				));
 			}
 			free(f);
@@ -243,17 +242,13 @@ void CColladaFile::LoadFromFile(const char* filename)
 		p_jointWeight[i].m_jointIndices = (byte*)malloc(num);
 		p_jointWeight[i].m_joints = (Joint**)malloc(num * 4);
 		p_jointWeight[i].m_weights = (float*)malloc(num * sizeof(float));
-		//string str = "";
-		//str += "index:" + CConverter::ToString(i) + "\tnum:" + CConverter::ToString(num);
 		for (int j = 0; j < num; j++)
 		{
 			p_jointWeight[i].m_joints[j] = m_skeleton.GetJoint(joint_source[v_array[weights_offsets[0] + v]]);
 			p_jointWeight[i].m_jointIndices[j] = m_skeleton.GetJointIndex(joint_source[v_array[weights_offsets[0] + v]]);
 			p_jointWeight[i].m_weights[j] = weight_source[v_array[weights_offsets[1] + v]];
-			//str += "\t" + CConverter::ToString(p_jointWeight[i].m_jointIndices[j]) + "\t" + CConverter::ToString(p_jointWeight[i].m_weights[j]);
 		}
 		v += num * 2;
-		//CDebug::Log(str);
 	}
 
 	for (int i = 0; i < joint_source.size(); i++)
@@ -266,17 +261,14 @@ void CColladaFile::LoadFromFile(const char* filename)
 	for (Joint& joint : m_skeleton.GetJoints())
 	{
 		Matrix4x4 matj = Matrix4x4::Identity();
-		Matrix4x4 matInv = Matrix4x4::Identity();
 		Joint* p = &joint;
 		do {
 			matj = p->m_localMatrix * matj;
-			matInv = p->m_invBindPose * matInv;
 			if (p->m_iParent == 0xFF)
 				break;
 			p = m_skeleton.GetJoint(p->m_iParent);
 		} while (true);
 		joint.m_globalMatrix = matj;
-		joint.m_invBindPose = matInv;
 	}
 
 	//读取几何信息
@@ -350,7 +342,7 @@ void CColladaFile::LoadFromFile(const char* filename)
 				JointWeight& w = p_jointWeight[vi];
 				Joint& joint = *(w.m_joints[0]);
 				m_jointWeights[vi] = w;
-				m_vertexArray[vertIndex++] = joint.m_globalMatrix * joint.m_invBindPose * Vector4(((Vector3*)source_map[sourceIds[0]].array)[vi]);
+				m_vertexArray[vertIndex++] = joint.m_globalMatrix * joint.m_invBindPose * m_bindShapeMat * Vector4(((Vector3*)source_map[sourceIds[0]].array)[vi]);
 			}
 			if (flags[1])
 			{

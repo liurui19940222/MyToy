@@ -6,6 +6,7 @@
 #include"include\rapidxml\rapidxml.hpp"
 #include"ModelFile.h"
 #include"BoneAnimation.h"
+#include"Debug.h"
 
 using namespace std;
 using namespace rapidxml;

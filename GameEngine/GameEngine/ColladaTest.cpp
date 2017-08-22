@@ -12,34 +12,12 @@ void CColladaTest::OnStart()
 	_MainCameraGo->SetLocalEulerAngles(Vector3(-30, 180, 0));
 
 	model = _Maker->Instantiate("model");
-	model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 4);
+	model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 10);
 	model->SetLocalEulerAngles(Vector3(0, 180, 0));
 	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("light"));
 	//model->AddComponent<CMeshRenderer>()->SetModel(_Maker->Instantiate<CMeshCube>())->SetMaterial(model_mat);
 	collada = _Resources->Load<CColladaFile>("models/walk.dae");
 	model->AddComponent<CSkinnedMeshRenderer>()->SetModel(collada)->SetMaterial(model_mat);
-	//glm::mat4 m;
-	//m[0][0] = 2.54; m[1][0] = -0; 		m[2][0] = 0; 			m[3][0] = 0;
-	//m[0][1] = 0; 	m[1][1] = 2.52908;  m[2][1] = -0.235263; 	m[3][1] = 0;
-	//m[0][2] = 0; 	m[1][2] = 0.235263; m[2][2] = 2.52908; 		m[3][2] = 0;
-	//m[0][3] = -0;	m[1][3] = -6.84199; m[2][3] = 0.987113; 	m[3][3] = 1;
-
-	//Matrix4x4 ma;
-	//ma[0][0] = 2.54; ma[1][0] = -0; 		ma[2][0] = 0; 			ma[3][0] = 0;
-	//ma[0][1] = 0; 	ma[1][1] = 2.52908;  ma[2][1] = -0.235263; 	ma[3][1] = 0;
-	//ma[0][2] = 0; 	ma[1][2] = 0.235263; ma[2][2] = 2.52908; 		ma[3][2] = 0;
-	//ma[0][3] = -0;	ma[1][3] = -6.84199; ma[2][3] = 0.987113; 	ma[3][3] = 1;
-
-	//glm::mat4 result1 = m * m._inverse();
-	//glm::mat4 result2 = m._inverse() * m;
-
-	//Matrix4x4 result3 = ma * ma.Inverse();
-	//Matrix4x4 result4 = ma.Inverse() * ma;
-
-	//int j = 0;
-	Matrix4x4 trans = Matrix4x4::Translate(Vector3(30, 0, 0));
-	Matrix4x4 inv = trans.Inverse();
-	int j = 0;
 }
 
 void CColladaTest::OnUpdate()

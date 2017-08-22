@@ -165,7 +165,7 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 	glDisable(GL_DEPTH_TEST);
 	glPushMatrix();
 	glPointSize(3);
-	glScalef(2.5, 2.5, 2.5);
+	//glScalef(2.5, 2.5, 2.5);
 	glMultMatrixf((float*)&(modelToWorldMatrix));
 	glColor3f(1, 0, 0);
 	JointVertex* vertices = (JointVertex*)malloc(sizeof(JointVertex) * skeleton.GetSize());
