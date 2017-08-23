@@ -5,11 +5,15 @@
 #include"RenderBuffer.h"
 #include"Math.h"
 #include"EngineDefine.h"
+#include"BoneAnimation.h"
 
-#define VERTEX_POS 0
-#define COLOR_POS  1
-#define UV_POS	   2
-#define NORMAL_POS 3
+#define VERTEX_POS			0
+#define COLOR_POS			1
+#define UV_POS				2
+#define NORMAL_POS			3
+#define JOINT_INDEX_POS		4
+#define JOINT_WEIGHT_POS	5
+#define WEIGHT_NUM_POS		6
 
 class CMeshBuffer : public CRenderBuffer
 {
@@ -20,7 +24,9 @@ private:
 	GLuint m_vboColorHandle;
 	GLuint m_vboNormalHandle;
 	GLuint m_vboUVHandle;
-	GLuint m_vboMatrixHandle;
+	GLuint m_vboJointIndexHandle;
+	GLuint m_vboJointWeightHandle;
+	GLuint m_vboWeigthNumHandle;
 
 public:
 	CMeshBuffer();
@@ -34,6 +40,8 @@ public:
 	void MakeUVBuffer(const Vector2* uvs, int size);
 
 	void MakeNormalBuffer(const Vector3* normals, int size);
+
+	void MakeJointBuffer(const SkeletonWeight& skeletonWeight);
 
 	virtual void BindBuffer() override;
 

@@ -70,6 +70,11 @@ void CMeshBuffer::MakeNormalBuffer(const Vector3* normals, int size)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+void CMeshBuffer::MakeJointBuffer(const SkeletonWeight& skeletonWeight)
+{
+	
+}
+
 void CMeshBuffer::BindBuffer()
 {
 	glBindVertexArray(m_vaoHandle);

@@ -164,7 +164,7 @@ void CColladaFile::ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth)
 	}
 }
 
-JointWeight* CColladaFile::ReadSkin(xml_node<>* root)
+SkeletonWeight CColladaFile::ReadSkin(xml_node<>* root)
 {
 	//读取蒙皮
 	xml_node<>* skin_node = GetNodeByName(root, "library_controllers")->first_node()->first_node();
@@ -236,18 +236,20 @@ JointWeight* CColladaFile::ReadSkin(xml_node<>* root)
 	for (int i = 0; i < weights_count; i++)
 		v_length += vcount[i] * 2;
 	int* v_array = UnpackValues<int>(v_str, v_length);
-	JointWeight* p_jointWeights = (JointWeight*)malloc(sizeof(JointWeight) * weights_count);
+	SkeletonWeight p_skeletonWeight;
+	p_skeletonWeight.m_jointWeights = (JointWeight*)malloc(sizeof(JointWeight) * weights_count);
+	p_skeletonWeight.m_count = weights_count;
 
 	for (int i = 0, v = 0; i < weights_count; i++)
 	{
 		int num = vcount[i];
-		p_jointWeights[i].m_count = num;
-		p_jointWeights[i].m_jointIndices = (byte*)malloc(num);
-		p_jointWeights[i].m_weights = (float*)malloc(num * sizeof(float));
+		p_skeletonWeight.m_jointWeights[i].m_count = num;
+		p_skeletonWeight.m_jointWeights[i].m_jointIndices = (byte*)malloc(num);
+		p_skeletonWeight.m_jointWeights[i].m_weights = (float*)malloc(num * sizeof(float));
 		for (int j = 0; j < num; j++)
 		{
-			p_jointWeights[i].m_jointIndices[j] = m_skeleton.GetJointIndex(joint_source[v_array[weights_offsets[0] + v + j * 2]]);
-			p_jointWeights[i].m_weights[j] = weight_source[v_array[weights_offsets[1] + v + j * 2]];
+			p_skeletonWeight.m_jointWeights[i].m_jointIndices[j] = m_skeleton.GetJointIndex(joint_source[v_array[weights_offsets[0] + v + j * 2]]);
+			p_skeletonWeight.m_jointWeights[i].m_weights[j] = weight_source[v_array[weights_offsets[1] + v + j * 2]];
 		}
 		v += num * 2;
 	}
@@ -257,7 +259,7 @@ JointWeight* CColladaFile::ReadSkin(xml_node<>* root)
 		Joint& joint = *m_skeleton.GetJoint(joint_source[i]);
 		joint.m_invBindPose = matrix_source[i];
 	}
-	return p_jointWeights;
+	return p_skeletonWeight;
 }
 
 void CColladaFile::CalculateGlobalMatrix()
@@ -288,7 +290,7 @@ void CColladaFile::CalculateSkinningMatrix()
 	}
 }
 
-void CColladaFile::ReadMesh(xml_node<>* root, JointWeight* p_jointWeights)
+void CColladaFile::ReadMesh(xml_node<>* root, SkeletonWeight p_skeletonWeight)
 {
 	//读取几何信息
 	xml_node<>* mesh = GetNodeByName(root, "library_geometries")->first_node()->first_node();
@@ -318,8 +320,10 @@ void CColladaFile::ReadMesh(xml_node<>* root, JointWeight* p_jointWeights)
 	m_vertexArray = (Vector3*)malloc(sizeof(Vector3) * m_vertexNum);
 	m_normalArray = (Vector3*)malloc(sizeof(Vector3) * m_vertexNum);
 	m_uvArray = (Vector2*)malloc(sizeof(Vector2) * m_vertexNum);
-	m_jointWeights = (JointWeight*)malloc(sizeof(JointWeight) * m_vertexNum);
-
+	m_skeletonWeight.m_jointWeights = (JointWeight*)malloc(sizeof(JointWeight) * m_vertexNum);
+	memset(m_skeletonWeight.m_jointWeights, 0, sizeof(JointWeight) * m_vertexNum);
+	m_skeletonWeight.m_count = m_vertexNum;
+	int index_num = 0;
 	for (auto it = triangles.begin(); it != triangles.end(); ++it)
 	{
 		int count = GetAttribute<int>(*it, "count");
@@ -346,14 +350,15 @@ void CColladaFile::ReadMesh(xml_node<>* root, JointWeight* p_jointWeights)
 			offsets[index] = offset;
 			sourceIds[index] = source;
 		}
-		int* indices = UnpackValues<int>(p, (size_t)count * 3 * step);
-		for (int i = 0; i < count * 3 * step; i += step)
+		index_num = count * 3 * step;
+		int* indices = UnpackValues<int>(p, (size_t)index_num);
+		for (int i = 0; i < index_num; i += step)
 		{
 			int vi = indices[i] + offsets[0];
-			m_jointWeights[vertIndex] = p_jointWeights[vi];
+			JointWeight::Copy(m_skeletonWeight.m_jointWeights[vertIndex], p_skeletonWeight.m_jointWeights[vi]);
 
 			if (flags[0])
-				m_vertexArray[vertIndex++] = m_skeletonPose.m_aGlobalPose[ m_jointWeights[vertIndex].m_jointIndices[0]] * Vector4(((Vector3*)source_map[sourceIds[0]].array)[vi]);
+				m_vertexArray[vertIndex++] = m_skeletonPose.m_aGlobalPose[m_skeletonWeight.m_jointWeights[vertIndex].m_jointIndices[0]] * Vector4(((Vector3*)source_map[sourceIds[0]].array)[vi]);
 			if (flags[1])
 				//这里根据下标取normal索引是有问题的，所以按顺序来取
 				m_normalArray[normalIndex++] = ((Vector3*)source_map[sourceIds[1]].array)[normalIndex];
@@ -362,11 +367,7 @@ void CColladaFile::ReadMesh(xml_node<>* root, JointWeight* p_jointWeights)
 		}
 		free(indices);
 	}
-	//for (int i = 0; i < m_vertexNum; i++)
-	//{
-	//	CDebug:::Log();
-	//}
-	free(p_jointWeights);
+	SkeletonWeight::Free(p_skeletonWeight);
 }
 
 void CColladaFile::LoadFromFile(const char* filename)
@@ -374,10 +375,10 @@ void CColladaFile::LoadFromFile(const char* filename)
 	LoadXmlDocument(filename);
 	xml_node<>* root = m_xmlDoc.first_node();
 	ReadSkeleton(root);
-	JointWeight* p_jointWeights = ReadSkin(root);
+	SkeletonWeight weight = ReadSkin(root);
 	CalculateGlobalMatrix();
 	CalculateSkinningMatrix();
-	ReadMesh(root, p_jointWeights);
+	ReadMesh(root, weight);
 
 	//上传到缓冲区
 	m_buffer.MakeBuffer(m_vertexArray, NULL, m_normalArray, m_uvArray, m_vertexNum);

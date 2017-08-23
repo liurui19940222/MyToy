@@ -29,7 +29,7 @@ private:
 	Matrix4x4 m_bindShapeMat;
 	Skeleton m_skeleton;
 	SkeletonPose m_skeletonPose;
-	JointWeight* m_jointWeights;
+	SkeletonWeight m_skeletonWeight;
 
 #pragma region read_mesh
 
@@ -40,7 +40,7 @@ private:
 	void ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth);
 
 	//读取蒙皮
-	JointWeight* ReadSkin(xml_node<>* root);
+	SkeletonWeight ReadSkin(xml_node<>* root);
 
 	//计算每个关节的全局变换矩阵
 	void CalculateGlobalMatrix();
@@ -49,7 +49,7 @@ private:
 	void CalculateSkinningMatrix();
 
 	//读取Mesh
-	void ReadMesh(xml_node<>* root, JointWeight* p_jointWeights);
+	void ReadMesh(xml_node<>* root, SkeletonWeight p_skeletonWeight);
 
 #pragma endregion
 

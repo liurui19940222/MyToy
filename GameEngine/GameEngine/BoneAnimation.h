@@ -1,4 +1,4 @@
-#ifndef _BONE_ANIMATION_H_
+ï»¿#ifndef _BONE_ANIMATION_H_
 #define _BONE_ANIMATION_H_
 
 #include<string>
@@ -12,11 +12,11 @@ using namespace std;
 
 struct Joint
 {
-	string m_name;				//¹Ø½ÚÃû×Ö
-	byte m_iParent;				//¸¸Ë÷Òı£¬»ò0xFF´ú±í¸ù¹Ø½Ú
-	Matrix4x4 m_invBindPose;	//°ó¶¨×ËÊÆÖ®Äæ±ä»»
-	Matrix4x4 m_localMatrix;	//¾Ö²¿¾ØÕó
-	Matrix4x4 m_globalMatrix;	//È«¾Ö¾ØÕó
+	string m_name;				//å…³èŠ‚åå­—
+	byte m_iParent;				//çˆ¶ç´¢å¼•ï¼Œæˆ–0xFFä»£è¡¨æ ¹å…³èŠ‚
+	Matrix4x4 m_invBindPose;	//ç»‘å®šå§¿åŠ¿ä¹‹é€†å˜æ¢
+	Matrix4x4 m_localMatrix;	//å±€éƒ¨çŸ©é˜µ
+	Matrix4x4 m_globalMatrix;	//å…¨å±€çŸ©é˜µ
 
 	Joint() {
 		m_invBindPose.MakeIdentity();
@@ -69,32 +69,50 @@ struct Skeleton
 
 struct JointWeight
 {
-	byte* m_jointIndices;
-	float* m_weights;
-	byte m_count;
-private:
-	JointWeight(const JointWeight& jointWeight) 
+	byte* m_jointIndices = NULL;
+	float* m_weights = NULL;
+	byte m_count = 0;
+
+	inline static void Copy(JointWeight& dst, const JointWeight& src)
 	{
-		static int count = 0;
-		CDebug::Log("¿½±´¹¹Ôì:%d", ++count); 
+		if (!dst.m_jointIndices) dst.m_jointIndices = (byte*)malloc(src.m_count);
+		if (!dst.m_weights) dst.m_weights = (float*)malloc(sizeof(float) * src.m_count);
+		memcpy(dst.m_jointIndices, src.m_jointIndices, src.m_count);
+		memcpy(dst.m_weights, src.m_weights, src.m_count * sizeof(float));
+	}
+};
+
+struct SkeletonWeight
+{
+	int m_count;
+	JointWeight* m_jointWeights;
+
+	inline static void Free(SkeletonWeight& skeletonWeight)
+	{
+		for (int i = 0; i < skeletonWeight.m_count; i++)
+		{
+			free(skeletonWeight.m_jointWeights[i].m_jointIndices);
+			free(skeletonWeight.m_jointWeights[i].m_weights);
+		}
+		free(skeletonWeight.m_jointWeights);
 	}
 };
 
 struct JointPose
 {
-	Matrix4x4 m_matrix;			//±ä»»¾ØÕó
+	Matrix4x4 m_matrix;			//å˜æ¢çŸ©é˜µ
 };
 
 struct SkeletonPose
 {
-	Skeleton* m_pSkeleton;		//¹Ç÷À+¹Ø½ÚÊıÁ¿
-	JointPose* m_aLoclPose;		//¶à¸ö¾Ö²¿¹Ø½Ú×ËÊÆ
-	Matrix4x4* m_aGlobalPose;	//¶à¸öÈ«¾Ö¹Ø½Ú×ËÊÆ
+	Skeleton* m_pSkeleton;		//éª¨éª¼+å…³èŠ‚æ•°é‡
+	JointPose* m_aLoclPose;		//å¤šä¸ªå±€éƒ¨å…³èŠ‚å§¿åŠ¿
+	Matrix4x4* m_aGlobalPose;	//å¤šä¸ªå…¨å±€å…³èŠ‚å§¿åŠ¿
 };
 
 struct AnimationSample
 {
-	JointPose* m_aJointPose;	//¹Ø½Ú×ËÊÆÊı×é
+	JointPose* m_aJointPose;	//å…³èŠ‚å§¿åŠ¿æ•°ç»„
 };
 
 struct AnimationClip
