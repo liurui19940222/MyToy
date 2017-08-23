@@ -21,23 +21,72 @@ struct ValueArray
 class CColladaFile : public CModelFile
 {
 private:
-	Matrix4x4 m_bindShapeMat;
+	friend class CSkinnedMeshRenderer;
 
-	vector<xml_node<>*> GetNodesByName(xml_node<>* node, const string name);
-	xml_node<>* GetNodeByName(xml_node<>* node, const string name);
-	xml_node<>* GetNodeById(xml_node<>* node, const string name);
-	string GetAttribute(xml_node<>* node, const string name);
-	vector<string> ReadSource(xml_node<>* node, const string id);
-	map<string, vector<string>> ReadSources(xml_node<>* node);
+	xml_document<> m_xmlDoc;
+	char* m_xmlData;
+
+	Matrix4x4 m_bindShapeMat;
+	Skeleton m_skeleton;
+	SkeletonPose m_skeletonPose;
+	JointWeight* m_jointWeights;
+
+#pragma region read_mesh
+
+	//读取整个骨架
+	void ReadSkeleton(xml_node<>* node);
+
+	//读取关节信息,包括没有蒙皮信息的节点
 	void ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth);
+
+	//读取蒙皮
+	JointWeight* ReadSkin(xml_node<>* root);
+
+	//计算每个关节的全局变换矩阵
+	void CalculateGlobalMatrix();
+
+	//计算蒙皮矩阵
+	void CalculateSkinningMatrix();
+
+	//读取Mesh
+	void ReadMesh(xml_node<>* root, JointWeight* p_jointWeights);
+
+#pragma endregion
+
+#pragma region read_xml
+
+	//加载xml文件
+	void LoadXmlDocument(const char* filename);
+
+	//得到node下面名字为name的所有节点
+	vector<xml_node<>*> GetNodesByName(xml_node<>* node, const string name);
+
+	//得到node下面名字为name的第一个节点
+	xml_node<>* GetNodeByName(xml_node<>* node, const string name);
+
+	//得到node下面Id为(name)的节点
+	xml_node<>* GetNodeById(xml_node<>* node, const string name);
+
+	//得到node节点的属性为(name)的值
+	string GetAttribute(xml_node<>* node, const string name);
+
+	//读取id为(id)的Source节点的值
+	vector<string> ReadSource(xml_node<>* node, const string id);
+
+	//读取node节点下所有source节点的值
+	map<string, vector<string>> ReadSources(xml_node<>* node);
+
+	//将空格、换行、回车分隔的字符串，转换成vector<string>
 	vector<string> UnpackValues(string& str, size_t count);
 
+	//得到node的name属性的值
 	template<typename T>
 	T GetAttribute(xml_node<>* node, const string name)
 	{
 		return CConverter::ToValue<T>(GetAttribute(node, name));
 	}
 
+	//将8 9 5 6 33这种分隔数据转换为数组
 	template<typename TValue>
 	TValue* UnpackValues(string& str, size_t count)
 	{
@@ -69,6 +118,7 @@ private:
 		return valueArray;
 	}
 
+	//读取Source节点下面所有数据
 	template<typename T>
 	T* ReadSource(xml_node<>* node, const string id, int* count)
 	{
@@ -83,9 +133,9 @@ private:
 		return UnpackValues<T>(value, *count);
 	}
 
+#pragma endregion
+
 public:
-	Skeleton m_skeleton;
-	JointWeight* m_jointWeights;
 
 	virtual void LoadFromFile(const char* filename) override;
 };

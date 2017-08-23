@@ -15,9 +15,28 @@ void CColladaTest::OnStart()
 	model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 10);
 	model->SetLocalEulerAngles(Vector3(0, 180, 0));
 	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("light"));
-	//model->AddComponent<CMeshRenderer>()->SetModel(_Maker->Instantiate<CMeshCube>())->SetMaterial(model_mat);
 	collada = _Resources->Load<CColladaFile>("models/walk.dae");
 	model->AddComponent<CSkinnedMeshRenderer>()->SetModel(collada)->SetMaterial(model_mat);
+
+	Matrix4x4 m1;
+	m1[0][0] = 1; m1[1][0] = 1.5; m1[2][0] = -5; m1[3][0] = 10;
+	m1[0][1] = 0; m1[1][1] = 2; m1[2][1] = -5; m1[3][1] = 8;
+	m1[0][2] = 8; m1[1][2] = 1.2; m1[2][2] = -3; m1[3][2] = 7;
+	m1[0][3] = 9; m1[1][3] = 1.1; m1[2][3] = -0.5; m1[3][3] = 6;
+
+	m1 = m1 * 5.0;
+	m1 += m1;
+
+	glm::mat4 m2;
+	m2[0][0] = 1; m2[1][0] = 1.5; m2[2][0] = -5; m2[3][0] = 10;
+	m2[0][1] = 0; m2[1][1] = 2; m2[2][1] = -5; m2[3][1] = 8;
+	m2[0][2] = 8; m2[1][2] = 1.2; m2[2][2] = -3; m2[3][2] = 7;
+	m2[0][3] = 9; m2[1][3] = 1.1; m2[2][3] = -0.5; m2[3][3] = 6;
+
+	m2 = m2 * 5.0;
+	m2 += m2;
+
+	int j = 0;
 }
 
 void CColladaTest::OnUpdate()

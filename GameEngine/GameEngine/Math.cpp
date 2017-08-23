@@ -344,10 +344,42 @@ Matrix4x4 Matrix4x4::Multiply(Matrix4x4& mat)
 
 Matrix4x4 Matrix4x4::Multiply(float value)
 {
-	return Matrix4x4(m[0][0] * value, m[0][1] * value, m[0][2] * value, m[0][3] * value,
-		m[1][0] * value, m[1][1] * value, m[1][2] * value, m[1][3] * value,
-		m[2][0] * value, m[2][1] * value, m[2][2] * value, m[2][3] * value,
-		m[3][0] * value, m[3][1] * value, m[3][2] * value, m[3][3] * value);
+	return Matrix4x4(m[0][0] * value, m[1][0] * value, m[2][0] * value, m[3][0] * value,
+		m[0][1] * value, m[1][1] * value, m[2][1] * value, m[3][1] * value,
+		m[0][2] * value, m[1][2] * value, m[2][2] * value, m[3][2] * value,
+		m[0][3] * value, m[1][3] * value, m[2][3] * value, m[3][3] * value);
+}
+
+Matrix4x4 Matrix4x4::operator+(Matrix4x4& matrix)
+{
+	return Matrix4x4(m[0][0] + matrix[0][0], m[1][0] + matrix[1][0], m[2][0] + matrix[2][0], m[3][0] + matrix[3][0],
+		m[0][1] + matrix[0][1], m[1][1] + matrix[1][1], m[2][1] + matrix[2][1], m[3][1] + matrix[3][1],
+		m[0][2] + matrix[0][2], m[1][2] + matrix[1][2], m[2][2] + matrix[2][2], m[3][2] + matrix[3][2],
+		m[0][3] + matrix[0][3], m[1][3] + matrix[1][3], m[2][3] + matrix[2][3], m[3][3] + matrix[3][3]);
+}
+
+Matrix4x4 Matrix4x4::operator-(Matrix4x4& matrix)
+{
+	return Matrix4x4(m[0][0] - matrix[0][0], m[1][0] - matrix[1][0], m[2][0] - matrix[2][0], m[3][0] - matrix[3][0],
+		m[0][1] - matrix[0][1], m[1][1] - matrix[1][1], m[2][1] - matrix[2][1], m[3][1] - matrix[3][1],
+		m[0][2] - matrix[0][2], m[1][2] - matrix[1][2], m[2][2] - matrix[2][2], m[3][2] - matrix[3][2],
+		m[0][3] - matrix[0][3], m[1][3] - matrix[1][3], m[2][3] - matrix[2][3], m[3][3] - matrix[3][3]);
+}
+
+void Matrix4x4::operator+=(Matrix4x4& matrix)
+{
+	m[0][0] += matrix[0][0]; m[1][0] += matrix[1][0]; m[2][0] += matrix[2][0]; m[3][0] += matrix[3][0];
+	m[0][1] += matrix[0][1]; m[1][1] += matrix[1][1]; m[2][1] += matrix[2][1]; m[3][1] += matrix[3][1];
+	m[0][2] += matrix[0][2]; m[1][2] += matrix[1][2]; m[2][2] += matrix[2][2]; m[3][2] += matrix[3][2];
+	m[0][3] += matrix[0][3]; m[1][3] += matrix[1][3]; m[2][3] += matrix[2][3]; m[3][3] += matrix[3][3];
+}
+
+void Matrix4x4::operator-=(Matrix4x4& matrix)
+{
+	m[0][0] -= matrix[0][0]; m[1][0] -= matrix[1][0]; m[2][0] -= matrix[2][0]; m[3][0] -= matrix[3][0];
+	m[0][1] -= matrix[0][1]; m[1][1] -= matrix[1][1]; m[2][1] -= matrix[2][1]; m[3][1] -= matrix[3][1];
+	m[0][2] -= matrix[0][2]; m[1][2] -= matrix[1][2]; m[2][2] -= matrix[2][2]; m[3][2] -= matrix[3][2];
+	m[0][3] -= matrix[0][3]; m[1][3] -= matrix[1][3]; m[2][3] -= matrix[2][3]; m[3][3] -= matrix[3][3];
 }
 
 Matrix4x4 Matrix4x4::operator*(Matrix4x4& matrix)
@@ -367,12 +399,12 @@ Vector4 Matrix4x4::operator*(const Vector4& v)
 
 Matrix4x4 Matrix4x4::operator*(float value)
 {
-	return std::move(Multiply(value));
+	return Multiply(value);
 }
 
 Matrix4x4 Matrix4x4::operator/(float value)
 {
-	return std::move(Multiply(1.0f / value));
+	return Multiply(1.0f / value);
 }
 
 Vector4& Matrix4x4::operator[](size_t index)

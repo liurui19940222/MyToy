@@ -70,9 +70,14 @@ struct Skeleton
 struct JointWeight
 {
 	byte* m_jointIndices;
-	Joint** m_joints;
 	float* m_weights;
 	byte m_count;
+private:
+	JointWeight(const JointWeight& jointWeight) 
+	{
+		static int count = 0;
+		CDebug::Log("øΩ±¥ππ‘Ï:%d", ++count); 
+	}
 };
 
 struct JointPose

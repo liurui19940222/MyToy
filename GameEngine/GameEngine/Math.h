@@ -169,6 +169,14 @@ public:
 
 	Matrix4x4 Multiply(float value);
 
+	Matrix4x4 operator+(Matrix4x4& matrix);
+
+	Matrix4x4 operator-(Matrix4x4& matrix);
+
+	void operator+=(Matrix4x4& matrix);
+
+	void operator-=(Matrix4x4& matrix);
+
 	Matrix4x4 operator*(Matrix4x4& matrix);
 
 	Vector3 operator*(const Vector3& v);
