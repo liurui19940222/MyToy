@@ -3,6 +3,7 @@
 
 #include<Windows.h>
 #include<gl\glew.h>
+#include"Math.h"
 
 #define _RGBA32(r, g, b, a) (a << 24) + (b << 16) + (g << 8) + r
 #define CH_MAP_BITMAP_SIZE_W 512
@@ -12,8 +13,8 @@ typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint32;
 typedef unsigned int uint;
+typedef TmpVector2<float> Vector2;
 
-class Vector2;
 struct Color;
 struct Color32
 {

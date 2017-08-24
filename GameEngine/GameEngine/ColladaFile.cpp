@@ -356,9 +356,9 @@ void CColladaFile::ReadMesh(xml_node<>* root, SkeletonWeight p_skeletonWeight)
 		{
 			int vi = indices[i] + offsets[0];
 			JointWeight::Copy(m_skeletonWeight.m_jointWeights[vertIndex], p_skeletonWeight.m_jointWeights[vi]);
-
+			Vector3 position = ((Vector3*)source_map[sourceIds[0]].array)[vi];
 			if (flags[0])
-				m_vertexArray[vertIndex++] = m_skeletonPose.m_aGlobalPose[m_skeletonWeight.m_jointWeights[vertIndex].m_jointIndices[0]] * Vector4(((Vector3*)source_map[sourceIds[0]].array)[vi]);
+				m_vertexArray[vertIndex++] = m_skeletonPose.m_aGlobalPose[m_skeletonWeight.m_jointWeights[vertIndex].m_jointIndices[0]] * Vector4(position.x, position.y, position.z, 1);
 			if (flags[1])
 				//这里根据下标取normal索引是有问题的，所以按顺序来取
 				m_normalArray[normalIndex++] = ((Vector3*)source_map[sourceIds[1]].array)[normalIndex];

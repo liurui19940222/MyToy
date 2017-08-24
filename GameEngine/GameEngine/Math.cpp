@@ -1,122 +1,5 @@
 #include "Math.h"
-
-#pragma region Vector2
-
-Vector2::Vector2() :x(0), y(0) {}
-Vector2::Vector2(const Vector3& v3) : x(v3.x), y(v3.y) {}
-Vector2::Vector2(const Vector2& v2) : x(v2.x), y(v2.y) {}
-Vector2::Vector2(float px, float py) : x(px), y(py) {}
-
-float Vector2::Magnitude() const
-{
-	return sqrt(x*x + y*y);
-}
-
-float Vector2::MagnitudeSqrt() const
-{
-	return x*x + y*y;
-}
-
-Vector2 Vector2::Normalization() const
-{
-	float mag = Magnitude();
-	return Vector2(x / mag, y / mag);
-}
-
-void Vector2::Rotate(float angle)
-{
-	angle = angle / 180 * CMath::PI;
-	float tx = x*cos(angle) - y*sin(angle);
-	float ty = x*sin(angle) + y*cos(angle);
-	x = tx;
-	y = ty;
-}
-
-Vector2 Vector2::operator+(const Vector2& vec) const
-{
-	return Vector2(this->x + vec.x, this->y + vec.y);
-}
-
-Vector2 Vector2::operator-(const Vector2& vec) const
-{
-	return Vector2(this->x - vec.x, this->y - vec.y);
-}
-
-Vector2 Vector2::operator*(const float value) const
-{
-	return Vector2(this->x * value, this->y*value);
-}
-
-Vector2 Vector2::operator/(const float value) const
-{
-	return Vector2(this->x / value, this->y / value);
-}
-
-bool Vector2::operator==(const Vector2& vec) const
-{
-	return this->x == vec.x && this->y == vec.y;
-}
-
-bool Vector2::operator!=(const Vector2& vec) const
-{
-	return this->x != vec.x || this->y != vec.y;
-}
-
-void Vector2::operator+=(const Vector2& vec)
-{
-	x += vec.x;
-	y += vec.y;
-}
-
-void Vector2::operator-=(const Vector2& vec)
-{
-	x -= vec.x;
-	y -= vec.y;
-}
-
-void Vector2::operator*=(const float value)
-{
-	x *= value;
-	y *= value;
-}
-
-void Vector2::operator/=(const float value)
-{
-	(*this) *= (1.0f / value);
-}
-
-Vector2 Vector2::operator-() const
-{
-	return Vector2(-x, -y);
-}
-
-float Vector2::Dot(const Vector2 &vec1, const Vector2 &vec2)
-{
-	return vec1.x * vec2.x + vec1.y * vec2.y;
-}
-
-float Vector2::Angle(const Vector2 &vec1, const Vector2 &vec2)
-{
-	Vector2 nor1 = vec1.Normalization();
-	Vector2 nor2 = vec2.Normalization();
-	return  acos(Dot(nor1, nor2));
-}
-
-Vector2 Vector2::Projection(const Vector2 &u, const Vector2 &v)
-{
-	float mag = v.Magnitude();
-	return v * Dot(u, v) / (mag * mag);
-}
-
-const Vector2 Vector2::zero(0.0f, 0.0f);
-const Vector2 Vector2::one(1.0f, 1.0f);
-const Vector2 Vector2::up(0.0f, 1.0f);
-const Vector2 Vector2::down(0.0f, -1.0f);
-const Vector2 Vector2::left(-1.0f, 0.0f);
-const Vector2 Vector2::right(1.0f, 0.0f);
-
-#pragma endregion
-
+/*
 #pragma region Vector3
 
 Vector3::Vector3() :x(0), y(0), z(0) {}
@@ -222,9 +105,7 @@ Vector3 Vector3::Cross(const Vector3 &u, const Vector3 &v)
 
 float Vector3::Angle(const Vector3 &vec1, const Vector3 &vec2)
 {
-	Vector3 nor1 = vec1.Normalization();
-	Vector3 nor2 = vec2.Normalization();
-	return  acos(Dot(nor1, nor2));
+	return  acos(Dot(vec1.Normalization(), vec2.Normalization()));
 }
 
 Vector3 Vector3::Projection(const Vector3 &u, const Vector3 &v)
@@ -243,31 +124,7 @@ const Vector3 Vector3::forward(0.0f, 0.0f, 1.0f);
 const Vector3 Vector3::back(0.0f, 0.0f, -1.0f);
 
 #pragma endregion
-
-#pragma region Vector4
-
-Vector4::Vector4() :x(0), y(0), z(0), w(1) { }
-
-Vector4::Vector4(const Vector3& v) : x(v.x), y(v.y), z(v.z), w(1) { }
-
-Vector4::Vector4(const Vector4& v) : x(v.x), y(v.y), z(v.z), w(v.w) { }
-
-Vector4::Vector4(float px, float py, float pz) : x(px), y(py), z(pz), w(1) { }
-
-Vector4::Vector4(float px, float py, float pz, float pw) : x(px), y(py), z(pz), w(pw) { }
-
-float& Vector4::operator[](size_t index)
-{
-	return m[index];
-}
-
-float const & Vector4::operator[](size_t index) const
-{
-	return m[index];
-}
-
-#pragma endregion
-
+*/
 #pragma region Matrix4x4
 
 Matrix4x4::Matrix4x4()

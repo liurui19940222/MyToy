@@ -22,7 +22,8 @@ CGUIWidget::CGUIWidget() :
 bool CGUIWidget::Overlay(Vector2 pos)
 {
 	//因为rect被定义在模型空间，所以要用pos减去世界空间位置
-	return m_rect.Overlay(pos - gameObject->GetRealPosition());
+	//return m_rect.Overlay(pos - gameObject->GetRealPosition());
+	return false;
 }
 
 bool CGUIWidget::IsCollide()
