@@ -1,118 +1,11 @@
 #include "Math.h"
-/*
-#pragma region Vector3
 
-Vector3::Vector3() :x(0), y(0), z(0) {}
-Vector3::Vector3(const Vector2& v2) : x(v2.x), y(v2.y), z(0) {}
-Vector3::Vector3(const Vector3& v3) : x(v3.x), y(v3.y), z(v3.z) {}
-Vector3::Vector3(const Vector4& v4) : x(v4.x), y(v4.y), z(v4.z) {}
-Vector3::Vector3(float px, float py, float pz) : x(px), y(py), z(pz) {}
-
-float Vector3::Magnitude() const
-{
-	return sqrt(x * x + y*y + z*z);
-}
-
-float Vector3::MagnitudeSqrt() const
-{
-	return x * x + y*y + z*z;
-}
-
-Vector3 Vector3::Normalization() const
-{
-	float mag = Magnitude();
-	return Vector3(x / mag, y / mag, z / mag);
-}
-
-Vector3 Vector3::operator+(const Vector3& vec) const
-{
-	return Vector3(x + vec.x, y + vec.y, z + vec.z);
-}
-
-void Vector3::operator+=(const Vector3& vec)
-{
-	x += vec.x;
-	y += vec.y;
-	z += vec.z;
-}
-
-void Vector3::operator-=(const Vector3& vec)
-{
-	x -= vec.x;
-	y -= vec.y;
-	z -= vec.z;
-}
-
-void Vector3::operator*=(const float value)
-{
-	x *= value;
-	y *= value;
-	z *= value;
-}
-
-void Vector3::operator/=(const float value)
-{
-	*(this) *= (1.0f / value);
-}
-
-Vector3 Vector3::operator-(const Vector3& vec) const
-{
-	return Vector3(x - vec.x, y - vec.y, z - vec.z);
-}
-
-Vector3 Vector3::operator*(const float value) const
-{
-	return Vector3(x * value, y * value, z * value);
-}
-
-Vector3 Vector3::operator/(const float value) const
-{
-	return Vector3(x / value, y / value, z / value);
-}
-
-bool Vector3::operator==(const Vector3& vec) const
-{
-	return this->x == vec.x && this->y == vec.y && this->z == vec.z;
-}
-
-bool Vector3::operator!=(const Vector3& vec) const
-{
-	return this->x != vec.x || this->y != vec.y || this->z != vec.z;
-}
-
-Vector3 Vector3::operator*(Matrix4x4& mat) const
-{
-	float px = x * mat[0][0] + y * mat[1][0] + z * mat[2][0];
-	float py = x * mat[0][1] + y * mat[1][1] + z * mat[2][1];
-	float pz = x * mat[0][2] + y * mat[1][2] + z * mat[2][2];
-	return Vector3(px, py, pz);
-}
-
-Vector3 Vector3::operator-() const
-{
-	return Vector3(-x, -y, -z);
-}
-
-float Vector3::Dot(const Vector3 &vec1, const Vector3 &vec2)
-{
-	return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z;
-}
-
-Vector3 Vector3::Cross(const Vector3 &u, const Vector3 &v)
-{
-	return Vector3(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x);
-}
-
-float Vector3::Angle(const Vector3 &vec1, const Vector3 &vec2)
-{
-	return  acos(Dot(vec1.Normalization(), vec2.Normalization()));
-}
-
-Vector3 Vector3::Projection(const Vector3 &u, const Vector3 &v)
-{
-	float mag = v.Magnitude();
-	return v * Dot(u, v) / (mag * mag);
-}
+const Vector2 Vector2::zero(0.0f, 0.0f);
+const Vector2 Vector2::one(1.0f, 1.0f);
+const Vector2 Vector2::up(0.0f, 1.0f);
+const Vector2 Vector2::down(0.0f, -1.0f);
+const Vector2 Vector2::left(-1.0f, 0.0f);
+const Vector2 Vector2::right(1.0f, 0.0f);
 
 const Vector3 Vector3::zero(0.0f, 0.0f, 0.0f);
 const Vector3 Vector3::one(1.0f, 1.0f, 1.0f);
@@ -123,8 +16,6 @@ const Vector3 Vector3::right(1.0f, 0.0f, 0.0f);
 const Vector3 Vector3::forward(0.0f, 0.0f, 1.0f);
 const Vector3 Vector3::back(0.0f, 0.0f, -1.0f);
 
-#pragma endregion
-*/
 #pragma region Matrix4x4
 
 Matrix4x4::Matrix4x4()

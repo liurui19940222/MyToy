@@ -9,7 +9,6 @@ template<typename VType> class TmpVector3;
 template<typename VType> union TmpVector4;
 typedef TmpVector2<float> Vector2;
 typedef TmpVector3<float> Vector3;
-typedef TmpVector4<unsigned char> BVector4;
 typedef TmpVector4<float> Vector4;
 
 class Matrix4x4;
@@ -22,7 +21,7 @@ public:
 	VType y = 0;
 
 	TmpVector2() {}
-	//TmpVector2(const TmpVector3<VType>& v3) : x(v3.x), y(v3.y) {}
+	TmpVector2(const TmpVector3<VType>& v3) : x(v3.x), y(v3.y) {}
 	TmpVector2(const TmpVector2<VType>& v2) : x(v2.x), y(v2.y) {}
 	TmpVector2(VType px, VType py) : x(px), y(py) {}
 
@@ -89,20 +88,13 @@ public:
 		return v * Dot(u, v) / (mag * mag);
 	}
 
-	static const TmpVector2<VType> zero;
-	static const TmpVector2<VType> one;
-	static const TmpVector2<VType> up;
-	static const TmpVector2<VType> down;
-	static const TmpVector2<VType> left;
-	static const TmpVector2<VType> right;
+	static const TmpVector2<float> zero;
+	static const TmpVector2<float> one;
+	static const TmpVector2<float> up;
+	static const TmpVector2<float> down;
+	static const TmpVector2<float> left;
+	static const TmpVector2<float> right;
 };
-
-template<typename VType> TmpVector2<VType> TmpVector2<VType>::zero(VType(0), VType(0));
-template<typename VType> TmpVector2<VType> TmpVector2<VType>::one(VType(1), VType(1));
-template<typename VType> TmpVector2<VType> TmpVector2<VType>::up(VType(0), VType(1));
-template<typename VType> TmpVector2<VType> TmpVector2<VType>::down(VType(0), VType(-1));
-template<typename VType> TmpVector2<VType> TmpVector2<VType>::left(VType(-1), VType(0));
-template<typename VType> TmpVector2<VType> TmpVector2<VType>::right(VType(1), VType(0));
 
 template<typename VType>
 class TmpVector3
@@ -118,142 +110,70 @@ public:
 	TmpVector3(const TmpVector4<VType>& v4) : x(v4.x), y(v4.y), z(v4.z) {}
 	TmpVector3(VType px, VType py, VType pz) : x(px), y(py), z(pz) {}
 
-	VType Magnitude() const { return sqrt(x * x + y*y + z*z); }
+	inline VType Magnitude() const { return sqrt(x * x + y*y + z*z); }
 
-	VType MagnitudeSqrt() const { return x * x + y*y + z*z; }
+	inline VType MagnitudeSqrt() const { return x * x + y*y + z*z; }
 
-	TmpVector3<VType> Normalization() const {
+	inline TmpVector3<VType> Normalization() const {
 		float mag = Magnitude();
 		return Vector3(x / mag, y / mag, z / mag);
 	}
 
-	TmpVector3<VType> operator+(const TmpVector3<VType>& vec) const { return TmpVector3<VType>(x + vec.x, y + vec.y, z + vec.z); }
+	inline TmpVector3<VType> operator+(const TmpVector3<VType>& vec) const { return TmpVector3<VType>(x + vec.x, y + vec.y, z + vec.z); }
 
-	TmpVector3<VType> operator-(const TmpVector3<VType>& vec) const { return TmpVector3<VType>(x - vec.x, y - vec.y, z - vec.z); }
+	inline TmpVector3<VType> operator-(const TmpVector3<VType>& vec) const { return TmpVector3<VType>(x - vec.x, y - vec.y, z - vec.z); }
 
-	TmpVector3<VType> operator*(const VType value) const { return TmpVector3<VType>(x * value, y * value, z * value); }
+	inline TmpVector3<VType> operator*(const VType value) const { return TmpVector3<VType>(x * value, y * value, z * value); }
 
-	TmpVector3<VType> operator/(const VType value) const { return TmpVector3<VType>(x / value, y / value, z / value); }
+	inline TmpVector3<VType> operator/(const VType value) const { return TmpVector3<VType>(x / value, y / value, z / value); }
 
-	//TmpVector3<VType> operator*(Matrix4x4& mat) const {}
+	inline TmpVector3<VType> operator-() const { return TmpVector3<VType>(-x, -y, -z); }
 
-	TmpVector3<VType> operator-() const { return TmpVector3<VType>(-x, -y, -z); }
-
-	void operator+=(const TmpVector3<VType>& vec) {
+	inline void operator+=(const TmpVector3<VType>& vec) {
 		x += vec.x;
 		y += vec.y;
 		z += vec.z;
 	}
 
-	void operator-=(const TmpVector3<VType>& vec) {
+	inline void operator-=(const TmpVector3<VType>& vec) {
 		x -= vec.x;
 		y -= vec.y;
 		z -= vec.z;
 	}
 
-	void operator*=(const VType value) {
+	inline void operator*=(const VType value) {
 		x *= value;
 		y *= value;
 		z *= value;
 	}
 
-	void operator/=(const VType value) { *(this) *= (1.0f / value); }
+	inline void operator/=(const VType value) { *(this) *= (1.0f / value); }
 
-	bool operator==(const TmpVector3<VType>& vec) const { return this->x == vec.x && this->y == vec.y && this->z == vec.z; }
+	inline bool operator==(const TmpVector3<VType>& vec) const { return this->x == vec.x && this->y == vec.y && this->z == vec.z; }
 
-	bool operator!=(const TmpVector3<VType>& vec) const { return this->x != vec.x || this->y != vec.y || this->z != vec.z; }
+	inline bool operator!=(const TmpVector3<VType>& vec) const { return this->x != vec.x || this->y != vec.y || this->z != vec.z; }
 
-	static VType Dot(const TmpVector3<VType> &vec1, const TmpVector3<VType> &vec2) { return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z; }
+	inline static VType Dot(const TmpVector3<VType> &vec1, const TmpVector3<VType> &vec2) { return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z; }
 
-	static TmpVector3<VType> Cross(const TmpVector3<VType> &vec1, const TmpVector3<VType> &vec2) { return TmpVector3<VType>(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x); }
+	inline static TmpVector3<VType> Cross(const TmpVector3<VType> &u, const TmpVector3<VType> &v) { return TmpVector3<VType>(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x); }
 
-	static VType Angle(const TmpVector3<VType> &vec1, const TmpVector3<VType> &vec2) { return  acos(Dot(vec1.Normalization(), vec2.Normalization())); }
+	inline static VType Angle(const TmpVector3<VType> &vec1, const TmpVector3<VType> &vec2) { return  acos(Dot(vec1.Normalization(), vec2.Normalization())); }
 
-	static TmpVector3<VType> Projection(const TmpVector3<VType> &u, const TmpVector3<VType> &v) {
+	inline static TmpVector3<VType> Projection(const TmpVector3<VType> &u, const TmpVector3<VType> &v) {
 		float mag = v.Magnitude();
 		return v * Dot(u, v) / (mag * mag);
 	}
 
-	static const TmpVector3<VType> zero;
-	static const TmpVector3<VType> one;
-	static const TmpVector3<VType> up;
-	static const TmpVector3<VType> down;
-	static const TmpVector3<VType> left;
-	static const TmpVector3<VType> right;
-	static const TmpVector3<VType> forward;
-	static const TmpVector3<VType> back;
+	static const TmpVector3<float> zero;
+	static const TmpVector3<float> one;
+	static const TmpVector3<float> up;
+	static const TmpVector3<float> down;
+	static const TmpVector3<float> left;
+	static const TmpVector3<float> right;
+	static const TmpVector3<float> forward;
+	static const TmpVector3<float> back;
 };
 
-template<typename VType> TmpVector3<VType> TmpVector3<VType>::zero(VType(0), VType(0), VType(0));
-template<typename VType> TmpVector3<VType> TmpVector3<VType>::one(VType(1), VType(1), VType(1));
-template<typename VType> TmpVector3<VType> TmpVector3<VType>::up(VType(0), VType(1), VType(0));
-template<typename VType> TmpVector3<VType> TmpVector3<VType>::down(VType(0), VType(-1), VType(0));
-template<typename VType> TmpVector3<VType> TmpVector3<VType>::left(VType(-1), VType(0), VType(0));
-template<typename VType> TmpVector3<VType> TmpVector3<VType>::right(VType(1), VType(0), VType(0));
-template<typename VType> TmpVector3<VType> TmpVector3<VType>::forward(VType(0), VType(0), VType(1));
-template<typename VType> TmpVector3<VType> TmpVector3<VType>::back(VType(0), VType(0), VType(-1));
-/*
-class Vector3
-{
-public:
-	float x;
-	float y;
-	float z;
-
-	Vector3();
-	Vector3(const Vector2& v2);
-	Vector3(const Vector3& v3);
-	Vector3(const Vector4& v4);
-	Vector3(float px, float py, float pz);
-
-	float Magnitude() const;
-
-	float MagnitudeSqrt() const;
-
-	Vector3 Normalization() const;
-
-	Vector3 operator+(const Vector3& vec) const;
-
-	Vector3 operator-(const Vector3& vec) const;
-
-	Vector3 operator*(const float value) const;
-
-	Vector3 operator/(const float value) const;
-
-	Vector3 operator*(Matrix4x4& mat) const;
-
-	Vector3 operator-() const;
-
-	void operator+=(const Vector3& vec);
-
-	void operator-=(const Vector3& vec);
-
-	void operator*=(const float value);
-
-	void operator/=(const float value);
-
-	bool operator==(const Vector3& vec) const;
-
-	bool operator!=(const Vector3& vec) const;
-
-	static float Dot(const Vector3 &vec1, const Vector3 &vec2);
-
-	static Vector3 Cross(const Vector3 &vec1, const Vector3 &vec2);
-
-	static float Angle(const Vector3 &vec1, const Vector3 &vec2);
-
-	static Vector3 Projection(const Vector3 &u, const Vector3 &v);
-
-	static const Vector3 zero;
-	static const Vector3 one;
-	static const Vector3 up;
-	static const Vector3 down;
-	static const Vector3 left;
-	static const Vector3 right;
-	static const Vector3 forward;
-	static const Vector3 back;
-};
-*/
 template<typename VType>
 union TmpVector4
 {

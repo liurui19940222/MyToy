@@ -1,4 +1,7 @@
-﻿  main.cpp
+﻿  3DSFile.cpp
+  正在生成代码...
+  正在编译...
+  main.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   TrueTypeFont.cpp
   Texture2D.cpp
@@ -8,13 +11,6 @@
   TextRenderer.cpp
   TestApp.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-d:\github\mytoy\gameengine\gameengine\math.h(188): error C2373: “one”: 重定义；不同的类型修饰符
-  d:\github\mytoy\gameengine\gameengine\math.h(178): note: 参见“one”的声明
-  d:\github\mytoy\gameengine\gameengine\math.h(178): note: 编译类 模板 静态数据成员“const TmpVector3<float> TmpVector3<float>::one”时
-  d:\github\mytoy\gameengine\gameengine\math.h(407): note: 参见对正在编译的类 模板 实例化“TmpVector3<float>”的引用
-d:\github\mytoy\gameengine\gameengine\math.h(192): error C2373: “right”: 重定义；不同的类型修饰符
-  d:\github\mytoy\gameengine\gameengine\math.h(182): note: 参见“right”的声明
-  d:\github\mytoy\gameengine\gameengine\math.h(182): note: 编译类 模板 静态数据成员“const TmpVector3<float> TmpVector3<float>::right”时
   SpriteRenderer.cpp
   SpriteAnimation.cpp
   SkinnedMeshRenderer.cpp
@@ -25,10 +21,6 @@ d:\github\mytoy\gameengine\gameengine\math.h(192): error C2373: “right”: 重
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
 d:\github\mytoy\gameengine\gameengine\relationshiptest.cpp(6): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
 d:\github\mytoy\gameengine\gameengine\relationshiptest.cpp(7): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
-d:\github\mytoy\gameengine\gameengine\math.h(188): error C2373: “one”: 重定义；不同的类型修饰符
-  d:\github\mytoy\gameengine\gameengine\math.h(178): note: 参见“one”的声明
-  d:\github\mytoy\gameengine\gameengine\math.h(178): note: 编译类 模板 静态数据成员“const TmpVector3<float> TmpVector3<float>::one”时
-  d:\github\mytoy\gameengine\gameengine\math.h(407): note: 参见对正在编译的类 模板 实例化“TmpVector3<float>”的引用
   ModelFile.cpp
   MeshRenderer.cpp
   MeshQuad.cpp
@@ -38,17 +30,6 @@ d:\github\mytoy\gameengine\gameengine\math.h(188): error C2373: “one”: 重�
   正在生成代码...
   正在编译...
   Math.cpp
-d:\github\mytoy\gameengine\gameengine\math.h(168): error C2065: “u”: 未声明的标识符
-  d:\github\mytoy\gameengine\gameengine\math.h(168): note: 编译类 模板 成员函数“TmpVector3<float> TmpVector3<float>::Cross(const TmpVector3<float> &,const TmpVector3<float> &)”时
-  d:\github\mytoy\gameengine\gameengine\math.cpp(522): note: 参见对正在编译的函数 模板 实例化“TmpVector3<float> TmpVector3<float>::Cross(const TmpVector3<float> &,const TmpVector3<float> &)”的引用
-  d:\github\mytoy\gameengine\gameengine\math.h(407): note: 参见对正在编译的类 模板 实例化“TmpVector3<float>”的引用
-d:\github\mytoy\gameengine\gameengine\math.h(168): error C2228: “.y”的左边必须有类/结构/联合
-  d:\github\mytoy\gameengine\gameengine\math.h(168): note: 类型是“unknown-type”
-d:\github\mytoy\gameengine\gameengine\math.h(168): error C2065: “v”: 未声明的标识符
-d:\github\mytoy\gameengine\gameengine\math.h(168): error C2228: “.z”的左边必须有类/结构/联合
-  d:\github\mytoy\gameengine\gameengine\math.h(168): note: 类型是“unknown-type”
-d:\github\mytoy\gameengine\gameengine\math.h(168): error C2228: “.x”的左边必须有类/结构/联合
-  d:\github\mytoy\gameengine\gameengine\math.h(168): note: 类型是“unknown-type”
   Material.cpp
 d:\github\mytoy\gameengine\gameengine\material.cpp(33): warning C4800: “GLboolean”: 将值强制为布尔值“true”或“false”(性能警告)
   Maker.cpp
@@ -60,24 +41,10 @@ d:\github\mytoy\gameengine\gameengine\input.cpp(131): warning C4244: “参数�
   ImageFile.cpp
   GameWindow.cpp
   GameObject.cpp
-d:\github\mytoy\gameengine\gameengine\math.h(189): error C2373: “up”: 重定义；不同的类型修饰符
-  d:\github\mytoy\gameengine\gameengine\math.h(179): note: 参见“up”的声明
-  d:\github\mytoy\gameengine\gameengine\math.h(179): note: 编译类 模板 静态数据成员“const TmpVector3<float> TmpVector3<float>::up”时
-  d:\github\mytoy\gameengine\gameengine\math.h(407): note: 参见对正在编译的类 模板 实例化“TmpVector3<float>”的引用
-d:\github\mytoy\gameengine\gameengine\math.h(192): error C2373: “right”: 重定义；不同的类型修饰符
-  d:\github\mytoy\gameengine\gameengine\math.h(182): note: 参见“right”的声明
-  d:\github\mytoy\gameengine\gameengine\math.h(182): note: 编译类 模板 静态数据成员“const TmpVector3<float> TmpVector3<float>::right”时
-d:\github\mytoy\gameengine\gameengine\math.h(193): error C2373: “forward”: 重定义；不同的类型修饰符
-  d:\github\mytoy\gameengine\gameengine\math.h(183): note: 参见“forward”的声明
-  d:\github\mytoy\gameengine\gameengine\math.h(183): note: 编译类 模板 静态数据成员“const TmpVector3<float> TmpVector3<float>::forward”时
   GUITest.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   GUISystem.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-d:\github\mytoy\gameengine\gameengine\math.h(187): error C2373: “zero”: 重定义；不同的类型修饰符
-  d:\github\mytoy\gameengine\gameengine\math.h(177): note: 参见“zero”的声明
-  d:\github\mytoy\gameengine\gameengine\math.h(177): note: 编译类 模板 静态数据成员“const TmpVector3<float> TmpVector3<float>::zero”时
-  d:\github\mytoy\gameengine\gameengine\math.h(407): note: 参见对正在编译的类 模板 实例化“TmpVector3<float>”的引用
   GUILable.cpp
   GUIImage.cpp
 d:\github\mytoy\gameengine\gameengine\guiimage.cpp(58): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
@@ -97,10 +64,6 @@ d:\github\mytoy\gameengine\gameengine\engine.cpp(125): warning C4309: “参数�
   EditorTool.cpp
 d:\github\mytoy\gameengine\gameengine\editortool.cpp(198): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
 d:\github\mytoy\gameengine\gameengine\editortool.cpp(202): warning C4305: “参数”: 从“double”到“GLfloat”截断
-d:\github\mytoy\gameengine\gameengine\math.h(188): error C2373: “one”: 重定义；不同的类型修饰符
-  d:\github\mytoy\gameengine\gameengine\math.h(178): note: 参见“one”的声明
-  d:\github\mytoy\gameengine\gameengine\math.h(178): note: 编译类 模板 静态数据成员“const TmpVector3<float> TmpVector3<float>::one”时
-  d:\github\mytoy\gameengine\gameengine\math.h(407): note: 参见对正在编译的类 模板 实例化“TmpVector3<float>”的引用
   Debug.cpp
   Config.cpp
   Component.cpp
@@ -126,20 +89,8 @@ d:\github\mytoy\gameengine\gameengine\colladafile.h(99): warning C4018: “<”:
   Camera.cpp
   BitImage.cpp
   Atlas.cpp
-  3DSFile.cpp
-d:\github\mytoy\gameengine\gameengine\math.h(168): error C2065: “u”: 未声明的标识符
-  d:\github\mytoy\gameengine\gameengine\math.h(168): note: 编译类 模板 成员函数“TmpVector3<float> TmpVector3<float>::Cross(const TmpVector3<float> &,const TmpVector3<float> &)”时
-  d:\github\mytoy\gameengine\gameengine\3dsfile.cpp(34): note: 参见对正在编译的函数 模板 实例化“TmpVector3<float> TmpVector3<float>::Cross(const TmpVector3<float> &,const TmpVector3<float> &)”的引用
-  d:\github\mytoy\gameengine\gameengine\math.h(407): note: 参见对正在编译的类 模板 实例化“TmpVector3<float>”的引用
-d:\github\mytoy\gameengine\gameengine\math.h(168): error C2228: “.y”的左边必须有类/结构/联合
-  d:\github\mytoy\gameengine\gameengine\math.h(168): note: 类型是“unknown-type”
-d:\github\mytoy\gameengine\gameengine\math.h(168): error C2065: “v”: 未声明的标识符
-d:\github\mytoy\gameengine\gameengine\math.h(168): error C2228: “.z”的左边必须有类/结构/联合
-  d:\github\mytoy\gameengine\gameengine\math.h(168): note: 类型是“unknown-type”
-d:\github\mytoy\gameengine\gameengine\math.h(168): error C2228: “.x”的左边必须有类/结构/联合
-  d:\github\mytoy\gameengine\gameengine\math.h(168): note: 类型是“unknown-type”
-  正在生成代码...
-  正在编译...
   Application.cpp
 d:\github\mytoy\gameengine\gameengine\application.cpp(147): warning C4800: “int”: 将值强制为布尔值“true”或“false”(性能警告)
   正在生成代码...
+  GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
+  GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.pdb (Full PDB)

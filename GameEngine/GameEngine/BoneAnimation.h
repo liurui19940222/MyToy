@@ -10,6 +10,8 @@
 
 using namespace std;
 
+typedef TmpVector4<byte> BVector4;
+
 struct Joint
 {
 	string m_name;				//关节名字
