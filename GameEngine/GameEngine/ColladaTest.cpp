@@ -12,10 +12,11 @@ void CColladaTest::OnStart()
 	_MainCameraGo->SetLocalEulerAngles(Vector3(-30, 180, 0));
 
 	model = _Maker->Instantiate("model");
-	model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 10);
+	model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 2);
 	model->SetLocalEulerAngles(Vector3(0, 180, 0));
-	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("light"));
-	collada = _Resources->Load<CColladaFile>("models/walk.dae");
+	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"))
+		->SetMainTexture(CTexture2D::Create("textures/longxia.png"));
+	collada = _Resources->Load<CColladaFile>("models/longxia.dae");
 	model->AddComponent<CSkinnedMeshRenderer>()->SetModel(collada)->SetMaterial(model_mat);
 
 	TmpVector2<float> v2(5, 6);

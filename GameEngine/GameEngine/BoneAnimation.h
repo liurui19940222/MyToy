@@ -69,35 +69,11 @@ struct Skeleton
 	}
 };
 
-struct JointWeight
-{
-	byte* m_jointIndices = NULL;
-	float* m_weights = NULL;
-	byte m_count = 0;
-
-	inline static void Copy(JointWeight& dst, const JointWeight& src)
-	{
-		if (!dst.m_jointIndices) dst.m_jointIndices = (byte*)malloc(src.m_count);
-		if (!dst.m_weights) dst.m_weights = (float*)malloc(sizeof(float) * src.m_count);
-		memcpy(dst.m_jointIndices, src.m_jointIndices, src.m_count);
-		memcpy(dst.m_weights, src.m_weights, src.m_count * sizeof(float));
-	}
-};
-
 struct SkeletonWeight
 {
 	int m_count;
-	JointWeight* m_jointWeights;
-
-	inline static void Free(SkeletonWeight& skeletonWeight)
-	{
-		for (int i = 0; i < skeletonWeight.m_count; i++)
-		{
-			free(skeletonWeight.m_jointWeights[i].m_jointIndices);
-			free(skeletonWeight.m_jointWeights[i].m_weights);
-		}
-		free(skeletonWeight.m_jointWeights);
-	}
+	Vector4* m_weights;
+	BVector4* m_indices;
 };
 
 struct JointPose

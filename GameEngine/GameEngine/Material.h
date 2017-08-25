@@ -53,6 +53,12 @@ public:
 		return this;
 	}
 
+	inline CMaterial* SetParam(const char* paramName, const Matrix4x4* matrices, int count)
+	{
+		if (m_shader) m_shader->SetUniformParam(paramName, matrices, count);
+		return this;
+	}
+
 	static CMaterial* GetDefaltMaterial();
 };
 

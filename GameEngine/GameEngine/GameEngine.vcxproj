@@ -210,6 +210,8 @@
     <None Include="Shader\color.vert" />
     <None Include="Shader\light.frag" />
     <None Include="Shader\light.vert" />
+    <None Include="Shader\skinning.frag" />
+    <None Include="Shader\skinning.vert" />
     <None Include="Shader\texture.frag" />
     <None Include="Shader\texture.vert" />
   </ItemGroup>

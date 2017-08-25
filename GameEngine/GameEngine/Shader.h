@@ -67,6 +67,7 @@ public:
 	void SetUniformParam(const char* paramName, const Vector2& value);
 	void SetUniformParam(const char* paramName, const Vector3& value);
 	void SetUniformParam(const char* paramName, const Matrix4x4& value);
+	void SetUniformParam(const char* paramName, const Matrix4x4* value, int count);
 	map<string, EShaderParamType> GetAllOfUniformParams();
 
 	static CShader* Get(const string& shaderName);

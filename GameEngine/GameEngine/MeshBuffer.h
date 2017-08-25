@@ -13,7 +13,6 @@
 #define NORMAL_POS			3
 #define JOINT_INDEX_POS		4
 #define JOINT_WEIGHT_POS	5
-#define WEIGHT_NUM_POS		6
 
 class CMeshBuffer : public CRenderBuffer
 {
@@ -26,7 +25,6 @@ private:
 	GLuint m_vboUVHandle;
 	GLuint m_vboJointIndexHandle;
 	GLuint m_vboJointWeightHandle;
-	GLuint m_vboWeigthNumHandle;
 
 public:
 	CMeshBuffer();

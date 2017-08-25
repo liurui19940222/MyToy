@@ -21,7 +21,9 @@ void CSkinnedMeshRenderer::RenderDebug(Matrix4x4& modelMatrix)
 void CSkinnedMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
 {
 	if (!m_mesh) return;
+	CColladaFile* collada = (CColladaFile*)m_mesh;
 	m_material->Bind();
+	m_material->SetParam("GlobalPoseMatrices", collada->m_skeletonPose.m_aGlobalPose, collada->m_skeleton.GetSize());
 	m_material->SetParam("M", modelMatrix);
 	m_material->SetParam("V", viewMatrix);
 	m_material->SetParam("P", projectionMatrix);
@@ -29,7 +31,6 @@ void CSkinnedMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix,
 	glDrawArrays(m_mesh->GetGLMode(), 0, m_mesh->GetVertexNum());
 	m_material->Unbind();
 
-	CColladaFile* collada = (CColladaFile*)m_mesh;
 	CEditorTool::DrawSkeleton(modelMatrix, collada->m_skeleton);
 }
 

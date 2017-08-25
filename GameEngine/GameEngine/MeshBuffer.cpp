@@ -72,7 +72,23 @@ void CMeshBuffer::MakeNormalBuffer(const Vector3* normals, int size)
 
 void CMeshBuffer::MakeJointBuffer(const SkeletonWeight& skeletonWeight)
 {
-	
+	if (!m_vaoHandle) glGenVertexArrays(1, &m_vaoHandle);
+	glBindVertexArray(m_vaoHandle);
+
+	if (!skeletonWeight.m_indices || !skeletonWeight.m_weights) return;
+	if (!m_vboJointIndexHandle) glGenBuffers(1, &m_vboJointIndexHandle);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vboJointIndexHandle);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(BVector4) * skeletonWeight.m_count, skeletonWeight.m_indices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(JOINT_INDEX_POS);
+	glVertexAttribIPointer(JOINT_INDEX_POS, 4, GL_UNSIGNED_BYTE, 0, NULL);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	if (!m_vboJointWeightHandle) glGenBuffers(1, &m_vboJointWeightHandle);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vboJointWeightHandle);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vector4) * skeletonWeight.m_count, skeletonWeight.m_weights, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(JOINT_WEIGHT_POS);
+	glVertexAttribPointer(JOINT_WEIGHT_POS, 4, GL_FLOAT, GL_FALSE, 0, NULL);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void CMeshBuffer::BindBuffer()

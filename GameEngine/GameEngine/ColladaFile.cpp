@@ -237,19 +237,19 @@ SkeletonWeight CColladaFile::ReadSkin(xml_node<>* root)
 		v_length += vcount[i] * 2;
 	int* v_array = UnpackValues<int>(v_str, v_length);
 	SkeletonWeight p_skeletonWeight;
-	p_skeletonWeight.m_jointWeights = (JointWeight*)malloc(sizeof(JointWeight) * weights_count);
 	p_skeletonWeight.m_count = weights_count;
+	p_skeletonWeight.m_weights = (Vector4*)malloc(sizeof(Vector4) * weights_count);
+	p_skeletonWeight.m_indices = (BVector4*)malloc(sizeof(BVector4) * weights_count);
+	memset(p_skeletonWeight.m_weights, 0, sizeof(Vector4) * weights_count);
+	memset(p_skeletonWeight.m_indices, 0, sizeof(BVector4) * weights_count);
 
 	for (int i = 0, v = 0; i < weights_count; i++)
 	{
 		int num = vcount[i];
-		p_skeletonWeight.m_jointWeights[i].m_count = num;
-		p_skeletonWeight.m_jointWeights[i].m_jointIndices = (byte*)malloc(num);
-		p_skeletonWeight.m_jointWeights[i].m_weights = (float*)malloc(num * sizeof(float));
 		for (int j = 0; j < num; j++)
 		{
-			p_skeletonWeight.m_jointWeights[i].m_jointIndices[j] = m_skeleton.GetJointIndex(joint_source[v_array[weights_offsets[0] + v + j * 2]]);
-			p_skeletonWeight.m_jointWeights[i].m_weights[j] = weight_source[v_array[weights_offsets[1] + v + j * 2]];
+			p_skeletonWeight.m_indices[i][j] = m_skeleton.GetJointIndex(joint_source[v_array[weights_offsets[0] + v + j * 2]]);
+			p_skeletonWeight.m_weights[i][j] = weight_source[v_array[weights_offsets[1] + v + j * 2]];
 		}
 		v += num * 2;
 	}
@@ -320,9 +320,13 @@ void CColladaFile::ReadMesh(xml_node<>* root, SkeletonWeight p_skeletonWeight)
 	m_vertexArray = (Vector3*)malloc(sizeof(Vector3) * m_vertexNum);
 	m_normalArray = (Vector3*)malloc(sizeof(Vector3) * m_vertexNum);
 	m_uvArray = (Vector2*)malloc(sizeof(Vector2) * m_vertexNum);
-	m_skeletonWeight.m_jointWeights = (JointWeight*)malloc(sizeof(JointWeight) * m_vertexNum);
-	memset(m_skeletonWeight.m_jointWeights, 0, sizeof(JointWeight) * m_vertexNum);
+
 	m_skeletonWeight.m_count = m_vertexNum;
+	m_skeletonWeight.m_weights = (Vector4*)malloc(sizeof(Vector4) * m_vertexNum);
+	m_skeletonWeight.m_indices = (BVector4*)malloc(sizeof(BVector4) * m_vertexNum);
+	memset(m_skeletonWeight.m_weights, 0, sizeof(Vector4) * m_vertexNum);
+	memset(m_skeletonWeight.m_indices, 0, sizeof(BVector4) * m_vertexNum);
+
 	int index_num = 0;
 	for (auto it = triangles.begin(); it != triangles.end(); ++it)
 	{
@@ -352,22 +356,23 @@ void CColladaFile::ReadMesh(xml_node<>* root, SkeletonWeight p_skeletonWeight)
 		}
 		index_num = count * 3 * step;
 		int* indices = UnpackValues<int>(p, (size_t)index_num);
+
 		for (int i = 0; i < index_num; i += step)
 		{
-			int vi = indices[i] + offsets[0];
-			JointWeight::Copy(m_skeletonWeight.m_jointWeights[vertIndex], p_skeletonWeight.m_jointWeights[vi]);
-			Vector3 position = ((Vector3*)source_map[sourceIds[0]].array)[vi];
+			int vi = indices[i + offsets[0]];
+			m_skeletonWeight.m_weights[vertIndex] = p_skeletonWeight.m_weights[vi];
+			m_skeletonWeight.m_indices[vertIndex] = p_skeletonWeight.m_indices[vi];
 			if (flags[0])
-				m_vertexArray[vertIndex++] = m_skeletonPose.m_aGlobalPose[m_skeletonWeight.m_jointWeights[vertIndex].m_jointIndices[0]] * Vector4(position.x, position.y, position.z, 1);
+				m_vertexArray[vertIndex++] = ((Vector3*)source_map[sourceIds[0]].array)[vi];
 			if (flags[1])
-				//这里根据下标取normal索引是有问题的，所以按顺序来取
-				m_normalArray[normalIndex++] = ((Vector3*)source_map[sourceIds[1]].array)[normalIndex];
+				m_normalArray[normalIndex++] = ((Vector3*)source_map[sourceIds[1]].array)[indices[i + offsets[1]]];
 			if (flags[2])
-				m_uvArray[uvIndex++] = ((Vector2*)source_map[sourceIds[2]].array)[indices[i] + offsets[2]];
+				m_uvArray[uvIndex++] = ((Vector2*)source_map[sourceIds[2]].array)[indices[i + offsets[2]]];
 		}
 		free(indices);
 	}
-	SkeletonWeight::Free(p_skeletonWeight);
+	free(p_skeletonWeight.m_indices);
+	free(p_skeletonWeight.m_weights);
 }
 
 void CColladaFile::LoadFromFile(const char* filename)
@@ -382,4 +387,5 @@ void CColladaFile::LoadFromFile(const char* filename)
 
 	//上传到缓冲区
 	m_buffer.MakeBuffer(m_vertexArray, NULL, m_normalArray, m_uvArray, m_vertexNum);
+	m_buffer.MakeJointBuffer(m_skeletonWeight);
 }

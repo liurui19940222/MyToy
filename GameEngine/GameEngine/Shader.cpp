@@ -205,6 +205,15 @@ void CShader::SetUniformParam(const char* paramName, const Matrix4x4& value)
 	}
 }
 
+void CShader::SetUniformParam(const char* paramName, const Matrix4x4* value, int count)
+{
+	GLuint location = UniformParamLocation(paramName);
+	if (location >= 0)
+	{
+		glUniformMatrix4fv(location, count, GL_FALSE, (float*)value);
+	}
+}
+
 map<string, EShaderParamType> CShader::GetAllOfUniformParams()
 {
 	map<string, EShaderParamType> list;

@@ -518,6 +518,12 @@
     <None Include="Shader\light.frag">
       <Filter>Shader</Filter>
     </None>
+    <None Include="Shader\skinning.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\skinning.vert">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Config\engine.xml" />
