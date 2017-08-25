@@ -30,6 +30,7 @@ private:
 	Skeleton m_skeleton;
 	SkeletonPose m_skeletonPose;
 	SkeletonWeight m_skeletonWeight;
+	AnimationClip m_animationClip;
 
 #pragma region read_mesh
 
@@ -45,11 +46,20 @@ private:
 	//计算每个关节的全局变换矩阵
 	void CalculateGlobalMatrix();
 
+	//计算每个关节的全局变换矩阵，用动画局部矩阵
+	void CalculateGlobalMatrixByAnim();
+
 	//计算蒙皮矩阵
 	void CalculateSkinningMatrix();
 
+	//按采样时间，把所有骨骼的采样分类
+	void AddSample(map<float, AnimationSample>& p_samples, float time, byte jointIndex, const JointPose& pose);
+
 	//读取Mesh
 	void ReadMesh(xml_node<>* root, SkeletonWeight p_skeletonWeight);
+
+	//读取动画
+	void ReadAnimation(xml_node<>* root);
 
 #pragma endregion
 
@@ -78,6 +88,14 @@ private:
 
 	//将空格、换行、回车分隔的字符串，转换成vector<string>
 	vector<string> UnpackValues(string& str, size_t count);
+
+	//去掉字符串的第一个#
+	inline string RemoveAtFirst(string& str)
+	{
+		if (str.size() < 1 || str[0] != '#') 
+			return str;
+		return str.substr(1, str.size());
+	}
 
 	//得到node的name属性的值
 	template<typename T>
@@ -138,6 +156,8 @@ private:
 public:
 
 	virtual void LoadFromFile(const char* filename) override;
+
+	void Sample(float t);
 };
 
 #endif

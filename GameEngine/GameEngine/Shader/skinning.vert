@@ -6,7 +6,7 @@ layout(location = 3) in vec3 VertexNormal;
 layout(location = 4) in ivec4 JointIndex;
 layout(location = 5) in vec4 JointWeight;
 
-const vec3 lightDir = vec3(0.3, -0.4, 0.3);
+const vec3 lightDir = vec3(0.1, -0.4, 0.8);
 uniform mat4 GlobalPoseMatrices[100];
 uniform mat4 M;
 uniform mat4 V;

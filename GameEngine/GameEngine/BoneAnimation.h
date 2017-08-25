@@ -18,6 +18,7 @@ struct Joint
 	byte m_iParent;				//父索引，或0xFF代表根关节
 	Matrix4x4 m_invBindPose;	//绑定姿势之逆变换
 	Matrix4x4 m_localMatrix;	//局部矩阵
+	Matrix4x4 m_localAnimMatrix;//为了不让动画覆盖原始的局部矩阵
 	Matrix4x4 m_globalMatrix;	//全局矩阵
 
 	Joint() {
@@ -55,7 +56,7 @@ struct Skeleton
 		for (byte i = 0; i < m_joints.size(); ++i)
 			if (m_joints[i].m_name == name)
 				return i;
-		return -1;
+		return 0xFF;
 	}
 
 	inline vector<Joint>& GetJoints()
@@ -83,23 +84,23 @@ struct JointPose
 
 struct SkeletonPose
 {
-	Skeleton* m_pSkeleton;		//骨骼+关节数量
-	JointPose* m_aLoclPose;		//多个局部关节姿势
 	Matrix4x4* m_aGlobalPose;	//多个全局关节姿势
 };
 
 struct AnimationSample
 {
-	JointPose* m_aJointPose;	//关节姿势数组
+	float m_time;			//该采样的时间点
+	map<byte, JointPose> m_jointPoses;	//该采样所引用的关节和对应的局部姿势
 };
 
 struct AnimationClip
 {
 	Skeleton* m_pSkeleton;
-	float m_framePerSecond;
-	uint m_frameCount;
-	AnimationSample* m_aSamples;
+	vector<AnimationSample> m_aSamples;
+	float m_length;
 	bool m_isLooping;
+
+	void Sample(float t);
 };
 
 #endif

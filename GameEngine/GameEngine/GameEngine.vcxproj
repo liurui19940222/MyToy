@@ -146,6 +146,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Atlas.cpp" />
     <ClCompile Include="BitImage.cpp" />
+    <ClCompile Include="BoneAnimation.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColladaFile.cpp" />
     <ClCompile Include="ColladaTest.cpp" />

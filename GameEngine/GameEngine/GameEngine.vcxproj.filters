@@ -472,6 +472,9 @@
     <ClCompile Include="SkinnedMeshRenderer.cpp">
       <Filter>Component\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="BoneAnimation.cpp">
+      <Filter>Animation\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="dinput8.lib">

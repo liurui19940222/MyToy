@@ -1,7 +1,2 @@
-﻿  ColladaTest.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-c:\program files (x86)\windows kits\8.1\include\um\glm\core\func_common.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-c:\program files (x86)\windows kits\8.1\include\um\glm\core\func_common.inl : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-c:\program files (x86)\windows kits\8.1\include\um\glm\core\func_integer.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
+﻿  GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.pdb (Full PDB)

@@ -31,7 +31,7 @@ void CSkinnedMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix,
 	glDrawArrays(m_mesh->GetGLMode(), 0, m_mesh->GetVertexNum());
 	m_material->Unbind();
 
-	CEditorTool::DrawSkeleton(modelMatrix, collada->m_skeleton);
+	//CEditorTool::DrawSkeleton(modelMatrix, collada->m_skeleton);
 }
 
 CSkinnedMeshRenderer* CSkinnedMeshRenderer::SetModel(CMeshProvider* mesh)
