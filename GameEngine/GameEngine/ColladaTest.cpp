@@ -17,12 +17,19 @@ void CColladaTest::OnStart()
 	//model->SetLocalEulerAngles(Vector3(0, 90, 0));
 	//CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"))
 	//	->SetMainTexture(CTexture2D::Create("textures/longxia.png"));
-	//collada = _Resources->Load<CColladaFile>("models/longxia.dae");
+	//collada = _Resources->Load<CColladaFile>("models/longxia.xml");
 
 	model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 10);
 	model->SetLocalEulerAngles(Vector3(0, 0, 0));
 	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"));
-	collada = _Resources->Load<CColladaFile>("models/walk.dae");
+	collada = _Resources->Load<CColladaFile>("models/walk.xml");
+
+	//model->SetLocalPosition(Vector3(0, 1, 0));
+	//model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 1.8);
+	//model->SetLocalEulerAngles(Vector3(0, -70, 0));
+	//CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"))
+	//	->SetMainTexture(CTexture2D::Create("textures/shake.png"));
+	//collada = _Resources->Load<CColladaFile>("models/shake.xml");
 
 	model->AddComponent<CSkinnedMeshRenderer>()->SetModel(collada)->SetMaterial(model_mat);
 }
@@ -49,7 +56,7 @@ void CColladaTest::OnUpdate()
 	//model->SetLocalPosition(position);
 	static float t = 0;
 	t += h * 0.1f;
-	collada->Sample(t);
+	collada->Sample(CTime::time);
 }
 
 void CColladaTest::OnRender()

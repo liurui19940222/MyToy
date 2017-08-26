@@ -17,18 +17,32 @@ void AnimationClip::Sample(float t)
 			Matrix4x4 mat_b;
 			for (byte i = 0; i < m_pSkeleton->GetSize(); i++)
 			{
-				mat_a.MakeIdentity();
-				mat_b.MakeIdentity();
 				auto it_a = a.m_jointPoses.find(i);
 				auto it_b = b.m_jointPoses.find(i);
 				if (it_a != a.m_jointPoses.end())
 					mat_a = it_a->second.m_matrix;
-
+				else
+					mat_a = m_pSkeleton->GetJoint(i)->m_localAnimMatrix;
 				if (it_b != b.m_jointPoses.end())
 					mat_b = it_b->second.m_matrix;
+				else
+					mat_b = m_pSkeleton->GetJoint(i)->m_localAnimMatrix;
 
 				m_pSkeleton->GetJoint(i)->m_localAnimMatrix = Matrix4x4::Lerp(mat_a, mat_b, (t - a.m_time) / (b.m_time - a.m_time));
 			}
 		}
 	}
+}
+
+AnimationSample& AnimationClip::FindPrev(byte joint, float time)
+{
+	for (int i = 0; i < m_aSamples.size() - 1; i++)
+	{
+
+	}
+}
+
+AnimationSample& AnimationClip::FindNext(byte joint, float time)
+{
+	
 }
