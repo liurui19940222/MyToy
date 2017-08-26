@@ -158,6 +158,8 @@ public:
 	virtual void LoadFromFile(const char* filename) override;
 
 	void Sample(float t);
+
+	void SampleB(float t);
 };
 
 #endif

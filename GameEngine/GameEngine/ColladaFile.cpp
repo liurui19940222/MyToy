@@ -96,7 +96,7 @@ void CColladaFile::AddSample(map<float, AnimationSample>& p_samples, float time,
 {
 	auto it = p_samples.find(time);
 	if (it == p_samples.end())
-		p_samples.insert(make_pair(time, AnimationSample{time}));
+		p_samples.insert(make_pair(time, AnimationSample{ time }));
 	AnimationSample& sample = p_samples[time];
 	if (sample.m_jointPoses.find(jointIndex) == sample.m_jointPoses.end())
 	{
@@ -457,7 +457,8 @@ void CColladaFile::ReadAnimation(xml_node<>* root)
 	int index = 0;
 	for (pair<float, AnimationSample> kv : p_samples)
 		m_animationClip.m_aSamples.push_back(kv.second);
-	m_animationClip.m_length = m_animationClip.m_aSamples[m_animationClip.m_aSamples.size() - 1].m_time;
+	if (m_animationClip.m_aSamples.size() > 0)
+		m_animationClip.m_length = m_animationClip.m_aSamples[m_animationClip.m_aSamples.size() - 1].m_time;
 }
 
 void CColladaFile::LoadFromFile(const char* filename)
@@ -478,7 +479,18 @@ void CColladaFile::LoadFromFile(const char* filename)
 
 void CColladaFile::Sample(float t)
 {
-	m_animationClip.Sample(t);
-	CalculateGlobalMatrixByAnim();
-	CalculateSkinningMatrix();
+	if (m_animationClip.Sample(t))
+	{
+		CalculateGlobalMatrixByAnim();
+		CalculateSkinningMatrix();
+	}
+}
+
+void CColladaFile::SampleB(float t)
+{
+	if (m_animationClip.FullMatchSample(t))
+	{
+		CalculateGlobalMatrixByAnim();
+		CalculateSkinningMatrix();
+	}
 }

@@ -19,44 +19,43 @@ void CColladaTest::OnStart()
 	//	->SetMainTexture(CTexture2D::Create("textures/longxia.png"));
 	//collada = _Resources->Load<CColladaFile>("models/longxia.xml");
 
-	model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 10);
-	model->SetLocalEulerAngles(Vector3(0, 0, 0));
-	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"));
-	collada = _Resources->Load<CColladaFile>("models/walk.xml");
-
-	//model->SetLocalPosition(Vector3(0, 1, 0));
-	//model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 1.8);
-	//model->SetLocalEulerAngles(Vector3(0, -70, 0));
-	//CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"))
-	//	->SetMainTexture(CTexture2D::Create("textures/shake.png"));
-	//collada = _Resources->Load<CColladaFile>("models/shake.xml");
+	//model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 10);
+	//model->SetLocalEulerAngles(Vector3(0, 0, 0));
+	//CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"));
+	//collada = _Resources->Load<CColladaFile>("models/walk.xml");
+	
+	model->SetLocalPosition(Vector3(0, 1, 0));
+	model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 1.8);
+	model->SetLocalEulerAngles(Vector3(0, -70, 0));
+	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"))
+		->SetMainTexture(CTexture2D::Create("textures/shake.png"));
+	collada = _Resources->Load<CColladaFile>("models/shake.xml");
 
 	model->AddComponent<CSkinnedMeshRenderer>()->SetModel(collada)->SetMaterial(model_mat);
 }
 
 void CColladaTest::OnUpdate()
 {
-	//Vector3 euler = model->GetLocalEulerAngles();
-	//euler.y += CTime::deltaTime * 50;
-	//model->SetLocalEulerAngles(euler);
+	float h = CInput::GetAxis("Horizontal") * CTime::deltaTime * 100;
+	float v = CInput::GetAxis("Vertical") * CTime::deltaTime * 100;
 
-	float h = CInput::GetAxis("Horizontal") * CTime::deltaTime * 20;
-	float v = CInput::GetAxis("Vertical") * CTime::deltaTime * 20;
-	Vector3 position = model->GetLocalPosition();
-	position.x += h;
-	position.y += v;
-	if (CInput::GetKey(DIK_NUMPAD2))
+	Vector3 euler = model->GetLocalEulerAngles();
+	euler.y += h;
+	model->SetLocalEulerAngles(euler);
+	static bool b = false;
+	if (CInput::GetKeyDown(DIK_SPACE))
 	{
-		position.z += CTime::deltaTime * 20;
+		b = true;
 	}
-	if (CInput::GetKey(DIK_NUMPAD8))
+	if (CInput::GetKeyDown(DIK_N))
 	{
-		position.z -= CTime::deltaTime * 20;
+		b = false;
 	}
-	//model->SetLocalPosition(position);
-	static float t = 0;
-	t += h * 0.1f;
-	collada->Sample(CTime::time);
+
+	if(!b)
+		collada->Sample(CTime::time);
+	else
+		collada->SampleB(CTime::time);
 }
 
 void CColladaTest::OnRender()

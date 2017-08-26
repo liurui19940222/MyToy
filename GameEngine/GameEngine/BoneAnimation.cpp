@@ -1,10 +1,10 @@
 #include"BoneAnimation.h"
 
-void AnimationClip::Sample(float t)
+bool AnimationClip::Sample(float t)
 {
 	t = m_isLooping ? fmod(t, m_length) : t;
-	if (t > m_length || t < 0)
-		return;
+	if (t > m_length || t < 0 || m_aSamples.size() == 0)
+		return false;
 
 	for (int i = 0; i < m_aSamples.size() - 1; i++)
 	{
@@ -32,17 +32,32 @@ void AnimationClip::Sample(float t)
 			}
 		}
 	}
+	return true;
 }
 
-AnimationSample& AnimationClip::FindPrev(byte joint, float time)
+bool AnimationClip::FullMatchSample(float t)
 {
-	for (int i = 0; i < m_aSamples.size() - 1; i++)
+	t = m_isLooping ? fmod(t, m_length) : t;
+	if (t > m_length || t < 0 || m_aSamples.size() == 0)
+		return false;
+
+	for (byte joint = 0, index = 0; joint < m_pSkeleton->GetSize(); joint++)
 	{
-
+		AnimationSample* a = NULL;
+		AnimationSample* b = NULL;
+		for (int i = 0; i < m_aSamples.size() && (!a || !b); i++)
+		{
+			index = m_aSamples.size() - i - 1;
+			if (!a && m_aSamples[index].m_time <= t && m_aSamples[index].m_jointPoses.find(joint) != m_aSamples[index].m_jointPoses.end())
+				a = &m_aSamples[index];
+			if (!b && m_aSamples[i].m_time >= t && m_aSamples[i].m_jointPoses.find(joint) != m_aSamples[i].m_jointPoses.end())
+				b = &m_aSamples[i];
+		}
+		Matrix4x4 mat_a = a ? a->m_jointPoses.find(joint)->second.m_matrix : m_pSkeleton->GetJoint(joint)->m_localAnimMatrix;
+		Matrix4x4 mat_b = b ? b->m_jointPoses.find(joint)->second.m_matrix : m_pSkeleton->GetJoint(joint)->m_localAnimMatrix;
+		float a_time = a ? a->m_time : 0;
+		float b_time = b ? b->m_time : 1;
+		m_pSkeleton->GetJoint(joint)->m_localAnimMatrix = Matrix4x4::Lerp(mat_a, mat_b, (t - a_time) / (b_time - a_time));
 	}
-}
-
-AnimationSample& AnimationClip::FindNext(byte joint, float time)
-{
-	
+	return true;
 }

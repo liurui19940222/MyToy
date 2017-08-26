@@ -100,11 +100,8 @@ struct AnimationClip
 	float m_length;
 	bool m_isLooping;
 
-	void Sample(float t);
-
-private:
-	AnimationSample& FindPrev(byte joint, float time);
-	AnimationSample& FindNext(byte joint, float time);
+	bool Sample(float t);
+	bool FullMatchSample(float t);
 };
 
 #endif

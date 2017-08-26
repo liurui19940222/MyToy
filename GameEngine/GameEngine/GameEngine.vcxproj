@@ -99,6 +99,7 @@
     <ClInclude Include="EngineSetting.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="FontRenderer.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />
@@ -160,6 +161,7 @@
     <ClCompile Include="EngineSetting.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="FontRenderer.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
