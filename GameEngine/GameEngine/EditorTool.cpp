@@ -5,7 +5,8 @@
 #include"Application.h"
 #include"Debug.h"
 #include"GameObject.h"
-
+#include"Input.h"
+#include"Time.h"
 
 void CEditorTool::DrawQuad(const Vector3& position, float size)
 {
@@ -24,19 +25,20 @@ void CEditorTool::DrawQuad(const Vector3& position, float size)
 void CEditorTool::DrawGrid(const Vector3& cameraPos, const Vector3& pos, const Color& color)
 {
 	static float cellSize = 1.0f;
-	static float cellCount = 10000.0f;
+	static float cellCount = 70.0f;
 	static float length = cellSize * cellCount;
 	static float cellLen = 0;
 
 	glEnable(GL_FOG);
 	glEnable(GL_DEPTH_TEST);
-	glFogf(GL_FOG_DENSITY, 0.03f);
+	glEnable(GL_LINE_SMOOTH);
+	glFogf(GL_FOG_DENSITY, 0.003f);
+	glLineWidth(1.4f);
 	glPushMatrix();
 	glColor3f(color.r, color.g, color.b);
 	glTranslatef(pos.x - length * 0.5f + cameraPos.x, pos.y, pos.z + length * 0.5f + cameraPos.z);
-
 	glBegin(GL_LINES);
-	for (float i = 0; i <= cellCount; i++)
+	for (int i = 0; i <= cellCount; i++)
 	{
 		cellLen = i * cellSize;
 		glVertex3f(cellLen, 0, 0);
@@ -46,6 +48,7 @@ void CEditorTool::DrawGrid(const Vector3& cameraPos, const Vector3& pos, const C
 	}
 	glEnd();
 	glPopMatrix();
+	glLineWidth(1);
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_FOG);
 }
@@ -247,4 +250,39 @@ void CEditorTool::PrintTree(CGameObject* go, int depth, bool showDepth)
 	else
 		str = str + go->GetName();
 	CDebug::Log(str.c_str());
+}
+
+void CEditorTool::WatchTarget(CGameObject& camera, const Vector3& targetPos)
+{
+	static Vector3 eyePos(0, 6.8, 10);
+	static float speed = 50.0f;
+	static bool key_down = false;
+	static Vector2 lastMousePos(0.0f, 0.0f);
+	static Vector2 curMousePos(0.0f, 0.0f);
+	static float distance = (eyePos - targetPos).Magnitude();
+	if (CInput::GetMouseDown(EMouseKey::Right))
+	{
+		key_down = true;
+		lastMousePos = CInput::InputMousePosition();
+		_Application->SetCursor(IDC_CROSS);
+	}
+	if (CInput::GetMouseUp(EMouseKey::Right))
+	{
+		key_down = false;
+		_Application->SetCursor(IDC_ARROW);
+	}
+	distance -= CInput::GetAxis("Scroll") * CTime::deltaTime;
+	distance = CMath::Clamp(distance, 8.0f, 20.0f);
+	Vector3 dir = (camera.GetLocalPosition() - targetPos).Normalize() * distance;
+	camera.SetLocalPosition(dir + targetPos);
+	if (!key_down) return;
+	curMousePos = CInput::InputMousePosition();
+	float h = (curMousePos.x - lastMousePos.x) * CTime::deltaTime * speed;
+	float v = (curMousePos.y - lastMousePos.y) * CTime::deltaTime * speed;
+	lastMousePos = curMousePos;
+	dir = Quaternion::AngleAxis(Vector3::up, -h) * Quaternion::AngleAxis(Vector3::Cross(dir, Vector3::up), -v) * dir;
+	float angle = Vector3::Angle(dir, Vector3::up);
+	if (angle  < 10.0f || angle > 170.0f) return;
+	camera.SetLocalPosition(dir + targetPos);
+	camera.LookAt(targetPos);
 }

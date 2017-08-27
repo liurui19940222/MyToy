@@ -51,6 +51,13 @@ void CGameObject::SetLocalEulerAngles(const Vector3& euler)
 	ComputeModelToWorldMat();
 }
 
+void CGameObject::LookAt(const Vector3& target)
+{
+	localRotateMat.MakeRotateUVN(target, localPosition);
+	Matrix4x4::GetUVN(localRotateMat, &right, &up, &forward);
+	ComputeModelToWorldMat();
+}
+
 const Vector3& CGameObject::GetLocalScale() const
 {
 	return localScale;

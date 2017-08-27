@@ -46,9 +46,15 @@ public:
 
 	void SetWindowSize(int width, int height);
 
+	void SetCursor(LPWSTR cursorId);
+
 	int GetWindowWidth();
 
 	int GetWindowHeight();
+
+	HINSTANCE GetInstanceHandle();
+
+	HWND GetWindowHandle();
 
 	const RECT* GetRect();
 

@@ -31,7 +31,7 @@ void C3DSFile::LoadFromFile(const char* filename)
 			m_triangleArray[i].verties[j].z = temp;
 		}
 
-		Vector3 normal = Vector3::Cross(m_triangleArray[i].verties[1] - m_triangleArray[i].verties[0], m_triangleArray[i].verties[2] - m_triangleArray[i].verties[0]).Normalization();
+		Vector3 normal = Vector3::Cross(m_triangleArray[i].verties[1] - m_triangleArray[i].verties[0], m_triangleArray[i].verties[2] - m_triangleArray[i].verties[0]).Normalize();
 
 		//memcpy(&normalArray[index++], &face->normal, sizeof(Vector3));
 		//memcpy(&normalArray[index++], &face->normal, sizeof(Vector3));
@@ -45,7 +45,7 @@ void C3DSFile::LoadFromFile(const char* filename)
 	}
 	for (size_t i = 0; i < lib3dsfile->meshes->points; i++)
 	{
-		normalBuffer[i] = normalBuffer[i].Normalization();
+		normalBuffer[i] = normalBuffer[i].Normalize();
 	}
 	for (int i = 0, index = 0; i < m_triangleNum; i++)
 	{

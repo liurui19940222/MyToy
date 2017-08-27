@@ -102,7 +102,7 @@ void CEngine::Render()
 		camera->EndTheFrame();
 	});
 
-	if (CEngineSetting::DrawGrid) CEditorTool::DrawGrid(_MainCameraGo->GetLocalPosition(), Vector3(0.0f, 0.0f, 0.0f), Color(0.0f, 0.0f, 0.8f, 1.0f));
+	if (CEngineSetting::DrawGrid) CEditorTool::DrawGrid(_MainCameraGo->GetLocalPosition(), Vector3(0.0f, 0.0f, 0.0f), Color::grey);
 	//BeginOrtho();
 	//_GUISystem->OnRender();
 	//if (drawDebug) _GUISystem->OnDrawDebug();

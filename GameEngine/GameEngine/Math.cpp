@@ -1,4 +1,5 @@
 #include "Math.h"
+#include<assert.h>
 
 const Vector2 Vector2::zero(0.0f, 0.0f);
 const Vector2 Vector2::one(1.0f, 1.0f);
@@ -409,8 +410,8 @@ void Matrix4x4::Rotate(Matrix4x4& mat, float pitch, float yaw, float roll)
 
 void Matrix4x4::RotateUVN(Matrix4x4& mat, const Vector3& targetPos, const Vector3& selfPos)
 {
-	Vector3 n = (targetPos - selfPos).Normalization();
-	Vector3 u = Vector3::Cross(Vector3(0, 1, 0), n).Normalization();
+	Vector3 n = (targetPos - selfPos).Normalize();
+	Vector3 u = Vector3::Cross(Vector3(0, 1, 0), n).Normalize();
 	Vector3 v = Vector3::Cross(n, u);
 	mat.MakeIdentity();
 	mat[0][0] = u.x; mat[0][1] = u.y; mat[0][2] = u.z;
@@ -463,9 +464,9 @@ void Matrix4x4::Perspective(Matrix4x4& mat, float fov, float aspect, float near,
 
 void Matrix4x4::LookAt(Matrix4x4& mat, const Vector3& eye, const Vector3& center, const Vector3& up)
 {
-	Vector3 f = (center - eye).Normalization();
-	Vector3 u = up.Normalization();
-	Vector3 s = Vector3::Cross(f, u).Normalization();
+	Vector3 f = (center - eye).Normalize();
+	Vector3 u = up.Normalize();
+	Vector3 s = Vector3::Cross(f, u).Normalize();
 	u = Vector3::Cross(s, f);
 
 	mat.MakeIdentity();
@@ -650,5 +651,329 @@ int CMath::Random(int min, int max)
 {
 	return (int)(Random((float)min, (float)max) + 0.5f);
 }
+
+#pragma endregion
+
+#pragma region Quaternion
+
+Quaternion::Quaternion() : x(0), y(0), z(0), w(0) {}
+Quaternion::Quaternion(const Vector3& vec) : x(vec.x), y(vec.y), z(vec.z), w(0) {}
+Quaternion::Quaternion(float px, float py, float pz, float pw) : x(px), y(py), z(pz), w(pw) {}
+bool Quaternion::operator==(const Quaternion& q) const { return x == q.x && y == q.y && z == q.z && w == q.w; }
+bool Quaternion::operator!=(const Quaternion& q) const { return x != q.x || y != q.y || z != q.z || w != q.w; }
+Vector3 Quaternion::operator*(const Vector3& vec) const { return Multiply(vec); }
+Quaternion Quaternion::operator*(const Quaternion& vec) const { return Multiply(vec); }
+Quaternion Quaternion::operator-() { return Quaternion(-x, -y, -z, w); }
+
+void Quaternion::MakeEuler(const Vector3& euler)
+{
+	float x = euler.x * CMath::HalfDegToRad;
+	float y = euler.y * CMath::HalfDegToRad;
+	float z = euler.z * CMath::HalfDegToRad;
+
+	float sinX = sin(x);
+	float cosX = cos(x);
+	float sinY = sin(y);
+	float cosY = cos(y);
+	float sinZ = sin(z);
+	float cosZ = cos(z);
+
+	this->w = cosY * cosX * cosZ + sinY * sinX * sinZ;
+	this->x = cosY * sinX * cosZ + sinY * cosX * sinZ;
+	this->y = sinY * cosX * cosZ - cosY * sinX * sinZ;
+	this->z = cosY * cosX * sinZ - sinY * sinX * cosZ;
+}
+
+void Quaternion::MakeNormalize()
+{
+	float n = this->x * this->x + this->y * this->y + this->z * this->z + this->w * this->w;
+
+	if (n != 1 && n > 0)
+	{
+		n = 1 / sqrt(n);
+		this->x = this->x * n;
+		this->y = this->y * n;
+		this->z = this->z * n;
+		this->w = this->w * n;
+	}
+}
+
+void Quaternion::MakeIdentity()
+{
+	x = 0;
+	y = 0;
+	z = 0;
+	w = 1;
+}
+
+Quaternion Quaternion::AngleAxis(const Vector3& axis, float angle)
+{
+	Vector3 normAxis = axis.Normalize();
+	angle = angle * CMath::HalfDegToRad;
+	float s = sin(angle);
+	float w = cos(angle);
+	float x = normAxis.x * s;
+	float y = normAxis.y * s;
+	float z = normAxis.z * s;
+	return Quaternion(x, y, z, w);
+}
+
+Quaternion Quaternion::Euler(const Vector3& euler)
+{
+	Quaternion q;
+	q.MakeEuler(euler);
+	return q;
+}
+
+Quaternion Quaternion::Lerp(const Quaternion& q1, const Quaternion& q2, float t)
+{
+	t = CMath::Clamp01(t);
+	Quaternion q;
+	if (Quaternion::Dot(q1, q2) < 0)
+	{
+		q.x = q1.x + t * (-q2.x - q1.x);
+		q.y = q1.y + t * (-q2.y - q1.y);
+		q.z = q1.z + t * (-q2.z - q1.z);
+		q.w = q1.w + t * (-q2.w - q1.w);
+	}
+	else
+	{
+		q.x = q1.x + (q2.x - q1.x) * t;
+		q.y = q1.y + (q2.y - q1.y) * t;
+		q.z = q1.z + (q2.z - q1.z) * t;
+		q.w = q1.w + (q2.w - q1.w) * t;
+	}
+	q.MakeNormalize();
+	return q;
+}
+
+Quaternion Quaternion::UnclampedSlerp(const Quaternion& from, const Quaternion& to, float t)
+{
+	float cosAngle = Quaternion::Dot(from, to);
+	Quaternion target = to;
+	if (cosAngle < 0.0f)
+	{
+		cosAngle = -cosAngle;
+		target = Quaternion(-to.x, -to.y, -to.z, -to.w);
+	}
+
+	float t1(0.0f), t2(0.0f);
+
+	if (cosAngle < 0.95)
+	{
+		float angle = acos(cosAngle);
+		float sinAngle = sin(angle);
+		float invSinAngle = 1.0f / sinAngle;
+		t1 = sin((1.0f - t) * angle) * invSinAngle;
+		t2 = sin(t * angle) * invSinAngle;
+		return Quaternion(from.x * t1 + target.x * t2, from.y * t1 + target.y * t2, from.z * t1 + target.z * t2, from.w * t1 + target.w * t2);
+	}
+	else
+	{
+		return Quaternion::Lerp(from, target, t);
+	}
+}
+
+Quaternion Quaternion::Slerp(const Quaternion& from, const Quaternion& to, float t)
+{
+	return UnclampedSlerp(from, to, CMath::Clamp01(t));
+}
+
+Quaternion Quaternion::LookRotation(const Vector3& pForward, const Vector3& pUp)
+{
+	float mag = pForward.Magnitude();
+	assert(mag >= 1e-6);
+
+	Vector3 forward = pForward / mag;
+	Vector3 right = Vector3::Cross(pUp, forward);
+	right.MakeNormalize();
+	Vector3 up = Vector3::Cross(forward, right);
+	right = Vector3::Cross(up, forward);
+
+	float t = right.x + up.y + forward.z;
+
+	if (t > 0.0f)
+	{
+		float x, y, z, w;
+		t = t + 1.0f;
+		float s = 0.5f / sqrt(t);
+		w = s * t;
+		x = (up.z - forward.y) * s;
+		y = (forward.x - right.z) * s;
+		z = (right.y - up.x) * s;
+
+		Quaternion ret = Quaternion(x, y, z, w);
+		ret.MakeNormalize();
+		return ret;
+	}
+	else
+	{
+		float rot[3][3] =
+		{
+			{ right.x, up.x, forward.x },
+			{ right.y, up.y, forward.y },
+			{ right.z, up.z, forward.z },
+		};
+
+		float q[3] = { 0, 0, 0 };
+		int i = 1;
+
+		if (up.y > right.x)
+		{
+			i = 2;
+		}
+
+		if (forward.z > rot[i][i])
+		{
+			i = 3;
+		}
+
+		int j = _next[i];
+		int k = _next[j];
+
+		float t = rot[i][i] - rot[j][j] - rot[k][k] + 1;
+		float s = 0.5f / sqrt(t);
+		q[i] = s * t;
+		float w = (rot[k][j] - rot[j][k]) * s;
+		q[j] = (rot[j][i] + rot[i][j]) * s;
+		q[k] = (rot[k][i] + rot[i][k]) * s;
+
+		Quaternion ret = Quaternion(q[1], q[2], q[3], w);
+		ret.MakeNormalize();
+		return ret;
+	}
+}
+
+Quaternion Quaternion::Normalize() const
+{
+	Quaternion q = *this;
+	q.MakeNormalize();
+	return q;
+}
+
+float Quaternion::Angle(const Quaternion& a, const Quaternion& b)
+{
+	float dot = Quaternion::Dot(a, b);
+	if (dot < 0.0f) dot = -dot;
+	return CMath::Acos(CMath::Min(dot, 1.0f)) * 2.0f * 57.29578f;
+}
+
+float Quaternion::Dot(const Quaternion& a, const Quaternion& b)
+{
+	return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+}
+
+Vector3 Quaternion::ToEulerAngles() const
+{
+	//from http://www.geometrictools.com/Documentation/EulerAngles.pdf
+	//Order of rotations : YXZ, Ô­À´µÄZXYË³Ðò
+	float x = this->x;
+	float y = this->y;
+	float z = this->z;
+	float w = this->w;
+
+	float check = 2 * (y * z - w * x);
+
+	if (check < 0.999)
+	{
+		if (check > -0.999)
+		{
+			Vector3 v = Vector3(-asin(check),
+			atan2(2 * (x * z + w * y), 1 - 2 * (x * x + y * y)),
+			atan2(2 * (x * y + w * z), 1 - 2 * (x * x + z * z)));
+			SanitizeEuler(v);
+			return v * CMath::RadToDeg;
+		}
+		else
+		{
+			Vector3 v = Vector3(CMath::HALF_PI, atan2(2 * (x * y - w * z), 1 - 2 * (y * y + z * z)), 0);
+			SanitizeEuler(v);
+			return v * CMath::RadToDeg;
+		}
+	}
+	else
+	{
+		Vector3 v = Vector3(-CMath::HALF_PI, atan2(-2 * (x * y - w * z), 1 - 2 * (y * y + z * z)), 0);
+		SanitizeEuler(v);
+		return v * CMath::RadToDeg;
+	}
+}
+
+void Quaternion::SanitizeEuler(Vector3& euler)
+{
+	if (euler.x < negativeFlip)
+	{
+		euler.x = euler.x + CMath::TWO_PI;
+	}
+	else if (euler.x > positiveFlip)
+	{
+		euler.x = euler.x - CMath::TWO_PI;
+	}
+	if (euler.y < negativeFlip)
+	{
+		euler.y = euler.y + CMath::TWO_PI;
+	}
+	else if (euler.y > positiveFlip)
+	{
+		euler.y = euler.y - CMath::TWO_PI;
+	}
+	if (euler.z < negativeFlip)
+	{
+		euler.z = euler.z + CMath::TWO_PI;
+	}
+	else if (euler.z > positiveFlip)
+	{
+		euler.z = euler.z + CMath::TWO_PI;
+	}
+}
+
+Vector3 Quaternion::Multiply(const Vector3& point) const
+{
+	Vector3 vec;
+
+	float num = this->x * 2;
+	float num2 = this->y * 2;
+	float num3 = this->z * 2;
+	float num4 = this->x * num;
+	float num5 = this->y * num2;
+	float num6 = this->z * num3;
+	float num7 = this->x * num2;
+	float num8 = this->x * num3;
+	float num9 = this->y * num3;
+	float num10 = this->w * num;
+	float num11 = this->w * num2;
+	float num12 = this->w * num3;
+
+	vec.x = (((1 - (num5 + num6)) * point.x) + ((num7 - num12) * point.y)) + ((num8 + num11) * point.z);
+	vec.y = (((num7 + num12) * point.x) + ((1 - (num4 + num6)) * point.y)) + ((num9 - num10) * point.z);
+	vec.z = (((num8 - num11) * point.x) + ((num9 + num10) * point.y)) + ((1 - (num4 + num5)) * point.z);
+
+	return vec;
+}
+
+Quaternion Quaternion::Multiply(const Quaternion& q) const
+{
+	return Quaternion((((this->w * q.x) + (this->x * q.w)) + (this->y * q.z)) - (this->z * q.y), 
+		(((this->w * q.y) + (this->y * q.w)) + (this->z * q.x)) - (this->x * q.z), 
+		(((this->w * q.z) + (this->z * q.w)) + (this->x * q.y)) - (this->y * q.x), 
+		(((this->w * q.w) - (this->x * q.x)) - (this->y * q.y)) - (this->z * q.z));
+}
+
+void Quaternion::ToAngleAxis(const Quaternion& q, Vector3* outVec, float* outAngle) const
+{
+	float angle = 2.0f * CMath::Acos(this->w);
+
+	if (CMath::Approximately(angle, 0.0f))
+	{
+		*outAngle = angle * 57.29578f;
+		*outVec = Vector3(1.0f, 0.0f, 0.0f);
+	}
+
+	float div = 1.0f / sqrt(1.0f - sqrt(this->w));
+	*outAngle = angle * 57.29578f;
+	*outVec = Vector3(q.x * div, q.y * div, q.z * div);
+}
+
+const Quaternion Quaternion::identity(0.0f, 0.0f, 0.0f, 1.0f);
 
 #pragma endregion

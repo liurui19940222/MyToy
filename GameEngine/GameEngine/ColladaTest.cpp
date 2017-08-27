@@ -9,7 +9,6 @@ void CColladaTest::OnStart()
 	_MainCamera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
 	_MainCamera->SetCameraClearColor(Color::Hex(0x314D79FF));
 	_MainCameraGo->SetLocalPosition(Vector3(0, 6.8, 10));
-	_MainCameraGo->SetLocalEulerAngles(Vector3(-25, 180, 0));
 
 	model = _Maker->Instantiate("model");
 
@@ -30,8 +29,12 @@ void CColladaTest::OnStart()
 	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"))
 		->SetMainTexture(CTexture2D::Create("textures/shake.png"));
 	collada = _Resources->Load<CColladaFile>("models/shake.xml");
-
+	 
 	model->AddComponent<CSkinnedMeshRenderer>()->SetModel(collada)->SetMaterial(model_mat);
+
+	_MainCameraGo->LookAt(model->GetLocalPosition());
+
+
 }
 
 void CColladaTest::OnUpdate()
@@ -56,6 +59,8 @@ void CColladaTest::OnUpdate()
 		collada->Sample(CTime::time);
 	else
 		collada->SampleB(CTime::time);
+
+	CEditorTool::WatchTarget(*_MainCameraGo, model->GetLocalPosition());
 }
 
 void CColladaTest::OnRender()

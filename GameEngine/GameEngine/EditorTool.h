@@ -24,6 +24,7 @@ public:
 	static void DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton);
 	static void PrintTree(bool showDepth = false);
 	static void PrintTree(CGameObject* go, bool showDepth = false);
+	static void WatchTarget(CGameObject& camera, const Vector3& targetPos);
 };
 
 #endif

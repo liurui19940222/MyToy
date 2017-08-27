@@ -21,20 +21,8 @@ class CRelationshipTest : public CGameWindow
 private:
 	Matrix4x4 model = { 1 };
 
-	int window_width = 800;
-	int window_height = 600;
-
-	float moveSpeed = 50;
-	Vector3 cameraPos;
 	CGameObject* go;
-	CGameObject* go2;
-	vector<CGameObject*> childs;
-
-	float direction[3] = { -55.0f, -22.5f, 0.0f };
-	float diffuse[3] = { 0, 1, 0 };
-	float specular[3] = { 1, 1, 1 };
-
-	int max = 999;
+	CGameObject* axis;
 public:
 
 	virtual void OnStart();

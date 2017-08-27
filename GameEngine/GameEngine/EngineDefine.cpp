@@ -114,6 +114,7 @@ Color Color::Hex(int hex)
 const Color Color::red(1.0f, 0.0f, 0.0f, 1.0f);
 const Color Color::blue(0.0f, 0.0f, 1.0f, 1.0f);
 const Color Color::green(0.0f, 1.0f, 0.0f, 1.0f);
+const Color Color::grey(0.4f, 0.4f, 0.4f, 1.0f);
 const Color Color::black(0.0f, 0.0f, 0.0f, 1.0f);
 const Color Color::cyan(0.0f, 1.0f, 1.0f, 1.0f);
 const Color Color::purple(1.0f, 0.0f, 1.0f, 1.0f);

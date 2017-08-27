@@ -1,7 +1,7 @@
 #ifndef _CDEBUG_
 #define _CDEBUG_
 
-#define DEBUG_BUFFER_SIZE 256
+#define DEBUG_BUFFER_SIZE 1024
 #include<Windows.h>
 #include<string>
 #include"Math.h"

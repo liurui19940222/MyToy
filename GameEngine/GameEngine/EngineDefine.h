@@ -80,6 +80,7 @@ struct Color
 	static const Color red;
 	static const Color blue;
 	static const Color green;
+	static const Color grey;
 	static const Color black;
 	static const Color cyan;
 	static const Color purple;

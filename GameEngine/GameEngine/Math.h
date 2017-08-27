@@ -29,7 +29,7 @@ public:
 
 	inline VType MagnitudeSqrt() const { return x*x + y*y; }
 
-	inline TmpVector2<VType> Normalization() const 
+	inline TmpVector2<VType> Normalize() const 
 	{
 		float mag = Magnitude();
 		return TmpVector2<VType>(x / mag, y / mag);
@@ -80,7 +80,7 @@ public:
 
 	inline static float Dot(const TmpVector2<VType> &vec1, const TmpVector2<VType> &vec2) { return vec1.x * vec2.x + vec1.y * vec2.y; }
 
-	inline static float Angle(const TmpVector2<VType> &vec1, const TmpVector2<VType> &vec2) { return  acos(Dot(vec1.Normalization(), vec2.Normalization())); }
+	inline static float Angle(const TmpVector2<VType> &vec1, const TmpVector2<VType> &vec2) { return  acos(Dot(vec1.Normalize(), vec2.Normalize())); }
 
 	inline static TmpVector2<VType> Projection(const TmpVector2<VType> &u, const TmpVector2<VType> &v) 
 	{
@@ -114,9 +114,15 @@ public:
 
 	inline VType MagnitudeSqrt() const { return x * x + y*y + z*z; }
 
-	inline TmpVector3<VType> Normalization() const {
-		float mag = Magnitude();
-		return Vector3(x / mag, y / mag, z / mag);
+	inline TmpVector3<VType> Normalize() const {
+		float mag = 1.0f / Magnitude();
+		return Vector3(x * mag, y * mag, z * mag);
+	}
+
+	inline void MakeNormalize()
+	{
+		float mag = 1.0f / Magnitude();
+		x *= mag; y *= mag; z *= mag;
 	}
 
 	inline TmpVector3<VType> operator+(const TmpVector3<VType>& vec) const { return TmpVector3<VType>(x + vec.x, y + vec.y, z + vec.z); }
@@ -157,7 +163,7 @@ public:
 
 	inline static TmpVector3<VType> Cross(const TmpVector3<VType> &u, const TmpVector3<VType> &v) { return TmpVector3<VType>(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x); }
 
-	inline static VType Angle(const TmpVector3<VType> &vec1, const TmpVector3<VType> &vec2) { return  acos(Dot(vec1.Normalization(), vec2.Normalization())); }
+	inline static VType Angle(const TmpVector3<VType> &vec1, const TmpVector3<VType> &vec2) { return  acos(Dot(vec1.Normalize(), vec2.Normalize())) * CMath::RadToDeg; }
 
 	inline static TmpVector3<VType> Projection(const TmpVector3<VType> &u, const TmpVector3<VType> &v) {
 		float mag = v.Magnitude();
@@ -360,12 +366,18 @@ public:
 	static constexpr float QUARTER_PI = PI * 0.25f;
 	static constexpr float DegToRad = PI / 180.0f;
 	static constexpr float RadToDeg = 180.0f / PI;
+	static constexpr float HalfDegToRad = 0.5f * DegToRad;
 
 	static float Random();
 	static float Random(float max);
 	static float Random(float min, float max);
 	static int Random(int max);
 	static int Random(int min, int max);
+
+	inline static bool Approximately(float f0, float f1)
+	{
+		return abs(f0 - f1) < 1e-6;
+	}
 
 	template<typename T>
 	inline static T Floor(T value)
@@ -462,6 +474,46 @@ public:
 	{
 		return pow(base, exponent);
 	}
+};
+
+class Quaternion
+{
+public:
+	float x, y, z, w;
+	
+	Quaternion();
+	Quaternion(const Vector3& vec);
+	Quaternion(float px, float py, float pz, float pw);
+	bool operator==(const Quaternion& q) const;
+	bool operator!=(const Quaternion& q) const;
+	Vector3 operator*(const Vector3& vec) const;
+	Quaternion operator*(const Quaternion& vec) const;
+	Quaternion operator-();
+
+	void MakeEuler(const Vector3& euler);
+	void MakeNormalize();
+	void MakeIdentity();
+	void ToAngleAxis(const Quaternion& q, Vector3* outVec, float* outAngle) const;
+	Quaternion Normalize() const;
+	Vector3 ToEulerAngles() const;
+	Vector3 Multiply(const Vector3& vec) const;
+	Quaternion Multiply(const Quaternion& q) const;
+	
+	static Quaternion AngleAxis(const Vector3& axis, float angle);
+	static Quaternion Euler(const Vector3& euler);
+	static Quaternion Lerp(const Quaternion& a, const Quaternion& b, float t);
+	static Quaternion UnclampedSlerp(const Quaternion& a, const Quaternion& b, float t);
+	static Quaternion Slerp(const Quaternion& a, const Quaternion& b, float t);
+	static Quaternion LookRotation(const Vector3& forward, const Vector3& up);
+	static float Angle(const Quaternion& a, const Quaternion& b);
+	static float Dot(const Quaternion& a, const Quaternion& b);
+	static void SanitizeEuler(Vector3& euler);
+
+	static const Quaternion identity;
+private:
+	static constexpr float _next[3] = { 2, 3, 1 };
+	static constexpr float negativeFlip = -0.0001f;
+	static constexpr float positiveFlip = CMath::TWO_PI - 0.0001f;
 };
 
 #endif

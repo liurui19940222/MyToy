@@ -127,10 +127,14 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 
 void CApplication::SetWindowSize(int width, int height)
 {
-	//CDebug::Log("change w:%d\th:%d", width, height);
 	_Engine->SetupProjection(width, height);
 	appInfo.windowWidth = width;
 	appInfo.windowHeight = height;
+}
+
+void CApplication::SetCursor(LPWSTR cursorId)
+{
+	SetClassLong(hwnd, GCL_HCURSOR, (LONG)::LoadCursor(NULL, cursorId));
 }
 
 void CApplication::ToggleFullOrWindow()
@@ -266,6 +270,16 @@ int CApplication::GetWindowWidth()
 int CApplication::GetWindowHeight()
 {
 	return appInfo.windowHeight;
+}
+
+HINSTANCE CApplication::GetInstanceHandle()
+{
+	return mHIntance;
+}
+
+HWND CApplication::GetWindowHandle()
+{
+	return hwnd;
 }
 
 const RECT* CApplication::GetRect()
