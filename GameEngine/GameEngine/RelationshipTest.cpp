@@ -1,5 +1,6 @@
 #include "RelationshipTest.h"
 #include "RenderCamera.h"
+#include "MeshFactory.h"
 
 void CRelationshipTest::OnStart()
 {
@@ -12,14 +13,13 @@ void CRelationshipTest::OnStart()
 	_MainCameraGo->SetLocalPosition(Vector3(0, 7, 10));
 	_MainCameraGo->SetLocalEulerAngles(Vector3(-30, 180, 0));
 	CTexture* texture = CTexture2D::Create("textures/dlg01.bmp");
-	CMeshCube* cube = _Maker->Instantiate<CMeshCube>();
 	go = _Maker->Instantiate("testGo");
-	go->AddComponent<CMeshRenderer>()->SetModel(cube);
+	go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube));
 	go->SetLocalPosition(Vector3(-2, 1.0, 0));
 	go->SetLocalScale(Vector3::one * 1);
 
 	axis = _Maker->Instantiate("axis");
-	axis->AddComponent<CMeshRenderer>()->SetModel(cube);
+	axis->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube));
 	axis->SetLocalScale(Vector3(0.2f, 0.2f, 10.0f));
 	CEditorTool::PrintTree();
 }

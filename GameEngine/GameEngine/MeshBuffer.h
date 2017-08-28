@@ -29,6 +29,8 @@ private:
 public:
 	CMeshBuffer();
 
+	CMeshBuffer(const Mesh& mesh);
+
 	void MakeBuffer(const Vector3* vertices, const Color* colors, const Vector3* normals, const Vector2* uvs, int size);
 
 	void MakeVertexBuffer(const Vector3* vertices, int size);

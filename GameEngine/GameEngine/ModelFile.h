@@ -1,7 +1,6 @@
 #ifndef _CMODEL_FILE_
 #define _CMODEL_FILE_
 
-#include "MeshProvider.h"
 #include "Math.h"
 #include "SourceFile.h"
 #include "BoneAnimation.h"

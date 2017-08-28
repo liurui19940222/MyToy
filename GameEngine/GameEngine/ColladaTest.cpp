@@ -1,6 +1,5 @@
 #include"ColladaTest.h"
 #include"ColladaFile.h"
-#include"MeshCube.h"
 #include"Maker.h"
 #include<glm\glm.hpp>
 
@@ -29,7 +28,7 @@ void CColladaTest::OnStart()
 	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"))
 		->SetMainTexture(CTexture2D::Create("textures/shake.png"));
 	collada = _Resources->Load<CColladaFile>("models/shake.xml");
-	 
+
 	model->AddComponent<CSkinnedMeshRenderer>()->SetModel(collada)->SetMaterial(model_mat);
 
 	_MainCameraGo->LookAt(model->GetLocalPosition());
@@ -54,8 +53,7 @@ void CColladaTest::OnUpdate()
 	{
 		b = false;
 	}
-
-	if(!b)
+	if (!b)
 		collada->Sample(CTime::time);
 	else
 		collada->SampleB(CTime::time);
@@ -65,7 +63,7 @@ void CColladaTest::OnUpdate()
 
 void CColladaTest::OnRender()
 {
-
+	//CEditorTool::DrawSkeleton(model->GetModelToWorldMat(), collada->m_model->m_skeleton);
 }
 
 void CColladaTest::OnClose()

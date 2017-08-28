@@ -111,6 +111,14 @@ struct Mesh
 	Vector2* m_texcoords = NULL;
 	Color* m_colors = NULL;
 	int m_vertexCount = 0;
+
+	~Mesh()
+	{
+		if (m_vertices) free(m_vertices);
+		if (m_normals) free(m_normals);
+		if (m_texcoords) free(m_texcoords);
+		if (m_colors) free(m_colors);
+	}
 };
 
 struct Model

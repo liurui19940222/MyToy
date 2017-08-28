@@ -477,6 +477,11 @@ void CColladaFile::LoadFromFile(const char* filename)
 	m_buffer.MakeJointBuffer(m_skeletonWeight);
 }
 
+void CColladaFile::ReleaseSource()
+{
+	
+}
+
 void CColladaFile::Sample(float t)
 {
 	if (m_animationClip.Sample(t))

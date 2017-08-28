@@ -1,12 +1,12 @@
 #include"TestApp.h"
 #include"Input.h"
 #include"Time.h"
-#include"MeshCube.h"
 #include"RenderTexture.h"
 #include"3DSFile.h"
 #include"Resources.h"
 #include"Debug.h"
 #include"Config.h"
+#include"MeshFactory.h"
 
 void CTestApp::OnStart()
 {
@@ -26,11 +26,11 @@ void CTestApp::OnStart()
 	model->SetLocalScale(Vector3(0.12f, 0.12f, 0.12f));
 	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("texture"));
 	model_mat->SetMainTexture(CTexture2D::Create("textures/model.png"));
-	model->AddComponent<CMeshRenderer>()->SetModel(_Resources->Load<C3DSFile>("models/model.3DS"))->SetMaterial(model_mat);
+	model->AddComponent<CMeshRenderer>()->SetModel(new CMeshBuffer(_Resources->Load<C3DSFile>("models/model.3DS")->m_model->m_meshes[0]))->SetMaterial(model_mat);
 
 	CMaterial* material = _Maker->Instantiate<CMaterial>();
 	material->SetMainTexture(renderTexture)->SetShader(CShader::Get("texture"));
-	CMeshProvider* quad = _Maker->Instantiate<CMeshCube>();
+	CMeshBuffer* quad = _MeshFactory->SharedBuffer(EMeshType::Quad);
 	go1 = _Maker->Instantiate("parent");
 	go1->AddComponent<CMeshRenderer>()->SetModel(quad)->SetMaterial(material);
 

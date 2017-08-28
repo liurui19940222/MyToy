@@ -5,6 +5,11 @@ CMeshBuffer::CMeshBuffer() : m_vaoHandle(0), m_vboColorHandle(0),
 {
 }
 
+CMeshBuffer::CMeshBuffer(const Mesh& mesh) : CMeshBuffer()
+{
+	MakeBuffer(mesh);
+}
+
 void CMeshBuffer::MakeBuffer(const Vector3* vertices, const Color* colors, const Vector3* normals, const Vector2* uvs, int size)
 {
 	MakeVertexBuffer(vertices, size);

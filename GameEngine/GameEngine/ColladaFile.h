@@ -7,6 +7,7 @@
 #include"ModelFile.h"
 #include"BoneAnimation.h"
 #include"Debug.h"
+#include"MeshBuffer.h"
 
 using namespace std;
 using namespace rapidxml;
@@ -154,9 +155,16 @@ private:
 #pragma endregion
 
 public:
+	CMeshBuffer m_buffer;
+	Vector3* m_vertexArray;
+	Vector3* m_normalArray;
+	Vector2* m_uvArray;
+	int m_vertexNum;
+
+	Model* m_model;
 
 	virtual void LoadFromFile(const char* filename) override;
-
+	virtual void ReleaseSource() override;
 	void Sample(float t);
 
 	void SampleB(float t);

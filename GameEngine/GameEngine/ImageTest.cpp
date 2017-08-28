@@ -1,4 +1,5 @@
-#include "ImageTest.h"
+#include"ImageTest.h"
+#include"MeshFactory.h"
 
 void CImageTest::OnStart()
 {
@@ -17,7 +18,7 @@ void CImageTest::OnStart()
 	go->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f));
 	go->SetLocalEulerAngles(Vector3(0, 180, 0));
 	CMeshRenderer* renderer = go->AddComponent<CMeshRenderer>();
-	renderer->SetModel(model)->SetMaterial(mat_model);
+	renderer->SetModel(new CMeshBuffer(model->m_model->m_meshes[0]))->SetMaterial(mat_model);
 
 	CBitImage* ground_image = _Resources->Load<CBitImage>("textures/dlg01.bmp");
 	CTexture* ground_texture = CTexture2D::Create(ground_image);
@@ -27,9 +28,8 @@ void CImageTest::OnStart()
 	quadGo->SetLocalPosition(Vector3(0, -3.5f, 0));
 	quadGo->SetLocalScale(Vector3(7, 7, 7));
 	quadGo->SetLocalEulerAngles(Vector3(-90, 0, 0));
-	CMeshQuad* quadMesh = _Maker->Instantiate<CMeshQuad>();
 	CMeshRenderer* ground_renderer = quadGo->AddComponent<CMeshRenderer>();
-	ground_renderer->SetModel(quadMesh)->SetMaterial(mat_ground);
+	ground_renderer->SetModel(_MeshFactory->SharedBuffer(EMeshType::Quad))->SetMaterial(mat_ground);
 
 	CEditorTool::PrintTree();
 }

@@ -1,7 +1,6 @@
 #ifndef _SKINNED_MESH_RENDERER_H_
 #define _SKINNED_MESH_RENDERER_H_
 
-#include"MeshProvider.h"
 #include"Texture.h"
 #include"FileHead.h"
 #include"Component.h"
@@ -9,17 +8,18 @@
 #include"Shader.h"
 #include"Renderer.h"
 #include"Material.h"
+#include"ColladaFile.h"
 
 class CSkinnedMeshRenderer : public CComponent, public IRenderer
 {
 	REFLECT_CLASS(CSkinnedMeshRenderer)
 private:
-	CMeshBuffer* m_mesh;
+	CColladaFile* m_mesh;
 	CMaterial* m_material;
 
 public:
 
-	CSkinnedMeshRenderer* SetModel(CMeshBuffer* mesh);
+	CSkinnedMeshRenderer* SetModel(CColladaFile* mesh);
 
 	CSkinnedMeshRenderer* SetMaterial(CMaterial* material);
 

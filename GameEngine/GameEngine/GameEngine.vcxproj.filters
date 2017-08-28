@@ -87,15 +87,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Component\MeshProvide">
-      <UniqueIdentifier>{e7feb4b4-7a93-487d-af62-47d5697fa1b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Component\MeshProvide\头文件">
-      <UniqueIdentifier>{39e3d893-87e7-4bfe-8f6c-31c9dc5fb89a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Component\MeshProvide\源文件">
-      <UniqueIdentifier>{09e2a2c2-ebb9-4823-82c5-45fb3f0e0fd0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Container">
       <UniqueIdentifier>{a99bae24-83a5-44fa-b3bf-dbe911d2b9bc}</UniqueIdentifier>
     </Filter>
@@ -182,9 +173,6 @@
     <ClInclude Include="GUISystem.h">
       <Filter>GUISystem\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="MeshCube.h">
-      <Filter>Component\MeshProvide\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Application.h">
       <Filter>Core\头文件</Filter>
     </ClInclude>
@@ -211,9 +199,6 @@
     </ClInclude>
     <ClInclude Include="ImageTest.h">
       <Filter>Application\头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshQuad.h">
-      <Filter>Component\MeshProvide\头文件</Filter>
     </ClInclude>
     <ClInclude Include="GUITest.h">
       <Filter>Application\头文件</Filter>
@@ -302,6 +287,9 @@
     <ClInclude Include="Animation.h">
       <Filter>Animation\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MeshFactory.h">
+      <Filter>Render\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -349,9 +337,6 @@
     <ClCompile Include="GUISystem.cpp">
       <Filter>GUISystem\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MeshCube.cpp">
-      <Filter>Component\MeshProvide\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Application.cpp">
       <Filter>Core\源文件</Filter>
     </ClCompile>
@@ -384,9 +369,6 @@
     </ClCompile>
     <ClCompile Include="ImageTest.cpp">
       <Filter>Application\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshQuad.cpp">
-      <Filter>Component\MeshProvide\源文件</Filter>
     </ClCompile>
     <ClCompile Include="GUITest.cpp">
       <Filter>Application\源文件</Filter>
@@ -456,6 +438,9 @@
     </ClCompile>
     <ClCompile Include="BoneAnimation.cpp">
       <Filter>Animation\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshFactory.cpp">
+      <Filter>Render\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

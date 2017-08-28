@@ -1,7 +1,6 @@
 #ifndef _MESH_RENDERER_H_
 #define _MESH_RENDERER_H_
 
-#include"MeshProvider.h"
 #include"Texture.h"
 #include"FileHead.h"
 #include"Component.h"
@@ -9,6 +8,7 @@
 #include"Shader.h"
 #include"Renderer.h"
 #include"Material.h"
+#include"MeshBuffer.h"
 
 class CMeshRenderer : public CComponent, public IRenderer
 {
