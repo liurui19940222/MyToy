@@ -4,12 +4,13 @@ IMPL_CLASS(C3DSFile)
 
 void C3DSFile::LoadFromFile(const char* filename)
 {
+	m_model = new Model;
 	lib3dsfile = lib3ds_file_load(filename);
-	m_triangleNum = lib3dsfile->meshes->faces;
-	m_vertexNum = m_triangleNum * 3;
-	m_triangleArray = (STriangle*)malloc(m_triangleNum * sizeof(STriangle));
-	m_normalArray = (Vector3*)malloc(m_triangleNum * 3 * sizeof(Vector3));
-	m_uvArray = (Vector2*)malloc(m_vertexNum * sizeof(Vector2));
+	int m_triangleNum = lib3dsfile->meshes->faces;
+	int m_vertexNum = m_triangleNum * 3;
+	STriangle* m_triangleArray = (STriangle*)malloc(m_triangleNum * sizeof(STriangle));
+	Vector3* m_normalArray = (Vector3*)malloc(m_triangleNum * 3 * sizeof(Vector3));
+	Vector2* m_uvArray = (Vector2*)malloc(m_vertexNum * sizeof(Vector2));
 	Lib3dsPoint* points = lib3dsfile->meshes->pointL;
 	Lib3dsTexel* texels = lib3dsfile->meshes->texelL;
 	Lib3dsFace* face = NULL;
@@ -33,12 +34,6 @@ void C3DSFile::LoadFromFile(const char* filename)
 
 		Vector3 normal = Vector3::Cross(m_triangleArray[i].verties[1] - m_triangleArray[i].verties[0], m_triangleArray[i].verties[2] - m_triangleArray[i].verties[0]).Normalize();
 
-		//memcpy(&normalArray[index++], &face->normal, sizeof(Vector3));
-		//memcpy(&normalArray[index++], &face->normal, sizeof(Vector3));
-		//memcpy(&normalArray[index++], &face->normal, sizeof(Vector3));
-		//memcpy(&normalArray[index++], &normal, sizeof(Vector3));
-		//memcpy(&normalArray[index++], &normal, sizeof(Vector3));
-		//memcpy(&normalArray[index++], &normal, sizeof(Vector3));
 		normalBuffer[face->points[0]] += normal;
 		normalBuffer[face->points[1]] += normal;
 		normalBuffer[face->points[2]] += normal;
@@ -55,9 +50,16 @@ void C3DSFile::LoadFromFile(const char* filename)
 		memcpy(&m_normalArray[index++], &(normalBuffer[face->points[1]]), sizeof(Vector3));
 		memcpy(&m_normalArray[index++], &(normalBuffer[face->points[2]]), sizeof(Vector3));
 	}
-	m_vertexArray = (Vector3*)m_triangleArray;
+	m_model->m_meshCount = 1;
+	m_model->m_meshes = (Mesh*)malloc(sizeof(Mesh) * 1);
+	m_model->m_meshes[0].m_vertices = (Vector3*)m_triangleArray;
+	m_model->m_meshes[0].m_normals = m_normalArray;
+	m_model->m_meshes[0].m_texcoords = m_uvArray;
+	m_model->m_meshes[0].m_vertexCount = m_vertexNum;
+}
+
+void C3DSFile::ReleaseSource()
+{
 	lib3ds_file_free(lib3dsfile);
 	lib3dsfile = NULL;
-
-	m_buffer.MakeBuffer(m_vertexArray, NULL, m_normalArray, m_uvArray, m_vertexNum);
 }

@@ -3,8 +3,8 @@
 
 #include <lib3ds/file.h>
 #include <lib3ds/camera.h>
-#include <lib3ds/mesh.h>
-#include <lib3ds/node.h>
+#include<lib3ds/mesh.h>
+#include<lib3ds/node.h>
 #include<lib3ds/material.h>
 #include<lib3ds/matrix.h>
 #include<lib3ds/vector.h>
@@ -21,6 +21,8 @@ private:
 public:
 
 	virtual void LoadFromFile(const char* filename) override;
+
+	virtual void ReleaseSource() override;
 };
 
 #endif

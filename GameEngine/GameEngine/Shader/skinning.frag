@@ -1,15 +1,14 @@
 #version 400
 
 layout(location = 0) out vec4 FragColor;
-
 in vec2 uv;
 in vec3 normal;
-in vec3 eyeLight[10];
-in vec3 eyeDir[10];
+const int MAX_LIGHT_NUM = 2;
+in vec3 eyeLight[MAX_LIGHT_NUM];
+in vec3 eyeDir[MAX_LIGHT_NUM];
 
 const vec3 ambientColor = vec3(0.05f, 0.05f, 0.05f);
 const vec3 diffuseColor = vec3(1.0, 1.0, 1.0);
-//const vec3 specularColor = vec3(0.8, 0.5, 0.8);
 const vec3 specularColor = vec3(0.2, 1, 0.8);
 
 uniform sampler2D mainTex;

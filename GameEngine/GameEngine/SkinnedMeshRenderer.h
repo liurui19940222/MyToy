@@ -14,12 +14,12 @@ class CSkinnedMeshRenderer : public CComponent, public IRenderer
 {
 	REFLECT_CLASS(CSkinnedMeshRenderer)
 private:
-	CMeshProvider* m_mesh;
+	CMeshBuffer* m_mesh;
 	CMaterial* m_material;
 
 public:
 
-	CSkinnedMeshRenderer* SetModel(CMeshProvider* mesh);
+	CSkinnedMeshRenderer* SetModel(CMeshBuffer* mesh);
 
 	CSkinnedMeshRenderer* SetMaterial(CMaterial* material);
 

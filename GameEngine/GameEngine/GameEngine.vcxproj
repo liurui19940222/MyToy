@@ -99,7 +99,6 @@
     <ClInclude Include="EngineSetting.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="FontRenderer.h" />
-    <ClInclude Include="Mesh.h" />
     <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />
@@ -117,7 +116,6 @@
     <ClInclude Include="RelationshipTest.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MeshCube.h" />
-    <ClInclude Include="MeshProvider.h" />
     <ClInclude Include="ModelFile.h" />
     <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="RenderBuffer.h" />
@@ -161,7 +159,6 @@
     <ClCompile Include="EngineSetting.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="FontRenderer.cpp" />
-    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
@@ -175,12 +172,10 @@
     <ClCompile Include="Maker.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MeshBuffer.cpp" />
-    <ClCompile Include="MeshProvider.cpp" />
     <ClCompile Include="MeshQuad.cpp" />
     <ClCompile Include="RelationshipTest.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="MeshCube.cpp" />
-    <ClCompile Include="ModelFile.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="RenderCamera.cpp" />
     <ClCompile Include="Resources.cpp" />

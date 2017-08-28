@@ -104,4 +104,27 @@ struct AnimationClip
 	bool FullMatchSample(float t);
 };
 
+struct Mesh
+{
+	Vector3* m_vertices = NULL;
+	Vector3* m_normals = NULL;
+	Vector2* m_texcoords = NULL;
+	Color* m_colors = NULL;
+	int m_vertexCount = 0;
+};
+
+struct Model
+{
+	Mesh* m_meshes = NULL;
+	int m_meshCount = 0;
+
+	Skeleton m_skeleton;
+	SkeletonPose m_skeletonPose;
+	SkeletonWeight m_skeletonWeight;
+	AnimationClip* m_animations = NULL;
+	int m_animationCount = 0;
+
+	Matrix4x4 m_bindShapeMat;
+};
+
 #endif

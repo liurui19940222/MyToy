@@ -6,7 +6,7 @@ layout(location = 3) in vec3 VertexNormal;
 layout(location = 4) in ivec4 JointIndex;
 layout(location = 5) in vec4 JointWeight;
 
-const int MAX_LIGHT_NUM = 10;
+const int MAX_LIGHT_NUM = 2;
 vec3 lightDir[MAX_LIGHT_NUM];
 uniform mat4 GlobalPoseMatrices[100];
 uniform mat4 M;

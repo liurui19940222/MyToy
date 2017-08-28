@@ -24,12 +24,12 @@ void CMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix
 	m_material->SetParam("M", modelMatrix);
 	m_material->SetParam("V", viewMatrix);
 	m_material->SetParam("P", projectionMatrix);
-	m_mesh->GetBuffer()->BindBuffer();
-	glDrawArrays(m_mesh->GetGLMode(), 0, m_mesh->GetVertexNum());
+	m_mesh->BindBuffer();
+	glDrawArrays(GL_TRIANGLES, 0, m_mesh->GetVertexNum());
 	m_material->Unbind();
 }
 
-CMeshRenderer* CMeshRenderer::SetModel(CMeshProvider* mesh)
+CMeshRenderer* CMeshRenderer::SetModel(CMeshBuffer* mesh)
 {
 	this->m_mesh = mesh;
 	return this;

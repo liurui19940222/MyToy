@@ -22,9 +22,6 @@
     <Filter Include="Component">
       <UniqueIdentifier>{ee3c1d53-6f33-4274-bd9e-ae5afe9ce171}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component\Interface">
-      <UniqueIdentifier>{5d8c646e-6a25-47fd-afbb-a3e06e889898}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GUISystem">
       <UniqueIdentifier>{7bf9203e-61c6-4737-a0c0-4b8c80e04acc}</UniqueIdentifier>
     </Filter>
@@ -48,9 +45,6 @@
     </Filter>
     <Filter Include="Core\源文件">
       <UniqueIdentifier>{03258bed-9e4a-4f95-895d-37b20ff2e751}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Component\Interface\头文件">
-      <UniqueIdentifier>{0c6f04e0-919c-43b3-8d20-7682012e22e5}</UniqueIdentifier>
     </Filter>
     <Filter Include="File\头文件">
       <UniqueIdentifier>{434fce0c-35c8-41f9-9978-18a2ae661886}</UniqueIdentifier>
@@ -117,9 +111,6 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{9853b6b4-ddbe-4782-bb29-26c5af0affa0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component\Interface\源文件">
-      <UniqueIdentifier>{dfe603ac-4b06-460d-a543-469e44a14539}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Animation">
       <UniqueIdentifier>{532b1edd-0096-400b-a5ae-e605073ead3e}</UniqueIdentifier>
     </Filter>
@@ -164,9 +155,6 @@
     <ClInclude Include="IncludeComponent.h">
       <Filter>Component\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Component\Interface\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="FileHead.h">
       <Filter>File\头文件</Filter>
     </ClInclude>
@@ -193,9 +181,6 @@
     </ClInclude>
     <ClInclude Include="GUISystem.h">
       <Filter>GUISystem\头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshProvider.h">
-      <Filter>Component\Interface\头文件</Filter>
     </ClInclude>
     <ClInclude Include="MeshCube.h">
       <Filter>Component\MeshProvide\头文件</Filter>
@@ -284,9 +269,6 @@
     <ClInclude Include="TestApp.h">
       <Filter>Application\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Component\Interface\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="RenderTexture.h">
       <Filter>Render\头文件</Filter>
     </ClInclude>
@@ -314,8 +296,11 @@
     <ClInclude Include="BoneAnimation.h">
       <Filter>Animation\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
+    <ClInclude Include="Renderer.h">
       <Filter>Render\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Animation\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -350,9 +335,6 @@
       <Filter>File\Image\源文件</Filter>
     </ClCompile>
     <ClCompile Include="3DSFile.cpp">
-      <Filter>File\Model\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelFile.cpp">
       <Filter>File\Model\源文件</Filter>
     </ClCompile>
     <ClCompile Include="Atlas.cpp">
@@ -430,9 +412,6 @@
     <ClCompile Include="MeshBuffer.cpp">
       <Filter>Render\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MeshProvider.cpp">
-      <Filter>Component\Interface\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Render\源文件</Filter>
     </ClCompile>
@@ -477,9 +456,6 @@
     </ClCompile>
     <ClCompile Include="BoneAnimation.cpp">
       <Filter>Animation\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Render\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

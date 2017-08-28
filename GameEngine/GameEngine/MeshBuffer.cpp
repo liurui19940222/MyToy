@@ -91,6 +91,11 @@ void CMeshBuffer::MakeJointBuffer(const SkeletonWeight& skeletonWeight)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+void CMeshBuffer::MakeBuffer(const Mesh& mesh)
+{
+	MakeBuffer(mesh.m_vertices, mesh.m_colors, mesh.m_normals, mesh.m_texcoords, mesh.m_vertexCount);
+}
+
 void CMeshBuffer::BindBuffer()
 {
 	glBindVertexArray(m_vaoHandle);

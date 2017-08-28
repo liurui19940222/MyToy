@@ -41,6 +41,8 @@ public:
 
 	void MakeJointBuffer(const SkeletonWeight& skeletonWeight);
 
+	void MakeBuffer(const Mesh& mesh);
+
 	virtual void BindBuffer() override;
 
 	virtual void ReleaseBuffer() override;

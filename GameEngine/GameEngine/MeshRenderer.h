@@ -14,12 +14,12 @@ class CMeshRenderer : public CComponent, public IRenderer
 {
 	REFLECT_CLASS(CMeshRenderer)
 private:
-	CMeshProvider* m_mesh;
+	CMeshBuffer* m_mesh;
 	CMaterial* m_material;
 
 public:
 
-	CMeshRenderer* SetModel(CMeshProvider* mesh);
+	CMeshRenderer* SetModel(CMeshBuffer* mesh);
 
 	CMeshRenderer* SetMaterial(CMaterial* material);
 

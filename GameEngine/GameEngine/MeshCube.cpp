@@ -1,31 +1,72 @@
 #include "MeshCube.h"
 
-#ifndef GL_QUADS
-#define GL_QUADS                          0x0007
-#endif
+Vector3 CMeshCube::vertices[VERTEX_NUM] = {
+	//front
+	{ -0.5f, 0.5f, -0.5f },
+	{ -0.5f, -0.5f, -0.5f },
+	{ 0.5f, -0.5f, -0.5f },
+	{ -0.5f, 0.5f, -0.5f },
+	{ 0.5f, -0.5f, -0.5f },
+	{ 0.5f, 0.5f, -0.5f },
+	//back
+	{ 0.5f, 0.5f, 0.5f },
+	{ 0.5f, -0.5f, 0.5f },
+	{ -0.5f, -0.5f, 0.5f },
+	{ 0.5f, 0.5f, 0.5f },
+	{ -0.5f, -0.5f, 0.5f },
+	{ -0.5f, 0.5f, 0.5f },
+	//left
+	{ -0.5f, 0.5f, 0.5f },
+	{ -0.5f, -0.5f, 0.5f },
+	{ -0.5f, -0.5f, -0.5f },
+	{ -0.5f, 0.5f, 0.5f },
+	{ -0.5f, -0.5f, -0.5f },
+	{ -0.5f, 0.5f, -0.5f },
+	//right
+	{ 0.5f, 0.5f, -0.5f },
+	{ 0.5f, -0.5f, -0.5f },
+	{ 0.5f, -0.5f, 0.5f },
+	{ 0.5f, 0.5f, -0.5f },
+	{ 0.5f, -0.5f, 0.5f },
+	{ 0.5f, 0.5f, 0.5f },
+	//top
+	{ -0.5f, 0.5f, 0.5f },
+	{ -0.5f, 0.5f, -0.5f },
+	{ 0.5f, 0.5f, -0.5f },
+	{ -0.5f, 0.5f, 0.5f },
+	{ 0.5f, 0.5f, -0.5f },
+	{ 0.5f, 0.5f, 0.5f },
+	//bottom
+	{ -0.5f, -0.5f, -0.5f },
+	{ -0.5f, -0.5f, 0.5f },
+	{ 0.5f, -0.5f, 0.5f },
+	{ -0.5f, -0.5f, -0.5f },
+	{ 0.5f, -0.5f, 0.5f },
+	{ 0.5f, -0.5f, -0.5f },
+};
 
-IMPL_CLASS(CMeshCube)
-
-void CMeshCube::OnInitialize()
+Mesh* CMeshCube::Create()
 {
+	Mesh* mesh = new Mesh;
+	mesh->m_vertexCount = VERTEX_NUM;
+	mesh->m_vertices = (Vector3*)malloc(sizeof(Vector3) * VERTEX_NUM);
+	mesh->m_texcoords = (Vector2*)malloc(sizeof(Vector2) * VERTEX_NUM);
+	memcpy(mesh->m_vertices, vertices, sizeof(Vector3) * VERTEX_NUM);
+
 	for (int i = 0; i < VERTEX_NUM;)
 	{
-		uvs[i++] = Vector2(0.0f, 1.0f);
-		uvs[i++] = Vector2(0.0f, 0.0f);
-		uvs[i++] = Vector2(1.0f, 0.0f);
-		uvs[i++] = Vector2(0.0f, 1.0f);
-		uvs[i++] = Vector2(1.0f, 0.0f);
-		uvs[i++] = Vector2(1.0f, 1.0f);
+		mesh->m_texcoords[i++] = Vector2(0.0f, 1.0f);
+		mesh->m_texcoords[i++] = Vector2(0.0f, 0.0f);
+		mesh->m_texcoords[i++] = Vector2(1.0f, 0.0f);
+		mesh->m_texcoords[i++] = Vector2(0.0f, 1.0f);
+		mesh->m_texcoords[i++] = Vector2(1.0f, 0.0f);
+		mesh->m_texcoords[i++] = Vector2(1.0f, 1.0f);
 	}
-	m_buffer.MakeBuffer(vertices, NULL, NULL, uvs, VERTEX_NUM);
+
+	return mesh;
 }
 
-Vector3* CMeshCube::GetVertexArray() { return vertices; }
-
-Vector3* CMeshCube::GetNormalArray() { return normals; }
-
-Vector2* CMeshCube::GetUVArray() { return uvs; }
-
-int CMeshCube::GetVertexNum() { return VERTEX_NUM; }
-
-int CMeshCube::GetTriangleNum() { return VERTEX_NUM / 3; }
+CMeshBuffer* CMeshCube::CreateBuffer()
+{
+	CMeshBuffer* buffer = new CMeshBuffer;
+}

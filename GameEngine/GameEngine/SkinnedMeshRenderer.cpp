@@ -27,14 +27,12 @@ void CSkinnedMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix,
 	m_material->SetParam("M", modelMatrix);
 	m_material->SetParam("V", viewMatrix);
 	m_material->SetParam("P", projectionMatrix);
-	m_mesh->GetBuffer()->BindBuffer();
-	glDrawArrays(m_mesh->GetGLMode(), 0, m_mesh->GetVertexNum());
+	m_mesh->BindBuffer();
+	glDrawArrays(GL_TRIANGLES, 0, m_mesh->GetVertexNum());
 	m_material->Unbind();
-
-	//CEditorTool::DrawSkeleton(modelMatrix, collada->m_skeleton);
 }
 
-CSkinnedMeshRenderer* CSkinnedMeshRenderer::SetModel(CMeshProvider* mesh)
+CSkinnedMeshRenderer* CSkinnedMeshRenderer::SetModel(CMeshBuffer* mesh)
 {
 	this->m_mesh = mesh;
 	return this;
