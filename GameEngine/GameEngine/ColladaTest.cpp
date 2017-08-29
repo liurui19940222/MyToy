@@ -28,12 +28,11 @@ void CColladaTest::OnStart()
 	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"))
 		->SetMainTexture(CTexture2D::Create("textures/shake.png"));
 	collada = _Resources->Load<CColladaFile>("models/shake.xml");
-
-	model->AddComponent<CSkinnedMeshRenderer>()->SetModel(collada)->SetMaterial(model_mat);
-
+	m_model = collada->m_model;
+	Mesh* mesh = &m_model->m_meshes[0];
+	CMeshBuffer* buffer = new CMeshBuffer(*mesh, m_model->m_skeletonWeight);
+	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, &m_model->m_skeleton, &m_model->m_skeletonPose)->SetMaterial(model_mat);
 	_MainCameraGo->LookAt(model->GetLocalPosition());
-
-
 }
 
 void CColladaTest::OnUpdate()
@@ -44,26 +43,17 @@ void CColladaTest::OnUpdate()
 	Vector3 euler = model->GetLocalEulerAngles();
 	euler.y += h;
 	model->SetLocalEulerAngles(euler);
-	static bool b = false;
-	if (CInput::GetKeyDown(DIK_SPACE))
-	{
-		b = true;
-	}
-	if (CInput::GetKeyDown(DIK_N))
-	{
-		b = false;
-	}
-	if (!b)
-		collada->Sample(CTime::time);
-	else
-		collada->SampleB(CTime::time);
+
+	m_model->m_animations[0].Sample(CTime::time);
+	m_model->CalculateGlobalMatrixByAnim();
+	m_model->CalculateSkinningMatrix();
 
 	CEditorTool::WatchTarget(*_MainCameraGo, model->GetLocalPosition());
 }
 
 void CColladaTest::OnRender()
 {
-	//CEditorTool::DrawSkeleton(model->GetModelToWorldMat(), collada->m_model->m_skeleton);
+
 }
 
 void CColladaTest::OnClose()

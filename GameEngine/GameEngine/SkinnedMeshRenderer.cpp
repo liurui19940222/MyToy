@@ -21,22 +21,23 @@ void CSkinnedMeshRenderer::RenderDebug(Matrix4x4& modelMatrix)
 void CSkinnedMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
 {
 	if (!m_mesh) return;
-	CColladaFile* collada = (CColladaFile*)m_mesh;
 	m_material->Bind();
-	m_material->SetParam("GlobalPoseMatrices", collada->m_skeletonPose.m_aGlobalPose, collada->m_skeleton.GetSize());
+	m_material->SetParam("GlobalPoseMatrices", m_skeletonPose->m_aGlobalPose, m_skeleton->GetSize());
 	m_material->SetParam("M", modelMatrix);
 	m_material->SetParam("V", viewMatrix);
 	m_material->SetParam("P", projectionMatrix);
-	collada->m_buffer.BindBuffer();
-	glDrawArrays(GL_TRIANGLES, 0, collada->m_vertexNum);
+	m_mesh->BindBuffer();
+	glDrawArrays(GL_TRIANGLES, 0, m_mesh->GetVertexNum());
 	m_material->Unbind();
 
-	//CEditorTool::DrawSkeleton(modelMatrix, collada->m_skeleton);
+	//CEditorTool::DrawSkeleton(modelMatrix, *m_skeleton);
 }
 
-CSkinnedMeshRenderer* CSkinnedMeshRenderer::SetModel(CColladaFile* mesh)
+CSkinnedMeshRenderer* CSkinnedMeshRenderer::SetSkinningMesh(CMeshBuffer* mesh, Skeleton* skeleton, SkeletonPose* pose)
 {
 	this->m_mesh = mesh;
+	this->m_skeletonPose = pose;
+	this->m_skeleton = skeleton;
 	return this;
 }
 

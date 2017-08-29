@@ -58,6 +58,19 @@ void CGameObject::LookAt(const Vector3& target)
 	ComputeModelToWorldMat();
 }
 
+void CGameObject::SetRotation(const Quaternion& q)
+{
+	rotation = q;
+	localRotateMat.MakeRotate(q);
+	Matrix4x4::GetUVN(localRotateMat, &right, &up, &forward);
+	ComputeModelToWorldMat();
+}
+
+Quaternion CGameObject::GetRotation() const
+{
+	return rotation;
+}
+
 const Vector3& CGameObject::GetLocalScale() const
 {
 	return localScale;

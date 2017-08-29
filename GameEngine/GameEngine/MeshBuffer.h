@@ -5,7 +5,7 @@
 #include"RenderBuffer.h"
 #include"Math.h"
 #include"EngineDefine.h"
-#include"BoneAnimation.h"
+#include"SkeletonAnimation.h"
 
 #define VERTEX_POS			0
 #define COLOR_POS			1
@@ -30,6 +30,8 @@ public:
 	CMeshBuffer();
 
 	CMeshBuffer(const Mesh& mesh);
+
+	CMeshBuffer(const Mesh& mesh, const SkeletonWeight& skeletonWeight);
 
 	void MakeBuffer(const Vector3* vertices, const Color* colors, const Vector3* normals, const Vector2* uvs, int size);
 

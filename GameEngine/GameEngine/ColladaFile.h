@@ -5,7 +5,7 @@
 #include"Converter.h"
 #include"include\rapidxml\rapidxml.hpp"
 #include"ModelFile.h"
-#include"BoneAnimation.h"
+#include"SkeletonAnimation.h"
 #include"Debug.h"
 #include"MeshBuffer.h"
 
@@ -27,11 +27,11 @@ private:
 	xml_document<> m_xmlDoc;
 	char* m_xmlData;
 
-	Matrix4x4 m_bindShapeMat;
-	Skeleton m_skeleton;
-	SkeletonPose m_skeletonPose;
-	SkeletonWeight m_skeletonWeight;
-	AnimationClip m_animationClip;
+	//Matrix4x4 m_bindShapeMat;
+	//Skeleton m_skeleton;
+	//SkeletonPose m_skeletonPose;
+	//SkeletonWeight m_skeletonWeight;
+	//AnimationClip m_animationClip;
 
 #pragma region read_mesh
 
@@ -43,15 +43,6 @@ private:
 
 	//读取蒙皮
 	SkeletonWeight ReadSkin(xml_node<>* root);
-
-	//计算每个关节的全局变换矩阵
-	void CalculateGlobalMatrix();
-
-	//计算每个关节的全局变换矩阵，用动画局部矩阵
-	void CalculateGlobalMatrixByAnim();
-
-	//计算蒙皮矩阵
-	void CalculateSkinningMatrix();
 
 	//按采样时间，把所有骨骼的采样分类
 	void AddSample(map<float, AnimationSample>& p_samples, float time, byte jointIndex, const JointPose& pose);
@@ -156,11 +147,6 @@ private:
 
 public:
 	CMeshBuffer m_buffer;
-	Vector3* m_vertexArray;
-	Vector3* m_normalArray;
-	Vector2* m_uvArray;
-	int m_vertexNum;
-
 	Model* m_model;
 
 	virtual void LoadFromFile(const char* filename) override;

@@ -5,7 +5,7 @@
 
 #include<map>
 #include"Singleton.h"
-#include"BoneAnimation.h"
+#include"SkeletonAnimation.h"
 #include"MeshBuffer.h"
 
 using namespace std;

@@ -1,27 +1,4 @@
-﻿  ColladaFile.cpp
-d:\github\mytoy\gameengine\gameengine\colladafile.cpp(71): warning C4018: “<=”: 有符号/无符号不匹配
-d:\github\mytoy\gameengine\gameengine\colladafile.cpp(73): warning C4018: “<”: 有符号/无符号不匹配
-d:\github\mytoy\gameengine\gameengine\colladafile.cpp(266): warning C4018: “<”: 有符号/无符号不匹配
-d:\github\mytoy\gameengine\gameengine\colladafile.cpp(310): warning C4018: “<”: 有符号/无符号不匹配
-d:\github\mytoy\gameengine\gameengine\colladafile.h(116): warning C4018: “<=”: 有符号/无符号不匹配
-  d:\github\mytoy\gameengine\gameengine\colladafile.cpp(154): note: 参见对正在编译的函数 模板 实例化“TValue *CColladaFile::UnpackValues<float>(std::string &,std::size_t)”的引用
-          with
-          [
-              TValue=float
-          ]
-d:\github\mytoy\gameengine\gameengine\colladafile.h(118): warning C4018: “<”: 有符号/无符号不匹配
-  正在生成代码...
-  正在编译...
-  main.cpp
+﻿  TestTest.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  SkinnedMeshRenderer.cpp
-  ColladaTest.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\glm\core\func_common.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\glm\core\func_common.inl : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\glm\core\func_integer.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-d:\github\mytoy\gameengine\gameengine\colladatest.cpp(10): warning C4305: “参数”: 从“double”到“float”截断
-d:\github\mytoy\gameengine\gameengine\colladatest.cpp(26): warning C4305: “参数”: 从“double”到“const float”截断
-  正在生成代码...
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.pdb (Full PDB)

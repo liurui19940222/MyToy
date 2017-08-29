@@ -24,6 +24,7 @@ public:
 	static void Log(Matrix4x4& mat);
 	static void Log(const Vector3& v);
 	static void Log(const Vector4& v);
+	static void Log(const Quaternion& q);
 	static void Log(const Color& color);
 	static void Box(const char* text, ...);
 	static void Box(const wchar_t* text, ...);

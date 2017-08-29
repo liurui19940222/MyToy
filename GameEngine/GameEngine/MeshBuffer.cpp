@@ -1,13 +1,21 @@
 #include "MeshBuffer.h"
 
 CMeshBuffer::CMeshBuffer() : m_vaoHandle(0), m_vboColorHandle(0), 
-	m_vboNormalHandle(0), m_vboUVHandle(0), m_vboVertexHandle(0)
+	m_vboNormalHandle(0), m_vboUVHandle(0), m_vboVertexHandle(0),
+	m_vboJointIndexHandle(0), m_vboJointWeightHandle(0), m_vertexNum(0)
 {
+
 }
 
 CMeshBuffer::CMeshBuffer(const Mesh& mesh) : CMeshBuffer()
 {
 	MakeBuffer(mesh);
+}
+
+CMeshBuffer::CMeshBuffer(const Mesh& mesh, const SkeletonWeight& skeletonWeight) : CMeshBuffer()
+{
+	MakeBuffer(mesh);
+	MakeJointBuffer(skeletonWeight);
 }
 
 void CMeshBuffer::MakeBuffer(const Vector3* vertices, const Color* colors, const Vector3* normals, const Vector2* uvs, int size)

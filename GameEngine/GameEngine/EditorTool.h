@@ -3,7 +3,7 @@
 
 #include"Math.h"
 #include"EngineDefine.h"
-#include"BoneAnimation.h"
+#include"SkeletonAnimation.h"
 
 class CGameObject;
 

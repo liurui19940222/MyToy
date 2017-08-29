@@ -278,9 +278,6 @@
     <ClInclude Include="SkinnedMeshRenderer.h">
       <Filter>Component\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="BoneAnimation.h">
-      <Filter>Animation\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Render\头文件</Filter>
     </ClInclude>
@@ -289,6 +286,12 @@
     </ClInclude>
     <ClInclude Include="MeshFactory.h">
       <Filter>Render\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SkeletonAnimation.h">
+      <Filter>Animation\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TestTest.h">
+      <Filter>Application\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -436,11 +439,14 @@
     <ClCompile Include="SkinnedMeshRenderer.cpp">
       <Filter>Component\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BoneAnimation.cpp">
-      <Filter>Animation\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="MeshFactory.cpp">
       <Filter>Render\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SkeletonAnimation.cpp">
+      <Filter>Animation\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TestTest.cpp">
+      <Filter>Application\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

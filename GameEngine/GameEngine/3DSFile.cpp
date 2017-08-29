@@ -51,7 +51,7 @@ void C3DSFile::LoadFromFile(const char* filename)
 		memcpy(&m_normalArray[index++], &(normalBuffer[face->points[2]]), sizeof(Vector3));
 	}
 	m_model->m_meshCount = 1;
-	m_model->m_meshes = (Mesh*)malloc(sizeof(Mesh) * 1);
+	m_model->m_meshes = new Mesh[1];
 	m_model->m_meshes[0].m_vertices = (Vector3*)m_triangleArray;
 	m_model->m_meshes[0].m_normals = m_normalArray;
 	m_model->m_meshes[0].m_texcoords = m_uvArray;

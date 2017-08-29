@@ -84,7 +84,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Atlas.h" />
     <ClInclude Include="BitImage.h" />
-    <ClInclude Include="BoneAnimation.h" />
+    <ClInclude Include="SkeletonAnimation.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColladaFile.h" />
     <ClInclude Include="ColladaTest.h" />
@@ -127,6 +127,7 @@
     <ClInclude Include="SpriteAnimation.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="TestApp.h" />
+    <ClInclude Include="TestTest.h" />
     <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="TextTest.h" />
     <ClInclude Include="Texture.h" />
@@ -144,7 +145,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Atlas.cpp" />
     <ClCompile Include="BitImage.cpp" />
-    <ClCompile Include="BoneAnimation.cpp" />
+    <ClCompile Include="SkeletonAnimation.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColladaFile.cpp" />
     <ClCompile Include="ColladaTest.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="SpriteAnimation.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TestApp.cpp" />
+    <ClCompile Include="TestTest.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="TextTest.cpp" />
     <ClCompile Include="Texture.cpp" />

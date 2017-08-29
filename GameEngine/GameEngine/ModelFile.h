@@ -3,7 +3,7 @@
 
 #include "Math.h"
 #include "SourceFile.h"
-#include "BoneAnimation.h"
+#include "SkeletonAnimation.h"
 
 class CModelFile : public ISourceFile
 {

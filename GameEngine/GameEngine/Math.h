@@ -12,6 +12,7 @@ typedef TmpVector3<float> Vector3;
 typedef TmpVector4<float> Vector4;
 
 class Matrix4x4;
+union Quaternion;
 
 template<typename VType>
 class TmpVector2
@@ -253,6 +254,8 @@ public:
 
 	void MakeRotate(float pitch, float yaw, float roll);
 
+	void MakeRotate(const Quaternion& q);
+
 	void MakeRotateUVN(const Vector3& targetPos, const Vector3& selfPos);
 
 	void MakeTranslate(const Vector3& translate);
@@ -283,11 +286,15 @@ public:
 
 	static Matrix4x4 Lerp(Matrix4x4& a, Matrix4x4& b, float t);
 
+	static Quaternion ToQuaternion(Matrix4x4& mat);
+
 	static void Zero(Matrix4x4& mat);
 
 	static void Identity(Matrix4x4& mat);
 
 	static void Rotate(Matrix4x4& mat, float pitch, float yaw, float roll);
+
+	static void Rotate(Matrix4x4& mat, const Quaternion& q);
 
 	static void RotateUVN(Matrix4x4& mat, const Vector3& targetPos, const Vector3& selfPos);
 
@@ -476,11 +483,13 @@ public:
 	}
 };
 
-class Quaternion
+union Quaternion
 {
 public:
-	float x, y, z, w;
-	
+	float m[4];
+	struct {
+		float x, y, z, w;
+	};
 	Quaternion();
 	Quaternion(const Vector3& vec);
 	Quaternion(float px, float py, float pz, float pw);

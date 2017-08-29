@@ -14,6 +14,7 @@
 class CColladaTest : public CGameWindow
 {
 	CColladaFile* collada;
+	Model* m_model;
 	CGameObject* model;
 public:
 	virtual void OnStart();

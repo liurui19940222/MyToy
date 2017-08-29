@@ -8,18 +8,22 @@
 #include"Shader.h"
 #include"Renderer.h"
 #include"Material.h"
+#include"SkeletonAnimation.h"
+#include"MeshBuffer.h"
 #include"ColladaFile.h"
 
 class CSkinnedMeshRenderer : public CComponent, public IRenderer
 {
 	REFLECT_CLASS(CSkinnedMeshRenderer)
 private:
-	CColladaFile* m_mesh;
+	Skeleton* m_skeleton;
+	SkeletonPose* m_skeletonPose;
+	CMeshBuffer* m_mesh;
 	CMaterial* m_material;
 
 public:
 
-	CSkinnedMeshRenderer* SetModel(CColladaFile* mesh);
+	CSkinnedMeshRenderer* SetSkinningMesh(CMeshBuffer* mesh, Skeleton* skeleton, SkeletonPose* pose);
 
 	CSkinnedMeshRenderer* SetMaterial(CMaterial* material);
 

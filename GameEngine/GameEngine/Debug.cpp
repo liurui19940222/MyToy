@@ -68,6 +68,11 @@ void CDebug::Log(const Vector4& v)
 	Log("%g %g %g %g", v.x, v.y, v.z, v.w);
 }
 
+void CDebug::Log(const Quaternion& q)
+{
+	Log("%g %g %g %g", q.x, q.y, q.z, q.w);
+}
+
 void CDebug::Log(const Color& color)
 {
 	Log("%g %g %g %g", color.r, color.g, color.b, color.a);

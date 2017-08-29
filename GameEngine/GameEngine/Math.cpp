@@ -204,6 +204,39 @@ Matrix4x4 Matrix4x4::Lerp(Matrix4x4& a, Matrix4x4& b, float t)
 	return m;
 }
 
+Quaternion Matrix4x4::ToQuaternion(Matrix4x4& mat)
+{
+	Quaternion q;
+	float trace = mat[0][0] + mat[1][1] + mat[2][2];
+	if (trace > 0.0f)
+	{
+		float s = sqrt(trace + 1.0f);
+		q.w = s * 0.5f;
+		float t = 0.5f / s;
+		q.x = (mat[1][2] - mat[2][1]) * t;
+		q.y = (mat[2][0] - mat[0][2]) * t;
+		q.z = (mat[0][1] - mat[1][0]) * t;
+	}
+	else
+	{
+		int i = 0;
+		if (mat[1][1] > mat[0][0]) i = 1;
+		if (mat[2][2] > mat[i][i]) i = 2;
+		static const int next[3] = { 1, 2, 0 };
+		int j = next[i];
+		int k = next[j];
+		float s = sqrt((mat[i][i] - (mat[j][j] + mat[k][k])) + 1.0f);
+		q.m[i] = s * 0.5f;
+		float t;
+		if (s != 0.0f) t = 0.5f / s;
+		else t = s;
+		q.m[3] = (mat[j][k] - mat[k][j]) * t;
+		q.m[j] = (mat[i][j] + mat[j][i]) * t;
+		q.m[k] = (mat[i][k] + mat[k][i]) * t;
+	}
+	return q;
+}
+
 Matrix4x4 Matrix4x4::RotateUVN(const Vector3& targetPos, const Vector3& selfPos)
 {
 	Matrix4x4 m;
@@ -339,6 +372,11 @@ void Matrix4x4::MakeRotate(float pitch, float yaw, float roll)
 	Rotate(*this, pitch, yaw, roll);
 }
 
+void Matrix4x4::MakeRotate(const Quaternion& q)
+{
+	Rotate(*this, q);
+}
+
 void Matrix4x4::MakeRotateUVN(const Vector3& targetPos, const Vector3& selfPos)
 {
 	RotateUVN(*this, targetPos, selfPos);
@@ -406,6 +444,14 @@ void Matrix4x4::Rotate(Matrix4x4& mat, float pitch, float yaw, float roll)
 	z[2][0] = 0;		z[2][1] = 0;		z[2][2] = 1; z[2][3] = 0;
 	z[3][0] = 0;		z[3][1] = 0;		z[3][2] = 0; z[3][3] = 1;
 	mat = z * x * y;
+}
+
+void Matrix4x4::Rotate(Matrix4x4& mat, const Quaternion& q)
+{
+	mat.MakeIdentity();
+	mat[0][0] = 1 - 2 * q.y * q.y - 2 * q.z * q.z;	mat[0][1] = 2 * q.x * q.y + 2 * q.z * q.w;		mat[0][2] = 2 * q.x * q.y - 2 * q.y * q.w;
+	mat[1][0] = 2 * q.x * q.y - 2 * q.z * q.w;		mat[1][1] = 1 - 2 * q.x * q.x - 2 * q.z * q.z;	mat[1][2] = 2 * q.y * q.z + 2 * q.x * q.w;
+	mat[2][0] = 2 * q.x * q.z + 2 * q.y * q.w;		mat[2][1] = 2 * q.y * q.z - 2 * q.x * q.w;		mat[2][2] = 1 - 2 * q.x * q.x - 2 * q.y * q.y;
 }
 
 void Matrix4x4::RotateUVN(Matrix4x4& mat, const Vector3& targetPos, const Vector3& selfPos)
