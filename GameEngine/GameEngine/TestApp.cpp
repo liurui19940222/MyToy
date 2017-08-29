@@ -30,7 +30,7 @@ void CTestApp::OnStart()
 
 	CMaterial* material = _Maker->Instantiate<CMaterial>();
 	material->SetMainTexture(renderTexture)->SetShader(CShader::Get("texture"));
-	CMeshBuffer* quad = _MeshFactory->SharedBuffer(EMeshType::Quad);
+	CMeshBuffer* quad = _MeshFactory->SharedBuffer(EMeshType::Cube);
 	go1 = _Maker->Instantiate("parent");
 	go1->AddComponent<CMeshRenderer>()->SetModel(quad)->SetMaterial(material);
 
@@ -58,7 +58,7 @@ void CTestApp::OnUpdate()
 	euler.x += v * 300;
 	euler.y += h * 300;
 	go1->SetLocalEulerAngles(euler);
-
+	go1->SetRotation(go1->GetRotation());
 	euler = go3->GetLocalEulerAngles();
 	if (CInput::GetKey(DIK_NUMPAD8))
 	{

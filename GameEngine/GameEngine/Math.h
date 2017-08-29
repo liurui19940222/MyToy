@@ -246,8 +246,6 @@ public:
 
 	Matrix4x4 Inverse();
 
-	Vector3 EulerAngles();
-
 	void MakeIdentity();
 
 	void MakeZero();
@@ -267,6 +265,8 @@ public:
 	void MakePerspective(float fov, float aspect, float near, float far);
 
 	void MakeLookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
+
+	Quaternion ToQuaternion();
 
 	static Matrix4x4 Identity();
 
@@ -493,6 +493,7 @@ public:
 	Quaternion();
 	Quaternion(const Vector3& vec);
 	Quaternion(float px, float py, float pz, float pw);
+	float& operator[](int index);
 	bool operator==(const Quaternion& q) const;
 	bool operator!=(const Quaternion& q) const;
 	Vector3 operator*(const Vector3& vec) const;

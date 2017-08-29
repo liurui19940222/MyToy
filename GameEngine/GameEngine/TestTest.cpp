@@ -4,10 +4,15 @@
 void CTestTest::OnStart() {
 	_MainCameraGo->SetLocalPosition(Vector3(0, 2, -10));
 	go = _Maker->Instantiate("NewGameObject");
+	go2 = _Maker->Instantiate("2");
 	CMaterial* mat = _Maker->Instantiate<CMaterial>();
 	mat->SetMainTexture(CTexture2D::Create("textures/dlg01.bmp"))->SetShader(CShader::Get("texture"));
 	go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube))
 		->SetMaterial(mat);
+
+	go2->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube))
+		->SetMaterial(mat);
+	go2->SetLocalPosition(Vector3(2, 0, 0));
 
 	_MainCameraGo->LookAt(go->GetLocalPosition());
 
@@ -19,19 +24,21 @@ void CTestTest::OnStart() {
 	CDebug::Log(q3);
 	Matrix4x4 matrix;
 	matrix.MakeRotate(q3);
-	matrix = Matrix4x4::Translate(Vector3::zero) * matrix * Matrix4x4::Scale(Vector3::one);
 	CDebug::Log(matrix);
+	Quaternion q4 = Matrix4x4::ToQuaternion(matrix);
+	CDebug::Log(q4);
 }
 
 void CTestTest::OnUpdate() 
 {
-	static float axis_y = 0, axis_z = 0;
 	float h = CInput::GetAxis("Horizontal") * CTime::deltaTime * 100;
 	float v = CInput::GetAxis("Vertical") * CTime::deltaTime * 100;
-	axis_y += h;
-	axis_z += v;
-	go->SetRotation(Quaternion::AngleAxis(Vector3::right, axis_z));
 
+	Vector3 eul = go->GetLocalEulerAngles();
+	eul.y += h;
+	eul.z += v;
+	go->SetLocalEulerAngles(eul);
+	go->SetRotation(go->GetRotation());
 	CEditorTool::WatchTarget(*_MainCameraGo, go->GetLocalPosition());
 }
 

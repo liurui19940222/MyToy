@@ -10,8 +10,8 @@ void CRelationshipTest::OnStart()
 	CRenderCamera* batch = new CRenderCamera;
 	_MainCamera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
 	_MainCamera->SetCameraClearColor(Color::Hex(0x314D79FF));
-	_MainCameraGo->SetLocalPosition(Vector3(0, 7, 10));
-	_MainCameraGo->SetLocalEulerAngles(Vector3(-30, 180, 0));
+	_MainCameraGo->SetLocalPosition(Vector3(0, 2, 10));
+	_MainCameraGo->SetLocalEulerAngles(Vector3(0, -180, 0));
 	CTexture* texture = CTexture2D::Create("textures/dlg01.bmp");
 	go = _Maker->Instantiate("testGo");
 	go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube));

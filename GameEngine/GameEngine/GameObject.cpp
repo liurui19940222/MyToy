@@ -25,19 +25,13 @@ CGameObject::~CGameObject() { }
 void CGameObject::SetLocalScale(const Vector3& s)
 {
 	this->localScale = s;
-
 	localScaleMat.MakeScale(s);
-
-	ComputeModelToWorldMat();
 }
 
 void CGameObject::SetLocalPosition(const Vector3& pos)
 {
 	localPosition = pos;
-
 	localMoveMat.MakeTranslate(pos);
-
-	ComputeModelToWorldMat();
 }
 
 void CGameObject::SetLocalEulerAngles(const Vector3& euler)
@@ -48,22 +42,23 @@ void CGameObject::SetLocalEulerAngles(const Vector3& euler)
 
 	localRotateMat.MakeRotate(localEulerAngles.x, localEulerAngles.y, localEulerAngles.z);
 	Matrix4x4::GetUVN(localRotateMat, &right, &up, &forward);
-	ComputeModelToWorldMat();
+	rotation = Quaternion::Euler(euler);
 }
 
 void CGameObject::LookAt(const Vector3& target)
 {
 	localRotateMat.MakeRotateUVN(target, localPosition);
 	Matrix4x4::GetUVN(localRotateMat, &right, &up, &forward);
-	ComputeModelToWorldMat();
+	rotation = Quaternion::LookRotation(forward, up);
+	localEulerAngles = rotation.ToEulerAngles();
 }
 
 void CGameObject::SetRotation(const Quaternion& q)
 {
 	rotation = q;
+	localEulerAngles = rotation.ToEulerAngles();
 	localRotateMat.MakeRotate(q);
 	Matrix4x4::GetUVN(localRotateMat, &right, &up, &forward);
-	ComputeModelToWorldMat();
 }
 
 Quaternion CGameObject::GetRotation() const
@@ -136,6 +131,11 @@ Matrix4x4 CGameObject::GetModelToWorldMat()
 	return ComputeModelToWorldMat();
 }
 
+Matrix4x4 CGameObject::GetRotateMatrix()
+{
+	return localRotateMat;
+}
+
 void CGameObject::OnStart()
 {
 	vector<CComponent*>::iterator it = components.begin();
@@ -178,14 +178,6 @@ void CGameObject::OnDestroy()
 	while (it != components.end())
 	{
 		(*it++)->OnDestroy();
-	}
-}
-
-void CGameObject::UpdateEulerAngles()
-{
-	if (parent)
-	{
-		SetLocalEulerAngles(localEulerAngles);
 	}
 }
 

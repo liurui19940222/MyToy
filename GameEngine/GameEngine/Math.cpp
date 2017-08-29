@@ -204,35 +204,35 @@ Matrix4x4 Matrix4x4::Lerp(Matrix4x4& a, Matrix4x4& b, float t)
 	return m;
 }
 
-Quaternion Matrix4x4::ToQuaternion(Matrix4x4& mat)
+Quaternion Matrix4x4::ToQuaternion(Matrix4x4& R)
 {
 	Quaternion q;
-	float trace = mat[0][0] + mat[1][1] + mat[2][2];
+	float trace = R[0][0] + R[1][1] + R[2][2];
 	if (trace > 0.0f)
 	{
 		float s = sqrt(trace + 1.0f);
-		q.w = s * 0.5f;
+		q[3] = s * 0.5f;
 		float t = 0.5f / s;
-		q.x = (mat[1][2] - mat[2][1]) * t;
-		q.y = (mat[2][0] - mat[0][2]) * t;
-		q.z = (mat[0][1] - mat[1][0]) * t;
+		q[0] = (R[1][2] - R[2][1]) * t;
+		q[1] = (R[2][0] - R[0][2]) * t;
+		q[2] = (R[0][1] - R[1][0]) * t;
 	}
 	else
 	{
 		int i = 0;
-		if (mat[1][1] > mat[0][0]) i = 1;
-		if (mat[2][2] > mat[i][i]) i = 2;
+		if (R[1][1] > R[0][0]) i = 1;
+		if (R[2][2] > R[i][i]) i = 2;
 		static const int next[3] = { 1, 2, 0 };
 		int j = next[i];
 		int k = next[j];
-		float s = sqrt((mat[i][i] - (mat[j][j] + mat[k][k])) + 1.0f);
-		q.m[i] = s * 0.5f;
+		float s = sqrt((R[i][i] - (R[j][j] + R[k][k])) + 1.0f);
+		q[i] = s * 0.5f;
 		float t;
 		if (s != 0.0f) t = 0.5f / s;
 		else t = s;
-		q.m[3] = (mat[j][k] - mat[k][j]) * t;
-		q.m[j] = (mat[i][j] + mat[j][i]) * t;
-		q.m[k] = (mat[i][k] + mat[k][i]) * t;
+		q[3] = (R[j][k] - R[k][j]) * t;
+		q[j] = (R[i][j] + R[j][i]) * t;
+		q[k] = (R[i][k] + R[k][i]) * t;
 	}
 	return q;
 }
@@ -319,44 +319,6 @@ Matrix4x4 Matrix4x4::Inverse()
 	return Inverse;
 }
 
-Vector3 Matrix4x4::EulerAngles()
-{
-	Vector3 euler;
-
-	float h = 0, p = 0, b = 0;
-	float sp = -m[1][2];
-	if (sp <= -1.0f)
-	{
-		p = -1.570796f;
-	}
-	else if (sp >= 1.0f)
-	{
-		p = 1.570796f;
-	}
-	else
-	{
-		p = asin(sp);
-	}
-	if (sp > 0.9999f)
-	{
-		b = 0;
-		h = atan2(-m[2][0], m[0][0]);
-	}
-	else
-	{
-		h = atan2(m[0][2], m[2][2]);
-		b = atan2(m[2][0], m[1][1]);
-	}
-
-	euler.y = CMath::RadToDeg * h;
-	euler.x = CMath::RadToDeg * p;
-	euler.z = CMath::RadToDeg * b;
-	if (euler.x < 0) euler.x = 360 + euler.x;
-	if (euler.y < 0) euler.y = 360 + euler.y;
-	if (euler.z < 0) euler.z = 360 + euler.z;
-	return euler;
-}
-
 void Matrix4x4::MakeIdentity()
 {
 	Identity(*this);
@@ -407,6 +369,11 @@ void Matrix4x4::MakeLookAt(const Vector3& eye, const Vector3& center, const Vect
 	LookAt(*this, eye, center, up);
 }
 
+Quaternion Matrix4x4::ToQuaternion()
+{
+	return ToQuaternion(*this);
+}
+
 void Matrix4x4::Zero(Matrix4x4& mat)
 {
 	memset(&mat, 0, sizeof(float) * 16);
@@ -443,13 +410,13 @@ void Matrix4x4::Rotate(Matrix4x4& mat, float pitch, float yaw, float roll)
 	z[1][0] = -sin_z;	z[1][1] = cos_z;	z[1][2] = 0; z[1][3] = 0;
 	z[2][0] = 0;		z[2][1] = 0;		z[2][2] = 1; z[2][3] = 0;
 	z[3][0] = 0;		z[3][1] = 0;		z[3][2] = 0; z[3][3] = 1;
-	mat = z * x * y;
+	mat = y * x * z;
 }
 
 void Matrix4x4::Rotate(Matrix4x4& mat, const Quaternion& q)
 {
 	mat.MakeIdentity();
-	mat[0][0] = 1 - 2 * q.y * q.y - 2 * q.z * q.z;	mat[0][1] = 2 * q.x * q.y + 2 * q.z * q.w;		mat[0][2] = 2 * q.x * q.y - 2 * q.y * q.w;
+	mat[0][0] = 1 - 2 * q.y * q.y - 2 * q.z * q.z;	mat[0][1] = 2 * q.x * q.y + 2 * q.z * q.w;		mat[0][2] = 2 * q.x * q.z - 2 * q.y * q.w;
 	mat[1][0] = 2 * q.x * q.y - 2 * q.z * q.w;		mat[1][1] = 1 - 2 * q.x * q.x - 2 * q.z * q.z;	mat[1][2] = 2 * q.y * q.z + 2 * q.x * q.w;
 	mat[2][0] = 2 * q.x * q.z + 2 * q.y * q.w;		mat[2][1] = 2 * q.y * q.z - 2 * q.x * q.w;		mat[2][2] = 1 - 2 * q.x * q.x - 2 * q.y * q.y;
 }
@@ -705,6 +672,7 @@ int CMath::Random(int min, int max)
 Quaternion::Quaternion() : x(0), y(0), z(0), w(0) {}
 Quaternion::Quaternion(const Vector3& vec) : x(vec.x), y(vec.y), z(vec.z), w(0) {}
 Quaternion::Quaternion(float px, float py, float pz, float pw) : x(px), y(py), z(pz), w(pw) {}
+float& Quaternion::operator[](int index) { return m[index]; }
 bool Quaternion::operator==(const Quaternion& q) const { return x == q.x && y == q.y && z == q.z && w == q.w; }
 bool Quaternion::operator!=(const Quaternion& q) const { return x != q.x || y != q.y || z != q.z || w != q.w; }
 Vector3 Quaternion::operator*(const Vector3& vec) const { return Multiply(vec); }
@@ -861,7 +829,7 @@ Quaternion Quaternion::LookRotation(const Vector3& pForward, const Vector3& pUp)
 			{ right.z, up.z, forward.z },
 		};
 
-		float q[3] = { 0, 0, 0 };
+		static float q[3] = { 0, 0, 0 };
 		int i = 1;
 
 		if (up.y > right.x)
@@ -912,7 +880,7 @@ float Quaternion::Dot(const Quaternion& a, const Quaternion& b)
 Vector3 Quaternion::ToEulerAngles() const
 {
 	//from http://www.geometrictools.com/Documentation/EulerAngles.pdf
-	//Order of rotations : YXZ, Ô­À´µÄZXYË³Ðò
+	//ZXYË³Ðò
 	float x = this->x;
 	float y = this->y;
 	float z = this->z;

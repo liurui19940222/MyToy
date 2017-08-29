@@ -12,6 +12,7 @@
 class CTestTest : public CGameWindow
 {
 	CGameObject* go;
+	CGameObject* go2;
 public:
 	virtual void OnStart();
 
