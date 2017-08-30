@@ -42,14 +42,14 @@ void CGameObject::SetLocalEulerAngles(const Vector3& euler)
 
 	localRotateMat.MakeRotate(localEulerAngles.x, localEulerAngles.y, localEulerAngles.z);
 	Matrix4x4::GetUVN(localRotateMat, &right, &up, &forward);
-	rotation = Quaternion::Euler(euler);
+	rotation = localRotateMat.ToQuaternion();
 }
 
 void CGameObject::LookAt(const Vector3& target)
 {
 	localRotateMat.MakeRotateUVN(target, localPosition);
 	Matrix4x4::GetUVN(localRotateMat, &right, &up, &forward);
-	rotation = Quaternion::LookRotation(forward, up);
+	rotation = localRotateMat.ToQuaternion();
 	localEulerAngles = rotation.ToEulerAngles();
 }
 

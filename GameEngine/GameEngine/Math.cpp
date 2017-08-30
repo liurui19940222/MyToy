@@ -829,17 +829,17 @@ Quaternion Quaternion::LookRotation(const Vector3& pForward, const Vector3& pUp)
 			{ right.z, up.z, forward.z },
 		};
 
-		static float q[3] = { 0, 0, 0 };
-		int i = 1;
+		float q[3] = { 0, 0, 0 };
+		int i = 0;
 
 		if (up.y > right.x)
 		{
-			i = 2;
+			i = 1;
 		}
 
 		if (forward.z > rot[i][i])
 		{
-			i = 3;
+			i = 2;
 		}
 
 		int j = _next[i];
@@ -852,7 +852,7 @@ Quaternion Quaternion::LookRotation(const Vector3& pForward, const Vector3& pUp)
 		q[j] = (rot[j][i] + rot[i][j]) * s;
 		q[k] = (rot[k][i] + rot[i][k]) * s;
 
-		Quaternion ret = Quaternion(q[1], q[2], q[3], w);
+		Quaternion ret = Quaternion(q[0], q[1], q[2], w);
 		ret.MakeNormalize();
 		return ret;
 	}

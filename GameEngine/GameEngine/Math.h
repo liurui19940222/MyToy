@@ -171,6 +171,11 @@ public:
 		return v * Dot(u, v) / (mag * mag);
 	}
 
+	inline static bool Approximately(const TmpVector3<VType>& a, const TmpVector3<VType>& b)
+	{
+		return CMath::Approximately(a.x, b.x) && CMath::Approximately(a.y, b.y) && CMath::Approximately(a.z, b.z);
+	}
+
 	static const TmpVector3<float> zero;
 	static const TmpVector3<float> one;
 	static const TmpVector3<float> up;
@@ -521,7 +526,7 @@ public:
 
 	static const Quaternion identity;
 private:
-	static constexpr float _next[3] = { 2, 3, 1 };
+	static constexpr float _next[3] = { 1, 2, 0 };
 	static constexpr float negativeFlip = -0.0001f;
 	static constexpr float positiveFlip = CMath::TWO_PI - 0.0001f;
 };
