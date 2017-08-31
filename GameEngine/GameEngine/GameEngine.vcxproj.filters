@@ -293,6 +293,9 @@
     <ClInclude Include="TestTest.h">
       <Filter>Application\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationSystem.h">
+      <Filter>Application\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -446,6 +449,9 @@
       <Filter>Animation\源文件</Filter>
     </ClCompile>
     <ClCompile Include="TestTest.cpp">
+      <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationSystem.cpp">
       <Filter>Application\源文件</Filter>
     </ClCompile>
   </ItemGroup>

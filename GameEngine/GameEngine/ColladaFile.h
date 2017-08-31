@@ -27,12 +27,6 @@ private:
 	xml_document<> m_xmlDoc;
 	char* m_xmlData;
 
-	//Matrix4x4 m_bindShapeMat;
-	//Skeleton m_skeleton;
-	//SkeletonPose m_skeletonPose;
-	//SkeletonWeight m_skeletonWeight;
-	//AnimationClip m_animationClip;
-
 #pragma region read_mesh
 
 	//¶ÁÈ¡Õû¸ö¹Ç¼Ü
@@ -146,14 +140,10 @@ private:
 #pragma endregion
 
 public:
-	CMeshBuffer m_buffer;
 	Model* m_model;
 
 	virtual void LoadFromFile(const char* filename) override;
 	virtual void ReleaseSource() override;
-	void Sample(float t);
-
-	void SampleB(float t);
 };
 
 #endif

@@ -10,12 +10,16 @@
 #include"Config.h"
 #include"SkinnedMeshRenderer.h"
 #include"ColladaFile.h"
+#include<vector>
+
+using namespace std;
 
 class CColladaTest : public CGameWindow
 {
 	CColladaFile* collada;
 	Model* m_model;
 	CGameObject* model;
+	vector<AnimationClip*> m_clips;
 public:
 	virtual void OnStart();
 

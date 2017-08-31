@@ -81,6 +81,7 @@
   <ItemGroup>
     <ClInclude Include="3DSFile.h" />
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationSystem.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Atlas.h" />
     <ClInclude Include="BitImage.h" />
@@ -142,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DSFile.cpp" />
+    <ClCompile Include="AnimationSystem.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Atlas.cpp" />
     <ClCompile Include="BitImage.cpp" />

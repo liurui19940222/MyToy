@@ -178,6 +178,8 @@ void CColladaFile::ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth)
 SkeletonWeight CColladaFile::ReadSkin(xml_node<>* root)
 {
 	//读取蒙皮
+	if (GetNodeByName(root, "library_controllers") == NULL)
+		return SkeletonWeight();
 	xml_node<>* skin_node = GetNodeByName(root, "library_controllers")->first_node()->first_node();
 	string mat_value = GetNodeByName(skin_node, "bind_shape_matrix")->value();
 	float* p_mat = UnpackValues<float>(mat_value, 16);
@@ -273,8 +275,8 @@ SkeletonWeight CColladaFile::ReadSkin(xml_node<>* root)
 
 void CColladaFile::ReadMesh(xml_node<>* root, SkeletonWeight p_skeletonWeight)
 {
-	Mesh* p_mesh = m_model->m_meshes = new Mesh[1];
-	m_model->m_meshCount = 1;
+	if (GetNodeByName(root, "library_geometries") == NULL)
+		return;
 	//读取几何信息
 	xml_node<>* mesh = GetNodeByName(root, "library_geometries")->first_node()->first_node();
 
@@ -297,6 +299,8 @@ void CColladaFile::ReadMesh(xml_node<>* root, SkeletonWeight p_skeletonWeight)
 	{
 		m_triangleNum += GetAttribute<int>(*it, "count");
 	}
+	Mesh* p_mesh = m_model->m_meshes = new Mesh[1];
+	m_model->m_meshCount = 1;
 	p_mesh->m_vertexCount = m_triangleNum * 3;
 
 	int vertIndex = 0, normalIndex = 0, uvIndex = 0; //读取时已到达的索引
@@ -410,7 +414,7 @@ void CColladaFile::ReadAnimation(xml_node<>* root)
 		free(times);
 	}
 	AnimationClip* clip = m_model->m_animations = new AnimationClip[1];
-	m_model->m_animationCount = 1;
+	m_model->m_animationCount = 0;
 	clip->m_pSkeleton = &m_model->m_skeleton;
 	clip->m_isLooping = true;
 	clip->m_aSamples.clear();
@@ -418,7 +422,10 @@ void CColladaFile::ReadAnimation(xml_node<>* root)
 	for (pair<float, AnimationSample> kv : p_samples)
 		clip->m_aSamples.push_back(kv.second);
 	if (clip->m_aSamples.size() > 0)
+	{
 		clip->m_length = clip->m_aSamples[clip->m_aSamples.size() - 1].m_time;
+		m_model->m_animationCount = 1;
+	}
 }
 
 void CColladaFile::LoadFromFile(const char* filename)
@@ -436,5 +443,5 @@ void CColladaFile::LoadFromFile(const char* filename)
 
 void CColladaFile::ReleaseSource()
 {
-	
+	free(m_xmlData);
 }

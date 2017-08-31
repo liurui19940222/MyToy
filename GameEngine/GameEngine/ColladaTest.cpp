@@ -27,12 +27,21 @@ void CColladaTest::OnStart()
 	model->SetLocalEulerAngles(Vector3(0, -70, 0));
 	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"))
 		->SetMainTexture(CTexture2D::Create("textures/shake.png"));
-	collada = _Resources->Load<CColladaFile>("models/shake.xml");
+	collada = _Resources->Load<CColladaFile>("models/shake_skin.xml");
 	m_model = collada->m_model;
 	Mesh* mesh = &m_model->m_meshes[0];
 	CMeshBuffer* buffer = new CMeshBuffer(*mesh, m_model->m_skeletonWeight);
 	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, &m_model->m_skeleton, &m_model->m_skeletonPose)->SetMaterial(model_mat);
 	_MainCameraGo->LookAt(model->GetLocalPosition());
+
+	m_clips.push_back(_Resources->LoadAnimation("models/shake_move.xml"));
+	m_clips.push_back(_Resources->LoadAnimation("models/shake_hit.xml"));
+	m_clips.push_back(_Resources->LoadAnimation("models/shake_death.xml"));
+	m_clips[0]->m_pSkeleton = &m_model->m_skeleton;
+	m_clips[1]->m_pSkeleton = &m_model->m_skeleton;
+	m_clips[1]->m_isLooping = false;
+	m_clips[2]->m_pSkeleton = &m_model->m_skeleton;
+	m_clips[2]->m_isLooping = false;
 }
 
 void CColladaTest::OnUpdate()
@@ -44,9 +53,12 @@ void CColladaTest::OnUpdate()
 	euler.y += h;
 	model->SetLocalEulerAngles(euler);
 
-	m_model->m_animations[0].Sample(CTime::time);
-	m_model->CalculateGlobalMatrixByAnim();
-	m_model->CalculateSkinningMatrix();
+	if (m_clips.size() > 0)
+	{
+		m_clips[1]->Sample(CTime::time);
+		m_model->CalculateGlobalMatrixByAnim();
+		m_model->CalculateSkinningMatrix();
+	}
 
 	CEditorTool::WatchTarget(*_MainCameraGo, model->GetLocalPosition());
 }

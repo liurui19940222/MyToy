@@ -9,6 +9,7 @@
 #include"SourceFile.h"
 #include"DynamicFactory.h"
 #include"Singleton.h"
+#include"SkeletonAnimation.h"
 
 using namespace std;
 
@@ -35,6 +36,8 @@ public:
 		}
 		return dynamic_cast<T*>(sourceFile);
 	}
+
+	AnimationClip* LoadAnimation(string path);
 
 	void Unload(string& path);
 };
