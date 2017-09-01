@@ -22,11 +22,6 @@ void CCamera::OnUpdate()
 	
 }
 
-void CCamera::OnRender()
-{
-
-}
-
 CRenderCamera* CCamera::Perspective(float fov, float aspect, float znear, float zfar)
 {
 	CRenderCamera::Perspective(fov, aspect, znear, zfar);

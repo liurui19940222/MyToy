@@ -12,10 +12,10 @@ CMeshBuffer::CMeshBuffer(const Mesh& mesh) : CMeshBuffer()
 	MakeBuffer(mesh);
 }
 
-CMeshBuffer::CMeshBuffer(const Mesh& mesh, const SkeletonWeight& skeletonWeight) : CMeshBuffer()
+CMeshBuffer::CMeshBuffer(const Mesh& mesh, const vector<Vector4>& weights, const vector<BVector4>& indices) : CMeshBuffer()
 {
 	MakeBuffer(mesh);
-	MakeJointBuffer(skeletonWeight);
+	MakeJointBuffer(weights, indices);
 }
 
 void CMeshBuffer::MakeBuffer(const Vector3* vertices, const Color* colors, const Vector3* normals, const Vector2* uvs, int size)
@@ -83,22 +83,22 @@ void CMeshBuffer::MakeNormalBuffer(const Vector3* normals, int size)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void CMeshBuffer::MakeJointBuffer(const SkeletonWeight& skeletonWeight)
+void CMeshBuffer::MakeJointBuffer(const vector<Vector4>& weights, const vector<BVector4>& indices)
 {
 	if (!m_vaoHandle) glGenVertexArrays(1, &m_vaoHandle);
 	glBindVertexArray(m_vaoHandle);
 
-	if (!skeletonWeight.m_indices || !skeletonWeight.m_weights) return;
+	if (!weights.size() || !indices.size()) return;
 	if (!m_vboJointIndexHandle) glGenBuffers(1, &m_vboJointIndexHandle);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vboJointIndexHandle);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(BVector4) * skeletonWeight.m_count, skeletonWeight.m_indices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(BVector4) * indices.size(), &indices[0], GL_STATIC_DRAW);
 	glEnableVertexAttribArray(JOINT_INDEX_POS);
 	glVertexAttribIPointer(JOINT_INDEX_POS, 4, GL_UNSIGNED_BYTE, 0, NULL);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	if (!m_vboJointWeightHandle) glGenBuffers(1, &m_vboJointWeightHandle);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vboJointWeightHandle);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vector4) * skeletonWeight.m_count, skeletonWeight.m_weights, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vector4) * weights.size(), &weights[0], GL_STATIC_DRAW);
 	glEnableVertexAttribArray(JOINT_WEIGHT_POS);
 	glVertexAttribPointer(JOINT_WEIGHT_POS, 4, GL_FLOAT, GL_FALSE, 0, NULL);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

@@ -22,7 +22,7 @@ void CSkinnedMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix,
 {
 	if (!m_mesh) return;
 	m_material->Bind();
-	m_material->SetParam("GlobalPoseMatrices", m_skeletonPose->m_aGlobalPose, m_skeleton->GetSize());
+	m_material->SetParam("GlobalPoseMatrices", &m_skeleton->m_skiningMatrices[0], m_skeleton->GetSize());
 	m_material->SetParam("M", modelMatrix);
 	m_material->SetParam("V", viewMatrix);
 	m_material->SetParam("P", projectionMatrix);
@@ -33,10 +33,9 @@ void CSkinnedMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix,
 	//CEditorTool::DrawSkeleton(modelMatrix, *m_skeleton);
 }
 
-CSkinnedMeshRenderer* CSkinnedMeshRenderer::SetSkinningMesh(CMeshBuffer* mesh, Skeleton* skeleton, SkeletonPose* pose)
+CSkinnedMeshRenderer* CSkinnedMeshRenderer::SetSkinningMesh(CMeshBuffer* mesh, Skeleton* skeleton)
 {
 	this->m_mesh = mesh;
-	this->m_skeletonPose = pose;
 	this->m_skeleton = skeleton;
 	return this;
 }

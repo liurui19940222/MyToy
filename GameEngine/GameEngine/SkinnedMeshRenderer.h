@@ -17,13 +17,12 @@ class CSkinnedMeshRenderer : public CComponent, public IRenderer
 	REFLECT_CLASS(CSkinnedMeshRenderer)
 private:
 	Skeleton* m_skeleton;
-	SkeletonPose* m_skeletonPose;
 	CMeshBuffer* m_mesh;
 	CMaterial* m_material;
 
 public:
 
-	CSkinnedMeshRenderer* SetSkinningMesh(CMeshBuffer* mesh, Skeleton* skeleton, SkeletonPose* pose);
+	CSkinnedMeshRenderer* SetSkinningMesh(CMeshBuffer* mesh, Skeleton* skeleton);
 
 	CSkinnedMeshRenderer* SetMaterial(CMaterial* material);
 

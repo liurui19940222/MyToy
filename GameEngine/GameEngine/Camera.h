@@ -16,7 +16,6 @@ public:
 	virtual void OnStart() override;
 	virtual void OnDestroy() override;
 	virtual void OnUpdate() override;
-	virtual void OnRender() override;
 
 	virtual CRenderCamera* Perspective(float fov, float aspect, float znear, float zfar) override;
 	virtual CRenderCamera* Ortho(float left, float right, float bottom, float top, float znear, float zfar) override;

@@ -1,5 +1,6 @@
-#include "FontRenderer.h"
-#include "BitImage.h"
+#include"FontRenderer.h"
+#include"BitImage.h"
+#include"EditorTool.h"
 
 CCharacterPrimitive::CCharacterPrimitive(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels) :left(left_padding), top(top), advance_x(advance_x), pixels(pixels)
 {
@@ -61,7 +62,7 @@ void CTextOneLineData::Release()
 	primitives.clear();
 }
 
-void CFontRenderer::Render()
+void CFontRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
 {
 	if (!font || !text) return;
 
@@ -84,6 +85,11 @@ void CFontRenderer::Render()
 
 	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
+}
+
+void CFontRenderer::RenderDebug(Matrix4x4& modelMatrix)
+{
+	CEditorTool::DrawRect(rect, modelMatrix);
 }
 
 CFontRenderer* CFontRenderer::SetFont(CTrueTypeFont* font)

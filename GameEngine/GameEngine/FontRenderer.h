@@ -4,6 +4,7 @@
 #include"Math.h"
 #include"FontManager.h"
 #include"EngineDefine.h"
+#include"Renderer.h"
 
 class CCharacterPrimitive
 {
@@ -39,7 +40,7 @@ public:
 	void Release();
 };
 
-class CFontRenderer
+class CFontRenderer : public IRenderer
 {
 private:
 	const wchar_t* text;
@@ -62,8 +63,6 @@ protected:
 
 	virtual float GetPixelScale() = 0;
 
-	void Render();
-
 	float GetOffsetX(float line_width);
 
 	float GetOffsetY();
@@ -73,26 +72,19 @@ protected:
 	void Init(CTrueTypeFont* font, const wchar_t* text, int font_size, float interval_x, float interval_y, Color color, EAlignment alignment, SRect2D rect);
 
 public:
+	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix) override;
+	virtual void RenderDebug(Matrix4x4& modelMatrix) override;
+
 	virtual CFontRenderer* SetTextRect(SRect2D rect);
-
 	SRect2D GetTextRect();
-
 	CFontRenderer* SetFont(CTrueTypeFont* font);
-
 	CTrueTypeFont* GetFont();
-
 	CFontRenderer* SetText(const wchar_t* text);
-
 	const wchar_t* GetText();
-
 	CFontRenderer* SetIntervalX(float x);
-
 	CFontRenderer* SetIntervalY(float y);
-
 	CFontRenderer* SetFontSize(int size);
-
 	CFontRenderer* SetColor(Color color);
-
 	CFontRenderer* SetTextAlignment(EAlignment alignment);
 };
 

@@ -3,7 +3,7 @@
 
 CRenderCamera::CRenderCamera() : m_projectionType(EProjectionType::Perspective) , m_cameraClearFlag(ECameraClearFlag::SolidColor)
 , m_fov(0) , m_near(0) , m_far(0) , m_left(0) , m_right(0)
-, m_top(0) , m_bottom(0), m_depth(0)
+, m_top(0) , m_bottom(0), m_depth(0), m_layerMask(0x1)
 {
 	m_viewMat.MakeIdentity();
 	m_projectionMat.MakeIdentity();
@@ -81,6 +81,7 @@ float CRenderCamera::GetRight() const { return m_right; }
 float CRenderCamera::GetTop() const { return m_top; }
 float CRenderCamera::GetBottom() const { return m_bottom; }
 int CRenderCamera::GetDepth() const { return m_depth; }
+int& CRenderCamera::LayerMask() { return m_layerMask; }
 const Vector3& CRenderCamera::GetEyePosition() const { return m_eyePos; }
 const Vector3& CRenderCamera::GetCenterPosition() const { return m_centerPos; }
 const Vector3& CRenderCamera::GetUp() const { return m_up; }

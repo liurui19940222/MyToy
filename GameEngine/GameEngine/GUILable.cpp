@@ -16,7 +16,6 @@ void CGUILable::OnStart()
 
 void CGUILable::OnUIRender()
 {
-	Render();
 	CGUIWidget::OnUIRender();
 }
 

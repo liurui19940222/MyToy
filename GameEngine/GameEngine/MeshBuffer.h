@@ -31,7 +31,7 @@ public:
 
 	CMeshBuffer(const Mesh& mesh);
 
-	CMeshBuffer(const Mesh& mesh, const SkeletonWeight& skeletonWeight);
+	CMeshBuffer(const Mesh& mesh, const vector<Vector4>& weights, const vector<BVector4>& indices);
 
 	void MakeBuffer(const Vector3* vertices, const Color* colors, const Vector3* normals, const Vector2* uvs, int size);
 
@@ -43,7 +43,7 @@ public:
 
 	void MakeNormalBuffer(const Vector3* normals, int size);
 
-	void MakeJointBuffer(const SkeletonWeight& skeletonWeight);
+	void MakeJointBuffer(const vector<Vector4>& weights, const vector<BVector4>& indices);
 
 	void MakeBuffer(const Mesh& mesh);
 

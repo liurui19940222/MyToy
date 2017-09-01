@@ -34,6 +34,7 @@ protected:
 	float m_top;
 	float m_bottom;
 	int m_depth;
+	int m_layerMask;
 
 	Color m_clearColor;
 	Vector3 m_eyePos;
@@ -53,7 +54,6 @@ public:
 	CRenderCamera* SetCameraClearFlag(ECameraClearFlag flag);
 	CRenderCamera* SetCameraClearColor(const Color& color);
 	CRenderCamera* SetRenderTexture(CRenderTexture* texture);
-
 	EProjectionType GetProjectionType() const;
 	ECameraClearFlag GetCameraClearFlag() const;
 	CRenderTexture* GetRenderTexture() const;
@@ -67,6 +67,7 @@ public:
 	float GetTop() const;
 	float GetBottom() const;
 	int GetDepth() const;
+	int& LayerMask();
 	const Vector3& GetEyePosition() const;
 	const Vector3& GetCenterPosition() const;
 	const Vector3& GetUp() const;

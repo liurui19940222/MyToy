@@ -6,7 +6,7 @@
     height = "600"
 		/>
   <debug
-    draw_grid = "true"
-    draw_gizmos = "false"
+    draw_grid = "false"
+    draw_gizmos = "true"
     />
 </engine>

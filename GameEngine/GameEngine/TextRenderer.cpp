@@ -1,17 +1,7 @@
 #include "GameObject.h"
 #include "TextRenderer.h"
-//#include "BitImage.h"
 
 IMPL_CLASS(CTextRenderer)
-
-CTextRenderer::CTextRenderer()
-{
-}
-
-
-CTextRenderer::~CTextRenderer()
-{
-}
 
 void CTextRenderer::OnStart()
 {
@@ -21,16 +11,6 @@ void CTextRenderer::OnStart()
 void CTextRenderer::OnUpdate()
 {
 
-}
-
-void CTextRenderer::OnRender()
-{
-	Render();
-}
-
-void CTextRenderer::OnDrawDebug()
-{
-	CEditorTool::DrawRect(GetTextRect(), gameObject->GetModelToWorldMat());
 }
 
 void CTextRenderer::OnDestroy()

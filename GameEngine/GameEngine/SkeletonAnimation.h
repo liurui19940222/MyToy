@@ -11,26 +11,31 @@
 using namespace std;
 
 typedef TmpVector4<byte> BVector4;
+struct JointPose;
 
 struct Joint
 {
 	string m_name;				//关节名字
+	byte m_Index;				//在数组中的索引
 	byte m_iParent;				//父索引，或0xFF代表根关节
 	Matrix4x4 m_invBindPose;	//绑定姿势之逆变换
 	Matrix4x4 m_localMatrix;	//局部矩阵
-	Matrix4x4 m_localAnimMatrix;//为了不让动画覆盖原始的局部矩阵
-	Matrix4x4 m_globalMatrix;	//全局矩阵
 
 	Joint() {
 		m_invBindPose.MakeIdentity();
 		m_localMatrix.MakeIdentity();
-		m_globalMatrix.MakeIdentity();
 	}
 };
 
 struct Skeleton
 {
 	vector<Joint> m_joints;
+	vector<JointPose> m_localPoses;
+	vector<Matrix4x4> m_globalPoses;
+	vector<Matrix4x4> m_skiningMatrices;
+	vector<Vector4> m_weights;
+	vector<BVector4> m_indices;
+	Matrix4x4 m_bindShapeMat;
 
 	inline void AddJoint(Joint& joint)
 	{
@@ -64,27 +69,22 @@ struct Skeleton
 		return m_joints;
 	}
 
+	//得到关节数量
 	inline int GetSize()
 	{
 		return m_joints.size();
 	}
-};
 
-struct SkeletonWeight
-{
-	int m_count;
-	Vector4* m_weights;
-	BVector4* m_indices;
+	//得到权重数量
+	inline int GetWeightSize()
+	{
+		return m_weights.size();
+	}
 };
 
 struct JointPose
 {
 	Matrix4x4 m_matrix;			//变换矩阵
-};
-
-struct SkeletonPose
-{
-	Matrix4x4* m_aGlobalPose;	//多个全局关节姿势
 };
 
 struct AnimationSample
@@ -95,13 +95,9 @@ struct AnimationSample
 
 struct AnimationClip
 {
-	Skeleton* m_pSkeleton;
 	vector<AnimationSample> m_aSamples;
 	float m_length;
 	bool m_isLooping;
-
-	bool Sample(float t);
-	bool FullMatchSample(float t);
 };
 
 struct Mesh
@@ -112,31 +108,29 @@ struct Mesh
 	Color* m_colors = NULL;
 	int m_vertexCount = 0;
 
-	~Mesh()
-	{
-		if (m_vertices) free(m_vertices);
-		if (m_normals) free(m_normals);
-		if (m_texcoords) free(m_texcoords);
-		if (m_colors) free(m_colors);
-	}
+	inline Mesh() {}
+	Mesh(const Mesh& mesh);
+	~Mesh();
 };
 
 struct Model
 {
+	Skeleton m_skeleton;
 	Mesh* m_meshes = NULL;
 	int m_meshCount = 0;
-
-	Skeleton m_skeleton;
-	SkeletonPose m_skeletonPose;
-	SkeletonWeight m_skeletonWeight;
 	AnimationClip* m_animations = NULL;
 	int m_animationCount = 0;
+};
 
-	Matrix4x4 m_bindShapeMat;
+class CSkeletonAnimation {
 
-	void CalculateGlobalMatrix();
-	void CalculateGlobalMatrixByAnim();
-	void CalculateSkinningMatrix();
+public:
+	static vector<JointPose> Sample(AnimationClip& clip, Skeleton& skeleton, float t, float weight);
+	static vector<JointPose> FullMatchSample(AnimationClip& clip, Skeleton& skeleton, float t, float weight);
+	static vector<JointPose> Blend(AnimationClip** clips, float* timePos, float* weights, int count, Skeleton& skeleton);
+	static void CalculateGlobalMatrix(Skeleton& skeleton);
+	static void CalculateGlobalMatrix(Skeleton& skeleton, vector<JointPose> localPoses);
+	static void CalculateSkinningMatrix(Skeleton& skeleton);
 };
 
 #endif

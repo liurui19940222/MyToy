@@ -18,8 +18,6 @@ public:
 
 	virtual void OnUpdate() override;
 
-	virtual void OnRender() override;
-
 	virtual void OnDestroy() override;
 };
 

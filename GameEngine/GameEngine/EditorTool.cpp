@@ -176,8 +176,8 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 	for (Joint& joint : skeleton.GetJoints())
 	{
 		JointVertex v;
-		v.m_matrix = joint.m_globalMatrix;
-		v.m_pos = joint.m_globalMatrix * Vector4(0, 0, 0, 1);
+		v.m_matrix = skeleton.m_globalPoses[joint.m_Index];
+		v.m_pos = skeleton.m_globalPoses[joint.m_Index] * Vector4(0, 0, 0, 1);
 		v.m_parent = joint.m_iParent;
 		vertices[index++] = v;
 	}

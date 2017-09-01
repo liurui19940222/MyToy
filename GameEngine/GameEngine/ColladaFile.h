@@ -36,13 +36,13 @@ private:
 	void ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth);
 
 	//读取蒙皮
-	SkeletonWeight ReadSkin(xml_node<>* root);
+	void ReadSkin(xml_node<>* root, vector<Vector4>& weights, vector<BVector4>& indices);
 
 	//按采样时间，把所有骨骼的采样分类
 	void AddSample(map<float, AnimationSample>& p_samples, float time, byte jointIndex, const JointPose& pose);
 
 	//读取Mesh
-	void ReadMesh(xml_node<>* root, SkeletonWeight p_skeletonWeight);
+	void ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<BVector4>& indices);
 
 	//读取动画
 	void ReadAnimation(xml_node<>* root);

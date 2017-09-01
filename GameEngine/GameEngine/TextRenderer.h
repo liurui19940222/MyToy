@@ -13,13 +13,8 @@ class CTextRenderer : public CFontRenderer, public CComponent
 private:
 
 public:
-	CTextRenderer();
-	~CTextRenderer();
-
 	virtual void OnStart() override;
 	virtual void OnUpdate() override;
-	virtual void OnRender() override;
-	virtual void OnDrawDebug() override;
 	virtual void OnDestroy() override;
 
 	virtual float GetPixelScale() override;

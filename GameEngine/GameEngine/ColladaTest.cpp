@@ -30,17 +30,14 @@ void CColladaTest::OnStart()
 	collada = _Resources->Load<CColladaFile>("models/shake_skin.xml");
 	m_model = collada->m_model;
 	Mesh* mesh = &m_model->m_meshes[0];
-	CMeshBuffer* buffer = new CMeshBuffer(*mesh, m_model->m_skeletonWeight);
-	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, &m_model->m_skeleton, &m_model->m_skeletonPose)->SetMaterial(model_mat);
+	CMeshBuffer* buffer = new CMeshBuffer(*mesh, m_model->m_skeleton.m_weights, m_model->m_skeleton.m_indices);
+	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, &m_model->m_skeleton)->SetMaterial(model_mat);
 	_MainCameraGo->LookAt(model->GetLocalPosition());
 
 	m_clips.push_back(_Resources->LoadAnimation("models/shake_move.xml"));
 	m_clips.push_back(_Resources->LoadAnimation("models/shake_hit.xml"));
 	m_clips.push_back(_Resources->LoadAnimation("models/shake_death.xml"));
-	m_clips[0]->m_pSkeleton = &m_model->m_skeleton;
-	m_clips[1]->m_pSkeleton = &m_model->m_skeleton;
-	m_clips[1]->m_isLooping = false;
-	m_clips[2]->m_pSkeleton = &m_model->m_skeleton;
+	m_clips[1]->m_isLooping = true;
 	m_clips[2]->m_isLooping = false;
 }
 
@@ -55,9 +52,15 @@ void CColladaTest::OnUpdate()
 
 	if (m_clips.size() > 0)
 	{
-		m_clips[1]->Sample(CTime::time);
-		m_model->CalculateGlobalMatrixByAnim();
-		m_model->CalculateSkinningMatrix();
+		vector<AnimationClip*> v(2);
+		v[0] = m_clips[0];
+		v[1] = m_clips[1];
+		float times[] = { CTime::time, CTime::time };
+		float weights[] = { 0.8f, 0.1f };
+		vector<JointPose> jointPoses = CSkeletonAnimation::Blend(&v[0], times, weights, 2, m_model->m_skeleton);
+		//vector<JointPose> jointPoses = CSkeletonAnimation::Sample(*m_clips[1], m_model->m_skeleton, CTime::time, 1);
+		CSkeletonAnimation::CalculateGlobalMatrix(m_model->m_skeleton, jointPoses);
+		CSkeletonAnimation::CalculateSkinningMatrix(m_model->m_skeleton);
 	}
 
 	CEditorTool::WatchTarget(*_MainCameraGo, model->GetLocalPosition());

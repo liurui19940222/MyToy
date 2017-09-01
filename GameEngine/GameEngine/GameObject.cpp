@@ -9,7 +9,7 @@ CGameObject::CGameObject() : CGameObject("NewGameObject")
 	
 }
 
-CGameObject::CGameObject(string name) : Object(name)
+CGameObject::CGameObject(string name) : Object(name), m_layer(0x1)
 {
 	SetLocalScale(Vector3(1, 1, 1));
 	SetLocalPosition(Vector3(0, 0, 0));
@@ -19,8 +19,6 @@ CGameObject::CGameObject(string name) : Object(name)
 	up = Vector3::up;
 	forward = Vector3::forward;
 }
-
-CGameObject::~CGameObject() { }
 
 void CGameObject::SetLocalScale(const Vector3& s)
 {
@@ -154,24 +152,6 @@ void CGameObject::OnUpdate()
 	}
 }
 
-void CGameObject::OnRender()
-{
-	vector<CComponent*>::iterator it = components.begin();
-	while (it != components.end())
-	{
-		(*it++)->OnRender();
-	}
-}
-
-void CGameObject::OnDrawDebug()
-{
-	vector<CComponent*>::iterator it = components.begin();
-	while (it != components.end())
-	{
-		(*it++)->OnDrawDebug();
-	}
-}
-
 void CGameObject::OnDestroy()
 {
 	vector<CComponent*>::iterator it = components.begin();
@@ -236,4 +216,14 @@ void CGameObject::SetParent(CGameObject* parent)
 	{
 		this->parent = NULL;
 	}
+}
+
+void CGameObject::SetLayer(int layer)
+{
+	m_layer = layer;
+}
+
+int CGameObject::GetLayer() const
+{
+	return m_layer;
 }

@@ -93,7 +93,7 @@ void CEngine::Render()
 		camera->BeginOneFrame();
 		IRenderer* renderer = NULL;
 		_Maker->ForeachGameObject([this, &renderer, &camera](CGameObject* go, int depth, Matrix4x4& mat) {
-			if (renderer = go->GetRenderer())
+			if ((renderer = go->GetRenderer()) != NULL && camera->LayerMask() & go->GetLayer())
 			{
 				renderer->Render(mat, camera->m_viewMat, camera->m_projectionMat);
 				if (CEngineSetting::DrawGizmos) renderer->RenderDebug(mat);
