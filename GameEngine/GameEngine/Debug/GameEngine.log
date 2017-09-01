@@ -1,2 +1,5 @@
-﻿  GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
+﻿  FontRenderer.cpp
+d:\github\mytoy\gameengine\gameengine\fontrenderer.cpp(164): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\fontrenderer.cpp(176): warning C4018: “<”: 有符号/无符号不匹配
+  GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.pdb (Full PDB)

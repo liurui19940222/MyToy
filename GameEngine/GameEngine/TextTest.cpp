@@ -1,4 +1,5 @@
-#include "TextTest.h"
+#include"TextTest.h"
+#include"Converter.h"
 
 void CTextTest::OnStart()
 {
@@ -8,17 +9,10 @@ void CTextTest::OnStart()
 	CTrueTypeFont* font = FontManager->LoadFont(1, "C:/Windows/Fonts/StencilStd.otf");
 	go = _Maker->Instantiate();
 	go->SetLocalPosition(Vector3(0, 0, 0));
+	go->SetLayer(Layer::Default);
 	text = go->AddComponent<CTextRenderer>();
 	text->SetFont(font)->SetFontSize(10)->SetTextRect(SRect2D{ 0, 0, 5, 1 });
 	text->SetText(L"Sams Publishing & Pearson Education Inc., \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson");
-	//text->SetText(L"дasdfsdf\nͨ564654564");
-
-	//CBitImage* image = _Engine->CreateImage("textures/model.png");
-	//CTexture* texture = CTexture::Create(image);
-	//CGameObject* texGo = _Engine->CreateGameObject();
-	//texGo->AddComponent<CSpriteRenderer>()->SetTexture(texture);
-	//texGo->SetLocalScale(Vector3(0.1, 0.1, 0));
-	//texGo->SetLocalPosition(Vector3(0, -1, 0));
 
 	//CAtlas* atlas = (*font->GetAtlases(10))[0];
 	//CTexture* tex = CTexture::Create((UCHAR*)(atlas->GetPixels()), atlas->GetWidth(), atlas->GetHeight());
@@ -83,13 +77,15 @@ void CTextTest::OnUpdate()
 	{
 		text->SetColor(Color::red);
 	}
-
+	
 	float h = CInput::GetAxis("Horizontal");
 	float v = CInput::GetAxis("Vertical");
 	Vector3 euler = go->GetLocalEulerAngles();
 	euler.y += h * CTime::deltaTime * 60;
 	euler.x += v * CTime::deltaTime * 60;
 	go->SetLocalEulerAngles(euler);
+
+	//text->SetText(CConverter::FormatWString(L"FPS:%g", CTime::fps));
 }
 
 void CTextTest::OnRender()

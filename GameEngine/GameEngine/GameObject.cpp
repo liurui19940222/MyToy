@@ -9,7 +9,7 @@ CGameObject::CGameObject() : CGameObject("NewGameObject")
 	
 }
 
-CGameObject::CGameObject(string name) : Object(name), m_layer(0x1)
+CGameObject::CGameObject(string name) : Object(name), m_layer(Layer::Default)
 {
 	SetLocalScale(Vector3(1, 1, 1));
 	SetLocalPosition(Vector3(0, 0, 0));

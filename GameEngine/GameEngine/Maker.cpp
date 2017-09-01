@@ -19,25 +19,6 @@ CGameObject* CMaker::Instantiate(string name)
 	return go;
 }
 
-void CMaker::Destroy(Object* obj)
-{
-	if (IS_TYPE(CGameObject, obj))
-	{
-		DestroyGameObject(dynamic_cast<CGameObject*>(obj));
-	}
-	else
-	{
-		auto it = m_objects.find(obj->GetInstanceId());
-		if (it != m_objects.end())
-		{
-			Object* obj = it->second;
-			m_objects.erase(it);
-			obj->OnRelease();
-			delete(obj);
-		}
-	}
-}
-
 void CMaker::AddGameObject(CGameObject* go)
 {
 	auto it = m_gameObjects.begin();
@@ -72,10 +53,14 @@ void CMaker::DestroyGameObject(CGameObject* go)
 		go->parent->RemoveChild(go);
 	_Maker->RemoveGameObject(go);
 
-	ForeachGameObject(go, [](CGameObject* go, int depth) {
+	vector<CGameObject*> list;
+	ForeachGameObject(go, [&list](CGameObject* go, int depth) {
 		go->OnDestroy();
 		go->OnRelease();
+		list.push_back(go);
 	});
+	for (int i = list.size() - 1; i >= 0; --i)
+		delete(list[i]);
 }
 
 void CMaker::ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback)

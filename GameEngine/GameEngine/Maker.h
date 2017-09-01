@@ -60,7 +60,24 @@ public:
 
 	CGameObject* Instantiate(string name);
 
-	void Destroy(Object* obj);
+	template<typename T>
+	void Destroy(T* obj)
+	{
+		if (IS_TYPE(CGameObject, obj))
+		{
+			DestroyGameObject(dynamic_cast<CGameObject*>(obj));
+		}
+		else
+		{
+			auto it = m_objects.find(obj->GetInstanceId());
+			if (it != m_objects.end())
+			{
+				m_objects.erase(it);
+			}
+			obj->OnRelease();
+			delete(obj);
+		}
+	}
 
 	void ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback);
 

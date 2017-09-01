@@ -157,4 +157,11 @@ enum EAlignmentVertical
 	BOTTOM = 3,
 };
 
+struct Layer
+{
+	static constexpr int Default = 1;
+	static constexpr int UI = 10;
+	static constexpr int Overlay2D = 30;
+};
+
 #endif

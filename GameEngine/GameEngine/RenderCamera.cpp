@@ -3,7 +3,7 @@
 
 CRenderCamera::CRenderCamera() : m_projectionType(EProjectionType::Perspective) , m_cameraClearFlag(ECameraClearFlag::SolidColor)
 , m_fov(0) , m_near(0) , m_far(0) , m_left(0) , m_right(0)
-, m_top(0) , m_bottom(0), m_depth(0), m_layerMask(0x1)
+, m_top(0) , m_bottom(0), m_depth(0), m_layerMask(Layer::Default)
 {
 	m_viewMat.MakeIdentity();
 	m_projectionMat.MakeIdentity();

@@ -421,9 +421,6 @@
     <ClCompile Include="Config.cpp">
       <Filter>Common\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Converter.cpp">
-      <Filter>Common\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="EngineSetting.cpp">
       <Filter>Common\源文件</Filter>
     </ClCompile>
@@ -498,6 +495,12 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="Shader\skinning.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\font.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\font.vert">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>

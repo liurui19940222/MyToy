@@ -151,7 +151,6 @@
     <ClCompile Include="ColladaTest.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Config.cpp" />
-    <ClCompile Include="Converter.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="EditorTool.cpp" />
     <ClCompile Include="Engine.cpp" />
@@ -206,6 +205,8 @@
     <None Include="Shader\basic.vert" />
     <None Include="Shader\color.frag" />
     <None Include="Shader\color.vert" />
+    <None Include="Shader\font.frag" />
+    <None Include="Shader\font.vert" />
     <None Include="Shader\light.frag" />
     <None Include="Shader\light.vert" />
     <None Include="Shader\skinning.frag" />

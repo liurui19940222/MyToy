@@ -26,6 +26,7 @@ class CMeshFactory : public CSingleton<CMeshFactory>
 	Mesh* CreateMesh(const Vector3* vertices, const Vector2* texcoords, const Vector3* normals, int count);
 
 public:
+	Mesh* CreateRectMesh(float width, float height);
 	Mesh* CreateMesh(EMeshType type);
 	Mesh* SharedMesh(EMeshType type);
 	CMeshBuffer* CreateBuffer(EMeshType type);

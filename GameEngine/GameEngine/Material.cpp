@@ -7,11 +7,6 @@ IMPL_CLASS(CMaterial)
 map<EPiplelineStateType, bool> CMaterial::m_pushStates;
 CMaterial* CMaterial::m_defaultMaterial = NULL;
 
-static CMaterial* get()
-{
-	return NULL;
-}
-
 void CMaterial::OnInitialize()
 {
 	Object::OnInitialize();

@@ -1,73 +1,58 @@
 #include"FontRenderer.h"
 #include"BitImage.h"
 #include"EditorTool.h"
+#include"MeshFactory.h"
+#include"Maker.h"
 
-CCharacterPrimitive::CCharacterPrimitive(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels) :left(left_padding), top(top), advance_x(advance_x), pixels(pixels)
+CCharacterPrimitive::CCharacterPrimitive(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels) :left(left_padding), top(top), advance_x(advance_x)
 {
 	this->width = width;
 	this->height = height;
 	this->width_x = width * pixelScale;
 	this->height_y = height * pixelScale;
-	glEnable(GL_BLEND);
-	glEnable(GL_TEXTURE_2D);
-	glGenTextures(1, &texId);
-	glBindTexture(GL_TEXTURE_2D, texId);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	//CBitImage::Create(width, height, 32, (BYTE*)pixels)->Save("F://font.png", FREE_IMAGE_FORMAT::FIF_PNG);
+	m_material = _Maker->Instantiate<CMaterial>();
+	m_texture = CTexture2D::Create((UCHAR*)pixels, width, height);
+	m_material->SetMainTexture(m_texture);
+	m_material->SetShader(CShader::Get("font"));
+	Mesh* mesh = _MeshFactory->CreateRectMesh(width_x, height_y);
+	m_buffer.MakeBuffer(*mesh);
+	delete(mesh);
 }
 
-void CCharacterPrimitive::Render(Vector3 pos, Vector3 size)
+CCharacterPrimitive::~CCharacterPrimitive()
 {
-	glBindTexture(GL_TEXTURE_2D, texId);
-	glPushMatrix();
-	glTranslatef(pos.x, pos.y, pos.z);
-	glScalef(size.x, size.y, size.z);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 1);
-	glVertex3f(0, height_y, 0);
-	glTexCoord2f(0, 0);
-	glVertex3f(0, 0, 0);
-	glTexCoord2f(1, 0);
-	glVertex3f(width_x, 0, 0);
-	glTexCoord2f(1, 1);
-	glVertex3f(width_x, height_y, 0);
-	glEnd();
-	glPopMatrix();
+	m_buffer.ReleaseBuffer();
+	_Maker->Destroy(m_texture);
+	_Maker->Destroy(m_material);
 }
 
-void CCharacterPrimitive::Release()
+void CCharacterPrimitive::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color)
 {
-	glDeleteTextures(1, &texId);
-	if (pixels)
-		free(pixels);
+	m_material->SetColor(color);
+	m_material->Bind();
+	m_material->SetParam("M", modelMatrix * Matrix4x4::Translate(pos) * Matrix4x4::Scale(size));
+	m_material->SetParam("V", viewMatrix);
+	m_material->SetParam("P", projectionMatrix);
+	m_buffer.BindBuffer();
+	glDrawArrays(GL_TRIANGLES, 0, m_buffer.GetVertexNum());
+	m_material->Unbind();
 }
 
-CTextOneLineData::CTextOneLineData() : line_width(0)
+CTextOneLineData::CTextOneLineData() : line_width(0), line_height(0)
 {
 
 }
 
-void CTextOneLineData::Release()
+CTextOneLineData::~CTextOneLineData()
 {
-	for (size_t i = 0; i < primitives.size(); ++i)
-	{
-		primitives[i]->Release();
-	}
-	primitives.clear();
+
 }
 
 void CFontRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
 {
-	if (!font || !text) return;
+	if (!font || text.size() == 0) return;
 
 	glEnable(GL_BLEND);
-	glEnable(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	static float offset_x;
@@ -76,15 +61,15 @@ void CFontRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix
 	offset_y = GetOffsetY();
 	for (size_t i = 0; i < lineDatas.size(); ++i)
 	{
-		offset_x = GetOffsetX(lineDatas[i]->line_width);
+		offset_x = GetOffsetX(i);
 		for (size_t j = 0; j < lineDatas[i]->primitives.size(); ++j)
 		{
-			lineDatas[i]->primitives[j]->Render(lineDatas[i]->primitives[j]->position + Vector3(offset_x, offset_y, 0), Vector3{ 1.0f, -1.0f, 1 });
+			lineDatas[i]->primitives[j]->Render(modelMatrix, viewMatrix, projectionMatrix,
+				lineDatas[i]->primitives[j]->position + Vector3(offset_x, offset_y, 0), Vector3{ 1.0f, -1.0f, 1 }, color);
 		}
 	}
 
 	glDisable(GL_BLEND);
-	glDisable(GL_TEXTURE_2D);
 }
 
 void CFontRenderer::RenderDebug(Matrix4x4& modelMatrix)
@@ -104,14 +89,14 @@ CTrueTypeFont* CFontRenderer::GetFont()
 	return font;
 }
 
-CFontRenderer* CFontRenderer::SetText(const wchar_t* text)
+CFontRenderer* CFontRenderer::SetText(const wstring text)
 {
 	this->text = text;
 	Rebuild();
 	return this;
 }
 
-const wchar_t* CFontRenderer::GetText()
+const wstring& CFontRenderer::GetText()
 {
 	return text;
 }
@@ -161,10 +146,11 @@ SRect2D CFontRenderer::GetTextRect()
 	return rect;
 }
 
-float CFontRenderer::GetOffsetX(float line_width)
+float CFontRenderer::GetOffsetX(int line_index)
 {
+	float line_width = lineDatas[line_index]->line_width;
 	if (alignment_h == EAlignmentHorizontal::LEFT)
-		return 0;
+		return lineDatas[line_index]->primitives[0]->width_x;
 	else if (alignment_h == EAlignmentHorizontal::CENTER)
 		return (rect.half_size_x * 2 - line_width) * 0.5f;
 	else if (alignment_h == EAlignmentHorizontal::RIGHT)
@@ -175,27 +161,26 @@ float CFontRenderer::GetOffsetX(float line_width)
 float CFontRenderer::GetOffsetY()
 {
 	if (alignment_v == EAlignmentVertical::TOP)
-		return 0;
+		return  -lineDatas[0]->line_height * 0.5;
 	else if (alignment_v == EAlignmentVertical::MIDDLE)
-		return -(rect.half_size_y * 2 - interval_y * (lineDatas.size() - 1) ) * 0.5f;
+		return -(rect.half_size_y * 2 - interval_y  * (lineDatas.size() - 1)) * 0.5f;
 	else if (alignment_v == EAlignmentVertical::BOTTOM)
-		return -(rect.half_size_y * 2 - interval_y * (lineDatas.size()));
+		return -(rect.half_size_y * 2 - interval_y * (lineDatas.size())) - lineDatas[0]->line_height;
 	return 0;
 }
 
 void CFontRenderer::Rebuild()
 {
 	ClearPrimitive();
-	for (int i = 0; i < lstrlenW(text); i++)
+	ClearLineData();
+	for (int i = 0; i < text.size(); i++)
 	{
 		CCharacterInfo* chInfo = font->GetCharacter(text[i], font_size);
 		SBitmapData bitmap;
 		chInfo->GetBitmap(&bitmap, color);
-
 		primitives.push_back(new CCharacterPrimitive(chInfo->left_padding, chInfo->top, chInfo->advance_x, bitmap.width, bitmap.height, GetPixelScale(), bitmap.buffer));
+		free(bitmap.buffer);
 	}
-
-	ClearLineData();
 
 	static float start_x = 0;
 	static float start_y = 0;
@@ -232,37 +217,37 @@ void CFontRenderer::Rebuild()
 		primitives[i]->position = Vector3{ start_x, start_y - top, 0 };
 		start_x += adv_x + interval_x;
 		lineData->line_width += left + adv_x + interval_x;
+		if (primitives[i]->height_y > lineData->line_height)
+			lineData->line_height = primitives[i]->height_y;
 		lineData->primitives.push_back(primitives[i]);
 	}
 }
 
-void CFontRenderer::Init(CTrueTypeFont* font, const wchar_t* text, int font_size, float interval_x, float interval_y, Color color, EAlignment alignment, SRect2D rect)
+void CFontRenderer::Init(CTrueTypeFont* font, int font_size, float interval_x, float interval_y, Color color, EAlignment alignment, SRect2D rect)
 {
 	this->font = font;
 	this->font_size = font_size;
 	this->interval_x = interval_x;
 	this->interval_y = interval_y;
 	this->color = color;
-	this->text = text;
 	this->rect = rect;
 	SetTextAlignment(alignment);
-	if (lstrlenW(text) > 0)
-		Rebuild();
 }
 
 void CFontRenderer::ClearPrimitive()
 {
+	for (size_t i = 0; i < primitives.size(); ++i)
+	{
+		delete primitives[i];
+	}
 	primitives.clear();
 }
 
 void CFontRenderer::ClearLineData()
 {
-	if (lineDatas.size() > 0)
+	for (size_t i = 0; i < lineDatas.size(); ++i)
 	{
-		for (size_t i = 0; i < lineDatas.size(); ++i)
-		{
-			lineDatas[i]->Release();
-		}
-		lineDatas.clear();
+		delete(lineDatas[i]);
 	}
+	lineDatas.clear();
 }

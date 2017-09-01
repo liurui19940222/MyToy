@@ -105,6 +105,30 @@ Mesh* CMeshFactory::CreateMesh(const Vector3* vertices, const Vector2* texcoords
 	return mesh;
 }
 
+Mesh* CMeshFactory::CreateRectMesh(float width, float height)
+{
+	float half_w = width * 0.5f;
+	float half_h = height * 0.5f;
+	static const int VERTEX_NUM = 6;
+	Vector3 vertices[VERTEX_NUM] = {
+		{ -half_w, half_h, 0.0f },
+		{ -half_w, -half_h, 0.0f },
+		{ half_w, -half_h, 0.0f },
+		{ half_w, -half_h, 0.0f },
+		{ half_w, half_h, 0.0f },
+		{ -half_w, half_h, 0.0f },
+	};
+	static const Vector2 texcoords[VERTEX_NUM] = {
+		{ 0.0f, 1.0f },
+		{ 0.0f, 0.0f },
+		{ 1.0f, 0.0f },
+		{ 1.0f, 0.0f },
+		{ 1.0f, 1.0f },
+		{ 0.0f, 1.0f },
+	};
+	return CreateMesh(vertices, texcoords, NULL, VERTEX_NUM);
+}
+
 Mesh* CMeshFactory::CreateMesh(EMeshType type)
 {
 	switch (type)

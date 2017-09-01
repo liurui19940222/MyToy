@@ -23,6 +23,7 @@ enum class EPiplelineStateType
 class CMaterial : public Object
 {
 	REFLECT_CLASS(CMaterial)
+
 private:
 	static CMaterial* m_defaultMaterial;
 	static map<EPiplelineStateType, bool> m_pushStates;

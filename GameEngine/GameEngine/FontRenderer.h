@@ -5,45 +5,49 @@
 #include"FontManager.h"
 #include"EngineDefine.h"
 #include"Renderer.h"
+#include"MeshBuffer.h"
+#include"Texture2D.h"
+#include"Material.h"
+
+#define TEXT_BUFFER_SIZE 2048
 
 class CCharacterPrimitive
 {
 public:
+	CMeshBuffer m_buffer;
+	CMaterial* m_material;
+	CTexture2D* m_texture;
 	Vector3 position;
 	int left;
 	int top;
 	int advance_x;
-
-	uint32 texId;
 	int width;
 	int height;
 	float width_x;
 	float height_y;
-	uint32* pixels;
 
 	CCharacterPrimitive(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
-
-	void Render(Vector3 pos, Vector3 size);
-
-	void Release();
+	~CCharacterPrimitive();
+	void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color);
 };
 
 class CTextOneLineData
 {
 public:
 	CTextOneLineData();
+	~CTextOneLineData();
 
 	float line_width;
+	float line_height;
 
 	vector<CCharacterPrimitive*> primitives;
-
-	void Release();
 };
 
 class CFontRenderer : public IRenderer
 {
 private:
-	const wchar_t* text;
+	wchar_t m_textBuffer[TEXT_BUFFER_SIZE];
+	wstring text;
 	CTrueTypeFont* font;
 	float interval_x;
 	float interval_y;
@@ -58,29 +62,27 @@ private:
 
 protected:
 	void ClearPrimitive();
-
 	void ClearLineData();
 
 	virtual float GetPixelScale() = 0;
 
-	float GetOffsetX(float line_width);
+	float GetOffsetX(int line_index);
 
 	float GetOffsetY();
 
 	void Rebuild();
 
-	void Init(CTrueTypeFont* font, const wchar_t* text, int font_size, float interval_x, float interval_y, Color color, EAlignment alignment, SRect2D rect);
+	void Init(CTrueTypeFont* font, int font_size, float interval_x, float interval_y, Color color, EAlignment alignment, SRect2D rect);
 
 public:
 	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix) override;
 	virtual void RenderDebug(Matrix4x4& modelMatrix) override;
-
 	virtual CFontRenderer* SetTextRect(SRect2D rect);
 	SRect2D GetTextRect();
 	CFontRenderer* SetFont(CTrueTypeFont* font);
 	CTrueTypeFont* GetFont();
-	CFontRenderer* SetText(const wchar_t* text);
-	const wchar_t* GetText();
+	CFontRenderer* SetText(const wstring text);
+	const wstring& GetText();
 	CFontRenderer* SetIntervalX(float x);
 	CFontRenderer* SetIntervalY(float y);
 	CFontRenderer* SetFontSize(int size);
