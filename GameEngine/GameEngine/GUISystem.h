@@ -8,6 +8,9 @@
 #include"Component.h"
 #include"PriorityQueue.h"
 #include"Singleton.h"
+#include"Renderer.h"
+#include"MeshBuffer.h"
+#include"Material.h"
 
 #define _GUISystem guisystem::CGUISystem::GetInstance()
 
@@ -40,12 +43,14 @@ namespace guisystem {
 		MouseOver,
 	};
 
-	class CGUIWidget : public CComponent
+	class CGUIWidget : public CComponent, public IRenderer
 	{
 		REFLECT_CLASS(CGUIWidget)
 		friend class CGUISystem;
 
 	public:
+		virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix) override;
+		virtual void RenderDebug(Matrix4x4& modelMatrix) override;
 
 		bool Overlay(Vector2 pos);
 		bool IsCollide();
@@ -87,19 +92,21 @@ namespace guisystem {
 		bool operator<(CGUIWidget* widget) const;
 
 	protected:
+		Vector3 m_vertices[6];
 		int m_layer;
 		float m_width;
 		float m_height;
 		bool m_collide;
 		bool m_fill;
 		bool m_enable;
+		CMeshBuffer m_buffer;
+		CMaterial* m_material;
 		Color m_fillColor;
 		SRect2D m_rect;
 		EWidgetState m_state;
 		Vector2 m_lastOverPos;
 		Vector3 m_anchorPos;
 		Vector2 m_pivot;
-		Vector3 m_vertices[4];
 		EAlignment m_alignment;
 		EAlignmentHorizontal m_alignment_h;
 		EAlignmentVertical m_alignment_v;
@@ -111,8 +118,7 @@ namespace guisystem {
 		vector<OnMouseOverEvent> onMouseOver;
 
 		virtual void OnUIUpdate();
-		virtual void OnUIRender();
-		virtual void OnUIDrawDebug();
+		void UpdateVertices();
 
 	private:
 		Vector3 GetCenterPositionInParent();
@@ -156,12 +162,7 @@ namespace guisystem {
 
 		void OnUpdate();
 
-		void OnRender();
-
-		void OnDrawDebug();
-
 		void Quit();
-
 	};
 
 }

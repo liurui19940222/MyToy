@@ -13,42 +13,17 @@ CGUIImage::CGUIImage() : CGUIWidget(), m_texture(NULL)
 	m_uvs[3].x = 1; m_uvs[3].y = 1;
 }
 
-void CGUIImage::OnUIRender()
+void CGUIImage::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
 {
 	if (m_texture)
 	{
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glEnable(GL_TEXTURE_2D);
-		m_texture->Bind();
-		glBegin(GL_QUADS);
-		if (m_state == EWidgetState::Normal)
-		{
-			glColor4f(1, 1, 1, 1);
-		}
-		else if (m_state == EWidgetState::Hover)
-		{
-			glColor4f(0.9f, 0.9f, 0.9f, 1);
-		}
-		else if (m_state == EWidgetState::Pressed)
-		{
-			glColor4f(0.76f, 0.76f, 0.76f, 1);
-		}
-		else if (m_state == EWidgetState::Disabled)
-		{
-			glColor4f(0.35f, 0.35f, 0.35f, 1);
-		}
-		for (int i = 0; i < 4; ++i)
-		{
-			glTexCoord2fv((float*)&m_uvs[i]);
-			glVertex3fv((float*)&m_vertices[i]);
-		}
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
+
 		glDisable(GL_BLEND);
 	}
 
-	CGUIWidget::OnUIRender();
+	CGUIWidget::Render(modelMatrix, viewMatrix, projectionMatrix);
 }
 
 CGUIImage* CGUIImage::SetTexture(CTexture* texture)

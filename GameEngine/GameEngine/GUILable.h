@@ -12,7 +12,6 @@ namespace guisystem {
 		REFLECT_CLASS(CGUILable)
 	protected:
 		virtual void OnStart() override;
-		virtual void OnUIRender() override;
 		virtual CFontRenderer* SetTextRect(SRect2D rect) override;
 	public:
 		CGUILable();

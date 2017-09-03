@@ -14,7 +14,7 @@ namespace guisystem {
 		CTexture* m_texture;
 
 	protected:
-		virtual void OnUIRender() override;
+		virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix) override;
 
 	public:
 		CGUIImage();

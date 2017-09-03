@@ -14,11 +14,6 @@ void CGUILable::OnStart()
 	Init(NULL, 10, 0, 50.0f, Color::white, EAlignment::CENTER_MIDDLE, SRect2D(0.0f, 0.0f, 100.0f, 100.0f));
 }
 
-void CGUILable::OnUIRender()
-{
-	CGUIWidget::OnUIRender();
-}
-
 CFontRenderer* CGUILable::SetTextRect(SRect2D rect)
 {
 	return CFontRenderer::SetTextRect(rect);

@@ -1,24 +1,26 @@
 #include "GUITest.h"
 #include "GUISystem.h"
+#include"MeshFactory.h"
 
 void GUITest::OnStart()
 {
-	_MainCamera->SetCameraClearColor(Color::Hex(0x18253BFF));
-	_MainCameraGo->SetLocalPosition(Vector3(0, 0, 10));
-	_MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
-
 	CTexture* tex = CTexture2D::Create("F://monthad_1.png");
 	CTexture* tex2 = CTexture2D::Create("F://avatar_15.png");
 	go = _Maker->Instantiate("widget");
-	widget = go->AddComponent<CGUIImage>();
-	//widget->SetWidth(400)->SetHeight(300);
-	widget->SetTexture(tex);
+	widget = go->AddComponent<CGUIWidget>();
+	widget->SetWidth(400)->SetHeight(300);
 	//widget->SetFill(true)->SetFillColor(Color::blue());
 	widget->SetAlignment(EAlignment::CENTER_MIDDLE);
 	widget->SetPivot(Vector2(0.5f, 0.5f));
-	widget->SetCollide(true);
+	widget->SetCollide(true)->SetFill(true);
+	widget->SetFillColor(Color::red);
 
-	CGameObject* go3 = _Maker->Instantiate();
+	CMaterial* mat = _Maker->Instantiate<CMaterial>();
+	mat->SetShader(CShader::Get("color"));
+	CMeshRenderer* render = _Maker->Instantiate("Cube")->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube));
+	render->SetMaterial(mat);
+	render->gameObject->SetLocalPosition(Vector3(0, 0, 10));
+	/*CGameObject* go3 = _Maker->Instantiate();
 	go3->AddComponent<CGUIImage>()->SetTexture(tex2)->SetLayer(2)->SetCollide(true);
 
 	go2 = _Maker->Instantiate("widget2");
@@ -32,7 +34,7 @@ void GUITest::OnStart()
 	widget2->SetCollide(false);
 	CTrueTypeFont* font = FontManager->LoadFont(1, "fonts/msyh.ttf");
 	widget2->SetColor(Color::red)->SetFont(font)->SetFontSize(5)->SetIntervalY(25)->SetText(L"Sams Publishing & Pearson Education Inc., \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson");
-
+	*/
 
 
 
@@ -45,7 +47,7 @@ void GUITest::OnStart()
 
 void GUITest::OnUpdate()
 {
-	Vector2 pos = CInput::InputMousePosition();
+	/*Vector2 pos = CInput::InputMousePosition();
 	wchar_t buffer[128];
 	swprintf_s(buffer, L"MousePosition X:%g Y:%g\nWidgetState:%d\nAnchor X:%g Y:%g\nPivot X:%g Y:%g", 
 		pos.x, pos.y, widget2->GetState(), widget2->GetAnchorPosition().x, widget2->GetAnchorPosition().y, widget2->GetPivot().x, widget2->GetPivot().y);
@@ -169,7 +171,14 @@ void GUITest::OnUpdate()
 
 	//euler = go->GetLocalEulerAngles();
 	//euler.z -= CTime::deltaTime * 30;
-	//go->SetLocalEulerAngles(euler);
+	//go->SetLocalEulerAngles(euler);*/
+
+float h = CInput::GetAxis("Horizontal");
+float v = CInput::GetAxis("Vertical");
+Vector3 anchor_pos = widget->GetAnchorPosition();
+anchor_pos.x += h * CTime::deltaTime * 50;
+anchor_pos.y += v * CTime::deltaTime * 50;
+widget->SetAnchorPosition(anchor_pos);
 }
 
 void GUITest::OnRender()

@@ -109,6 +109,13 @@ void CMeshBuffer::MakeBuffer(const Mesh& mesh)
 	MakeBuffer(mesh.m_vertices, mesh.m_colors, mesh.m_normals, mesh.m_texcoords, mesh.m_vertexCount);
 }
 
+void CMeshBuffer::UpdateVertices(const Vector3* vertices, int offset, int size)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, m_vboVertexHandle);
+	glBufferSubData(GL_ARRAY_BUFFER, offset, size * sizeof(Vector3), vertices);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
 void CMeshBuffer::BindBuffer()
 {
 	glBindVertexArray(m_vaoHandle);

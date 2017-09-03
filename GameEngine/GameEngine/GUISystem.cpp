@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Object.h"
 #include "GameObject.h"
+#include "MeshFactory.h"
 using namespace guisystem;
 using namespace container;
 
@@ -102,6 +103,7 @@ CGUIWidget* CGUIWidget::SetRect(SRect2D rect)
 	this->m_rect = rect;
 	this->m_width = rect.half_size_x * 2;
 	this->m_height = rect.half_size_y * 2;
+	UpdateVertices();
 	return this;
 }
 
@@ -125,6 +127,7 @@ CGUIWidget* CGUIWidget::SetWidth(float width)
 {
 	this->m_width = width;
 	this->m_rect.half_size_x = width * 0.5f;
+	UpdateVertices();
 	return this;
 }
 
@@ -132,6 +135,7 @@ CGUIWidget* CGUIWidget::SetHeight(float height)
 {
 	this->m_height = height;
 	this->m_rect.half_size_y = height * 0.5f;
+	UpdateVertices();
 	return this;
 }
 
@@ -336,11 +340,16 @@ void CGUIWidget::OnStart()
 	_GUISystem->AddWidget(this);
 	SetAlignment(EAlignment::CENTER_MIDDLE);
 	SetAnchorPosition(Vector3::zero);
+	m_buffer.MakeBuffer(*_MeshFactory->SharedMesh(EMeshType::Quad));
+	m_material = _Maker->Instantiate<CMaterial>();
+	m_material->SetShader(CShader::Get("texture"));
 }
 
 void CGUIWidget::OnDestroy()
 {
 	_GUISystem->DestroyWidget(this);
+	m_buffer.ReleaseBuffer();
+	_Maker->Destroy(m_material);
 }
 
 void CGUIWidget::OnUIUpdate()
@@ -348,37 +357,48 @@ void CGUIWidget::OnUIUpdate()
 
 }
 
-void CGUIWidget::OnUIRender()
+void CGUIWidget::UpdateVertices()
 {
 	m_vertices[0].x = -m_rect.half_size_x; m_vertices[0].y = m_rect.half_size_y; m_vertices[0].z = 0;
 	m_vertices[1].x = -m_rect.half_size_x; m_vertices[1].y = -m_rect.half_size_y; m_vertices[1].z = 0;
 	m_vertices[2].x = m_rect.half_size_x; m_vertices[2].y = -m_rect.half_size_y; m_vertices[2].z = 0;
-	m_vertices[3].x = m_rect.half_size_x; m_vertices[3].y = m_rect.half_size_y; m_vertices[3].z = 0;
+	m_vertices[3].x = m_rect.half_size_x; m_vertices[3].y = -m_rect.half_size_y; m_vertices[3].z = 0;
+	m_vertices[4].x = m_rect.half_size_x; m_vertices[4].y = m_rect.half_size_y; m_vertices[4].z = 0;
+	m_vertices[5].x = -m_rect.half_size_x; m_vertices[5].y = m_rect.half_size_y; m_vertices[5].z = 0;
+}
 
+void CGUIWidget::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
+{
 	if (m_fill)
 	{
+		m_buffer.UpdateVertices(m_vertices, 0, 6);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		if (m_state == EWidgetState::Normal)
-			glColor4f(m_fillColor.r, m_fillColor.g, m_fillColor.b, m_fillColor.a);
+			m_material->SetColor(m_fillColor);
 		else if (m_state == EWidgetState::Hover)
-			glColor4f(m_fillColor.r + 0.3f, m_fillColor.g + 0.3f, m_fillColor.b + 0.3f, m_fillColor.a + 0.3f);
+			m_material->SetColor(m_fillColor + 0.3f);
 		else if (m_state == EWidgetState::Pressed)
-			glColor4f(m_fillColor.r - 0.3f, m_fillColor.g - 0.3f, m_fillColor.b - 0.3f, m_fillColor.a);
+			m_material->SetColor(Color(m_fillColor.r - 0.3f, m_fillColor.g - 0.3f, m_fillColor.b - 0.3f, m_fillColor.a));
 		else if (m_state == EWidgetState::Disabled)
-			glColor4f(0.35f, 0.35f, 0.35f, m_fillColor.a);
+			m_material->SetColor(Color(0.35f, 0.35f, 0.35f, m_fillColor.a));
+		 
+		m_material->Bind();
+		m_material->SetParam("M", modelMatrix);
+		m_material->SetParam("V", viewMatrix);
+		m_material->SetParam("P", projectionMatrix);
+		m_buffer.BindBuffer();
+		glDrawArrays(GL_TRIANGLES, 0, m_buffer.GetVertexNum());
+		m_material->Unbind();
 
-		glBegin(GL_QUADS);
-		for (int i = 0; i < 4; ++i) glVertex3fv((float*)&m_vertices[i]);
-		glEnd();
 		glDisable(GL_BLEND);
 	}
 }
 
-void CGUIWidget::OnUIDrawDebug()
+void CGUIWidget::RenderDebug(Matrix4x4& modelMatrix)
 {
-	CEditorTool::DrawRect(m_rect, gameObject->GetModelToWorldMat());
+	CEditorTool::DrawRect(m_rect, modelMatrix);
 }
 
 #pragma endregion
@@ -489,22 +509,6 @@ void CGUISystem::OnUpdate()
 	});
 	widgets.Foreach([](CGUIWidget* widget) {
 		widget->OnUIUpdate();
-	});
-}
-
-void CGUISystem::OnRender()
-{
-	glDisable(GL_DEPTH_TEST);
-	widgets.ForeachInverse([](CGUIWidget* widget) {
-		widget->OnUIRender();
-	});
-	glEnable(GL_DEPTH_TEST);
-}
-
-void CGUISystem::OnDrawDebug()
-{
-	widgets.Foreach([](CGUIWidget* widget) {
-		widget->OnUIDrawDebug();
 	});
 }
 

@@ -20,10 +20,17 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd)
 	CTime::SetTargetFrameCount(60);
 	CEngineSetting::Init();
 	m_cameras.SetComparator(CompareCamera);
-	m_camera = _Maker->Instantiate("MainCamera")->AddComponent<CCamera>();
-	m_camera->gameObject->SetLocalPosition(Vector3(0, 4, -10));
-	m_camera->Perspective(54.0f, (GLfloat)_Application->GetWindowWidth() / (GLfloat)_Application->GetWindowHeight(), 1.0f, 1000.0f);
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	m_mainCamera = _Maker->Instantiate("MainCamera")->AddComponent<CCamera>();
+	m_mainCamera->gameObject->SetLocalPosition(Vector3(0, 4, -10));
+	m_mainCamera->Perspective(54.0f, (GLfloat)_Application->GetWindowWidth() / (GLfloat)_Application->GetWindowHeight(), 1.0f, 1000.0f);
+	m_mainCamera->LayerMask() = Layer::Default;
+
+	m_uiCamera = _Maker->Instantiate("UICamera")->AddComponent<CCamera>();
+	m_uiCamera->gameObject->SetLocalPosition(Vector3(0, 0, 10));
+	m_uiCamera->gameObject->SetLocalEulerAngles(Vector3(0, 180, 0));
+	m_uiCamera->SetCameraClearFlag(ECameraClearFlag::DontClear);
+	m_uiCamera->SetDepth(99)->LayerMask() = Layer::Overlay2D;
+	m_uiCamera->Ortho((GLfloat)_Application->GetWindowHeight() * 0.5f, (GLfloat)_Application->GetWindowWidth() / (GLfloat)_Application->GetWindowHeight());
 }
 
 void CEngine::SetupProjection(int width, int height)
@@ -40,7 +47,12 @@ void CEngine::SetupProjection(int width, int height)
 	{
 		m_cameras.Foreach([&width, &height](CCamera* camera) {
 			if (camera->GetRenderTexture() == NULL)
-				camera->Perspective(camera->GetFov(), (float)width / (float)height, camera->GetNear(), camera->GetFar());
+			{
+				if(camera->GetProjectionType() == EProjectionType::Perspective)
+					camera->Perspective(camera->GetFov(), (float)width / (float)height, camera->GetNear(), camera->GetFar());
+				else if(camera->GetProjectionType() == EProjectionType::Ortho)
+					camera->Ortho((float)height * 0.5f, (float)width / (float)height);
+			}
 		});
 	}
 }
@@ -103,17 +115,13 @@ void CEngine::Render()
 	});
 
 	if (CEngineSetting::DrawGrid) CEditorTool::DrawGrid(_MainCameraGo->GetLocalPosition(), Vector3(0.0f, 0.0f, 0.0f), Color::grey);
-	//BeginOrtho();
-	//_GUISystem->OnRender();
-	//if (drawDebug) _GUISystem->OnDrawDebug();
-	//EndOrtho();
 }
 
 void CEngine::Quit()
 {
 	_GUISystem->Quit();
 	CInput::ShutDown();
-	delete m_camera;
+	delete m_mainCamera;
 
 	_Maker->ForeachGameObject([](CGameObject* go, int depth) {
 		go->OnRelease();
@@ -130,7 +138,7 @@ void CEngine::CheckShortcuts()
 
 CCamera* CEngine::GetCamera()
 {
-	return m_camera;
+	return m_mainCamera;
 }
 
 void CEngine::AddCamera(CCamera* camera)

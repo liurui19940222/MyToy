@@ -51,6 +51,7 @@ private:
 	CTrueTypeFont* font;
 	float interval_x;
 	float interval_y;
+	float eachLineHeight;
 	int font_size;
 	Color color;
 	SRect2D rect;

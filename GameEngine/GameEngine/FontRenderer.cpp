@@ -160,12 +160,13 @@ float CFontRenderer::GetOffsetX(int line_index)
 
 float CFontRenderer::GetOffsetY()
 {
+	float ea = lineDatas.size() * eachLineHeight;
 	if (alignment_v == EAlignmentVertical::TOP)
-		return  -lineDatas[0]->line_height * 0.5;
+		return  eachLineHeight * 0.5;
 	else if (alignment_v == EAlignmentVertical::MIDDLE)
-		return -(rect.half_size_y * 2 - interval_y  * (lineDatas.size() - 1)) * 0.5f;
+		return -rect.half_size_y + ea * 0.5 + eachLineHeight * 0.5;
 	else if (alignment_v == EAlignmentVertical::BOTTOM)
-		return -(rect.half_size_y * 2 - interval_y * (lineDatas.size())) - lineDatas[0]->line_height;
+		return -rect.half_size_y * 2 + ea + eachLineHeight * 0.5;
 	return 0;
 }
 
@@ -221,6 +222,16 @@ void CFontRenderer::Rebuild()
 			lineData->line_height = primitives[i]->height_y;
 		lineData->primitives.push_back(primitives[i]);
 	}
+	eachLineHeight = 0;
+	for (CTextOneLineData* lineData : lineDatas)
+	{
+		eachLineHeight -= lineData->line_height;
+		for (CCharacterPrimitive* primitive : lineData->primitives)
+		{
+			primitive->position.y += eachLineHeight;
+		}
+	}
+	eachLineHeight = -eachLineHeight / (float)lineDatas.size() + interval_y;
 }
 
 void CFontRenderer::Init(CTrueTypeFont* font, int font_size, float interval_x, float interval_y, Color color, EAlignment alignment, SRect2D rect)

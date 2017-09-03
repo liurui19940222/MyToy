@@ -53,7 +53,10 @@ public:
 	void RemoveCamera(CCamera* camera);
 private:
 	//主摄像机
-	CCamera* m_camera = NULL;
+	CCamera* m_mainCamera = NULL;
+
+	//UI摄像机
+	CCamera* m_uiCamera = NULL;
 
 	//相机
 	CPriorityQueue<CCamera*> m_cameras;

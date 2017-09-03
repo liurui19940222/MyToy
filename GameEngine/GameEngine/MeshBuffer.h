@@ -28,29 +28,18 @@ private:
 
 public:
 	CMeshBuffer();
-
 	CMeshBuffer(const Mesh& mesh);
-
 	CMeshBuffer(const Mesh& mesh, const vector<Vector4>& weights, const vector<BVector4>& indices);
-
 	void MakeBuffer(const Vector3* vertices, const Color* colors, const Vector3* normals, const Vector2* uvs, int size);
-
 	void MakeVertexBuffer(const Vector3* vertices, int size);
-
 	void MakeColorBuffer(const Color* colors, int size);
-
 	void MakeUVBuffer(const Vector2* uvs, int size);
-
 	void MakeNormalBuffer(const Vector3* normals, int size);
-
 	void MakeJointBuffer(const vector<Vector4>& weights, const vector<BVector4>& indices);
-
 	void MakeBuffer(const Mesh& mesh);
-
+	void UpdateVertices(const Vector3* vertices, int offset, int size);
 	virtual void BindBuffer() override;
-
 	virtual void ReleaseBuffer() override;
-
 	int GetVertexNum() const;
 };
 
