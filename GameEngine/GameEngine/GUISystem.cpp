@@ -338,6 +338,7 @@ void CGUIWidget::OnMouseOver(Vector2 mousePos)
 void CGUIWidget::OnStart()
 {
 	_GUISystem->AddWidget(this);
+	gameObject->SetLayer(Layer::Overlay2D);
 	SetAlignment(EAlignment::CENTER_MIDDLE);
 	SetAnchorPosition(Vector3::zero);
 	m_buffer.MakeBuffer(*_MeshFactory->SharedMesh(EMeshType::Quad));
