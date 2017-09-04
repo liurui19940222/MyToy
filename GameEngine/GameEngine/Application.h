@@ -83,6 +83,8 @@ private:
 	HINSTANCE mHIntance;
 	bool isExiting;
 	RECT clientRect;
+
+	void UpdateClientRect();
 };
 
 #endif

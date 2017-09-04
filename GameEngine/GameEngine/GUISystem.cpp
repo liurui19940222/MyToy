@@ -395,15 +395,27 @@ void CGUIWidget::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		if (m_state == EWidgetState::Normal)
-			m_material->SetColor(m_fillColor);
+		{
+			m_fillColor = Color::white;
+			m_addColor = Color(0.0f, 0.0f, 0.0f, 0.0f);
+		}
 		else if (m_state == EWidgetState::Hover)
-			m_material->SetColor(m_fillColor + 0.3f);
+		{
+			m_addColor = Color(0.1f, 0.1f, 0.1f, 0.1f);
+		}
 		else if (m_state == EWidgetState::Pressed)
-			m_material->SetColor(Color(m_fillColor.r - 0.3f, m_fillColor.g - 0.3f, m_fillColor.b - 0.3f, m_fillColor.a));
+		{
+			m_addColor = Color(0.0f, 0.0f, 0.0f, 0.0f);
+			m_fillColor = Color(0.8f, 0.8f, 0.8f, 1.0f);
+		}
 		else if (m_state == EWidgetState::Disabled)
-			m_material->SetColor(Color(0.35f, 0.35f, 0.35f, m_fillColor.a));
-		 
+		{
+			m_fillColor = Color::grey;
+			m_addColor = Color(0.0f, 0.0f, 0.0f, 0.0f);
+		}
+
 		m_material->Bind();
+		m_material->SetParam("AddColor", m_addColor);
 		m_material->SetParam("M", modelMatrix);
 		m_material->SetParam("V", viewMatrix);
 		m_material->SetParam("P", projectionMatrix);
@@ -427,7 +439,8 @@ void CGUIWidget::RenderDebug(Matrix4x4& modelMatrix)
 void CGUISystem::InitGUI(float resolution_x, float resolution_y)
 {
 	SetResolution(resolution_x, resolution_y);
-	m_uiRoot = _Maker->Instantiate("UIRoot");
+	if (!m_uiRoot)
+		m_uiRoot = _Maker->Instantiate("UIRoot");
 }
 
 void CGUISystem::AddWidget(CGUIWidget* widget)
@@ -579,7 +592,7 @@ void CGUISystem::OnUpdate()
 
 void CGUISystem::Quit()
 {
-	
+
 }
 
 Vector3 CGUISystem::GetCenterPosition()

@@ -87,6 +87,7 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 	static HDC hDC;
 	static HGLRC hRC;
 	static POINT p{ 0, 0 };
+	static RECT rect;
 	int height, width;
 
 	switch (uMsg)
@@ -97,7 +98,6 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 		hRC = wglCreateContext(hDC);
 		wglMakeCurrent(hDC, hRC);
 		break;
-
 	case WM_DESTROY:
 	case WM_QUIT:
 	case WM_CLOSE:
@@ -105,24 +105,30 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 		wglDeleteContext(hRC);
 		PostQuitMessage(0);
 		break;
-
 	case WM_SIZE:
 		height = HIWORD(lParam);
 		width = LOWORD(lParam);
 		SetWindowSize(width, height);
+		UpdateClientRect();
 		break;
 	case WM_MOVE:
-		p.x = LOWORD(lParam);
-		p.y = HIWORD(lParam);
-		clientRect.left = p.x;
-		clientRect.right = p.x + appInfo.windowWidth;
-		clientRect.top = p.y;
-		clientRect.bottom = p.y + appInfo.windowHeight;
+		UpdateClientRect();
 		break;
 	default:
 		break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+}
+
+void CApplication::UpdateClientRect()
+{
+	static POINT p{ 0, 0 };
+	p.x = 0; p.y = 0;
+	ClientToScreen(hwnd, &p);
+	clientRect.left = p.x;
+	clientRect.right = p.x + appInfo.windowWidth;
+	clientRect.top = p.y;
+	clientRect.bottom = p.y + appInfo.windowHeight;
 }
 
 void CApplication::SetWindowSize(int width, int height)

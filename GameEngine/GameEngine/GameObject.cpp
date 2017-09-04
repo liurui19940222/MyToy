@@ -137,6 +137,41 @@ Matrix4x4 CGameObject::GetRotateMatrix()
 	return localRotateMat;
 }
 
+void CGameObject::SiblingRiseOnce()
+{
+	
+}
+
+void CGameObject::SiblingFallOnce()
+{
+	
+}
+
+void CGameObject::SiblingRiseToTop()
+{
+	
+}
+
+void CGameObject::SiblingFallToBottom()
+{
+	
+}
+
+void CGameObject::SetSibling(int pos)
+{
+	if (!GetParent()) return;
+	vector<CGameObject*>& parent_childs = parent->childs;
+	for (vector<CGameObject*>::iterator it = parent_childs.begin(); it != parent_childs.end(); ++it)
+	{
+		if (*it == this)
+		{
+			parent_childs.erase(it);
+			break;
+		}
+	}
+	parent_childs.insert(parent_childs.begin() + pos, this);
+}
+
 void CGameObject::OnStart()
 {
 	vector<CComponent*>::iterator it = components.begin();

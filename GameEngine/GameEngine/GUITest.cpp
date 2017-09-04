@@ -14,13 +14,23 @@ void GUITest::OnStart()
 	//widget->SetFill(true)->SetFillColor(Color::blue());
 	widget->SetAlignment(EAlignment::CENTER_MIDDLE);
 	widget->SetPivot(Vector2(0.5f, 0.5f));
-	widget->SetCollide(true)->SetFill(true);
+	widget->SetCollide(false)->SetFill(false);
 	widget->SetFillColor(Color::grey);
 	widget->SetFont(FontManager->GetFont(2));
 	widget->SetText(L"Button");
 	widget->AddOnMouseClickListener([](Vector2 mousepos) {
 		CDebug::Box(L"x:%g y:%g", mousepos.x, mousepos.y);
 	});
+
+	CGameObject* imgGo = _Maker->Instantiate("Button");
+	widget2 = imgGo->AddComponent<CGUIImage>();
+	widget2->SetTexture(CTexture2D::Create("textures/dlg01.bmp"));
+	widget2->SetWidth(128)->SetHeight(128)->SetCollide(true);
+	widget2->AddOnMouseClickListener([](Vector2 mousepos) {
+		CDebug::Box(L"x:%g y:%g", mousepos.x, mousepos.y);
+	});
+	imgGo->SetSibling(0);
+
 	//widget->SetText(L"Ïß");
 	CMaterial* mat = _Maker->Instantiate<CMaterial>();
 	mat->SetShader(CShader::Get("color"));
@@ -51,6 +61,7 @@ void GUITest::OnStart()
 	//texGo->SetLocalPosition(Vector3(-4.75f, 4.05f, 0));
 	//text = texGo->AddComponent<CTextRenderer>();
 	//text->Init(FontManager->GetFont(2), NULL, 8, 0, 0.5f, Color::green(), EAlignment::LEFT_TOP, SRect2D(0, 0, 2, 1));
+	CEditorTool::PrintTree();
 }
 
 void GUITest::OnUpdate()

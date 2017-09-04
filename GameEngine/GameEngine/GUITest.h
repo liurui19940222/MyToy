@@ -20,7 +20,7 @@ class GUITest : public CGameWindow
 	CGameObject* go2;
 	CTextRenderer* text;
 	CGUILabel* widget;
-	CGUILabel* widget2;
+	CGUIImage* widget2;
 public:
 	virtual void OnStart();
 

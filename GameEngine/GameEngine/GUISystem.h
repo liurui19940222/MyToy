@@ -106,6 +106,7 @@ namespace guisystem {
 		CMeshBuffer m_buffer;
 		CMaterial* m_material;
 		Color m_fillColor;
+		Color m_addColor;
 		SRect2D m_rect;
 		EWidgetState m_state;
 		Vector2 m_lastOverPos;
@@ -149,7 +150,7 @@ namespace guisystem {
 		CGUIWidget* m_curOverlay;
 		CGUIWidget* m_lastDown;
 		Vector3 m_centerPos;
-		CGameObject* m_uiRoot;
+		CGameObject* m_uiRoot = NULL;
 
 	public:
 		void InitGUI(float resolution_x, float resolution_y);

@@ -127,8 +127,8 @@ Vector2 CInput::InputMousePosition()
 	POINT p;
 	GetCursorPos(&p);
 	int left = _Application->GetRect()->left;
-	int top = _Application->GetRect()->top;
-	return Vector2(p.x - CApplication::GetInstance()->GetRect()->left, _Application->GetRect()->bottom - p.y);
+	int bottom = _Application->GetRect()->bottom;
+	return Vector2(p.x - left, bottom - p.y);
 }
 
 float CInput::GetAxis(string axis)
