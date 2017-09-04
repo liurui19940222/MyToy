@@ -22,10 +22,12 @@ namespace guisystem {
 
 	typedef function<void(Vector2)> OnMouseDownEvent;
 	typedef function<void(Vector2)> OnMouseUpEvent;
+	typedef function<void(Vector2)> OnMouseClickEvent;
 	typedef function<void(Vector2)> OnMouseEnterEvent;
 	typedef function<void(Vector2)> OnMouseExitEvent;
 	typedef function<void(Vector2)> OnMouseOverEvent;
 
+		 
 	enum EWidgetState
 	{
 		Disabled = -1,
@@ -79,11 +81,13 @@ namespace guisystem {
 
 		CGUIWidget* AddOnMouseDownListener(OnMouseDownEvent down);
 		CGUIWidget* AddOnMouseUpListener(OnMouseUpEvent up);
+		CGUIWidget* AddOnMouseClickListener(OnMouseClickEvent enter);
 		CGUIWidget* AddOnMouseEnterListener(OnMouseEnterEvent enter);
 		CGUIWidget* AddOnMouseExitListener(OnMouseExitEvent exit);
 		CGUIWidget* AddOnMouseOverListener(OnMouseOverEvent over);
 		CGUIWidget* RemoveAllOnMouseDownListener();
 		CGUIWidget* RemoveAllOnMouseUpListener();
+		CGUIWidget* RemoveAllOnMouseClickListener();
 		CGUIWidget* RemoveAllOnMouseEnterListener();
 		CGUIWidget* RemoveAllOnMouseExitListener();
 		CGUIWidget* RemoveAllOnMouseOverListener();
@@ -113,6 +117,7 @@ namespace guisystem {
 
 		vector<OnMouseDownEvent> onMouseDown;
 		vector<OnMouseUpEvent> onMouseUp;
+		vector<OnMouseClickEvent> onMouseClick;
 		vector<OnMouseEnterEvent> onMouseEnter;
 		vector<OnMouseExitEvent> onMouseExit;
 		vector<OnMouseOverEvent> onMouseOver;
@@ -126,42 +131,40 @@ namespace guisystem {
 		void SetState(EWidgetState state);
 		void OnMouseDown(Vector2 mousePos);
 		void OnMouseUp(Vector2 mousePos);
+		void OnMouseClick(Vector2 mousePos);
 		void OnMouseEnter(Vector2 mousePos);
 		void OnMouseExit(Vector2 mousePos);
 		void OnMouseOver(Vector2 mousePos);
-
+	protected:
 		virtual void OnStart() override;
 		virtual void OnDestroy() override;
 	};
 
 	class CGUISystem : public CSingleton<CGUISystem>
 	{
+		typedef function<void(CGUIWidget*)> WidghtForeachCallback;
+		typedef function<bool(CGUIWidget*)> WidghtForeachCallbackR;
 	private:
 		float m_resolutionX, m_resolutionY;
-		CPriorityQueue<CGUIWidget*> widgets;
 		CGUIWidget* m_curOverlay;
 		CGUIWidget* m_lastDown;
 		Vector3 m_centerPos;
+		CGameObject* m_uiRoot;
 
 	public:
 		void InitGUI(float resolution_x, float resolution_y);
-
 		void AddWidget(CGUIWidget* widget);
-
 		void UpdateWidgetLayer(CGUIWidget* widget);
-
 		void DestroyWidget(CGUIWidget* widget);
-
+		void ForeachWidght(WidghtForeachCallback callback);
+		void ForeachWidghtR(WidghtForeachCallbackR callback);
+		void InverseForeachWidght(WidghtForeachCallback callback);
+		void InverseForeachWidghtR(WidghtForeachCallbackR callback);
 		void SetResolution(float resolution_x, float resolution_y);
-
 		float GetResolutionX();
-
 		float GetResolutionY();
-
 		Vector3 GetCenterPosition();
-
 		void OnUpdate();
-
 		void Quit();
 	};
 

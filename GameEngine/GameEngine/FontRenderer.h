@@ -43,7 +43,7 @@ public:
 	vector<CCharacterPrimitive*> primitives;
 };
 
-class CFontRenderer : public IRenderer
+class CFontRenderer
 {
 private:
 	wchar_t m_textBuffer[TEXT_BUFFER_SIZE];
@@ -51,7 +51,6 @@ private:
 	CTrueTypeFont* font;
 	float interval_x;
 	float interval_y;
-	float eachLineHeight;
 	int font_size;
 	Color color;
 	SRect2D rect;
@@ -73,11 +72,11 @@ protected:
 
 	void Rebuild();
 
-	void Init(CTrueTypeFont* font, int font_size, float interval_x, float interval_y, Color color, EAlignment alignment, SRect2D rect);
+	void Init(CTrueTypeFont* font, int font_size, float interval_x, Color color, EAlignment alignment, SRect2D rect);
 
 public:
-	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix) override;
-	virtual void RenderDebug(Matrix4x4& modelMatrix) override;
+	void OnRender(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix);
+	void OnRenderDebug(Matrix4x4& modelMatrix);
 	virtual CFontRenderer* SetTextRect(SRect2D rect);
 	SRect2D GetTextRect();
 	CFontRenderer* SetFont(CTrueTypeFont* font);

@@ -22,6 +22,7 @@ public:
 	virtual CRenderCamera* Ortho(float halfSize, float aspect) override;
 	virtual CRenderCamera* LookAt(const Vector3& eye, const Vector3& center, const Vector3& up) override;
 	virtual CRenderCamera* SetDepth(int depth) override;
+	CCamera* UpdateViewMatrix();
 
 	void BeginOneFrame();
 	void EndTheFrame();

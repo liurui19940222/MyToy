@@ -15,6 +15,7 @@ enum ETexWrapMode
 
 enum ETexFilterMode
 {
+	Point = 0x2600,
 	Linear = 0x2601,
 };
 

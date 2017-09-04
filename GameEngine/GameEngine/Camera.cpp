@@ -55,6 +55,18 @@ CRenderCamera* CCamera::SetDepth(int depth)
 	return this;
 }
 
+CCamera* CCamera::UpdateViewMatrix()
+{
+	static Vector3 position;
+	static Vector3 forward;
+	static Vector3 up;
+	position = this->gameObject->GetLocalPosition();
+	forward = this->gameObject->GetForward();
+	up = this->gameObject->GetUp();
+	LookAt(position, position + forward, up);
+	return this;
+}
+
 void CCamera::BeginOneFrame()
 {
 	if (m_renderTexture)
@@ -74,13 +86,7 @@ void CCamera::BeginOneFrame()
 	}
 	PrepareFixed();
 	glLoadIdentity();
-	static Vector3 position;
-	static Vector3 forward;
-	static Vector3 up;
-	position = this->gameObject->GetLocalPosition();
-	forward = this->gameObject->GetForward();
-	up = this->gameObject->GetUp();
-	LookAt(position, position + forward, up);
+	UpdateViewMatrix();
 }
 
 void CCamera::EndTheFrame()

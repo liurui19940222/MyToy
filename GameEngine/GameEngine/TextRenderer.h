@@ -7,7 +7,7 @@
 #include"FontRenderer.h"
 
 
-class CTextRenderer : public CFontRenderer, public CComponent
+class CTextRenderer : public CFontRenderer, public CComponent, public IRenderer
 {
 	REFLECT_CLASS(CTextRenderer)
 private:
@@ -18,6 +18,9 @@ public:
 	virtual void OnDestroy() override;
 
 	virtual float GetPixelScale() override;
+
+	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix) override;
+	virtual void RenderDebug(Matrix4x4& modelMatrix) override;
 };
 
 #endif

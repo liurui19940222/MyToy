@@ -7,6 +7,6 @@
 		/>
   <debug
     draw_grid = "false"
-    draw_gizmos = "true"
+    draw_gizmos = "false"
     />
 </engine>

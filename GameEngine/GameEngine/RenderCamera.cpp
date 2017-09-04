@@ -1,5 +1,6 @@
 #include"RenderCamera.h"
 #include"RenderTexture.h"
+#include"Application.h"
 
 CRenderCamera::CRenderCamera() : m_projectionType(EProjectionType::Perspective) , m_cameraClearFlag(ECameraClearFlag::SolidColor)
 , m_fov(0) , m_near(0) , m_far(0) , m_left(0) , m_right(0)
@@ -87,3 +88,22 @@ const Vector3& CRenderCamera::GetCenterPosition() const { return m_centerPos; }
 const Vector3& CRenderCamera::GetUp() const { return m_up; }
 Matrix4x4 CRenderCamera::GetViewMatrix() const { return m_viewMat; }
 Matrix4x4 CRenderCamera::GetProjectionMatrix() const { return m_projectionMat; }
+
+Vector3 CRenderCamera::WorldPosToScreen(Vector3 worldPos)
+{
+	float width = (float)_Application->GetWindowWidth();
+	float height = (float)_Application->GetWindowHeight();
+	Vector4 pos = m_projectionMat * m_viewMat * Vector4(worldPos, 1.0f);
+	float w = 1.0 / pos.w;
+	pos.x *= w; pos.y *= w; pos.z *= w;
+	pos.x = width * (pos.x + 0.5f);
+	pos.y = height - height * (pos.y + 0.5f);
+	return pos;
+}
+
+Vector3 CRenderCamera::ScreenPosToViewPort(Vector3 screenPos)
+{
+	float width = (float)_Application->GetWindowWidth();
+	float height = (float)_Application->GetWindowHeight();
+	return Vector3(screenPos.x - width * 0.5f, -screenPos.y + height * 0.5f, screenPos.z);
+}

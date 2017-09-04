@@ -1,6 +1,6 @@
-#include "GameObject.h"
-#include "DynamicFactory.h"
-#include "Application.h"
+#include"GameObject.h"
+#include"DynamicFactory.h"
+#include"Application.h"
 
 IMPL_CLASS(CGameObject)
 
@@ -81,7 +81,7 @@ const Vector3& CGameObject::GetLocalEulerAngles() const
 
 const Vector3& CGameObject::GetRealPosition() const
 {
-	return localPosition;
+	return realPosition;
 }
 
 const Vector3& CGameObject::GetUp() const
@@ -121,6 +121,9 @@ IRenderer* CGameObject::GetRenderer()
 Matrix4x4 CGameObject::ComputeModelToWorldMat()
 {
 	modelToWorldMat = localMoveMat * localRotateMat * localScaleMat;
+	realPosition.x = modelToWorldMat[3][0];
+	realPosition.y = modelToWorldMat[3][1];
+	realPosition.z = modelToWorldMat[3][2];
 	return modelToWorldMat;
 }
 

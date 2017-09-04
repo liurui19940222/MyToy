@@ -73,6 +73,9 @@ public:
 	const Vector3& GetUp() const;
 	Matrix4x4 GetViewMatrix() const;
 	Matrix4x4 GetProjectionMatrix() const;
+
+	Vector3 WorldPosToScreen(Vector3 worldPos);
+	Vector3 ScreenPosToViewPort(Vector3 screenPos);
 };
 
 #endif

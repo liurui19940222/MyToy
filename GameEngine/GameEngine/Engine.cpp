@@ -24,6 +24,7 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd)
 	m_mainCamera->gameObject->SetLocalPosition(Vector3(0, 4, -10));
 	m_mainCamera->Perspective(54.0f, (GLfloat)_Application->GetWindowWidth() / (GLfloat)_Application->GetWindowHeight(), 1.0f, 1000.0f);
 	m_mainCamera->LayerMask() = Layer::Default;
+	m_mainCamera->UpdateViewMatrix();
 
 	m_uiCamera = _Maker->Instantiate("UICamera")->AddComponent<CCamera>();
 	m_uiCamera->gameObject->SetLocalPosition(Vector3(0, 0, 10));
@@ -31,6 +32,7 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd)
 	m_uiCamera->SetCameraClearFlag(ECameraClearFlag::DontClear);
 	m_uiCamera->SetDepth(99)->LayerMask() = Layer::Overlay2D;
 	m_uiCamera->Ortho((GLfloat)_Application->GetWindowHeight() * 0.5f, (GLfloat)_Application->GetWindowWidth() / (GLfloat)_Application->GetWindowHeight());
+	m_uiCamera->UpdateViewMatrix();
 }
 
 void CEngine::SetupProjection(int width, int height)

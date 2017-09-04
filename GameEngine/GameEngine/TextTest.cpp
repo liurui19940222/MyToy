@@ -6,13 +6,16 @@ void CTextTest::OnStart()
 	_MainCameraGo->SetLocalPosition(Vector3(0, 0, 10));
 	_MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
 
-	CTrueTypeFont* font = FontManager->LoadFont(1, "C:/Windows/Fonts/StencilStd.otf");
+	CTrueTypeFont* font = FontManager->LoadFont(1, "C:/Windows/Fonts/simsun.ttc");
 	go = _Maker->Instantiate();
 	go->SetLocalPosition(Vector3(0, 0, 0));
 	go->SetLayer(Layer::Default);
 	text = go->AddComponent<CTextRenderer>();
-	text->SetFont(font)->SetFontSize(10)->SetTextRect(SRect2D{ 0, 0, 5, 1 });
-	text->SetText(L"Sams Publishing & Pearson Education Inc., \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson");
+	text->SetFont(font)->SetFontSize(10)->SetTextRect(SRect2D{ 0, 0, 5, 1 })->SetColor(Color::blue);
+	text->SetText(L"那么照此格式输出的字母都能以基线对齐，。 \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson");
+	//text->SetText(L"ABg_-");
+	//text->SetText(L"-+*/123456789");
+	//text->SetText(L"那么照此格式输出的字母都能以基线对齐。但是所有的字都比设置的位置要低一些，想问一下我的计算方式是不是不对，网上都是这么计算的  ……");
 
 	//CAtlas* atlas = (*font->GetAtlases(10))[0];
 	//CTexture* tex = CTexture::Create((UCHAR*)(atlas->GetPixels()), atlas->GetWidth(), atlas->GetHeight());
@@ -76,6 +79,20 @@ void CTextTest::OnUpdate()
 	if (CInput::GetKeyDown(DIK_4))
 	{
 		text->SetColor(Color::red);
+	}
+
+	if (CInput::GetKey(DIK_N))
+	{
+		SRect2D rect = text->GetTextRect();
+		rect.half_size_x -= CTime::deltaTime * 10;
+		text->SetTextRect(rect);
+	}
+
+	if (CInput::GetKey(DIK_M))
+	{
+		SRect2D rect = text->GetTextRect();
+		rect.half_size_x += CTime::deltaTime * 10;
+		text->SetTextRect(rect);
 	}
 	
 	float h = CInput::GetAxis("Horizontal");

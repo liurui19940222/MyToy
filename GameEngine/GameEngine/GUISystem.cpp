@@ -23,8 +23,7 @@ CGUIWidget::CGUIWidget() :
 bool CGUIWidget::Overlay(Vector2 pos)
 {
 	//因为rect被定义在模型空间，所以要用pos减去世界空间位置
-	//return m_rect.Overlay(pos - gameObject->GetRealPosition());
-	return false;
+	return m_rect.Overlay(pos - gameObject->GetRealPosition());
 }
 
 bool CGUIWidget::IsCollide()
@@ -181,6 +180,12 @@ CGUIWidget* CGUIWidget::AddOnMouseUpListener(OnMouseUpEvent up)
 	return this;
 }
 
+CGUIWidget* CGUIWidget::AddOnMouseClickListener(OnMouseClickEvent click)
+{
+	onMouseClick.push_back(click);
+	return this;
+}
+
 CGUIWidget* CGUIWidget::AddOnMouseEnterListener(OnMouseEnterEvent enter)
 {
 	onMouseEnter.push_back(enter);
@@ -208,6 +213,12 @@ CGUIWidget* CGUIWidget::RemoveAllOnMouseDownListener()
 CGUIWidget* CGUIWidget::RemoveAllOnMouseUpListener()
 {
 	onMouseUp.clear();
+	return this;
+}
+
+CGUIWidget* CGUIWidget::RemoveAllOnMouseClickListener()
+{
+	onMouseClick.clear();
 	return this;
 }
 
@@ -314,6 +325,13 @@ void CGUIWidget::OnMouseUp(Vector2 mousePos)
 			(*it)(mousePos);
 }
 
+void CGUIWidget::OnMouseClick(Vector2 mousePos)
+{
+	if (onMouseClick.size() > 0)
+		for (auto it = onMouseClick.begin(); it != onMouseClick.end(); ++it)
+			(*it)(mousePos);
+}
+
 void CGUIWidget::OnMouseEnter(Vector2 mousePos)
 {
 	if (onMouseEnter.size() > 0)
@@ -343,7 +361,7 @@ void CGUIWidget::OnStart()
 	SetAnchorPosition(Vector3::zero);
 	m_buffer.MakeBuffer(*_MeshFactory->SharedMesh(EMeshType::Quad));
 	m_material = _Maker->Instantiate<CMaterial>();
-	m_material->SetShader(CShader::Get("texture"));
+	m_material->SetShader(CShader::Get("gui"))->SetState(EPiplelineStateType::DepthTest, false);
 }
 
 void CGUIWidget::OnDestroy()
@@ -409,27 +427,70 @@ void CGUIWidget::RenderDebug(Matrix4x4& modelMatrix)
 void CGUISystem::InitGUI(float resolution_x, float resolution_y)
 {
 	SetResolution(resolution_x, resolution_y);
-	widgets.SetComparator([](CGUIWidget* a, CGUIWidget* b) {
-		if (a->m_layer > b->m_layer) return 1;
-		if (a->m_layer < b->m_layer) return -1;
-		return 0;
-	});
+	m_uiRoot = _Maker->Instantiate("UIRoot");
 }
 
 void CGUISystem::AddWidget(CGUIWidget* widget)
 {
-	widgets.Enqueue(widget);
+	widget->gameObject->SetParent(m_uiRoot);
 }
 
 void CGUISystem::UpdateWidgetLayer(CGUIWidget* widget)
 {
-	widgets.Remove(widget);
-	widgets.Enqueue(widget);
+
 }
 
 void CGUISystem::DestroyWidget(CGUIWidget* dwidget)
 {
-	widgets.Remove(dwidget);
+
+}
+
+void CGUISystem::ForeachWidght(WidghtForeachCallback callback)
+{
+	_Maker->ForeachGameObject(m_uiRoot, [&callback](CGameObject* go, int depth) {
+		CGUIWidget* widght = NULL;
+		if (widght = go->GetComponent<CGUIWidget>())
+		{
+			callback(widght);
+		}
+	});
+}
+
+void CGUISystem::ForeachWidghtR(WidghtForeachCallbackR callback)
+{
+	_Maker->ForeachGameObject(m_uiRoot, [&callback](CGameObject* go, int depth) {
+		CGUIWidget* widght = NULL;
+		if (widght = go->GetComponent<CGUIWidget>())
+		{
+			if (callback(widght))
+				return;
+		}
+	});
+}
+
+void CGUISystem::InverseForeachWidght(WidghtForeachCallback callback)
+{
+	vector<CGUIWidget*> list;
+	ForeachWidght([&list](CGUIWidget* widght) {
+		list.push_back(widght);
+	});
+	for (int i = list.size() - 1; i >= 0; --i)
+	{
+		callback(list[i]);
+	}
+}
+
+void CGUISystem::InverseForeachWidghtR(WidghtForeachCallbackR callback)
+{
+	vector<CGUIWidget*> list;
+	ForeachWidght([&list](CGUIWidget* widght) {
+		list.push_back(widght);
+	});
+	for (int i = list.size() - 1; i >= 0; --i)
+	{
+		if (callback(list[i]))
+			break;
+	}
 }
 
 void CGUISystem::SetResolution(float resolution_x, float resolution_y)
@@ -438,7 +499,7 @@ void CGUISystem::SetResolution(float resolution_x, float resolution_y)
 	m_resolutionY = resolution_y;
 	m_centerPos.x = resolution_x * 0.5f;
 	m_centerPos.y = resolution_y * 0.5f;
-	widgets.Foreach([](CGUIWidget* widget) {
+	ForeachWidght([](CGUIWidget* widget) {
 		widget->RefreshAnchor();
 	});
 }
@@ -456,7 +517,9 @@ float CGUISystem::GetResolutionY()
 void CGUISystem::OnUpdate()
 {
 	Vector2 mousePos = CInput::InputMousePosition();
-	widgets.ForeachR([this, &mousePos](CGUIWidget* widget) {
+	mousePos.y = (float)_Application->GetWindowHeight() - mousePos.y;
+	mousePos = _MainCamera->ScreenPosToViewPort(mousePos);
+	ForeachWidghtR([this, &mousePos](CGUIWidget* widget) {
 		if (!widget->IsState(EWidgetState::Disabled) && widget->IsCollide())
 		{
 			if (widget->Overlay(mousePos))
@@ -483,6 +546,7 @@ void CGUISystem::OnUpdate()
 					{
 						widget->SetState(EWidgetState::Hover);
 						widget->OnMouseUp(mousePos);
+						widget->OnMouseClick(mousePos);
 					}
 				}
 				else if (!widget->IsState(EWidgetState::Pressed))
@@ -508,14 +572,14 @@ void CGUISystem::OnUpdate()
 		}
 		return true;
 	});
-	widgets.Foreach([](CGUIWidget* widget) {
+	ForeachWidght([](CGUIWidget* widget) {
 		widget->OnUIUpdate();
 	});
 }
 
 void CGUISystem::Quit()
 {
-	widgets.Clear();
+	
 }
 
 Vector3 CGUISystem::GetCenterPosition()

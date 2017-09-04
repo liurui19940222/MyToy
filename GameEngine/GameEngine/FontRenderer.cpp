@@ -12,7 +12,8 @@ CCharacterPrimitive::CCharacterPrimitive(int left_padding, int top, int advance_
 	this->height_y = height * pixelScale;
 	m_material = _Maker->Instantiate<CMaterial>();
 	m_texture = CTexture2D::Create((UCHAR*)pixels, width, height);
-	m_material->SetMainTexture(m_texture);
+	m_texture->SetEnvMode(ETexEnvMode::Replace)->SetWrapMode(ETexWrapMode::Clamp)->SetFilterMode(ETexFilterMode::Linear);
+	m_material->SetMainTexture(m_texture)->SetState(EPiplelineStateType::DepthTest, false);
 	m_material->SetShader(CShader::Get("font"));
 	Mesh* mesh = _MeshFactory->CreateRectMesh(width_x, height_y);
 	m_buffer.MakeBuffer(*mesh);
@@ -48,13 +49,12 @@ CTextOneLineData::~CTextOneLineData()
 
 }
 
-void CFontRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
+void CFontRenderer::OnRender(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
 {
 	if (!font || text.size() == 0) return;
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	static float offset_x;
 	static float offset_y;
 
@@ -72,7 +72,7 @@ void CFontRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix
 	glDisable(GL_BLEND);
 }
 
-void CFontRenderer::RenderDebug(Matrix4x4& modelMatrix)
+void CFontRenderer::OnRenderDebug(Matrix4x4& modelMatrix)
 {
 	CEditorTool::DrawRect(rect, modelMatrix);
 }
@@ -116,6 +116,7 @@ CFontRenderer* CFontRenderer::SetIntervalY(float y)
 CFontRenderer* CFontRenderer::SetFontSize(int size)
 {
 	this->font_size = size;
+	this->interval_y = font_size * GetPixelScale();
 	return this;
 }
 
@@ -150,35 +151,50 @@ float CFontRenderer::GetOffsetX(int line_index)
 {
 	float line_width = lineDatas[line_index]->line_width;
 	if (alignment_h == EAlignmentHorizontal::LEFT)
-		return lineDatas[line_index]->primitives[0]->width_x;
+	{
+		return lineDatas[line_index]->primitives[0]->width_x * 0.5f;
+	}
 	else if (alignment_h == EAlignmentHorizontal::CENTER)
-		return (rect.half_size_x * 2 - line_width) * 0.5f;
+	{
+		float firstWordHalfWidth = lineDatas[line_index]->primitives[0]->width_x * 0.5f;
+		return (rect.half_size_x * 2 - line_width) * 0.5f + firstWordHalfWidth;
+	}
 	else if (alignment_h == EAlignmentHorizontal::RIGHT)
-		return rect.half_size_x * 2 - line_width;
+	{
+		float lastWordHalfWidth = lineDatas[line_index]->primitives[lineDatas[line_index]->primitives.size() - 1]->width_x * 0.5f;
+		return rect.half_size_x * 2 - line_width + lastWordHalfWidth;
+	}
 	return 0;
 }
 
 float CFontRenderer::GetOffsetY()
 {
-	float ea = lineDatas.size() * eachLineHeight;
 	if (alignment_v == EAlignmentVertical::TOP)
-		return  eachLineHeight * 0.5;
+	{
+		return  -interval_y * 0.5;
+	}
 	else if (alignment_v == EAlignmentVertical::MIDDLE)
-		return -rect.half_size_y + ea * 0.5 + eachLineHeight * 0.5;
+	{
+		return -(rect.half_size_y * 2 - interval_y  * ((lineDatas.size() - 1))) * 0.5f;
+	}
 	else if (alignment_v == EAlignmentVertical::BOTTOM)
-		return -rect.half_size_y * 2 + ea + eachLineHeight * 0.5;
+	{
+		float lastLineHalfHeight = lineDatas[lineDatas.size() - 1]->line_height * 0.5f;
+		return -(rect.half_size_y * 2 - interval_y * (lineDatas.size())) - lastLineHalfHeight;
+	}
 	return 0;
 }
 
 void CFontRenderer::Rebuild()
 {
+	if (!font) return;
 	ClearPrimitive();
 	ClearLineData();
 	for (int i = 0; i < text.size(); i++)
 	{
 		CCharacterInfo* chInfo = font->GetCharacter(text[i], font_size);
 		SBitmapData bitmap;
-		chInfo->GetBitmap(&bitmap, color);
+		chInfo->GetBitmap(&bitmap, Color::white);
 		primitives.push_back(new CCharacterPrimitive(chInfo->left_padding, chInfo->top, chInfo->advance_x, bitmap.width, bitmap.height, GetPixelScale(), bitmap.buffer));
 		free(bitmap.buffer);
 	}
@@ -215,33 +231,23 @@ void CFontRenderer::Rebuild()
 		}
 		if (start_y - top - interval_y < -rect.half_size_y)
 			break;
-		primitives[i]->position = Vector3{ start_x, start_y - top, 0 };
+		primitives[i]->position = Vector3{ start_x, start_y - top * 0.5f, 0 };
 		start_x += adv_x + interval_x;
 		lineData->line_width += left + adv_x + interval_x;
 		if (primitives[i]->height_y > lineData->line_height)
 			lineData->line_height = primitives[i]->height_y;
 		lineData->primitives.push_back(primitives[i]);
 	}
-	eachLineHeight = 0;
-	for (CTextOneLineData* lineData : lineDatas)
-	{
-		eachLineHeight -= lineData->line_height;
-		for (CCharacterPrimitive* primitive : lineData->primitives)
-		{
-			primitive->position.y += eachLineHeight;
-		}
-	}
-	eachLineHeight = -eachLineHeight / (float)lineDatas.size() + interval_y;
 }
 
-void CFontRenderer::Init(CTrueTypeFont* font, int font_size, float interval_x, float interval_y, Color color, EAlignment alignment, SRect2D rect)
+void CFontRenderer::Init(CTrueTypeFont* font, int font_size, float interval_x, Color color, EAlignment alignment, SRect2D rect)
 {
 	this->font = font;
-	this->font_size = font_size;
 	this->interval_x = interval_x;
 	this->interval_y = interval_y;
 	this->color = color;
 	this->rect = rect;
+	SetFontSize(font_size);
 	SetTextAlignment(alignment);
 }
 

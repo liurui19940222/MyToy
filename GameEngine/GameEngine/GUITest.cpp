@@ -2,22 +2,30 @@
 #include "GUISystem.h"
 #include"MeshFactory.h"
 
+CGameObject* r;
 void GUITest::OnStart()
 {
+	FontManager->LoadFont(2, "C:/Windows/Fonts/simsun.ttc");
 	CTexture* tex = CTexture2D::Create("F://monthad_1.png");
 	CTexture* tex2 = CTexture2D::Create("F://avatar_15.png");
 	go = _Maker->Instantiate("widget");
-	widget = go->AddComponent<CGUIWidget>();
-	widget->SetWidth(400)->SetHeight(300);
+	widget = go->AddComponent<CGUILabel>();
+	widget->SetWidth(100)->SetHeight(30);
 	//widget->SetFill(true)->SetFillColor(Color::blue());
 	widget->SetAlignment(EAlignment::CENTER_MIDDLE);
 	widget->SetPivot(Vector2(0.5f, 0.5f));
 	widget->SetCollide(true)->SetFill(true);
-	widget->SetFillColor(Color::red);
-
+	widget->SetFillColor(Color::grey);
+	widget->SetFont(FontManager->GetFont(2));
+	widget->SetText(L"Button");
+	widget->AddOnMouseClickListener([](Vector2 mousepos) {
+		CDebug::Box(L"x:%g y:%g", mousepos.x, mousepos.y);
+	});
+	//widget->SetText(L"Ïß");
 	CMaterial* mat = _Maker->Instantiate<CMaterial>();
 	mat->SetShader(CShader::Get("color"));
 	CMeshRenderer* render = _Maker->Instantiate("Cube")->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube));
+	r = render->gameObject;
 	render->SetMaterial(mat);
 	render->gameObject->SetLocalPosition(Vector3(0, 0, 10));
 	/*CGameObject* go3 = _Maker->Instantiate();
@@ -47,131 +55,74 @@ void GUITest::OnStart()
 
 void GUITest::OnUpdate()
 {
-	/*Vector2 pos = CInput::InputMousePosition();
-	wchar_t buffer[128];
-	swprintf_s(buffer, L"MousePosition X:%g Y:%g\nWidgetState:%d\nAnchor X:%g Y:%g\nPivot X:%g Y:%g", 
-		pos.x, pos.y, widget2->GetState(), widget2->GetAnchorPosition().x, widget2->GetAnchorPosition().y, widget2->GetPivot().x, widget2->GetPivot().y);
-	//text->SetText(buffer);
-
-	float h = CInput::GetAxis("Horizontal");
-	float v = CInput::GetAxis("Vertical");
-
-	static bool controlDown = false;
-
-	if (CInput::GetKeyDown(DIK_LCONTROL))
+	CGUILabel* text = widget;
+	if (CInput::GetKeyDown(DIK_NUMPAD1))
 	{
-		controlDown = true;
+		text->SetTextAlignment(EAlignment::LEFT_BOTTOM);
 	}
-	if (CInput::GetKeyUp(DIK_LCONTROL))
+	if (CInput::GetKeyDown(DIK_NUMPAD2))
 	{
-		controlDown = false;
+		text->SetTextAlignment(EAlignment::CENTER_BOTTOM);
 	}
-	if (CInput::GetKeyDown(DIK_R))
+	if (CInput::GetKeyDown(DIK_NUMPAD3))
 	{
-		//widget2->SetAnchorPosition(Vector3::Zero());
-		widget2->RefreshAnchor();
+		text->SetTextAlignment(EAlignment::RIGHT_BOTTOM);
 	}
-	if (controlDown)
+	if (CInput::GetKeyDown(DIK_NUMPAD4))
 	{
-		if (CInput::GetKeyDown(DIK_NUMPAD1))
-		{
-			widget2->SetAlignment(EAlignment::LEFT_BOTTOM);
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD2))
-		{
-			widget2->SetAlignment(EAlignment::CENTER_BOTTOM);
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD3))
-		{
-			widget2->SetAlignment(EAlignment::RIGHT_BOTTOM);
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD4))
-		{
-			widget2->SetAlignment(EAlignment::LEFT_MIDDLE);
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD5))
-		{
-			widget2->SetAlignment(EAlignment::CENTER_MIDDLE);
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD6))
-		{
-			widget2->SetAlignment(EAlignment::RIGHT_MIDDLE);
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD7))
-		{
-			widget2->SetAlignment(EAlignment::LEFT_TOP);
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD8))
-		{
-			widget2->SetAlignment(EAlignment::CENTER_TOP);
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD9))
-		{
-			widget2->SetAlignment(EAlignment::RIGHT_TOP);
-		}
+		text->SetTextAlignment(EAlignment::LEFT_MIDDLE);
 	}
-	else
+	if (CInput::GetKeyDown(DIK_NUMPAD5))
 	{
-		if (CInput::GetKeyDown(DIK_NUMPAD1))
-		{
-			widget2->SetPivot(Vector2(0, 0));
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD2))
-		{
-			widget2->SetPivot(Vector2(0.5f, 0));
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD3))
-		{
-			widget2->SetPivot(Vector2(1, 0));
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD4))
-		{
-			widget2->SetPivot(Vector2(0, 0.5f));
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD5))
-		{
-			widget2->SetPivot(Vector2(0.5f, 0.5f));
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD6))
-		{
-			widget2->SetPivot(Vector2(1, 0.5f));
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD7))
-		{
-			widget2->SetPivot(Vector2(0, 1));
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD8))
-		{
-			widget2->SetPivot(Vector2(0.5f, 1));
-		}
-		if (CInput::GetKeyDown(DIK_NUMPAD9))
-		{
-			widget2->SetPivot(Vector2(1, 1));
-		}
+		text->SetTextAlignment(EAlignment::CENTER_MIDDLE);
+	}
+	if (CInput::GetKeyDown(DIK_NUMPAD6))
+	{
+		text->SetTextAlignment(EAlignment::RIGHT_MIDDLE);
+	}
+	if (CInput::GetKeyDown(DIK_NUMPAD7))
+	{
+		text->SetTextAlignment(EAlignment::LEFT_TOP);
+	}
+	if (CInput::GetKeyDown(DIK_NUMPAD8))
+	{
+		text->SetTextAlignment(EAlignment::CENTER_TOP);
+	}
+	if (CInput::GetKeyDown(DIK_NUMPAD9))
+	{
+		text->SetTextAlignment(EAlignment::RIGHT_TOP);
 	}
 
-	//Vector3 anchor_pos = widget2->GetAnchorPosition();
-	//anchor_pos.x += h * CTime::deltaTime * 50;
-	//anchor_pos.y += v * CTime::deltaTime * 50;
-	//widget2->SetAnchorPosition(anchor_pos);
-
-	if (h != 0 || v != 0)
+	if (CInput::GetKeyDown(DIK_1))
 	{
-		float width = widget2->GetWidth();
-		float height = widget2->GetHeight();
-		width += h * CTime::deltaTime * 50;
-		height += v * CTime::deltaTime * 50;
-		widget2->SetWidth(width);
-		widget2->SetHeight(height);
+		text->SetColor(Color::orange);
+	}
+	if (CInput::GetKeyDown(DIK_2))
+	{
+		text->SetColor(Color::cyan);
+	}
+	if (CInput::GetKeyDown(DIK_3))
+	{
+		text->SetColor(Color::green);
+	}
+	if (CInput::GetKeyDown(DIK_4))
+	{
+		text->SetColor(Color::red);
 	}
 
-	//Vector3 euler = go2->GetLocalEulerAngles();
-	//euler.z += CTime::deltaTime * 30;
-	//go2->SetLocalEulerAngles(euler);
+	if (CInput::GetKey(DIK_N))
+	{
+		float w = text->GetWidth();
+		w -= CTime::deltaTime * 10;
+		text->SetWidth(w);
+	}
 
-	//euler = go->GetLocalEulerAngles();
-	//euler.z -= CTime::deltaTime * 30;
-	//go->SetLocalEulerAngles(euler);*/
+	if (CInput::GetKey(DIK_M))
+	{
+		float w = text->GetWidth();
+		w += CTime::deltaTime * 10;
+		text->SetWidth(w);
+	}
 
 float h = CInput::GetAxis("Horizontal");
 float v = CInput::GetAxis("Vertical");
