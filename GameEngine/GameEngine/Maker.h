@@ -18,7 +18,7 @@ typedef function<bool(CGameObject*, int)> ForeachGoCallbackR;
 typedef function<void(CGameObject*, int)> ForeachGoCallback;
 typedef function<void(CGameObject*, int, Matrix4x4&)> ForeachGoCallbackMatrix;
 
-class CMaker : public CSingleton<CMaker>
+class ENGINE_API CMaker : public CSingleton<CMaker>
 {
 private:
 	friend class CGameObject;

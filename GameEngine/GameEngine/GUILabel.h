@@ -7,7 +7,7 @@
 
 namespace guisystem {
 
-	class CGUILabel : public CGUIWidget, public CFontRenderer
+	class ENGINE_API CGUILabel : public CGUIWidget, public CFontRenderer
 	{
 		REFLECT_CLASS(CGUILabel)
 	protected:

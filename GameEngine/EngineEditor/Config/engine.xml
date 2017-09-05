@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine>
+	<window
+    full_screen = "false"
+		width = "800"
+    height = "600"
+		/>
+  <debug
+    draw_grid = "false"
+    draw_gizmos = "false"
+    />
+</engine>

@@ -12,11 +12,12 @@
 #include <string>
 #include <typeinfo>
 #include <iostream>
+#include"ApiDefine.h"
 
 using namespace std;
 
 // 动态对象基类
-class DynamicObject
+class ENGINE_API DynamicObject
 {
 public:
 	DynamicObject() {}
@@ -24,7 +25,7 @@ public:
 };
 
 // 动态对象创建工厂
-class DynamicFactory
+class ENGINE_API DynamicFactory
 {
 public:
 

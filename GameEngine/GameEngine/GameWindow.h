@@ -2,8 +2,11 @@
 #define _CGAME_WINDOW_
 
 #include"Application.h"
+#include"ApiDefine.h"
 
-class CGameWindow
+struct ENGINE_API SApplicationInfo;
+
+class ENGINE_API CGameWindow
 {
 public:
 	CGameWindow();

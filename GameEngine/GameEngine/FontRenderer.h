@@ -11,7 +11,7 @@
 
 #define TEXT_BUFFER_SIZE 2048
 
-class CCharacterPrimitive
+class ENGINE_API CCharacterPrimitive
 {
 public:
 	CMeshBuffer m_buffer;
@@ -31,7 +31,7 @@ public:
 	void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color);
 };
 
-class CTextOneLineData
+class ENGINE_API CTextOneLineData
 {
 public:
 	CTextOneLineData();
@@ -43,7 +43,7 @@ public:
 	vector<CCharacterPrimitive*> primitives;
 };
 
-class CFontRenderer
+class ENGINE_API CFontRenderer
 {
 private:
 	wchar_t m_textBuffer[TEXT_BUFFER_SIZE];

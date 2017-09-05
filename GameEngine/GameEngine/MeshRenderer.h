@@ -10,7 +10,7 @@
 #include"Material.h"
 #include"MeshBuffer.h"
 
-class CMeshRenderer : public CComponent, public IRenderer
+class ENGINE_API CMeshRenderer : public CComponent, public IRenderer
 {
 	REFLECT_CLASS(CMeshRenderer)
 private:

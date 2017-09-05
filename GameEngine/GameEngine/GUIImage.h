@@ -6,7 +6,7 @@
 
 namespace guisystem {
 
-	class CGUIImage : public CGUIWidget
+	class ENGINE_API CGUIImage : public CGUIWidget
 	{
 		REFLECT_CLASS(CGUIImage)
 	private:

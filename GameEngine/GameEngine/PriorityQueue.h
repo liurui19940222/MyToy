@@ -3,12 +3,13 @@
 
 #include<iostream>
 #include<functional>
+#include"ApiDefine.h"
 
 using namespace std::tr1;
 
 namespace container {
 	template<typename T>
-	struct CTwoWayNode
+	struct ENGINE_API CTwoWayNode
 	{
 		T value;
 		CTwoWayNode* prev;
@@ -18,7 +19,7 @@ namespace container {
 	};
 
 	template<typename T>
-	class CPriorityQueue
+	class ENGINE_API CPriorityQueue
 	{
 	public:
 		typedef function<int(T, T)> Comparator;

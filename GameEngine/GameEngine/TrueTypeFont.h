@@ -11,7 +11,7 @@
 using namespace std;
 
 //单个字符信息
-class CCharacterInfo
+class ENGINE_API CCharacterInfo
 {
 public:
 	CAtlas* atlas;
@@ -28,7 +28,7 @@ public:
 
 //某个字号的所有字体
 //可包含多张图集，图集的大小预定义
-class CTrueTypeFontSize
+class ENGINE_API CTrueTypeFontSize
 {
 private:
 	int fontSize;
@@ -54,7 +54,7 @@ public:
 
 //一个字体类
 //按字号包含该字号的图所有信息
-class CTrueTypeFont
+class ENGINE_API CTrueTypeFont
 {
 private:
 	int id;

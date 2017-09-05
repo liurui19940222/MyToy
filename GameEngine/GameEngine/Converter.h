@@ -3,10 +3,11 @@
 
 #include<string>
 #include<Windows.h>
+#include"ApiDefine.h"
 
 using namespace std;
 
-class CConverter
+class ENGINE_API CConverter
 {
 private:
 	static constexpr int WSTRING_BUFFER_SIZE = 4096;

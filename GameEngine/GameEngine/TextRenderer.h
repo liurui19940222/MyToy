@@ -7,7 +7,7 @@
 #include"FontRenderer.h"
 
 
-class CTextRenderer : public CFontRenderer, public CComponent, public IRenderer
+class ENGINE_API CTextRenderer : public CFontRenderer, public CComponent, public IRenderer
 {
 	REFLECT_CLASS(CTextRenderer)
 private:

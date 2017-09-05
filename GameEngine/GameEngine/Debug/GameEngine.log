@@ -1,4 +1,113 @@
-﻿  GUITest.cpp
+﻿  TrueTypeFont.cpp
+  Object.cpp
+  ImageFile.cpp
+  Time.cpp
+  Texture2D.cpp
+  Texture.cpp
+  TextTest.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.exe
+  TextRenderer.cpp
+  TestTest.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\github\mytoy\gameengine\gameengine\testtest.cpp(28): warning C4305: “参数”: 从“double”到“float”截断
+  TestApp.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  SpriteRenderer.cpp
+  SpriteAnimation.cpp
+  SkinnedMeshRenderer.cpp
+  Shader.cpp
+  Resources.cpp
+  RenderCamera.cpp
+d:\github\mytoy\gameengine\gameengine\rendercamera.cpp(97): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+  MeshRenderer.cpp
+  Math.cpp
+d:\github\mytoy\gameengine\gameengine\math.cpp(845): warning C4244: “初始化”: 从“const float”转换到“int”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\math.cpp(846): warning C4244: “初始化”: 从“const float”转换到“int”，可能丢失数据
+  RelationshipTest.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\github\mytoy\gameengine\gameengine\relationshiptest.cpp(7): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\relationshiptest.cpp(8): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+  MeshBuffer.cpp
+  正在生成代码...
+  正在编译...
+  Material.cpp
+d:\github\mytoy\gameengine\gameengine\material.cpp(28): warning C4800: “GLboolean”: 将值强制为布尔值“true”或“false”(性能警告)
+  Maker.cpp
+  main.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Input.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\github\mytoy\gameengine\gameengine\input.cpp(131): warning C4244: “参数”: 从“LONG”转换到“float”，可能丢失数据
+  ImageTest.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  GUITest.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  GUISystem.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  GUILabel.cpp
+  GUIImage.cpp
+d:\github\mytoy\gameengine\gameengine\guiimage.cpp(26): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\guiimage.cpp(27): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+  GameWindow.cpp
+  GameObject.cpp
+  RenderTexture.cpp
+  MeshFactory.cpp
+  FontRenderer.cpp
+d:\github\mytoy\gameengine\gameengine\fontrenderer.cpp(174): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\fontrenderer.cpp(193): warning C4018: “<”: 有符号/无符号不匹配
+  FontManager.cpp
+  EngineSetting.cpp
+  EngineDefine.cpp
+d:\github\mytoy\gameengine\gameengine\enginedefine.cpp(136): warning C4244: “=”: 从“float”转换到“byte”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\enginedefine.cpp(137): warning C4244: “=”: 从“float”转换到“byte”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\enginedefine.cpp(138): warning C4244: “=”: 从“float”转换到“byte”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\enginedefine.cpp(139): warning C4244: “=”: 从“float”转换到“byte”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\enginedefine.cpp(167): warning C4244: “参数”: 从“float”转换到“byte”，可能丢失数据
+  Engine.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\github\mytoy\gameengine\gameengine\engine.cpp(135): warning C4305: “参数”: 从“unsigned int”到“byte”截断
+d:\github\mytoy\gameengine\gameengine\engine.cpp(135): warning C4309: “参数”: 截断常量值
+  EditorTool.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\github\mytoy\gameengine\gameengine\editortool.cpp(201): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\editortool.cpp(205): warning C4305: “参数”: 从“double”到“GLfloat”截断
+d:\github\mytoy\gameengine\gameengine\editortool.cpp(257): warning C4305: “参数”: 从“double”到“float”截断
+  Debug.cpp
+  正在生成代码...
+  正在编译...
+  Config.cpp
+  Component.cpp
+  ColladaTest.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+c:\program files (x86)\windows kits\8.1\include\um\glm\core\func_common.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+c:\program files (x86)\windows kits\8.1\include\um\glm\core\func_common.inl : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+c:\program files (x86)\windows kits\8.1\include\um\glm\core\func_integer.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+d:\github\mytoy\gameengine\gameengine\colladatest.cpp(10): warning C4305: “参数”: 从“double”到“float”截断
+d:\github\mytoy\gameengine\gameengine\colladatest.cpp(26): warning C4305: “参数”: 从“double”到“const float”截断
+  ColladaFile.cpp
+d:\github\mytoy\gameengine\gameengine\colladafile.cpp(71): warning C4018: “<=”: 有符号/无符号不匹配
+d:\github\mytoy\gameengine\gameengine\colladafile.cpp(73): warning C4018: “<”: 有符号/无符号不匹配
+d:\github\mytoy\gameengine\gameengine\colladafile.cpp(267): warning C4018: “<”: 有符号/无符号不匹配
+d:\github\mytoy\gameengine\gameengine\colladafile.h(101): warning C4018: “<=”: 有符号/无符号不匹配
+  d:\github\mytoy\gameengine\gameengine\colladafile.cpp(156): note: 参见对正在编译的函数 模板 实例化“TValue *CColladaFile::UnpackValues<float>(std::string &,std::size_t)”的引用
+          with
+          [
+              TValue=float
+          ]
+d:\github\mytoy\gameengine\gameengine\colladafile.h(103): warning C4018: “<”: 有符号/无符号不匹配
+  Camera.cpp
+  SkeletonAnimation.cpp
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.cpp(42): warning C4018: “<”: 有符号/无符号不匹配
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.cpp(82): warning C4018: “<”: 有符号/无符号不匹配
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.cpp(84): warning C4267: “=”: 从“size_t”转换到“byte”，可能丢失数据
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.cpp(113): warning C4018: “<”: 有符号/无符号不匹配
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.cpp(160): warning C4018: “<”: 有符号/无符号不匹配
+  GUIDesigner.cpp
+  BitImage.cpp
+  Atlas.cpp
+  Application.cpp
+d:\github\mytoy\gameengine\gameengine\application.cpp(157): warning C4800: “int”: 将值强制为布尔值“true”或“false”(性能警告)
+  3DSFile.cpp
+  正在生成代码...
+  GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.dll
   GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.pdb (Full PDB)

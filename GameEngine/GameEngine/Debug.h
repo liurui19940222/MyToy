@@ -6,10 +6,11 @@
 #include<string>
 #include"Math.h"
 #include"EngineDefine.h"
+#include"ApiDefine.h"
 
 using namespace std;
 
-class CDebug
+class ENGINE_API CDebug
 {
 private:
 	static wchar_t w_buffer[DEBUG_BUFFER_SIZE];

@@ -161,7 +161,7 @@ void GUITest::GetApplicationInfo(SApplicationInfo* info)
 		info->windowHeight = 600;
 		info->windowBits = 32;
 		info->isFullScreen = false;
-		info->appName = L"GameEngineTest";
+		info->appName = L"GUITest";
 		info->className = L"MainClass";
 	}
 }

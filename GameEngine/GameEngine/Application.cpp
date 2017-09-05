@@ -57,7 +57,7 @@ int CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR 
 		windowRect.right - windowRect.left,
 		windowRect.bottom - windowRect.top,
 		NULL,
-		NULL,
+		LoadMenu(hInstance, MAKEINTRESOURCE(appInfo.menuId)),
 		hInstance,
 		NULL);
 
@@ -68,8 +68,20 @@ int CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR 
 	oldWindowRawWidth = appInfo.windowWidth;
 	oldWindowRawHeight = appInfo.windowHeight;
 
+	const type_info* info = &typeid(*_Application);
+	const type_info* _info = &typeid(*this);
+	string name = info->name();
+	string _name = _info->name();
+	string raw = info->raw_name();
+	string _raw = info->raw_name();
+
+
 	engine = new CEngine;
-	_Engine->InitEngine(hInstance, hwnd);
+
+	CApplication* e = this;
+	CApplication* _e = _Application;
+
+	engine->InitEngine(hInstance, hwnd);
 
 	ChangeDisplayMode((EDisplayMode)appInfo.isFullScreen);
 	hdc = GetDC(hwnd);
@@ -94,7 +106,7 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 	{
 	case WM_CREATE:
 		hDC = GetDC(hWnd);
-		_Engine->SetupPixelFormat(hDC);
+		engine->SetupPixelFormat(hDC);
 		hRC = wglCreateContext(hDC);
 		wglMakeCurrent(hDC, hRC);
 		break;
@@ -133,7 +145,7 @@ void CApplication::UpdateClientRect()
 
 void CApplication::SetWindowSize(int width, int height)
 {
-	_Engine->SetupProjection(width, height);
+	engine->SetupProjection(width, height);
 	appInfo.windowWidth = width;
 	appInfo.windowHeight = height;
 }
@@ -228,9 +240,9 @@ int CApplication::GameLoop()
 
 	while (!isExiting)
 	{
-		_Engine->Update();
+		engine->Update();
 		window->OnUpdate();
-		_Engine->Render();
+		engine->Render();
 		window->OnRender();
 		SwapBuffers(hdc);
 
@@ -257,7 +269,7 @@ int CApplication::GameLoop()
 void CApplication::QuitApp()
 {
 	window->OnClose();
-	_Engine->Quit();
+	engine->Quit();
 
 	delete engine;
 

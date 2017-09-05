@@ -4,7 +4,7 @@
 #include"Component.h"
 #include"Texture.h"
 
-class CSpriteRenderer : public CComponent
+class ENGINE_API CSpriteRenderer : public CComponent
 {
 	REFLECT_CLASS(CSpriteRenderer)
 private:

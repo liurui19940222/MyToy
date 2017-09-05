@@ -2,6 +2,7 @@
 #define _SINGLETON_H_
 
 #include<Windows.h>
+#include"ApiDefine.h"
 
 template<typename T>
 class CSingleton

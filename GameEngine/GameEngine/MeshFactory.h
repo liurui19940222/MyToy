@@ -10,13 +10,13 @@
 
 using namespace std;
 
-enum class EMeshType
+enum class ENGINE_API EMeshType
 {
 	Cube,
 	Quad,
 };
 
-class CMeshFactory : public CSingleton<CMeshFactory>
+class ENGINE_API CMeshFactory : public CSingleton<CMeshFactory>
 {
 	map<EMeshType, Mesh*> m_meshes;
 	map<EMeshType, CMeshBuffer*> m_buffers;

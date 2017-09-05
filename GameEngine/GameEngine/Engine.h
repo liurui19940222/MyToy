@@ -24,7 +24,7 @@ using namespace container;
 
 int CompareCamera(CCamera* a, CCamera* b);
 
-class CEngine
+class ENGINE_API CEngine
 {
 public:
 	void InitEngine(HINSTANCE instance, HWND hwnd);

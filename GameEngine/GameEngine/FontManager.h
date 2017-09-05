@@ -8,7 +8,7 @@
 #define _GetFont(fontId) CFontManager::GetInstance()->GetFont(fontId)
 #define FontManager CFontManager::GetInstance()
 
-class CFontManager : public CSingleton<CFontManager>
+class ENGINE_API CFontManager : public CSingleton<CFontManager>
 {
 private:
 	map<int, CTrueTypeFont*> fontMap;

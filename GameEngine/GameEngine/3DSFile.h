@@ -12,7 +12,7 @@
 #include"ModelFile.h"
 #include"DynamicFactory.h"
 
-class C3DSFile : public CModelFile
+class ENGINE_API C3DSFile : public CModelFile
 {
 	REFLECT_CLASS(C3DSFile)
 private:

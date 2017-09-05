@@ -6,7 +6,7 @@
 #include"DynamicFactory.h"
 #include<freeimage\FreeImage.h>
 
-class CBitImage : public ISourceFile
+class ENGINE_API CBitImage : public ISourceFile
 {
 	REFLECT_CLASS(CBitImage)
 	FIBITMAP* m_pFI;

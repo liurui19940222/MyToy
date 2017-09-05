@@ -4,10 +4,11 @@
 #include"Math.h"
 #include"EngineDefine.h"
 #include"SkeletonAnimation.h"
+#include"ApiDefine.h"
 
-class CGameObject;
+class ENGINE_API CGameObject;
 
-class CEditorTool
+class ENGINE_API CEditorTool
 {
 	static void PrintTree(CGameObject* go, int depth, bool showDepth);
 

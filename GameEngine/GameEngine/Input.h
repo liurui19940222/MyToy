@@ -8,17 +8,18 @@
 #include<string>
 #include<dinput.h>
 #include"Math.h"
+#include"ApiDefine.h"
 
 using namespace std;
 
-enum EMouseKey : int
+enum ENGINE_API EMouseKey : int
 {
 	Left = 0,
 	Right = 1,
 	Center = 2
 };
 
-class CInput
+class ENGINE_API CInput
 {
 private:
 	static LPDIRECTINPUT8 lpDI;

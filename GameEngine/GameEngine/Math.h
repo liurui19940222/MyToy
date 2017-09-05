@@ -3,19 +3,20 @@
 
 #include<math.h>
 #include<string>
+#include"ApiDefine.h"
 
-template<typename VType> class TmpVector2;
-template<typename VType> class TmpVector3;
-template<typename VType> union TmpVector4;
+template<typename VType> class ENGINE_API TmpVector2;
+template<typename VType> class ENGINE_API TmpVector3;
+template<typename VType> union ENGINE_API TmpVector4;
 typedef TmpVector2<float> Vector2;
 typedef TmpVector3<float> Vector3;
 typedef TmpVector4<float> Vector4;
 
-class Matrix4x4;
-union Quaternion;
+class ENGINE_API Matrix4x4;
+union ENGINE_API Quaternion;
 
 template<typename VType>
-class TmpVector2
+class ENGINE_API TmpVector2
 {
 public:
 	VType x = 0;
@@ -98,7 +99,7 @@ public:
 };
 
 template<typename VType>
-class TmpVector3
+class ENGINE_API TmpVector3
 {
 public:
 	VType x;
@@ -187,7 +188,7 @@ public:
 };
 
 template<typename VType>
-union TmpVector4
+union ENGINE_API TmpVector4
 {
 	VType m[4];
 	struct
@@ -205,7 +206,7 @@ union TmpVector4
 	TmpVector4(const TmpVector3<VType>& v3, VType pw) :x(v3.x), y(v3.y), z(v3.z), w(pw) {}
 };
 
-class Matrix4x4
+class ENGINE_API Matrix4x4
 {
 public:
 	Matrix4x4();
@@ -326,7 +327,7 @@ private:
 	Vector4 m[4];
 };
 
-class ParameterizedLine2D
+class ENGINE_API ParameterizedLine2D
 {
 public:
 	Vector2 p0;
@@ -340,7 +341,7 @@ public:
 	static bool Interset(const ParameterizedLine2D& line0, const ParameterizedLine2D& line1, Vector2* intersetPoint);
 };
 
-class ParameterizedLine3D
+class ENGINE_API ParameterizedLine3D
 {
 public:
 	Vector3 p0;
@@ -352,7 +353,7 @@ public:
 	Vector3 GetPoint(float t) const;
 };
 
-class Plane3D
+class ENGINE_API Plane3D
 {
 public:
 	Vector3 normal;
@@ -364,12 +365,12 @@ public:
 	bool IntersetLine(const ParameterizedLine3D& line, Vector3* intersetPoint) const;
 };
 
-struct STriangle
+struct ENGINE_API STriangle
 {
 	Vector3 verties[3];
 };
 
-class CMath
+class ENGINE_API CMath
 {
 public:
 	static constexpr float EPSILON = FLT_EPSILON;
@@ -489,7 +490,7 @@ public:
 	}
 };
 
-union Quaternion
+union ENGINE_API Quaternion
 {
 public:
 	float m[4];

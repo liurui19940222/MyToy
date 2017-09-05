@@ -12,7 +12,7 @@
 #include"MeshBuffer.h"
 #include"ColladaFile.h"
 
-class CSkinnedMeshRenderer : public CComponent, public IRenderer
+class ENGINE_API CSkinnedMeshRenderer : public CComponent, public IRenderer
 {
 	REFLECT_CLASS(CSkinnedMeshRenderer)
 private:

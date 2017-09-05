@@ -5,7 +5,7 @@
 #include"RenderCamera.h"
 #include"DynamicFactory.h"
 
-class CCamera : public CComponent, public CRenderCamera
+class ENGINE_API CCamera : public CComponent, public CRenderCamera
 {
 	REFLECT_CLASS(CCamera)
 	friend class CEngine;

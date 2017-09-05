@@ -7,7 +7,7 @@
 #include "Debug.h"
 #include "SourceFile.h"
 
-struct SImageInfo {
+struct ENGINE_API SImageInfo {
 public:
 	GLsizei width;
 	GLsizei height;
@@ -16,7 +16,7 @@ public:
 	GLubyte* data;
 };
 
-class CImageFile : public ISourceFile
+class ENGINE_API CImageFile : public ISourceFile
 {
 protected:
 	SImageInfo info;

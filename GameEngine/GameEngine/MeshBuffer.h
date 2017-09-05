@@ -14,7 +14,7 @@
 #define JOINT_INDEX_POS		4
 #define JOINT_WEIGHT_POS	5
 
-class CMeshBuffer : public CRenderBuffer
+class ENGINE_API CMeshBuffer : public CRenderBuffer
 {
 private:
 	int m_vertexNum;

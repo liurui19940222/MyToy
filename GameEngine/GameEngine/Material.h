@@ -10,7 +10,7 @@
 
 using namespace std;
 
-enum class EPiplelineStateType
+enum class ENGINE_API EPiplelineStateType
 {
 	Texture2D = GL_TEXTURE_2D,
 	DepthTest = GL_DEPTH_TEST,
@@ -20,7 +20,7 @@ enum class EPiplelineStateType
 	Fog = GL_FOG,
 };
 
-class CMaterial : public Object
+class ENGINE_API CMaterial : public Object
 {
 	REFLECT_CLASS(CMaterial)
 

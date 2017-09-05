@@ -4,6 +4,7 @@
 #include<Windows.h>
 #include<gl\glew.h>
 #include"Math.h"
+#include"ApiDefine.h"
 
 #define _RGBA32(r, g, b, a) (a << 24) + (b << 16) + (g << 8) + r
 #define CH_MAP_BITMAP_SIZE_W 512
@@ -15,8 +16,8 @@ typedef unsigned int uint32;
 typedef unsigned int uint;
 typedef TmpVector2<float> Vector2;
 
-struct Color;
-struct Color32
+struct ENGINE_API Color;
+struct ENGINE_API Color32
 {
 	byte r, g, b, a;
 
@@ -39,7 +40,7 @@ struct Color32
 	static Color32 Hex(int hexColor);
 };
 
-struct Color
+struct ENGINE_API Color
 {
 	float r, g, b, a;
 
@@ -88,7 +89,7 @@ struct Color
 	static const Color orange;
 };
 
-struct SRect2D
+struct ENGINE_API SRect2D
 {
 	float center_x;
 	float center_y;
@@ -104,29 +105,29 @@ struct SRect2D
 
 LPWSTR AnsiToUnicode(LPCSTR lpcstr);
 
-struct RGB
+struct ENGINE_API RGB
 {
 	uint8 r, g, b;
 };
 
-struct Point2D
+struct ENGINE_API Point2D
 {
 	int x, y;
 };
 
-struct SBitmapData
+struct ENGINE_API SBitmapData
 {
 	uint32* buffer;
 	int width;
 	int height;
 };
 
-struct Rect2D
+struct ENGINE_API Rect2D
 {
 	int x, y, width, height;
 };
 
-enum EAlignment
+enum ENGINE_API EAlignment
 {
 	LEFT_TOP		= 1 << 16 | 1,
 	LEFT_MIDDLE		= 1 << 16 | 2,
@@ -143,21 +144,21 @@ enum EAlignment
 #define _GetVertical(alignment) (EAlignmentVertical)(alignment & 0xffff)
 #define _GetAlignment(h, v) (EAlignment)(h << 16 | v)
 
-enum EAlignmentHorizontal
+enum ENGINE_API EAlignmentHorizontal
 {
 	LEFT = 1,
 	CENTER = 2,
 	RIGHT = 3,
 };
 
-enum EAlignmentVertical
+enum ENGINE_API EAlignmentVertical
 {
 	TOP = 1,
 	MIDDLE = 2,
 	BOTTOM = 3,
 };
 
-struct Layer
+struct ENGINE_API Layer
 {
 	static constexpr int Default = 1;
 	static constexpr int UI = 10;

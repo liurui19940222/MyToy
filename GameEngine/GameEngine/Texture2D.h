@@ -3,13 +3,13 @@
 
 #include"Texture.h"
 
-enum EStoreTexture2DId
+enum ENGINE_API EStoreTexture2DId
 {
 	Black8x8 = 0,
 	White8x8 = 1,
 };
 
-class CTexture2D : public CTexture
+class ENGINE_API CTexture2D : public CTexture
 {
 	REFLECT_CLASS(CTexture2D)
 private:

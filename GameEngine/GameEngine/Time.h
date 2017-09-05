@@ -3,8 +3,9 @@
 
 #include<Windows.h>
 #include<windowsx.h>
+#include"ApiDefine.h"
 
-class CTime
+class ENGINE_API CTime
 {
 private:
 	static float fpsUpdateInterval; // 刷新fps的间隔时间

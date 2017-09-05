@@ -1,7 +1,9 @@
 #ifndef _RENDER_BUFFER_H_
 #define _RENDER_BUFFER_H_
 
-class CRenderBuffer
+#include"ApiDefine.h"
+
+class ENGINE_API CRenderBuffer
 {
 public:
 

@@ -7,6 +7,7 @@
 #include"Math.h"
 #include"EngineDefine.h"
 #include"Debug.h"
+#include"ApiDefine.h"
 
 using namespace std;
 
@@ -27,7 +28,7 @@ struct Joint
 	}
 };
 
-struct Skeleton
+struct ENGINE_API Skeleton
 {
 	vector<Joint> m_joints;
 	vector<JointPose> m_localPoses;
@@ -82,25 +83,25 @@ struct Skeleton
 	}
 };
 
-struct JointPose
+struct ENGINE_API JointPose
 {
 	Matrix4x4 m_matrix;			//变换矩阵
 };
 
-struct AnimationSample
+struct ENGINE_API AnimationSample
 {
 	float m_time;			//该采样的时间点
 	map<byte, JointPose> m_jointPoses;	//该采样所引用的关节和对应的局部姿势
 };
 
-struct AnimationClip
+struct ENGINE_API AnimationClip
 {
 	vector<AnimationSample> m_aSamples;
 	float m_length;
 	bool m_isLooping;
 };
 
-struct Mesh
+struct ENGINE_API Mesh
 {
 	Vector3* m_vertices = NULL;
 	Vector3* m_normals = NULL;
@@ -113,7 +114,7 @@ struct Mesh
 	~Mesh();
 };
 
-struct Model
+struct ENGINE_API Model
 {
 	Skeleton m_skeleton;
 	Mesh* m_meshes = NULL;
@@ -122,7 +123,7 @@ struct Model
 	int m_animationCount = 0;
 };
 
-class CSkeletonAnimation {
+class ENGINE_API CSkeletonAnimation {
 
 public:
 	static vector<JointPose> Sample(AnimationClip& clip, Skeleton& skeleton, float t, float weight);

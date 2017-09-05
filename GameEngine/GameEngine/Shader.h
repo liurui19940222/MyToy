@@ -10,7 +10,7 @@
 
 using namespace std;
 
-enum class EShaderParamType
+enum class ENGINE_API EShaderParamType
 {
 	INT = GL_INT,
 	INT_VEC2 = GL_INT_VEC2,
@@ -35,7 +35,7 @@ enum class EShaderParamType
 	SAMPLER_2D_SHADOW = GL_SAMPLER_2D_SHADOW,
 };
 
-class CShader : public Object
+class ENGINE_API CShader : public Object
 {
 private:
 	static map<string, CShader*> m_store;

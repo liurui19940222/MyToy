@@ -6,27 +6,27 @@
 #include"FileHead.h"
 #include"DynamicFactory.h"
 
-enum ETexWrapMode
+enum ENGINE_API ETexWrapMode
 {
 	Clamp = 0x2900,
 	ClampToEdge = 1,
 	Repeat = 0x2901,
 };
 
-enum ETexFilterMode
+enum ENGINE_API ETexFilterMode
 {
 	Point = 0x2600,
 	Linear = 0x2601,
 };
 
-enum ETexEnvMode
+enum ENGINE_API ETexEnvMode
 {
 	Replace = 0x1E01,
 	Modulate = 0x2100,
 	Add = 0x0104,
 };
 
-class CTexture : public Object
+class ENGINE_API CTexture : public Object
 {
 	REFLECT_CLASS(CTexture)
 protected:

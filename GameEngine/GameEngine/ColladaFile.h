@@ -13,13 +13,13 @@ using namespace std;
 using namespace rapidxml;
 
 template<typename T>
-struct ValueArray
+struct ENGINE_API ValueArray
 {
 	T* array;
 	int size;
 };
 
-class CColladaFile : public CModelFile
+class ENGINE_API CColladaFile : public CModelFile
 {
 private:
 	friend class CSkinnedMeshRenderer;

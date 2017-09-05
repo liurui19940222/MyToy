@@ -3,7 +3,7 @@
 
 #include"Math.h"
 
-class IRenderer {
+class ENGINE_API IRenderer {
 
 public:
 	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix) = 0;

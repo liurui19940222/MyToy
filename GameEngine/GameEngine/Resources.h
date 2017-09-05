@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class CResources : public CSingleton<CResources>
+class ENGINE_API CResources : public CSingleton<CResources>
 {
 private:
 	map<string, ISourceFile*> m_sources;

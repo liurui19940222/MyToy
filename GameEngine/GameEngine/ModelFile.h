@@ -5,7 +5,7 @@
 #include "SourceFile.h"
 #include "SkeletonAnimation.h"
 
-class CModelFile : public ISourceFile
+class ENGINE_API CModelFile : public ISourceFile
 {
 public:
 	Model* m_model = NULL;

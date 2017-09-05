@@ -7,7 +7,7 @@
 #include"Component.h"
 #include"SpriteRenderer.h"
 
-class CSpriteAnimation : public CComponent, public IAnimation
+class ENGINE_API CSpriteAnimation : public CComponent, public IAnimation
 {
 	REFLECT_CLASS(CSpriteAnimation)
 private:

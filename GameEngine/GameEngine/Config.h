@@ -9,11 +9,12 @@
 #include"include\rapidxml\rapidxml.hpp"
 #include"Singleton.h"
 #include"Converter.h"
+#include"ApiDefine.h"
 
 using namespace std;
 using namespace rapidxml;
 
-class CConfig : public CSingleton<CConfig>
+class ENGINE_API CConfig : public CSingleton<CConfig>
 {
 private:
 	friend class CSingleton<CConfig>;

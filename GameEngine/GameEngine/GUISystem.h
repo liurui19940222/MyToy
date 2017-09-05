@@ -28,7 +28,7 @@ namespace guisystem {
 	typedef function<void(Vector2)> OnMouseOverEvent;
 
 		 
-	enum EWidgetState
+	enum ENGINE_API EWidgetState
 	{
 		Disabled = -1,
 		Normal = 0,
@@ -36,7 +36,7 @@ namespace guisystem {
 		Pressed = 2,
 	};
 
-	enum EWidgetEvent
+	enum ENGINE_API EWidgetEvent
 	{
 		MouseDown,
 		MouseUp,
@@ -45,7 +45,7 @@ namespace guisystem {
 		MouseOver,
 	};
 
-	class CGUIWidget : public CComponent, public IRenderer
+	class ENGINE_API CGUIWidget : public CComponent, public IRenderer
 	{
 		REFLECT_CLASS(CGUIWidget)
 		friend class CGUISystem;
@@ -141,7 +141,7 @@ namespace guisystem {
 		virtual void OnDestroy() override;
 	};
 
-	class CGUISystem : public CSingleton<CGUISystem>
+	class ENGINE_API CGUISystem : public CSingleton<CGUISystem>
 	{
 		typedef function<void(CGUIWidget*)> WidghtForeachCallback;
 		typedef function<bool(CGUIWidget*)> WidghtForeachCallbackR;

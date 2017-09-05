@@ -293,6 +293,12 @@
     <ClInclude Include="GUILabel.h">
       <Filter>GUISystem\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="GUIDesigner.h">
+      <Filter>GUISystem\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ApiDefine.h">
+      <Filter>Common\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -444,6 +450,12 @@
     </ClCompile>
     <ClCompile Include="GUILabel.cpp">
       <Filter>GUISystem\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIDesigner.cpp">
+      <Filter>GUISystem\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ApiDefine.cpp">
+      <Filter>Common\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,10 +2,11 @@
 #define _OBJECT_
 
 #include<string>
+#include"ApiDefine.h"
 
 using namespace std;
 
-class Object
+class ENGINE_API Object
 {
 protected:
 	int instanceId;

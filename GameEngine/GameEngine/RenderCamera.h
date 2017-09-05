@@ -5,21 +5,21 @@
 #include"EngineDefine.h"
 //#include"RenderTexture.h"
 
-enum EProjectionType
+enum ENGINE_API EProjectionType
 {
 	Perspective,
 	Ortho
 };
 
-enum ECameraClearFlag
+enum ENGINE_API ECameraClearFlag
 {
 	SolidColor,
 	DontClear,
 };
 
-class CRenderTexture;
+class ENGINE_API CRenderTexture;
 
-class CRenderCamera
+class ENGINE_API CRenderCamera
 {
 protected:
 	EProjectionType m_projectionType;

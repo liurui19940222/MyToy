@@ -4,7 +4,7 @@
 #include<Windows.h>
 #include"EngineDefine.h"
 
-class CAtlas
+class ENGINE_API CAtlas
 {
 private:
 	SBitmapData bitmap;

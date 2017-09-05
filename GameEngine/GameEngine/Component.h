@@ -5,9 +5,9 @@
 #include"DynamicFactory.h"
 #include"EditorTool.h"
 
-class CGameObject;
+class ENGINE_API CGameObject;
 
-class CComponent : public Object
+class ENGINE_API CComponent : public Object
 {
 	REFLECT_CLASS(CComponent)
 public:

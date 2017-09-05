@@ -3,20 +3,26 @@
 
 #include<Windows.h>
 #include<windowsx.h>
+#include"ApiDefine.h"
+#include"Camera.h"
+#include"Engine.h"
+#include"GameWindow.h"
+#include"Singleton.h"
 
 #define _Application CApplication::GetInstance()
 
-struct SApplicationInfo
+struct ENGINE_API SApplicationInfo
 {
 	int windowWidth;
 	int windowHeight;
 	int windowBits;
+	int menuId;
 	bool isFullScreen;
 	WCHAR* appName;
 	WCHAR* className;
 };
 
-enum class EDisplayMode
+enum class ENGINE_API EDisplayMode
 {
 	None = -1,
 	Window = 0,
@@ -27,16 +33,11 @@ enum class EDisplayMode
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "glew32.lib")
 
-#include"Camera.h"
-#include"Engine.h"
-#include"GameWindow.h"
-#include"Singleton.h"
-
-class CGameWindow;
+class ENGINE_API CGameWindow;
 
 LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-class CApplication : public CSingleton<CApplication>
+class ENGINE_API CApplication : public CSingleton<CApplication>
 {
 public:
 
