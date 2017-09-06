@@ -1,9 +1,12 @@
 #include"EditorWindow.h"
 #include"resource.h"
+#include"GUIManager.h"
+#include"GUIElement.h"
 #include<GameEngine\MeshFactory.h>
 
 void CEditorWindow::OnStart()
 {
+	_GUIManager->InitGUI(800, 600);
 	_MainCamera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
 	_MainCamera->SetCameraClearColor(Color::Hex(0x314D79FF));
 	_MainCameraGo->SetLocalPosition(Vector3(0, 6.8, 10));
@@ -15,11 +18,21 @@ void CEditorWindow::OnStart()
 		->SetMaterial(mat);
 
 	_MainCameraGo->LookAt(go->GetLocalPosition());
+
+	CGUIElement* element = _GUIManager->Create<CGUIElement>();
+	element->SetWidth(300)->SetHeight(200);
+	element->SetFill(true)->SetFillColor(Color::red);
 }
 
 void CEditorWindow::OnUpdate()
 {
 	CEditorTool::WatchTarget(*_MainCameraGo, go->GetLocalPosition());
+	_GUIManager->OnUpdate();
+}
+
+void CEditorWindow::OnRender()
+{
+	_GUIManager->OnRender();
 }
 
 void CEditorWindow::GetApplicationInfo(SApplicationInfo* info)

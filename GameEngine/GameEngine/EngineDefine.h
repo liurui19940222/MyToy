@@ -101,6 +101,9 @@ struct ENGINE_API SRect2D
 	SRect2D(float center_x, float center_y, float half_size_x, float half_size_y);
 
 	bool Overlay(const Vector2& pos) const;
+
+	bool operator==(const SRect2D& rect);
+	bool operator!=(const SRect2D& rect);
 };
 
 LPWSTR AnsiToUnicode(LPCSTR lpcstr);

@@ -10,6 +10,8 @@ void CColladaTest::OnStart()
 	_MainCamera->SetCameraClearColor(Color::Hex(0x314D79FF));
 	_MainCameraGo->SetLocalPosition(Vector3(0, 6.8, 10));
 
+	FontManager->LoadFont(1, "C:/Windows/Fonts/simsun.ttc");
+
 	model = _Maker->Instantiate("model");
 
 	//model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 2);
@@ -40,6 +42,21 @@ void CColladaTest::OnStart()
 	m_clips.push_back(_Resources->LoadAnimation("models/shake_death.xml"));
 	m_clips[1]->m_isLooping = true;
 	m_clips[2]->m_isLooping = false;
+
+	//m_texture = CTexture2D::Create("textures/shake.png");
+
+	m_texture = CRenderTexture::Create(512, 512, true);
+
+	CCamera* camera = _Maker->Instantiate("Camera")->AddComponent<CCamera>();
+	camera->LayerMask() = Layer::Default;
+	camera->Perspective(54.0f, (GLfloat)_Application->GetWindowWidth() / (GLfloat)_Application->GetWindowHeight(), 1.0f, 1000.0f);
+	camera->UpdateViewMatrix();
+	camera->SetRenderTexture((CRenderTexture*)m_texture);
+	camera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
+	camera->gameObject->SetTag("CRTes");
+	camera->gameObject->SetLocalPosition(_MainCameraGo->GetLocalPosition());
+	camera->gameObject->SetLocalEulerAngles(_MainCameraGo->GetLocalEulerAngles());
+	camera->gameObject->LookAt(model->GetLocalPosition());
 }
 
 void CColladaTest::OnUpdate()
@@ -70,9 +87,11 @@ void CColladaTest::OnUpdate()
 void CColladaTest::OnRender()
 {
 	_Engine->BeginOrtho();
-	CRawRenderer::DrawRect(SRect2D{400, 300, 200, 200}, Color::red);
-	//CRawRenderer::DrawString("FontTTTTTTTTTTTT", Vector3(400, 300, 0), Color::white, 18);
-	CRawRenderer::RenderString(L"FontRenderer", { 0, 0, 200, 200 }, Vector3(400, 300, 0), Color::white, 18, EAlignment::CENTER_MIDDLE);
+	CRawRenderer::DrawRect(SRect2D{400, 300, 100, 30}, Color::cyan);
+	CRawRenderer::RenderString(L"FontRenderer", { 0, 0, 200, 200 }, Vector3(400, 300, 0), Color::blue, 18, EAlignment::CENTER_MIDDLE);
+	CRawRenderer::DrawLine(Vector3::zero, Vector3(800, 600, 0), Color::black, 2);
+	CRawRenderer::DrawPoint(Vector3(400, 300, 0), Color::orange, 10);
+	CRawRenderer::DrawTexture(*m_texture, SRect2D{ 400, 100, 100, 100 });
 	_Engine->EndOrtho();
 }
 

@@ -9,7 +9,7 @@ using namespace std::tr1;
 
 namespace container {
 	template<typename T>
-	struct ENGINE_API CTwoWayNode
+	struct ENGINE_API_TEMPLATE CTwoWayNode
 	{
 		T value;
 		CTwoWayNode* prev;
@@ -19,7 +19,7 @@ namespace container {
 	};
 
 	template<typename T>
-	class ENGINE_API CPriorityQueue
+	class ENGINE_API_TEMPLATE CPriorityQueue
 	{
 	public:
 		typedef function<int(T, T)> Comparator;

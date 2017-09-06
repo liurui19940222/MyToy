@@ -118,6 +118,8 @@ void CFontRenderer::OnRenderDebug(Matrix4x4& modelMatrix)
 
 CFontRenderer* CFontRenderer::SetFont(CTrueTypeFont* font)
 {
+	if (this->font == font)
+		return this;
 	this->font = font;
 	Rebuild();
 	return this;
@@ -130,6 +132,8 @@ CTrueTypeFont* CFontRenderer::GetFont()
 
 CFontRenderer* CFontRenderer::SetText(const wstring text)
 {
+	if (text == this->text)
+		return this;
 	this->text = text;
 	Rebuild();
 	return this;
@@ -161,6 +165,8 @@ CFontRenderer* CFontRenderer::SetFontSize(int size)
 
 CFontRenderer* CFontRenderer::SetColor(Color color)
 {
+	if (this->color == color)
+		return this;
 	this->color = color;
 	Rebuild();
 	return this;
@@ -182,6 +188,8 @@ CFontRenderer* CFontRenderer::SetRenderType(ERenderType type)
 
 CFontRenderer* CFontRenderer::SetTextRect(SRect2D rect)
 {
+	if (rect == this->rect)
+		return this;
 	this->rect = rect;
 	Rebuild();
 	return this;

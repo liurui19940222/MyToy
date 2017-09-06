@@ -13,6 +13,8 @@ public:
 
 	virtual void OnUpdate();
 
+	virtual void OnRender();
+
 	virtual void GetApplicationInfo(SApplicationInfo* info);
 };
 

@@ -15,6 +15,18 @@ bool SRect2D::Overlay(const Vector2& pos) const
 	return true;
 }
 
+bool SRect2D::operator==(const SRect2D& rect)
+{
+	return this->half_size_x == rect.half_size_x && this->half_size_y == rect.half_size_y 
+		&& this->center_x == rect.center_x && this->center_y == rect.center_y;
+}
+
+bool SRect2D::operator!=(const SRect2D& rect)
+{
+	return this->half_size_x != rect.half_size_x || this->half_size_y != rect.half_size_y
+		|| this->center_x != rect.center_x || this->center_y != rect.center_y;
+}
+
 Color::Color(){}
 
 Color::Color(float r, float g, float b, float a)

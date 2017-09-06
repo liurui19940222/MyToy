@@ -19,6 +19,15 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{cd5a9381-39e2-4c94-a8e7-9d20b0ed8cd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\源文件">
+      <UniqueIdentifier>{d73302e7-6ef1-483f-8cd7-59d4cd641074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\头文件">
+      <UniqueIdentifier>{6f127191-f4b4-40d9-8ce3-c38d90c57c47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -26,6 +35,15 @@
     </ClCompile>
     <ClCompile Include="EditorWindow.cpp">
       <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIElement.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIManager.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Channel.cpp">
+      <Filter>GUI\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +57,15 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Application\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIElement.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIManager.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Channel.h">
+      <Filter>GUI\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

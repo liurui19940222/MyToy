@@ -74,13 +74,11 @@ void CCamera::BeginOneFrame()
 	{
 		glPushAttrib(GL_VIEWPORT_BIT);
 		m_renderTexture->BindBuffer();
-		if (gameObject->GetTag() == "MainCamera")
-			glViewport(0, 0, m_renderTexture->GetWidth(), m_renderTexture->GetHeight());
+		glViewport(0, 0, m_renderTexture->GetWidth(), m_renderTexture->GetHeight());
 	}
 	else
 	{
-		if (gameObject->GetTag() == "MainCamera")
-			glViewport(0, 0, _Application->GetWindowWidth(), _Application->GetWindowHeight());
+		glViewport(0, 0, _Application->GetWindowWidth(), _Application->GetWindowHeight());
 	}
 	if (m_cameraClearFlag == ECameraClearFlag::SolidColor)
 	{

@@ -254,10 +254,7 @@ Vector3 CGUIWidget::GetCenterPositionInParent()
 {
 	Vector2 parentSize = GetParentSize() * 0.5f;
 	Vector3 pos;
-	if (gameObject->GetName() == "widget2")
-	{
-		int j = 0;
-	}
+
 	if (GetParentWidget())
 	{
 		if (m_alignment_h == EAlignmentHorizontal::LEFT)

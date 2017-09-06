@@ -9,7 +9,7 @@
 #include"SysFont.h"
 #include"FontRenderer.h"
 
-class CRawFontRenderer : public CFontRenderer
+class ENGINE_API CRawFontRenderer : public CFontRenderer
 {
 	virtual float GetPixelScale() override;
 public:
@@ -30,8 +30,9 @@ public:
 	static void DrawRect(const SRect2D& rect, const Color& color);
 	static void DrawString(const string& str, const Vector3& position, const Color& color, int size);
 	static void DrawLine(const Vector3& p0, const Vector3& p1, const Color& color, float width);
-	static void DrawPoint(const Vector3& p, float size);
-	static void DrawTexture(const CTexture& texture, const Vector3& position);
+	static void DrawPoint(const Vector3& p, const Color& color, float size);
+	static void DrawTexture(CTexture& texture, const Vector3& position);
+	static void DrawTexture(CTexture& texture, const SRect2D& rect);
 	static void RenderString(const wstring& str, const SRect2D& rect, const Vector3& position, const Color& color, int size, EAlignment alignment);
 };
 

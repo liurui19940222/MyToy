@@ -20,6 +20,7 @@ class CColladaTest : public CGameWindow
 	Model* m_model;
 	CGameObject* model;
 	vector<AnimationClip*> m_clips;
+	CTexture* m_texture;
 public:
 	virtual void OnStart();
 

@@ -82,6 +82,7 @@ void CEngine::BeginOrtho()
 	glOrtho(0, CApplication::GetInstance()->GetWindowWidth(), 0, CApplication::GetInstance()->GetWindowHeight(), -1, 1000);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	glDisable(GL_DEPTH_TEST);
 }
 
 void CEngine::EndOrtho()
@@ -89,6 +90,7 @@ void CEngine::EndOrtho()
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	SetupProjection(CApplication::GetInstance()->GetWindowWidth(), CApplication::GetInstance()->GetWindowHeight());
+	glEnable(GL_DEPTH_TEST);
 }
 
 void CEngine::Update()
