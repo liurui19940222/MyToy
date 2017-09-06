@@ -19,7 +19,7 @@ void CCamera::OnDestroy()
 
 void CCamera::OnUpdate()
 {
-	
+
 }
 
 CRenderCamera* CCamera::Perspective(float fov, float aspect, float znear, float zfar)
@@ -43,7 +43,8 @@ CRenderCamera* CCamera::Ortho(float halfSize, float aspect)
 CRenderCamera* CCamera::LookAt(const Vector3& eye, const Vector3& center, const Vector3& up)
 {
 	CRenderCamera::LookAt(eye, center, up);
-	gluLookAt(m_eyePos.x, m_eyePos.y, m_eyePos.z, m_centerPos.x, m_centerPos.y, m_centerPos.z, m_up.x, m_up.y, m_up.z);
+	if (gameObject->GetTag() == "MainCamera")
+		gluLookAt(m_eyePos.x, m_eyePos.y, m_eyePos.z, m_centerPos.x, m_centerPos.y, m_centerPos.z, m_up.x, m_up.y, m_up.z);
 	return this;
 }
 
@@ -73,11 +74,13 @@ void CCamera::BeginOneFrame()
 	{
 		glPushAttrib(GL_VIEWPORT_BIT);
 		m_renderTexture->BindBuffer();
-		glViewport(0, 0, m_renderTexture->GetWidth(), m_renderTexture->GetHeight());
+		if (gameObject->GetTag() == "MainCamera")
+			glViewport(0, 0, m_renderTexture->GetWidth(), m_renderTexture->GetHeight());
 	}
 	else
 	{
-		glViewport(0, 0, _Application->GetWindowWidth(), _Application->GetWindowHeight());
+		if (gameObject->GetTag() == "MainCamera")
+			glViewport(0, 0, _Application->GetWindowWidth(), _Application->GetWindowHeight());
 	}
 	if (m_cameraClearFlag == ECameraClearFlag::SolidColor)
 	{
@@ -85,7 +88,6 @@ void CCamera::BeginOneFrame()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	}
 	PrepareFixed();
-	glLoadIdentity();
 	UpdateViewMatrix();
 }
 
@@ -102,18 +104,23 @@ void CCamera::EndTheFrame()
 
 void CCamera::PrepareFixed()
 {
-	if (m_projectionType == EProjectionType::Perspective)
+	if (gameObject->GetTag() == "MainCamera")
 	{
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		gluPerspective(m_fov, m_aspect, m_near, m_far);
-		glMatrixMode(GL_MODELVIEW);
-	}
-	else if (m_projectionType == EProjectionType::Ortho)
-	{
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(m_left, m_right, m_bottom, m_top, m_near, m_far);
-		glMatrixMode(GL_MODELVIEW);
+		if (m_projectionType == EProjectionType::Perspective)
+		{
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluPerspective(m_fov, m_aspect, m_near, m_far);
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+		}
+		else if (m_projectionType == EProjectionType::Ortho)
+		{
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			glOrtho(m_left, m_right, m_bottom, m_top, m_near, m_far);
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+		}
 	}
 }

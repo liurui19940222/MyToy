@@ -3,6 +3,12 @@
 
 #include"Math.h"
 
+enum class ERenderType
+{
+	Fixed,
+	Smart,
+};
+
 class ENGINE_API IRenderer {
 
 public:

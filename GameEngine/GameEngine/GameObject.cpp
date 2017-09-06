@@ -265,3 +265,13 @@ int CGameObject::GetLayer() const
 {
 	return m_layer;
 }
+
+void CGameObject::SetTag(const string& tag)
+{
+	m_tag = tag;
+}
+
+string CGameObject::GetTag() const
+{
+	return m_tag;
+}

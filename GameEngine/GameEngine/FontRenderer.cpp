@@ -4,15 +4,21 @@
 #include"MeshFactory.h"
 #include"Maker.h"
 
-CCharacterPrimitive::CCharacterPrimitive(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels) :left(left_padding), top(top), advance_x(advance_x)
+CCharacterPrimitiveBase::CCharacterPrimitiveBase(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels) :left(left_padding), top(top), advance_x(advance_x)
 {
 	this->width = width;
 	this->height = height;
 	this->width_x = width * pixelScale;
 	this->height_y = height * pixelScale;
-	m_material = _Maker->Instantiate<CMaterial>();
 	m_texture = CTexture2D::Create((UCHAR*)pixels, width, height);
-	m_texture->SetEnvMode(ETexEnvMode::Replace)->SetWrapMode(ETexWrapMode::Clamp)->SetFilterMode(ETexFilterMode::Linear);
+	m_texture->SetWrapMode(ETexWrapMode::Clamp)->SetFilterMode(ETexFilterMode::Linear);
+}
+
+CCharacterPrimitiveSmart::CCharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels)
+	: CCharacterPrimitiveBase(left_padding, top, advance_x, width, height, pixelScale, pixels)
+{
+	m_texture->SetEnvMode(ETexEnvMode::Replace);
+	m_material = _Maker->Instantiate<CMaterial>();
 	m_material->SetMainTexture(m_texture)->SetState(EPiplelineStateType::DepthTest, false);
 	m_material->SetShader(CShader::Get("font"));
 	Mesh* mesh = _MeshFactory->CreateRectMesh(width_x, height_y);
@@ -20,14 +26,14 @@ CCharacterPrimitive::CCharacterPrimitive(int left_padding, int top, int advance_
 	delete(mesh);
 }
 
-CCharacterPrimitive::~CCharacterPrimitive()
+CCharacterPrimitiveSmart::~CCharacterPrimitiveSmart()
 {
 	m_buffer.ReleaseBuffer();
 	_Maker->Destroy(m_texture);
 	_Maker->Destroy(m_material);
 }
 
-void CCharacterPrimitive::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color)
+void CCharacterPrimitiveSmart::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color)
 {
 	m_material->SetColor(color);
 	m_material->Bind();
@@ -37,6 +43,39 @@ void CCharacterPrimitive::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, 
 	m_buffer.BindBuffer();
 	glDrawArrays(GL_TRIANGLES, 0, m_buffer.GetVertexNum());
 	m_material->Unbind();
+}
+
+CCharacterPrimitiveFixed::CCharacterPrimitiveFixed(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels)
+	: CCharacterPrimitiveBase(left_padding, top, advance_x, width, height, pixelScale, pixels)
+{
+	m_texture->SetEnvMode(ETexEnvMode::Modulate);
+}
+
+CCharacterPrimitiveFixed::~CCharacterPrimitiveFixed()
+{
+	_Maker->Destroy(m_texture);
+}
+
+void CCharacterPrimitiveFixed::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color)
+{
+	float half_w = width_x * 0.5f;
+	float half_h = height_y * 0.5f;
+	m_texture->Bind();
+	glPushMatrix();
+	glTranslatef(pos.x, pos.y, pos.z);
+	glScalef(size.x, size.y, size.z);
+	glColor4f(color.r, color.g, color.b, color.a);
+	glBegin(GL_QUADS);
+	glTexCoord2f(1, 1);
+	glVertex3f(half_w, half_h, 0);
+	glTexCoord2f(0, 1);
+	glVertex3f(-half_w, half_h, 0);
+	glTexCoord2f(0, 0);
+	glVertex3f(-half_w, -half_h, 0);
+	glTexCoord2f(1, 0);
+	glVertex3f(half_w, -half_h, 0);
+	glEnd();
+	glPopMatrix();
 }
 
 CTextOneLineData::CTextOneLineData() : line_width(0), line_height(0)
@@ -135,6 +174,12 @@ CFontRenderer* CFontRenderer::SetTextAlignment(EAlignment alignment)
 	return this;
 }
 
+CFontRenderer* CFontRenderer::SetRenderType(ERenderType type)
+{
+	m_renderType = type;
+	return this;
+}
+
 CFontRenderer* CFontRenderer::SetTextRect(SRect2D rect)
 {
 	this->rect = rect;
@@ -195,7 +240,10 @@ void CFontRenderer::Rebuild()
 		CCharacterInfo* chInfo = font->GetCharacter(text[i], font_size);
 		SBitmapData bitmap;
 		chInfo->GetBitmap(&bitmap, Color::white);
-		primitives.push_back(new CCharacterPrimitive(chInfo->left_padding, chInfo->top, chInfo->advance_x, bitmap.width, bitmap.height, GetPixelScale(), bitmap.buffer));
+		if(m_renderType == ERenderType::Fixed)
+			primitives.push_back(new CCharacterPrimitiveFixed(chInfo->left_padding, chInfo->top, chInfo->advance_x, bitmap.width, bitmap.height, GetPixelScale(), bitmap.buffer));
+		else
+			primitives.push_back(new CCharacterPrimitiveSmart(chInfo->left_padding, chInfo->top, chInfo->advance_x, bitmap.width, bitmap.height, GetPixelScale(), bitmap.buffer));
 		free(bitmap.buffer);
 	}
 

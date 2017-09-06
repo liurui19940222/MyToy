@@ -106,7 +106,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)$(Configuration)\GameEngine.dll $(SolutionDir)\EngineEditor\ </Command>
+      <Command>copy $(SolutionDir)$(Configuration)\GameEngine.dll $(SolutionDir)\EngineEditor\ 
+copy $(SolutionDir)GameEngine\Shader\ $(SolutionDir)\EngineEditor\Shader\</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -119,7 +120,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;WIN32RUN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -153,6 +154,7 @@
     <ClInclude Include="Atlas.h" />
     <ClInclude Include="BitImage.h" />
     <ClInclude Include="GUIDesigner.h" />
+    <ClInclude Include="RawRenderer.h" />
     <ClInclude Include="SkeletonAnimation.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColladaFile.h" />
@@ -195,6 +197,7 @@
     <ClInclude Include="SkinnedMeshRenderer.h" />
     <ClInclude Include="SpriteAnimation.h" />
     <ClInclude Include="SpriteRenderer.h" />
+    <ClInclude Include="SysFont.h" />
     <ClInclude Include="TestApp.h" />
     <ClInclude Include="TestTest.h" />
     <ClInclude Include="TextRenderer.h" />
@@ -211,11 +214,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DSFile.cpp" />
-    <ClCompile Include="ApiDefine.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Atlas.cpp" />
     <ClCompile Include="BitImage.cpp" />
     <ClCompile Include="GUIDesigner.cpp" />
+    <ClCompile Include="RawRenderer.cpp" />
     <ClCompile Include="SkeletonAnimation.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColladaFile.cpp" />
@@ -252,6 +255,7 @@
     <ClCompile Include="SkinnedMeshRenderer.cpp" />
     <ClCompile Include="SpriteAnimation.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
+    <ClCompile Include="SysFont.cpp" />
     <ClCompile Include="TestApp.cpp" />
     <ClCompile Include="TestTest.cpp" />
     <ClCompile Include="TextRenderer.cpp" />

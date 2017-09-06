@@ -15,7 +15,12 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	return CApplication::GetInstance()->MessageHandle(hWnd, uMsg, wParam, lParam);
 }
 
-int CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd, CGameWindow* window)
+CApplication* CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd, CGameWindow* window)
+{
+	return _Application->CreateApp(hInstance, hPrevInstance, lpCmdLine, nShowCmd, window);
+}
+
+CApplication* CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd, CGameWindow* window)
 {
 	mHIntance = hInstance;
 	WNDCLASSEX windowClass;
@@ -43,11 +48,11 @@ int CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR 
 	windowClass.hIconSm = LoadIcon(NULL, IDI_WINLOGO);
 
 	if (!RegisterClassEx(&windowClass))
-		return 0;
+		return NULL;
 
 	int x = (GetSystemMetrics(0) - appInfo.windowWidth) >> 1;
 	int y = (GetSystemMetrics(1) - appInfo.windowHeight) >> 1;
-	
+
 	hwnd = CreateWindowEx(NULL,
 		appInfo.className,
 		appInfo.appName,
@@ -62,25 +67,13 @@ int CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR 
 		NULL);
 
 	if (!hwnd)
-		return 0;
+		return NULL;
 	oldWindowPosX = (GetSystemMetrics(0) - appInfo.windowWidth) >> 1;
 	oldWindowPosY = (GetSystemMetrics(1) - appInfo.windowHeight) >> 1;
 	oldWindowRawWidth = appInfo.windowWidth;
 	oldWindowRawHeight = appInfo.windowHeight;
 
-	const type_info* info = &typeid(*_Application);
-	const type_info* _info = &typeid(*this);
-	string name = info->name();
-	string _name = _info->name();
-	string raw = info->raw_name();
-	string _raw = info->raw_name();
-
-
 	engine = new CEngine;
-
-	CApplication* e = this;
-	CApplication* _e = _Application;
-
 	engine->InitEngine(hInstance, hwnd);
 
 	ChangeDisplayMode((EDisplayMode)appInfo.isFullScreen);
@@ -91,7 +84,7 @@ int CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR 
 
 	window->OnStart();
 
-	return 0;
+	return this;
 }
 
 LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -129,6 +122,8 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 	default:
 		break;
 	}
+	if (appInfo.wndProc)
+		appInfo.wndProc(hWnd, uMsg, wParam, lParam);
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
@@ -220,7 +215,7 @@ void CApplication::ChangeDisplayMode(EDisplayMode mode)
 	}
 	else
 	{
-		if(mChangedDisplayMode)
+		if (mChangedDisplayMode)
 			ChangeDisplaySettings(NULL, 0);
 		ShowCursor(TRUE);
 		dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
@@ -298,6 +293,11 @@ HINSTANCE CApplication::GetInstanceHandle()
 HWND CApplication::GetWindowHandle()
 {
 	return hwnd;
+}
+
+CGameWindow* CApplication::GetGameWindow()
+{
+	return window;
 }
 
 const RECT* CApplication::GetRect()

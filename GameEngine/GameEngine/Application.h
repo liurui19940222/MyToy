@@ -11,6 +11,8 @@
 
 #define _Application CApplication::GetInstance()
 
+typedef function<LRESULT CALLBACK(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)> WndProcFunc;
+
 struct ENGINE_API SApplicationInfo
 {
 	int windowWidth;
@@ -20,6 +22,7 @@ struct ENGINE_API SApplicationInfo
 	bool isFullScreen;
 	WCHAR* appName;
 	WCHAR* className;
+	WndProcFunc wndProc;
 };
 
 enum class ENGINE_API EDisplayMode
@@ -35,13 +38,11 @@ enum class ENGINE_API EDisplayMode
 
 class ENGINE_API CGameWindow;
 
-LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
 class ENGINE_API CApplication : public CSingleton<CApplication>
 {
 public:
 
-	int CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd, CGameWindow* window);
+	CApplication* CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd, CGameWindow* window);
 
 	LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -56,6 +57,8 @@ public:
 	HINSTANCE GetInstanceHandle();
 
 	HWND GetWindowHandle();
+
+	CGameWindow* GetGameWindow();
 
 	const RECT* GetRect();
 
@@ -87,5 +90,9 @@ private:
 
 	void UpdateClientRect();
 };
+
+LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+ENGINE_API CApplication* CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd, CGameWindow* window);
 
 #endif

@@ -5,7 +5,7 @@
 #include"ApiDefine.h"
 
 template<typename T>
-class CSingleton
+class ENGINE_API_TEMPLATE CSingleton
 {
 	static T* m_instance;
 

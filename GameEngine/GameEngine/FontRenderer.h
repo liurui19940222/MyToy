@@ -11,11 +11,9 @@
 
 #define TEXT_BUFFER_SIZE 2048
 
-class ENGINE_API CCharacterPrimitive
+class ENGINE_API CCharacterPrimitiveBase
 {
 public:
-	CMeshBuffer m_buffer;
-	CMaterial* m_material;
 	CTexture2D* m_texture;
 	Vector3 position;
 	int left;
@@ -26,9 +24,27 @@ public:
 	float width_x;
 	float height_y;
 
-	CCharacterPrimitive(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
-	~CCharacterPrimitive();
-	void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color);
+	CCharacterPrimitiveBase(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
+	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color) = 0;
+};
+
+class ENGINE_API CCharacterPrimitiveSmart : public CCharacterPrimitiveBase
+{
+public:
+	CMeshBuffer m_buffer;
+	CMaterial* m_material;
+
+	CCharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
+	~CCharacterPrimitiveSmart();
+	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color) override;
+};
+
+class ENGINE_API CCharacterPrimitiveFixed : public CCharacterPrimitiveBase
+{
+public:
+	CCharacterPrimitiveFixed(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
+	~CCharacterPrimitiveFixed();
+	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color) override;
 };
 
 class ENGINE_API CTextOneLineData
@@ -40,12 +56,13 @@ public:
 	float line_width;
 	float line_height;
 
-	vector<CCharacterPrimitive*> primitives;
+	vector<CCharacterPrimitiveBase*> primitives;
 };
 
 class ENGINE_API CFontRenderer
 {
 private:
+	ERenderType m_renderType = ERenderType::Smart;
 	wchar_t m_textBuffer[TEXT_BUFFER_SIZE];
 	wstring text;
 	CTrueTypeFont* font;
@@ -57,7 +74,7 @@ private:
 	EAlignment alignment;
 	EAlignmentHorizontal alignment_h;
 	EAlignmentVertical alignment_v;
-	vector<CCharacterPrimitive*> primitives;
+	vector<CCharacterPrimitiveBase*> primitives;
 	vector<CTextOneLineData*> lineDatas;
 
 protected:
@@ -88,6 +105,7 @@ public:
 	CFontRenderer* SetFontSize(int size);
 	CFontRenderer* SetColor(Color color);
 	CFontRenderer* SetTextAlignment(EAlignment alignment);
+	CFontRenderer* SetRenderType(ERenderType type);
 };
 
 #endif

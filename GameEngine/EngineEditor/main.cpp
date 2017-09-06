@@ -5,6 +5,5 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-	_Application->CreateApp(hInstance, hPrevInstance, lpCmdLine, nShowCmd, new CEditorWindow);
-	return _Application->GameLoop();
+	return CreateApp(hInstance, hPrevInstance, lpCmdLine, nShowCmd, new CEditorWindow)->GameLoop();
 }

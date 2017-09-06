@@ -21,6 +21,7 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd)
 	CEngineSetting::Init();
 	m_cameras.SetComparator(CompareCamera);
 	m_mainCamera = _Maker->Instantiate("MainCamera")->AddComponent<CCamera>();
+	m_mainCamera->gameObject->SetTag("MainCamera");
 	m_mainCamera->gameObject->SetLocalPosition(Vector3(0, 4, -10));
 	m_mainCamera->Perspective(54.0f, (GLfloat)_Application->GetWindowWidth() / (GLfloat)_Application->GetWindowHeight(), 1.0f, 1000.0f);
 	m_mainCamera->LayerMask() = Layer::Default;

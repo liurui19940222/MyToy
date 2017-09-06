@@ -1,6 +1,7 @@
 #include"ColladaTest.h"
 #include"ColladaFile.h"
 #include"Maker.h"
+#include"RawRenderer.h"
 #include<glm\glm.hpp>
 
 void CColladaTest::OnStart()
@@ -68,7 +69,11 @@ void CColladaTest::OnUpdate()
 
 void CColladaTest::OnRender()
 {
-
+	_Engine->BeginOrtho();
+	CRawRenderer::DrawRect(SRect2D{400, 300, 200, 200}, Color::red);
+	//CRawRenderer::DrawString("FontTTTTTTTTTTTT", Vector3(400, 300, 0), Color::white, 18);
+	CRawRenderer::RenderString(L"FontRenderer", { 0, 0, 200, 200 }, Vector3(400, 300, 0), Color::white, 18, EAlignment::CENTER_MIDDLE);
+	_Engine->EndOrtho();
 }
 
 void CColladaTest::OnClose()
