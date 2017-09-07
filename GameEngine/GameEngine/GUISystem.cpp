@@ -527,7 +527,7 @@ float CGUISystem::GetResolutionY()
 void CGUISystem::OnUpdate()
 {
 	Vector2 mousePos = CInput::InputMousePosition();
-	mousePos.y = (float)_Application->GetWindowHeight() - mousePos.y;
+	mousePos.y = _SCH - mousePos.y;
 	mousePos = _MainCamera->ScreenPosToViewPort(mousePos);
 	ForeachWidghtR([this, &mousePos](CGUIWidget* widget) {
 		if (!widget->IsState(EWidgetState::Disabled) && widget->IsCollide())

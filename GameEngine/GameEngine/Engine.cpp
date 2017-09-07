@@ -11,7 +11,7 @@
 
 using namespace guisystem;
 
-void CEngine::InitEngine(HINSTANCE instance, HWND hwnd)
+void CEngine::InitEngine(HINSTANCE instance, HWND hwnd, float screenWidth, float screenHeight)
 {
 	glewInit();
 	CDebug::Init(hwnd);
@@ -19,11 +19,16 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd)
 	CTime::InitTime();
 	CTime::SetTargetFrameCount(60);
 	CEngineSetting::Init();
+
+	m_hInstance = instance;
+	m_hwnd = hwnd;
+	m_screenWidth = screenWidth;
+	m_screenHeight = screenHeight;
 	m_cameras.SetComparator(CompareCamera);
 	m_mainCamera = _Maker->Instantiate("MainCamera")->AddComponent<CCamera>();
 	m_mainCamera->gameObject->SetTag("MainCamera");
 	m_mainCamera->gameObject->SetLocalPosition(Vector3(0, 4, -10));
-	m_mainCamera->Perspective(54.0f, (GLfloat)_Application->GetWindowWidth() / (GLfloat)_Application->GetWindowHeight(), 1.0f, 1000.0f);
+	m_mainCamera->Perspective(54.0f, screenWidth / screenHeight, 1.0f, 1000.0f);
 	m_mainCamera->LayerMask() = Layer::Default;
 	m_mainCamera->UpdateViewMatrix();
 
@@ -32,16 +37,17 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd)
 	m_uiCamera->gameObject->SetLocalEulerAngles(Vector3(0, 180, 0));
 	m_uiCamera->SetCameraClearFlag(ECameraClearFlag::DontClear);
 	m_uiCamera->SetDepth(99)->LayerMask() = Layer::Overlay2D;
-	m_uiCamera->Ortho((GLfloat)_Application->GetWindowHeight() * 0.5f, (GLfloat)_Application->GetWindowWidth() / (GLfloat)_Application->GetWindowHeight());
+	m_uiCamera->Ortho(screenHeight * 0.5f, screenWidth / screenHeight);
 	m_uiCamera->UpdateViewMatrix();
 }
 
 void CEngine::SetupProjection(int width, int height)
 {
 	if (height == 0)
-	{
 		height = 1;
-	}
+
+	m_screenWidth = (float)width;
+	m_screenHeight = (float)height;
 	_GUISystem->InitGUI((float)width, (float)height);
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_MODELVIEW);
@@ -154,6 +160,17 @@ void CEngine::AddCamera(CCamera* camera)
 void CEngine::RemoveCamera(CCamera* camera)
 {
 	m_cameras.Remove(camera);
+}
+
+void CEngine::UpdateClientRect()
+{
+	static POINT p{ 0, 0 };
+	p.x = 0; p.y = 0;
+	ClientToScreen(m_hwnd, &p);
+	m_clientRect.left = p.x;
+	m_clientRect.right = p.x + m_screenWidth;
+	m_clientRect.top = p.y;
+	m_clientRect.bottom = p.y + m_screenHeight;
 }
 
 int CompareCamera(CCamera* a, CCamera* b)

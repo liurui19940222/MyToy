@@ -5,11 +5,6 @@
 #include "Debug.h"
 #include "Config.h"
 
-CEngine* CApplication::GetEngine()
-{
-	return CApplication::GetInstance()->engine;
-}
-
 LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	return CApplication::GetInstance()->MessageHandle(hWnd, uMsg, wParam, lParam);
@@ -73,8 +68,7 @@ CApplication* CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstan
 	oldWindowRawWidth = appInfo.windowWidth;
 	oldWindowRawHeight = appInfo.windowHeight;
 
-	engine = new CEngine;
-	engine->InitEngine(hInstance, hwnd);
+	_Engine->InitEngine(hInstance, hwnd, appInfo.windowWidth, appInfo.windowHeight);
 
 	ChangeDisplayMode((EDisplayMode)appInfo.isFullScreen);
 	hdc = GetDC(hwnd);
@@ -99,7 +93,7 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 	{
 	case WM_CREATE:
 		hDC = GetDC(hWnd);
-		engine->SetupPixelFormat(hDC);
+		_Engine->SetupPixelFormat(hDC);
 		hRC = wglCreateContext(hDC);
 		wglMakeCurrent(hDC, hRC);
 		break;
@@ -114,10 +108,10 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 		height = HIWORD(lParam);
 		width = LOWORD(lParam);
 		SetWindowSize(width, height);
-		UpdateClientRect();
+		_Engine->UpdateClientRect();
 		break;
 	case WM_MOVE:
-		UpdateClientRect();
+		_Engine->UpdateClientRect();
 		break;
 	default:
 		break;
@@ -127,20 +121,9 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
-void CApplication::UpdateClientRect()
-{
-	static POINT p{ 0, 0 };
-	p.x = 0; p.y = 0;
-	ClientToScreen(hwnd, &p);
-	clientRect.left = p.x;
-	clientRect.right = p.x + appInfo.windowWidth;
-	clientRect.top = p.y;
-	clientRect.bottom = p.y + appInfo.windowHeight;
-}
-
 void CApplication::SetWindowSize(int width, int height)
 {
-	engine->SetupProjection(width, height);
+	_Engine->SetupProjection(width, height);
 	appInfo.windowWidth = width;
 	appInfo.windowHeight = height;
 }
@@ -235,9 +218,9 @@ int CApplication::GameLoop()
 
 	while (!isExiting)
 	{
-		engine->Update();
+		_Engine->Update();
 		window->OnUpdate();
-		engine->Render();
+		_Engine->Render();
 		window->OnRender();
 		SwapBuffers(hdc);
 
@@ -264,9 +247,9 @@ int CApplication::GameLoop()
 void CApplication::QuitApp()
 {
 	window->OnClose();
-	engine->Quit();
+	_Engine->Quit();
 
-	delete engine;
+	delete _Engine;
 
 	if (appInfo.isFullScreen)
 	{
@@ -298,9 +281,4 @@ HWND CApplication::GetWindowHandle()
 CGameWindow* CApplication::GetGameWindow()
 {
 	return window;
-}
-
-const RECT* CApplication::GetRect()
-{
-	return &clientRect;
 }

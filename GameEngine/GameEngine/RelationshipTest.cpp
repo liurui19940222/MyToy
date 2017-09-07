@@ -4,8 +4,6 @@
 
 void CRelationshipTest::OnStart()
 {
-	float width = _Application->GetWindowWidth();
-	float height = _Application->GetWindowHeight();
 	model = Matrix4x4::Identity();
 	CRenderCamera* batch = new CRenderCamera;
 	_MainCamera->SetCameraClearFlag(ECameraClearFlag::SolidColor);

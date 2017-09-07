@@ -60,8 +60,6 @@ public:
 
 	CGameWindow* GetGameWindow();
 
-	const RECT* GetRect();
-
 	void ToggleFullOrWindow();
 
 	void ChangeDisplayMode(EDisplayMode mode);
@@ -70,8 +68,6 @@ public:
 
 	void QuitApp();
 
-	static CEngine* GetEngine();
-
 private:
 	int oldWindowRawWidth = 0;
 	int oldWindowRawHeight = 0;
@@ -79,16 +75,12 @@ private:
 	int oldWindowPosY = 0;
 	bool mChangedDisplayMode = false;
 	EDisplayMode mDisplayMode = EDisplayMode::None;
-	CEngine* engine;
 	CGameWindow* window;
 	SApplicationInfo appInfo;
 	HDC hdc;
 	HWND hwnd;
 	HINSTANCE mHIntance;
 	bool isExiting;
-	RECT clientRect;
-
-	void UpdateClientRect();
 };
 
 LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

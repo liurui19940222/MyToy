@@ -1,5 +1,6 @@
-#include "Input.h"
-#include "Application.h"
+#include"Input.h"
+#include"Engine.h"
+#include"Application.h"
 
 LPDIRECTINPUT8 CInput::lpDI;
 LPDIRECTINPUTDEVICE8 CInput::lpDIKeyboard;
@@ -126,8 +127,8 @@ Vector2 CInput::InputMousePosition()
 {
 	POINT p;
 	GetCursorPos(&p);
-	int left = _Application->GetRect()->left;
-	int bottom = _Application->GetRect()->bottom;
+	int left = _Engine->GetClientRect().left;
+	int bottom = _Engine->GetClientRect().bottom;
 	return Vector2(p.x - left, bottom - p.y);
 }
 

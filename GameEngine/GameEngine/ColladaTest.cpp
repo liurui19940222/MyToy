@@ -49,7 +49,7 @@ void CColladaTest::OnStart()
 
 	CCamera* camera = _Maker->Instantiate("Camera")->AddComponent<CCamera>();
 	camera->LayerMask() = Layer::Default;
-	camera->Perspective(54.0f, (GLfloat)_Application->GetWindowWidth() / (GLfloat)_Application->GetWindowHeight(), 1.0f, 1000.0f);
+	camera->Perspective(54.0f, _SCW / _SCH, 1.0f, 1000.0f);
 	camera->UpdateViewMatrix();
 	camera->SetRenderTexture((CRenderTexture*)m_texture);
 	camera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
@@ -89,6 +89,7 @@ void CColladaTest::OnRender()
 	_Engine->BeginOrtho();
 	CRawRenderer::DrawRect(SRect2D{400, 300, 100, 30}, Color::cyan);
 	CRawRenderer::RenderString(L"FontRenderer", { 0, 0, 200, 200 }, Vector3(400, 300, 0), Color::blue, 18, EAlignment::CENTER_MIDDLE);
+	CRawRenderer::RenderString(L"FontRenderer", { 0, 0, 200, 200 }, Vector3(400 + 50, 300 + 50, 0), Color::green, 18, EAlignment::CENTER_MIDDLE);
 	CRawRenderer::DrawLine(Vector3::zero, Vector3(800, 600, 0), Color::black, 2);
 	CRawRenderer::DrawPoint(Vector3(400, 300, 0), Color::orange, 10);
 	CRawRenderer::DrawTexture(*m_texture, SRect2D{ 400, 100, 100, 100 });

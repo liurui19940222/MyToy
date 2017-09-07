@@ -33,9 +33,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Application\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="EditorWindow.cpp">
-      <Filter>Application\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="GUIElement.cpp">
       <Filter>GUI\源文件</Filter>
     </ClCompile>
@@ -52,9 +49,6 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EditorWindow.h">
-      <Filter>Application\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Application\头文件</Filter>
     </ClInclude>

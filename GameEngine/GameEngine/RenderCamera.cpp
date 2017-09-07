@@ -91,19 +91,15 @@ Matrix4x4 CRenderCamera::GetProjectionMatrix() const { return m_projectionMat; }
 
 Vector3 CRenderCamera::WorldPosToScreen(Vector3 worldPos)
 {
-	float width = (float)_Application->GetWindowWidth();
-	float height = (float)_Application->GetWindowHeight();
 	Vector4 pos = m_projectionMat * m_viewMat * Vector4(worldPos, 1.0f);
 	float w = 1.0 / pos.w;
 	pos.x *= w; pos.y *= w; pos.z *= w;
-	pos.x = width * (pos.x + 0.5f);
-	pos.y = height - height * (pos.y + 0.5f);
+	pos.x = _SCW * (pos.x + 0.5f);
+	pos.y = _SCH - _SCH * (pos.y + 0.5f);
 	return pos;
 }
 
 Vector3 CRenderCamera::ScreenPosToViewPort(Vector3 screenPos)
 {
-	float width = (float)_Application->GetWindowWidth();
-	float height = (float)_Application->GetWindowHeight();
-	return Vector3(screenPos.x - width * 0.5f, -screenPos.y + height * 0.5f, screenPos.z);
+	return Vector3(screenPos.x - _SCW * 0.5f, -screenPos.y + _SCH * 0.5f, screenPos.z);
 }

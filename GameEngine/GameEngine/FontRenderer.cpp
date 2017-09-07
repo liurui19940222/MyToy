@@ -311,7 +311,10 @@ void CFontRenderer::ClearPrimitive()
 {
 	for (size_t i = 0; i < primitives.size(); ++i)
 	{
-		delete primitives[i];
+		if (m_renderType == ERenderType::Fixed)
+			delete (CCharacterPrimitiveFixed*)primitives[i];
+		else
+			delete (CCharacterPrimitiveSmart*)primitives[i];
 	}
 	primitives.clear();
 }

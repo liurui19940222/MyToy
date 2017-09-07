@@ -135,6 +135,8 @@ CGUIElement* CGUIElement::SetRect(SRect2D rect)
 	this->m_rect = rect;
 	this->m_width = rect.half_size_x * 2;
 	this->m_height = rect.half_size_y * 2;
+	this->m_position.x = rect.center_x;
+	this->m_position.y = rect.center_y;
 	return this;
 }
 
@@ -162,6 +164,14 @@ CGUIElement* CGUIElement::SetHeight(float height)
 CGUIElement* CGUIElement::SetEnable(bool enable)
 {
 	m_enable = enable;
+	return this;
+}
+
+CGUIElement* CGUIElement::SetPosition(const Vector2& position)
+{
+	m_position = position;
+	m_rect.center_x = position.x;
+	m_rect.center_y = position.y;
 	return this;
 }
 

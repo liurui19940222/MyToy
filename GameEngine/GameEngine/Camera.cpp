@@ -78,7 +78,7 @@ void CCamera::BeginOneFrame()
 	}
 	else
 	{
-		glViewport(0, 0, _Application->GetWindowWidth(), _Application->GetWindowHeight());
+		glViewport(0, 0, _SCW, _SCH);
 	}
 	if (m_cameraClearFlag == ECameraClearFlag::SolidColor)
 	{

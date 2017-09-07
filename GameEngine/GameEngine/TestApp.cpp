@@ -17,7 +17,7 @@ void CTestApp::OnStart()
 	camera = _Maker->Instantiate("Camera");
 	CRenderTexture* renderTexture = CRenderTexture::Create(400, 400, true);
 	CCamera* c = camera->AddComponent<CCamera>();
-	c->Perspective(54.0f, (float)_Application->GetWindowWidth() / (float)_Application->GetWindowHeight(), 0.1f, 1000.0f);
+	c->Perspective(54.0f, _SCW / _SCH, 0.1f, 1000.0f);
 	c->SetCameraClearFlag(ECameraClearFlag::SolidColor)->SetCameraClearColor(Color::black)->SetDepth(1)->SetRenderTexture(renderTexture);
 	c->SetName("camera");
 	camera->SetLocalPosition(Vector3(100, 3, -10));
