@@ -639,6 +639,15 @@ bool Plane3D::IntersetLine(const ParameterizedLine3D& line, Vector3* intersetPoi
 
 #pragma region Math
 
+const float CMath::EPSILON = FLT_EPSILON;
+const float CMath::PI = 3.141592653f;
+const float CMath::TWO_PI = PI * 2.0f;
+const float CMath::HALF_PI = PI * 0.5f;
+const float CMath::QUARTER_PI = PI * 0.25f;
+const float CMath::DegToRad = PI / 180.0f;
+const float CMath::RadToDeg = 180.0f / PI;
+const float CMath::HalfDegToRad = 0.5f * DegToRad;
+
 float CMath::Random()
 {
 	static float max_rec = 1 / (float)RAND_MAX;
@@ -668,6 +677,8 @@ int CMath::Random(int min, int max)
 #pragma endregion
 
 #pragma region Quaternion
+
+const float Quaternion::positiveFlip = CMath::TWO_PI - 0.0001f;
 
 Quaternion::Quaternion() : x(0), y(0), z(0), w(0) {}
 Quaternion::Quaternion(const Vector3& vec) : x(vec.x), y(vec.y), z(vec.z), w(0) {}

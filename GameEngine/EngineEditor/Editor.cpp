@@ -1,6 +1,9 @@
 #include"Editor.h"
 #include"resource.h"
-#include"Channel.h"
+#include"Window.h"
+#include"MainWindow.h"
+#include"SceneWindow.h"
+#include"WorldTreeWindow.h"
 #include<GameEngine\Config.h>
 
 int CEditor::InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
@@ -27,30 +30,9 @@ int CEditor::InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCm
 	if (!RegisterClassEx(&windowClass))
 		return NULL;
 
-	int x = (GetSystemMetrics(0) - (int)m_windowWidth) >> 1;
-	int y = (GetSystemMetrics(1) - (int)m_windowHeight) >> 1;
-
-	HWND hwnd = CreateWindowEx(NULL,
-		CLASS_NAME,
-		L"Win32Test",
-		WS_OVERLAPPEDWINDOW,
-		x, y,
-		m_windowWidth,
-		m_windowHeight,
-		NULL,
-		LoadMenu(NULL, MAKEINTRESOURCE(IDM_MENU_ROOT)),
-		hInstance,
-		NULL);
-
-	if (!hwnd)
-		return NULL;
-	m_hwnd = hwnd;
-	ShowWindow(hwnd, SW_SHOW);
-	UpdateWindow(hwnd);
-
-	m_channels.push_back(new CChannel(CLASS_NAME, hInstance, hwnd, 400, 400));
-
-	_Engine->InitEngine(hInstance, m_channels[0]->WindowHandle, m_windowWidth, m_windowHeight);
+	CWindow* mainWindow = OpenWindow<CMainWindow>(CLASS_NAME, hInstance, NULL, m_windowWidth, m_windowHeight, NULL);
+	CWindow* sceneWindow = OpenWindow<CSceneWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 800, 600, WS_OVERLAPPEDWINDOW);
+	CWindow* worldWindow = OpenWindow<CWorldTreeWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 250, 600, WS_OVERLAPPEDWINDOW);
 
 	return 0;
 }
@@ -80,55 +62,23 @@ int CEditor::EditorLoop()
 	return 0;
 }
 
-LRESULT CALLBACK CEditor::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	static HGLRC hRC;
-	static HDC hDC;
-	static POINT p{ 0, 0 };
-	static RECT rect;
-	static int height, width;
-	static LPPAINTSTRUCT ps;
+	CWindow* window = (CWindow*)GetWindowLongPtr(hWnd, GWL_USERDATA);
+	if (window)
+		return window->WindowProc(hWnd, uMsg, wParam, lParam);
 
 	switch (uMsg)
 	{
 	case WM_CREATE:
-		hDC = GetDC(hWnd);
-		_Engine->SetupPixelFormat(hDC);
-		hRC = wglCreateContext(hDC);
-		wglMakeCurrent(hDC, hRC);
-		break;
-	case WM_PAINT:
-
-		break;
-	case WM_DESTROY:
-		break;
-	case WM_QUIT:
-		break;
-	case WM_CLOSE:
-		PostQuitMessage(0);
-		break;
-	case WM_SIZE:
-		height = HIWORD(lParam);
-		width = LOWORD(lParam);
-		_Engine->SetupProjection(width, height);
-		_Engine->UpdateClientRect();
-		break;
-	case WM_COMMAND:
-
-		break;
-	case WM_MOVE:
-		_Engine->UpdateClientRect();
-		break;
-	default:
+		window = (CWindow*)((LPCREATESTRUCT)(lParam))->lpCreateParams;
+		SetWindowLongPtr(hWnd, GWL_USERDATA, (long)window);
+		if (window)
+			window->WindowProc(hWnd, uMsg, wParam, lParam);
 		break;
 	}
 
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
-}
-
-LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-	return _Editor->WindowProc(hWnd, uMsg, wParam, lParam);
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)

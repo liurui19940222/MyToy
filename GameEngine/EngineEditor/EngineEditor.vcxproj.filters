@@ -39,7 +39,19 @@
     <ClCompile Include="Editor.cpp">
       <Filter>Editor\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
     <ClCompile Include="Channel.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneWindow.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldTreeWindow.cpp">
       <Filter>Editor\源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -58,11 +70,23 @@
     <ClInclude Include="Editor.h">
       <Filter>Editor\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>资源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MainWindow.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
     <ClInclude Include="Channel.h">
       <Filter>Editor\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>资源文件</Filter>
+    <ClInclude Include="SceneWindow.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldTreeWindow.h">
+      <Filter>Editor\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

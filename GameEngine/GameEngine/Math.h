@@ -373,14 +373,14 @@ struct ENGINE_API STriangle
 class ENGINE_API CMath
 {
 public:
-	static constexpr float EPSILON = FLT_EPSILON;
-	static constexpr float PI = 3.141592653f;
-	static constexpr float TWO_PI = PI * 2.0f;
-	static constexpr float HALF_PI = PI * 0.5f;
-	static constexpr float QUARTER_PI = PI * 0.25f;
-	static constexpr float DegToRad = PI / 180.0f;
-	static constexpr float RadToDeg = 180.0f / PI;
-	static constexpr float HalfDegToRad = 0.5f * DegToRad;
+	static const float EPSILON;
+	static const float PI;
+	static const float TWO_PI;
+	static const float HALF_PI;
+	static const float QUARTER_PI;
+	static const float DegToRad;
+	static const float RadToDeg;
+	static const float HalfDegToRad;
 
 	static float Random();
 	static float Random(float max);
@@ -530,7 +530,7 @@ public:
 private:
 	static constexpr float _next[3] = { 1, 2, 0 };
 	static constexpr float negativeFlip = -0.0001f;
-	static constexpr float positiveFlip = CMath::TWO_PI - 0.0001f;
+	static const float positiveFlip;
 };
 
 #endif

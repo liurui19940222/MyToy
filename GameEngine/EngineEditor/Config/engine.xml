@@ -2,8 +2,8 @@
 <engine>
 	<window
     full_screen = "false"
-		width = "800"
-    height = "600"
+		width = "1280"
+    height = "720"
 		/>
   <debug
     draw_grid = "true"

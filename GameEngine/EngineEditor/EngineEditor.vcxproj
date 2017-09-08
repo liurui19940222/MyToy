@@ -150,19 +150,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Channel.cpp" />
+    <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="SceneWindow.cpp" />
+    <ClCompile Include="Window.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="GUIElement.cpp" />
     <ClCompile Include="GUIManager.cpp" />
+    <ClCompile Include="WorldTreeWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\DLLEXPORT\GameEngine.lib" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Channel.h" />
+    <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="SceneWindow.h" />
+    <ClInclude Include="Window.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="GUIElement.h" />
     <ClInclude Include="GUIManager.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="WorldTreeWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EngineEditor.rc" />
