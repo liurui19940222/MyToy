@@ -15,12 +15,13 @@
 #include"Resources.h"
 #include"Maker.h"
 #include"Singleton.h"
+#include"Property.h"
 
 #define _Engine CEngine::GetInstance()
 #define _MainCamera _Engine->GetCamera()
 #define _MainCameraGo _MainCamera->gameObject
-#define _SCW _Engine->GetScreenWidth()
-#define _SCH _Engine->GetScreenHeight()
+#define _SCW _Engine->ClientWidth
+#define _SCH _Engine->ClientHeight
 
 using namespace std;
 using namespace container;
@@ -57,15 +58,18 @@ public:
 
 	void UpdateClientRect();
 
-	inline float GetScreenWidth() { return m_screenWidth; }
-	inline float GetScreenHeight() { return m_screenHeight; }
-	inline void SetScreenWidth(float w) { m_screenWidth = w; }
-	inline void SetScreenHeight(float h) { m_screenHeight = h; }
-	inline void SetClientRect(RECT rect) { m_clientRect; }
-	inline RECT GetClientRect() { return m_clientRect; }
+	property<float> ClientWidth = _prop(float, { m_clientWidth = value; },  { return m_clientWidth; });
+	property<float> ClientHeight = _prop(float, { m_clientHeight = value; }, { return m_clientHeight; });
+	property<RECT> ClientRect = _prop(RECT, { m_clientRect = value; }, { return m_clientRect; });
+	property_r<HDC> DCHandle = _prop_r(HDC, { return m_hdc; });
+	property<HWND> WindowHandle = _prop(HWND, { 
+		m_hwnd = value; 
+		m_hdc = GetDC(m_hwnd);
+	}, { return m_hwnd; });
+
 private:
 	//屏幕宽度，高度
-	float m_screenWidth = 0, m_screenHeight = 0;
+	float m_clientWidth = 0, m_clientHeight = 0;
 
 	//客户区范围
 	RECT m_clientRect;
@@ -75,6 +79,7 @@ private:
 
 	//窗口句柄
 	HWND m_hwnd;
+	HDC m_hdc;
 
 	//主摄像机
 	CCamera* m_mainCamera = NULL;

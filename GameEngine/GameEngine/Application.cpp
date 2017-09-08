@@ -71,7 +71,6 @@ CApplication* CApplication::CreateApp(HINSTANCE hInstance, HINSTANCE hPrevInstan
 	_Engine->InitEngine(hInstance, hwnd, appInfo.windowWidth, appInfo.windowHeight);
 
 	ChangeDisplayMode((EDisplayMode)appInfo.isFullScreen);
-	hdc = GetDC(hwnd);
 
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
@@ -222,7 +221,7 @@ int CApplication::GameLoop()
 		window->OnUpdate();
 		_Engine->Render();
 		window->OnRender();
-		SwapBuffers(hdc);
+		SwapBuffers(_Engine->DCHandle);
 
 		while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
 		{

@@ -127,8 +127,8 @@ Vector2 CInput::InputMousePosition()
 {
 	POINT p;
 	GetCursorPos(&p);
-	int left = _Engine->GetClientRect().left;
-	int bottom = _Engine->GetClientRect().bottom;
+	int left = _Engine->ClientRect.value().left;
+	int bottom = _Engine->ClientRect.value().bottom;
 	return Vector2(p.x - left, bottom - p.y);
 }
 

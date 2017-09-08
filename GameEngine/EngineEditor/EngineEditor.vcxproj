@@ -150,15 +150,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Channel.cpp" />
+    <ClCompile Include="Editor.cpp" />
     <ClCompile Include="GUIElement.cpp" />
     <ClCompile Include="GUIManager.cpp" />
-    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\DLLEXPORT\GameEngine.lib" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Channel.h" />
+    <ClInclude Include="Editor.h" />
     <ClInclude Include="GUIElement.h" />
     <ClInclude Include="GUIManager.h" />
     <ClInclude Include="resource.h" />

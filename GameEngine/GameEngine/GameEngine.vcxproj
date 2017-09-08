@@ -154,6 +154,7 @@ copy $(SolutionDir)GameEngine\Shader\ $(SolutionDir)\EngineEditor\Shader\</Comma
     <ClInclude Include="Atlas.h" />
     <ClInclude Include="BitImage.h" />
     <ClInclude Include="GUIDesigner.h" />
+    <ClInclude Include="Property.h" />
     <ClInclude Include="RawRenderer.h" />
     <ClInclude Include="SkeletonAnimation.h" />
     <ClInclude Include="Camera.h" />

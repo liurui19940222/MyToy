@@ -305,6 +305,9 @@
     <ClInclude Include="SysFont.h">
       <Filter>Font\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Property.h">
+      <Filter>Common\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">

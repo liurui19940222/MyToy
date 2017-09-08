@@ -77,9 +77,8 @@ private:
 	EDisplayMode mDisplayMode = EDisplayMode::None;
 	CGameWindow* window;
 	SApplicationInfo appInfo;
-	HDC hdc;
-	HWND hwnd;
 	HINSTANCE mHIntance;
+	HWND hwnd;
 	bool isExiting;
 };
 
