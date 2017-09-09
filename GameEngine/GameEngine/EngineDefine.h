@@ -130,6 +130,11 @@ struct ENGINE_API Rect2D
 	int x, y, width, height;
 };
 
+struct ENGINE_API FRect
+{
+	float left, top, right, bottom;
+};
+
 enum ENGINE_API EAlignment
 {
 	LEFT_TOP		= 1 << 16 | 1,

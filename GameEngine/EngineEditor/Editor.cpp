@@ -4,6 +4,8 @@
 #include"MainWindow.h"
 #include"SceneWindow.h"
 #include"WorldTreeWindow.h"
+#include"ConsoleWindow.h"
+#include"WatcherWindow.h"
 #include<GameEngine\Config.h>
 
 int CEditor::InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
@@ -31,8 +33,14 @@ int CEditor::InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCm
 		return NULL;
 
 	CWindow* mainWindow = OpenWindow<CMainWindow>(CLASS_NAME, hInstance, NULL, m_windowWidth, m_windowHeight, NULL);
-	CWindow* sceneWindow = OpenWindow<CSceneWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 800, 600, WS_OVERLAPPEDWINDOW);
-	CWindow* worldWindow = OpenWindow<CWorldTreeWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 250, 600, WS_OVERLAPPEDWINDOW);
+	CWindow* sceneWindow = OpenWindow<CSceneWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 800, 600, NULL);
+	CWindow* worldWindow = OpenWindow<CWorldTreeWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 250, 600, NULL);
+	CWindow* consoleWindow = OpenWindow<CConsoleWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 250, 600, NULL);
+	CWindow* watcherWindow = OpenWindow<CWatcherWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 250, 600, NULL);
+	CWindow::Hold(*mainWindow, *worldWindow, GetWindowsExcept(EWindowType::WorldTree), EDockDirection::Left, 0.2f);
+	CWindow::Hold(*mainWindow, *sceneWindow, GetWindowsExcept(EWindowType::Scene), EDockDirection::Right, 0.8f);
+	CWindow::Divide(*sceneWindow, *consoleWindow, EDockDirection::Bottom, 0.2);
+	CWindow::Hold(*mainWindow, *watcherWindow, GetWindowsExcept(EWindowType::Watcher), EDockDirection::Right, 0.2f);
 
 	return 0;
 }
@@ -62,6 +70,34 @@ int CEditor::EditorLoop()
 	return 0;
 }
 
+void CEditor::UpdateSize()
+{
+	auto it = m_windows.find(EWindowType::Main);
+	if (it == m_windows.end())
+	{
+		return;
+	}
+	RECT rect = it->second->GetLocalRect();
+	int width = rect.right - rect.left;
+	int height = rect.bottom - rect.top;
+	for (pair<EWindowType, CWindow*> p : m_windows)
+	{
+		if (p.first != EWindowType::Main)
+			p.second->UpdateRect(width, height);
+	}
+}
+
+vector<CWindow*> CEditor::GetWindowsExcept(EWindowType type)
+{
+	vector<CWindow*> list;
+	for (pair<EWindowType, CWindow*> p : m_windows)
+	{
+		if (p.first != type && p.first != EWindowType::Main)
+			list.push_back(p.second);
+	}
+	return list;
+}
+
 LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	CWindow* window = (CWindow*)GetWindowLongPtr(hWnd, GWL_USERDATA);
@@ -86,3 +122,4 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	_Editor->InitEditor(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
 	return _Editor->EditorLoop();
 }
+

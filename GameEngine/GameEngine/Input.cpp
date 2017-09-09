@@ -103,6 +103,11 @@ bool CInput::GetMouseUp(EMouseKey key)
 	return isMouseKeyUp[(EMouseKey)key];
 }
 
+bool CInput::GetMouse(EMouseKey key)
+{
+	return mouseStateData.rgbButtons[key];
+}
+
 bool CInput::GetMouseDownState(EMouseKey key)
 {
 	if (mouseStateData.rgbButtons[(int)key] && !mouseStateDataHold.rgbButtons[(int)key])

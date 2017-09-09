@@ -150,8 +150,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Channel.cpp" />
+    <ClCompile Include="ConsoleWindow.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="SceneWindow.cpp" />
+    <ClCompile Include="WatcherWindow.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="GUIElement.cpp" />
@@ -163,8 +165,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Channel.h" />
+    <ClInclude Include="ConsoleWindow.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="SceneWindow.h" />
+    <ClInclude Include="WatcherWindow.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="GUIElement.h" />

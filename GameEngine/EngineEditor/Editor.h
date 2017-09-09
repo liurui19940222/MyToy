@@ -20,6 +20,8 @@ enum EWindowType
 	Main,
 	Scene,
 	WorldTree,
+	Console,
+	Watcher,
 };
 
 LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -36,10 +38,10 @@ private:
 
 public:
 
-	property_r<HINSTANCE> WinInstance = _prop_r(HINSTANCE, { return m_hInstance; });
-
+	void UpdateSize();
 	int EditorLoop();
 	int InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
+	vector<CWindow*> GetWindowsExcept(EWindowType type);
 
 	template<typename T> T* OpenWindow(wchar_t* class_name, HINSTANCE instance, HWND parent, int width, int height, DWORD style)
 	{
@@ -60,6 +62,8 @@ public:
 		}
 		delete(t);
 	}
+
+	property_r<HINSTANCE> WinInstance = _prop_r(HINSTANCE, { return m_hInstance; });
 };
 
 #endif

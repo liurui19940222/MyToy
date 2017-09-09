@@ -46,6 +46,7 @@ public:
 	static bool GetKeyUp(byte key);
 	static bool GetMouseDown(EMouseKey key);
 	static bool GetMouseUp(EMouseKey key);
+	static bool GetMouse(EMouseKey key);
 	static Vector2 InputMousePosition();
 	static float GetAxis(string axis);
 	static void ShutDown();

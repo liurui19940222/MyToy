@@ -54,6 +54,12 @@
     <ClCompile Include="WorldTreeWindow.cpp">
       <Filter>Editor\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ConsoleWindow.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WatcherWindow.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\DLLEXPORT\GameEngine.lib">
@@ -86,6 +92,12 @@
       <Filter>Editor\头文件</Filter>
     </ClInclude>
     <ClInclude Include="WorldTreeWindow.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleWindow.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WatcherWindow.h">
       <Filter>Editor\头文件</Filter>
     </ClInclude>
   </ItemGroup>
