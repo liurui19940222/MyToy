@@ -678,6 +678,8 @@ int CMath::Random(int min, int max)
 
 #pragma region Quaternion
 
+const float Quaternion::_next[3] = { 1, 2, 0 };
+const float Quaternion::negativeFlip = -0.0001f;
 const float Quaternion::positiveFlip = CMath::TWO_PI - 0.0001f;
 
 Quaternion::Quaternion() : x(0), y(0), z(0), w(0) {}

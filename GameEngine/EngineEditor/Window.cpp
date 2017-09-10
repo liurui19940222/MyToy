@@ -61,7 +61,8 @@ LRESULT CALLBACK CWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 	switch (uMsg)
 	{
 	case WM_SIZE:
-		OnSizeChanged();
+		if (CInput::GetMouse(EMouseKey::Left))
+			OnSizeChanged();
 		break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -194,7 +195,7 @@ void CWindow::Shrink(vector<CWindow*>& windows, RECT& mask, EDockDirection dir, 
 void CWindow::Expand(vector<CWindow*>& windows, RECT& mask, EDockDirection dir, float parent_width, float parent_height)
 {
 	vector<CWindow*> nearby;
-	for (int i = 0; i < windows.size - 1; ++i)
+	for (int i = 0; i < windows.size() - 1; ++i)
 	{
 		for (int j = 0; j < windows.size() - i - 1; ++j)
 		{

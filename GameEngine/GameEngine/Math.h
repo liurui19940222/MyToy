@@ -528,8 +528,8 @@ public:
 
 	static const Quaternion identity;
 private:
-	static constexpr float _next[3] = { 1, 2, 0 };
-	static constexpr float negativeFlip = -0.0001f;
+	static const float _next[3];
+	static const float negativeFlip;
 	static const float positiveFlip;
 };
 
