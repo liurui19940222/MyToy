@@ -168,6 +168,7 @@
     <ClInclude Include="ConsoleWindow.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="SceneWindow.h" />
+    <ClInclude Include="SelfContainedGrid.h" />
     <ClInclude Include="WatcherWindow.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="Editor.h" />

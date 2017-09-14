@@ -100,6 +100,9 @@
     <ClInclude Include="WatcherWindow.h">
       <Filter>Editor\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SelfContainedGrid.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EngineEditor.rc">
