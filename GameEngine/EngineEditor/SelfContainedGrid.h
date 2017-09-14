@@ -11,6 +11,12 @@
 #define MAX_ROW 10
 #define MAX_COL 10
 
+#define _FRectToLocalClient(frect, width, height) { RECT{ (LONG)(frect.left * width), \
+(LONG)(frect.top * height), (LONG)(frect.right * width), (LONG)(frect.bottom * height) } }
+
+#define _LocalClientToFRect(rect, width, height) { FRect{ (float)rect.left / width, \
+(float)rect.top / height, (float)rect.right / width, (float)rect.bottom / height } }
+
 class CGridElement
 {
 protected:
@@ -42,6 +48,7 @@ public:
 		m_data = data; 
 		m_data->SetRow(m_row);
 		m_data->SetCol(m_col);
+		m_data->OnFieldChanged(m_rect);
 	}
 
 	void SetRow(int row) 
@@ -103,11 +110,11 @@ public:
 		}
 	}
 
-	void InsertRow(const FRect& rect, int index)
+	void InsertRow(const FRect& rect, int index, bool full = false)
 	{
 		assert(m_count < MAX_ROW);
 		GridField<T>* row = new GridField<T>();
-		row->m_rect = rect;
+		row->m_rect = full ? m_rect : rect;
 		m_rows[m_count] = row;
 
 		if (index == -1)
@@ -308,7 +315,7 @@ public:
 		FRect oldRect = column->m_rect;
 		float offset = 0;
 		//×ó±ß <--
-		if (column->m_rect.left < rect.left)
+		if (column->m_rect.left > rect.left)
 		{
 			if (col == 0) return;
 			offset = abs(column->m_rect.left - rect.left);
@@ -317,7 +324,7 @@ public:
 			neighbor->SetRect(FRect{ neighbor->m_rect.left, neighbor->m_rect.top, neighbor->m_rect.right - offset, neighbor->m_rect.bottom });
 		}
 		//×ó±ß -->
-		else if (column->m_rect.left > rect.left)
+		else if (column->m_rect.left < rect.left)
 		{
 			if (col == 0) return;
 			offset = abs(column->m_rect.left - rect.left);

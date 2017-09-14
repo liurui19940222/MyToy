@@ -1,5 +1,6 @@
 #include "Math.h"
 #include<assert.h>
+#include<Windows.h>
 
 const Vector2 Vector2::zero(0.0f, 0.0f);
 const Vector2 Vector2::one(1.0f, 1.0f);
@@ -183,10 +184,10 @@ Matrix4x4 Matrix4x4::Ortho(float left, float right, float bottom, float top, flo
 	return m;
 }
 
-Matrix4x4 Matrix4x4::Perspective(float fov, float aspect, float near, float far)
+Matrix4x4 Matrix4x4::Perspective(float fov, float aspect, float _near, float _far)
 {
 	Matrix4x4 m;
-	Perspective(m, fov, aspect, near, far);
+	Perspective(m, fov, aspect, _near, _far);
 	return m;
 }
 
@@ -359,9 +360,9 @@ void Matrix4x4::MakeOrtho(float left, float right, float bottom, float top, floa
 	Ortho(*this, left, right, bottom, top, zNear, zFar);
 }
 
-void Matrix4x4::MakePerspective(float fov, float aspect, float near, float far)
+void Matrix4x4::MakePerspective(float fov, float aspect, float _near, float _far)
 {
-	Perspective(*this, fov, aspect, near, far);
+	Perspective(*this, fov, aspect, _near, _far);
 }
 
 void Matrix4x4::MakeLookAt(const Vector3& eye, const Vector3& center, const Vector3& up)
@@ -459,20 +460,20 @@ void Matrix4x4::Ortho(Matrix4x4& mat, float left, float right, float bottom, flo
 	mat[3][2] = -(zFar + zNear) / (zFar - zNear);
 }
 
-void Matrix4x4::Perspective(Matrix4x4& mat, float fov, float aspect, float near, float far)
+void Matrix4x4::Perspective(Matrix4x4& mat, float fov, float aspect, float _near, float _far)
 {
 	mat.MakeZero();
-	float range = tan(CMath::DegToRad * (fov / 2.0f)) * near;
+	float range = tan(CMath::DegToRad * (fov / 2.0f)) * _near;
 	float left = -range * aspect;
 	float right = range * aspect;
 	float bottom = -range;
 	float top = range;
 
-	mat[0][0] = (2.0f * near) / (right - left);
-	mat[1][1] = (2.0f * near) / (top - bottom);
-	mat[2][2] = -(far + near) / (far - near);
+	mat[0][0] = (2.0f * _near) / (right - left);
+	mat[1][1] = (2.0f * _near) / (top - bottom);
+	mat[2][2] = -(_far + _near) / (_far - _near);
 	mat[2][3] = -1.0f;
-	mat[3][2] = -(2.0f * far * near) / (far - near);
+	mat[3][2] = -(2.0f * _far * _near) / (_far - _near);
 }
 
 void Matrix4x4::LookAt(Matrix4x4& mat, const Vector3& eye, const Vector3& center, const Vector3& up)
@@ -651,6 +652,7 @@ const float CMath::HalfDegToRad = 0.5f * DegToRad;
 float CMath::Random()
 {
 	static float max_rec = 1 / (float)RAND_MAX;
+	srand(GetTickCount());
 	return rand() * max_rec;
 }
 

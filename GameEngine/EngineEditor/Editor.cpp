@@ -37,10 +37,27 @@ int CEditor::InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCm
 	CWindow* worldWindow = OpenWindow<CWorldTreeWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 250, 600, NULL);
 	CWindow* consoleWindow = OpenWindow<CConsoleWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 250, 600, NULL);
 	CWindow* watcherWindow = OpenWindow<CWatcherWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 250, 600, NULL);
-	CWindow::Hold(*mainWindow, *worldWindow, GetWindowsExcept(EWindowType::WorldTree), EDockDirection::Left, 0.2f);
-	CWindow::Hold(*mainWindow, *sceneWindow, GetWindowsExcept(EWindowType::Scene), EDockDirection::Right, 0.8f);
-	CWindow::Divide(*sceneWindow, *consoleWindow, EDockDirection::Bottom, 0.2);
-	CWindow::Hold(*mainWindow, *watcherWindow, GetWindowsExcept(EWindowType::Watcher), EDockDirection::Right, 0.2f);
+
+	m_layout.InsertColumn(FRect{ 0.0f, 0.0f, 0.2f, 1.0f }, 0);
+	m_layout.InsertColumn(FRect{ 0.2f, 0.0f, 0.8f, 1.0f }, 1);
+	m_layout.InsertColumn(FRect{ 0.8f, 0.0f, 1.0f, 1.0f }, 2);
+	m_layout[0].InsertRow(FRect{}, 0, true);
+	m_layout[1].InsertRow(FRect{}, 0, true);
+	m_layout[2].InsertRow(FRect{}, 0, true);
+	m_layout[0][0].set(worldWindow);
+	m_layout[1][0].set(sceneWindow);
+	m_layout[2][0].set(watcherWindow);
+	m_layout[1].InsertRow(FRect{ 0.2f, 0.7f, 0.8f, 1.0f }, 1);
+	m_layout[1][1].set(consoleWindow);
+
+	//m_layout.InsertColumn(FRect{ 0.0f, 0.0f, 1.0f, 1.0f }, 0);
+	//m_layout[0].InsertRow(FRect{ 0.0f, 0.0f, 1.0f, 0.6f }, 0);
+	//m_layout[0].InsertRow(FRect{ 0.0f, 0.6f, 1.0f, 1.0f }, 1);
+	//m_layout[0][0].set(sceneWindow);
+	//m_layout[0][1].set(consoleWindow);
+	//m_layout.InsertColumn(FRect{ 0.8f, 0.0f, 1.0f, 1.0f }, 1);
+	//m_layout[1].InsertRow(FRect{ }, 0, true);
+	//m_layout[1][0].set(watcherWindow);
 
 	return 0;
 }
@@ -70,6 +87,16 @@ int CEditor::EditorLoop()
 	return 0;
 }
 
+void CEditor::UpdateColumn(const FRect& rect, int index)
+{
+	m_layout.UpdateColumn(rect, index);
+}
+
+void CEditor::UpdateRow(const FRect& rect, int col, int row)
+{
+	m_layout[col].UpdateRow(rect, row);
+}
+
 void CEditor::UpdateSize()
 {
 	auto it = m_windows.find(EWindowType::Main);
@@ -80,6 +107,8 @@ void CEditor::UpdateSize()
 	RECT rect = it->second->GetLocalRect();
 	int width = rect.right - rect.left;
 	int height = rect.bottom - rect.top;
+	m_windowWidth = width;
+	m_windowHeight = height;
 	for (pair<EWindowType, CWindow*> p : m_windows)
 	{
 		if (p.first != EWindowType::Main)

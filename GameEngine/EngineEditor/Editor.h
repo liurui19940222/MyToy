@@ -6,6 +6,7 @@
 #include<GameEngine\Property.h>
 #include<windowsx.h>
 #include<map>
+#include"SelfContainedGrid.h"
 
 #define CLASS_NAME L"MainClass"
 #define _Editor CEditor::GetInstance()
@@ -35,9 +36,12 @@ private:
 	float m_windowHeight;
 
 	map<EWindowType, CWindow*> m_windows;
+	SelfContainedGrid<CWindow*> m_layout;
 
 public:
 
+	void UpdateColumn(const FRect& rect, int index);
+	void UpdateRow(const FRect& rect, int col, int row);
 	void UpdateSize();
 	int EditorLoop();
 	int InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
@@ -64,6 +68,8 @@ public:
 	}
 
 	property_r<HINSTANCE> WinInstance = _prop_r(HINSTANCE, { return m_hInstance; });
+	property_r<float> WindowWidth = _prop_r(float, { return m_windowWidth; });
+	property_r<float> WindowHeight = _prop_r(float, { return m_windowHeight; });
 };
 
 #endif

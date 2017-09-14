@@ -17,27 +17,15 @@ DWORD CWorldTreeWindow::GetStyle()
 
 LRESULT CALLBACK CWorldTreeWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	static HGLRC hRC;
-	static HDC hDC;
-	static POINT p{ 0, 0 };
-	static RECT rect;
+	static HDC hdc;
 	static int height, width;
+	static PAINTSTRUCT ps;
 
 	switch (uMsg)
 	{
-	case WM_CREATE:
-
-		break;
-	case WM_CLOSE:
-		break;
-	case WM_SIZE:
-
-		break;
-	case WM_COMMAND:
-
-		break;
-	case WM_MOVE:
-
+	case WM_PAINT:
+		hdc = BeginPaint(m_hwnd, &ps);
+		EndPaint(m_hwnd, &ps);
 		break;
 	default:
 		break;
