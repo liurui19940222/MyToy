@@ -13,7 +13,7 @@ EWindowType CSceneWindow::GetType()
 
 DWORD CSceneWindow::GetStyle()
 {
-	return WS_CHILDWINDOW | WS_THICKFRAME;
+	return WS_CHILD | WS_THICKFRAME;
 }
 
 LRESULT CALLBACK CSceneWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -27,10 +27,8 @@ LRESULT CALLBACK CSceneWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
 	switch (uMsg)
 	{
 	case WM_CREATE:
-		hDC = GetDC(hWnd);
-		_Engine->SetupPixelFormat(hDC);
-		hRC = wglCreateContext(hDC);
-		wglMakeCurrent(hDC, hRC);
+		_Engine->SetupRenderContext(hWnd);
+		FontManager->LoadFont(1, "C:/Windows/Fonts/simkai.ttf");
 		break;
 	case WM_CLOSE:
 		break;

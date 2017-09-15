@@ -1,6 +1,8 @@
 #ifndef _RAW_RENDERER_H_
 #define _RAW_RENDERER_H_
 
+#include<Windows.h>
+#include<gl\glew.h>
 #include"FontManager.h"
 #include"Math.h"
 #include"Texture.h"
@@ -16,24 +18,38 @@ public:
 	CRawFontRenderer();
 };
 
-class ENGINE_API CRawRenderer : public CSingleton<CRawRenderer>
+class ENGINE_API CRawRenderer
 {
-	static map<int, CSysFont*> m_fonts;
-	static CRawFontRenderer m_fontRenderer;
+	CRawFontRenderer m_fontRenderer;
+	float m_width;
+	float m_height;
+	HWND m_hwnd;
+	HDC m_hdc;
+	HGLRC m_hrc;
+	bool m_initialized;
 
-	static CSysFont* PrepareFont(int size);
+	void SetupPixelFormat();
 public:
+	CRawRenderer();
 
-	static void BeginBlend();
-	static void EndBlend();
-	static void SetColor(const Color& color);
-	static void DrawRect(const SRect2D& rect, const Color& color);
-	static void DrawString(const string& str, const Vector3& position, const Color& color, int size);
-	static void DrawLine(const Vector3& p0, const Vector3& p1, const Color& color, float width);
-	static void DrawPoint(const Vector3& p, const Color& color, float size);
-	static void DrawTexture(CTexture& texture, const Vector3& position);
-	static void DrawTexture(CTexture& texture, const SRect2D& rect);
-	static void RenderString(const wstring& str, const SRect2D& rect, const Vector3& position, const Color& color, int size, EAlignment alignment);
+	void SetupRenderContext(HWND hwnd);
+	void SetupProjection(float width, float height);
+	void BeginOrtho();
+	void EndOrtho();
+	void BeginBlend();
+	void EndBlend();
+	void SetColor(const Color& color);
+	void DrawRect(const SRect2D& rect, const Color& color);
+	void DrawLine(const Vector3& p0, const Vector3& p1, const Color& color, float width);
+	void DrawPoint(const Vector3& p, const Color& color, float size);
+	void DrawTexture(CTexture& texture, const Vector3& position);
+	void DrawTexture(CTexture& texture, const SRect2D& rect);
+	void DrawString(const wstring& str, const SRect2D& rect, const Vector3& position, const Color& color, int size, EAlignment alignment);
+	void Release();
+
+	HDC GetDcHandle();
+	HWND GetWindowHandle();
+	bool Initialized();
 };
 
 #endif

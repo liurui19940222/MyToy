@@ -34,9 +34,12 @@ private:
 	HINSTANCE m_hInstance;
 	float m_windowWidth;
 	float m_windowHeight;
+	float m_headerHeight;
 
 	map<EWindowType, CWindow*> m_windows;
 	SelfContainedGrid<CWindow*> m_layout;
+
+	void RenderWindow();
 
 public:
 
@@ -70,6 +73,7 @@ public:
 	property_r<HINSTANCE> WinInstance = _prop_r(HINSTANCE, { return m_hInstance; });
 	property_r<float> WindowWidth = _prop_r(float, { return m_windowWidth; });
 	property_r<float> WindowHeight = _prop_r(float, { return m_windowHeight; });
+	property_r<float> HeaderHeight = _prop_r(float, { return m_headerHeight; });
 };
 
 #endif

@@ -30,6 +30,8 @@ private:
 	float m_parentHeight;
 
 protected:
+	float m_width;
+	float m_height;
 	HWND m_hwnd;
 	EChannelState m_state;
 
@@ -48,6 +50,7 @@ public:
 
 	void UpdateRect(float parent_width, float parent_height);
 
+	virtual void OnRender();
 	virtual void OnFieldChanged(const FRect& rect) override;
 
 	/*
@@ -69,6 +72,9 @@ public:
 
 	//得到客户区的全局大小
 	static RECT GetGlobalClientRect(HWND hwnd);
+
+	//得到头部(包含菜单栏，工具栏)高度
+	float GetHeaderHeight();
 
 	property_r<HWND> WindowHandle = _prop_r(HWND, { return m_hwnd; });
 	property_r<EChannelState> State = _prop_r(EChannelState, { return m_state; });

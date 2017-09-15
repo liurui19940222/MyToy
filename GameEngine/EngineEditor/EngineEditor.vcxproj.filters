@@ -60,6 +60,9 @@
     <ClCompile Include="WatcherWindow.cpp">
       <Filter>Editor\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="GLWindow.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\DLLEXPORT\GameEngine.lib">
@@ -101,6 +104,9 @@
       <Filter>Editor\头文件</Filter>
     </ClInclude>
     <ClInclude Include="SelfContainedGrid.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GLWindow.h">
       <Filter>Editor\头文件</Filter>
     </ClInclude>
   </ItemGroup>

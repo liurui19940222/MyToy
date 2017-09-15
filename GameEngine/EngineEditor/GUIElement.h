@@ -44,6 +44,7 @@ private:
 	void OnMouseExit(Vector2 mousePos);
 	void OnMouseOver(Vector2 mousePos);
 protected:
+	CGUIManager* m_manager;
 	Vector2 m_position;
 	int m_layer;
 	float m_width;

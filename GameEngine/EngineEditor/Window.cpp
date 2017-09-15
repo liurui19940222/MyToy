@@ -60,18 +60,22 @@ wchar_t* CWindow::GetTitle()
 LRESULT CALLBACK CWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	static FRect frect;
-	static float width;
-	static float height;
+	static float pwidth;
+	static float pheight;
+	static HDC hDC;
+	static HGLRC hRC;
 
 	switch (uMsg)
 	{
 	case WM_SIZE:
-		CDebug::Log("window size col:%d row:%d", m_col, m_row);
-		width = _Editor->WindowWidth;
-		height = _Editor->WindowHeight;
-		frect = _LocalClientToFRect(GetLocalRect(), width, height);
+		pwidth = _Editor->WindowWidth;
+		pheight = _Editor->WindowHeight;
+		frect = _LocalClientToFRect(GetLocalRect(), pwidth, pheight);
 		_Editor->UpdateColumn(frect, m_col);
 		_Editor->UpdateRow(frect, m_col, m_row);
+
+		m_height = HIWORD(lParam);
+		m_width = LOWORD(lParam);
 		break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -164,14 +168,28 @@ RECT CWindow::GetGlobalClientRect(HWND hwnd)
 	return rect;
 }
 
+float CWindow::GetHeaderHeight()
+{
+	RECT rect;
+	POINT p{ 0, 0 };
+	p.x = 0; p.y = 0;
+	ClientToScreen(m_hwnd, &p);
+	GetWindowRect(m_hwnd, &rect);
+	return abs(rect.top - p.y);
+}
+
 void CWindow::UpdateRect(float parent_width, float parent_height)
 {
 	SetLocalRect(_FRectToLocalClient(m_normalizedRect, parent_width, parent_height), parent_width, parent_height);
 }
 
+void CWindow::OnRender()
+{
+
+}
+
 void CWindow::OnFieldChanged(const FRect& rect)
 {
-	CDebug::Log("col:%d row:%d left:%g top:%g right:%g bottom:%g", m_col, m_row, rect.left, rect.top, rect.right, rect.bottom);
 	SetLocalRect(_FRectToLocalClient(rect, _Editor->WindowWidth, _Editor->WindowHeight)
-		,_Editor->WindowWidth, _Editor->WindowHeight);
+		, _Editor->WindowWidth, _Editor->WindowHeight);
 }

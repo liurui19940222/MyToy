@@ -32,19 +32,14 @@ class ENGINE_API CEngine : public CSingleton<CEngine>
 {
 public:
 	void InitEngine(HINSTANCE instance, HWND hwnd, float screenWidth, float screenHeight);
-
 	void SetupProjection(int width, int height);
-
 	void SetupPixelFormat(HDC hDC);
-
+	void SetupRenderContext(HWND hwnd);
+	void MakeRenderContext();
 	void BeginOrtho();
-
 	void EndOrtho();
-
 	void Update();
-
 	void Render();
-
 	void Quit();
 
 	//检查快捷键
@@ -80,6 +75,7 @@ private:
 	//窗口句柄
 	HWND m_hwnd;
 	HDC m_hdc;
+	HGLRC m_hrc;
 
 	//主摄像机
 	CCamera* m_mainCamera = NULL;

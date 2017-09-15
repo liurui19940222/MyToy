@@ -38,6 +38,8 @@ int CEditor::InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCm
 	CWindow* consoleWindow = OpenWindow<CConsoleWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 250, 600, NULL);
 	CWindow* watcherWindow = OpenWindow<CWatcherWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 250, 600, NULL);
 
+	m_headerHeight = mainWindow->GetHeaderHeight();
+
 	m_layout.InsertColumn(FRect{ 0.0f, 0.0f, 0.2f, 1.0f }, 0);
 	m_layout.InsertColumn(FRect{ 0.2f, 0.0f, 0.8f, 1.0f }, 1);
 	m_layout.InsertColumn(FRect{ 0.8f, 0.0f, 1.0f, 1.0f }, 2);
@@ -71,8 +73,10 @@ int CEditor::EditorLoop()
 	while (!isExiting)
 	{
 		_Engine->Update();
+		_Engine->MakeRenderContext();
 		_Engine->Render();
 		SwapBuffers(_Engine->DCHandle);
+		RenderWindow();
 		while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
 		{
 			if (!GetMessage(&msg, NULL, 0, 0))
@@ -125,6 +129,14 @@ vector<CWindow*> CEditor::GetWindowsExcept(EWindowType type)
 			list.push_back(p.second);
 	}
 	return list;
+}
+
+void CEditor::RenderWindow()
+{
+	for (pair<EWindowType, CWindow*> p : m_windows)
+	{
+		p.second->OnRender();
+	}
 }
 
 LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)

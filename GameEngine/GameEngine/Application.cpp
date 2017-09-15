@@ -91,16 +91,11 @@ LRESULT CALLBACK CApplication::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam
 	switch (uMsg)
 	{
 	case WM_CREATE:
-		hDC = GetDC(hWnd);
-		_Engine->SetupPixelFormat(hDC);
-		hRC = wglCreateContext(hDC);
-		wglMakeCurrent(hDC, hRC);
+		_Engine->SetupRenderContext(hWnd);
 		break;
 	case WM_DESTROY:
 	case WM_QUIT:
 	case WM_CLOSE:
-		wglMakeCurrent(hDC, NULL);
-		wglDeleteContext(hRC);
 		PostQuitMessage(0);
 		break;
 	case WM_SIZE:

@@ -13,7 +13,7 @@ class CGUIElement;
 using namespace std;
 using namespace container;
 
-class CGUIManager : public CSingleton<CGUIManager>
+class CGUIManager
 {
 public:
 	typedef function<void(CGUIElement*)> ElementForeachCallback;
@@ -44,6 +44,7 @@ public:
 	template<typename T> T* Create()
 	{
 		T* t = new T();
+		t->m_manager = this;
 		m_elements.Enqueue(t);
 		return t;
 	}

@@ -12,19 +12,71 @@ float CRawFontRenderer::GetPixelScale()
 	return 1.0f;
 }
 
-map<int, CSysFont*> CRawRenderer::m_fonts;
-CRawFontRenderer CRawRenderer::m_fontRenderer;
-
-CSysFont* CRawRenderer::PrepareFont(int size)
+CRawRenderer::CRawRenderer()
 {
-	auto it = m_fonts.find(size);
-	if (it == m_fonts.end())
-	{
-		CSysFont* font = new CSysFont(L"Verdana", size);
-		m_fonts.insert(make_pair(size, font));
-		return font;
-	}
-	return it->second;
+	
+}
+
+void CRawRenderer::SetupPixelFormat()
+{
+	int pixelFormat;
+	PIXELFORMATDESCRIPTOR pfd;
+	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
+	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_DOUBLEBUFFER | PFD_SUPPORT_OPENGL;
+	pfd.cColorBits = 32;
+	pfd.cDepthBits = 24;
+	pfd.iLayerType = PFD_MAIN_PLANE;
+
+	pixelFormat = ChoosePixelFormat(m_hdc, &pfd);
+	SetPixelFormat(m_hdc, pixelFormat, &pfd);
+}
+
+void CRawRenderer::SetupRenderContext(HWND hwnd)
+{
+	m_hwnd = hwnd;
+	m_hdc = GetDC(hwnd);
+	SetupPixelFormat();
+	m_hrc = wglCreateContext(m_hdc);
+	wglMakeCurrent(m_hdc, m_hrc);
+	m_initialized = true;
+}
+
+void CRawRenderer::Release()
+{
+	wglMakeCurrent(m_hdc, NULL);
+	wglDeleteContext(m_hrc);
+}
+
+void CRawRenderer::SetupProjection(float width, float height)
+{
+	if (height == 0)
+		height = 1;
+	m_width = (float)width;
+	m_height = (float)height;
+	glViewport(0, 0, width, height);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
+
+void CRawRenderer::BeginOrtho()
+{
+	wglMakeCurrent(m_hdc, m_hrc);
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0, m_width, 0, m_height, -1, 1000);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glDisable(GL_DEPTH_TEST);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+}
+
+void CRawRenderer::EndOrtho()
+{
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	SetupProjection(m_width, m_height);
+	glEnable(GL_DEPTH_TEST);
 }
 
 void CRawRenderer::BeginBlend()
@@ -54,15 +106,6 @@ void CRawRenderer::DrawRect(const SRect2D& rect, const Color& color)
 	glVertex3f(rect.half_size_x, -rect.half_size_y, 0.0f);
 	glVertex3f(rect.half_size_x, rect.half_size_y, 0.0f);
 	glEnd();
-	glPopMatrix();
-}
-
-void CRawRenderer::DrawString(const string& str, const Vector3& position, const Color& color, int size)
-{
-	glPushMatrix();
-	SetColor(color);
-	CSysFont* font = PrepareFont(size);
-	font->Render(str.c_str(), position);
 	glPopMatrix();
 }
 
@@ -114,7 +157,7 @@ void CRawRenderer::DrawTexture(CTexture& texture, const SRect2D& rect)
 	glPopMatrix();
 }
 
-void CRawRenderer::RenderString(const wstring& str, const SRect2D& rect, const Vector3& position, const Color& color, int size, EAlignment alignment)
+void CRawRenderer::DrawString(const wstring& str, const SRect2D& rect, const Vector3& position, const Color& color, int size, EAlignment alignment)
 {
 	m_fontRenderer.SetRenderType(ERenderType::Fixed);
 	m_fontRenderer.SetFont(FontManager->GetFont(1));
@@ -127,4 +170,19 @@ void CRawRenderer::RenderString(const wstring& str, const SRect2D& rect, const V
 	glTranslatef(position.x, position.y, position.z);
 	m_fontRenderer.OnRender(Matrix4x4::Identity(), Matrix4x4::Identity(), Matrix4x4::Identity());
 	glPopMatrix();
+}
+
+HDC CRawRenderer::GetDcHandle()
+{
+	return m_hdc;
+}
+
+HWND CRawRenderer::GetWindowHandle()
+{
+	return m_hwnd;
+}
+
+bool CRawRenderer::Initialized()
+{
+	return m_initialized;
 }

@@ -15,7 +15,7 @@ EWindowType CMainWindow::GetType()
 
 DWORD CMainWindow::GetStyle()
 {
-	return WS_OVERLAPPEDWINDOW;
+	return WS_DLGFRAME | WS_SYSMENU;
 }
 
 HMENU CMainWindow::GetMenu()
@@ -30,6 +30,7 @@ wchar_t* CMainWindow::GetTitle()
 
 LRESULT CALLBACK CMainWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	CWindow::WindowProc(hWnd, uMsg, wParam, lParam);
 	static HGLRC hRC;
 	static HDC hDC;
 	static POINT p{ 0, 0 };
@@ -51,21 +52,23 @@ LRESULT CALLBACK CMainWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 			PostQuitMessage(0);
 			break;
 		case IDM_WORLD_CREATEEMPTY:
+			_Engine->MakeRenderContext();
 			CMaterial* mat = _Maker->Instantiate<CMaterial>();
 			mat->SetShader(CShader::Get("texture"));
-			mat->SetColor(Color(CMath::Random(), CMath::Random(), CMath::Random(), 1.0f));
+			mat->SetColor(Color::white);
 			CGameObject* go = _Maker->Instantiate("NewGameObject");
 			go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube))->SetMaterial(mat);
 			go->SetLocalPosition(Vector3(CMath::Random() * 10.0f * CMath::Random(-1.0f, 1.0f), CMath::Random() * 3, CMath::Random() * 10.0f * CMath::Random(-1.0f, 1.0f)));
 			break;
 		}
 		break;
-	case WM_MOVE:
-
-		break;
+	case WM_SYSCOMMAND:
+		if (wParam == SC_MAXIMIZE)
+			return 0;
+		return 0;
 	default:
 		break;
 	}
 
-	return CWindow::WindowProc(hWnd, uMsg, wParam, lParam);
+	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }

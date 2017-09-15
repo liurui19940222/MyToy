@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="ConsoleWindow.cpp" />
+    <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="SceneWindow.cpp" />
     <ClCompile Include="WatcherWindow.cpp" />
@@ -166,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="Channel.h" />
     <ClInclude Include="ConsoleWindow.h" />
+    <ClInclude Include="GLWindow.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="SceneWindow.h" />
     <ClInclude Include="SelfContainedGrid.h" />

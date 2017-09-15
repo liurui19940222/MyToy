@@ -652,7 +652,6 @@ const float CMath::HalfDegToRad = 0.5f * DegToRad;
 float CMath::Random()
 {
 	static float max_rec = 1 / (float)RAND_MAX;
-	srand(GetTickCount());
 	return rand() * max_rec;
 }
 

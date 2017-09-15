@@ -77,11 +77,11 @@ void CGUIManager::OnRender()
 {
 	_Engine->BeginOrtho();
 	glDisable(GL_DEPTH_TEST);
-	CRawRenderer::BeginBlend();
+	//CRawRenderer::BeginBlend();
 	ForeachElement([](CGUIElement* element) {
 		element->OnRender();
 	});
-	CRawRenderer::EndBlend();
+	//CRawRenderer::EndBlend();
 	glEnable(GL_DEPTH_TEST);
 	_Engine->EndOrtho();
 }

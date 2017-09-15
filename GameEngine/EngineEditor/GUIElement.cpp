@@ -68,7 +68,7 @@ void CGUIElement::OnRender()
 {
 	if (m_fill)
 	{
-		CRawRenderer::DrawRect(m_rect, m_fillColor);
+		//CRawRenderer::DrawRect(m_rect, m_fillColor);
 	}
 }
 
@@ -143,7 +143,7 @@ CGUIElement* CGUIElement::SetRect(SRect2D rect)
 CGUIElement* CGUIElement::SetLayer(int layer)
 {
 	this->m_layer = layer;
-	_GUIManager->UpdateWidgetLayer(this);
+	m_manager->UpdateWidgetLayer(this);
 	return this;
 }
 

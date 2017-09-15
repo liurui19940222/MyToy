@@ -81,6 +81,19 @@ void CEngine::SetupPixelFormat(HDC hDC)
 	SetPixelFormat(hDC, pixelFormat, &pfd);
 }
 
+void CEngine::SetupRenderContext(HWND hwnd)
+{
+	m_hdc = GetDC(hwnd);
+	_Engine->SetupPixelFormat(m_hdc);
+	m_hrc = wglCreateContext(m_hdc);
+	MakeRenderContext();
+}
+
+void CEngine::MakeRenderContext()
+{
+	wglMakeCurrent(m_hdc, m_hrc);
+}
+
 void CEngine::BeginOrtho()
 {
 	glMatrixMode(GL_PROJECTION);
@@ -138,6 +151,9 @@ void CEngine::Quit()
 	_Maker->ForeachGameObject([](CGameObject* go, int depth) {
 		go->OnRelease();
 	});
+
+	wglMakeCurrent(m_hdc, NULL);
+	wglDeleteContext(m_hrc);
 }
 
 void CEngine::CheckShortcuts()

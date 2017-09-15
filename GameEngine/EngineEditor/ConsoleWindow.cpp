@@ -2,6 +2,7 @@
 
 CConsoleWindow::CConsoleWindow(wchar_t* class_name, HINSTANCE instance, HWND parent, int width, int height, DWORD dword) : CChannel()
 {
+	m_caption = L"Console";
 	Create(class_name, instance, parent, width, height, dword);
 }
 
@@ -12,11 +13,12 @@ EWindowType CConsoleWindow::GetType()
 
 DWORD CConsoleWindow::GetStyle()
 {
-	return WS_CHILDWINDOW | WS_THICKFRAME;
+	return WS_CHILD;
 }
 
 LRESULT CALLBACK CConsoleWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	CChannel::WindowProc(hWnd, uMsg, wParam, lParam);
 	static HGLRC hRC;
 	static HDC hDC;
 	static POINT p{ 0, 0 };
@@ -43,5 +45,5 @@ LRESULT CALLBACK CConsoleWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 		break;
 	}
 
-	return CWindow::WindowProc(hWnd, uMsg, wParam, lParam);
+	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
