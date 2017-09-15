@@ -70,10 +70,6 @@ LRESULT CALLBACK CWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 		width = _Editor->WindowWidth;
 		height = _Editor->WindowHeight;
 		frect = _LocalClientToFRect(GetLocalRect(), width, height);
-		if (frect.top >= 0.90f)
-		{
-			frect.top = m_normalizedRect.top;
-		}
 		_Editor->UpdateColumn(frect, m_col);
 		_Editor->UpdateRow(frect, m_col, m_row);
 		break;
@@ -110,7 +106,6 @@ RECT CWindow::GetRectClient()
 void CWindow::SetLocalRect(RECT& rect, float parent_width, float parent_height)
 {
 	m_normalizedRect.left = (float)rect.left / parent_width;
-	if((float)rect.top / parent_height < 0.95f)
 	m_normalizedRect.top = (float)rect.top / parent_height;
 	m_normalizedRect.right = (float)rect.right / parent_width;
 	m_normalizedRect.bottom = (float)rect.bottom / parent_height;
@@ -126,11 +121,10 @@ RECT CWindow::GetLocalRect()
 		return GetRect();
 	RECT parentRect = GetGlobalClientRect(parent);
 	RECT childRect = GetRect();
-	//int screenHeight = GetSystemMetrics(1);
-	//if (childRect.top  >= screenHeight - parentRect.top)
-	//{
-	//	childRect.top = (parentRect.bottom - parentRect.top) * m_normalizedRect.top;
-	//}
+	if (childRect.bottom - childRect.top < 100)
+	{
+		childRect.top = m_normalizedRect.top * m_parentHeight;
+	}
 	return RECT{ childRect.left - parentRect.left, childRect.top - parentRect.top,
 		childRect.right - parentRect.left, childRect.bottom - parentRect.top };
 }
