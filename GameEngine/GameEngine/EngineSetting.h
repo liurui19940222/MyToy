@@ -7,6 +7,7 @@ class ENGINE_API CEngineSetting
 {
 public:
 	static bool DrawGrid;
+	static float GridStrength;
 	static bool DrawGizmos;
 
 	static void Init();

@@ -3,7 +3,6 @@
 
 #include"Math.h"
 #include"EngineDefine.h"
-//#include"RenderTexture.h"
 
 enum ENGINE_API EProjectionType
 {
@@ -15,9 +14,11 @@ enum ENGINE_API ECameraClearFlag
 {
 	SolidColor,
 	DontClear,
+	SkyBox,
 };
 
 class ENGINE_API CRenderTexture;
+class ENGINE_API CSkyBox;
 
 class ENGINE_API CRenderCamera
 {
@@ -25,6 +26,7 @@ protected:
 	EProjectionType m_projectionType;
 	ECameraClearFlag m_cameraClearFlag;
 	CRenderTexture* m_renderTexture;
+	CSkyBox* m_skybox;
 	float m_fov;
 	float m_aspect;
 	float m_near;
@@ -54,6 +56,7 @@ public:
 	CRenderCamera* SetCameraClearFlag(ECameraClearFlag flag);
 	CRenderCamera* SetCameraClearColor(const Color& color);
 	CRenderCamera* SetRenderTexture(CRenderTexture* texture);
+	CRenderCamera* SetSkyBox(CSkyBox* skybox);
 	EProjectionType GetProjectionType() const;
 	ECameraClearFlag GetCameraClearFlag() const;
 	CRenderTexture* GetRenderTexture() const;

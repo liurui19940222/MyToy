@@ -7,6 +7,7 @@
 #include"GameObject.h"
 #include"Input.h"
 #include"Time.h"
+#include"EngineSetting.h"
 
 void CEditorTool::DrawQuad(const Vector3& position, float size)
 {
@@ -33,7 +34,7 @@ void CEditorTool::DrawGrid(const Vector3& cameraPos, const Vector3& pos, const C
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LINE_SMOOTH);
 	glFogf(GL_FOG_DENSITY, 0.003f);
-	glLineWidth(1.4f);
+	glLineWidth(CEngineSetting::GridStrength);
 	glPushMatrix();
 	glColor3f(color.r, color.g, color.b);
 	glTranslatef(pos.x - length * 0.5f + cameraPos.x, pos.y, pos.z + length * 0.5f + cameraPos.z);

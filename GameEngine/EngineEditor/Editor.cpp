@@ -76,6 +76,7 @@ int CEditor::EditorLoop()
 		_Engine->MakeRenderContext();
 		_Engine->Render();
 		SwapBuffers(_Engine->DCHandle);
+		UpdateWindow();
 		RenderWindow();
 		while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
 		{
@@ -129,6 +130,14 @@ vector<CWindow*> CEditor::GetWindowsExcept(EWindowType type)
 			list.push_back(p.second);
 	}
 	return list;
+}
+
+void CEditor::UpdateWindow()
+{
+	for (pair<EWindowType, CWindow*> p : m_windows)
+	{
+		p.second->OnUpdate();
+	}
 }
 
 void CEditor::RenderWindow()

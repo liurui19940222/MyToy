@@ -39,6 +39,7 @@ private:
 	map<EWindowType, CWindow*> m_windows;
 	SelfContainedGrid<CWindow*> m_layout;
 
+	void UpdateWindow();
 	void RenderWindow();
 
 public:

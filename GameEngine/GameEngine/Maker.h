@@ -63,6 +63,8 @@ public:
 	template<typename T>
 	void Destroy(T* obj)
 	{
+		if (obj == NULL)
+			return;
 		if (IS_TYPE(CGameObject, obj))
 		{
 			DestroyGameObject(dynamic_cast<CGameObject*>(obj));

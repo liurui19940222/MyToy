@@ -196,6 +196,7 @@ copy $(SolutionDir)GameEngine\Shader\ $(SolutionDir)\EngineEditor\Shader\</Comma
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SkinnedMeshRenderer.h" />
+    <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SpriteAnimation.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="SysFont.h" />
@@ -254,6 +255,7 @@ copy $(SolutionDir)GameEngine\Shader\ $(SolutionDir)\EngineEditor\Shader\</Comma
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkinnedMeshRenderer.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SpriteAnimation.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SysFont.cpp" />

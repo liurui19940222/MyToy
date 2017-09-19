@@ -2,7 +2,10 @@
 #include"ColladaFile.h"
 #include"Maker.h"
 #include"RawRenderer.h"
+#include"SkyBox.h"
 #include<glm\glm.hpp>
+
+CSkyBox* box;
 
 void CColladaTest::OnStart()
 {
@@ -58,6 +61,21 @@ void CColladaTest::OnStart()
 	camera->gameObject->SetLocalEulerAngles(_MainCameraGo->GetLocalEulerAngles());
 	camera->gameObject->LookAt(model->GetLocalPosition());
 
+	//box = CSkyBox::Create("textures/skybox/top.jpg", 
+	//	NULL, 
+	//	"textures/skybox/front.jpg", 
+	//	"textures/skybox/back.jpg", 
+	//	"textures/skybox/left.jpg", 
+	//	"textures/skybox/right.jpg");
+
+	box = CSkyBox::Create("textures/skybox2/top.tga",
+		"textures/skybox2/bottom.tga",
+		"textures/skybox2/front.tga",
+		"textures/skybox2/back.tga",
+		"textures/skybox2/left.tga",
+		"textures/skybox2/right.tga");
+
+	_MainCamera->SetSkyBox(box);
 }
 
 void CColladaTest::OnUpdate()
@@ -75,7 +93,7 @@ void CColladaTest::OnUpdate()
 		v[0] = m_clips[0];
 		v[1] = m_clips[1];
 		float times[] = { CTime::time, CTime::time };
-		float weights[] = { 0.8f, 0.1f };
+		float weights[] = { 1.0f, 0.0f };
 		vector<JointPose> jointPoses = CSkeletonAnimation::Blend(&v[0], times, weights, 2, m_model->m_skeleton);
 		//vector<JointPose> jointPoses = CSkeletonAnimation::Sample(*m_clips[1], m_model->m_skeleton, CTime::time, 1);
 		CSkeletonAnimation::CalculateGlobalMatrix(m_model->m_skeleton, jointPoses);

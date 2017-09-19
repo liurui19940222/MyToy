@@ -11,6 +11,7 @@ protected:
 public:
 	virtual LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) override;
 	virtual void OnDraw() override;
+	virtual void OnCreate() override;
 };
 
 #endif

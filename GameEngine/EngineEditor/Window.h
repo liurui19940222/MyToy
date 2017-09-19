@@ -36,6 +36,7 @@ protected:
 	EChannelState m_state;
 
 	void Create(wchar_t* class_name, HINSTANCE instance, HWND parent, int width, int height, DWORD dword);
+	virtual void OnCreate();
 
 public:
 	CWindow();
@@ -50,6 +51,7 @@ public:
 
 	void UpdateRect(float parent_width, float parent_height);
 
+	virtual void OnUpdate();
 	virtual void OnRender();
 	virtual void OnFieldChanged(const FRect& rect) override;
 

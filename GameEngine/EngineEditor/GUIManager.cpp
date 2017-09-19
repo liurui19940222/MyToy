@@ -75,15 +75,9 @@ void CGUIManager::OnUpdate()
 
 void CGUIManager::OnRender()
 {
-	_Engine->BeginOrtho();
-	glDisable(GL_DEPTH_TEST);
-	//CRawRenderer::BeginBlend();
 	ForeachElement([](CGUIElement* element) {
 		element->OnRender();
 	});
-	//CRawRenderer::EndBlend();
-	glEnable(GL_DEPTH_TEST);
-	_Engine->EndOrtho();
 }
 
 void CGUIManager::Quit()

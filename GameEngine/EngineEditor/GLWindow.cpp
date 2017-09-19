@@ -24,6 +24,11 @@ LRESULT CALLBACK CGLWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
+void CGLWindow::OnUpdate()
+{
+	m_gui.OnUpdate();
+}
+
 void CGLWindow::OnRender()
 {
 	if (!m_renderer.Initialized()) return;
@@ -37,8 +42,12 @@ void CGLWindow::OnRender()
 	m_renderer.DrawLine(Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, m_height, 0.0f), borderColor, 4);
 	m_renderer.DrawLine(Vector3(0.0f, m_height, 0.0f), Vector3(m_width, m_height, 0.0f), borderColor, 4);
 	m_renderer.DrawLine(Vector3(m_width, 0.0f, 0.0f), Vector3(m_width, m_height, 0.0f), borderColor, 4);
-	m_renderer.EndOrtho();
+
+	//draw gui
+	m_gui.OnRender();
 	SwapBuffers(m_renderer.GetDcHandle());
+
+	m_renderer.EndOrtho();
 }
 
 void CGLWindow::OnDraw()

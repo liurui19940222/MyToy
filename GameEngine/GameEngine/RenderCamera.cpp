@@ -4,7 +4,7 @@
 
 CRenderCamera::CRenderCamera() : m_projectionType(EProjectionType::Perspective) , m_cameraClearFlag(ECameraClearFlag::SolidColor)
 , m_fov(0) , m_near(0) , m_far(0) , m_left(0) , m_right(0)
-, m_top(0) , m_bottom(0), m_depth(0), m_layerMask(Layer::Default)
+, m_top(0) , m_bottom(0), m_depth(0), m_layerMask(Layer::Default), m_skybox(NULL)
 {
 	m_viewMat.MakeIdentity();
 	m_projectionMat.MakeIdentity();
@@ -67,6 +67,7 @@ CRenderCamera* CRenderCamera::SetRenderTexture(CRenderTexture* texture)
 	return this;
 }
 
+CRenderCamera* CRenderCamera::SetSkyBox(CSkyBox* skybox) { m_skybox = skybox; m_cameraClearFlag = ECameraClearFlag::SkyBox; return this; }
 CRenderCamera* CRenderCamera::SetCameraClearFlag(ECameraClearFlag flag) { m_cameraClearFlag = flag; return this; }
 CRenderCamera* CRenderCamera::SetCameraClearColor(const Color& color) { m_clearColor = color; return this; }
 EProjectionType CRenderCamera::GetProjectionType() const { return m_projectionType; }

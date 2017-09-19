@@ -37,6 +37,11 @@ void CWindow::Create(wchar_t* class_name, HINSTANCE instance, HWND parent, int w
 	UpdateWindow(m_hwnd);
 }
 
+void CWindow::OnCreate()
+{
+	
+}
+
 EWindowType CWindow::GetType()
 {
 	return EWindowType::Other;
@@ -67,6 +72,9 @@ LRESULT CALLBACK CWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 
 	switch (uMsg)
 	{
+	case WM_CREATE:
+		OnCreate();
+		break;
 	case WM_SIZE:
 		pwidth = _Editor->WindowWidth;
 		pheight = _Editor->WindowHeight;
@@ -181,6 +189,11 @@ float CWindow::GetHeaderHeight()
 void CWindow::UpdateRect(float parent_width, float parent_height)
 {
 	SetLocalRect(_FRectToLocalClient(m_normalizedRect, parent_width, parent_height), parent_width, parent_height);
+}
+
+void CWindow::OnUpdate()
+{
+	
 }
 
 void CWindow::OnRender()

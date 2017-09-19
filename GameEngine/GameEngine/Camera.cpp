@@ -4,6 +4,7 @@
 #include "Engine.h"
 #include "Application.h"
 #include "RenderTexture.h"
+#include "SkyBox.h"
 
 IMPL_CLASS(CCamera)
 
@@ -87,6 +88,12 @@ void CCamera::BeginOneFrame()
 	}
 	PrepareFixed();
 	UpdateViewMatrix();
+	if (m_cameraClearFlag == ECameraClearFlag::SkyBox)
+	{
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+		if (m_skybox) m_skybox->Render(Matrix4x4::Scale(Vector3::one * 50), m_viewMat, m_projectionMat);
+	}
 }
 
 void CCamera::EndTheFrame()

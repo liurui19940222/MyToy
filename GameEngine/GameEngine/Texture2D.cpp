@@ -29,6 +29,7 @@ CTexture2D* CTexture2D::Init(CTexture2D* texture, ETexWrapMode wrapMode, ETexFil
 
 CTexture2D* CTexture2D::Create(const char* filename)
 {
+	if (!filename) return NULL;
 	CBitImage* image = _Resources->Load<CBitImage>(filename);
 	CTexture2D* texture = Create(image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
 	_Resources->Unload(string(filename));
@@ -42,6 +43,7 @@ CTexture2D* CTexture2D::Create(CBitImage* image)
 
 CTexture2D* CTexture2D::Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
 {
+	if (!filename) return NULL;
 	CBitImage* image = _Resources->Load<CBitImage>(string(filename));
 	CTexture2D* texture = Create(image, wrapMode, filterMode, envMode, mipmaps);
 	_Resources->Unload(string(filename));
