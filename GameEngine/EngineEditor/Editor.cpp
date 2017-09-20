@@ -7,6 +7,7 @@
 #include"ConsoleWindow.h"
 #include"WatcherWindow.h"
 #include<GameEngine\Config.h>
+#include<GameEngine\SkyBox.h>
 
 int CEditor::InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
@@ -60,6 +61,17 @@ int CEditor::InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCm
 	//m_layout.InsertColumn(FRect{ 0.8f, 0.0f, 1.0f, 1.0f }, 1);
 	//m_layout[1].InsertRow(FRect{ }, 0, true);
 	//m_layout[1][0].set(watcherWindow);
+
+	FontManager->LoadFont(1, "C:/Windows/Fonts/simkai.ttf");
+
+	_Engine->MakeRenderContext();
+	CSkyBox* box = CSkyBox::Create("textures/skybox2/top.tga",
+		"textures/skybox2/bottom.tga",
+		"textures/skybox2/front.tga",
+		"textures/skybox2/back.tga",
+		"textures/skybox2/left.tga",
+		"textures/skybox2/right.tga");
+	_MainCamera->SetSkyBox(box);
 
 	return 0;
 }

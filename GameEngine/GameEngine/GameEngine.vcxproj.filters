@@ -309,7 +309,7 @@
       <Filter>Common\头文件</Filter>
     </ClInclude>
     <ClInclude Include="SkyBox.h">
-      <Filter>Application\头文件</Filter>
+      <Filter>Render\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -473,7 +473,7 @@
       <Filter>Font\源文件</Filter>
     </ClCompile>
     <ClCompile Include="SkyBox.cpp">
-      <Filter>Application\源文件</Filter>
+      <Filter>Render\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

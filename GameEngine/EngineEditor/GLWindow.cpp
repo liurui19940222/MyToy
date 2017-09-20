@@ -13,12 +13,13 @@ LRESULT CALLBACK CGLWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 		height = HIWORD(lParam);
 		width = LOWORD(lParam);
 		m_renderer.SetupProjection(width, height);
+		m_gui.SetRenderer(&m_renderer);
 		break;
 	case WM_CREATE:
 		m_renderer.SetupRenderContext(hWnd);
 		break;
 	case WM_CLOSE:
-
+		m_gui.SetRenderer(NULL);
 		break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);

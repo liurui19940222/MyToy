@@ -3,6 +3,7 @@
 #include"Maker.h"
 #include"RawRenderer.h"
 #include"SkyBox.h"
+#include"MeshFactory.h"
 #include<glm\glm.hpp>
 
 CSkyBox* box;

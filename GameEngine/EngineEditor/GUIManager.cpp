@@ -5,6 +5,7 @@
 
 void CGUIManager::InitGUI(float resolution_x, float resolution_y)
 {
+	m_renderer = NULL;
 	SetResolution(resolution_x, resolution_y);
 	m_elements.SetComparator([](CGUIElement* a, CGUIElement* b) {
 		if (*a > *b) return 1;
@@ -68,6 +69,16 @@ Vector3 CGUIManager::GetCenterPosition()
 	return m_centerPos;
 }
 
+void CGUIManager::SetRenderer(CRawRenderer* renderer)
+{
+	m_renderer = renderer;
+}
+
+CRawRenderer* CGUIManager::GetRenderer() const
+{
+	return m_renderer;
+}
+
 void CGUIManager::OnUpdate()
 {
 
@@ -75,6 +86,7 @@ void CGUIManager::OnUpdate()
 
 void CGUIManager::OnRender()
 {
+	if (!m_renderer) return;
 	ForeachElement([](CGUIElement* element) {
 		element->OnRender();
 	});

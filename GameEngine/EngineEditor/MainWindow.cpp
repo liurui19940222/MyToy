@@ -54,11 +54,10 @@ LRESULT CALLBACK CMainWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 		case IDM_WORLD_CREATEEMPTY:
 			_Engine->MakeRenderContext();
 			CMaterial* mat = _Maker->Instantiate<CMaterial>();
-			mat->SetShader(CShader::Get("texture"));
+			mat->SetShader(CShader::Get("light"));
 			mat->SetColor(Color::white);
 			CGameObject* go = _Maker->Instantiate("NewGameObject");
 			go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube))->SetMaterial(mat);
-			go->SetLocalPosition(Vector3(CMath::Random() * 10.0f * CMath::Random(-1.0f, 1.0f), CMath::Random() * 3, CMath::Random() * 10.0f * CMath::Random(-1.0f, 1.0f)));
 			break;
 		}
 		break;

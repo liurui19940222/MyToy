@@ -36,6 +36,12 @@ LRESULT CALLBACK CWorldTreeWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wPara
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
+void CWorldTreeWindow::OnCreate()
+{
+	CGUIElement* ui = m_gui.Create<CGUIElement>();
+	ui->SetWidth(100)->SetHeight(30)->SetPosition(Vector2(100, 200))->SetFill(true)->SetFillColor(Color::red);
+}
+
 void CWorldTreeWindow::OnDraw()
 {
 	CChannel::OnDraw();

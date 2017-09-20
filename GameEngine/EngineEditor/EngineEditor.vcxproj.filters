@@ -63,6 +63,9 @@
     <ClCompile Include="GLWindow.cpp">
       <Filter>Editor\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="GridLayout.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\DLLEXPORT\GameEngine.lib">
@@ -108,6 +111,9 @@
     </ClInclude>
     <ClInclude Include="GLWindow.h">
       <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GridLayout.h">
+      <Filter>GUI\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

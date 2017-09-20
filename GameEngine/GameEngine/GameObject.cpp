@@ -9,7 +9,7 @@ CGameObject::CGameObject() : CGameObject("NewGameObject")
 	
 }
 
-CGameObject::CGameObject(string name) : Object(name), m_layer(Layer::Default)
+CGameObject::CGameObject(string name) : Object(name), m_layer(Layer::Default), m_active(true)
 {
 	SetLocalScale(Vector3(1, 1, 1));
 	SetLocalPosition(Vector3(0, 0, 0));
@@ -274,4 +274,14 @@ void CGameObject::SetTag(const string& tag)
 string CGameObject::GetTag() const
 {
 	return m_tag;
+}
+
+void CGameObject::SetActive(bool active)
+{
+	m_active = active;
+}
+
+bool CGameObject::IsActive() const
+{
+	return m_active;
 }

@@ -114,5 +114,6 @@ void CSkyBox::Render(const Matrix4x4& model, const Matrix4x4& view, const Matrix
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	}
 
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glEnable(GL_DEPTH_TEST);
 }

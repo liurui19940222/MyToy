@@ -1,6 +1,5 @@
 #include "Object.h"
 
-
 Object::Object()
 {
 	static int id;

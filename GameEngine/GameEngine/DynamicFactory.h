@@ -28,7 +28,6 @@ public:
 class ENGINE_API DynamicFactory
 {
 public:
-
 	typedef void* (*CreateFunction)();
 
 	static DynamicFactory & Instance()

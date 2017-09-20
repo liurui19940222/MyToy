@@ -6,14 +6,13 @@ void CTextTest::OnStart()
 	_MainCameraGo->SetLocalPosition(Vector3(0, 0, 10));
 	_MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
 
-	CTrueTypeFont* font = FontManager->LoadFont(1, "C:/Windows/Fonts/simsun.ttc");
+	CTrueTypeFont* font = FontManager->LoadFont(1, "C:/Windows/Fonts/simkai.ttf");
 	go = _Maker->Instantiate();
 	go->SetLocalPosition(Vector3(0, 0, 0));
 	go->SetLayer(Layer::Default);
 	text = go->AddComponent<CTextRenderer>();
-	text->SetFont(font)->SetFontSize(10)->SetTextRect(SRect2D{ 0, 0, 5, 1 })->SetColor(Color::blue);
+	text->SetFont(font)->SetFontSize(52)->SetTextRect(SRect2D{ 0, 0, 5, 1 })->SetColor(Color::green);
 	text->SetText(L"那么照此格式输出的字母都能以基线对齐，。 \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson");
-	//text->SetText(L"ABg_-");
 	//text->SetText(L"-+*/123456789");
 	//text->SetText(L"那么照此格式输出的字母都能以基线对齐。但是所有的字都比设置的位置要低一些，想问一下我的计算方式是不是不对，网上都是这么计算的  ……");
 

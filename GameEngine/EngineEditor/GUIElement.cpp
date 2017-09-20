@@ -68,7 +68,7 @@ void CGUIElement::OnRender()
 {
 	if (m_fill)
 	{
-		//CRawRenderer::DrawRect(m_rect, m_fillColor);
+		m_manager->GetRenderer()->DrawRect(m_rect, m_fillColor);
 	}
 }
 

@@ -35,6 +35,7 @@ void CWindow::Create(wchar_t* class_name, HINSTANCE instance, HWND parent, int w
 		x, y, width, height, parent, GetMenu(), instance, (void*)this);
 	ShowWindow(m_hwnd, SW_SHOW);
 	UpdateWindow(m_hwnd);
+	OnCreate();
 }
 
 void CWindow::OnCreate()
@@ -73,7 +74,6 @@ LRESULT CALLBACK CWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 	switch (uMsg)
 	{
 	case WM_CREATE:
-		OnCreate();
 		break;
 	case WM_SIZE:
 		pwidth = _Editor->WindowWidth;

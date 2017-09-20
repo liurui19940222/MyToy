@@ -47,6 +47,50 @@ Mesh* CMeshFactory::CreateCube()
 		{ 0.5f, -0.5f, 0.5f },
 		{ 0.5f, -0.5f, -0.5f },
 	};
+	static const Vector3 normals[VERTEX_NUM] = {
+		//front
+		{ 0.0f, 0.0f, 1.0f },
+		{ 0.0f, 0.0f, 1.0f },
+		{ 0.0f, 0.0f, 1.0f },
+		{ 0.0f, 0.0f, 1.0f },
+		{ 0.0f, 0.0f, 1.0f },
+		{ 0.0f, 0.0f, 1.0f },
+		//back
+		{ 0.0f, 0.0f, -1.0f },
+		{ 0.0f, 0.0f, -1.0f },
+		{ 0.0f, 0.0f, -1.0f },
+		{ 0.0f, 0.0f, -1.0f },
+		{ 0.0f, 0.0f, -1.0f },
+		{ 0.0f, 0.0f, -1.0f },
+		//left
+		{ -1.0f, 0.0f, 0.0f },
+		{ -1.0f, 0.0f, 0.0f },
+		{ -1.0f, 0.0f, 0.0f },
+		{ -1.0f, 0.0f, 0.0f },
+		{ -1.0f, 0.0f, 0.0f },
+		{ -1.0f, 0.0f, 0.0f },
+		//right
+		{ 1.0f, 0.0f, 0.0f },
+		{ 1.0f, 0.0f, 0.0f },
+		{ 1.0f, 0.0f, 0.0f },
+		{ 1.0f, 0.0f, 0.0f },
+		{ 1.0f, 0.0f, 0.0f },
+		{ 1.0f, 0.0f, 0.0f },
+		//top
+		{ 0.0f, 1.0f, 0.0f },
+		{ 0.0f, 1.0f, 0.0f },
+		{ 0.0f, 1.0f, 0.0f },
+		{ 0.0f, 1.0f, 0.0f },
+		{ 0.0f, 1.0f, 0.0f },
+		{ 0.0f, 1.0f, 0.0f },
+		//bottom
+		{ 0.0f, -1.0f, 0.0f },
+		{ 0.0f, -1.0f, 0.0f },
+		{ 0.0f, -1.0f, 0.0f },
+		{ 0.0f, -1.0f, 0.0f },
+		{ 0.0f, -1.0f, 0.0f },
+		{ 0.0f, -1.0f, 0.0f },
+	};
 	Vector2 texcoords[VERTEX_NUM];
 	for (int i = 0; i < VERTEX_NUM;)
 	{
@@ -57,7 +101,7 @@ Mesh* CMeshFactory::CreateCube()
 		texcoords[i++] = Vector2(1.0f, 0.0f);
 		texcoords[i++] = Vector2(1.0f, 1.0f);
 	}
-	return CreateMesh(vertices, texcoords, NULL, VERTEX_NUM);
+	return CreateMesh(vertices, texcoords, normals, VERTEX_NUM);
 }
 
 Mesh* CMeshFactory::CreateQuad()
@@ -98,7 +142,7 @@ Mesh* CMeshFactory::CreateMesh(const Vector3* vertices, const Vector2* texcoords
 	}
 	if (normals)
 	{
-		mesh->m_vertices = (Vector3*)malloc(sizeof(Vector3) * count);
+		mesh->m_normals = (Vector3*)malloc(sizeof(Vector3) * count);
 		memcpy(mesh->m_normals, normals, sizeof(Vector3) * count);
 	}
 

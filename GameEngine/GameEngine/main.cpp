@@ -8,6 +8,6 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-	_Application->CreateApp(hInstance, hPrevInstance, lpCmdLine, nShowCmd, new CColladaTest);
+	_Application->CreateApp(hInstance, hPrevInstance, lpCmdLine, nShowCmd, new CTextTest);
 	return _Application->GameLoop();
 }

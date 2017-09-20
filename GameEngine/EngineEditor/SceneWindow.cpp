@@ -1,4 +1,4 @@
-#include "SceneWindow.h"
+#include"SceneWindow.h"
 
 CSceneWindow::CSceneWindow(wchar_t* class_name, HINSTANCE instance, HWND parent, int width, int height, DWORD dword) : CChannel()
 {
@@ -13,11 +13,17 @@ EWindowType CSceneWindow::GetType()
 
 DWORD CSceneWindow::GetStyle()
 {
-	return WS_CHILD | WS_THICKFRAME;
+	return WS_CHILD;
+}
+
+void CSceneWindow::OnCreate()
+{
+
 }
 
 LRESULT CALLBACK CSceneWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	CWindow::WindowProc(hWnd, uMsg, wParam, lParam);
 	static HGLRC hRC;
 	static HDC hDC;
 	static POINT p{ 0, 0 };
@@ -28,7 +34,6 @@ LRESULT CALLBACK CSceneWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
 	{
 	case WM_CREATE:
 		_Engine->SetupRenderContext(hWnd);
-		FontManager->LoadFont(1, "C:/Windows/Fonts/simkai.ttf");
 		break;
 	case WM_CLOSE:
 		break;
@@ -48,5 +53,5 @@ LRESULT CALLBACK CSceneWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
 		break;
 	}
 
-	return CWindow::WindowProc(hWnd, uMsg, wParam, lParam);
+	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }

@@ -38,7 +38,8 @@ CCharacterInfo* CTrueTypeFontSize::GetCharacter(int code)
 		chInfo = new CCharacterInfo(code);
 		characters.insert(make_pair(code, chInfo));
 
-		FT_Set_Char_Size(*ft_face, fontSize * 48, (int)(fontSize) * 48, 96, 96);
+		//FT_Set_Char_Size(*ft_face, fontSize * 48, (int)(fontSize) * 48, 128, 128);
+		FT_Set_Pixel_Sizes(*ft_face, fontSize, fontSize);
 
 		FT_Load_Glyph(*ft_face, code, FT_LOAD_DEFAULT);
 
@@ -50,8 +51,9 @@ CCharacterInfo* CTrueTypeFontSize::GetCharacter(int code)
 		int width = (*ft_face)->glyph->bitmap.width;
 		int height = (*ft_face)->glyph->bitmap.rows;
 		FT_Pos max_height = (*ft_face)->size->metrics.ascender >> 6;
-		chInfo->left_padding = (*ft_face)->glyph->bitmap_left;
+		chInfo->left_padding = -(*ft_face)->glyph->bitmap_left;
 		chInfo->top = max_height - (*ft_face)->glyph->bitmap_top;
+		//chInfo->top = max_height - ((*ft_face)->glyph->metrics.horiBearingY >> 6);
 		chInfo->advance_x = (int)((*ft_face)->glyph->advance.x / 64.0f);
 		CAtlas* atlas = GetEnoughAtlas(width, height, max_height);
 		atlas->Push(width, height, max_height + 5, (*ft_face)->glyph->bitmap.buffer, RGB{ 255, 255, 255 }, &(chInfo->rect));

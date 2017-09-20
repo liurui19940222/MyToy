@@ -5,6 +5,9 @@
 
 class CSceneWindow : public CChannel
 {
+protected:
+	virtual void OnCreate() override;
+
 public:
 	CSceneWindow(wchar_t* class_name, HINSTANCE instance, HWND parent, int width, int height, DWORD dword);
 

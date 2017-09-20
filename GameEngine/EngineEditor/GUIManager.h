@@ -5,6 +5,7 @@
 #include<GameEngine\Singleton.h>
 #include<GameEngine\Math.h>
 #include<GameEngine\PriorityQueue.h>
+#include<GameEngine\RawRenderer.h>
 
 #define _GUIManager CGUIManager::GetInstance()
 
@@ -24,6 +25,7 @@ private:
 	CGUIElement* m_lastDown;
 	Vector3 m_centerPos;
 	CPriorityQueue<CGUIElement*> m_elements;
+	CRawRenderer* m_renderer;
 
 public:
 	void InitGUI(float resolution_x, float resolution_y);
@@ -37,6 +39,8 @@ public:
 	float GetResolutionX();
 	float GetResolutionY();
 	Vector3 GetCenterPosition();
+	void SetRenderer(CRawRenderer* renderer);
+	CRawRenderer* GetRenderer() const;
 	void OnUpdate();
 	void OnRender();
 	void Quit();
