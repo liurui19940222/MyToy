@@ -1,4 +1,15 @@
-#include "GLWindow.h"
+#include"GLWindow.h"
+#include<GameEngine\EngineSetting.h>
+
+CRawRenderer& CGLWindow::GetRenderer()
+{
+	return m_renderer;
+}
+
+CGUIManager& CGLWindow::GetGUIManager()
+{
+	return m_gui;
+}
 
 LRESULT CALLBACK CGLWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -14,15 +25,25 @@ LRESULT CALLBACK CGLWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 		width = LOWORD(lParam);
 		m_renderer.SetupProjection(width, height);
 		m_gui.SetRenderer(&m_renderer);
+		m_gui.SetResolution(width, height);
 		break;
 	case WM_CREATE:
 		m_renderer.SetupRenderContext(hWnd);
+		break;
+	case WM_MOVE:
+		OnPositionChanged();
 		break;
 	case WM_CLOSE:
 		m_gui.SetRenderer(NULL);
 		break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+}
+
+void CGLWindow::OnPositionChanged()
+{
+	RECT rect = GetRectClient();
+	m_gui.SetAbsoluteWindowLTPos(Vector2(rect.left, rect.top));
 }
 
 void CGLWindow::OnUpdate()
@@ -53,5 +74,6 @@ void CGLWindow::OnRender()
 
 void CGLWindow::OnDraw()
 {
-
+	if(CEngineSetting::DrawGUILayout)
+		m_gui.DrawLayout();
 }

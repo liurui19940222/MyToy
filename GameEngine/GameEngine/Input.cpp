@@ -2,6 +2,7 @@
 #include"Engine.h"
 #include"Application.h"
 
+EMouseMode CInput::Mode = EMouseMode::Relative;
 LPDIRECTINPUT8 CInput::lpDI;
 LPDIRECTINPUTDEVICE8 CInput::lpDIKeyboard;
 LPDIRECTINPUTDEVICE8 CInput::lpDIMouse;
@@ -132,9 +133,13 @@ Vector2 CInput::InputMousePosition()
 {
 	POINT p;
 	GetCursorPos(&p);
-	int left = _Engine->ClientRect.value().left;
-	int bottom = _Engine->ClientRect.value().bottom;
-	return Vector2(p.x - left, bottom - p.y);
+	if (Mode == EMouseMode::Relative)
+	{
+		int left = _Engine->ClientRect.value().left;
+		int bottom = _Engine->ClientRect.value().bottom;
+		return Vector2(p.x - left, bottom - p.y);
+	}
+	return Vector2(p.x, p.y);
 }
 
 float CInput::GetAxis(string axis)

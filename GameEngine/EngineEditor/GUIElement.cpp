@@ -2,9 +2,12 @@
 #include"GUIManager.h"
 #include<GameEngine\RawRenderer.h>
 
+CGUIElement::~CGUIElement() {}
+
 void CGUIElement::SetState(EElementState state)
 {
 	m_state = state;
+	OnStateChanged();
 }
 
 void CGUIElement::OnMouseDown(Vector2 mousePos)
@@ -68,7 +71,7 @@ void CGUIElement::OnRender()
 {
 	if (m_fill)
 	{
-		m_manager->GetRenderer()->DrawRect(m_rect, m_fillColor);
+		m_manager->GetRenderer()->DrawRect(m_rect, m_fillColor + m_addColor);
 	}
 }
 
@@ -173,6 +176,30 @@ CGUIElement* CGUIElement::SetPosition(const Vector2& position)
 	m_rect.center_x = position.x;
 	m_rect.center_y = position.y;
 	return this;
+}
+
+void CGUIElement::OnStateChanged()
+{
+	switch (m_state)
+	{
+	case EElementState::Normal:
+		m_addColor = Color(0.0f, 0.0f, 0.0f, 0.0f);
+		break;
+	case EElementState::Hover:
+		m_addColor = Color(0.2f, 0.2f, 0.2f, 0.0f);
+		break;
+	case EElementState::Pressed:
+		m_addColor = Color(-0.3f, -0.3f, -0.3f, 0.0f);
+		break;
+	case EElementState::Disabled:
+		m_addColor = Color(-0.5f, -0.5f, -0.5f, 0.0f);
+		break;
+	}
+}
+
+void CGUIElement::OnLayoutChanged(const SRect2D& rect)
+{
+	SetRect(rect);
 }
 
 CGUIElement* CGUIElement::AddOnMouseDownListener(OnMouseDownCallback down)

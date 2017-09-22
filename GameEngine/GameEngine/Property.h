@@ -37,12 +37,12 @@ public:
 		return *this;
 	}
 
-	operator T()
+	operator T() const
 	{
 		return m_getter();
 	}
 
-	const T& value()
+	const T& value() const
 	{
 		return m_getter();
 	}
@@ -59,12 +59,12 @@ template<typename T> class ENGINE_API_TEMPLATE property_r
 public:
 	property_r(Getter getter) : m_getter(getter) {}
 
-	operator T()
+	operator T() const
 	{
 		return m_getter();
 	}
 
-	const T& value()
+	const T& value() const
 	{
 		return m_getter();
 	}

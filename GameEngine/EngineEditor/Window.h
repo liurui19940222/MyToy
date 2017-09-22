@@ -53,6 +53,7 @@ public:
 
 	virtual void OnUpdate();
 	virtual void OnRender();
+	virtual void OnPositionChanged();
 	virtual void OnFieldChanged(const FRect& rect) override;
 
 	/*

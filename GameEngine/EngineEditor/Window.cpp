@@ -201,6 +201,11 @@ void CWindow::OnRender()
 
 }
 
+void CWindow::OnPositionChanged()
+{
+	
+}
+
 void CWindow::OnFieldChanged(const FRect& rect)
 {
 	SetLocalRect(_FRectToLocalClient(rect, _Editor->WindowWidth, _Editor->WindowHeight)

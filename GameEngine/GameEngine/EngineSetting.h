@@ -9,6 +9,7 @@ public:
 	static bool DrawGrid;
 	static float GridStrength;
 	static bool DrawGizmos;
+	static bool DrawGUILayout;
 
 	static void Init();
 };

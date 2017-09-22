@@ -30,10 +30,10 @@ void CEditorTool::DrawGrid(const Vector3& cameraPos, const Vector3& pos, const C
 	static float length = cellSize * cellCount;
 	static float cellLen = 0;
 
-	glEnable(GL_FOG);
+	//glEnable(GL_FOG);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LINE_SMOOTH);
-	glFogf(GL_FOG_DENSITY, 0.003f);
+	glFogf(GL_FOG_DENSITY, 0.03f);
 	glLineWidth(CEngineSetting::GridStrength);
 	glPushMatrix();
 	glColor3f(color.r, color.g, color.b);

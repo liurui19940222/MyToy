@@ -141,6 +141,7 @@ void CRawRenderer::DrawTexture(CTexture& texture, const Vector3& position)
 
 void CRawRenderer::DrawTexture(CTexture& texture, const SRect2D& rect)
 {
+	glEnable(GL_BLEND);
 	glPushMatrix();
 	glTranslatef(rect.center_x, rect.center_y, 0.0f);
 	texture.Bind();
@@ -154,7 +155,9 @@ void CRawRenderer::DrawTexture(CTexture& texture, const SRect2D& rect)
 	glTexCoord2f(1, 0);
 	glVertex3f(rect.half_size_x, -rect.half_size_y, 0);
 	glEnd();
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glPopMatrix();
+	glDisable(GL_BLEND);
 }
 
 void CRawRenderer::DrawString(const wstring& str, const SRect2D& rect, const Vector3& position, const Color& color, int size, EAlignment alignment)

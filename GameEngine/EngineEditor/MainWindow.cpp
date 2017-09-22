@@ -45,6 +45,9 @@ LRESULT CALLBACK CMainWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 	case WM_SIZE:
 		_Editor->UpdateSize();
 		break;
+	case WM_MOVE:
+		_Editor->UpdatePosition();
+		break;
 	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{

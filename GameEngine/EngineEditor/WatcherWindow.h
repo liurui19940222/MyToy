@@ -11,6 +11,7 @@ public:
 	virtual EWindowType GetType() override;
 	virtual DWORD GetStyle() override;
 	virtual LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) override;
+	virtual void OnCreate() override;
 	virtual void OnDraw() override;
 };
 

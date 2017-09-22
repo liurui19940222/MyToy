@@ -3,6 +3,8 @@
 
 #include"Window.h"
 #include"GUIManager.h"
+#include"GUIText.h"
+#include"GUITexture.h"
 #include"GUIElement.h"
 #include<GameEngine\RawRenderer.h>
 
@@ -13,7 +15,11 @@ protected:
 	CGUIManager m_gui;
 
 public:
+
+	CRawRenderer& GetRenderer();
+	CGUIManager& GetGUIManager();
 	virtual LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) override;
+	virtual void OnPositionChanged() override;
 	virtual void OnUpdate() override;
 	virtual void OnRender() override;
 	virtual void OnDraw();

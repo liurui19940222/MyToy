@@ -4,6 +4,7 @@
 #include<vector>
 #include<functional>
 #include<GameEngine\EngineDefine.h>
+#include"GridLayout.h"
 
 using namespace std;
 using namespace std::tr1;
@@ -15,7 +16,7 @@ typedef function<void(Vector2)> OnMouseEnterCallback;
 typedef function<void(Vector2)> OnMouseExitCallback;
 typedef function<void(Vector2)> OnMouseOverCallback;
 
-enum ENGINE_API EElementState
+enum EElementState
 {
 	Disabled = -1,
 	Normal = 0,
@@ -23,7 +24,7 @@ enum ENGINE_API EElementState
 	Pressed = 2,
 };
 
-enum ENGINE_API EElementEvent
+enum EElementEvent
 {
 	MouseDown,
 	MouseUp,
@@ -32,7 +33,7 @@ enum ENGINE_API EElementEvent
 	MouseOver,
 };
 
-class CGUIElement
+class CGUIElement : public CGridLayoutElement
 {
 	friend class CGUIManager;
 private:
@@ -44,6 +45,7 @@ private:
 	void OnMouseExit(Vector2 mousePos);
 	void OnMouseOver(Vector2 mousePos);
 protected:
+	virtual ~CGUIElement();
 	CGUIManager* m_manager;
 	Vector2 m_position;
 	int m_layer;
@@ -53,6 +55,7 @@ protected:
 	bool m_fill;
 	bool m_enable;
 	Color m_fillColor;
+	Color m_addColor;
 	SRect2D m_rect;
 	EElementState m_state;
 	Vector2 m_lastOverPos;
@@ -91,6 +94,9 @@ public:
 	virtual CGUIElement* SetHeight(float height);
 	virtual CGUIElement* SetEnable(bool enable);
 	virtual CGUIElement* SetPosition(const Vector2& position);
+
+	virtual void OnStateChanged();
+	virtual void OnLayoutChanged(const SRect2D& rect);
 
 	CGUIElement* AddOnMouseDownListener(OnMouseDownCallback down);
 	CGUIElement* AddOnMouseUpListener(OnMouseUpCallback up);

@@ -153,6 +153,8 @@
     <ClCompile Include="ConsoleWindow.cpp" />
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="GridLayout.cpp" />
+    <ClCompile Include="GUIText.cpp" />
+    <ClCompile Include="GUITexture.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="SceneWindow.cpp" />
     <ClCompile Include="WatcherWindow.cpp" />
@@ -170,6 +172,8 @@
     <ClInclude Include="ConsoleWindow.h" />
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="GridLayout.h" />
+    <ClInclude Include="GUIText.h" />
+    <ClInclude Include="GUITexture.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="SceneWindow.h" />
     <ClInclude Include="SelfContainedGrid.h" />

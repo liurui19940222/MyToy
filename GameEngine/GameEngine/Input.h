@@ -19,6 +19,12 @@ enum ENGINE_API EMouseKey : int
 	Center = 2
 };
 
+enum ENGINE_API EMouseMode : int
+{
+	Absolute,
+	Relative,
+};
+
 class ENGINE_API CInput
 {
 private:
@@ -39,6 +45,7 @@ private:
 	static bool GetKeyDownState(byte key);
 	static bool GetKeyUpState(byte key);
 public:
+	static EMouseMode Mode;
 	static void Init(HINSTANCE instance, HWND hwnd);
 	static void GetState();
 	static bool GetKey(byte key);

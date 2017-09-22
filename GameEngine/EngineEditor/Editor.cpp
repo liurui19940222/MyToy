@@ -6,8 +6,18 @@
 #include"WorldTreeWindow.h"
 #include"ConsoleWindow.h"
 #include"WatcherWindow.h"
+#include"GridLayout.h"
 #include<GameEngine\Config.h>
 #include<GameEngine\SkyBox.h>
+#include<GameEngine\Input.h>
+
+class CGridTest : public CGridLayoutElement
+{
+	virtual void OnLayoutChanged(const SRect2D& rect) 
+	{
+
+	}
+};
 
 int CEditor::InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
@@ -53,15 +63,7 @@ int CEditor::InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCm
 	m_layout[1].InsertRow(FRect{ 0.2f, 0.7f, 0.8f, 1.0f }, 1);
 	m_layout[1][1].set(consoleWindow);
 
-	//m_layout.InsertColumn(FRect{ 0.0f, 0.0f, 1.0f, 1.0f }, 0);
-	//m_layout[0].InsertRow(FRect{ 0.0f, 0.0f, 1.0f, 0.6f }, 0);
-	//m_layout[0].InsertRow(FRect{ 0.0f, 0.6f, 1.0f, 1.0f }, 1);
-	//m_layout[0][0].set(sceneWindow);
-	//m_layout[0][1].set(consoleWindow);
-	//m_layout.InsertColumn(FRect{ 0.8f, 0.0f, 1.0f, 1.0f }, 1);
-	//m_layout[1].InsertRow(FRect{ }, 0, true);
-	//m_layout[1][0].set(watcherWindow);
-
+	CInput::Mode = EMouseMode::Absolute;
 	FontManager->LoadFont(1, "C:/Windows/Fonts/simkai.ttf");
 
 	_Engine->MakeRenderContext();
@@ -133,6 +135,14 @@ void CEditor::UpdateSize()
 	}
 }
 
+void CEditor::UpdatePosition()
+{
+	for (pair<EWindowType, CWindow*> p : m_windows)
+	{
+		p.second->OnPositionChanged();
+	}
+}
+
 vector<CWindow*> CEditor::GetWindowsExcept(EWindowType type)
 {
 	vector<CWindow*> list;
@@ -162,6 +172,10 @@ void CEditor::RenderWindow()
 
 LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	if (uMsg == WM_MOVE)
+	{
+		int j = 0;
+	}
 	CWindow* window = (CWindow*)GetWindowLongPtr(hWnd, GWL_USERDATA);
 	if (window)
 		return window->WindowProc(hWnd, uMsg, wParam, lParam);

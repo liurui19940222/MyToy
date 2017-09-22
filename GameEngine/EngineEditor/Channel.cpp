@@ -35,12 +35,12 @@ LRESULT CALLBACK CChannel::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 
 void CChannel::OnCreate()
 {
-	CGUIElement* e = m_gui.Create<CGUIElement>();
-	e->SetFill(true)->SetWidth(100)->SetHeight(30)->SetPosition(Vector2(m_width * .5f, m_height * .5f));
+	m_gui.SetLayoutOffsetY(28);
 }
 
 void CChannel::OnDraw()
 {
+	CGLWindow::OnDraw();
 	m_renderer.DrawRect(SRect2D{ m_width * 0.5f, m_height - 12, m_width * 0.5f, 14 }, Color(0.1, 0.1, 0.1, 1));
 	m_renderer.DrawString(CConverter::FormatWString(L" %s", m_caption.c_str()), SRect2D{ 0, 0, m_width * 0.5f, 20 }, Vector3(m_width * 0.5f, m_height - 12, 0), Color::white, 16, EAlignment::LEFT_MIDDLE);
 }

@@ -9,5 +9,6 @@
     draw_grid = "true"
     grid_strength = "0.5"
     draw_gizmos = "false"
+    draw_gui_layout = "true"
     />
 </engine>

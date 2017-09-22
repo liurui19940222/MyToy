@@ -100,9 +100,9 @@ void CFontRenderer::OnRender(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matr
 	offset_y = GetOffsetY();
 	for (size_t i = 0; i < lineDatas.size(); ++i)
 	{
-		offset_x = GetOffsetX(i);
 		for (size_t j = 0; j < lineDatas[i]->primitives.size(); ++j)
 		{
+			offset_x = GetOffsetX(i);
 			lineDatas[i]->primitives[j]->Render(modelMatrix, viewMatrix, projectionMatrix,
 				lineDatas[i]->primitives[j]->position + Vector3(offset_x, offset_y, 0), Vector3{ 1.0f, -1.0f, 1 }, color);
 		}
@@ -285,7 +285,7 @@ void CFontRenderer::Rebuild()
 			lineData = new CTextOneLineData();
 			lineDatas.push_back(lineData);
 		}
-		if (start_y - top - interval_y < -rect.half_size_y)
+		if (start_y - top - interval_y < -rect.half_size_y && lineDatas.size() > 1)
 			break;
 		primitives[i]->position = Vector3{ start_x, start_y - top * 0.5f, 0 };
 		start_x += adv_x + interval_x;

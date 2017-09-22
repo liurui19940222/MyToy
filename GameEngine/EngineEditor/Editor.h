@@ -47,6 +47,7 @@ public:
 	void UpdateColumn(const FRect& rect, int index);
 	void UpdateRow(const FRect& rect, int col, int row);
 	void UpdateSize();
+	void UpdatePosition();
 	int EditorLoop();
 	int InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
 	vector<CWindow*> GetWindowsExcept(EWindowType type);
