@@ -51,18 +51,18 @@ LRESULT CALLBACK CWatcherWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 
 void CWatcherWindow::OnCreate()
 {
-	CChannel::OnCreate();
-	m_gui.SetGridRowHeight(20);
-	m_gui.SetGridRowCount(20);
-	m_gui.SetGridColumns(2, vector<float>{ 0.3f, 0.7f });
-	CGUIElement* ui = m_gui.Create<CGUIElement>();
-	ui->SetFill(true)->SetFillColor(Color::red)->SetCollide(true)->AddOnMouseClickListener([this](Vector2 pos) {
-		this->GetGUIManager().SetLayoutOffsetY(this->GetGUIManager().GetLayoutOffsetY() + 10);
-	});
-	m_gui.PutIntoGrid(1, 0, ui);
+	//CChannel::OnCreate();
+	//m_gui.SetGridRowHeight(20);
+	//m_gui.SetGridRowCount(20);
+	//m_gui.SetGridColumns(2, vector<float>{ 0.3f, 0.7f });
+	//CGUIElement* ui = m_gui.Create<CGUIElement>();
+	//ui->SetFill(true)->SetFillColor(Color::red)->SetCollide(true)->AddOnMouseClickListener([this](Vector2 pos) {
+	//	this->GetGUIManager().SetLayoutOffsetY(this->GetGUIManager().GetLayoutOffsetY() + 10);
+	//});
+	//m_gui.PutIntoGrid(1, 0, ui);
 }
 
 void CWatcherWindow::OnDraw()
 {
-	CChannel::OnDraw();
+	//CChannel::OnDraw();
 }

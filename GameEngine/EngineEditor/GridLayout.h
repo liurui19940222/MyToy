@@ -16,6 +16,7 @@ class CGridLayoutElement
 	friend class CGridLayoutCell;
 protected:
 	virtual void OnLayoutChanged(const SRect2D& rect) = 0;
+	virtual void OnVisibleChanged(bool visible) = 0;
 public:
 	CGridLayoutCell* m_cell;
 };
@@ -64,6 +65,7 @@ public:
 	void UpdateLayout();
 	void PrintLayout();
 	void DrawLayout(CRawRenderer& renderer);
+	int GetUnfilledRowIndex();
 	vector<CGridLayoutCell>& operator[](int index);
 
 	property_r<int> RowCount = _prop_r(int,

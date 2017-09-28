@@ -2,6 +2,7 @@
 #include"GUIManager.h"
 #include<GameEngine\RawRenderer.h>
 
+CGUIElement::CGUIElement() : m_enable(true), m_depth(0) {}
 CGUIElement::~CGUIElement() {}
 
 void CGUIElement::SetState(EElementState state)
@@ -85,6 +86,11 @@ bool CGUIElement::IsCollide()
 	return m_collide;
 }
 
+bool CGUIElement::IsEnalbe()
+{
+	return m_enable;
+}
+
 SRect2D CGUIElement::GetRect()
 {
 	return m_rect;
@@ -93,6 +99,11 @@ SRect2D CGUIElement::GetRect()
 int CGUIElement::GetLayer()
 {
 	return m_layer;
+}
+
+int CGUIElement::GetDepth()
+{
+	return m_depth;
 }
 
 float CGUIElement::GetWidth()
@@ -113,6 +124,11 @@ EElementState CGUIElement::GetState()
 bool CGUIElement::IsState(EElementState state)
 {
 	return m_state == state;
+}
+
+bool CGUIElement::Visible()
+{
+	return (m_cell && m_cell->m_visible) || !m_cell;
 }
 
 CGUIElement* CGUIElement::SetCollide(bool isCollide)
@@ -178,6 +194,18 @@ CGUIElement* CGUIElement::SetPosition(const Vector2& position)
 	return this;
 }
 
+CGUIElement* CGUIElement::SetDepth(int depth)
+{
+	m_depth = depth;
+	return this;
+}
+
+CGUIElement* CGUIElement::SetParent(CGUIElement* parent)
+{
+	m_parent = parent;
+	return this;
+}
+
 void CGUIElement::OnStateChanged()
 {
 	switch (m_state)
@@ -200,6 +228,11 @@ void CGUIElement::OnStateChanged()
 void CGUIElement::OnLayoutChanged(const SRect2D& rect)
 {
 	SetRect(rect);
+}
+
+void CGUIElement::OnVisibleChanged(bool visible)
+{
+
 }
 
 CGUIElement* CGUIElement::AddOnMouseDownListener(OnMouseDownCallback down)
@@ -276,10 +309,10 @@ CGUIElement* CGUIElement::RemoveAllOnMouseOverListener()
 
 bool CGUIElement::operator>(const CGUIElement& widget) const
 {
-	return m_layer > widget.m_layer;
+	return m_layer < widget.m_layer;
 }
 
 bool CGUIElement::operator<(const CGUIElement& widget) const
 {
-	return m_layer < widget.m_layer;
+	return m_layer > widget.m_layer;
 }

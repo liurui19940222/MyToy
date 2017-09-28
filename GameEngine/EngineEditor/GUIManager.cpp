@@ -7,17 +7,17 @@
 CGUIManager::CGUIManager() 
 {
 	m_layout.m_gui = this;
+	m_elements.SetComparator([](CGUIElement* a, CGUIElement* b) {
+		if (*a > *b) return 1;
+		else if (*a < *b) return -1;
+		return 0;
+	});
 }
 
 void CGUIManager::InitGUI(float resolution_x, float resolution_y)
 {
 	m_renderer = NULL;
 	SetResolution(resolution_x, resolution_y);
-	m_elements.SetComparator([](CGUIElement* a, CGUIElement* b) {
-		if (*a > *b) return 1;
-		else if (*a < *b) return -1;
-		return 0;
-	});
 }
 
 void CGUIManager::UpdateWidgetLayer(CGUIElement* widget)
@@ -28,6 +28,8 @@ void CGUIManager::UpdateWidgetLayer(CGUIElement* widget)
 
 void CGUIManager::Destroy(CGUIElement* widget)
 {
+	if (!widget) return;
+	widget->OnDestroy();
 	m_elements.Remove(widget);
 	delete(widget);
 }
@@ -102,6 +104,11 @@ void CGUIManager::DrawLayout()
 	m_layout.DrawLayout(*m_renderer);
 }
 
+void CGUIManager::PrintLayout()
+{
+	m_layout.PrintLayout();
+}
+
 float CGUIManager::GetLayoutOffsetX() const
 {
 	return m_layout.OffsetX;
@@ -115,6 +122,12 @@ float CGUIManager::GetLayoutOffsetY() const
 CGUIManager* CGUIManager::SetRowsVisible(int startIndex, int count, bool visible)
 {
 	m_layout.SetRowsVisible(startIndex, count, visible);
+	return this;
+}
+
+CGUIManager* CGUIManager::UpdateLayout()
+{
+	m_layout.UpdateLayout();
 	return this;
 }
 
@@ -153,6 +166,8 @@ CGUIManager* CGUIManager::PutIntoGrid(int rowIndex, int colIndex, CGUIElement* e
 {
 	if (rowIndex >= m_layout.RowCount)
 		m_layout.ResizeRow(rowIndex + 1);
+	else if (rowIndex == -1)
+		rowIndex = m_layout.GetUnfilledRowIndex();
 	if (newline)
 	{
 		m_layout.InsertRow(rowIndex);
@@ -172,10 +187,9 @@ void CGUIManager::OnUpdate()
 {
 	Vector2 mousePos = CInput::InputMousePosition() - m_absoluteWindowLTPos;
 	mousePos.y = m_resolutionY - mousePos.y;
-	ForeachElementR([this, &mousePos](CGUIElement* widget) {
+	InverseForeachElementR([this, &mousePos](CGUIElement* widget) {
 		if (!widget->IsState(EElementState::Disabled) && widget->IsCollide())
 		{
-			//CDebug::Log("%g %g", mousePos.x, mousePos.y);
 			if (widget->Overlay(mousePos))
 			{
 				if (widget != m_curOverlay)
@@ -235,7 +249,7 @@ void CGUIManager::OnRender()
 {
 	if (!m_renderer) return;
 	ForeachElement([](CGUIElement* element) {
-		if(element->m_cell && element->m_cell->m_visible)
+		if(element->IsEnalbe() && (element->m_cell == NULL || (element->m_cell && element->m_cell->m_visible)))
 			element->OnRender();
 	});
 }

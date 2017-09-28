@@ -43,6 +43,16 @@ void CWindow::OnCreate()
 	
 }
 
+void CWindow::OnClose()
+{
+	
+}
+
+void CWindow::OnReceiveMsg(SMessage& message)
+{
+	
+}
+
 EWindowType CWindow::GetType()
 {
 	return EWindowType::Other;
@@ -74,6 +84,9 @@ LRESULT CALLBACK CWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 	switch (uMsg)
 	{
 	case WM_CREATE:
+		break;
+	case WM_CLOSE:
+		OnClose();
 		break;
 	case WM_SIZE:
 		pwidth = _Editor->WindowWidth;

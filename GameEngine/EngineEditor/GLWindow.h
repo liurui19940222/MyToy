@@ -6,6 +6,7 @@
 #include"GUIText.h"
 #include"GUITexture.h"
 #include"GUIElement.h"
+#include"GUIGroup.h"
 #include<GameEngine\RawRenderer.h>
 
 class CGLWindow : public CWindow

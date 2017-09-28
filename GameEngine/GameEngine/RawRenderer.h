@@ -39,6 +39,7 @@ public:
 	void BeginBlend();
 	void EndBlend();
 	void SetColor(const Color& color);
+	void DrawMesh(const Vector3* vertices, int count, Matrix4x4& modelMatrix, const Color& color);
 	void DrawRect(const SRect2D& rect, const Color& color);
 	void DrawLine(const Vector3& p0, const Vector3& p1, const Color& color, float width);
 	void DrawPoint(const Vector3& p, const Color& color, float size);

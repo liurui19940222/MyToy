@@ -72,6 +72,12 @@
     <ClCompile Include="GUITexture.cpp">
       <Filter>GUI\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="GUIGroup.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIMesh.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\DLLEXPORT\GameEngine.lib">
@@ -126,6 +132,18 @@
     </ClInclude>
     <ClInclude Include="GUITexture.h">
       <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIGroup.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIMesh.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITree.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageDef.h">
+      <Filter>Editor\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

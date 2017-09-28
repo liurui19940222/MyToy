@@ -45,10 +45,13 @@ private:
 	void OnMouseExit(Vector2 mousePos);
 	void OnMouseOver(Vector2 mousePos);
 protected:
+	CGUIElement();
 	virtual ~CGUIElement();
 	CGUIManager* m_manager;
+	CGUIElement* m_parent;
 	Vector2 m_position;
 	int m_layer;
+	int m_depth;
 	float m_width;
 	float m_height;
 	bool m_collide;
@@ -76,14 +79,17 @@ protected:
 	virtual void OnUpdate();
 	virtual void OnRender();
 public:
-	bool Overlay(Vector2 pos);
+	virtual bool Overlay(Vector2 pos);
 	bool IsCollide();
+	bool IsEnalbe();
 	SRect2D GetRect();
 	int GetLayer();
+	int GetDepth();
 	float GetWidth();
 	float GetHeight();
 	EElementState GetState();
 	bool IsState(EElementState state);
+	bool Visible();
 
 	virtual CGUIElement* SetCollide(bool isCollide);
 	virtual CGUIElement* SetFill(bool isFill);
@@ -94,9 +100,12 @@ public:
 	virtual CGUIElement* SetHeight(float height);
 	virtual CGUIElement* SetEnable(bool enable);
 	virtual CGUIElement* SetPosition(const Vector2& position);
+	virtual CGUIElement* SetDepth(int depth);
+	virtual CGUIElement* SetParent(CGUIElement* parent);
 
 	virtual void OnStateChanged();
-	virtual void OnLayoutChanged(const SRect2D& rect);
+	virtual void OnLayoutChanged(const SRect2D& rect) override;
+	virtual void OnVisibleChanged(bool visible) override;
 
 	CGUIElement* AddOnMouseDownListener(OnMouseDownCallback down);
 	CGUIElement* AddOnMouseUpListener(OnMouseUpCallback up);
@@ -110,6 +119,7 @@ public:
 	CGUIElement* RemoveAllOnMouseEnterListener();
 	CGUIElement* RemoveAllOnMouseExitListener();
 	CGUIElement* RemoveAllOnMouseOverListener();
+	inline CGUIManager* GetManager() { return m_manager; }
 
 	bool operator>(const CGUIElement& widget) const;
 	bool operator<(const CGUIElement& widget) const;

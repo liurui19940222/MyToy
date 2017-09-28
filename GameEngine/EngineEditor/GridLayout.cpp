@@ -37,6 +37,10 @@ void CGridLayout::InsertRow(int index)
 	}
 	m_cells.insert(m_cells.begin() + index, vector<CGridLayoutCell>());
 	m_cells[index].resize(m_colCount);
+	for (CGridLayoutCell& cell : m_cells[index])
+	{
+		cell.m_rowIndex = index;
+	}
 	m_rowCount++;
 }
 
@@ -124,9 +128,9 @@ void CGridLayout::SetRowsVisible(int startIndex, int count, bool visible)
 		for (CGridLayoutCell& cell : rowData)
 		{
 			cell.m_visible = visible;
+			if (cell.m_element) cell.m_element->OnVisibleChanged(visible);
 		}
 	}
-	UpdateLayout();
 }
 
 void CGridLayout::SetWeights(vector<float>& weights)
@@ -175,9 +179,11 @@ void CGridLayout::PrintLayout()
 		string str;
 		for (int col = 0; col < m_colCount; ++col)
 		{
+			CGridLayoutCell& cell = m_cells[row][col];
 			SRect2D& rect = m_cells[row][col].m_rect;
 			int hasElement = m_cells[row][col].m_element ? 1 : 0;
-			str += "\tx:" + CConverter::ToString(rect.center_x) + " y:" + CConverter::ToString(rect.center_y) + " hw:" + CConverter::ToString(rect.half_size_x) + " hh:" + CConverter::ToString(rect.half_size_y) + " e:" + CConverter::ToString(hasElement);
+			//str += "\tx:" + CConverter::ToString(rect.center_x) + " y:" + CConverter::ToString(rect.center_y) + " hw:" + CConverter::ToString(rect.half_size_x) + " hh:" + CConverter::ToString(rect.half_size_y) + " e:" + CConverter::ToString(hasElement);
+			str += "row:" + CConverter::ToString(cell.m_rowIndex) + "\tvisible:" + CConverter::ToString(cell.m_visible) + "\te:" + CConverter::ToString(hasElement);
 		}
 		CDebug::Log(str);
 	}
@@ -193,5 +199,29 @@ void CGridLayout::DrawLayout(CRawRenderer& renderer)
 			renderer.DrawRect(rect, Color::black);
 			renderer.DrawRect(SRect2D{ rect.center_x, rect.center_y, rect.half_size_x - 1, rect.half_size_y - 1 }, Color(0.2f, 0.2f, 0.2f, 1.0f));
 		}
+		CGridLayoutCell& cell = m_cells[row][0];
+		if(cell.m_visible)
+		renderer.DrawString(CConverter::FormatWString(L"row:%d ", cell.m_rowIndex), cell.m_rect, Vector3(cell.m_rect.center_x, cell.m_rect.center_y, 0.0f), Color::green, 13, EAlignment::RIGHT_MIDDLE);
 	}
+}
+
+int CGridLayout::GetUnfilledRowIndex()
+{
+	bool hasSame = false;
+
+	for (vector<CGridLayoutCell>& row : m_cells)
+	{
+		hasSame = false;
+		for (CGridLayoutCell& cell : row)
+		{
+			if (cell.m_element)
+			{
+				hasSame = true;
+				continue;
+			}
+		}
+		if (!hasSame)
+			return row[0].m_rowIndex;
+	}
+	return m_cells.size();
 }

@@ -61,6 +61,7 @@ LRESULT CALLBACK CMainWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 			mat->SetColor(Color::white);
 			CGameObject* go = _Maker->Instantiate("NewGameObject");
 			go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube))->SetMaterial(mat);
+			CMessageCenter::Send(SMessage{ "on_create_object", this, NULL });
 			break;
 		}
 		break;

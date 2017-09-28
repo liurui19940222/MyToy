@@ -4,7 +4,9 @@
 #include<Windows.h>
 #include<windowsx.h>
 #include<GameEngine\Property.h>
+#include<GameEngine\MessageCenter.h>
 #include"Editor.h"
+#include"MessageDef.h"
 
 enum EWindowType;
 
@@ -22,7 +24,7 @@ enum class EDockDirection
 	Right = 2,
 };
 
-class CWindow : public CGridElement
+class CWindow : public CGridElement, public IReceiver
 {
 private:
 	FRect m_normalizedRect;
@@ -37,6 +39,8 @@ protected:
 
 	void Create(wchar_t* class_name, HINSTANCE instance, HWND parent, int width, int height, DWORD dword);
 	virtual void OnCreate();
+	virtual void OnClose();
+	virtual void OnReceiveMsg(SMessage& message) override;
 
 public:
 	CWindow();

@@ -9,7 +9,7 @@ CGUIText::CGUIText() : CGUIElement(), m_color(Color::white), m_alignment(EAlignm
 void CGUIText::OnRender()
 {
 	CGUIElement::OnRender();
-	if (m_text.size() > 0)
+	if (m_text.size() > 0 && Visible())
 		m_manager->GetRenderer()->DrawString(m_text, m_rect, m_position, m_color, m_fontSize, m_alignment);
 }
 

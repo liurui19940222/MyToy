@@ -14,7 +14,7 @@ float CRawFontRenderer::GetPixelScale()
 
 CRawRenderer::CRawRenderer()
 {
-	
+
 }
 
 void CRawRenderer::SetupPixelFormat()
@@ -95,6 +95,20 @@ void CRawRenderer::SetColor(const Color& color)
 	glColor4f(color.r, color.g, color.b, color.a);
 }
 
+void CRawRenderer::DrawMesh(const Vector3* vertices, int count, Matrix4x4& modelMatrix, const Color& color)
+{
+	glPushMatrix();
+	SetColor(color);
+	glMultMatrixf((float*)&modelMatrix);
+	glBegin(GL_TRIANGLES);
+	for (int i = 0; i < count; ++i)
+	{
+		glVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
+	}
+	glEnd();
+	glPopMatrix();
+}
+
 void CRawRenderer::DrawRect(const SRect2D& rect, const Color& color)
 {
 	glPushMatrix();
@@ -136,7 +150,7 @@ void CRawRenderer::DrawPoint(const Vector3& p, const Color& color, float size)
 
 void CRawRenderer::DrawTexture(CTexture& texture, const Vector3& position)
 {
-	CRawRenderer::DrawTexture(texture, SRect2D{position.x, position.y, texture.GetWidth() * 0.5f, texture.GetHeight() * 0.5f});
+	CRawRenderer::DrawTexture(texture, SRect2D{ position.x, position.y, texture.GetWidth() * 0.5f, texture.GetHeight() * 0.5f });
 }
 
 void CRawRenderer::DrawTexture(CTexture& texture, const SRect2D& rect)

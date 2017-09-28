@@ -1,4 +1,5 @@
 #include"WorldTreeWindow.h"
+#include"GUIMesh.h"
 #include<GameEngine\Converter.h>
 #include<GameEngine\Input.h>
 
@@ -37,36 +38,61 @@ LRESULT CALLBACK CWorldTreeWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wPara
 
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
-CGUIText* ui2;
+
+CGUIElement* CWorldTreeWindow::CreateElement(const Color& color)
+{
+	CGUIElement* ui = m_gui.Create<CGUIElement>();
+	ui->SetFill(true)->SetFillColor(color)->SetCollide(true);
+	return ui;
+}
+
+CGUIGroup* CWorldTreeWindow::CreateGroup(const wstring& name)
+{
+	CGUIGroup* group3 = m_gui.Create<CGUIGroup>();
+	group3->SetText(name);
+	return group3;
+}
+
 void CWorldTreeWindow::OnCreate()
 {
 	CChannel::OnCreate();
+	CMessageCenter::Register(MSG_ON_ENGINE_INIT_COMPLETE, this);
 	m_gui.SetGridRowHeight(20);
 	m_gui.SetGridRowCount(20);
-	m_gui.SetGridColumns(2, vector<float>{ 0.3f, 0.7f });
-	CGUIElement* ui = m_gui.Create<CGUIElement>();
-	ui->SetFill(true)->SetFillColor(Color::red)->SetCollide(true)->AddOnMouseClickListener([this](Vector2 pos) {
-		this->GetGUIManager().SetRowsVisible(3, 10, true);
-	});
-	m_gui.PutIntoGrid(1, 0, ui);
 
-	ui2 = m_gui.Create<CGUIText>();
-	ui2->SetText(L"WorldTree")->SetColor(Color::green)->SetFontSize(16)->SetAlignment(EAlignment::CENTER_MIDDLE)->SetCollide(true)->AddOnMouseClickListener([this](Vector2 pos) {
-		//this->GetGUIManager().PutIntoGrid(10, 0, NULL, true);
-		this->GetGUIManager().DeleteRow(10, true);
-	});
-	m_gui.PutIntoGrid(10, 1, ui2);
+	m_tree.SetManager(&m_gui);
+	CGUITreeNode<int>* root = m_tree.AddNode(L"MainCamera", -1);
+	for (int i = 0; i < 2; ++i)
+	{
+		m_tree[0].AddNode(CConverter::FormatWString(L"node%d", i), i);
+		m_tree[0][i].AddNode(CConverter::FormatWString(L"child node 0 %d"), i);
+	}
+}
 
-	CTexture2D* texture = CTexture2D::Create("textures/gui/button.png");
-	CGUITexture* guit = m_gui.Create<CGUITexture>();
-	guit->SetTexture(texture)->SetCollide(true)->AddOnMouseClickListener([this](Vector2 pos) {
-		this->GetGUIManager().SetRowsVisible(3, 10, false);
-	});
-	m_gui.PutIntoGrid(19, 0, guit);
+void CWorldTreeWindow::OnClose()
+{
+	CChannel::OnClose();
+	CMessageCenter::Unregister(MSG_ON_ENGINE_INIT_COMPLETE, this);
 }
 
 void CWorldTreeWindow::OnDraw()
 {
 	CChannel::OnDraw();
-	ui2->SetText(CConverter::FormatWString(L"ÃÌº”“ª––"));
+}
+
+void CWorldTreeWindow::OnReceiveMsg(SMessage& message)
+{
+	CChannel::OnReceiveMsg(message);
+	if (message.m_msgType == MSG_ON_ENGINE_INIT_COMPLETE)
+	{
+
+	}
+	else if (message.m_msgType == MSG_ON_GAMEOBJECT_CREATED)
+	{
+
+	}
+	else if (message.m_msgType == MSG_ON_GAMEOBJECT_DESTORYED)
+	{
+
+	}
 }

@@ -51,7 +51,9 @@ public:
 	void Quit();
 
 	void DrawLayout();
+	void PrintLayout();
 	CGUIManager* SetRowsVisible(int startIndex, int count, bool visible);
+	CGUIManager* UpdateLayout();
 	CGUIManager* SetLayoutOffsetX(float offset);
 	CGUIManager* SetLayoutOffsetY(float offset);
 	CGUIManager* SetGridRowHeight(float rowHeight);
@@ -67,6 +69,7 @@ public:
 	{
 		T* t = new T();
 		t->m_manager = this;
+		t->OnStart();
 		m_elements.Enqueue(t);
 		return t;
 	}
