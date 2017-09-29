@@ -18,6 +18,12 @@ public:
 	CRawFontRenderer();
 };
 
+enum class ENGINE_API ERenderMode
+{
+	Wireframe,
+	Fill,
+};
+
 class ENGINE_API CRawRenderer
 {
 	CRawFontRenderer m_fontRenderer;
@@ -27,11 +33,13 @@ class ENGINE_API CRawRenderer
 	HDC m_hdc;
 	HGLRC m_hrc;
 	bool m_initialized;
+	ERenderMode m_renderMode;
 
 	void SetupPixelFormat();
 public:
 	CRawRenderer();
 
+	void SetRenderMode(ERenderMode mode);
 	void SetupRenderContext(HWND hwnd);
 	void SetupProjection(float width, float height);
 	void BeginOrtho();
@@ -45,7 +53,7 @@ public:
 	void DrawPoint(const Vector3& p, const Color& color, float size);
 	void DrawTexture(CTexture& texture, const Vector3& position);
 	void DrawTexture(CTexture& texture, const SRect2D& rect);
-	void DrawString(const wstring& str, const SRect2D& rect, const Vector3& position, const Color& color, int size, EAlignment alignment);
+	void DrawString(const wstring& str, const SRect2D& rect, const Vector3& position, const Color& color, int size, EAlignment alignment, bool singleLine = true);
 	void Release();
 
 	HDC GetDcHandle();

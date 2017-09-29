@@ -2,11 +2,11 @@
 
 Object::Object()
 {
-	static int id;
+	static int id = 0;
 	instanceId = ++id;
 }
 
-Object::Object(std::string& name) : Object()
+Object::Object(std::wstring& name) : Object()
 {
 	this->name = name;
 }
@@ -30,12 +30,12 @@ void Object::OnInitialize()
 
 }
 
-void Object::SetName(const string& name)
+void Object::SetName(const wstring& name)
 {
 	this->name = name;
 }
 
-string& Object::GetName()
+wstring& Object::GetName()
 {
 	return name;
 }

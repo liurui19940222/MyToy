@@ -10,6 +10,7 @@
 #include<GameEngine\Config.h>
 #include<GameEngine\SkyBox.h>
 #include<GameEngine\Input.h>
+#include<GameEngine\Time.h>
 
 class CGridTest : public CGridLayoutElement
 {
@@ -75,6 +76,7 @@ int CEditor::InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCm
 		"textures/skybox2/right.tga");
 	_MainCamera->SetSkyBox(box);
 
+	CMessageCenter::Send(SMessage{ MSG_ON_ENGINE_INIT_COMPLETE, this, _Engine });
 	return 0;
 }
 
@@ -102,6 +104,9 @@ int CEditor::EditorLoop()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+
+		CTime::UpdateTime();
+		CTime::Lock();
 	}
 	return 0;
 }

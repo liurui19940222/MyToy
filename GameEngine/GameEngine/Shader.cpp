@@ -5,6 +5,7 @@
 #include<Windows.h>
 #include"Shader.h"
 #include"Debug.h"
+#include"Converter.h"
 
 using namespace std;
 
@@ -247,7 +248,7 @@ CShader* CShader::Get(const string& shaderName)
 		string vt = "Shader/" + shaderName + ".vert";
 		string fg = "Shader/" + shaderName + ".frag";
 		shader = new CShader(vt.c_str(), fg.c_str());
-		shader->SetName(shaderName);
+		shader->SetName(CConverter::StringToWString(shaderName));
 		m_store.insert(make_pair(shaderName, shader));
 	}
 	else

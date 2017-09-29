@@ -57,6 +57,7 @@ protected:
 	bool m_collide;
 	bool m_fill;
 	bool m_enable;
+	bool m_haveFocus;
 	Color m_fillColor;
 	Color m_addColor;
 	SRect2D m_rect;
@@ -74,6 +75,8 @@ protected:
 	vector<OnMouseExitCallback> onMouseExit;
 	vector<OnMouseOverCallback> onMouseOver;
 
+	virtual void OnGotFocus();
+	virtual void OnLostFocus();
 	virtual void OnStart();
 	virtual void OnDestroy();
 	virtual void OnUpdate();

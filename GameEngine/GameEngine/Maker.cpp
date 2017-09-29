@@ -1,6 +1,10 @@
 #include"Maker.h"
 #include"Texture2D.h"
 #include"Material.h"
+#include"MeshRenderer.h"
+#include"MeshFactory.h"
+#include"MessageCenter.h"
+#include"MessageDef.h"
 
 void CMaker::OnInitialize()
 {
@@ -9,10 +13,10 @@ void CMaker::OnInitialize()
 
 CGameObject* CMaker::Instantiate()
 {
-	return Instantiate("NewGameObject");
+	return Instantiate(L"NewGameObject");
 }
 
-CGameObject* CMaker::Instantiate(string name)
+CGameObject* CMaker::Instantiate(wstring name)
 {
 	CGameObject* go = Instantiate<CGameObject>();
 	go->SetName(name);
@@ -61,6 +65,11 @@ void CMaker::DestroyGameObject(CGameObject* go)
 	});
 	for (int i = list.size() - 1; i >= 0; --i)
 		delete(list[i]);
+}
+
+void CMaker::ForeachAllGameObject(ForeachGoCallback callback)
+{
+	ForeachGameObject(callback);
 }
 
 void CMaker::ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback)
@@ -142,4 +151,66 @@ void CMaker::ForeachGameObject(CGameObject* go, ForeachGoCallbackMatrix callback
 	{
 		ForeachGameObject(*it, callback, depth + 1, modelMatrix * (*it)->GetModelToWorldMat());
 	}
+}
+
+CGameObject* CMaker::FindGameObject(int instanceId)
+{
+	CGameObject* result = NULL;
+	ForeachGameObjectR([instanceId, &result](CGameObject* go, int depth) {
+		if (go->GetInstanceId() == instanceId)
+		{
+			result = go;
+			return false;
+		}
+		return true;
+	});
+	return result;
+}
+
+CGameObject* CMaker::FindGameObjectWithTag(const string& tag)
+{
+	CGameObject* result = NULL;
+	ForeachGameObjectR([&tag, &result](CGameObject* go, int depth) {
+		if (go->GetTag() == tag)
+		{
+			result = go;
+			return false;
+		}
+		return true;
+	});
+	return result;
+}
+
+CGameObject* CMaker::FindGameObjectWithName(const wstring& name)
+{
+	CGameObject* result = NULL;
+	ForeachGameObjectR([&name, &result](CGameObject* go, int depth) {
+		if (go->GetName() == name)
+		{
+			result = go;
+			return false;
+		}
+		return true;
+	});
+	return result;
+}
+
+CGameObject* CMaker::CreateCube()
+{
+	CMaterial* mat = _Maker->Instantiate<CMaterial>();
+	mat->SetShader(CShader::Get("light"));
+	mat->SetColor(Color::white);
+	CGameObject* go = _Maker->Instantiate(L"Cube");
+	go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube))->SetMaterial(mat);
+	return go;
+}
+
+CGameObject* CMaker::CreateQuad()
+{
+	CMaterial* mat = _Maker->Instantiate<CMaterial>();
+	mat->SetShader(CShader::Get("light"));
+	mat->SetColor(Color::white);
+	CGameObject* go = _Maker->Instantiate(L"Quad");
+	go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Quad))->SetMaterial(mat);
+	return go;
 }

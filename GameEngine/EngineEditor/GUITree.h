@@ -44,8 +44,8 @@ public:
 		m_manager = manager;
 		m_group = m_manager->Create<CGUIGroup>();
 		m_group->SetText(name);
-		m_group->AddOnMouseClickListener([this, tree](Vector2 mousePos) {
-			tree->SelectNode(this);
+		m_group->AddOnMouseDownListener([this](Vector2 mousePos) {
+			m_tree->SelectNode(this);
 		});
 
 		if (parent == NULL)
@@ -119,8 +119,8 @@ private:
 	}
 
 public:
-	CGUITree<T>() : m_manager(NULL) {}
-	CGUITree<T>(CGUIManager* manager) : m_manager(manager)
+	CGUITree<T>() : m_manager(NULL), m_lastClickNode(NULL) {}
+	CGUITree<T>(CGUIManager* manager) : m_manager(manager), m_lastClickNode(NULL)
 	{
 	}
 
@@ -168,6 +168,15 @@ public:
 		return true;
 	}
 
+	void Clear()
+	{
+		for (int i = m_nodes.size() - 1; i >= 0; --i)
+		{
+			DeleteNode(m_nodes[i]);
+		}
+		this->m_nodes.clear();
+	}
+
 	CGUITreeNode<T>& operator[](int index)
 	{
 		return *(m_nodes[index]);
@@ -193,6 +202,11 @@ public:
 	void SetManager(CGUIManager* manager)
 	{
 		m_manager = manager;
+	}
+
+	CGUITreeNode<T>* GetSelectedNode()
+	{
+		return m_lastClickNode;
 	}
 };
 

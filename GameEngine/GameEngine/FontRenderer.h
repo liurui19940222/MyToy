@@ -69,6 +69,7 @@ private:
 	float interval_x;
 	float interval_y;
 	int font_size;
+	bool singleLine;
 	Color color;
 	SRect2D rect;
 	EAlignment alignment;
@@ -104,8 +105,10 @@ public:
 	CFontRenderer* SetIntervalY(float y);
 	CFontRenderer* SetFontSize(int size);
 	CFontRenderer* SetColor(Color color);
+	CFontRenderer* SetSingleLine(bool isSingle);
 	CFontRenderer* SetTextAlignment(EAlignment alignment);
 	CFontRenderer* SetRenderType(ERenderType type);
+	CTextOneLineData* GetLineData(int rowIndex);
 };
 
 #endif

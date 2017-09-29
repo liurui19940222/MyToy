@@ -3,8 +3,8 @@
 
 void CTestTest::OnStart() {
 	_MainCameraGo->SetLocalPosition(Vector3(0, 2, -10));
-	go = _Maker->Instantiate("NewGameObject");
-	go2 = _Maker->Instantiate("2");
+	go = _Maker->Instantiate(L"NewGameObject");
+	go2 = _Maker->Instantiate(L"2");
 	CMaterial* mat = _Maker->Instantiate<CMaterial>();
 	mat->SetMainTexture(CTexture2D::Create("textures/dlg01.bmp"))->SetShader(CShader::Get("texture"));
 	go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube))

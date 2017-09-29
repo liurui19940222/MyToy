@@ -104,7 +104,10 @@ void CEditorTool::DrawRect(const SRect2D& rect, const Matrix4x4& modelToWorldMat
 	glDisable(GL_DEPTH_TEST);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	static Color color;
-	color = Color::white - _MainCamera->GetCameraClearColor();
+	if (_MainCamera)
+		color = Color::white - _MainCamera->GetCameraClearColor();
+	else
+		color = Color::white;
 	glColor3f(color.r, color.g, color.b);
 	glBegin(GL_QUADS);
 	for (int i = 0; i < 4; ++i) glVertex3fv((float*)&vertices[i]);
@@ -241,13 +244,13 @@ void CEditorTool::PrintTree(CGameObject* go, bool showDepth)
 
 void CEditorTool::PrintTree(CGameObject* go, int depth, bool showDepth)
 {
-	string str;
+	wstring str;
 	for (int i = 0; i < depth; i++)
 	{
-		str += "   ";
+		str += L"   ";
 	}
 	if (showDepth)
-		str = str + go->GetName() + " " + (char)('0' + depth);
+		str = str + go->GetName() + L" " + (wchar_t)('0' + depth);
 	else
 		str = str + go->GetName();
 	CDebug::Log(str.c_str());

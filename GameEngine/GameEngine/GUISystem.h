@@ -162,6 +162,7 @@ namespace guisystem {
 		void InverseForeachWidght(WidghtForeachCallback callback);
 		void InverseForeachWidghtR(WidghtForeachCallbackR callback);
 		void SetResolution(float resolution_x, float resolution_y);
+		inline void SetRoot(CGameObject* go) { m_uiRoot = go; }
 		float GetResolutionX();
 		float GetResolutionY();
 		Vector3 GetCenterPosition();

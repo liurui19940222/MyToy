@@ -436,8 +436,6 @@ void CGUIWidget::RenderDebug(Matrix4x4& modelMatrix)
 void CGUISystem::InitGUI(float resolution_x, float resolution_y)
 {
 	SetResolution(resolution_x, resolution_y);
-	if (!m_uiRoot)
-		m_uiRoot = _Maker->Instantiate("UIRoot");
 }
 
 void CGUISystem::AddWidget(CGUIWidget* widget)
@@ -457,6 +455,7 @@ void CGUISystem::DestroyWidget(CGUIWidget* dwidget)
 
 void CGUISystem::ForeachWidght(WidghtForeachCallback callback)
 {
+	if (!m_uiRoot) return;
 	_Maker->ForeachGameObject(m_uiRoot, [&callback](CGameObject* go, int depth) {
 		CGUIWidget* widght = NULL;
 		if (widght = go->GetComponent<CGUIWidget>())
@@ -468,6 +467,7 @@ void CGUISystem::ForeachWidght(WidghtForeachCallback callback)
 
 void CGUISystem::ForeachWidghtR(WidghtForeachCallbackR callback)
 {
+	if (!m_uiRoot) return;
 	_Maker->ForeachGameObject(m_uiRoot, [&callback](CGameObject* go, int depth) {
 		CGUIWidget* widght = NULL;
 		if (widght = go->GetComponent<CGUIWidget>())
@@ -526,6 +526,7 @@ float CGUISystem::GetResolutionY()
 
 void CGUISystem::OnUpdate()
 {
+	if (!_MainCamera) return;
 	Vector2 mousePos = CInput::InputMousePosition();
 	mousePos.y = _SCH - mousePos.y;
 	mousePos = _MainCamera->ScreenPosToViewPort(mousePos);

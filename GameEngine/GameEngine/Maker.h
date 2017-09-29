@@ -58,7 +58,7 @@ public:
 
 	CGameObject* Instantiate();
 
-	CGameObject* Instantiate(string name);
+	CGameObject* Instantiate(wstring name);
 
 	template<typename T>
 	void Destroy(T* obj)
@@ -81,17 +81,30 @@ public:
 		}
 	}
 
+	//根据id得到object,不包括gameObject
+	template<typename T>
+	T* Get(int instanceId)
+	{
+		auto it = m_objects.find(instanceId);
+		if (it == m_objects.end())
+			return NULL;
+		return dynamic_cast<T*>(it->second);
+	}
+
+	CGameObject* FindGameObject(int instanceId);
+	CGameObject* FindGameObjectWithTag(const string& tag);
+	CGameObject* FindGameObjectWithName(const wstring& name);
+	void ForeachAllGameObject(ForeachGoCallback callback);
 	void ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback);
-
 	void ForeachGameObjectR(ForeachGoCallbackR callback);
-
 	void ForeachGameObject(CGameObject* go, ForeachGoCallback callback);
-
 	void ForeachGameObject(ForeachGoCallback callback);
-
 	void ForeachGameObject(CGameObject* go, ForeachGoCallbackMatrix callback);
-
 	void ForeachGameObject(ForeachGoCallbackMatrix callback);
+
+	//创建预定义形状的GameObject
+	CGameObject* CreateCube();
+	CGameObject* CreateQuad();
 };
 
 #endif

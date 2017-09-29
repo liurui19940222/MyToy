@@ -16,7 +16,7 @@ void CColladaTest::OnStart()
 
 	FontManager->LoadFont(1, "C:/Windows/Fonts/simsun.ttc");
 
-	model = _Maker->Instantiate("model");
+	model = _Maker->Instantiate(L"model");
 
 	//model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 2);
 	//model->SetLocalEulerAngles(Vector3(0, 90, 0));
@@ -51,7 +51,7 @@ void CColladaTest::OnStart()
 
 	m_texture = CRenderTexture::Create(512, 512, true);
 
-	CCamera* camera = _Maker->Instantiate("Camera")->AddComponent<CCamera>();
+	CCamera* camera = _Maker->Instantiate(L"Camera")->AddComponent<CCamera>();
 	camera->LayerMask() = Layer::Default;
 	camera->Perspective(54.0f, _SCW / _SCH, 1.0f, 1000.0f);
 	camera->UpdateViewMatrix();

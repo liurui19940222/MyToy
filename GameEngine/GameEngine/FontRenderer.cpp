@@ -3,6 +3,7 @@
 #include"EditorTool.h"
 #include"MeshFactory.h"
 #include"Maker.h"
+#include"BitImage.h"
 
 CCharacterPrimitiveBase::CCharacterPrimitiveBase(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels) :left(left_padding), top(top), advance_x(advance_x)
 {
@@ -12,6 +13,7 @@ CCharacterPrimitiveBase::CCharacterPrimitiveBase(int left_padding, int top, int 
 	this->height_y = height * pixelScale;
 	m_texture = CTexture2D::Create((UCHAR*)pixels, width, height);
 	m_texture->SetWrapMode(ETexWrapMode::Clamp)->SetFilterMode(ETexFilterMode::Linear);
+	//CBitImage::Create(width, height, 32, (UCHAR*)pixels)->Save("F://1.png", FREE_IMAGE_FORMAT::FIF_PNG);
 }
 
 CCharacterPrimitiveSmart::CCharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels)
@@ -58,6 +60,7 @@ CCharacterPrimitiveFixed::~CCharacterPrimitiveFixed()
 
 void CCharacterPrimitiveFixed::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color)
 {
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	float half_w = width_x * 0.5f;
 	float half_h = height_y * 0.5f;
 	m_texture->Bind();
@@ -76,6 +79,7 @@ void CCharacterPrimitiveFixed::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMat
 	glVertex3f(half_w, -half_h, 0);
 	glEnd();
 	glPopMatrix();
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 CTextOneLineData::CTextOneLineData() : line_width(0), line_height(0)
@@ -172,6 +176,16 @@ CFontRenderer* CFontRenderer::SetColor(Color color)
 	return this;
 }
 
+CFontRenderer* CFontRenderer::SetSingleLine(bool isSingle)
+{
+	if (singleLine != isSingle)
+	{
+		singleLine = isSingle;
+		Rebuild();
+	}
+	return this;
+}
+
 CFontRenderer* CFontRenderer::SetTextAlignment(EAlignment alignment)
 {
 	this->alignment = alignment;
@@ -184,6 +198,13 @@ CFontRenderer* CFontRenderer::SetRenderType(ERenderType type)
 {
 	m_renderType = type;
 	return this;
+}
+
+CTextOneLineData* CFontRenderer::GetLineData(int rowIndex)
+{
+	if (rowIndex >= lineDatas.size())
+		return NULL;
+	return lineDatas[rowIndex];
 }
 
 CFontRenderer* CFontRenderer::SetTextRect(SRect2D rect)
@@ -248,7 +269,7 @@ void CFontRenderer::Rebuild()
 		CCharacterInfo* chInfo = font->GetCharacter(text[i], font_size);
 		SBitmapData bitmap;
 		chInfo->GetBitmap(&bitmap, Color::white);
-		if(m_renderType == ERenderType::Fixed)
+		if (m_renderType == ERenderType::Fixed)
 			primitives.push_back(new CCharacterPrimitiveFixed(chInfo->left_padding, chInfo->top, chInfo->advance_x, bitmap.width, bitmap.height, GetPixelScale(), bitmap.buffer));
 		else
 			primitives.push_back(new CCharacterPrimitiveSmart(chInfo->left_padding, chInfo->top, chInfo->advance_x, bitmap.width, bitmap.height, GetPixelScale(), bitmap.buffer));
@@ -264,7 +285,7 @@ void CFontRenderer::Rebuild()
 	float pixelScale = GetPixelScale();
 	for (size_t i = 0; i < primitives.size(); ++i)
 	{
-		if (text[i] == *L"\n")
+		if (text[i] == *L"\n" && !singleLine)
 		{
 			start_x = -rect.half_size_x;
 			start_y -= interval_y;
@@ -277,7 +298,7 @@ void CFontRenderer::Rebuild()
 		float adv_x = primitives[i]->advance_x * pixelScale;
 		start_x += left;
 
-		if (start_x + adv_x + interval_x >= rect.half_size_x)
+		if (start_x + adv_x + interval_x >= rect.half_size_x && !singleLine)
 		{
 			start_x = -rect.half_size_x;
 			start_y -= interval_y;

@@ -4,12 +4,12 @@
 
 IMPL_CLASS(CGameObject)
 
-CGameObject::CGameObject() : CGameObject("NewGameObject")
+CGameObject::CGameObject() : CGameObject(L"NewGameObject")
 {
 	
 }
 
-CGameObject::CGameObject(string name) : Object(name), m_layer(Layer::Default), m_active(true)
+CGameObject::CGameObject(wstring name) : Object(name), m_layer(Layer::Default), m_active(true)
 {
 	SetLocalScale(Vector3(1, 1, 1));
 	SetLocalPosition(Vector3(0, 0, 0));

@@ -14,7 +14,7 @@ void CImageTest::OnStart()
 	mat_model->SetShader(CShader::Get("texture"))->SetMainTexture(texture);
 	texture->SetEnvMode(ETexEnvMode::Modulate);
 	CModelFile* model = _Resources->Load<C3DSFile>("models/model.3DS");
-	go = _Maker->Instantiate("model");
+	go = _Maker->Instantiate(L"model");
 	go->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f));
 	go->SetLocalEulerAngles(Vector3(0, 180, 0));
 	CMeshRenderer* renderer = go->AddComponent<CMeshRenderer>();
@@ -24,7 +24,7 @@ void CImageTest::OnStart()
 	CTexture* ground_texture = CTexture2D::Create(ground_image);
 	CMaterial* mat_ground = _Maker->Instantiate<CMaterial>();
 	mat_ground->SetShader(CShader::Get("texture"))->SetMainTexture(ground_texture);
-	CGameObject* quadGo = _Maker->Instantiate("ground");
+	CGameObject* quadGo = _Maker->Instantiate(L"ground");
 	quadGo->SetLocalPosition(Vector3(0, -3.5f, 0));
 	quadGo->SetLocalScale(Vector3(7, 7, 7));
 	quadGo->SetLocalEulerAngles(Vector3(-90, 0, 0));

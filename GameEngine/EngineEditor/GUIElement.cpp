@@ -13,6 +13,8 @@ void CGUIElement::SetState(EElementState state)
 
 void CGUIElement::OnMouseDown(Vector2 mousePos)
 {
+	OnGotFocus();
+	m_haveFocus = true;
 	if (onMouseDown.size() > 0)
 		for (auto it = onMouseDown.begin(); it != onMouseDown.end(); ++it)
 			(*it)(mousePos);
@@ -51,6 +53,16 @@ void CGUIElement::OnMouseOver(Vector2 mousePos)
 	if (onMouseOver.size() > 0)
 		for (auto it = onMouseOver.begin(); it != onMouseOver.end(); ++it)
 			(*it)(mousePos);
+}
+
+void CGUIElement::OnGotFocus()
+{
+
+}
+
+void CGUIElement::OnLostFocus()
+{
+
 }
 
 void CGUIElement::OnStart()

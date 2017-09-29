@@ -16,10 +16,17 @@
 #include"Maker.h"
 #include"Singleton.h"
 #include"Property.h"
+#include"TaskManager.h"
+
+inline CCamera* GetMainCamera()
+{
+	CGameObject* go = _Maker->FindGameObjectWithTag("MainCamera");
+	return go ? go->GetComponent<CCamera>() : NULL;
+}
 
 #define _Engine CEngine::GetInstance()
-#define _MainCamera _Engine->GetCamera()
-#define _MainCameraGo _MainCamera->gameObject
+#define _MainCamera GetMainCamera()
+#define _MainCameraGo _Maker->FindGameObjectWithTag("MainCamera")
 #define _SCW _Engine->ClientWidth
 #define _SCH _Engine->ClientHeight
 
@@ -44,13 +51,8 @@ public:
 
 	//检查快捷键
 	void CheckShortcuts();
-
-	CCamera* GetCamera();
-
 	void AddCamera(CCamera* camera);
-
 	void RemoveCamera(CCamera* camera);
-
 	void UpdateClientRect();
 
 	property<float> ClientWidth = _prop(float, { m_clientWidth = value; },  { return m_clientWidth; });
@@ -76,12 +78,6 @@ private:
 	HWND m_hwnd;
 	HDC m_hdc;
 	HGLRC m_hrc;
-
-	//主摄像机
-	CCamera* m_mainCamera = NULL;
-
-	//UI摄像机
-	CCamera* m_uiCamera = NULL;
 
 	//相机
 	CPriorityQueue<CCamera*> m_cameras;

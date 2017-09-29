@@ -172,7 +172,7 @@ void CGUIGroup::AddMember(CGUIElement* element)
 	if (element == NULL) return;
 	element->SetParent(this);
 	m_manager->PutIntoGrid(GetBottomMostRowIndex(), 0, element, true);
-	m_manager->SetRowsVisible(element->m_cell->m_rowIndex, 1, false);
+	m_manager->SetRowsVisible(element->m_cell->m_rowIndex, 1, m_opened);
 	element->SetDepth(this->m_depth + 1);
 	m_manager->UpdateLayout();
 	m_guiMesh->SetEnable(true);

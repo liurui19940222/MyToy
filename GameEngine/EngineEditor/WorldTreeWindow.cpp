@@ -32,8 +32,6 @@ LRESULT CALLBACK CWorldTreeWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wPara
 		hdc = BeginPaint(m_hwnd, &ps);
 		EndPaint(m_hwnd, &ps);
 		break;
-	default:
-		break;
 	}
 
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -57,22 +55,69 @@ void CWorldTreeWindow::OnCreate()
 {
 	CChannel::OnCreate();
 	CMessageCenter::Register(MSG_ON_ENGINE_INIT_COMPLETE, this);
+	CMessageCenter::Register(MSG_ON_GAMEOBJECT_CREATED, this);
+	CMessageCenter::Register(MSG_ON_GAMEOBJECT_DESTORYED, this);
 	m_gui.SetGridRowHeight(20);
-	m_gui.SetGridRowCount(20);
+	m_gui.SetGridRowCount(5);
+
+	CGUITextEdit* edit = m_gui.Create<CGUITextEdit>();
+	m_gui.PutIntoGrid(-1, 0, edit, false);
 
 	m_tree.SetManager(&m_gui);
-	CGUITreeNode<int>* root = m_tree.AddNode(L"MainCamera", -1);
-	for (int i = 0; i < 2; ++i)
-	{
-		m_tree[0].AddNode(CConverter::FormatWString(L"node%d", i), i);
-		m_tree[0][i].AddNode(CConverter::FormatWString(L"child node 0 %d"), i);
-	}
+
+	m_contextMenu->Append(CMENU_ID_CREATE_EMPTY, L"Create Empty", [this](int id) {
+		_Engine->MakeRenderContext();
+		CGameObject* parent = NULL;
+		if (m_tree.GetSelectedNode()) 
+			parent = _Maker->FindGameObject(m_tree.GetSelectedNode()->value());
+		CGameObject* go = _Maker->Instantiate();
+		go->SetParent(parent);
+		CMessageCenter::Send(SMessage{ MSG_ON_GAMEOBJECT_CREATED, this, go });
+	});
+
+	m_contextMenu->Append(CMENU_ID_CREATE_CUBE, L"Create Cube", [this](int id) {
+		_Engine->MakeRenderContext();
+		CGameObject* parent = NULL;
+		if (m_tree.GetSelectedNode())
+			parent = _Maker->FindGameObject(m_tree.GetSelectedNode()->value());
+		CGameObject* go = _Maker->CreateCube();
+		go->SetParent(parent);
+		CMessageCenter::Send(SMessage{ MSG_ON_GAMEOBJECT_CREATED, this, go });
+	});
+
+	m_contextMenu->Append(CMENU_ID_CREATE_QUAD, L"Create Quad", [this](int id) {
+		_Engine->MakeRenderContext();
+		CGameObject* parent = NULL;
+		if (m_tree.GetSelectedNode())
+			parent = _Maker->FindGameObject(m_tree.GetSelectedNode()->value());
+		CGameObject* go = _Maker->CreateQuad();
+		go->SetParent(parent);
+		CMessageCenter::Send(SMessage{ MSG_ON_GAMEOBJECT_CREATED, this, go });
+	});
+
+	m_contextMenu->Append(CMENU_ID_GO_DESTORYED, L"Delete", [this](int id) {
+		if (m_tree.GetSelectedNode())
+		{
+			CGameObject* go = NULL;
+			go = _Maker->FindGameObject(m_tree.GetSelectedNode()->value());
+			if (go)
+			{
+				int instanceId = go->GetInstanceId();
+				_Maker->Destroy(go);
+				CTaskManager::AddTask(STask([](void* param) {
+					CMessageCenter::Send(SMessage{ MSG_ON_GAMEOBJECT_DESTORYED, NULL, param });
+				}, (void*)instanceId, 0));
+			}
+		}
+	});
 }
 
 void CWorldTreeWindow::OnClose()
 {
 	CChannel::OnClose();
 	CMessageCenter::Unregister(MSG_ON_ENGINE_INIT_COMPLETE, this);
+	CMessageCenter::Unregister(MSG_ON_GAMEOBJECT_CREATED, this);
+	CMessageCenter::Unregister(MSG_ON_GAMEOBJECT_DESTORYED, this);
 }
 
 void CWorldTreeWindow::OnDraw()
@@ -85,14 +130,44 @@ void CWorldTreeWindow::OnReceiveMsg(SMessage& message)
 	CChannel::OnReceiveMsg(message);
 	if (message.m_msgType == MSG_ON_ENGINE_INIT_COMPLETE)
 	{
-
+		m_tree.Clear();
+		auto func = std::bind(&CWorldTreeWindow::OnForeachGameObjects, this, std::placeholders::_1, std::placeholders::_2);
+		_Maker->ForeachAllGameObject(func);
 	}
 	else if (message.m_msgType == MSG_ON_GAMEOBJECT_CREATED)
 	{
-
+		OnGameObjectCreated((CGameObject*)message.m_body);
 	}
 	else if (message.m_msgType == MSG_ON_GAMEOBJECT_DESTORYED)
 	{
-
+		OnGameObjectDestoryed((int)message.m_body);
 	}
+}
+
+void CWorldTreeWindow::OnForeachGameObjects(CGameObject* go, int depth)
+{
+	OnGameObjectCreated(go);
+}
+
+void CWorldTreeWindow::OnGameObjectCreated(CGameObject* go)
+{
+	if (go->GetParent() == NULL)
+	{
+		CGUITree<int>* t1 = &m_tree;
+		m_tree.AddNode(go->GetName(), go->GetInstanceId());
+	}
+	else
+	{
+		CGUITreeNode<int>* parent = m_tree.FindNode(go->GetParent()->GetInstanceId());
+		if (parent != NULL)
+		{
+			parent->AddNode(go->GetName(), go->GetInstanceId());
+		}
+	}
+}
+
+void CWorldTreeWindow::OnGameObjectDestoryed(int instanceId)
+{
+	m_tree.DeleteNode(instanceId);
+	m_gui.UpdateLayout();
 }

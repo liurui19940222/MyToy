@@ -11,12 +11,12 @@ void CRelationshipTest::OnStart()
 	_MainCameraGo->SetLocalPosition(Vector3(0, 2, 10));
 	_MainCameraGo->SetLocalEulerAngles(Vector3(0, -180, 0));
 	CTexture* texture = CTexture2D::Create("textures/dlg01.bmp");
-	go = _Maker->Instantiate("testGo");
+	go = _Maker->Instantiate(L"testGo");
 	go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube));
 	go->SetLocalPosition(Vector3(-2, 1.0, 0));
 	go->SetLocalScale(Vector3::one * 1);
 
-	axis = _Maker->Instantiate("axis");
+	axis = _Maker->Instantiate(L"axis");
 	axis->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube));
 	axis->SetLocalScale(Vector3(0.2f, 0.2f, 10.0f));
 	CEditorTool::PrintTree();

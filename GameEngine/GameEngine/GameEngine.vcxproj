@@ -155,6 +155,7 @@ copy $(SolutionDir)GameEngine\Shader\ $(SolutionDir)\EngineEditor\Shader\</Comma
     <ClInclude Include="BitImage.h" />
     <ClInclude Include="GUIDesigner.h" />
     <ClInclude Include="MessageCenter.h" />
+    <ClInclude Include="MessageDef.h" />
     <ClInclude Include="Property.h" />
     <ClInclude Include="RawRenderer.h" />
     <ClInclude Include="SkeletonAnimation.h" />
@@ -201,6 +202,7 @@ copy $(SolutionDir)GameEngine\Shader\ $(SolutionDir)\EngineEditor\Shader\</Comma
     <ClInclude Include="SpriteAnimation.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="SysFont.h" />
+    <ClInclude Include="TaskManager.h" />
     <ClInclude Include="TestApp.h" />
     <ClInclude Include="TestTest.h" />
     <ClInclude Include="TextRenderer.h" />
@@ -261,6 +263,7 @@ copy $(SolutionDir)GameEngine\Shader\ $(SolutionDir)\EngineEditor\Shader\</Comma
     <ClCompile Include="SpriteAnimation.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SysFont.cpp" />
+    <ClCompile Include="TaskManager.cpp" />
     <ClCompile Include="TestApp.cpp" />
     <ClCompile Include="TestTest.cpp" />
     <ClCompile Include="TextRenderer.cpp" />

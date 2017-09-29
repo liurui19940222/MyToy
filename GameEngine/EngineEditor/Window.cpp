@@ -35,6 +35,7 @@ void CWindow::Create(wchar_t* class_name, HINSTANCE instance, HWND parent, int w
 		x, y, width, height, parent, GetMenu(), instance, (void*)this);
 	ShowWindow(m_hwnd, SW_SHOW);
 	UpdateWindow(m_hwnd);
+	m_contextMenu = new CContextMenu(m_hwnd);
 	OnCreate();
 }
 
@@ -45,7 +46,8 @@ void CWindow::OnCreate()
 
 void CWindow::OnClose()
 {
-	
+	delete(m_contextMenu);
+	m_contextMenu = NULL;
 }
 
 void CWindow::OnReceiveMsg(SMessage& message)
@@ -97,6 +99,17 @@ LRESULT CALLBACK CWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 
 		m_height = HIWORD(lParam);
 		m_width = LOWORD(lParam);
+		break;
+	case WM_RBUTTONUP:
+		{
+			POINT point;
+			point.x = LOWORD(lParam);
+			point.y = HIWORD(lParam);
+			m_contextMenu->Show(point);
+			return TRUE;
+		}
+	case WM_COMMAND:
+		m_contextMenu->HandleCommand(LOWORD(wParam));
 		break;
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);

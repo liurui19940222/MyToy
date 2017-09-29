@@ -59,9 +59,9 @@ LRESULT CALLBACK CMainWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 			CMaterial* mat = _Maker->Instantiate<CMaterial>();
 			mat->SetShader(CShader::Get("light"));
 			mat->SetColor(Color::white);
-			CGameObject* go = _Maker->Instantiate("NewGameObject");
+			CGameObject* go = _Maker->Instantiate(L"NewGameObject");
 			go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube))->SetMaterial(mat);
-			CMessageCenter::Send(SMessage{ "on_create_object", this, NULL });
+			CMessageCenter::Send(SMessage{ MSG_ON_GAMEOBJECT_CREATED, this, go });
 			break;
 		}
 		break;
@@ -69,8 +69,16 @@ LRESULT CALLBACK CMainWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 		if (wParam == SC_MAXIMIZE)
 			return 0;
 		return 0;
-	default:
+	case WM_KEYDOWN:
+		CMessageCenter::Send(SMessage{ MSG_ON_KEYDOWN, this, (void*)wParam });
 		break;
+	case WM_IME_COMPOSITION:
+	case WM_SYSCHAR:
+	case WM_IME_CHAR:
+		return 0;
+	case WM_CHAR:
+		CMessageCenter::Send(SMessage{ MSG_ON_INPUT_A_CHAR, this, (void*)wParam });
+		return 0;
 	}
 
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);

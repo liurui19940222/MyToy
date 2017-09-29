@@ -123,7 +123,16 @@ Mesh* CMeshFactory::CreateQuad()
 		{1.0f, 1.0f},
 		{0.0f, 1.0f},
 	};
-	return CreateMesh(vertices, texcoords, NULL, VERTEX_NUM);
+	static const Vector3 normals[VERTEX_NUM] = {
+		//front
+		{ 0.0f, 0.0f, 1.0f },
+		{ 0.0f, 0.0f, 1.0f },
+		{ 0.0f, 0.0f, 1.0f },
+		{ 0.0f, 0.0f, 1.0f },
+		{ 0.0f, 0.0f, 1.0f },
+		{ 0.0f, 0.0f, 1.0f },
+	};
+	return CreateMesh(vertices, texcoords, normals, VERTEX_NUM);
 }
 
 Mesh* CMeshFactory::CreateMesh(const Vector3* vertices, const Vector2* texcoords, const Vector3* normals, int count)

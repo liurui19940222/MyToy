@@ -78,6 +78,12 @@
     <ClCompile Include="GUIMesh.cpp">
       <Filter>GUI\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ContextMenu.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITextEdit.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\DLLEXPORT\GameEngine.lib">
@@ -142,8 +148,11 @@
     <ClInclude Include="GUITree.h">
       <Filter>GUI\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="MessageDef.h">
+    <ClInclude Include="ContextMenu.h">
       <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITextEdit.h">
+      <Filter>GUI\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@
 #include<GameEngine\RawRenderer.h>
 #include<GameEngine\Input.h>
 
-CGUIManager::CGUIManager() 
+CGUIManager::CGUIManager()
 {
 	m_layout.m_gui = this;
 	m_elements.SetComparator([](CGUIElement* a, CGUIElement* b) {
@@ -29,6 +29,8 @@ void CGUIManager::UpdateWidgetLayer(CGUIElement* widget)
 void CGUIManager::Destroy(CGUIElement* widget)
 {
 	if (!widget) return;
+	if (m_curOverlay == widget) m_curOverlay = NULL;
+	if (m_lastDown == widget) m_lastDown = NULL;
 	widget->OnDestroy();
 	m_elements.Remove(widget);
 	delete(widget);
@@ -164,10 +166,13 @@ CGUIManager* CGUIManager::SetGridColumns(int colCount, vector<float>& weights)
 
 CGUIManager* CGUIManager::PutIntoGrid(int rowIndex, int colIndex, CGUIElement* element, bool newline)
 {
-	if (rowIndex >= m_layout.RowCount)
-		m_layout.ResizeRow(rowIndex + 1);
-	else if (rowIndex == -1)
+	if (rowIndex == -1)
 		rowIndex = m_layout.GetUnfilledRowIndex();
+	if (rowIndex >= m_layout.RowCount)
+	{
+		m_layout.ResizeRow(rowIndex + 1);
+		m_layout.UpdateLayout();
+	}
 	if (newline)
 	{
 		m_layout.InsertRow(rowIndex);
@@ -187,7 +192,8 @@ void CGUIManager::OnUpdate()
 {
 	Vector2 mousePos = CInput::InputMousePosition() - m_absoluteWindowLTPos;
 	mousePos.y = m_resolutionY - mousePos.y;
-	InverseForeachElementR([this, &mousePos](CGUIElement* widget) {
+	bool hasAnyOneDown = false;
+	InverseForeachElementR([this, &mousePos, &hasAnyOneDown](CGUIElement* widget) {
 		if (!widget->IsState(EElementState::Disabled) && widget->IsCollide())
 		{
 			if (widget->Overlay(mousePos))
@@ -204,8 +210,14 @@ void CGUIManager::OnUpdate()
 
 				if (CInput::GetMouseDown(EMouseKey::Left))
 				{
+					hasAnyOneDown = true;
 					widget->SetState(EElementState::Pressed);
 					widget->OnMouseDown(mousePos);
+					if (m_lastDown && m_lastDown != widget)
+					{
+						m_lastDown->m_haveFocus = false;
+						m_lastDown->OnLostFocus();
+					}
 					m_lastDown = widget;
 				}
 				else if (CInput::GetMouseUp(EMouseKey::Left))
@@ -240,6 +252,14 @@ void CGUIManager::OnUpdate()
 		}
 		return true;
 	});
+	if (CInput::GetMouseDown(EMouseKey::Left) && !hasAnyOneDown)
+	{
+		if (m_lastDown)
+		{
+			m_lastDown->m_haveFocus = false;
+			m_lastDown->OnLostFocus();
+		}
+	}
 	ForeachElement([](CGUIElement* widget) {
 		widget->OnUpdate();
 	});
@@ -249,12 +269,12 @@ void CGUIManager::OnRender()
 {
 	if (!m_renderer) return;
 	ForeachElement([](CGUIElement* element) {
-		if(element->IsEnalbe() && (element->m_cell == NULL || (element->m_cell && element->m_cell->m_visible)))
+		if (element->IsEnalbe() && (element->m_cell == NULL || (element->m_cell && element->m_cell->m_visible)))
 			element->OnRender();
 	});
 }
 
 void CGUIManager::Quit()
 {
-	
+
 }

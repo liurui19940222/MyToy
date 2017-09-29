@@ -31,6 +31,19 @@ void CRawRenderer::SetupPixelFormat()
 	SetPixelFormat(m_hdc, pixelFormat, &pfd);
 }
 
+void CRawRenderer::SetRenderMode(ERenderMode mode)
+{
+	m_renderMode = mode;
+	if (mode == ERenderMode::Wireframe)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	else
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+}
+
 void CRawRenderer::SetupRenderContext(HWND hwnd)
 {
 	m_hwnd = hwnd;
@@ -174,7 +187,7 @@ void CRawRenderer::DrawTexture(CTexture& texture, const SRect2D& rect)
 	glDisable(GL_BLEND);
 }
 
-void CRawRenderer::DrawString(const wstring& str, const SRect2D& rect, const Vector3& position, const Color& color, int size, EAlignment alignment)
+void CRawRenderer::DrawString(const wstring& str, const SRect2D& rect, const Vector3& position, const Color& color, int size, EAlignment alignment, bool singleLine)
 {
 	m_fontRenderer.SetRenderType(ERenderType::Fixed);
 	m_fontRenderer.SetFont(FontManager->GetFont(1));
@@ -183,6 +196,7 @@ void CRawRenderer::DrawString(const wstring& str, const SRect2D& rect, const Vec
 	m_fontRenderer.SetFontSize(size);
 	m_fontRenderer.SetTextAlignment(alignment);
 	m_fontRenderer.SetText(str);
+	m_fontRenderer.SetSingleLine(singleLine);
 	glPushMatrix();
 	glTranslatef(position.x, position.y, position.z);
 	m_fontRenderer.OnRender(Matrix4x4::Identity(), Matrix4x4::Identity(), Matrix4x4::Identity());

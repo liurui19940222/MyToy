@@ -8,7 +8,7 @@ void GUITest::OnStart()
 	FontManager->LoadFont(2, "C:/Windows/Fonts/simsun.ttc");
 	CTexture* tex = CTexture2D::Create("F://monthad_1.png");
 	CTexture* tex2 = CTexture2D::Create("F://avatar_15.png");
-	go = _Maker->Instantiate("widget");
+	go = _Maker->Instantiate(L"widget");
 	widget = go->AddComponent<CGUILabel>();
 	widget->SetWidth(100)->SetHeight(30);
 	//widget->SetFill(true)->SetFillColor(Color::blue());
@@ -22,7 +22,7 @@ void GUITest::OnStart()
 		CDebug::Box(L"x:%g y:%g", mousepos.x, mousepos.y);
 	});
 
-	CGameObject* imgGo = _Maker->Instantiate("Button");
+	CGameObject* imgGo = _Maker->Instantiate(L"Button");
 	widget2 = imgGo->AddComponent<CGUIImage>();
 	widget2->SetTexture(CTexture2D::Create("textures/dlg01.bmp"));
 	widget2->SetWidth(128)->SetHeight(128)->SetCollide(true);
@@ -34,7 +34,7 @@ void GUITest::OnStart()
 	//widget->SetText(L"Ïß");
 	CMaterial* mat = _Maker->Instantiate<CMaterial>();
 	mat->SetShader(CShader::Get("color"));
-	CMeshRenderer* render = _Maker->Instantiate("Cube")->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube));
+	CMeshRenderer* render = _Maker->Instantiate(L"Cube")->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube));
 	r = render->gameObject;
 	render->SetMaterial(mat);
 	render->gameObject->SetLocalPosition(Vector3(0, 0, 10));

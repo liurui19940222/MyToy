@@ -14,14 +14,14 @@ void CTestApp::OnStart()
 	_MainCamera->SetCameraClearColor(Color::Hex(0x314D79FF));
 	_MainCameraGo->SetLocalPosition(Vector3(0, 0, 5));
 	_MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
-	camera = _Maker->Instantiate("Camera");
+	camera = _Maker->Instantiate(L"Camera");
 	CRenderTexture* renderTexture = CRenderTexture::Create(400, 400, true);
 	CCamera* c = camera->AddComponent<CCamera>();
 	c->Perspective(54.0f, _SCW / _SCH, 0.1f, 1000.0f);
 	c->SetCameraClearFlag(ECameraClearFlag::SolidColor)->SetCameraClearColor(Color::black)->SetDepth(1)->SetRenderTexture(renderTexture);
-	c->SetName("camera");
+	c->SetName(L"camera");
 	camera->SetLocalPosition(Vector3(100, 3, -10));
-	model = _Maker->Instantiate("model");
+	model = _Maker->Instantiate(L"model");
 	model->SetLocalPosition(Vector3(100, 0, 0));
 	model->SetLocalScale(Vector3(0.12f, 0.12f, 0.12f));
 	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("texture"));
@@ -31,16 +31,16 @@ void CTestApp::OnStart()
 	CMaterial* material = _Maker->Instantiate<CMaterial>();
 	material->SetMainTexture(renderTexture)->SetShader(CShader::Get("texture"));
 	CMeshBuffer* quad = _MeshFactory->SharedBuffer(EMeshType::Cube);
-	go1 = _Maker->Instantiate("parent");
+	go1 = _Maker->Instantiate(L"parent");
 	go1->AddComponent<CMeshRenderer>()->SetModel(quad)->SetMaterial(material);
 
-	go2 = _Maker->Instantiate("child");
+	go2 = _Maker->Instantiate(L"child");
 	go2->AddComponent<CMeshRenderer>()->SetModel(quad);
 	go2->SetParent(go1);
 	go2->SetLocalPosition(Vector3::right * 1.4f);
 	go2->SetLocalScale(Vector3::one * 0.5f);
 
-	go3 = _Maker->Instantiate("grandchild");
+	go3 = _Maker->Instantiate(L"grandchild");
 	go3->AddComponent<CMeshRenderer>()->SetModel(quad);
 	go3->SetParent(go2);
 	go3->SetLocalPosition(Vector3::right * 1.4f);

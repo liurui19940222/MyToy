@@ -90,7 +90,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_EDITOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="ConsoleWindow.cpp" />
+    <ClCompile Include="ContextMenu.cpp" />
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="GridLayout.cpp" />
     <ClCompile Include="GUIGroup.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="GUITexture.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="SceneWindow.cpp" />
+    <ClCompile Include="GUITextEdit.cpp" />
     <ClCompile Include="WatcherWindow.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Editor.cpp" />
@@ -172,6 +174,7 @@
   <ItemGroup>
     <ClInclude Include="Channel.h" />
     <ClInclude Include="ConsoleWindow.h" />
+    <ClInclude Include="ContextMenu.h" />
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="GridLayout.h" />
     <ClInclude Include="GUIGroup.h" />
@@ -180,9 +183,9 @@
     <ClInclude Include="GUITexture.h" />
     <ClInclude Include="GUITree.h" />
     <ClInclude Include="MainWindow.h" />
-    <ClInclude Include="MessageDef.h" />
     <ClInclude Include="SceneWindow.h" />
     <ClInclude Include="SelfContainedGrid.h" />
+    <ClInclude Include="GUITextEdit.h" />
     <ClInclude Include="WatcherWindow.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="Editor.h" />

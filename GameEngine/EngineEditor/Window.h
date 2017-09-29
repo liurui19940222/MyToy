@@ -5,8 +5,9 @@
 #include<windowsx.h>
 #include<GameEngine\Property.h>
 #include<GameEngine\MessageCenter.h>
+#include<GameEngine\MessageDef.h>
 #include"Editor.h"
-#include"MessageDef.h"
+#include"ContextMenu.h"
 
 enum EWindowType;
 
@@ -36,6 +37,7 @@ protected:
 	float m_height;
 	HWND m_hwnd;
 	EChannelState m_state;
+	CContextMenu* m_contextMenu;
 
 	void Create(wchar_t* class_name, HINSTANCE instance, HWND parent, int width, int height, DWORD dword);
 	virtual void OnCreate();

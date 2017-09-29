@@ -10,12 +10,12 @@ class ENGINE_API Object
 {
 protected:
 	int instanceId;
-	string name;
+	wstring name;
 
 public:
 	Object();
 
-	Object(std::string& name);
+	Object(std::wstring& name);
 
 	~Object();
 
@@ -25,9 +25,9 @@ public:
 
 	virtual void OnRelease();
 
-	void SetName(const string& name);
+	void SetName(const wstring& name);
 
-	string& GetName();
+	wstring& GetName();
 };
 
 #endif

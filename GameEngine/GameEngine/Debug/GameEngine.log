@@ -1,113 +1,1454 @@
-﻿  TrueTypeFont.cpp
-  Object.cpp
-  ImageFile.cpp
-  Time.cpp
+﻿  Time.cpp
+d:\github\mytoy\gameengine\gameengine\time.cpp(3): warning C4273: “fpsUpdateInterval”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(11): note: 参见“private: static float CTime::fpsUpdateInterval”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(3): error C2491: “CTime::fpsUpdateInterval”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(4): warning C4273: “lastFpsUpdateTime”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(14): note: 参见“private: static float CTime::lastFpsUpdateTime”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(4): error C2491: “CTime::lastFpsUpdateTime”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(5): warning C4273: “curSecondFrameCount”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(12): note: 参见“private: static int CTime::curSecondFrameCount”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(5): error C2491: “CTime::curSecondFrameCount”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(6): warning C4273: “targetFrameCount”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(13): note: 参见“private: static int CTime::targetFrameCount”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(6): error C2491: “CTime::targetFrameCount”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(7): warning C4273: “oneFrameTime”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(22): note: 参见“public: static double CTime::oneFrameTime”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(7): error C2491: “CTime::oneFrameTime”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(8): warning C4273: “deltaTime”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(18): note: 参见“public: static float CTime::deltaTime”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(8): error C2491: “CTime::deltaTime”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(9): warning C4273: “time”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(19): note: 参见“public: static float CTime::time”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(9): error C2491: “CTime::time”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(10): warning C4273: “fps”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(21): note: 参见“public: static float CTime::fps”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(10): error C2491: “CTime::fps”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(11): warning C4273: “lastFrameTime”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(20): note: 参见“public: static float CTime::lastFrameTime”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(11): error C2491: “CTime::lastFrameTime”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(12): warning C4273: “startTick”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(15): note: 参见“private: static unsigned long CTime::startTick”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(12): error C2491: “CTime::startTick”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(13): warning C4273: “frameStartTick”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(16): note: 参见“private: static unsigned long CTime::frameStartTick”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(13): error C2491: “CTime::frameStartTick”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(16): warning C4273: “CTime::SetTargetFrameCount”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(24): note: 参见“SetTargetFrameCount”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(23): warning C4273: “CTime::GetTargetFrameCount”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(25): note: 参见“GetTargetFrameCount”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(28): warning C4273: “CTime::InitTime”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(26): note: 参见“InitTime”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(36): warning C4273: “CTime::UpdateTime”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(27): note: 参见“UpdateTime”的前一个定义
+d:\github\mytoy\gameengine\gameengine\time.cpp(51): warning C4273: “CTime::Lock”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\time.h(28): note: 参见“Lock”的前一个定义
   Texture2D.cpp
-  Texture.cpp
-  TextTest.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  TextRenderer.cpp
-  TestTest.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-d:\github\mytoy\gameengine\gameengine\testtest.cpp(28): warning C4305: “参数”: 从“double”到“float”截断
-  TestApp.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  SpriteRenderer.cpp
-  SpriteAnimation.cpp
-  SkinnedMeshRenderer.cpp
-  Shader.cpp
-  Resources.cpp
-  RenderCamera.cpp
-d:\github\mytoy\gameengine\gameengine\rendercamera.cpp(97): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  MeshRenderer.cpp
-  Math.cpp
-d:\github\mytoy\gameengine\gameengine\math.cpp(845): warning C4244: “初始化”: 从“const float”转换到“int”，可能丢失数据
-d:\github\mytoy\gameengine\gameengine\math.cpp(846): warning C4244: “初始化”: 从“const float”转换到“int”，可能丢失数据
-  RelationshipTest.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-d:\github\mytoy\gameengine\gameengine\relationshiptest.cpp(7): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
-d:\github\mytoy\gameengine\gameengine\relationshiptest.cpp(8): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
-  MeshBuffer.cpp
-  正在生成代码...
-  正在编译...
-  Material.cpp
-d:\github\mytoy\gameengine\gameengine\material.cpp(28): warning C4800: “GLboolean”: 将值强制为布尔值“true”或“false”(性能警告)
-  Maker.cpp
-  main.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  Input.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-d:\github\mytoy\gameengine\gameengine\input.cpp(131): warning C4244: “参数”: 从“LONG”转换到“float”，可能丢失数据
-  ImageTest.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  GUITest.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  GUISystem.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  GUILabel.cpp
-  GUIImage.cpp
-d:\github\mytoy\gameengine\gameengine\guiimage.cpp(26): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-d:\github\mytoy\gameengine\gameengine\guiimage.cpp(27): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-  GameWindow.cpp
-  GameObject.cpp
-  RenderTexture.cpp
-  MeshFactory.cpp
-  FontRenderer.cpp
-d:\github\mytoy\gameengine\gameengine\fontrenderer.cpp(174): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
-d:\github\mytoy\gameengine\gameengine\fontrenderer.cpp(193): warning C4018: “<”: 有符号/无符号不匹配
-  FontManager.cpp
-  EngineSetting.cpp
-  EngineDefine.cpp
-d:\github\mytoy\gameengine\gameengine\enginedefine.cpp(136): warning C4244: “=”: 从“float”转换到“byte”，可能丢失数据
-d:\github\mytoy\gameengine\gameengine\enginedefine.cpp(137): warning C4244: “=”: 从“float”转换到“byte”，可能丢失数据
-d:\github\mytoy\gameengine\gameengine\enginedefine.cpp(138): warning C4244: “=”: 从“float”转换到“byte”，可能丢失数据
-d:\github\mytoy\gameengine\gameengine\enginedefine.cpp(139): warning C4244: “=”: 从“float”转换到“byte”，可能丢失数据
-d:\github\mytoy\gameengine\gameengine\enginedefine.cpp(167): warning C4244: “参数”: 从“float”转换到“byte”，可能丢失数据
-  Engine.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-d:\github\mytoy\gameengine\gameengine\engine.cpp(135): warning C4305: “参数”: 从“unsigned int”到“byte”截断
-d:\github\mytoy\gameengine\gameengine\engine.cpp(135): warning C4309: “参数”: 截断常量值
-  EditorTool.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-d:\github\mytoy\gameengine\gameengine\editortool.cpp(201): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-d:\github\mytoy\gameengine\gameengine\editortool.cpp(205): warning C4305: “参数”: 从“double”到“GLfloat”截断
-d:\github\mytoy\gameengine\gameengine\editortool.cpp(257): warning C4305: “参数”: 从“double”到“float”截断
-  Debug.cpp
-  正在生成代码...
-  正在编译...
-  Config.cpp
-  Component.cpp
-  ColladaTest.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-c:\program files (x86)\windows kits\8.1\include\um\glm\core\func_common.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-c:\program files (x86)\windows kits\8.1\include\um\glm\core\func_common.inl : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-c:\program files (x86)\windows kits\8.1\include\um\glm\core\func_integer.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-d:\github\mytoy\gameengine\gameengine\colladatest.cpp(10): warning C4305: “参数”: 从“double”到“float”截断
-d:\github\mytoy\gameengine\gameengine\colladatest.cpp(26): warning C4305: “参数”: 从“double”到“const float”截断
-  ColladaFile.cpp
-d:\github\mytoy\gameengine\gameengine\colladafile.cpp(71): warning C4018: “<=”: 有符号/无符号不匹配
-d:\github\mytoy\gameengine\gameengine\colladafile.cpp(73): warning C4018: “<”: 有符号/无符号不匹配
-d:\github\mytoy\gameengine\gameengine\colladafile.cpp(267): warning C4018: “<”: 有符号/无符号不匹配
-d:\github\mytoy\gameengine\gameengine\colladafile.h(101): warning C4018: “<=”: 有符号/无符号不匹配
-  d:\github\mytoy\gameengine\gameengine\colladafile.cpp(156): note: 参见对正在编译的函数 模板 实例化“TValue *CColladaFile::UnpackValues<float>(std::string &,std::size_t)”的引用
+d:\github\mytoy\gameengine\gameengine\object.h(13): warning C4251: “Object::name”: class“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”需要有 dll 接口由 class“Object”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2635): note: 参见“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”的声明
+d:\github\mytoy\gameengine\gameengine\dynamicfactory.h(84): warning C4251: “DynamicFactory::_create_function_map”: class“std::map<std::string,DynamicFactory::CreateFunction,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“DynamicFactory”的客户端使用
           with
           [
-              TValue=float
+              _Kty=std::string,
+              _Ty=DynamicFactory::CreateFunction
           ]
-d:\github\mytoy\gameengine\gameengine\colladafile.h(103): warning C4018: “<”: 有符号/无符号不匹配
-  Camera.cpp
-  SkeletonAnimation.cpp
-d:\github\mytoy\gameengine\gameengine\skeletonanimation.cpp(42): warning C4018: “<”: 有符号/无符号不匹配
-d:\github\mytoy\gameengine\gameengine\skeletonanimation.cpp(82): warning C4018: “<”: 有符号/无符号不匹配
-d:\github\mytoy\gameengine\gameengine\skeletonanimation.cpp(84): warning C4267: “=”: 从“size_t”转换到“byte”，可能丢失数据
-d:\github\mytoy\gameengine\gameengine\skeletonanimation.cpp(113): warning C4018: “<”: 有符号/无符号不匹配
-d:\github\mytoy\gameengine\gameengine\skeletonanimation.cpp(160): warning C4018: “<”: 有符号/无符号不匹配
-  GUIDesigner.cpp
-  BitImage.cpp
-  Atlas.cpp
-  Application.cpp
-d:\github\mytoy\gameengine\gameengine\application.cpp(157): warning C4800: “int”: 将值强制为布尔值“true”或“false”(性能警告)
-  3DSFile.cpp
-  正在生成代码...
-  GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.dll
-  GameEngine.vcxproj -> D:\GitHub\MyToy\GameEngine\Debug\GameEngine.pdb (Full PDB)
+  d:\github\mytoy\gameengine\gameengine\dynamicfactory.h(84): note: 参见“std::map<std::string,DynamicFactory::CreateFunction,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=std::string,
+              _Ty=DynamicFactory::CreateFunction
+          ]
+d:\github\mytoy\gameengine\gameengine\bitimage.h(11): warning C4251: “CBitImage::s_registor”: struct“CBitImage::Registor”需要有 dll 接口由 class“CBitImage”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\bitimage.h(11): note: 参见“CBitImage::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(33): warning C4251: “Skeleton::m_joints”: class“std::vector<Joint,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Joint
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(33): note: 参见“std::vector<Joint,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Joint
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(34): warning C4251: “Skeleton::m_localPoses”: class“std::vector<JointPose,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=JointPose
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(34): note: 参见“std::vector<JointPose,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=JointPose
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): warning C4251: “Skeleton::m_globalPoses”: class“std::vector<Matrix4x4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): note: 参见“std::vector<Matrix4x4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(36): warning C4251: “Skeleton::m_skiningMatrices”: class“std::vector<Matrix4x4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): note: 参见“std::vector<Matrix4x4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(37): warning C4251: “Skeleton::m_weights”: class“std::vector<Vector4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Vector4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(37): note: 参见“std::vector<Vector4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Vector4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(38): warning C4251: “Skeleton::m_indices”: class“std::vector<BVector4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=BVector4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(38): note: 参见“std::vector<BVector4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=BVector4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(94): warning C4251: “AnimationSample::m_jointPoses”: class“std::map<byte,JointPose,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 struct“AnimationSample”的客户端使用
+          with
+          [
+              _Kty=byte,
+              _Ty=JointPose
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(94): note: 参见“std::map<byte,JointPose,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=byte,
+              _Ty=JointPose
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(99): warning C4251: “AnimationClip::m_aSamples”: class“std::vector<AnimationSample,std::allocator<_Ty>>”需要有 dll 接口由 struct“AnimationClip”的客户端使用
+          with
+          [
+              _Ty=AnimationSample
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(99): note: 参见“std::vector<AnimationSample,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=AnimationSample
+          ]
+d:\github\mytoy\gameengine\gameengine\3dsfile.h(17): warning C4251: “C3DSFile::s_registor”: struct“C3DSFile::Registor”需要有 dll 接口由 class“C3DSFile”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\3dsfile.h(17): note: 参见“C3DSFile::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\texture.h(31): warning C4251: “CTexture::s_registor”: struct“CTexture::Registor”需要有 dll 接口由 class“CTexture”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\texture.h(31): note: 参见“CTexture::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\texture2d.h(14): warning C4251: “CTexture2D::s_registor”: struct“CTexture2D::Registor”需要有 dll 接口由 class“CTexture2D”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(14): note: 参见“CTexture2D::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\component.h(12): warning C4251: “CComponent::s_registor”: struct“CComponent::Registor”需要有 dll 接口由 class“CComponent”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\component.h(12): note: 参见“CComponent::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\camera.h(10): warning C4251: “CCamera::s_registor”: struct“CCamera::Registor”需要有 dll 接口由 class“CCamera”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\camera.h(10): note: 参见“CCamera::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\shader.h(41): warning C4251: “CShader::m_store”: class“std::map<std::string,CShader *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CShader”的客户端使用
+          with
+          [
+              _Kty=std::string,
+              _Ty=CShader *
+          ]
+  d:\github\mytoy\gameengine\gameengine\shader.h(41): note: 参见“std::map<std::string,CShader *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=std::string,
+              _Ty=CShader *
+          ]
+d:\github\mytoy\gameengine\gameengine\material.h(25): warning C4251: “CMaterial::s_registor”: struct“CMaterial::Registor”需要有 dll 接口由 class“CMaterial”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\material.h(25): note: 参见“CMaterial::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\material.h(29): warning C4251: “CMaterial::m_pushStates”: class“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CMaterial”的客户端使用
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+  d:\github\mytoy\gameengine\gameengine\material.h(29): note: 参见“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+d:\github\mytoy\gameengine\gameengine\material.h(30): warning C4251: “CMaterial::m_states”: class“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CMaterial”的客户端使用
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+  d:\github\mytoy\gameengine\gameengine\material.h(29): note: 参见“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+d:\github\mytoy\gameengine\gameengine\meshrenderer.h(15): warning C4251: “CMeshRenderer::s_registor”: struct“CMeshRenderer::Registor”需要有 dll 接口由 class“CMeshRenderer”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\meshrenderer.h(15): note: 参见“CMeshRenderer::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\spriterenderer.h(9): warning C4251: “CSpriteRenderer::s_registor”: struct“CSpriteRenderer::Registor”需要有 dll 接口由 class“CSpriteRenderer”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\spriterenderer.h(9): note: 参见“CSpriteRenderer::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\spriteanimation.h(12): warning C4251: “CSpriteAnimation::s_registor”: struct“CSpriteAnimation::Registor”需要有 dll 接口由 class“CSpriteAnimation”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(12): note: 参见“CSpriteAnimation::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\truetypefont.h(39): warning C4251: “CTrueTypeFontSize::characters”: class“std::map<int,CCharacterInfo *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CTrueTypeFontSize”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=CCharacterInfo *
+          ]
+  d:\github\mytoy\gameengine\gameengine\truetypefont.h(39): note: 参见“std::map<int,CCharacterInfo *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=CCharacterInfo *
+          ]
+d:\github\mytoy\gameengine\gameengine\truetypefont.h(41): warning C4251: “CTrueTypeFontSize::atlases”: class“std::vector<CAtlas *,std::allocator<_Ty>>”需要有 dll 接口由 class“CTrueTypeFontSize”的客户端使用
+          with
+          [
+              _Ty=CAtlas *
+          ]
+  d:\github\mytoy\gameengine\gameengine\truetypefont.h(41): note: 参见“std::vector<CAtlas *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CAtlas *
+          ]
+d:\github\mytoy\gameengine\gameengine\truetypefont.h(65): warning C4251: “CTrueTypeFont::sizeMap”: class“std::map<int,CTrueTypeFontSize *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CTrueTypeFont”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFontSize *
+          ]
+  d:\github\mytoy\gameengine\gameengine\truetypefont.h(65): note: 参见“std::map<int,CTrueTypeFontSize *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFontSize *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontmanager.h(14): warning C4251: “CFontManager::fontMap”: class“std::map<int,CTrueTypeFont *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CFontManager”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFont *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontmanager.h(14): note: 参见“std::map<int,CTrueTypeFont *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFont *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(59): warning C4251: “CTextOneLineData::primitives”: class“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”需要有 dll 接口由 class“CTextOneLineData”的客户端使用
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontrenderer.h(59): note: 参见“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(67): warning C4251: “CFontRenderer::text”: class“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”需要有 dll 接口由 class“CFontRenderer”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2635): note: 参见“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”的声明
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(77): warning C4251: “CFontRenderer::primitives”: class“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”需要有 dll 接口由 class“CFontRenderer”的客户端使用
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontrenderer.h(59): note: 参见“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(78): warning C4251: “CFontRenderer::lineDatas”: class“std::vector<CTextOneLineData *,std::allocator<_Ty>>”需要有 dll 接口由 class“CFontRenderer”的客户端使用
+          with
+          [
+              _Ty=CTextOneLineData *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontrenderer.h(78): note: 参见“std::vector<CTextOneLineData *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CTextOneLineData *
+          ]
+d:\github\mytoy\gameengine\gameengine\textrenderer.h(12): warning C4251: “CTextRenderer::s_registor”: struct“CTextRenderer::Registor”需要有 dll 接口由 class“CTextRenderer”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\textrenderer.h(12): note: 参见“CTextRenderer::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\resources.h(19): warning C4251: “CResources::m_sources”: class“std::map<std::string,ISourceFile *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CResources”的客户端使用
+          with
+          [
+              _Kty=std::string,
+              _Ty=ISourceFile *
+          ]
+  d:\github\mytoy\gameengine\gameengine\resources.h(19): note: 参见“std::map<std::string,ISourceFile *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=std::string,
+              _Ty=ISourceFile *
+          ]
+d:\github\mytoy\gameengine\gameengine\gameobject.h(18): warning C4251: “CGameObject::s_registor”: struct“CGameObject::Registor”需要有 dll 接口由 class“CGameObject”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(18): note: 参见“CGameObject::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\gameobject.h(23): warning C4251: “CGameObject::m_tag”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+d:\github\mytoy\gameengine\gameengine\gameobject.h(26): warning C4251: “CGameObject::components”: class“std::vector<CComponent *,std::allocator<_Ty>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+          with
+          [
+              _Ty=CComponent *
+          ]
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(26): note: 参见“std::vector<CComponent *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CComponent *
+          ]
+d:\github\mytoy\gameengine\gameengine\gameobject.h(27): warning C4251: “CGameObject::childs”: class“std::vector<CGameObject *,std::allocator<_Ty>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+          with
+          [
+              _Ty=CGameObject *
+          ]
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(27): note: 参见“std::vector<CGameObject *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CGameObject *
+          ]
+d:\github\mytoy\gameengine\gameengine\maker.h(28): warning C4251: “CMaker::m_gameObjects”: class“std::vector<CGameObject *,std::allocator<_Ty>>”需要有 dll 接口由 class“CMaker”的客户端使用
+          with
+          [
+              _Ty=CGameObject *
+          ]
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(27): note: 参见“std::vector<CGameObject *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CGameObject *
+          ]
+d:\github\mytoy\gameengine\gameengine\maker.h(31): warning C4251: “CMaker::m_objects”: class“std::map<int,Object *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CMaker”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=Object *
+          ]
+  d:\github\mytoy\gameengine\gameengine\maker.h(31): note: 参见“std::map<int,Object *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=Object *
+          ]
+d:\github\mytoy\gameengine\gameengine\engine.h(56): warning C4251: “CEngine::ClientWidth”: class“property<float>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(56): note: 参见“property<float>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(57): warning C4251: “CEngine::ClientHeight”: class“property<float>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(56): note: 参见“property<float>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(58): warning C4251: “CEngine::ClientRect”: class“property<RECT>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(58): note: 参见“property<RECT>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(59): warning C4251: “CEngine::DCHandle”: class“property_r<HDC>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(59): note: 参见“property_r<HDC>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(63): warning C4251: “CEngine::WindowHandle”: class“property<HWND>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(60): note: 参见“property<HWND>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(87): warning C4251: “CEngine::m_cameras”: class“container::CPriorityQueue<CCamera *>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(87): note: 参见“container::CPriorityQueue<CCamera *>”的声明
+d:\github\mytoy\gameengine\gameengine\application.h(25): warning C4251: “SApplicationInfo::wndProc”: class“std::function<LRESULT (HWND,UINT,WPARAM,LPARAM)>”需要有 dll 接口由 struct“SApplicationInfo”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\application.h(14): note: 参见“std::function<LRESULT (HWND,UINT,WPARAM,LPARAM)>”的声明
+d:\github\mytoy\gameengine\gameengine\texture2d.cpp(4): warning C4273: “s_registor”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(14): note: 参见“public: static CTexture2D::Registor CTexture2D::s_registor”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture2d.cpp(4): error C2491: “CTexture2D::s_registor”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\texture2d.cpp(4): warning C4273: “CTexture2D::GetClassNameW”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(14): note: 参见“GetClassNameW”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture2d.cpp(6): warning C4273: “m_store”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(16): note: 参见“private: static CTexture2D * * CTexture2D::m_store”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture2d.cpp(6): error C2491: “CTexture2D::m_store”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\texture2d.cpp(9): warning C4273: “CTexture2D::Init”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(18): note: 参见“Init”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture2d.cpp(31): warning C4273: “CTexture2D::Create”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(21): note: 参见“Create”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture2d.cpp(40): warning C4273: “CTexture2D::Create”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(22): note: 参见“Create”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture2d.cpp(45): warning C4273: “CTexture2D::Create”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(23): note: 参见“Create”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture2d.cpp(54): warning C4273: “CTexture2D::Create”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(24): note: 参见“Create”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture2d.cpp(61): warning C4273: “CTexture2D::Create”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(25): note: 参见“Create”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture2d.cpp(68): warning C4273: “CTexture2D::Create”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(26): note: 参见“Create”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture2d.cpp(73): warning C4273: “CTexture2D::GetOneInStore”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(28): note: 参见“GetOneInStore”的前一个定义
+  Texture.cpp
+d:\github\mytoy\gameengine\gameengine\object.h(13): warning C4251: “Object::name”: class“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”需要有 dll 接口由 class“Object”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2635): note: 参见“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”的声明
+d:\github\mytoy\gameengine\gameengine\dynamicfactory.h(84): warning C4251: “DynamicFactory::_create_function_map”: class“std::map<std::string,DynamicFactory::CreateFunction,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“DynamicFactory”的客户端使用
+          with
+          [
+              _Kty=std::string,
+              _Ty=DynamicFactory::CreateFunction
+          ]
+  d:\github\mytoy\gameengine\gameengine\dynamicfactory.h(84): note: 参见“std::map<std::string,DynamicFactory::CreateFunction,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=std::string,
+              _Ty=DynamicFactory::CreateFunction
+          ]
+d:\github\mytoy\gameengine\gameengine\bitimage.h(11): warning C4251: “CBitImage::s_registor”: struct“CBitImage::Registor”需要有 dll 接口由 class“CBitImage”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\bitimage.h(11): note: 参见“CBitImage::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(33): warning C4251: “Skeleton::m_joints”: class“std::vector<Joint,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Joint
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(33): note: 参见“std::vector<Joint,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Joint
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(34): warning C4251: “Skeleton::m_localPoses”: class“std::vector<JointPose,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=JointPose
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(34): note: 参见“std::vector<JointPose,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=JointPose
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): warning C4251: “Skeleton::m_globalPoses”: class“std::vector<Matrix4x4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): note: 参见“std::vector<Matrix4x4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(36): warning C4251: “Skeleton::m_skiningMatrices”: class“std::vector<Matrix4x4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): note: 参见“std::vector<Matrix4x4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(37): warning C4251: “Skeleton::m_weights”: class“std::vector<Vector4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Vector4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(37): note: 参见“std::vector<Vector4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Vector4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(38): warning C4251: “Skeleton::m_indices”: class“std::vector<BVector4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=BVector4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(38): note: 参见“std::vector<BVector4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=BVector4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(94): warning C4251: “AnimationSample::m_jointPoses”: class“std::map<byte,JointPose,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 struct“AnimationSample”的客户端使用
+          with
+          [
+              _Kty=byte,
+              _Ty=JointPose
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(94): note: 参见“std::map<byte,JointPose,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=byte,
+              _Ty=JointPose
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(99): warning C4251: “AnimationClip::m_aSamples”: class“std::vector<AnimationSample,std::allocator<_Ty>>”需要有 dll 接口由 struct“AnimationClip”的客户端使用
+          with
+          [
+              _Ty=AnimationSample
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(99): note: 参见“std::vector<AnimationSample,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=AnimationSample
+          ]
+d:\github\mytoy\gameengine\gameengine\3dsfile.h(17): warning C4251: “C3DSFile::s_registor”: struct“C3DSFile::Registor”需要有 dll 接口由 class“C3DSFile”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\3dsfile.h(17): note: 参见“C3DSFile::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\texture.h(31): warning C4251: “CTexture::s_registor”: struct“CTexture::Registor”需要有 dll 接口由 class“CTexture”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\texture.h(31): note: 参见“CTexture::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\component.h(12): warning C4251: “CComponent::s_registor”: struct“CComponent::Registor”需要有 dll 接口由 class“CComponent”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\component.h(12): note: 参见“CComponent::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\camera.h(10): warning C4251: “CCamera::s_registor”: struct“CCamera::Registor”需要有 dll 接口由 class“CCamera”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\camera.h(10): note: 参见“CCamera::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\texture2d.h(14): warning C4251: “CTexture2D::s_registor”: struct“CTexture2D::Registor”需要有 dll 接口由 class“CTexture2D”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(14): note: 参见“CTexture2D::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\shader.h(41): warning C4251: “CShader::m_store”: class“std::map<std::string,CShader *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CShader”的客户端使用
+          with
+          [
+              _Kty=std::string,
+              _Ty=CShader *
+          ]
+  d:\github\mytoy\gameengine\gameengine\shader.h(41): note: 参见“std::map<std::string,CShader *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=std::string,
+              _Ty=CShader *
+          ]
+d:\github\mytoy\gameengine\gameengine\material.h(25): warning C4251: “CMaterial::s_registor”: struct“CMaterial::Registor”需要有 dll 接口由 class“CMaterial”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\material.h(25): note: 参见“CMaterial::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\material.h(29): warning C4251: “CMaterial::m_pushStates”: class“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CMaterial”的客户端使用
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+  d:\github\mytoy\gameengine\gameengine\material.h(29): note: 参见“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+d:\github\mytoy\gameengine\gameengine\material.h(30): warning C4251: “CMaterial::m_states”: class“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CMaterial”的客户端使用
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+  d:\github\mytoy\gameengine\gameengine\material.h(29): note: 参见“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+d:\github\mytoy\gameengine\gameengine\meshrenderer.h(15): warning C4251: “CMeshRenderer::s_registor”: struct“CMeshRenderer::Registor”需要有 dll 接口由 class“CMeshRenderer”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\meshrenderer.h(15): note: 参见“CMeshRenderer::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\spriterenderer.h(9): warning C4251: “CSpriteRenderer::s_registor”: struct“CSpriteRenderer::Registor”需要有 dll 接口由 class“CSpriteRenderer”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\spriterenderer.h(9): note: 参见“CSpriteRenderer::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\spriteanimation.h(12): warning C4251: “CSpriteAnimation::s_registor”: struct“CSpriteAnimation::Registor”需要有 dll 接口由 class“CSpriteAnimation”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(12): note: 参见“CSpriteAnimation::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\truetypefont.h(39): warning C4251: “CTrueTypeFontSize::characters”: class“std::map<int,CCharacterInfo *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CTrueTypeFontSize”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=CCharacterInfo *
+          ]
+  d:\github\mytoy\gameengine\gameengine\truetypefont.h(39): note: 参见“std::map<int,CCharacterInfo *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=CCharacterInfo *
+          ]
+d:\github\mytoy\gameengine\gameengine\truetypefont.h(41): warning C4251: “CTrueTypeFontSize::atlases”: class“std::vector<CAtlas *,std::allocator<_Ty>>”需要有 dll 接口由 class“CTrueTypeFontSize”的客户端使用
+          with
+          [
+              _Ty=CAtlas *
+          ]
+  d:\github\mytoy\gameengine\gameengine\truetypefont.h(41): note: 参见“std::vector<CAtlas *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CAtlas *
+          ]
+d:\github\mytoy\gameengine\gameengine\truetypefont.h(65): warning C4251: “CTrueTypeFont::sizeMap”: class“std::map<int,CTrueTypeFontSize *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CTrueTypeFont”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFontSize *
+          ]
+  d:\github\mytoy\gameengine\gameengine\truetypefont.h(65): note: 参见“std::map<int,CTrueTypeFontSize *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFontSize *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontmanager.h(14): warning C4251: “CFontManager::fontMap”: class“std::map<int,CTrueTypeFont *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CFontManager”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFont *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontmanager.h(14): note: 参见“std::map<int,CTrueTypeFont *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFont *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(59): warning C4251: “CTextOneLineData::primitives”: class“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”需要有 dll 接口由 class“CTextOneLineData”的客户端使用
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontrenderer.h(59): note: 参见“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(67): warning C4251: “CFontRenderer::text”: class“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”需要有 dll 接口由 class“CFontRenderer”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2635): note: 参见“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”的声明
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(77): warning C4251: “CFontRenderer::primitives”: class“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”需要有 dll 接口由 class“CFontRenderer”的客户端使用
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontrenderer.h(59): note: 参见“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(78): warning C4251: “CFontRenderer::lineDatas”: class“std::vector<CTextOneLineData *,std::allocator<_Ty>>”需要有 dll 接口由 class“CFontRenderer”的客户端使用
+          with
+          [
+              _Ty=CTextOneLineData *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontrenderer.h(78): note: 参见“std::vector<CTextOneLineData *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CTextOneLineData *
+          ]
+d:\github\mytoy\gameengine\gameengine\textrenderer.h(12): warning C4251: “CTextRenderer::s_registor”: struct“CTextRenderer::Registor”需要有 dll 接口由 class“CTextRenderer”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\textrenderer.h(12): note: 参见“CTextRenderer::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\resources.h(19): warning C4251: “CResources::m_sources”: class“std::map<std::string,ISourceFile *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CResources”的客户端使用
+          with
+          [
+              _Kty=std::string,
+              _Ty=ISourceFile *
+          ]
+  d:\github\mytoy\gameengine\gameengine\resources.h(19): note: 参见“std::map<std::string,ISourceFile *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=std::string,
+              _Ty=ISourceFile *
+          ]
+d:\github\mytoy\gameengine\gameengine\gameobject.h(18): warning C4251: “CGameObject::s_registor”: struct“CGameObject::Registor”需要有 dll 接口由 class“CGameObject”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(18): note: 参见“CGameObject::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\gameobject.h(23): warning C4251: “CGameObject::m_tag”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+d:\github\mytoy\gameengine\gameengine\gameobject.h(26): warning C4251: “CGameObject::components”: class“std::vector<CComponent *,std::allocator<_Ty>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+          with
+          [
+              _Ty=CComponent *
+          ]
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(26): note: 参见“std::vector<CComponent *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CComponent *
+          ]
+d:\github\mytoy\gameengine\gameengine\gameobject.h(27): warning C4251: “CGameObject::childs”: class“std::vector<CGameObject *,std::allocator<_Ty>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+          with
+          [
+              _Ty=CGameObject *
+          ]
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(27): note: 参见“std::vector<CGameObject *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CGameObject *
+          ]
+d:\github\mytoy\gameengine\gameengine\maker.h(28): warning C4251: “CMaker::m_gameObjects”: class“std::vector<CGameObject *,std::allocator<_Ty>>”需要有 dll 接口由 class“CMaker”的客户端使用
+          with
+          [
+              _Ty=CGameObject *
+          ]
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(27): note: 参见“std::vector<CGameObject *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CGameObject *
+          ]
+d:\github\mytoy\gameengine\gameengine\maker.h(31): warning C4251: “CMaker::m_objects”: class“std::map<int,Object *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CMaker”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=Object *
+          ]
+  d:\github\mytoy\gameengine\gameengine\maker.h(31): note: 参见“std::map<int,Object *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=Object *
+          ]
+d:\github\mytoy\gameengine\gameengine\engine.h(56): warning C4251: “CEngine::ClientWidth”: class“property<float>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(56): note: 参见“property<float>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(57): warning C4251: “CEngine::ClientHeight”: class“property<float>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(56): note: 参见“property<float>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(58): warning C4251: “CEngine::ClientRect”: class“property<RECT>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(58): note: 参见“property<RECT>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(59): warning C4251: “CEngine::DCHandle”: class“property_r<HDC>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(59): note: 参见“property_r<HDC>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(63): warning C4251: “CEngine::WindowHandle”: class“property<HWND>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(60): note: 参见“property<HWND>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(87): warning C4251: “CEngine::m_cameras”: class“container::CPriorityQueue<CCamera *>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(87): note: 参见“container::CPriorityQueue<CCamera *>”的声明
+d:\github\mytoy\gameengine\gameengine\application.h(25): warning C4251: “SApplicationInfo::wndProc”: class“std::function<LRESULT (HWND,UINT,WPARAM,LPARAM)>”需要有 dll 接口由 struct“SApplicationInfo”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\application.h(14): note: 参见“std::function<LRESULT (HWND,UINT,WPARAM,LPARAM)>”的声明
+d:\github\mytoy\gameengine\gameengine\texture.cpp(4): warning C4273: “s_registor”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(31): note: 参见“public: static CTexture::Registor CTexture::s_registor”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(4): error C2491: “CTexture::s_registor”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(4): warning C4273: “CTexture::GetClassNameW”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(31): note: 参见“GetClassNameW”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(7): warning C4273: “CTexture::Bind”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(51): note: 参见“Bind”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(14): warning C4273: “CTexture::SetEnvMode”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(52): note: 参见“SetEnvMode”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(20): warning C4273: “CTexture::SetWrapMode”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(53): note: 参见“SetWrapMode”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(29): warning C4273: “CTexture::SetFilterMode”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(54): note: 参见“SetFilterMode”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(37): warning C4273: “CTexture::GetWidth”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(43): note: 参见“GetWidth”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(38): warning C4273: “CTexture::GetHeight”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(44): note: 参见“GetHeight”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(39): warning C4273: “CTexture::GetFormat”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(45): note: 参见“GetFormat”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(40): warning C4273: “CTexture::GetInternalFormat”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(46): note: 参见“GetInternalFormat”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(41): warning C4273: “CTexture::GetTextureId”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(47): note: 参见“GetTextureId”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(42): warning C4273: “CTexture::GetEnvMode”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(48): note: 参见“GetEnvMode”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(43): warning C4273: “CTexture::GetFilterMode”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(49): note: 参见“GetFilterMode”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(44): warning C4273: “CTexture::GetWrapMode”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(50): note: 参见“GetWrapMode”的前一个定义
+d:\github\mytoy\gameengine\gameengine\texture.cpp(47): warning C4273: “CTexture::OnRelease”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\texture.h(56): note: 参见“OnRelease”的前一个定义
+  TextRenderer.cpp
+d:\github\mytoy\gameengine\gameengine\object.h(13): warning C4251: “Object::name”: class“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”需要有 dll 接口由 class“Object”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2635): note: 参见“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”的声明
+d:\github\mytoy\gameengine\gameengine\dynamicfactory.h(84): warning C4251: “DynamicFactory::_create_function_map”: class“std::map<std::string,DynamicFactory::CreateFunction,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“DynamicFactory”的客户端使用
+          with
+          [
+              _Kty=std::string,
+              _Ty=DynamicFactory::CreateFunction
+          ]
+  d:\github\mytoy\gameengine\gameengine\dynamicfactory.h(84): note: 参见“std::map<std::string,DynamicFactory::CreateFunction,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=std::string,
+              _Ty=DynamicFactory::CreateFunction
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(33): warning C4251: “Skeleton::m_joints”: class“std::vector<Joint,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Joint
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(33): note: 参见“std::vector<Joint,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Joint
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(34): warning C4251: “Skeleton::m_localPoses”: class“std::vector<JointPose,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=JointPose
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(34): note: 参见“std::vector<JointPose,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=JointPose
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): warning C4251: “Skeleton::m_globalPoses”: class“std::vector<Matrix4x4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): note: 参见“std::vector<Matrix4x4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(36): warning C4251: “Skeleton::m_skiningMatrices”: class“std::vector<Matrix4x4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): note: 参见“std::vector<Matrix4x4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(37): warning C4251: “Skeleton::m_weights”: class“std::vector<Vector4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Vector4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(37): note: 参见“std::vector<Vector4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Vector4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(38): warning C4251: “Skeleton::m_indices”: class“std::vector<BVector4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=BVector4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(38): note: 参见“std::vector<BVector4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=BVector4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(94): warning C4251: “AnimationSample::m_jointPoses”: class“std::map<byte,JointPose,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 struct“AnimationSample”的客户端使用
+          with
+          [
+              _Kty=byte,
+              _Ty=JointPose
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(94): note: 参见“std::map<byte,JointPose,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=byte,
+              _Ty=JointPose
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(99): warning C4251: “AnimationClip::m_aSamples”: class“std::vector<AnimationSample,std::allocator<_Ty>>”需要有 dll 接口由 struct“AnimationClip”的客户端使用
+          with
+          [
+              _Ty=AnimationSample
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(99): note: 参见“std::vector<AnimationSample,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=AnimationSample
+          ]
+d:\github\mytoy\gameengine\gameengine\component.h(12): warning C4251: “CComponent::s_registor”: struct“CComponent::Registor”需要有 dll 接口由 class“CComponent”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\component.h(12): note: 参见“CComponent::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\gameobject.h(18): warning C4251: “CGameObject::s_registor”: struct“CGameObject::Registor”需要有 dll 接口由 class“CGameObject”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(18): note: 参见“CGameObject::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\gameobject.h(23): warning C4251: “CGameObject::m_tag”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+d:\github\mytoy\gameengine\gameengine\gameobject.h(26): warning C4251: “CGameObject::components”: class“std::vector<CComponent *,std::allocator<_Ty>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+          with
+          [
+              _Ty=CComponent *
+          ]
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(26): note: 参见“std::vector<CComponent *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CComponent *
+          ]
+d:\github\mytoy\gameengine\gameengine\gameobject.h(27): warning C4251: “CGameObject::childs”: class“std::vector<CGameObject *,std::allocator<_Ty>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+          with
+          [
+              _Ty=CGameObject *
+          ]
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(27): note: 参见“std::vector<CGameObject *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CGameObject *
+          ]
+d:\github\mytoy\gameengine\gameengine\truetypefont.h(39): warning C4251: “CTrueTypeFontSize::characters”: class“std::map<int,CCharacterInfo *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CTrueTypeFontSize”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=CCharacterInfo *
+          ]
+  d:\github\mytoy\gameengine\gameengine\truetypefont.h(39): note: 参见“std::map<int,CCharacterInfo *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=CCharacterInfo *
+          ]
+d:\github\mytoy\gameengine\gameengine\truetypefont.h(41): warning C4251: “CTrueTypeFontSize::atlases”: class“std::vector<CAtlas *,std::allocator<_Ty>>”需要有 dll 接口由 class“CTrueTypeFontSize”的客户端使用
+          with
+          [
+              _Ty=CAtlas *
+          ]
+  d:\github\mytoy\gameengine\gameengine\truetypefont.h(41): note: 参见“std::vector<CAtlas *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CAtlas *
+          ]
+d:\github\mytoy\gameengine\gameengine\truetypefont.h(65): warning C4251: “CTrueTypeFont::sizeMap”: class“std::map<int,CTrueTypeFontSize *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CTrueTypeFont”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFontSize *
+          ]
+  d:\github\mytoy\gameengine\gameengine\truetypefont.h(65): note: 参见“std::map<int,CTrueTypeFontSize *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFontSize *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontmanager.h(14): warning C4251: “CFontManager::fontMap”: class“std::map<int,CTrueTypeFont *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CFontManager”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFont *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontmanager.h(14): note: 参见“std::map<int,CTrueTypeFont *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFont *
+          ]
+d:\github\mytoy\gameengine\gameengine\bitimage.h(11): warning C4251: “CBitImage::s_registor”: struct“CBitImage::Registor”需要有 dll 接口由 class“CBitImage”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\bitimage.h(11): note: 参见“CBitImage::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\3dsfile.h(17): warning C4251: “C3DSFile::s_registor”: struct“C3DSFile::Registor”需要有 dll 接口由 class“C3DSFile”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\3dsfile.h(17): note: 参见“C3DSFile::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\texture.h(31): warning C4251: “CTexture::s_registor”: struct“CTexture::Registor”需要有 dll 接口由 class“CTexture”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\texture.h(31): note: 参见“CTexture::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\texture2d.h(14): warning C4251: “CTexture2D::s_registor”: struct“CTexture2D::Registor”需要有 dll 接口由 class“CTexture2D”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(14): note: 参见“CTexture2D::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\shader.h(41): warning C4251: “CShader::m_store”: class“std::map<std::string,CShader *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CShader”的客户端使用
+          with
+          [
+              _Kty=std::string,
+              _Ty=CShader *
+          ]
+  d:\github\mytoy\gameengine\gameengine\shader.h(41): note: 参见“std::map<std::string,CShader *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=std::string,
+              _Ty=CShader *
+          ]
+d:\github\mytoy\gameengine\gameengine\material.h(25): warning C4251: “CMaterial::s_registor”: struct“CMaterial::Registor”需要有 dll 接口由 class“CMaterial”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\material.h(25): note: 参见“CMaterial::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\material.h(29): warning C4251: “CMaterial::m_pushStates”: class“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CMaterial”的客户端使用
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+  d:\github\mytoy\gameengine\gameengine\material.h(29): note: 参见“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+d:\github\mytoy\gameengine\gameengine\material.h(30): warning C4251: “CMaterial::m_states”: class“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CMaterial”的客户端使用
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+  d:\github\mytoy\gameengine\gameengine\material.h(29): note: 参见“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(59): warning C4251: “CTextOneLineData::primitives”: class“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”需要有 dll 接口由 class“CTextOneLineData”的客户端使用
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontrenderer.h(59): note: 参见“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(67): warning C4251: “CFontRenderer::text”: class“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”需要有 dll 接口由 class“CFontRenderer”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2635): note: 参见“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”的声明
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(77): warning C4251: “CFontRenderer::primitives”: class“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”需要有 dll 接口由 class“CFontRenderer”的客户端使用
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontrenderer.h(59): note: 参见“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(78): warning C4251: “CFontRenderer::lineDatas”: class“std::vector<CTextOneLineData *,std::allocator<_Ty>>”需要有 dll 接口由 class“CFontRenderer”的客户端使用
+          with
+          [
+              _Ty=CTextOneLineData *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontrenderer.h(78): note: 参见“std::vector<CTextOneLineData *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CTextOneLineData *
+          ]
+d:\github\mytoy\gameengine\gameengine\textrenderer.h(12): warning C4251: “CTextRenderer::s_registor”: struct“CTextRenderer::Registor”需要有 dll 接口由 class“CTextRenderer”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\textrenderer.h(12): note: 参见“CTextRenderer::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\textrenderer.cpp(4): warning C4273: “s_registor”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\textrenderer.h(12): note: 参见“public: static CTextRenderer::Registor CTextRenderer::s_registor”的前一个定义
+d:\github\mytoy\gameengine\gameengine\textrenderer.cpp(4): error C2491: “CTextRenderer::s_registor”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\textrenderer.cpp(4): warning C4273: “CTextRenderer::GetClassNameW”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\textrenderer.h(12): note: 参见“GetClassNameW”的前一个定义
+d:\github\mytoy\gameengine\gameengine\textrenderer.cpp(7): warning C4273: “CTextRenderer::OnStart”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\textrenderer.h(16): note: 参见“OnStart”的前一个定义
+d:\github\mytoy\gameengine\gameengine\textrenderer.cpp(12): warning C4273: “CTextRenderer::OnUpdate”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\textrenderer.h(17): note: 参见“OnUpdate”的前一个定义
+d:\github\mytoy\gameengine\gameengine\textrenderer.cpp(17): warning C4273: “CTextRenderer::OnDestroy”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\textrenderer.h(18): note: 参见“OnDestroy”的前一个定义
+d:\github\mytoy\gameengine\gameengine\textrenderer.cpp(22): warning C4273: “CTextRenderer::GetPixelScale”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\textrenderer.h(20): note: 参见“GetPixelScale”的前一个定义
+d:\github\mytoy\gameengine\gameengine\textrenderer.cpp(27): warning C4273: “CTextRenderer::Render”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\textrenderer.h(22): note: 参见“Render”的前一个定义
+d:\github\mytoy\gameengine\gameengine\textrenderer.cpp(32): warning C4273: “CTextRenderer::RenderDebug”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\textrenderer.h(23): note: 参见“RenderDebug”的前一个定义
+  SpriteRenderer.cpp
+d:\github\mytoy\gameengine\gameengine\object.h(13): warning C4251: “Object::name”: class“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”需要有 dll 接口由 class“Object”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2635): note: 参见“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”的声明
+d:\github\mytoy\gameengine\gameengine\dynamicfactory.h(84): warning C4251: “DynamicFactory::_create_function_map”: class“std::map<std::string,DynamicFactory::CreateFunction,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“DynamicFactory”的客户端使用
+          with
+          [
+              _Kty=std::string,
+              _Ty=DynamicFactory::CreateFunction
+          ]
+  d:\github\mytoy\gameengine\gameengine\dynamicfactory.h(84): note: 参见“std::map<std::string,DynamicFactory::CreateFunction,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=std::string,
+              _Ty=DynamicFactory::CreateFunction
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(33): warning C4251: “Skeleton::m_joints”: class“std::vector<Joint,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Joint
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(33): note: 参见“std::vector<Joint,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Joint
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(34): warning C4251: “Skeleton::m_localPoses”: class“std::vector<JointPose,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=JointPose
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(34): note: 参见“std::vector<JointPose,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=JointPose
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): warning C4251: “Skeleton::m_globalPoses”: class“std::vector<Matrix4x4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): note: 参见“std::vector<Matrix4x4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(36): warning C4251: “Skeleton::m_skiningMatrices”: class“std::vector<Matrix4x4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): note: 参见“std::vector<Matrix4x4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(37): warning C4251: “Skeleton::m_weights”: class“std::vector<Vector4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Vector4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(37): note: 参见“std::vector<Vector4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Vector4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(38): warning C4251: “Skeleton::m_indices”: class“std::vector<BVector4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=BVector4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(38): note: 参见“std::vector<BVector4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=BVector4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(94): warning C4251: “AnimationSample::m_jointPoses”: class“std::map<byte,JointPose,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 struct“AnimationSample”的客户端使用
+          with
+          [
+              _Kty=byte,
+              _Ty=JointPose
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(94): note: 参见“std::map<byte,JointPose,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=byte,
+              _Ty=JointPose
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(99): warning C4251: “AnimationClip::m_aSamples”: class“std::vector<AnimationSample,std::allocator<_Ty>>”需要有 dll 接口由 struct“AnimationClip”的客户端使用
+          with
+          [
+              _Ty=AnimationSample
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(99): note: 参见“std::vector<AnimationSample,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=AnimationSample
+          ]
+d:\github\mytoy\gameengine\gameengine\component.h(12): warning C4251: “CComponent::s_registor”: struct“CComponent::Registor”需要有 dll 接口由 class“CComponent”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\component.h(12): note: 参见“CComponent::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\bitimage.h(11): warning C4251: “CBitImage::s_registor”: struct“CBitImage::Registor”需要有 dll 接口由 class“CBitImage”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\bitimage.h(11): note: 参见“CBitImage::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\3dsfile.h(17): warning C4251: “C3DSFile::s_registor”: struct“C3DSFile::Registor”需要有 dll 接口由 class“C3DSFile”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\3dsfile.h(17): note: 参见“C3DSFile::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\texture.h(31): warning C4251: “CTexture::s_registor”: struct“CTexture::Registor”需要有 dll 接口由 class“CTexture”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\texture.h(31): note: 参见“CTexture::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\spriterenderer.h(9): warning C4251: “CSpriteRenderer::s_registor”: struct“CSpriteRenderer::Registor”需要有 dll 接口由 class“CSpriteRenderer”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\spriterenderer.h(9): note: 参见“CSpriteRenderer::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\gameobject.h(18): warning C4251: “CGameObject::s_registor”: struct“CGameObject::Registor”需要有 dll 接口由 class“CGameObject”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(18): note: 参见“CGameObject::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\gameobject.h(23): warning C4251: “CGameObject::m_tag”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+d:\github\mytoy\gameengine\gameengine\gameobject.h(26): warning C4251: “CGameObject::components”: class“std::vector<CComponent *,std::allocator<_Ty>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+          with
+          [
+              _Ty=CComponent *
+          ]
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(26): note: 参见“std::vector<CComponent *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CComponent *
+          ]
+d:\github\mytoy\gameengine\gameengine\gameobject.h(27): warning C4251: “CGameObject::childs”: class“std::vector<CGameObject *,std::allocator<_Ty>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+          with
+          [
+              _Ty=CGameObject *
+          ]
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(27): note: 参见“std::vector<CGameObject *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CGameObject *
+          ]
+d:\github\mytoy\gameengine\gameengine\spriterenderer.cpp(4): warning C4273: “s_registor”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriterenderer.h(9): note: 参见“public: static CSpriteRenderer::Registor CSpriteRenderer::s_registor”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriterenderer.cpp(4): error C2491: “CSpriteRenderer::s_registor”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\spriterenderer.cpp(4): warning C4273: “CSpriteRenderer::GetClassNameW”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriterenderer.h(9): note: 参见“GetClassNameW”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriterenderer.cpp(7): warning C4273: “CSpriteRenderer::SetTexture”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriterenderer.h(15): note: 参见“SetTexture”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriterenderer.cpp(13): warning C4273: “CSpriteRenderer::OnStart”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriterenderer.h(17): note: 参见“OnStart”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriterenderer.cpp(18): warning C4273: “CSpriteRenderer::OnUpdate”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriterenderer.h(19): note: 参见“OnUpdate”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriterenderer.cpp(47): warning C4273: “CSpriteRenderer::OnDestroy”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriterenderer.h(21): note: 参见“OnDestroy”的前一个定义
+  SpriteAnimation.cpp
+d:\github\mytoy\gameengine\gameengine\object.h(13): warning C4251: “Object::name”: class“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”需要有 dll 接口由 class“Object”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2635): note: 参见“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”的声明
+d:\github\mytoy\gameengine\gameengine\dynamicfactory.h(84): warning C4251: “DynamicFactory::_create_function_map”: class“std::map<std::string,DynamicFactory::CreateFunction,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“DynamicFactory”的客户端使用
+          with
+          [
+              _Kty=std::string,
+              _Ty=DynamicFactory::CreateFunction
+          ]
+  d:\github\mytoy\gameengine\gameengine\dynamicfactory.h(84): note: 参见“std::map<std::string,DynamicFactory::CreateFunction,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=std::string,
+              _Ty=DynamicFactory::CreateFunction
+          ]
+d:\github\mytoy\gameengine\gameengine\bitimage.h(11): warning C4251: “CBitImage::s_registor”: struct“CBitImage::Registor”需要有 dll 接口由 class“CBitImage”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\bitimage.h(11): note: 参见“CBitImage::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(33): warning C4251: “Skeleton::m_joints”: class“std::vector<Joint,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Joint
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(33): note: 参见“std::vector<Joint,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Joint
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(34): warning C4251: “Skeleton::m_localPoses”: class“std::vector<JointPose,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=JointPose
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(34): note: 参见“std::vector<JointPose,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=JointPose
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): warning C4251: “Skeleton::m_globalPoses”: class“std::vector<Matrix4x4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): note: 参见“std::vector<Matrix4x4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(36): warning C4251: “Skeleton::m_skiningMatrices”: class“std::vector<Matrix4x4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(35): note: 参见“std::vector<Matrix4x4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Matrix4x4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(37): warning C4251: “Skeleton::m_weights”: class“std::vector<Vector4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=Vector4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(37): note: 参见“std::vector<Vector4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=Vector4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(38): warning C4251: “Skeleton::m_indices”: class“std::vector<BVector4,std::allocator<_Ty>>”需要有 dll 接口由 struct“Skeleton”的客户端使用
+          with
+          [
+              _Ty=BVector4
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(38): note: 参见“std::vector<BVector4,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=BVector4
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(94): warning C4251: “AnimationSample::m_jointPoses”: class“std::map<byte,JointPose,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 struct“AnimationSample”的客户端使用
+          with
+          [
+              _Kty=byte,
+              _Ty=JointPose
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(94): note: 参见“std::map<byte,JointPose,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=byte,
+              _Ty=JointPose
+          ]
+d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(99): warning C4251: “AnimationClip::m_aSamples”: class“std::vector<AnimationSample,std::allocator<_Ty>>”需要有 dll 接口由 struct“AnimationClip”的客户端使用
+          with
+          [
+              _Ty=AnimationSample
+          ]
+  d:\github\mytoy\gameengine\gameengine\skeletonanimation.h(99): note: 参见“std::vector<AnimationSample,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=AnimationSample
+          ]
+d:\github\mytoy\gameengine\gameengine\3dsfile.h(17): warning C4251: “C3DSFile::s_registor”: struct“C3DSFile::Registor”需要有 dll 接口由 class“C3DSFile”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\3dsfile.h(17): note: 参见“C3DSFile::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\texture.h(31): warning C4251: “CTexture::s_registor”: struct“CTexture::Registor”需要有 dll 接口由 class“CTexture”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\texture.h(31): note: 参见“CTexture::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\component.h(12): warning C4251: “CComponent::s_registor”: struct“CComponent::Registor”需要有 dll 接口由 class“CComponent”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\component.h(12): note: 参见“CComponent::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\spriterenderer.h(9): warning C4251: “CSpriteRenderer::s_registor”: struct“CSpriteRenderer::Registor”需要有 dll 接口由 class“CSpriteRenderer”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\spriterenderer.h(9): note: 参见“CSpriteRenderer::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\spriteanimation.h(12): warning C4251: “CSpriteAnimation::s_registor”: struct“CSpriteAnimation::Registor”需要有 dll 接口由 class“CSpriteAnimation”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(12): note: 参见“CSpriteAnimation::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\camera.h(10): warning C4251: “CCamera::s_registor”: struct“CCamera::Registor”需要有 dll 接口由 class“CCamera”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\camera.h(10): note: 参见“CCamera::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\texture2d.h(14): warning C4251: “CTexture2D::s_registor”: struct“CTexture2D::Registor”需要有 dll 接口由 class“CTexture2D”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\texture2d.h(14): note: 参见“CTexture2D::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\shader.h(41): warning C4251: “CShader::m_store”: class“std::map<std::string,CShader *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CShader”的客户端使用
+          with
+          [
+              _Kty=std::string,
+              _Ty=CShader *
+          ]
+  d:\github\mytoy\gameengine\gameengine\shader.h(41): note: 参见“std::map<std::string,CShader *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=std::string,
+              _Ty=CShader *
+          ]
+d:\github\mytoy\gameengine\gameengine\material.h(25): warning C4251: “CMaterial::s_registor”: struct“CMaterial::Registor”需要有 dll 接口由 class“CMaterial”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\material.h(25): note: 参见“CMaterial::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\material.h(29): warning C4251: “CMaterial::m_pushStates”: class“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CMaterial”的客户端使用
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+  d:\github\mytoy\gameengine\gameengine\material.h(29): note: 参见“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+d:\github\mytoy\gameengine\gameengine\material.h(30): warning C4251: “CMaterial::m_states”: class“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CMaterial”的客户端使用
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+  d:\github\mytoy\gameengine\gameengine\material.h(29): note: 参见“std::map<EPiplelineStateType,bool,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=EPiplelineStateType,
+              _Ty=bool
+          ]
+d:\github\mytoy\gameengine\gameengine\meshrenderer.h(15): warning C4251: “CMeshRenderer::s_registor”: struct“CMeshRenderer::Registor”需要有 dll 接口由 class“CMeshRenderer”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\meshrenderer.h(15): note: 参见“CMeshRenderer::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\truetypefont.h(39): warning C4251: “CTrueTypeFontSize::characters”: class“std::map<int,CCharacterInfo *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CTrueTypeFontSize”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=CCharacterInfo *
+          ]
+  d:\github\mytoy\gameengine\gameengine\truetypefont.h(39): note: 参见“std::map<int,CCharacterInfo *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=CCharacterInfo *
+          ]
+d:\github\mytoy\gameengine\gameengine\truetypefont.h(41): warning C4251: “CTrueTypeFontSize::atlases”: class“std::vector<CAtlas *,std::allocator<_Ty>>”需要有 dll 接口由 class“CTrueTypeFontSize”的客户端使用
+          with
+          [
+              _Ty=CAtlas *
+          ]
+  d:\github\mytoy\gameengine\gameengine\truetypefont.h(41): note: 参见“std::vector<CAtlas *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CAtlas *
+          ]
+d:\github\mytoy\gameengine\gameengine\truetypefont.h(65): warning C4251: “CTrueTypeFont::sizeMap”: class“std::map<int,CTrueTypeFontSize *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CTrueTypeFont”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFontSize *
+          ]
+  d:\github\mytoy\gameengine\gameengine\truetypefont.h(65): note: 参见“std::map<int,CTrueTypeFontSize *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFontSize *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontmanager.h(14): warning C4251: “CFontManager::fontMap”: class“std::map<int,CTrueTypeFont *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CFontManager”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFont *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontmanager.h(14): note: 参见“std::map<int,CTrueTypeFont *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=CTrueTypeFont *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(59): warning C4251: “CTextOneLineData::primitives”: class“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”需要有 dll 接口由 class“CTextOneLineData”的客户端使用
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontrenderer.h(59): note: 参见“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(67): warning C4251: “CFontRenderer::text”: class“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”需要有 dll 接口由 class“CFontRenderer”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2635): note: 参见“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>”的声明
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(77): warning C4251: “CFontRenderer::primitives”: class“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”需要有 dll 接口由 class“CFontRenderer”的客户端使用
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontrenderer.h(59): note: 参见“std::vector<CCharacterPrimitiveBase *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CCharacterPrimitiveBase *
+          ]
+d:\github\mytoy\gameengine\gameengine\fontrenderer.h(78): warning C4251: “CFontRenderer::lineDatas”: class“std::vector<CTextOneLineData *,std::allocator<_Ty>>”需要有 dll 接口由 class“CFontRenderer”的客户端使用
+          with
+          [
+              _Ty=CTextOneLineData *
+          ]
+  d:\github\mytoy\gameengine\gameengine\fontrenderer.h(78): note: 参见“std::vector<CTextOneLineData *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CTextOneLineData *
+          ]
+d:\github\mytoy\gameengine\gameengine\textrenderer.h(12): warning C4251: “CTextRenderer::s_registor”: struct“CTextRenderer::Registor”需要有 dll 接口由 class“CTextRenderer”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\textrenderer.h(12): note: 参见“CTextRenderer::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\resources.h(19): warning C4251: “CResources::m_sources”: class“std::map<std::string,ISourceFile *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CResources”的客户端使用
+          with
+          [
+              _Kty=std::string,
+              _Ty=ISourceFile *
+          ]
+  d:\github\mytoy\gameengine\gameengine\resources.h(19): note: 参见“std::map<std::string,ISourceFile *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=std::string,
+              _Ty=ISourceFile *
+          ]
+d:\github\mytoy\gameengine\gameengine\gameobject.h(18): warning C4251: “CGameObject::s_registor”: struct“CGameObject::Registor”需要有 dll 接口由 class“CGameObject”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(18): note: 参见“CGameObject::Registor”的声明
+d:\github\mytoy\gameengine\gameengine\gameobject.h(23): warning C4251: “CGameObject::m_tag”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xstring(2633): note: 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+d:\github\mytoy\gameengine\gameengine\gameobject.h(26): warning C4251: “CGameObject::components”: class“std::vector<CComponent *,std::allocator<_Ty>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+          with
+          [
+              _Ty=CComponent *
+          ]
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(26): note: 参见“std::vector<CComponent *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CComponent *
+          ]
+d:\github\mytoy\gameengine\gameengine\gameobject.h(27): warning C4251: “CGameObject::childs”: class“std::vector<CGameObject *,std::allocator<_Ty>>”需要有 dll 接口由 class“CGameObject”的客户端使用
+          with
+          [
+              _Ty=CGameObject *
+          ]
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(27): note: 参见“std::vector<CGameObject *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CGameObject *
+          ]
+d:\github\mytoy\gameengine\gameengine\maker.h(28): warning C4251: “CMaker::m_gameObjects”: class“std::vector<CGameObject *,std::allocator<_Ty>>”需要有 dll 接口由 class“CMaker”的客户端使用
+          with
+          [
+              _Ty=CGameObject *
+          ]
+  d:\github\mytoy\gameengine\gameengine\gameobject.h(27): note: 参见“std::vector<CGameObject *,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=CGameObject *
+          ]
+d:\github\mytoy\gameengine\gameengine\maker.h(31): warning C4251: “CMaker::m_objects”: class“std::map<int,Object *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”需要有 dll 接口由 class“CMaker”的客户端使用
+          with
+          [
+              _Kty=int,
+              _Ty=Object *
+          ]
+  d:\github\mytoy\gameengine\gameengine\maker.h(31): note: 参见“std::map<int,Object *,std::less<int>,std::allocator<std::pair<const _Kty,_Ty>>>”的声明
+          with
+          [
+              _Kty=int,
+              _Ty=Object *
+          ]
+d:\github\mytoy\gameengine\gameengine\engine.h(56): warning C4251: “CEngine::ClientWidth”: class“property<float>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(56): note: 参见“property<float>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(57): warning C4251: “CEngine::ClientHeight”: class“property<float>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(56): note: 参见“property<float>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(58): warning C4251: “CEngine::ClientRect”: class“property<RECT>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(58): note: 参见“property<RECT>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(59): warning C4251: “CEngine::DCHandle”: class“property_r<HDC>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(59): note: 参见“property_r<HDC>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(63): warning C4251: “CEngine::WindowHandle”: class“property<HWND>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(60): note: 参见“property<HWND>”的声明
+d:\github\mytoy\gameengine\gameengine\engine.h(87): warning C4251: “CEngine::m_cameras”: class“container::CPriorityQueue<CCamera *>”需要有 dll 接口由 class“CEngine”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\engine.h(87): note: 参见“container::CPriorityQueue<CCamera *>”的声明
+d:\github\mytoy\gameengine\gameengine\application.h(25): warning C4251: “SApplicationInfo::wndProc”: class“std::function<LRESULT (HWND,UINT,WPARAM,LPARAM)>”需要有 dll 接口由 struct“SApplicationInfo”的客户端使用
+  d:\github\mytoy\gameengine\gameengine\application.h(14): note: 参见“std::function<LRESULT (HWND,UINT,WPARAM,LPARAM)>”的声明
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(7): warning C4273: “s_registor”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(12): note: 参见“public: static CSpriteAnimation::Registor CSpriteAnimation::s_registor”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(7): error C2491: “CSpriteAnimation::s_registor”: 不允许 dllimport 静态数据成员 的定义
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(7): warning C4273: “CSpriteAnimation::GetClassNameW”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(12): note: 参见“GetClassNameW”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(9): warning C4273: “CSpriteAnimation::CSpriteAnimation”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(35): note: 参见“{ctor}”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(15): warning C4273: “CSpriteAnimation::~CSpriteAnimation”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(36): note: 参见“{dtor}”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(20): warning C4273: “CSpriteAnimation::Initialize”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(38): note: 参见“Initialize”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(35): warning C4273: “CSpriteAnimation::SetSpeed”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(41): note: 参见“SetSpeed”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(40): warning C4273: “CSpriteAnimation::GetSpeed”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(43): note: 参见“GetSpeed”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(45): warning C4273: “CSpriteAnimation::Play”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(45): note: 参见“Play”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(50): warning C4273: “CSpriteAnimation::Pause”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(47): note: 参见“Pause”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(55): warning C4273: “CSpriteAnimation::Stop”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(49): note: 参见“Stop”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(62): warning C4273: “CSpriteAnimation::ResetToBegin”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(51): note: 参见“ResetToBegin”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(73): warning C4273: “CSpriteAnimation::OnStart”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(55): note: 参见“OnStart”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(80): warning C4273: “CSpriteAnimation::OnUpdate”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(57): note: 参见“OnUpdate”的前一个定义
+d:\github\mytoy\gameengine\gameengine\spriteanimation.cpp(95): warning C4273: “CSpriteAnimation::OnDestroy”: dll 链接不一致
+  d:\github\mytoy\gameengine\gameengine\spriteanimation.h(59): note: 参见“OnDestroy”的前一个定义
+  SkinnedMeshRenderer.cpp

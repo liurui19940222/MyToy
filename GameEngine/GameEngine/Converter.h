@@ -7,11 +7,11 @@
 
 using namespace std;
 
+#define WSTRING_BUFFER_SIZE 4096
+
 class ENGINE_API CConverter
 {
 private:
-	static constexpr int WSTRING_BUFFER_SIZE = 4096;
-
 	static inline void StringToValue(const string& str, int* to) { *to = stoi(str); }
 	static inline void StringToValue(const string& str, float* to) { *to = stof(str); }
 	static inline void StringToValue(const string& str, double* to) { *to = stod(str); }
@@ -34,6 +34,24 @@ public:
 		vswprintf_s(m_wstringBuffer, text, ap);
 		va_end(ap);
 		return wstring(m_wstringBuffer);
+	}
+
+	static inline wstring StringToWString(const string &str)
+	{
+		wstring wstr;
+		int nLen = (int)str.length();
+		wstr.resize(nLen, L' ');
+		MultiByteToWideChar(CP_ACP, 0, (LPCSTR)str.c_str(), nLen, (LPWSTR)wstr.c_str(), nLen);
+		return wstr;
+	}
+
+	static inline string WStringToString(const wstring &wstr)
+	{
+		string str;
+		int nLen = (int)wstr.length();
+		str.resize(nLen, ' ');
+		WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstr.c_str(), nLen, (LPSTR)str.c_str(), nLen, NULL, NULL);
+		return str;
 	}
 };
 
