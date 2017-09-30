@@ -3,8 +3,11 @@
 
 #include<Windows.h>
 #include<gl\glew.h>
+#include<vector>
 #include"Math.h"
 #include"ApiDefine.h"
+
+using namespace std;
 
 #define _RGBA32(r, g, b, a) (a << 24) + (b << 16) + (g << 8) + r
 #define CH_MAP_BITMAP_SIZE_W 512
@@ -101,6 +104,7 @@ struct ENGINE_API SRect2D
 	SRect2D(float center_x, float center_y, float half_size_x, float half_size_y);
 
 	bool Overlay(const Vector2& pos) const;
+	vector<SRect2D> Split(vector<float> weights);
 
 	bool operator==(const SRect2D& rect);
 	bool operator!=(const SRect2D& rect);
@@ -168,9 +172,9 @@ enum ENGINE_API EAlignmentVertical
 
 struct ENGINE_API Layer
 {
-	static constexpr int Default = 1;
-	static constexpr int UI = 10;
-	static constexpr int Overlay2D = 30;
+	static const int Default;
+	static const int UI;
+	static const int Overlay2D;
 };
 
 #endif

@@ -60,9 +60,6 @@ void CWorldTreeWindow::OnCreate()
 	m_gui.SetGridRowHeight(20);
 	m_gui.SetGridRowCount(5);
 
-	CGUITextEdit* edit = m_gui.Create<CGUITextEdit>();
-	m_gui.PutIntoGrid(-1, 0, edit, false);
-
 	m_tree.SetManager(&m_gui);
 
 	m_contextMenu->Append(CMENU_ID_CREATE_EMPTY, L"Create Empty", [this](int id) {

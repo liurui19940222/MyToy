@@ -203,6 +203,22 @@ void CRawRenderer::DrawString(const wstring& str, const SRect2D& rect, const Vec
 	glPopMatrix();
 }
 
+void CRawRenderer::EnableClip(SRect2D& rect)
+{
+	glEnable(GL_SCISSOR_TEST);
+	glScissor(rect.center_x - rect.half_size_x, rect.center_y - rect.half_size_y, rect.half_size_x * 2, rect.half_size_y * 2);
+}
+
+void CRawRenderer::DisableClip()
+{
+	glDisable(GL_SCISSOR_TEST);
+}
+
+CTextOneLineData* CRawRenderer::GetLineData(int rowIndex)
+{
+	return m_fontRenderer.GetLineData(rowIndex);
+}
+
 HDC CRawRenderer::GetDcHandle()
 {
 	return m_hdc;

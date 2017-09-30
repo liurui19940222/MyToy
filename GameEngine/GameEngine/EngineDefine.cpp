@@ -15,6 +15,22 @@ bool SRect2D::Overlay(const Vector2& pos) const
 	return true;
 }
 
+vector<SRect2D> SRect2D::Split(vector<float> weights)
+{
+	float maxWidth = half_size_x * 2;
+	float leftPos = center_x - half_size_x;
+	float halfWidth = 0;
+	float w = 0;
+	vector<SRect2D> list;
+	for (int i = 0; i < weights.size(); ++i)
+	{
+		w += weights[i] * maxWidth;
+		halfWidth = weights[i] * maxWidth * 0.5f;
+		list.push_back(SRect2D{ leftPos + w - halfWidth, center_y,  halfWidth , half_size_y });
+	}
+	return list;
+}
+
 bool SRect2D::operator==(const SRect2D& rect)
 {
 	return this->half_size_x == rect.half_size_x && this->half_size_y == rect.half_size_y 
@@ -194,3 +210,7 @@ LPWSTR AnsiToUnicode(LPCSTR lpcstr)   //参数lpcstr类型也可是char*
 
 	return (Pwstr);
 }
+
+const int Layer::Default = 1;
+const int Layer::UI = 10;
+const int Layer::Overlay2D = 30;

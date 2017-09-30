@@ -11,13 +11,14 @@ void CGUIGroup::OnStart()
 	m_guiText->SetAlignment(EAlignment::LEFT_MIDDLE)->SetFontSize(13)->SetWidth(300)->SetHeight(50);
 	m_guiText->SetLayer(1);
 	m_guiTexture->SetLayer(1);
-	SetFillColor(Color::Hex(0x3E5F96FF));
+	SetFillColor(Color(0.2f, 0.2f, 0.6f, 1.0f));
 	SetCollide(true);
 	static Vector3 t1[3] = { Vector3(0.5f, 0.5f, 0.0f), Vector3(-0.5f, 0.5f, 0.0f), Vector3(0.0f, -0.5f, 0.0f) };
 	m_guiMesh = m_manager->Create<CGUIMesh>();
 	m_guiMesh->SetVertices(t1, 3)->SetMeshColor(Color::white)->SetScale(Vector3::one * 10)->SetWidth(10)->SetHeight(10)->SetCollide(true)->AddOnMouseClickListener([this](Vector2 m) {
 		this->SetOpened(!this->IsOpened());
 		this->GetManager()->UpdateLayout();
+		this->SetSelected(true);
 	});
 	m_guiMesh->SetLayer(1);
 	m_guiMesh->SetEnable(false);
@@ -44,7 +45,14 @@ void CGUIGroup::OnUpdate()
 
 void CGUIGroup::OnRender()
 {
+	CRawRenderer* renderer = m_manager->GetRenderer();
 	CGUIElement::OnRender();
+	if (m_fill)
+	{
+		renderer->SetRenderMode(ERenderMode::Wireframe);
+		renderer->DrawRect(m_rect, Color::orange);
+		renderer->SetRenderMode(ERenderMode::Fill);
+	}
 }
 
 void CGUIGroup::OnStateChanged()
@@ -52,7 +60,7 @@ void CGUIGroup::OnStateChanged()
 	switch (m_state)
 	{
 	case EElementState::Pressed:
-		SetSelected(!m_selected);
+		SetSelected(true);
 		break;
 	}
 }
@@ -108,6 +116,11 @@ void CGUIGroup::OnVisibleChanged(bool visible)
 bool CGUIGroup::Overlay(Vector2 pos)
 {
 	return CGUIElement::Overlay(pos);
+}
+
+void CGUIGroup::OnLostFocus()
+{
+	SetSelected(false);
 }
 
 CGUIGroup* CGUIGroup::SetOpened(bool opened)

@@ -155,6 +155,7 @@
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="GridLayout.cpp" />
     <ClCompile Include="GUIGroup.cpp" />
+    <ClCompile Include="GUIHorizontalLayout.cpp" />
     <ClCompile Include="GUIMesh.cpp" />
     <ClCompile Include="GUIText.cpp" />
     <ClCompile Include="GUITexture.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="GridLayout.h" />
     <ClInclude Include="GUIGroup.h" />
+    <ClInclude Include="GUIHorizontalLayout.h" />
     <ClInclude Include="GUIMesh.h" />
     <ClInclude Include="GUIText.h" />
     <ClInclude Include="GUITexture.h" />

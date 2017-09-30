@@ -51,18 +51,25 @@ LRESULT CALLBACK CWatcherWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 
 void CWatcherWindow::OnCreate()
 {
-	//CChannel::OnCreate();
-	//m_gui.SetGridRowHeight(20);
-	//m_gui.SetGridRowCount(20);
-	//m_gui.SetGridColumns(2, vector<float>{ 0.3f, 0.7f });
-	//CGUIElement* ui = m_gui.Create<CGUIElement>();
-	//ui->SetFill(true)->SetFillColor(Color::red)->SetCollide(true)->AddOnMouseClickListener([this](Vector2 pos) {
-	//	this->GetGUIManager().SetLayoutOffsetY(this->GetGUIManager().GetLayoutOffsetY() + 10);
-	//});
-	//m_gui.PutIntoGrid(1, 0, ui);
+	CChannel::OnCreate();
+	m_gui.SetGridRowHeight(20);
+	m_gui.SetGridRowCount(20);
+
+	CGUITextEdit* edit = m_gui.Create<CGUITextEdit>();
+	edit->SetEditValueMode(EEditValueMode::Word);
+
+	CGUIHorizontalLayout* layout = m_gui.Create<CGUIHorizontalLayout>();
+	layout->SetWeights(vector<float>{ 0.2f, 0.5f, 0.3f });
+	CGUIText* e1 = m_gui.Create<CGUIText>();
+	e1->SetText(L"name:")->SetAlignment(EAlignment::LEFT_MIDDLE)->SetFontSize(13);
+
+	m_gui.PutIntoGrid(0, 0, layout, false);
+
+	layout->AddMember(e1, 0);
+	layout->AddMember(edit, 1);
 }
 
 void CWatcherWindow::OnDraw()
 {
-	//CChannel::OnDraw();
+	CChannel::OnDraw();
 }

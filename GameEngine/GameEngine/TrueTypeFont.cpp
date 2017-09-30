@@ -41,7 +41,7 @@ CCharacterInfo* CTrueTypeFontSize::GetCharacter(int code)
 		//FT_Set_Char_Size(*ft_face, fontSize * 48, (int)(fontSize) * 48, 128, 128);
 		FT_Set_Pixel_Sizes(*ft_face, fontSize, fontSize);
 
-		FT_Load_Glyph(*ft_face, code, FT_LOAD_FORCE_AUTOHINT);
+		FT_Load_Glyph(*ft_face, code, FT_LOAD_DEFAULT);
 
 		if ((*ft_face)->glyph->format != FT_GLYPH_FORMAT_BITMAP)
 		{

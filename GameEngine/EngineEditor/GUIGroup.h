@@ -38,6 +38,7 @@ public:
 	virtual void OnVisibleChanged(bool visible) override;
 	virtual void OnStateChanged() override;
 	virtual bool Overlay(Vector2 pos) override;
+	virtual void OnLostFocus() override;
 
 	bool IsOpened();
 	bool IsSelected();

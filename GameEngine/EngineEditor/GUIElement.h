@@ -93,6 +93,7 @@ public:
 	EElementState GetState();
 	bool IsState(EElementState state);
 	bool Visible();
+	void EnableClip(bool clip);
 
 	virtual CGUIElement* SetCollide(bool isCollide);
 	virtual CGUIElement* SetFill(bool isFill);

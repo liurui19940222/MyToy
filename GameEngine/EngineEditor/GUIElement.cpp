@@ -80,6 +80,7 @@ void CGUIElement::OnUpdate()
 	
 }
 
+#include"GUIHorizontalLayout.h"
 void CGUIElement::OnRender()
 {
 	if (m_fill)
@@ -141,6 +142,16 @@ bool CGUIElement::IsState(EElementState state)
 bool CGUIElement::Visible()
 {
 	return (m_cell && m_cell->m_visible) || !m_cell;
+}
+
+void CGUIElement::EnableClip(bool clip)
+{
+	if (clip)
+	{
+		glEnable(GL_SCISSOR_TEST);
+		glScissor(m_rect.center_x - m_rect.half_size_x, m_rect.center_y - m_rect.half_size_y, m_rect.half_size_x * 2, m_rect.half_size_y * 2);
+	}
+	else glDisable(GL_SCISSOR_TEST);
 }
 
 CGUIElement* CGUIElement::SetCollide(bool isCollide)

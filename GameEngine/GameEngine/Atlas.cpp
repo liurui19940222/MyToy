@@ -40,7 +40,9 @@ void CAtlas::Set(int target_x, int target_y, int width, int height, uint8* grey_
 			if (x >= m_width || x < 0 || y >= m_height || y < 0)
 				continue;
 			uint8* p = grey_buffer + index_x + index_y * width;
-			bitmap.buffer[x + y * m_width] = _RGBA32(rgb.r, rgb.g, rgb.b, *p);
+			float v = pow((*p) / 255.0f, 1.0f / 2.2f);
+			//bitmap.buffer[x + y * m_width] = _RGBA32((int)(v * rgb.r), (int)(v * rgb.g), (int)(v * rgb.b), 255);
+			bitmap.buffer[x + y * m_width] = _RGBA32(rgb.r, rgb.g, rgb.b, (int)(v * 255));
 		}
 	}
 }

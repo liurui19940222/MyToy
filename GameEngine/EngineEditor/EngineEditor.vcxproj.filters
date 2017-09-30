@@ -84,6 +84,9 @@
     <ClCompile Include="GUITextEdit.cpp">
       <Filter>GUI\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="GUIHorizontalLayout.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\DLLEXPORT\GameEngine.lib">
@@ -152,6 +155,9 @@
       <Filter>Editor\头文件</Filter>
     </ClInclude>
     <ClInclude Include="GUITextEdit.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIHorizontalLayout.h">
       <Filter>GUI\头文件</Filter>
     </ClInclude>
   </ItemGroup>

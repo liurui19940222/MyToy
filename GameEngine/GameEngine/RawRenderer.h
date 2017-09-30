@@ -54,6 +54,9 @@ public:
 	void DrawTexture(CTexture& texture, const Vector3& position);
 	void DrawTexture(CTexture& texture, const SRect2D& rect);
 	void DrawString(const wstring& str, const SRect2D& rect, const Vector3& position, const Color& color, int size, EAlignment alignment, bool singleLine = true);
+	void EnableClip(SRect2D& rect);
+	void DisableClip();
+	CTextOneLineData* GetLineData(int rowIndex);
 	void Release();
 
 	HDC GetDcHandle();

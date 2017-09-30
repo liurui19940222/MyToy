@@ -8,6 +8,7 @@
 #include"GUIElement.h"
 #include"GUIGroup.h"
 #include"GUITextEdit.h"
+#include"GUIHorizontalLayout.h"
 #include<GameEngine\RawRenderer.h>
 
 class CGLWindow : public CWindow

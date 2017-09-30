@@ -15,8 +15,9 @@ enum ENGINE_API ETexWrapMode
 
 enum ENGINE_API ETexFilterMode
 {
-	Point = 0x2600,
-	Linear = 0x2601,
+	Point = GL_NEAREST,
+	Linear = GL_LINEAR,
+	Mipmap = GL_LINEAR_MIPMAP_LINEAR,
 };
 
 enum ENGINE_API ETexEnvMode
