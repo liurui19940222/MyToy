@@ -67,6 +67,12 @@ public:
 	void SetUniformParam(const char* paramName, const Vector2& value);
 	void SetUniformParam(const char* paramName, const Vector3& value);
 	void SetUniformParam(const char* paramName, const Matrix4x4& value);
+
+	void SetUniformParam(const char* paramName, int* value, int count);
+	void SetUniformParam(const char* paramName, float* value, int count);
+	void SetUniformParam(const char* paramName, const Color* value, int count);
+	void SetUniformParam(const char* paramName, const Vector2* value, int count);
+	void SetUniformParam(const char* paramName, const Vector3* value, int count);
 	void SetUniformParam(const char* paramName, const Matrix4x4* value, int count);
 	map<string, EShaderParamType> GetAllOfUniformParams();
 

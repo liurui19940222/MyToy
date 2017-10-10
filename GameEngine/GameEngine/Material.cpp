@@ -1,6 +1,7 @@
 #include"Material.h"
 #include"Maker.h"
 #include"Texture2D.h"
+#include"Light.h"
 
 IMPL_CLASS(CMaterial)
 
@@ -108,6 +109,7 @@ CMaterial* CMaterial::Bind()
 		SetParam("MainTex", 0);
 	}
 	SetParam("Color", m_color);
+	CLight::SetUniformParams(m_shader);
 	return this;
 }
 

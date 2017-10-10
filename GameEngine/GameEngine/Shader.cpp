@@ -206,6 +206,51 @@ void CShader::SetUniformParam(const char* paramName, const Matrix4x4& value)
 	}
 }
 
+void CShader::SetUniformParam(const char* paramName, int* value, int count)
+{
+	GLuint location = UniformParamLocation(paramName);
+	if (location >= 0)
+	{
+		glUniform1iv(location, count, value);
+	}
+}
+
+void CShader::SetUniformParam(const char* paramName, float* value, int count)
+{
+	GLuint location = UniformParamLocation(paramName);
+	if (location >= 0)
+	{
+		glUniform1fv(location, count, value);
+	}
+}
+
+void CShader::SetUniformParam(const char* paramName, const Color* value, int count)
+{
+	GLuint location = UniformParamLocation(paramName);
+	if (location >= 0)
+	{
+		glUniform4fv(location, count, (float*)value);
+	}
+}
+
+void CShader::SetUniformParam(const char* paramName, const Vector2* value, int count)
+{
+	GLuint location = UniformParamLocation(paramName);
+	if (location >= 0)
+	{
+		glUniform2fv(location, count, (float*)value);
+	}
+}
+
+void CShader::SetUniformParam(const char* paramName, const Vector3* value, int count)
+{
+	GLuint location = UniformParamLocation(paramName);
+	if (location >= 0)
+	{
+		glUniform3fv(location, count, (float*)value);
+	}
+}
+
 void CShader::SetUniformParam(const char* paramName, const Matrix4x4* value, int count)
 {
 	GLuint location = UniformParamLocation(paramName);

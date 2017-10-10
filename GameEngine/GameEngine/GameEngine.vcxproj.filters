@@ -320,6 +320,15 @@
     <ClInclude Include="TaskManager.h">
       <Filter>Common\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="LightTest.h">
+      <Filter>Application\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Component\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowMap.h">
+      <Filter>Render\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -489,6 +498,15 @@
     </ClCompile>
     <ClCompile Include="TaskManager.cpp">
       <Filter>Common\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LightTest.cpp">
+      <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Component\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowMap.cpp">
+      <Filter>Render\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

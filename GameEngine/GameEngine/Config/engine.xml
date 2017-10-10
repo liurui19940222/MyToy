@@ -8,6 +8,6 @@
   <debug
     draw_grid = "false"
     grid_strength = "0.5"
-    draw_gizmos = "true"
+    draw_gizmos = "false"
     />
 </engine>

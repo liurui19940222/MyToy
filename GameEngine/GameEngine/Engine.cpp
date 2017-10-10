@@ -8,6 +8,7 @@
 #include"GameObject.h"
 #include"Config.h"
 #include"EngineSetting.h"
+#include"Light.h"
 
 using namespace guisystem;
 
@@ -136,6 +137,8 @@ void CEngine::Render()
 		glClear(GL_COLOR_BUFFER_BIT);
 		return;
 	}
+	CLight::PrepareLight();
+
 	m_cameras.ForeachInverse([this](CCamera* camera) {
 		camera->BeginOneFrame();
 		IRenderer* renderer = NULL;

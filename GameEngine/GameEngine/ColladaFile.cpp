@@ -310,6 +310,7 @@ void CColladaFile::ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<B
 	m_model->m_skeleton.m_indices.resize(p_mesh->m_vertexCount);
 
 	int index_num = 0;
+	bool hasSkeletonInfo = weights.size() > 0;
 	for (auto it = triangles.begin(); it != triangles.end(); ++it)
 	{
 		int count = GetAttribute<int>(*it, "count");
@@ -342,8 +343,11 @@ void CColladaFile::ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<B
 		for (int i = 0; i < index_num; i += step)
 		{
 			int vi = indices[i + offsets[0]];
-			m_model->m_skeleton.m_weights[vertIndex] = weights[vi];
-			m_model->m_skeleton.m_indices[vertIndex] = weight_indices[vi];
+			if (hasSkeletonInfo)
+			{
+				m_model->m_skeleton.m_weights[vertIndex] = weights[vi];
+				m_model->m_skeleton.m_indices[vertIndex] = weight_indices[vi];
+			}
 			if (flags[0])
 				p_mesh->m_vertices[vertIndex++] = ((Vector3*)source_map[sourceIds[0]].array)[vi];
 			if (flags[1])
