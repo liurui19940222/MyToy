@@ -10,6 +10,7 @@
 #include"Config.h"
 #include"SkinnedMeshRenderer.h"
 #include"ColladaFile.h"
+#include"Light.h"
 #include<vector>
 
 using namespace std;
@@ -19,6 +20,9 @@ class CLightTest : public CGameWindow
 	CColladaFile* collada;
 	Model* m_model;
 	CGameObject* model;
+	CGameObject* directionalGo;
+	CGameObject* pointGo;
+	CLight* pointLight;
 	vector<AnimationClip*> m_clips;
 	CTexture* m_texture;
 public:

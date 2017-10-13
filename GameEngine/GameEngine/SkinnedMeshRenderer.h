@@ -28,6 +28,7 @@ public:
 
 	virtual void OnStart() override;
 	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix) override;
+	virtual void Render(CShader* shader) override;
 	virtual void RenderDebug(Matrix4x4& modelMatrix) override;
 };
 

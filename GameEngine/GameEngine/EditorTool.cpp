@@ -124,7 +124,7 @@ void CEditorTool::DrawRect(const SRect2D& rect, const Matrix4x4& modelToWorldMat
 
 void CEditorTool::DrawVector(const Vector3& vector, const Vector3& pos, const Color& color)
 {
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 	glPushMatrix();
 	float width;
 	glGetFloatv(GL_LINE_WIDTH, &width);
@@ -137,7 +137,7 @@ void CEditorTool::DrawVector(const Vector3& vector, const Vector3& pos, const Co
 	glEnd();
 	glLineWidth(width);
 	glPopMatrix();
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 }
 
 void CEditorTool::DrawAxis(const Vector3& forward, const Vector3& right, const Vector3& up, const Vector3& pos)

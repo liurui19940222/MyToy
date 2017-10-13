@@ -17,38 +17,6 @@ DWORD CWatcherWindow::GetStyle()
 	return WS_CHILD;
 }
 
-LRESULT CALLBACK CWatcherWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-	CChannel::WindowProc(hWnd, uMsg, wParam, lParam);
-	static HGLRC hRC;
-	static HDC hDC;
-	static POINT p{ 0, 0 };
-	static RECT rect;
-	static int height, width;
-
-	switch (uMsg)
-	{
-	case WM_CREATE:
-
-		break;
-	case WM_CLOSE:
-		break;
-	case WM_SIZE:
-
-		break;
-	case WM_COMMAND:
-
-		break;
-	case WM_MOVE:
-
-		break;
-	default:
-		break;
-	}
-
-	return DefWindowProc(hWnd, uMsg, wParam, lParam);
-}
-
 void CWatcherWindow::OnCreate()
 {
 	CChannel::OnCreate();
@@ -58,14 +26,14 @@ void CWatcherWindow::OnCreate()
 	CGUITextEdit* edit = m_gui.Create<CGUITextEdit>();
 	edit->SetEditValueMode(EEditValueMode::Word);
 
-	CGUIHorizontalLayout* layout = m_gui.Create<CGUIHorizontalLayout>();
-	layout->SetWeights(vector<float>{ 0.2f, 0.5f, 0.3f });
-	CGUIText* e1 = m_gui.Create<CGUIText>();
-	e1->SetText(L"name:")->SetAlignment(EAlignment::LEFT_MIDDLE)->SetFontSize(13);
+	CGUITexture* texture = m_gui.Create<CGUITexture>();
+	texture->SetTexture(CTexture2D::Create("textures/gui/ico_gameObject.png"));
 
+	CGUIHorizontalLayout* layout = m_gui.Create<CGUIHorizontalLayout>();
+	layout->SetWeights(vector<float>{ 0.08f, 0.75f, 0.17f });
 	m_gui.PutIntoGrid(0, 0, layout, false);
 
-	layout->AddMember(e1, 0);
+	layout->AddMember(texture, 0);
 	layout->AddMember(edit, 1);
 }
 

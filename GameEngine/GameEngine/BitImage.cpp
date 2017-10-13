@@ -88,6 +88,21 @@ void CBitImage::ReleaseSource()
 	}
 }
 
+bool CBitImage::ChangeSize(int width, int height)
+{
+	if (m_pFI)
+	{
+		FIBITMAP* bm = FreeImage_Rescale(m_pFI, width, height);
+		if (bm)
+		{
+			ReleaseSource();
+			m_pFI = bm;
+			return true;
+		}
+	}
+	return false;
+}
+
 bool CBitImage::Save(const char* path, FREE_IMAGE_FORMAT fif)
 {
 	if (m_pFI)

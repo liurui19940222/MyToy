@@ -16,6 +16,7 @@ void CSkinnedMeshRenderer::OnStart()
 void CSkinnedMeshRenderer::RenderDebug(Matrix4x4& modelMatrix)
 {
 	CEditorTool::DrawAxis(modelMatrix);
+	CEditorTool::DrawSkeleton(modelMatrix, *m_skeleton);
 }
 
 void CSkinnedMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
@@ -29,8 +30,13 @@ void CSkinnedMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix,
 	m_mesh->BindBuffer();
 	glDrawArrays(GL_TRIANGLES, 0, m_mesh->GetVertexNum());
 	m_material->Unbind();
+}
 
-	//CEditorTool::DrawSkeleton(modelMatrix, *m_skeleton);
+void CSkinnedMeshRenderer::Render(CShader* shader)
+{
+	if (!m_mesh) return;
+	m_mesh->BindBuffer();
+	glDrawArrays(GL_TRIANGLES, 0, m_mesh->GetVertexNum());
 }
 
 CSkinnedMeshRenderer* CSkinnedMeshRenderer::SetSkinningMesh(CMeshBuffer* mesh, Skeleton* skeleton)

@@ -10,7 +10,7 @@
 
 using namespace std;
 
-#define LIGHT_MAX_NUM 10
+#define LIGHT_MAX_NUM 12
 
 enum class ELightType
 {
@@ -26,9 +26,10 @@ private:
 	static Vector3 pos_buffer[LIGHT_MAX_NUM];
 	static float intensity_buffer[LIGHT_MAX_NUM];
 	static int type_buffer[LIGHT_MAX_NUM];
-
+	static Matrix4x4 shadowMapMatrix;
 	static CRenderTexture* shadowMap;
 	static vector<CLight*> lights;
+	static int shadowCasterIndex;
 
 protected:
 	Color m_color{ 1.0f, 1.0f, 1.0f, 1.0f };
@@ -39,7 +40,10 @@ protected:
 public:
 
 	static void SetShadowMapSize(int width, int height);
+	static CRenderTexture* GetShadowMap();
 	static CLight* PrepareLight();
+	static void RenderShadowMap(CLight* light);
+	static Matrix4x4 GetShadowMapMatrix();
 	static void SetUniformParams(CShader* shader);
 
 	inline virtual void SetColor(Color color) { m_color = color; }

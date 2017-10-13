@@ -25,32 +25,44 @@ void CLightTest::OnStart()
 	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, &m_model->m_skeleton)->SetMaterial(model_mat);
 	_MainCameraGo->LookAt(model->GetLocalPosition());
 
-	CLight* light0 = _Maker->Instantiate(L"light0")->AddComponent<CLight>();
-	light0->gameObject->SetLocalEulerAngles(Vector3(157, 0, 0));
+	directionalGo = _Maker->Instantiate(L"light0");
+	directionalGo->SetLocalEulerAngles(Vector3(50, 0, 0));
+	CLight* light0 = directionalGo->AddComponent<CLight>();
 	light0->SetColor(Color::white);
-	light0->SetIntensity(1.0);
+	light0->SetIntensity(0.8);
+	light0->SetCastShadow(true);
 
-	CLight* light1 = _Maker->Instantiate(L"light1")->AddComponent<CLight>();
-	light1->gameObject->SetLocalEulerAngles(Vector3(46, 0, 0));
-	light1->SetColor(Color::purple);
-	light1->SetIntensity(0.8);
+	pointGo = _Maker->Instantiate(L"light1");
+	pointGo->SetLocalPosition(Vector3(0, 0.5, 0));
+	pointGo->SetLocalScale(Vector3::one * 0.1);
+	//pointGo->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube));
+	pointLight = pointGo->AddComponent<CLight>();
+	pointLight->SetType(ELightType::Point);
+	pointLight->SetColor(Color::blue);
+	pointLight->SetIntensity(0.6);
 }
 
 void CLightTest::OnUpdate()
 {
-	float h = CInput::GetAxis("Horizontal") * CTime::deltaTime * 100;
-	float v = CInput::GetAxis("Vertical") * CTime::deltaTime * 100;
+	float h = CInput::GetAxis("Horizontal") * CTime::deltaTime * 30;
+	float v = CInput::GetAxis("Vertical") * CTime::deltaTime * 30;
 
-	Vector3 euler = model->GetLocalEulerAngles();
-	euler.y += h;
-	model->SetLocalEulerAngles(euler);
+	Vector3 pos = pointGo->GetLocalPosition();
+	pos.x += h;
+	pos.y += v;
+	pointGo->SetLocalPosition(pos);
 
 	CEditorTool::WatchTarget(*_MainCameraGo, model->GetLocalPosition());
+
+	//sprite->LookAt(_MainCameraGo->GetLocalPosition());
+	Vector3 euler = directionalGo->GetLocalEulerAngles();
+	euler.y += CTime::deltaTime * 20;
+	//directionalGo->SetLocalEulerAngles(euler);
 }
 
 void CLightTest::OnRender()
 {
-
+	//CEditorTool::DrawVector(directionalGo->GetForward(), directionalGo->GetLocalPosition(), Color::red);
 }
 
 void CLightTest::OnClose()

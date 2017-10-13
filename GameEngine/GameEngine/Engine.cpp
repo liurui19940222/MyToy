@@ -21,7 +21,7 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd, float clientWidth, float
 	CTime::InitTime();
 	CTime::SetTargetFrameCount(60);
 	CEngineSetting::Init();
-
+	CLight::SetShadowMapSize(1024, 1024);
 	m_hInstance = instance;
 	WindowHandle = hwnd;
 
@@ -137,7 +137,9 @@ void CEngine::Render()
 		glClear(GL_COLOR_BUFFER_BIT);
 		return;
 	}
-	CLight::PrepareLight();
+
+	CLight* light = CLight::PrepareLight();
+	CLight::RenderShadowMap(light);
 
 	m_cameras.ForeachInverse([this](CCamera* camera) {
 		camera->BeginOneFrame();

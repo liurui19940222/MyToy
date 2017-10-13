@@ -37,6 +37,8 @@ public:
 
 	BYTE* GetBytes();
 
+	bool ChangeSize(int width, int height);
+
 	bool Save(const char* path, FREE_IMAGE_FORMAT fif);
 
 	static CBitImage* Create(int width, int height, int bpp, BYTE* data);

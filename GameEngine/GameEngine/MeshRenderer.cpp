@@ -29,6 +29,13 @@ void CMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix
 	m_material->Unbind();
 }
 
+void CMeshRenderer::Render(CShader* shader)
+{
+	if (!m_mesh) return;
+	m_mesh->BindBuffer();
+	glDrawArrays(GL_TRIANGLES, 0, m_mesh->GetVertexNum());
+}
+
 CMeshRenderer* CMeshRenderer::SetModel(CMeshBuffer* mesh)
 {
 	this->m_mesh = mesh;

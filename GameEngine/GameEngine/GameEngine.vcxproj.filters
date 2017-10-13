@@ -329,6 +329,9 @@
     <ClInclude Include="ShadowMap.h">
       <Filter>Render\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ImageHandle.h">
+      <Filter>Common\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -508,6 +511,12 @@
     <ClCompile Include="ShadowMap.cpp">
       <Filter>Render\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Render\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageHandle.cpp">
+      <Filter>Common\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="dinput8.lib">
@@ -570,6 +579,12 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="Shader\gui.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\shadow.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\shadow.vert">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
