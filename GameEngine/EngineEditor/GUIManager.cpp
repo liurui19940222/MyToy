@@ -36,6 +36,20 @@ void CGUIManager::Destroy(CGUIElement* widget)
 	delete(widget);
 }
 
+void CGUIManager::DestroyAll()
+{
+	CGUIElement* e = m_elements.Head();
+	m_elements.Foreach([this](CGUIElement* e) {
+		e->OnDestroy();
+	});
+	m_elements.Foreach([this](CGUIElement* e) {
+		delete(e);
+	});
+	m_curOverlay = NULL;
+	m_lastDown = NULL;
+	m_elements.Clear();
+}
+
 void CGUIManager::ForeachElement(ElementForeachCallback callback)
 {
 	m_elements.Foreach(callback);

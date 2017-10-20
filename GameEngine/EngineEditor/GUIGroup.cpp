@@ -151,12 +151,13 @@ void CGUIGroup::UpdateVisible()
 
 CGUIGroup* CGUIGroup::SetSelected(bool selected)
 {
+	if (!m_canSelect) return this;
 	m_selected = selected;
 	m_fill = m_selected;
 	return this;
 }
 
-CGUIGroup* CGUIGroup::SetIcon(CTexture2D* texture)
+CGUIGroup* CGUIGroup::SetIcon(CTexture* texture)
 {
 	if (texture != NULL) m_hasIcon = true;
 	m_guiTexture->SetTexture(texture);
@@ -167,6 +168,12 @@ CGUIGroup* CGUIGroup::SetIcon(CTexture2D* texture)
 CGUIGroup* CGUIGroup::SetText(const wstring& text)
 {
 	m_guiText->SetText(text);
+	return this;
+}
+
+CGUIGroup* CGUIGroup::SetCanSelect(bool can)
+{
+	m_canSelect = can;
 	return this;
 }
 

@@ -1,7 +1,7 @@
 #include"GUIText.h"
 #include"GUIManager.h"
 
-CGUIText::CGUIText() : CGUIElement(), m_color(Color::white), m_alignment(EAlignment::CENTER_MIDDLE), m_fontSize(10)
+CGUIText::CGUIText() : CGUIElement(), m_color(Color::white), m_alignment(EAlignment::CENTER_MIDDLE), m_fontSize(13)
 {
 	SetFill(false);
 }

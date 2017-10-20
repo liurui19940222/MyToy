@@ -19,6 +19,7 @@ private:
 	bool m_hasIcon;
 	bool m_opened;
 	bool m_selected;
+	bool m_canSelect = true;
 	CGUIText* m_guiText;
 	CGUITexture* m_guiTexture;
 	CGUIMesh* m_guiMesh;
@@ -48,8 +49,9 @@ public:
 	void RemoveInParent();
 	CGUIGroup* SetOpened(bool opened);
 	CGUIGroup* SetSelected(bool selected);
-	CGUIGroup* SetIcon(CTexture2D* texture);
+	CGUIGroup* SetIcon(CTexture* texture);
 	CGUIGroup* SetText(const wstring& text);
+	CGUIGroup* SetCanSelect(bool can);
 
 	CGUIElement* operator[](int index);
 	CGUIElement* GetMember(int index);

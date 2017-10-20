@@ -64,6 +64,11 @@ int CEditor::InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCm
 	m_layout[1].InsertRow(FRect{ 0.2f, 0.7f, 0.8f, 1.0f }, 1);
 	m_layout[1][1].set(consoleWindow);
 
+	for (pair<EWindowType, CWindow*> kv : m_windows)
+	{
+		kv.second->OnWindowInitialized();
+	}
+
 	CInput::Mode = EMouseMode::Absolute;
 	FontManager->LoadFont(1, "C:/Windows/Fonts/simkai.ttf");
 

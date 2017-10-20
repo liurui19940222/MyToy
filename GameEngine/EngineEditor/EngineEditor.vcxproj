@@ -152,8 +152,10 @@
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="ConsoleWindow.cpp" />
     <ClCompile Include="ContextMenu.cpp" />
+    <ClCompile Include="GameObjectWatcher.cpp" />
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="GridLayout.cpp" />
+    <ClCompile Include="GUICheckBox.cpp" />
     <ClCompile Include="GUIGroup.cpp" />
     <ClCompile Include="GUIHorizontalLayout.cpp" />
     <ClCompile Include="GUIMesh.cpp" />
@@ -162,6 +164,7 @@
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="SceneWindow.cpp" />
     <ClCompile Include="GUITextEdit.cpp" />
+    <ClCompile Include="Watcher.cpp" />
     <ClCompile Include="WatcherWindow.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Editor.cpp" />
@@ -176,8 +179,10 @@
     <ClInclude Include="Channel.h" />
     <ClInclude Include="ConsoleWindow.h" />
     <ClInclude Include="ContextMenu.h" />
+    <ClInclude Include="GameObjectWatcher.h" />
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="GridLayout.h" />
+    <ClInclude Include="GUICheckBox.h" />
     <ClInclude Include="GUIGroup.h" />
     <ClInclude Include="GUIHorizontalLayout.h" />
     <ClInclude Include="GUIMesh.h" />
@@ -188,6 +193,7 @@
     <ClInclude Include="SceneWindow.h" />
     <ClInclude Include="SelfContainedGrid.h" />
     <ClInclude Include="GUITextEdit.h" />
+    <ClInclude Include="Watcher.h" />
     <ClInclude Include="WatcherWindow.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="Editor.h" />

@@ -30,7 +30,7 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd, float clientWidth, float
 	m_cameras.SetComparator(CompareCamera);
 	CCamera* mainCamera = _Maker->Instantiate(L"MainCamera")->AddComponent<CCamera>();
 	mainCamera->gameObject->SetTag("MainCamera");
-	mainCamera->gameObject->SetLocalPosition(Vector3(0, 4, -20));
+	mainCamera->gameObject->SetLocalPosition(Vector3(0, 4, -10));
 	mainCamera->Perspective(60.0f, clientWidth / clientHeight, 1.0f, 1000.0f);
 	mainCamera->LayerMask() = Layer::Default;
 	mainCamera->UpdateViewMatrix();
@@ -43,6 +43,8 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd, float clientWidth, float
 	uiCamera->SetDepth(99)->LayerMask() = Layer::Overlay2D;
 	uiCamera->Ortho(clientHeight * 0.5f, clientWidth / clientHeight);
 	uiCamera->UpdateViewMatrix();
+
+	_Maker->CreateDirectionalLight();
 }
 
 void CEngine::SetupProjection(int width, int height)

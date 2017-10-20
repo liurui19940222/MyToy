@@ -12,8 +12,10 @@ template<typename T> class CGUITree;
 
 template<typename T> class CGUITreeNode
 {
+	typedef function<void(T)> OnTreeNodeSelected;
 private:
 	vector<CGUITreeNode<T>*> m_nodes;
+	vector<OnTreeNodeSelected> m_callbacks;
 	CGUITree<T>* m_tree;
 	CGUITreeNode<T>* m_parent;
 	CGUIManager* m_manager;
@@ -46,6 +48,8 @@ public:
 		m_group->SetText(name);
 		m_group->AddOnMouseDownListener([this](Vector2 mousePos) {
 			m_tree->SelectNode(this);
+			for (OnTreeNodeSelected callback : this->m_callbacks)
+				callback(this->m_value);
 		});
 
 		if (parent == NULL)
@@ -58,7 +62,7 @@ public:
 		}
 	}
 
-	~CGUITreeNode<T>() 
+	~CGUITreeNode<T>()
 	{
 		for (int i = m_nodes.size() - 1; i >= 0; --i)
 		{
@@ -80,6 +84,18 @@ public:
 		return node;
 	}
 
+	CGUITreeNode<T>* AddOnSelectedListener(OnTreeNodeSelected callback)
+	{
+		m_callbacks.push_back(callback);
+		return this;
+	}
+
+	CGUITreeNode<T>* RemoveAllOnSelectedListener()
+	{
+		m_callbacks.clear();
+		return this;
+	}
+
 	CGUITreeNode<T>& operator[](int index)
 	{
 		return *(m_nodes[index]);
@@ -98,6 +114,11 @@ public:
 	vector<CGUITreeNode<T>*>& nodes()
 	{
 		return m_nodes;
+	}
+
+	void SetText(const wstring& str)
+	{
+		m_group->SetText(str);
 	}
 };
 

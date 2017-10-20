@@ -5,6 +5,7 @@
 #include"MeshFactory.h"
 #include"MessageCenter.h"
 #include"MessageDef.h"
+#include"Light.h"
 
 void CMaker::OnInitialize()
 {
@@ -213,4 +214,25 @@ CGameObject* CMaker::CreateQuad()
 	CGameObject* go = _Maker->Instantiate(L"Quad");
 	go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Quad))->SetMaterial(mat);
 	return go;
+}
+
+CGameObject* CMaker::CreateDirectionalLight()
+{
+	CGameObject* directionalGo = _Maker->Instantiate(L"DirectionLight");
+	directionalGo->SetLocalEulerAngles(Vector3(50, 0, 0));
+	CLight* light0 = directionalGo->AddComponent<CLight>();
+	light0->SetColor(Color::white);
+	light0->SetIntensity(1.0f);
+	light0->SetCastShadow(false);
+	return directionalGo;
+}
+
+CGameObject* CMaker::CreatePointLight()
+{
+	CGameObject* pointGo = _Maker->Instantiate(L"light1");
+	CLight* pointLight = pointGo->AddComponent<CLight>();
+	pointLight->SetType(ELightType::Point);
+	pointLight->SetColor(Color::white);
+	pointLight->SetIntensity(1.0f);
+	return pointGo;
 }

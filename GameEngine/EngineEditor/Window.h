@@ -27,6 +27,7 @@ enum class EDockDirection
 
 class CWindow : public CGridElement, public IReceiver
 {
+	friend class CEditor;
 private:
 	FRect m_normalizedRect;
 	float m_parentWidth;
@@ -41,6 +42,7 @@ protected:
 
 	void Create(wchar_t* class_name, HINSTANCE instance, HWND parent, int width, int height, DWORD dword);
 	virtual void OnCreate();
+	virtual void OnWindowInitialized();
 	virtual void OnClose();
 	virtual void OnReceiveMsg(SMessage& message) override;
 

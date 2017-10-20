@@ -43,6 +43,17 @@ bool SRect2D::operator!=(const SRect2D& rect)
 		|| this->center_x != rect.center_x || this->center_y != rect.center_y;
 }
 
+void SRect2D::operator*=(float scale)
+{
+	half_size_x *= scale;
+	half_size_y *= scale;
+}
+
+SRect2D SRect2D::operator*(float scale)
+{
+	return SRect2D(center_x, center_y, half_size_x * scale, half_size_y * scale);
+}
+
 Color::Color(){}
 
 Color::Color(float r, float g, float b, float a)

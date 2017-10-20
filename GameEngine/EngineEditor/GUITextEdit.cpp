@@ -3,6 +3,8 @@
 #include<GameEngine\MessageDef.h>
 #include<GameEngine\TaskManager.h>
 #include<GameEngine\Time.h>
+#include<GameEngine\Converter.h>
+#include<GameEngine\Input.h>
 #include<windowsx.h>
 
 CGUITextEdit::CGUITextEdit() : CGUIElement(), m_cursorPos(0)
@@ -13,6 +15,20 @@ CGUITextEdit::CGUITextEdit() : CGUIElement(), m_cursorPos(0)
 void CGUITextEdit::OnUpdate()
 {
 	CGUIElement::OnUpdate();
+	if (m_valueMode == EEditValueMode::Number && m_value.size() > 0 && m_haveFocus)
+	{
+		float s = CInput::GetAxis("Scroll") * CTime::deltaTime * 0.4f;
+		if (s != 0.0f)
+		{
+			float value = CConverter::ToValue<float>(m_value);
+			if (CInput::GetKey(DIK_LCONTROL))
+				s *= 2;
+			if (CInput::GetKey(DIK_LSHIFT))
+				s *= 10;
+			SetValueWithNumber(s + value);
+			if (m_submitCallback) m_submitCallback(m_value);
+		}
+	}
 }
 
 void CGUITextEdit::OnRender()
@@ -22,7 +38,7 @@ void CGUITextEdit::OnRender()
 	CGUIElement::OnRender();
 	renderer->SetRenderMode(ERenderMode::Fill);
 	EnableClip(true);
-	renderer->DrawString(m_value, m_rect, m_position - m_offset, Color::white, 13, EAlignment::LEFT_MIDDLE);
+	renderer->DrawString(m_value, m_rect * 0.95f, m_position - m_offset, Color::white, 13, EAlignment::LEFT_MIDDLE);
 	EnableClip(false);
 	m_lineData = renderer->GetLineData(0);
 
@@ -55,6 +71,7 @@ void CGUITextEdit::OnGotFocus()
 	CMessageCenter::Register(MSG_ON_INPUT_A_CHAR, this);
 	CMessageCenter::Register(MSG_ON_KEYDOWN, this);
 	SetFillColor(Color::green);
+	m_cursorPos = m_value.size();
 }
 
 void CGUITextEdit::OnLostFocus()
@@ -62,6 +79,15 @@ void CGUITextEdit::OnLostFocus()
 	CMessageCenter::Unregister(MSG_ON_INPUT_A_CHAR, this);
 	CMessageCenter::Unregister(MSG_ON_KEYDOWN, this);
 	SetFillColor(Color::white);
+
+	if (m_valueMode == EEditValueMode::Number)
+	{
+		if (m_value.size() == 0)
+			m_value = L"0";
+		else
+			SetValueWithNumber(CConverter::ToValue<float>(m_value));
+	}
+	if (m_submitCallback) m_submitCallback(m_value);
 }
 
 void CGUITextEdit::OnReceiveMsg(SMessage& message)
@@ -102,12 +128,12 @@ void CGUITextEdit::OnReceiveMsg(SMessage& message)
 			}, NULL, 0));
 			break;
 		case VK_LEFT:
-			m_cursorPos = CMath::Clamp(m_cursorPos-1, 0, (int)m_value.size());
+			m_cursorPos = CMath::Clamp(m_cursorPos - 1, 0, (int)m_value.size());
 			show = true;
 			timer = 0;
 			break;
 		case VK_RIGHT:
-			m_cursorPos = CMath::Clamp(m_cursorPos+1, 0, (int)m_value.size());
+			m_cursorPos = CMath::Clamp(m_cursorPos + 1, 0, (int)m_value.size());
 			show = true;
 			timer = 0;
 			break;
@@ -138,9 +164,34 @@ CGUITextEdit* CGUITextEdit::SetEditValueMode(EEditValueMode mode)
 	return this;
 }
 
+CGUITextEdit* CGUITextEdit::SetOnSubmitListener(OnSubmit callback)
+{
+	m_submitCallback = callback;
+	return this;
+}
+
+void CGUITextEdit::SetValue(const wstring& str)
+{
+	m_value = str;
+	m_cursorPos = str.size();
+}
+
+void CGUITextEdit::SetValueWithNumber(float f)
+{
+	if (f - (int)f < CMath::EPSILON)
+		m_value = CConverter::ToWString((int)f);
+	else
+		m_value = CConverter::ToWString(f);
+}
+
+wstring CGUITextEdit::GetValue()
+{
+	return m_value;
+}
+
 bool CGUITextEdit::CheckChar(wchar_t c)
 {
-	if (c == VK_BACK || c == VK_RETURN) 
+	if (c == VK_BACK || c == VK_RETURN)
 		return false;
 	if (m_valueMode == EEditValueMode::Number)
 	{

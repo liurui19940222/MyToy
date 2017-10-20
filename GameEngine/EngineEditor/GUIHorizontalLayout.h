@@ -15,8 +15,9 @@ public:
 	CGUIHorizontalLayout();
 
 	void AddMember(CGUIElement* element, int index);
-	void SetWeights(vector<float> weights);
+	void SetWeights(vector<float> weights, bool normalize = false);
 	virtual void OnLayoutChanged(const SRect2D& rect) override;
+	virtual void OnVisibleChanged(bool visible) override;
 };
 
 #endif

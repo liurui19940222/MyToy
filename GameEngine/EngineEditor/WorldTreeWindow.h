@@ -19,6 +19,7 @@ class CWorldTreeWindow : public CChannel
 	void OnForeachGameObjects(CGameObject* go, int depth);
 	void OnGameObjectCreated(CGameObject* go);
 	void OnGameObjectDestoryed(int instanceId);
+	void OnGameObjectNameChanged(CGameObject* go);
 
 public:
 	CWorldTreeWindow(wchar_t* class_name, HINSTANCE instance, HWND parent, int width, int height, DWORD dword);

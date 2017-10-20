@@ -108,6 +108,8 @@ struct ENGINE_API SRect2D
 
 	bool operator==(const SRect2D& rect);
 	bool operator!=(const SRect2D& rect);
+	void operator*=(float scale);
+	SRect2D operator*(float scale);
 };
 
 LPWSTR AnsiToUnicode(LPCSTR lpcstr);

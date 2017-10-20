@@ -28,6 +28,15 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Editor\Watcher">
+      <UniqueIdentifier>{bd58b3d9-507a-4ad1-b524-792c1ad0919f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Watcher\源文件">
+      <UniqueIdentifier>{c16724f5-108e-4c2d-8a62-35c8b8b65d3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Watcher\头文件">
+      <UniqueIdentifier>{ab7cff0c-472f-439c-9586-40c6de5d1bab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GUIElement.cpp">
@@ -85,6 +94,15 @@
       <Filter>GUI\源文件</Filter>
     </ClCompile>
     <ClCompile Include="GUIHorizontalLayout.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectWatcher.cpp">
+      <Filter>Editor\Watcher\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Watcher.cpp">
+      <Filter>Editor\Watcher\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUICheckBox.cpp">
       <Filter>GUI\源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -158,6 +176,15 @@
       <Filter>GUI\头文件</Filter>
     </ClInclude>
     <ClInclude Include="GUIHorizontalLayout.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Watcher.h">
+      <Filter>Editor\Watcher\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectWatcher.h">
+      <Filter>Editor\Watcher\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUICheckBox.h">
       <Filter>GUI\头文件</Filter>
     </ClInclude>
   </ItemGroup>

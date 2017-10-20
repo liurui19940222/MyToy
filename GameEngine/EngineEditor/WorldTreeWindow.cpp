@@ -57,6 +57,7 @@ void CWorldTreeWindow::OnCreate()
 	CMessageCenter::Register(MSG_ON_ENGINE_INIT_COMPLETE, this);
 	CMessageCenter::Register(MSG_ON_GAMEOBJECT_CREATED, this);
 	CMessageCenter::Register(MSG_ON_GAMEOBJECT_DESTORYED, this);
+	CMessageCenter::Register(MSG_ON_GMAEOBJECT_NAME_CHANGED, this);
 	m_gui.SetGridRowHeight(20);
 	m_gui.SetGridRowCount(5);
 
@@ -115,6 +116,7 @@ void CWorldTreeWindow::OnClose()
 	CMessageCenter::Unregister(MSG_ON_ENGINE_INIT_COMPLETE, this);
 	CMessageCenter::Unregister(MSG_ON_GAMEOBJECT_CREATED, this);
 	CMessageCenter::Unregister(MSG_ON_GAMEOBJECT_DESTORYED, this);
+	CMessageCenter::Unregister(MSG_ON_GMAEOBJECT_NAME_CHANGED, this);
 }
 
 void CWorldTreeWindow::OnDraw()
@@ -139,6 +141,10 @@ void CWorldTreeWindow::OnReceiveMsg(SMessage& message)
 	{
 		OnGameObjectDestoryed((int)message.m_body);
 	}
+	else if (message.m_msgType == MSG_ON_GMAEOBJECT_NAME_CHANGED)
+	{
+		OnGameObjectNameChanged((CGameObject*)message.m_body);
+	}
 }
 
 void CWorldTreeWindow::OnForeachGameObjects(CGameObject* go, int depth)
@@ -148,18 +154,26 @@ void CWorldTreeWindow::OnForeachGameObjects(CGameObject* go, int depth)
 
 void CWorldTreeWindow::OnGameObjectCreated(CGameObject* go)
 {
+	CGUITreeNode<int>* node = NULL;
 	if (go->GetParent() == NULL)
 	{
 		CGUITree<int>* t1 = &m_tree;
-		m_tree.AddNode(go->GetName(), go->GetInstanceId());
+		node = m_tree.AddNode(go->GetName(), go->GetInstanceId());
 	}
 	else
 	{
 		CGUITreeNode<int>* parent = m_tree.FindNode(go->GetParent()->GetInstanceId());
 		if (parent != NULL)
 		{
-			parent->AddNode(go->GetName(), go->GetInstanceId());
+			node = parent->AddNode(go->GetName(), go->GetInstanceId());
 		}
+	}
+	if (node)
+	{
+		int instanceId = go->GetInstanceId();
+		node->AddOnSelectedListener([this, instanceId](int instanceId) {
+			CMessageCenter::Send(SMessage{ MSG_ON_SELECTED_GO_ON_WORLDTREE, this, (void*)instanceId });
+		});
 	}
 }
 
@@ -167,4 +181,13 @@ void CWorldTreeWindow::OnGameObjectDestoryed(int instanceId)
 {
 	m_tree.DeleteNode(instanceId);
 	m_gui.UpdateLayout();
+}
+
+void CWorldTreeWindow::OnGameObjectNameChanged(CGameObject* go)
+{
+	CGUITreeNode<int>* node = NULL;
+	if (go && (node = m_tree.FindNode(go->GetInstanceId())))
+	{
+		node->SetText(go->GetName());
+	}
 }

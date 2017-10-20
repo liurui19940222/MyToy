@@ -34,6 +34,7 @@ public:
 	void InitGUI(float resolution_x, float resolution_y);
 	void UpdateWidgetLayer(CGUIElement* widget);
 	void Destroy(CGUIElement* widget);
+	void DestroyAll();
 	void ForeachElement(ElementForeachCallback callback);
 	void ForeachElementR(ElementForeachCallbackR callback);
 	void InverseForeachElement(ElementForeachCallback callback);

@@ -102,9 +102,11 @@ public:
 	void ForeachGameObject(CGameObject* go, ForeachGoCallbackMatrix callback);
 	void ForeachGameObject(ForeachGoCallbackMatrix callback);
 
-	//创建预定义形状的GameObject
+	//创建预定义的GameObject
 	CGameObject* CreateCube();
 	CGameObject* CreateQuad();
+	CGameObject* CreateDirectionalLight();
+	CGameObject* CreatePointLight();
 };
 
 #endif

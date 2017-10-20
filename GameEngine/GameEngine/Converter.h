@@ -21,9 +21,20 @@ private:
 	static inline void StringToValue(const string& str, unsigned long* to) { *to = stoul(str); }
 	static inline void StringToValue(const string& str, unsigned long long* to) { *to = stoull(str); }
 	static inline void StringToValue(const string& str, bool* to) { *to = str == "true" || str == "1"; }
+	static inline void WStringToValue(const wstring& str, int* to) { *to = stoi(str); }
+	static inline void WStringToValue(const wstring& str, float* to) { *to = stof(str); }
+	static inline void WStringToValue(const wstring& str, double* to) { *to = stod(str); }
+	static inline void WStringToValue(const wstring& str, long* to) { *to = stol(str); }
+	static inline void WStringToValue(const wstring& str, long long* to) { *to = stoll(str); }
+	static inline void WStringToValue(const wstring& str, long double* to) { *to = stold(str); }
+	static inline void WStringToValue(const wstring& str, unsigned long* to) { *to = stoul(str); }
+	static inline void WStringToValue(const wstring& str, unsigned long long* to) { *to = stoull(str); }
+	static inline void WStringToValue(const wstring& str, bool* to) { *to = str == L"true" || str == L"1"; }
 public:
 	template<typename T> static inline string ToString(T value) { return to_string(value); }
+	template<typename T> static inline wstring ToWString(T value) { return to_wstring(value); }
 	template<typename T> static inline T ToValue(const string& str) { T t; StringToValue(str, &t); return t; }
+	template<typename T> static inline T ToValue(const wstring& str) { T t; WStringToValue(str, &t); return t; }
 
 	static inline wstring FormatWString(wchar_t* text, ...)
 	{

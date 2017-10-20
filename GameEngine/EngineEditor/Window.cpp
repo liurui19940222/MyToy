@@ -44,6 +44,11 @@ void CWindow::OnCreate()
 	
 }
 
+void CWindow::OnWindowInitialized()
+{
+	
+}
+
 void CWindow::OnClose()
 {
 	delete(m_contextMenu);

@@ -55,13 +55,39 @@ LRESULT CALLBACK CMainWindow::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 			PostQuitMessage(0);
 			break;
 		case IDM_WORLD_CREATEEMPTY:
-			_Engine->MakeRenderContext();
-			CMaterial* mat = _Maker->Instantiate<CMaterial>();
-			mat->SetShader(CShader::Get("light"));
-			mat->SetColor(Color::white);
-			CGameObject* go = _Maker->Instantiate(L"NewGameObject");
-			go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube))->SetMaterial(mat);
-			CMessageCenter::Send(SMessage{ MSG_ON_GAMEOBJECT_CREATED, this, go });
+			{
+				_Engine->MakeRenderContext();
+				CGameObject* go = _Maker->Instantiate();
+				CMessageCenter::Send(SMessage{ MSG_ON_GAMEOBJECT_CREATED, this, go });
+			}
+			break;
+		case IDM_WORLD_CREATECUBE:
+			{
+				_Engine->MakeRenderContext();
+				CGameObject* go = _Maker->CreateCube();
+				CMessageCenter::Send(SMessage{ MSG_ON_GAMEOBJECT_CREATED, this, go });
+			}
+			break;
+		case IDM_WORLD_CREATEQUAD:
+			{
+				_Engine->MakeRenderContext();
+				CGameObject* go = _Maker->CreateQuad();
+				CMessageCenter::Send(SMessage{ MSG_ON_GAMEOBJECT_CREATED, this, go });
+			}
+			break;
+		case IDM_WORLD_CREATE_DIR_LIGHT:
+			{
+				_Engine->MakeRenderContext();
+				CGameObject* go = _Maker->CreateDirectionalLight();
+				CMessageCenter::Send(SMessage{ MSG_ON_GAMEOBJECT_CREATED, this, go });
+			}
+			break;
+		case IDM_WORLD_CREATE_POINT_LIGHT:
+			{
+				_Engine->MakeRenderContext();
+				CGameObject* go = _Maker->CreatePointLight();
+				CMessageCenter::Send(SMessage{ MSG_ON_GAMEOBJECT_CREATED, this, go });
+			}
 			break;
 		}
 		break;
