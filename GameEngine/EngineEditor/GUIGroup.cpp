@@ -15,10 +15,10 @@ void CGUIGroup::OnStart()
 	SetCollide(true);
 	static Vector3 t1[3] = { Vector3(0.5f, 0.5f, 0.0f), Vector3(-0.5f, 0.5f, 0.0f), Vector3(0.0f, -0.5f, 0.0f) };
 	m_guiMesh = m_manager->Create<CGUIMesh>();
-	m_guiMesh->SetVertices(t1, 3)->SetMeshColor(Color::white)->SetScale(Vector3::one * 10)->SetWidth(10)->SetHeight(10)->SetCollide(true)->AddOnMouseClickListener([this](Vector2 m) {
+	m_guiMesh->SetVertices(t1, 3)->SetMeshColor(Color(0.65f, 0.65f, 0.65f, 1.0f))->SetScale(Vector3::one * 10)->SetWidth(10)->SetHeight(10)->SetCollide(true)->AddOnMouseClickListener([this](Vector2 m) {
 		this->SetOpened(!this->IsOpened());
 		this->GetManager()->UpdateLayout();
-		this->SetSelected(true);
+		//this->SetSelected(true);
 	});
 	m_guiMesh->SetLayer(1);
 	m_guiMesh->SetEnable(false);
@@ -75,7 +75,6 @@ void CGUIGroup::OnLayoutChanged(const SRect2D& rect)
 	m_guiMesh->SetEnable(m_cell->m_visible && m_members.size() > 0);
 	m_guiText->SetEnable(m_cell->m_visible);
 	m_guiTexture->SetEnable(m_cell->m_visible);
-
 	if (m_hasIcon)
 	{
 		m_guiMesh->SetRect(m_arrowRect);
@@ -157,11 +156,11 @@ CGUIGroup* CGUIGroup::SetSelected(bool selected)
 	return this;
 }
 
-CGUIGroup* CGUIGroup::SetIcon(CTexture* texture)
+CGUIGroup* CGUIGroup::SetIcon(CTexture* texture, bool managed)
 {
 	if (texture != NULL) m_hasIcon = true;
-	m_guiTexture->SetTexture(texture);
-	m_guiTexture->SetRawSize();
+	m_guiTexture->SetTexture(texture, managed);
+	m_guiTexture->ConstrainSize(18, 18);
 	return this;
 }
 

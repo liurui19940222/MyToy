@@ -111,6 +111,15 @@
     <Filter Include="Animation\源文件">
       <UniqueIdentifier>{b6895492-d2f4-438b-958c-2cb92fa675f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="IO">
+      <UniqueIdentifier>{c9fa8315-4c23-45fb-9606-297b0380bac6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\源文件">
+      <UniqueIdentifier>{ca04e5fd-ae97-407b-b195-ed7eba266a26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\头文件">
+      <UniqueIdentifier>{a2683ad0-97ca-432f-a2f0-6ed1dd8a6801}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -332,6 +341,15 @@
     <ClInclude Include="ImageHandle.h">
       <Filter>Common\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DirectoryInfo.h">
+      <Filter>IO\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystemInfo.h">
+      <Filter>IO\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FileInfo.h">
+      <Filter>IO\头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp">
@@ -516,6 +534,15 @@
     </ClCompile>
     <ClCompile Include="ImageHandle.cpp">
       <Filter>Common\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectoryInfo.cpp">
+      <Filter>IO\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystemInfo.cpp">
+      <Filter>IO\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FileInfo.cpp">
+      <Filter>IO\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

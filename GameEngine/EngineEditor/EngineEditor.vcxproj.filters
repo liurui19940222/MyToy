@@ -105,6 +105,9 @@
     <ClCompile Include="GUICheckBox.cpp">
       <Filter>GUI\源文件</Filter>
     </ClCompile>
+    <ClCompile Include="AssetsWindow.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\DLLEXPORT\GameEngine.lib">
@@ -186,6 +189,9 @@
     </ClInclude>
     <ClInclude Include="GUICheckBox.h">
       <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetsWindow.h">
+      <Filter>Editor\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

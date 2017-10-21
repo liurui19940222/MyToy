@@ -6,6 +6,7 @@
 #include"WorldTreeWindow.h"
 #include"ConsoleWindow.h"
 #include"WatcherWindow.h"
+#include"AssetsWindow.h"
 #include"GridLayout.h"
 #include<GameEngine\Config.h>
 #include<GameEngine\SkyBox.h>
@@ -49,20 +50,37 @@ int CEditor::InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCm
 	CWindow* worldWindow = OpenWindow<CWorldTreeWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 250, 600, NULL);
 	CWindow* consoleWindow = OpenWindow<CConsoleWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 250, 600, NULL);
 	CWindow* watcherWindow = OpenWindow<CWatcherWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 250, 600, NULL);
+	CWindow* assetsWindow = OpenWindow<CAssetsWindow>(CLASS_NAME, hInstance, mainWindow->WindowHandle, 250, 600, NULL);
 
 	m_headerHeight = mainWindow->GetHeaderHeight();
 
-	m_layout.InsertColumn(FRect{ 0.0f, 0.0f, 0.2f, 1.0f }, 0);
-	m_layout.InsertColumn(FRect{ 0.2f, 0.0f, 0.8f, 1.0f }, 1);
-	m_layout.InsertColumn(FRect{ 0.8f, 0.0f, 1.0f, 1.0f }, 2);
+	//m_layout.InsertColumn(FRect{ 0.0f, 0.0f, 0.2f, 1.0f }, 0);
+	//m_layout.InsertColumn(FRect{ 0.2f, 0.0f, 0.8f, 1.0f }, 1);
+	//m_layout.InsertColumn(FRect{ 0.8f, 0.0f, 1.0f, 1.0f }, 2);
+	//m_layout[0].InsertRow(FRect{}, 0, true);
+	//m_layout[1].InsertRow(FRect{}, 0, true);
+	//m_layout[2].InsertRow(FRect{}, 0, true);
+	//m_layout[0][0].set(worldWindow);
+	//m_layout[1][0].set(sceneWindow);
+	//m_layout[2][0].set(watcherWindow);
+	//m_layout[1].InsertRow(FRect{ 0.2f, 0.7f, 0.8f, 1.0f }, 1);
+	//m_layout[1][1].set(consoleWindow);
+
+	//0--0.147--0.71--0.85--1
+	m_layout.InsertColumn(FRect{ 0.0f, 0.0f, 0.147f, 1.0f }, 0);
+	m_layout.InsertColumn(FRect{ 0.147f, 0.0f, 0.71f, 1.0f }, 1);
+	m_layout.InsertColumn(FRect{ 0.71f, 0.0f, 0.85f, 1.0f }, 2);
+	m_layout.InsertColumn(FRect{ 0.85f, 0.0f, 1.0f, 1.0f }, 3);
 	m_layout[0].InsertRow(FRect{}, 0, true);
 	m_layout[1].InsertRow(FRect{}, 0, true);
 	m_layout[2].InsertRow(FRect{}, 0, true);
+	m_layout[3].InsertRow(FRect{}, 0, true);
 	m_layout[0][0].set(worldWindow);
 	m_layout[1][0].set(sceneWindow);
-	m_layout[2][0].set(watcherWindow);
-	m_layout[1].InsertRow(FRect{ 0.2f, 0.7f, 0.8f, 1.0f }, 1);
-	m_layout[1][1].set(consoleWindow);
+	m_layout[2][0].set(assetsWindow);
+	m_layout[3][0].set(watcherWindow);
+	//m_layout[1].InsertRow(FRect{ 0.2f, 0.7f, 0.8f, 1.0f }, 1);
+	//m_layout[1][1].set(consoleWindow);
 
 	for (pair<EWindowType, CWindow*> kv : m_windows)
 	{
@@ -79,7 +97,7 @@ int CEditor::InitEditor(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCm
 		"textures/skybox2/back.tga",
 		"textures/skybox2/left.tga",
 		"textures/skybox2/right.tga");
-	_MainCamera->SetSkyBox(box);
+	//_MainCamera->SetSkyBox(box);
 
 	CMessageCenter::Send(SMessage{ MSG_ON_ENGINE_INIT_COMPLETE, this, _Engine });
 	return 0;

@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AssetsWindow.cpp" />
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="ConsoleWindow.cpp" />
     <ClCompile Include="ContextMenu.cpp" />
@@ -176,6 +177,7 @@
     <Library Include="..\DLLEXPORT\GameEngine.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AssetsWindow.h" />
     <ClInclude Include="Channel.h" />
     <ClInclude Include="ConsoleWindow.h" />
     <ClInclude Include="ContextMenu.h" />

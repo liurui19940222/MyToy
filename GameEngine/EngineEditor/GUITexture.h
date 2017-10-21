@@ -7,15 +7,17 @@ class CGUITexture : public CGUIElement
 {
 private:
 	CTexture* m_texture;
-
+	bool m_managedTex = false;
 public:
 	CGUITexture();
 
+	virtual void OnDestroy() override;
 	virtual void OnRender() override;
 	virtual void OnStateChanged() override;
 
-	CGUITexture* SetTexture(CTexture* texture);
+	CGUITexture* SetTexture(CTexture* texture, bool managed = false);
 	CGUITexture* SetRawSize();
+	CGUITexture* ConstrainSize(float maxWidth, float maxHeight);
 };
 
 #endif

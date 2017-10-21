@@ -153,6 +153,9 @@ copy $(SolutionDir)GameEngine\Shader\ $(SolutionDir)\EngineEditor\Shader\</Comma
     <ClInclude Include="Application.h" />
     <ClInclude Include="Atlas.h" />
     <ClInclude Include="BitImage.h" />
+    <ClInclude Include="DirectoryInfo.h" />
+    <ClInclude Include="FileInfo.h" />
+    <ClInclude Include="FileSystemInfo.h" />
     <ClInclude Include="GUIDesigner.h" />
     <ClInclude Include="ImageHandle.h" />
     <ClInclude Include="Light.h" />
@@ -226,6 +229,9 @@ copy $(SolutionDir)GameEngine\Shader\ $(SolutionDir)\EngineEditor\Shader\</Comma
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Atlas.cpp" />
     <ClCompile Include="BitImage.cpp" />
+    <ClCompile Include="DirectoryInfo.cpp" />
+    <ClCompile Include="FileInfo.cpp" />
+    <ClCompile Include="FileSystemInfo.cpp" />
     <ClCompile Include="GUIDesigner.cpp" />
     <ClCompile Include="ImageHandle.cpp" />
     <ClCompile Include="Light.cpp" />

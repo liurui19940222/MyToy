@@ -49,7 +49,7 @@ public:
 	void RemoveInParent();
 	CGUIGroup* SetOpened(bool opened);
 	CGUIGroup* SetSelected(bool selected);
-	CGUIGroup* SetIcon(CTexture* texture);
+	CGUIGroup* SetIcon(CTexture* texture, bool managed = false);
 	CGUIGroup* SetText(const wstring& text);
 	CGUIGroup* SetCanSelect(bool can);
 

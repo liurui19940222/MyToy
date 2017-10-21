@@ -23,6 +23,7 @@ enum EWindowType
 	WorldTree,
 	Console,
 	Watcher,
+	Assets,
 };
 
 LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
