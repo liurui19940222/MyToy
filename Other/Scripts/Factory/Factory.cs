@@ -22,6 +22,12 @@ public class Factory : Singleton<Factory> {
         return m_CharacterFactory.CreateCharacter<T>(config);
     }
 
+    //创建角色的身体
+    public IPartOfBody[] CreateBody()
+    {
+        return m_CharacterFactory.CreateBody();
+    }
+
     //创建受玩家操作的AI
     public CharacterFSMMachine CreateControlledAI(ICharacter ch, RPGGame game)
     {

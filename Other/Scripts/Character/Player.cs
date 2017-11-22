@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : ICharacter
+public class Player : BattleCharacter
 {
     public override void OnInitialize()
     {

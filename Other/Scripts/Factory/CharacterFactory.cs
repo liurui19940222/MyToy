@@ -20,4 +20,24 @@ public class CharacterFactory {
         //character.GameObject.SetActive(false);
         return character;
     }
+
+    public IPartOfBody[] CreateBody()
+    {
+        IPartOfBody[] body = new IPartOfBody[Util.GetEnumMaxValue(typeof(EPartOfBodyType)) + 1];
+        body[(int)EPartOfBodyType.Head] = new IPartOfBody();
+        body[(int)EPartOfBodyType.Chest] = new IPartOfBody();
+        body[(int)EPartOfBodyType.Back] = new IPartOfBody();
+        body[(int)EPartOfBodyType.LeftShoulder] = new IPartOfBody();
+        body[(int)EPartOfBodyType.RightShoulder] = new IPartOfBody();
+        body[(int)EPartOfBodyType.LeftArm] = new IPartOfBody();
+        body[(int)EPartOfBodyType.RightArm] = new IPartOfBody();
+        body[(int)EPartOfBodyType.Waist] = new IPartOfBody();
+        body[(int)EPartOfBodyType.LeftHand] = new LeftHand();
+        body[(int)EPartOfBodyType.RightHand] = new RightHand();
+        body[(int)EPartOfBodyType.LeftLeg] = new IPartOfBody();
+        body[(int)EPartOfBodyType.RightLeg] = new IPartOfBody();
+        body[(int)EPartOfBodyType.LeftFoot] = new IPartOfBody();
+        body[(int)EPartOfBodyType.RightFoot] = new IPartOfBody();
+        return body;
+    }
 }
