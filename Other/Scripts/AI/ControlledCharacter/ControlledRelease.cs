@@ -26,11 +26,29 @@ public class ControlledRelease : ControlledState
         bool down = (bool)msg["down"];
         if (down)
         {
-            if (word == EInputWord.RB && ReadyToExecute())
+            if (InputTranslater.IsAttackWord(word) && ReadyToExecute())
             {
-                Debug.Log("execute skill");
-                m_CurSkill = RPGGame.Instance.ExecuteSkill(m_Player, 1);
-                return AIConst.CONTROLLED_AI_STATE_RELEASE;
+                int skillId = 0;
+                int lastSkillId = 0;
+                if (m_CurSkill != null)
+                {
+                    skillId = m_CurSkill.GetTargetId(word);
+                    lastSkillId = m_CurSkill.Id;
+                }
+                if (skillId == 0)
+                {
+                    if (word == EInputWord.RB)
+                        skillId = 1;
+                    else if (word == EInputWord.RT)
+                        skillId = 3;
+                }
+                Debug.Log("id " + skillId + "\tlastId " + lastSkillId);
+                if (lastSkillId != skillId)
+                {
+                    m_CurSkill = RPGGame.Instance.ExecuteSkill(m_Player, skillId);
+                    Debug.Log("execute skill " + m_CurSkill.Name);
+                    return AIConst.CONTROLLED_AI_STATE_RELEASE;
+                }
             }
         }
         return base.HandleInput(input, msg);
@@ -39,6 +57,7 @@ public class ControlledRelease : ControlledState
     public override void OnExit()
     {
         base.OnExit();
+        m_CurSkill = null;
         Debug.Log("release exit");
     }
 

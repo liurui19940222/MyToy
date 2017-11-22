@@ -35,7 +35,7 @@ public class ControlledIdleState : ControlledState
         if (down)
         {
             //转到施放状态来处理攻击消息
-            if (word == EInputWord.RB && !m_Player.Stiff)
+            if (InputTranslater.IsAttackWord(word) && !m_Player.Stiff)
             {
                 IsHandledLastInput = false;
                 return AIConst.CONTROLLED_AI_STATE_RELEASE;

@@ -34,6 +34,11 @@ public class SkillEditor : EditorWindow
             CreateEventList();
             CreateTransitionList();
         }
+
+        if (m_Config.Events == null) m_Config.Events = new List<SkillEvent>();
+        if (m_Config.Conditions == null) m_Config.Conditions = new List<SkillCondition>();
+        if (m_Config.Transitions == null) m_Config.Transitions = new List<SkillTransition>();
+
         if (m_ConditionList == null)
             CreateConditionList();
         if (m_EventList == null)

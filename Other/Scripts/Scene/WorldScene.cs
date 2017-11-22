@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WorldScene : BaseScene {
 
-    public WorldScene(int id) : base("WorldScene", id) { }
+    public WorldScene(int id) : base("LakesideSceneFinal", id) { }
 
     public override void OnEnter()
     {

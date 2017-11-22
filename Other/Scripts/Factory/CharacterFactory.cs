@@ -15,9 +15,9 @@ public class CharacterFactory {
         character.Config = ch_cfg;
         character.Animator = go.GetComponentInChildren<Animator>();
         character.Controller = go.GetComponentInChildren<CharacterController>();
-        AnimationBehaviour behav = character.Animator.gameObject.AddComponent<AnimationBehaviour>();
-        behav.StepVoiceSound = ch_cfg.StepVoiceSound;
-        character.GameObject.SetActive(false);
+        character.AnimBehaviour = character.Animator.gameObject.AddComponent<AnimationBehaviour>();
+        character.AnimBehaviour.StepVoiceSound = ch_cfg.StepVoiceSound;
+        //character.GameObject.SetActive(false);
         return character;
     }
 }

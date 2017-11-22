@@ -24,6 +24,7 @@
     {
         "播放骨骼动画",
         "播放特效",
+        "播放音效",
         "伤害判定",
         "触发Buff",
         "触发另一个技能",
@@ -57,6 +58,7 @@ public enum ESkillActionType
 {
     PlayAnim,               //播放骨骼动画
     PlayEffect,             //播放特效
+    PlaySound,              //播放音效
     CheckHurt,              //伤害判定
     TriggerBuff,            //触发Buff
     TriggerSkill,           //触发另一个技能

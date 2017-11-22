@@ -70,6 +70,8 @@ public class CharacterSystem : IGameSystem {
     private void CreatePlayer()
     {
         ICharacter ch = Factory.Instance.CreateCharacter<Player>("char_cfg_001");
+        Transform bornPoint = GameObject.FindWithTag("BornPoint").transform;
+        ch.Transform.position = bornPoint.position;
         SetControlledCharacter(ch);
         m_RPGGame.GetCamera().FollowCharacter(ch);
         AddCharacter(ch);

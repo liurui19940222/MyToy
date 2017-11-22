@@ -15,7 +15,8 @@ public abstract class ICharacter
     protected CharacterFSMMachine m_FSM;              //状态机
     protected CharacterConfig m_Config;               //角色配置
     protected IGameCamera m_GameCamera;               //跟随该角色的相机
-    private bool stiff;                           //是否处于僵直状态
+    protected AnimationBehaviour m_AnimBehaviour;     //动画回调脚本
+    private bool stiff;                               //是否处于僵直状态
 
     public ICharacter() { m_InstanceId = ++identity; }
 
@@ -58,6 +59,12 @@ public abstract class ICharacter
     {
         get { return m_FSM; }
         set { m_FSM = value; }
+    }
+
+    public AnimationBehaviour AnimBehaviour
+    {
+        get { return m_AnimBehaviour; }
+        set { m_AnimBehaviour = value; }
     }
 
     public Vector3 Position
@@ -132,6 +139,7 @@ public abstract class ICharacter
     public void Move(Vector3 dir)
     {
         float speed = dir.magnitude;
+        if (m_AnimBehaviour) m_AnimBehaviour.MoveSpeed = speed;
         if (speed < 0.15f)
         {
             m_LastSpeed = Mathf.Lerp(m_LastSpeed, 0, Time.deltaTime * 10);

@@ -22,6 +22,10 @@ public class Skill
 
     public SkillSystem System { get { return m_System; } }
 
+    public string Name { get { return m_Config.Name; } }
+
+    public int Id { get { return m_Config.Id; } }
+
     public Skill(SkillSystem system, ICharacter owner, SkillConfig config)
     {
         m_Character = owner;
@@ -98,6 +102,17 @@ public class Skill
         }
         m_Timer = 0;
         m_bDone = true;
+    }
+
+    //根据输入键位获得下一击技能Id
+    public int GetTargetId(EInputWord word)
+    {
+        for (int i = 0; i < m_Config.Transitions.Count; ++i)
+        {
+            if (m_Config.Transitions[i].Input == word)
+                return m_Config.Transitions[i].TargetSkillId;
+        }
+        return 0;
     }
 }
 
