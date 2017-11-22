@@ -144,14 +144,14 @@
   <ItemGroup>
     <None Include="Assets\Atlas\Blue Button\Orc Buttons\Font\Font Readme.txt" />
     <None Include="Assets\Editor\DOTween\DOTweenEditor.XML" />
-    <None Include="Assets\LakeSideCabin\Shaders\Tree_Bark.shader" />
-    <None Include="Assets\LakeSideCabin\Shaders\Tree_Billboard.shader" />
-    <None Include="Assets\LakeSideCabin\Shaders\Tree_Leaf.shader" />
     <None Include="Assets\Scripts\Common\DOTween\DOTween.XML" />
     <None Include="Assets\Scripts\Common\DOTween\DOTween43.xml" />
     <None Include="Assets\Scripts\Common\DOTween\DOTween46.xml" />
     <None Include="Assets\Scripts\Common\DOTween\DOTween50.xml" />
     <None Include="Assets\Scripts\Common\DOTween\readme.txt" />
+    <None Include="Assets\Source\LakeSideCabin\Shaders\Tree_Bark.shader" />
+    <None Include="Assets\Source\LakeSideCabin\Shaders\Tree_Billboard.shader" />
+    <None Include="Assets\Source\LakeSideCabin\Shaders\Tree_Leaf.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />

@@ -3,7 +3,9 @@ using DG.Tweening;
 
 public class ControlledIdleState : ControlledState
 {
-    public ControlledIdleState(int id, ICharacter ch) : base(id, ch)
+    private HandleInputResult m_Result;
+
+    public ControlledIdleState(int id, BattleCharacter ch) : base(id, ch)
     {
 
     }
@@ -20,10 +22,6 @@ public class ControlledIdleState : ControlledState
         if (!m_Player.Stiff)
         {
             m_Player.UpdateMove(true);
-            if (InputSystem.Instance.GetInput(EInputWord.LB))
-            {
-                return AIConst.CONTROLLED_AI_STATE_SHIELD;
-            }
         }
         return base.OnUpdate();
     }
@@ -37,8 +35,19 @@ public class ControlledIdleState : ControlledState
             //转到施放状态来处理攻击消息
             if (InputTranslater.IsAttackWord(word) && !m_Player.Stiff)
             {
-                IsHandledLastInput = false;
-                return AIConst.CONTROLLED_AI_STATE_RELEASE;
+                m_Result = m_Player.GetInputResult(word, down);
+                if (m_Result != null)
+                {
+                    if (m_Result.ResultType == HandleInputResult.Type.Sheild)
+                    {
+                        return AIConst.CONTROLLED_AI_STATE_SHIELD;
+                    }
+                    else if (m_Result.ResultType == HandleInputResult.Type.Skill)
+                    {
+                        IsHandledLastInput = false;
+                        return AIConst.CONTROLLED_AI_STATE_RELEASE;
+                    }
+                }
             }
         }
         return base.HandleInput(input, msg);

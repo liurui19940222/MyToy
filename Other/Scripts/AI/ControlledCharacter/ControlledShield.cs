@@ -2,7 +2,7 @@
 
 public class ControlledShield : ControlledState
 {
-    public ControlledShield(int id, ICharacter ch) : base(id, ch)
+    public ControlledShield(int id, BattleCharacter ch) : base(id, ch)
     {
     }
 

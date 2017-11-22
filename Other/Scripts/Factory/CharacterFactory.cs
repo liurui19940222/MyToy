@@ -17,7 +17,7 @@ public class CharacterFactory {
         character.Controller = go.GetComponentInChildren<CharacterController>();
         character.AnimBehaviour = character.Animator.gameObject.AddComponent<AnimationBehaviour>();
         character.AnimBehaviour.StepVoiceSound = ch_cfg.StepVoiceSound;
-        //character.GameObject.SetActive(false);
+        character.OnInitialize();
         return character;
     }
 
@@ -27,17 +27,13 @@ public class CharacterFactory {
         body[(int)EPartOfBodyType.Head] = new IPartOfBody();
         body[(int)EPartOfBodyType.Chest] = new IPartOfBody();
         body[(int)EPartOfBodyType.Back] = new IPartOfBody();
-        body[(int)EPartOfBodyType.LeftShoulder] = new IPartOfBody();
-        body[(int)EPartOfBodyType.RightShoulder] = new IPartOfBody();
-        body[(int)EPartOfBodyType.LeftArm] = new IPartOfBody();
-        body[(int)EPartOfBodyType.RightArm] = new IPartOfBody();
+        body[(int)EPartOfBodyType.Shoulders] = new IPartOfBody();
+        body[(int)EPartOfBodyType.Arms] = new IPartOfBody();
         body[(int)EPartOfBodyType.Waist] = new IPartOfBody();
-        body[(int)EPartOfBodyType.LeftHand] = new LeftHand();
-        body[(int)EPartOfBodyType.RightHand] = new RightHand();
-        body[(int)EPartOfBodyType.LeftLeg] = new IPartOfBody();
-        body[(int)EPartOfBodyType.RightLeg] = new IPartOfBody();
-        body[(int)EPartOfBodyType.LeftFoot] = new IPartOfBody();
-        body[(int)EPartOfBodyType.RightFoot] = new IPartOfBody();
+        body[(int)EPartOfBodyType.LeftHand] = new Hand();
+        body[(int)EPartOfBodyType.RightHand] = new Hand();
+        body[(int)EPartOfBodyType.Legs] = new IPartOfBody();
+        body[(int)EPartOfBodyType.Foots] = new IPartOfBody();
         return body;
     }
 }

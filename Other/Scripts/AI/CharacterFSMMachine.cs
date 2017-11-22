@@ -1,9 +1,9 @@
 ﻿public class CharacterFSMMachine : FSMMachine
 {
-    protected ICharacter m_Character;
+    protected BattleCharacter m_Character;
     private RPGGame m_RPGGame;
 
-    public ICharacter Character
+    public BattleCharacter Character
     {
         get { return m_Character; }
     }
@@ -13,7 +13,7 @@
         get { return m_RPGGame; }
     }
 
-    public CharacterFSMMachine(ICharacter ch, RPGGame game)
+    public CharacterFSMMachine(BattleCharacter ch, RPGGame game)
     {
         m_Character = ch;
         m_RPGGame = game;

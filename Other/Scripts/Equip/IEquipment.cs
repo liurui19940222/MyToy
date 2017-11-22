@@ -4,6 +4,10 @@
 
     public EEquipmentType Type { get { return m_Config.Type; } }
 
+    public int FirstSkill { get { return m_Config.FirstSkill; } }
+
+    public int FirstHeavySkill { get { return m_Config.FirstHeavySkill; } }
+
     public IEquipment(int id)
     {
         m_Config = ResourceFactory.Instance.LoadEquipConfig(id);
@@ -18,6 +22,7 @@ public enum EEquipmentType
     Trousers,               //裤子
     Belt,                   //腰带(腰甲)
     Shoes,                  //鞋子
+    Shield,                 //盾
     Rapier,                 //西洋剑
     Sword,                  //长剑
     DoubleSword,            //双剑

@@ -44,7 +44,7 @@ public class CharacterSystem : IGameSystem {
     }
 
     //设置一个角色为可控制
-    public void SetControlledCharacter(ICharacter ch)
+    public void SetControlledCharacter(BattleCharacter ch)
     {
         //TODO 为上一个控制角色添加AI代理
 
@@ -69,7 +69,13 @@ public class CharacterSystem : IGameSystem {
     //创建玩家角色
     private void CreatePlayer()
     {
-        ICharacter ch = Factory.Instance.CreateCharacter<Player>("char_cfg_001");
+        BattleCharacter ch = Factory.Instance.CreateCharacter<Player>("char_cfg_001");
+        //默认装备
+        for (int i = 0; i < ch.Config.DefaultEquipments.Length; ++i)
+        {
+            if (ch.Config.DefaultEquipments[i] != 0)
+                ch.Wear((EPartOfBodyType)i, Factory.Instance.CreateEquipment(ch.Config.DefaultEquipments[i]));
+        }
         Transform bornPoint = GameObject.FindWithTag("BornPoint").transform;
         ch.Transform.position = bornPoint.position;
         SetControlledCharacter(ch);

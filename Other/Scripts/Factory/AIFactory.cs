@@ -6,7 +6,7 @@ using System.Text;
 public class AIFactory
 {
 
-    public CharacterFSMMachine CreateControlledAI(ICharacter ch, RPGGame game)
+    public CharacterFSMMachine CreateControlledAI(BattleCharacter ch, RPGGame game)
     {
         CharacterFSMMachine fsm = new CharacterFSMMachine(ch, game);
         fsm.AddState(new ControlledIdleState(AIConst.CONTROLLED_AI_STATE_IDLE, ch));   //待机状态

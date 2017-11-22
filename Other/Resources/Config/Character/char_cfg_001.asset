@@ -15,3 +15,5 @@ MonoBehaviour:
   PrefabName: Character_001
   FollowPoint: {x: 0, y: 1.5, z: 0}
   StepVoiceSound: {fileID: 8300000, guid: 72975f706c1c3604ebc9e204ec4c7d8a, type: 3}
+  Gravity: 0.5
+  DefaultEquipments: 00000000000000000000000000000000000000000000000064000000010000000000000000000000

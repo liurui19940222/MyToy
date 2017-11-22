@@ -16,7 +16,8 @@ public abstract class ICharacter
     protected CharacterConfig m_Config;               //角色配置
     protected IGameCamera m_GameCamera;               //跟随该角色的相机
     protected AnimationBehaviour m_AnimBehaviour;     //动画回调脚本
-    private bool stiff;                               //是否处于僵直状态
+    private bool m_Stiff;                               //是否处于僵直状态
+    private Vector3 m_Velocity;
 
     public ICharacter() { m_InstanceId = ++identity; }
 
@@ -110,8 +111,8 @@ public abstract class ICharacter
 
     public bool Stiff
     {
-        get { return stiff; }
-        set { stiff = value; }
+        get { return m_Stiff; }
+        set { m_Stiff = value; }
     }
 
     public virtual void OnInitialize() { }
@@ -124,6 +125,22 @@ public abstract class ICharacter
         //寻路组件更新
         if (m_Navengation != null)
             m_Navengation.OnUpdate();
+
+        UpdateGravity();
+    }
+
+    //更新重力
+    private void UpdateGravity()
+    {
+        if (!m_Controller.isGrounded)
+        {
+            m_Velocity.y -= m_Config.Gravity * Time.deltaTime;
+        }
+        else
+        {
+            m_Velocity.y = 0;
+        }
+        m_Controller.Move(m_Velocity);
     }
 
     public virtual void OnDestroy() { }
@@ -162,6 +179,7 @@ public abstract class ICharacter
         {
             speed = Mathf.Lerp(m_LastSpeed, speed, Time.deltaTime * 15);
         }
+
         m_Controller.Move(dir.normalized * speed * Time.deltaTime);
         m_Animator.SetFloat("Speed", Mathf.Max(speed, 1.0f), 0.1f, Time.deltaTime);
         m_LastSpeed = speed;

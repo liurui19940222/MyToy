@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e963c1d676c2d494ebc64b140499df77, type: 3}
+  m_Name: equip_100
+  m_EditorClassIdentifier: 
+  Id: 100
+  Name: "\u5706\u76FE"
+  Desc: "\u505A\u5DE5\u624E\u5B9E\u7684\u76FE\u724C"
+  Type: 6
+  PrefabName: 
+  FirstSkill: 1
+  FirstHeavySkill: 3

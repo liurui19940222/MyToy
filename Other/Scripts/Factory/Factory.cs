@@ -7,6 +7,7 @@ public class Factory : Singleton<Factory> {
     private CharacterFactory m_CharacterFactory;    //角色工厂
     private AIFactory m_AIFactory;                  //AI工厂
     private SkillFactory m_SkillFactory;            //技能工厂
+    private EquipmentFactory m_EquipmentFactory;    //装备工厂
 
     protected override void OnInitialize()
     {
@@ -14,6 +15,7 @@ public class Factory : Singleton<Factory> {
         m_CharacterFactory = new CharacterFactory();
         m_AIFactory = new AIFactory();
         m_SkillFactory = new SkillFactory();
+        m_EquipmentFactory = new EquipmentFactory();
     }
 
     //创建世界中的角色
@@ -29,7 +31,7 @@ public class Factory : Singleton<Factory> {
     }
 
     //创建受玩家操作的AI
-    public CharacterFSMMachine CreateControlledAI(ICharacter ch, RPGGame game)
+    public CharacterFSMMachine CreateControlledAI(BattleCharacter ch, RPGGame game)
     {
         return m_AIFactory.CreateControlledAI(ch, game);
     }
@@ -38,5 +40,11 @@ public class Factory : Singleton<Factory> {
     public ISkillAction CreateSkillAction(ESkillActionType type, Skill owner, Object _params)
     {
         return m_SkillFactory.CreateAction(type, owner, _params);
+    }
+
+    //创建装备
+    public IEquipment CreateEquipment(int id)
+    {
+        return m_EquipmentFactory.CreateEquipment(id);
     }
 }

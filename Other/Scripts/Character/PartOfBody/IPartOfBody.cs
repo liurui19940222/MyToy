@@ -3,12 +3,38 @@
 /// </summary>
 public class IPartOfBody
 {
-    private IEquipment m_Euipment;          //该部位的装备
+    protected BattleCharacter m_Character;    //拥有者
+
+    protected IEquipment m_Euipment;          //该部位的装备
 
     public IEquipment Euipment
     {
         get { return m_Euipment; }
         set { m_Euipment = value; }
+    }
+
+    public BattleCharacter Character
+    {
+        get { return m_Character; }
+        set { m_Character = value; }
+    }
+
+    public virtual HandleInputResult HandleInput(EInputWord word, bool down)
+    {
+        return null;
+    }
+}
+
+public class HandleInputResult
+{
+    public Type ResultType;
+
+    public int TargetSkillId;
+
+    public enum Type
+    {
+        Sheild,
+        Skill,
     }
 }
 
@@ -20,17 +46,13 @@ public enum EPartOfBodyType
     Head,                   //头
     Chest,                  //胸腔
     Back,                   //后背
-    LeftShoulder,           //左肩
-    RightShoulder,          //右肩
-    LeftArm,                //左臂
-    RightArm,               //右臂
+    Shoulders,              //左肩
+    Arms,                   //手臂
     Waist,                  //腰
     LeftHand,               //左手
     RightHand,              //右手
-    LeftLeg,                //左腿
-    RightLeg,               //右腿
-    LeftFoot,               //左脚
-    RightFoot,              //右脚
+    Legs,                   //腿
+    Foots,                  //脚
 }
 
 
