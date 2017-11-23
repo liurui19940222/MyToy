@@ -14,3 +14,6 @@ MonoBehaviour:
   Distance: 2.6
   RawAngle: 15
   RotateFactor: 200
+  LockEnemyHeight: 1.6
+  LockEnemyDistance: 2.6
+  LockEnemyMaxAngle: 35

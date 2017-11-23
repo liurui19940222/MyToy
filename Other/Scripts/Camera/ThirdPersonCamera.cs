@@ -28,33 +28,56 @@ public class ThirdPersonCamera : IGameCamera
     {
         if (m_Character != null)
         {
-            Vector3 targetPos = m_Character.Position + m_Character.FollowPoint;
-            if (!m_bInit)
+            if (m_LockedEnemy == null)
             {
-                SetPosition(targetPos + m_RawVector);
-                m_RelativePos = targetPos - m_Transform.position;
-                m_bInit = true;
-            }
-            if (m_Axis == Vector2.zero)
-            {
-                m_Transform.position = targetPos - m_RelativePos;
-                m_Transform.LookAt(targetPos);
-                return;
-            }
+                Vector3 targetPos = m_Character.Position + m_Character.FollowPoint;
+                if (!m_bInit)
+                {
+                    SetPosition(targetPos + m_RawVector);
+                    m_RelativePos = targetPos - m_Transform.position;
+                    m_bInit = true;
+                }
+                if (m_Axis == Vector2.zero)
+                {
+                    m_Transform.position = targetPos - m_RelativePos;
+                    m_Transform.LookAt(targetPos);
+                    return;
+                }
 
-            Quaternion rotation = Quaternion.AngleAxis(m_Axis.x, Vector3.up);
-            Quaternion rise = Quaternion.AngleAxis(-m_Axis.y, Vector3.Cross((m_Transform.position - targetPos).normalized, Vector3.up));
-            Vector3 point = m_Transform.position - targetPos;
-            Vector3 euler = m_Transform.eulerAngles;
-            euler.x = euler.x > 180 ? -(360 - euler.x) : euler.x;
-            if (euler.x > 30 && m_Axis.y < 0)
-                rise = Quaternion.identity;
-            if (euler.x < -20 && m_Axis.y > 0)
-                rise = Quaternion.identity;
-            point = rotation * rise * point;
-            m_Transform.position = targetPos + point.normalized * m_Config.Distance;
-            m_Transform.LookAt(targetPos);
-            m_RelativePos = targetPos - m_Transform.position;
+                Quaternion rotation = Quaternion.AngleAxis(m_Axis.x, Vector3.up);
+                Quaternion rise = Quaternion.AngleAxis(-m_Axis.y, Vector3.Cross((m_Transform.position - targetPos).normalized, Vector3.up));
+                Vector3 point = m_Transform.position - targetPos;
+                Vector3 euler = m_Transform.eulerAngles;
+                euler.x = euler.x > 180 ? -(360 - euler.x) : euler.x;
+                if (euler.x > 30 && m_Axis.y < 0)
+                    rise = Quaternion.identity;
+                if (euler.x < -20 && m_Axis.y > 0)
+                    rise = Quaternion.identity;
+                point = rotation * rise * point;
+                m_Transform.position = targetPos + point.normalized * m_Config.Distance;
+                m_Transform.LookAt(targetPos);
+                m_RelativePos = targetPos - m_Transform.position;
+            }
+            else
+            {
+                Vector3 targetPos = m_Character.Transform.position;
+                targetPos.y = m_Config.LockEnemyHeight;
+                Vector3 dir = targetPos - m_LockedEnemy.Transform.position;
+                float dis = m_Config.LockEnemyDistance;
+                //限制一下距离特别近时的角度
+                float angle = Vector3.Angle(dir, m_Character.Transform.position - m_LockedEnemy.Transform.position);
+                if (angle > m_Config.LockEnemyMaxAngle)
+                {
+                    dis += (angle - m_Config.LockEnemyMaxAngle) * 0.05f;
+                    dir = (m_Character.Transform.position - m_LockedEnemy.Transform.position).normalized;
+                    dir = Quaternion.AngleAxis(m_Config.LockEnemyMaxAngle, Vector3.Cross(dir, Vector3.up)) * dir;
+                }
+                else
+                    dir.Normalize();
+                dir = dir * dis;
+                m_Transform.position = Vector3.Lerp(m_Transform.position, targetPos + dir, Time.deltaTime * 5);
+                m_Transform.LookAt(m_LockedEnemy.Position);
+            }
         }
     }
 

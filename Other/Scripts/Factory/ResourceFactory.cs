@@ -95,9 +95,9 @@ public class ResourceFactory : SingletonMono<ResourceFactory> {
     /// </summary>
     /// <param name="name">配置名字</param>
     /// <returns>配置实例</returns>
-    public CharacterConfig LoadCharacterConfig(string name)
+    public CharacterConfig LoadCharacterConfig(int id)
     {
-        return LoadAsset<CharacterConfig>(CH_CONFIG_PATH, name);
+        return LoadAsset<CharacterConfig>(CH_CONFIG_PATH, "char_cfg_" + id);
     }
 
     /// <summary>

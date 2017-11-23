@@ -47,6 +47,24 @@ public class RPGGame : Singleton<RPGGame>
         return m_SkillSystem.Execute(ch, skillId);
     }
 
+    //创建玩家角色
+    public void CreatePlayer()
+    {
+        m_CharacterSystem.CreatePlayer();
+    }
+
+    //创建NPC
+    public void CreateNPC(int id, Vector3 position, Quaternion rotation)
+    {
+        m_CharacterSystem.CreateNPC(id, position, rotation);
+    }
+
+    //得到一个指定方向扇形范围内的角色
+    public ICharacter GetACharacterWithFanShape(ICharacter self, Vector3 dir, float angle, float distance)
+    {
+        return m_CharacterSystem.GetACharacterWithFanShape(self, dir, angle, distance);
+    }
+
     //向子系统发送消息
     public void SendMessage(ESubsystem subsystem, WorldMessage msg)
     {

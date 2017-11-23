@@ -19,9 +19,9 @@ public class Factory : Singleton<Factory> {
     }
 
     //创建世界中的角色
-    public T CreateCharacter<T>(string config) where T : ICharacter, new()
+    public T CreateCharacter<T>(int id) where T : ICharacter, new()
     {
-        return m_CharacterFactory.CreateCharacter<T>(config);
+        return m_CharacterFactory.CreateCharacter<T>(id);
     }
 
     //创建角色的身体

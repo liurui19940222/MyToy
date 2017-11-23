@@ -29,9 +29,21 @@ public class Player : BattleCharacter
         Move(dir);
     }
 
+    //锁定敌人
+    public void LockEnemy(ICharacter ch)
+    {
+        m_GameCamera.LockEnemy(ch);
+    }
+
+    //取消锁定敌人
+    public void UnlockEnemy()
+    {
+        m_GameCamera.UnlockEnemy();
+    }
+
     public override void SetToIdleState()
     {
         base.SetToIdleState();
-        m_FSM.SwitchToState(AIConst.CONTROLLED_AI_STATE_IDLE);
+        m_FSM.SwitchToState(AIConst.CONTROLLED_AI_STATE_COMBAT);
     }
 }

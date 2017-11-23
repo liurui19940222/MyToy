@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CharacterFactory {
 
-    public T CreateCharacter<T>(string config) where T : ICharacter, new()
+    public T CreateCharacter<T>(int id) where T : ICharacter, new()
     {
-        CharacterConfig ch_cfg = ResourceFactory.Instance.LoadCharacterConfig(config);
+        CharacterConfig ch_cfg = ResourceFactory.Instance.LoadCharacterConfig(id);
         Object prefab = ResourceFactory.Instance.LoadCharacter(ch_cfg.PrefabName);
         GameObject go = GameObject.Instantiate(prefab) as GameObject;
         T character = new T();

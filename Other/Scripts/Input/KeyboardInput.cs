@@ -12,11 +12,11 @@ public class KeyboardInput : IInputDevice
             m_Axis.x = Input.GetAxis("Horizontal");
             m_Axis.y = Input.GetAxis("Vertical");
         }
-        /*else if (joystick == EJoystick.RIGHT)
+        else if (joystick == EJoystick.RIGHT)
         {
             m_Axis.x = Input.GetAxis("Mouse X");
             m_Axis.y = Input.GetAxis("Mouse Y");
-        }*/
+        }
         return m_Axis;
     }
 
@@ -33,6 +33,7 @@ public class KeyboardInput : IInputDevice
         KeyTest(KeyCode.RightArrow, EInputWord.DPAD_RIGHT);
         KeyTest(KeyCode.Escape, EInputWord.BACK);
         KeyTest(KeyCode.Return, EInputWord.START);
+        KeyTest(KeyCode.LeftShift, EInputWord.A);
         MouseTest(0, EInputWord.RB);
         MouseTest(1, EInputWord.RT);
     }

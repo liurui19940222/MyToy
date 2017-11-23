@@ -21,7 +21,7 @@ public class ControlledShield : ControlledState
         {
             Debug.Log("松开");
             m_Character.PlaySheildAnim(false);
-            return AIConst.CONTROLLED_AI_STATE_IDLE;
+            return AIConst.CONTROLLED_AI_STATE_COMBAT;
         }
         return base.OnUpdate();
     }

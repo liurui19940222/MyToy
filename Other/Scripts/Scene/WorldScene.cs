@@ -16,6 +16,8 @@ public class WorldScene : BaseScene {
     {
         base.OnLoaded();
         RPGGame.Instance.Initialize();
+        RPGGame.Instance.CreatePlayer();
+        RPGGame.Instance.CreateNPC(2, new Vector3(0, 0, 3), Quaternion.LookRotation(Vector3.back));
     }
 
     public override int OnUpdate()

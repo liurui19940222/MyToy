@@ -16,9 +16,6 @@ public class CharacterSystem : IGameSystem {
     {
         base.OnInitialize();
         m_Characters = new Dictionary<int, ICharacter>();
-
-        //创建主角
-        CreatePlayer();
     }
 
     public override void OnUpdate()
@@ -67,20 +64,48 @@ public class CharacterSystem : IGameSystem {
     }
 
     //创建玩家角色
-    private void CreatePlayer()
+    public BattleCharacter CreatePlayer()
     {
-        BattleCharacter ch = Factory.Instance.CreateCharacter<Player>("char_cfg_001");
-        //默认装备
-        for (int i = 0; i < ch.Config.DefaultEquipments.Length; ++i)
-        {
-            if (ch.Config.DefaultEquipments[i] != 0)
-                ch.Wear((EPartOfBodyType)i, Factory.Instance.CreateEquipment(ch.Config.DefaultEquipments[i]));
-        }
+        BattleCharacter ch = Factory.Instance.CreateCharacter<Player>(1);
+        WearDefaultEquipment(ch);
         Transform bornPoint = GameObject.FindWithTag("BornPoint").transform;
         ch.Transform.position = bornPoint.position;
         SetControlledCharacter(ch);
         m_RPGGame.GetCamera().FollowCharacter(ch);
         AddCharacter(ch);
+        return ch;
+    }
+
+    //创建NPC
+    public BattleCharacter CreateNPC(int id, Vector3 position, Quaternion rotation)
+    {
+        BattleCharacter ch = Factory.Instance.CreateCharacter<NonPlayerCharacter>(id);
+        WearDefaultEquipment(ch);
+        ch.Transform.position = position;
+        ch.Transform.rotation = rotation;
+        AddCharacter(ch);
+        return ch;
+    }
+
+    //得到一个指定方向扇形范围内的角色
+    public ICharacter GetACharacterWithFanShape(ICharacter self, Vector3 dir, float angle, float distance)
+    {
+        ICharacter character = null;
+        Vector3 direction = default(Vector3);
+        float _angle = 0;
+        foreach (ICharacter ch in m_Characters.Values)
+        {
+            if (ch.InstanceId == self.InstanceId)
+                continue;
+            direction = ch.Transform.position - self.Transform.position;
+            _angle = Vector3.Angle(direction, dir) * 0.5f;
+            if (_angle <= angle && direction.magnitude <= distance)
+            {
+                character = ch;
+                break;
+            }
+        }
+        return character;
     }
 
     public override void OnRecMessage(WorldMessage msg)
@@ -95,4 +120,13 @@ public class CharacterSystem : IGameSystem {
         }
     }
 
+    private void WearDefaultEquipment(BattleCharacter ch)
+    {
+        //默认装备
+        for (int i = 0; i < ch.Config.DefaultEquipments.Length; ++i)
+        {
+            if (ch.Config.DefaultEquipments[i] != 0)
+                ch.Wear((EPartOfBodyType)i, Factory.Instance.CreateEquipment(ch.Config.DefaultEquipments[i]));
+        }
+    }
 }

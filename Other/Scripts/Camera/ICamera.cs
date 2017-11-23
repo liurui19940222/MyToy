@@ -6,6 +6,7 @@ public abstract class IGameCamera : IGameSystem
     protected GameObject m_GameObject;   //GameObject
     protected Transform m_Transform;    //Transform
     protected ICharacter m_Character;   //跟随的角色
+    protected ICharacter m_LockedEnemy; //被锁定的敌人
 
     public IGameCamera(RPGGame game) : base(game) { }
 
@@ -31,6 +32,20 @@ public abstract class IGameCamera : IGameSystem
     {
         m_Character = character;
         m_Character.GameCamera = this;
+    }
+
+    //锁定敌人
+    public void LockEnemy(ICharacter ch)
+    {
+        if (m_Character == null)
+            return;
+        m_LockedEnemy = ch;
+    }
+
+    //取消锁定敌人
+    public void UnlockEnemy()
+    {
+        m_LockedEnemy = null;
     }
 
     //解除跟随

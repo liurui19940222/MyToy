@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.2f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -103,7 +105,8 @@
     <Compile Include="Assets\Scripts\AI\AIConst.cs" />
     <Compile Include="Assets\Scripts\AI\CharacterFSMMachine.cs" />
     <Compile Include="Assets\Scripts\AI\CharacterState.cs" />
-    <Compile Include="Assets\Scripts\AI\ControlledCharacter\ControlledIdleState.cs" />
+    <Compile Include="Assets\Scripts\AI\ControlledCharacter\ControlledCombatState.cs" />
+    <Compile Include="Assets\Scripts\AI\ControlledCharacter\ControlledRelaxState.cs" />
     <Compile Include="Assets\Scripts\AI\ControlledCharacter\ControlledRelease.cs" />
     <Compile Include="Assets\Scripts\AI\ControlledCharacter\ControlledShield.cs" />
     <Compile Include="Assets\Scripts\AI\ControlledCharacter\ControlledState.cs" />
@@ -120,6 +123,7 @@
     <Compile Include="Assets\Scripts\Character\Dress\IDressingRoom.cs" />
     <Compile Include="Assets\Scripts\Character\Enemy.cs" />
     <Compile Include="Assets\Scripts\Character\ICharacter.cs" />
+    <Compile Include="Assets\Scripts\Character\NonPlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\Character\PartOfBody\Hand.cs" />
     <Compile Include="Assets\Scripts\Character\PartOfBody\IPartOfBody.cs" />
     <Compile Include="Assets\Scripts\Character\Player.cs" />
@@ -180,12 +184,12 @@
   <ItemGroup>
     <None Include="Assets\Atlas\Blue Button\Orc Buttons\Font\Font Readme.txt" />
     <None Include="Assets\Editor\DOTween\DOTweenEditor.XML" />
-    <None Include="Assets\Free medieval weapons\readme.txt" />
     <None Include="Assets\Scripts\Common\DOTween\DOTween.XML" />
     <None Include="Assets\Scripts\Common\DOTween\DOTween43.xml" />
     <None Include="Assets\Scripts\Common\DOTween\DOTween46.xml" />
     <None Include="Assets\Scripts\Common\DOTween\DOTween50.xml" />
     <None Include="Assets\Scripts\Common\DOTween\readme.txt" />
+    <None Include="Assets\Source\Free medieval weapons\readme.txt" />
     <None Include="Assets\Source\LakeSideCabin\Shaders\Tree_Bark.shader" />
     <None Include="Assets\Source\LakeSideCabin\Shaders\Tree_Billboard.shader" />
     <None Include="Assets\Source\LakeSideCabin\Shaders\Tree_Leaf.shader" />

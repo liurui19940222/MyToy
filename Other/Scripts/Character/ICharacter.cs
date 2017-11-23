@@ -16,7 +16,7 @@ public abstract class ICharacter
     protected CharacterConfig m_Config;               //角色配置
     protected IGameCamera m_GameCamera;               //跟随该角色的相机
     protected AnimationBehaviour m_AnimBehaviour;     //动画回调脚本
-    private bool m_Stiff;                               //是否处于僵直状态
+    private bool m_Stiff;                             //是否处于僵直状态
     private Vector3 m_Velocity;
 
     public ICharacter() { m_InstanceId = ++identity; }
@@ -192,9 +192,15 @@ public abstract class ICharacter
     }
 
     //播放防御动画
-    public void PlaySheildAnim(bool defence)
+    public void PlaySheildAnim(bool isDefence)
     {
-        m_Animator.SetBool("Defence", defence);
+        m_Animator.SetBool("Defence", isDefence);
+    }
+
+    //播放战斗模式动画
+    public void PlayCombatAnim(bool isCombat)
+    {
+        m_Animator.SetBool("Combat", isCombat);
     }
 
     //播放动画
