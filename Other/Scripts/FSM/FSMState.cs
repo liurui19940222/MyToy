@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FSMState
+public class FSMState : IFSMState
 {
 
     private int m_Id;                               //状态Id
@@ -42,5 +43,20 @@ public class FSMState
     public virtual int OnUpdate() { return m_Id; }
 
     public virtual bool HasAlready() { return true; }
+
+    public IFSMMachine GetController()
+    {
+        return FSM;
+    }
+
+    public void SetControllder(IFSMMachine fsm)
+    {
+        FSM = fsm as FSMMachine;
+    }
+
+    public int GetId()
+    {
+        return Id;
+    }
 }
 

@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FSMMachine {
+public class FSMMachine : IFSMMachine {
 
     private Dictionary<int, FSMState> m_States; //所有状态
 
@@ -13,21 +14,21 @@ public class FSMMachine {
     public FSMMachine()
     {
         m_States = new Dictionary<int, FSMState>();
-        OnEnter();
+        OnInitialize();
     }
 
     //添加一个状态
-    public void AddState(FSMState state)
+    public void AddState(IFSMState state)
     {
-        if (m_States.ContainsKey(state.Id))
-            m_States[state.Id] = state;
+        if (m_States.ContainsKey(state.GetId()))
+            m_States[state.GetId()] = state as FSMState;
         else
-            m_States.Add(state.Id, state);
-        state.FSM = this;
+            m_States.Add(state.GetId(), state as FSMState);
+        state.SetControllder(this);
     }
 
     //获取状态
-    public FSMState GetState(int id)
+    public IFSMState GetState(int id)
     {
         if (m_States.ContainsKey(id))
             return m_States[id];
@@ -42,16 +43,16 @@ public class FSMMachine {
     }
 
     //添加并置为默认状态
-    public void SetAsDefaultState(FSMState state)
+    public void SetAsDefaultState(IFSMState state)
     {
         AddState(state);
-        m_DefaultState = state;
+        m_DefaultState = state as FSMState;
     }
 
     //设置默认状态
     public void SetDefaultState(int id)
     {
-        m_DefaultState = GetState(id);
+        m_DefaultState = GetState(id) as FSMState;
     }
 
     //切换到一个状态
@@ -61,7 +62,7 @@ public class FSMMachine {
         {
             m_CurState.OnExit();
         }
-        m_CurState = GetState(id);
+        m_CurState = GetState(id) as FSMState;
         m_CurState.OnEnter();
     }
 
@@ -103,12 +104,12 @@ public class FSMMachine {
         }
     }
 
-    public void Exit()
+    public virtual void Exit()
     {
-        OnExit();
     }
 
-    protected virtual void OnEnter() { }
-
-    protected virtual void OnExit() { }
+    public virtual void OnInitialize()
+    {
+        
+    }
 }

@@ -150,6 +150,7 @@
     <Compile Include="Assets\Scripts\Factory\ResourceFactory.cs" />
     <Compile Include="Assets\Scripts\Factory\SkillFactory.cs" />
     <Compile Include="Assets\Scripts\FindingPath\INavigation.cs" />
+    <Compile Include="Assets\Scripts\FSM\IFSMMachine.cs" />
     <Compile Include="Assets\Scripts\GameLoop.cs" />
     <Compile Include="Assets\Scripts\Input\InputConst.cs" />
     <Compile Include="Assets\Scripts\Input\InputSystem.cs" />

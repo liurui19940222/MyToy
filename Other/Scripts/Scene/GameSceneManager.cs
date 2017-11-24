@@ -9,7 +9,7 @@ public class GameSceneManager : FSMMachine {
     public const int SCENE_ID_MAINMENU = 2;
     public const int SCENE_ID_WORLD = 3;
 
-    protected override void OnEnter()
+    public override void OnInitialize()
     {
         AddState(new StartScene(SCENE_ID_START));
         AddState(new MainMenuScene(SCENE_ID_MAINMENU));
@@ -26,7 +26,7 @@ public class GameSceneManager : FSMMachine {
         base.OnUpdate();
     }
 
-    protected override void OnExit()
+    public override void Exit()
     {
         MessageCenter.Instance.RemoveListener(MessageDefines.MSG_SWITCH_SCENE, OnRecSwitchScene);
     }

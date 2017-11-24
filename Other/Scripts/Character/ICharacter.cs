@@ -12,7 +12,7 @@ public abstract class ICharacter
     protected Animator m_Animator;                    //Animator
     protected CharacterController m_Controller;       //角色控制器
     protected INavengation m_Navengation;             //寻路组件
-    protected CharacterFSMMachine m_FSM;              //状态机
+    protected IFSMMachine m_FSM;              //状态机
     protected CharacterConfig m_Config;               //角色配置
     protected IGameCamera m_GameCamera;               //跟随该角色的相机
     protected AnimationBehaviour m_AnimBehaviour;     //动画回调脚本
@@ -56,7 +56,7 @@ public abstract class ICharacter
         set { m_Navengation = value; }
     }
 
-    public CharacterFSMMachine FSM
+    public IFSMMachine FSM
     {
         get { return m_FSM; }
         set { m_FSM = value; }
