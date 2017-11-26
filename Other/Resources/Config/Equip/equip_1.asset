@@ -15,6 +15,7 @@ MonoBehaviour:
   Name: "\u77ED\u5251"
   Desc: "\u5A01\u529B\u5C0F\u4F46\u5BB9\u6613\u4F7F\u7528\u7684\u77ED\u5251"
   Type: 8
+  Material: 0
   PrefabName: 
   FirstSkill: 1
   FirstHeavySkill: 3

@@ -41,7 +41,7 @@ public class CharacterSystem : IGameSystem {
     }
 
     //设置一个角色为可控制
-    public void SetControlledCharacter(BattleCharacter ch)
+    public void SetControlledCharacter(ICharacter ch)
     {
         //TODO 为上一个控制角色添加AI代理
 
@@ -64,9 +64,9 @@ public class CharacterSystem : IGameSystem {
     }
 
     //创建玩家角色
-    public BattleCharacter CreatePlayer()
+    public ICharacter CreatePlayer()
     {
-        BattleCharacter ch = Factory.Instance.CreateCharacter<Player>(1);
+        ICharacter ch = Factory.Instance.CreateCharacter<Player>(1);
         WearDefaultEquipment(ch);
         Transform bornPoint = GameObject.FindWithTag("BornPoint").transform;
         ch.Transform.position = bornPoint.position;
@@ -76,10 +76,16 @@ public class CharacterSystem : IGameSystem {
         return ch;
     }
 
-    //创建NPC
-    public BattleCharacter CreateNPC(int id, Vector3 position, Quaternion rotation)
+    //得到玩家角色
+    public ICharacter GetPlayer()
     {
-        BattleCharacter ch = Factory.Instance.CreateCharacter<NonPlayerCharacter>(id);
+        return m_ControlledCharacter;
+    }
+
+    //创建NPC
+    public ICharacter CreateNPC<T>(int id, Vector3 position, Quaternion rotation) where T : ICharacter, new()
+    {
+        ICharacter ch = Factory.Instance.CreateCharacter<T>(id);
         WearDefaultEquipment(ch);
         ch.Transform.position = position;
         ch.Transform.rotation = rotation;
@@ -87,25 +93,48 @@ public class CharacterSystem : IGameSystem {
         return ch;
     }
 
+    //设置AI
+    public void SetAI(ICharacter ch, int fsmId)
+    {
+        IFSMMachine fsm = Factory.Instance.CreateFSM(ch, fsmId);
+        ch.FSM = fsm;
+        if (fsm is FSMController)
+        {
+            (fsm as FSMController).SwitchToDefaultState();
+        }
+    }
+
     //得到一个指定方向扇形范围内的角色
     public ICharacter GetACharacterWithFanShape(ICharacter self, Vector3 dir, float angle, float distance)
     {
         ICharacter character = null;
-        Vector3 direction = default(Vector3);
-        float _angle = 0;
         foreach (ICharacter ch in m_Characters.Values)
         {
             if (ch.InstanceId == self.InstanceId)
                 continue;
-            direction = ch.Transform.position - self.Transform.position;
-            _angle = Vector3.Angle(direction, dir) * 0.5f;
-            if (_angle <= angle && direction.magnitude <= distance)
+            if (MathEx.DetectFanCollision(ch.Transform.position, self.Transform.position, dir, angle, distance))
             {
                 character = ch;
                 break;
             }
         }
         return character;
+    }
+
+    //得到指定方向扇形范围内的所有角色
+    public List<ICharacter> GetCharactersWithFanShape(ICharacter self, Vector3 dir, float angle, float distance)
+    {
+        List<ICharacter> characters = new List<ICharacter>();
+        foreach (ICharacter ch in m_Characters.Values)
+        {
+            if (ch.InstanceId == self.InstanceId)
+                continue;
+            if (MathEx.DetectFanCollision(ch.Transform.position, self.Transform.position, dir, angle, distance))
+            {
+                characters.Add(ch);
+            }
+        }
+        return characters;
     }
 
     public override void OnRecMessage(WorldMessage msg)
@@ -120,7 +149,7 @@ public class CharacterSystem : IGameSystem {
         }
     }
 
-    private void WearDefaultEquipment(BattleCharacter ch)
+    private void WearDefaultEquipment(ICharacter ch)
     {
         //默认装备
         for (int i = 0; i < ch.Config.DefaultEquipments.Length; ++i)

@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class DressingRoom : IDressingRoom
 {
-    public override void Wear(BattleCharacter ch, IEquipment equipment, EBodySide side)
+    public override void Wear(ICharacter ch, IEquipment equipment, EBodySide side)
     {
         switch (equipment.Type)
         {

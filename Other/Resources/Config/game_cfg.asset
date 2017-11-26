@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8034165b33b1e8643bd4a743a9077814, type: 3}
   m_Name: game_cfg
   m_EditorClassIdentifier: 
-  MainSceneName: WorldScene
+  MainSceneName: LakesideSceneFinal

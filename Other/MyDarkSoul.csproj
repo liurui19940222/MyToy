@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.2f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -116,7 +114,6 @@
     <Compile Include="Assets\Scripts\Camera\CameraConfig.cs" />
     <Compile Include="Assets\Scripts\Camera\ICamera.cs" />
     <Compile Include="Assets\Scripts\Camera\ThirdPersonCamera.cs" />
-    <Compile Include="Assets\Scripts\Character\BattleCharacter.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterConfig.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterSystem.cs" />
     <Compile Include="Assets\Scripts\Character\Dress\DressingRoom.cs" />
@@ -127,8 +124,10 @@
     <Compile Include="Assets\Scripts\Character\PartOfBody\Hand.cs" />
     <Compile Include="Assets\Scripts\Character\PartOfBody\IPartOfBody.cs" />
     <Compile Include="Assets\Scripts\Character\Player.cs" />
+    <Compile Include="Assets\Scripts\Common\CollisionDetection.cs" />
     <Compile Include="Assets\Scripts\Common\GameConfig.cs" />
     <Compile Include="Assets\Scripts\Common\IRecyclableObject.cs" />
+    <Compile Include="Assets\Scripts\Common\MathEx.cs" />
     <Compile Include="Assets\Scripts\Common\Message\Message.cs" />
     <Compile Include="Assets\Scripts\Common\Message\MessageCenter.cs" />
     <Compile Include="Assets\Scripts\Common\Message\MessageDefines.cs" />
@@ -141,8 +140,11 @@
     <Compile Include="Assets\Scripts\Equip\EquipmentConfig.cs" />
     <Compile Include="Assets\Scripts\Equip\IEquipment.cs" />
     <Compile Include="Assets\Scripts\FSM\FSMConst.cs" />
+    <Compile Include="Assets\Scripts\FSM\FSMController.cs" />
     <Compile Include="Assets\Scripts\FSM\FSMMachine.cs" />
     <Compile Include="Assets\Scripts\FSM\FSMState.cs" />
+    <Compile Include="Assets\Scripts\FSM\FSMStateAction.cs" />
+    <Compile Include="Assets\Scripts\FSM\IFSMMachine.cs" />
     <Compile Include="Assets\Scripts\Factory\AIFactory.cs" />
     <Compile Include="Assets\Scripts\Factory\CharacterFactory.cs" />
     <Compile Include="Assets\Scripts\Factory\EquipmentFactory.cs" />
@@ -150,7 +152,6 @@
     <Compile Include="Assets\Scripts\Factory\ResourceFactory.cs" />
     <Compile Include="Assets\Scripts\Factory\SkillFactory.cs" />
     <Compile Include="Assets\Scripts\FindingPath\INavigation.cs" />
-    <Compile Include="Assets\Scripts\FSM\IFSMMachine.cs" />
     <Compile Include="Assets\Scripts\GameLoop.cs" />
     <Compile Include="Assets\Scripts\Input\InputConst.cs" />
     <Compile Include="Assets\Scripts\Input\InputSystem.cs" />
@@ -164,8 +165,10 @@
     <Compile Include="Assets\Scripts\Scene\MainMenuScene.cs" />
     <Compile Include="Assets\Scripts\Scene\StartScene.cs" />
     <Compile Include="Assets\Scripts\Scene\WorldScene.cs" />
+    <Compile Include="Assets\Scripts\Skill\Action\CheckHurtAction.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\EndSkillAction.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\ISkillAction.cs" />
+    <Compile Include="Assets\Scripts\Skill\Action\Params\FanShapeCollisionParams.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\Params\PlayAnimActionParams.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\Params\PlayEffectActionParams.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\Params\PlaySoundActionParams.cs" />
@@ -178,6 +181,7 @@
     <Compile Include="Assets\Scripts\Skill\SkillConst.cs" />
     <Compile Include="Assets\Scripts\Skill\SkillEvent.cs" />
     <Compile Include="Assets\Scripts\Skill\SkillSystem.cs" />
+    <Compile Include="Assets\Scripts\UI\UIMainHUD.cs" />
     <Compile Include="Assets\Scripts\UI\UIMainMenu.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Test\Test.cs" />

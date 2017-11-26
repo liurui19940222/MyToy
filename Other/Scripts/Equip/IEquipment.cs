@@ -4,6 +4,8 @@
 
     public EEquipmentType Type { get { return m_Config.Type; } }
 
+    public EEquipmentMateril Material { get { return m_Config.Material; } }
+
     public int FirstSkill { get { return m_Config.FirstSkill; } }
 
     public int FirstHeavySkill { get { return m_Config.FirstHeavySkill; } }
@@ -12,6 +14,26 @@
     {
         m_Config = ResourceFactory.Instance.LoadEquipConfig(id);
     }
+
+    //是否是利器
+    public bool IsSharpWeapon()
+    {
+        return Type == EEquipmentType.Rapier || Type == EEquipmentType.Sword || 
+            Type == EEquipmentType.DoubleSword || Type == EEquipmentType.GreatSword || 
+            Type == EEquipmentType.Dagger || Type == EEquipmentType.Axe;
+    }
+
+    //是否是钝器
+    public bool IsBluntWeapon()
+    {
+        return Type == EEquipmentType.Stick || Type == EEquipmentType.MagicStick;
+    }
+}
+
+public enum EEquipmentMateril
+{
+    Wood,
+    Iron,
 }
 
 public enum EEquipmentType

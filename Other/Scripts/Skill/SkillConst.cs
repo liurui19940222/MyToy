@@ -74,15 +74,3 @@ public enum ESkillEffectType
     Health,                 //恢复
     Buff,                   //持续性作用
 }
-
-//技能影响范围
-public enum ESkillRange
-{
-    ByBoneAnimation,        //根据骨骼动画
-    Fan,                    //扇形
-    Circle,                 //圆形
-    Sphere,                 //球型
-    Rectangle,              //矩形
-    Linear,                 //线性
-    Single,                 //单体
-}

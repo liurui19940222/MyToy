@@ -12,9 +12,16 @@ public class EndSkillAction : ISkillAction
         m_Owner.Done = true;
         if (m_Owner.System.HasDone(m_Owner.Character.InstanceId))
         {
-            m_Owner.Character.Stiff = false;
+            m_Owner.Character.IsSkillStiff = false;
             m_Owner.Character.SetToIdleState();
         }
+    }
+
+    public override void Break()
+    {
+        base.Break();
+        m_Owner.Character.IsSkillStiff = false;
+        m_Owner.Character.SetToIdleState();
     }
 
     protected override void UnpackParams(Object _params)

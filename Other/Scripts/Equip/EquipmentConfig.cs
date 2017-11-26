@@ -11,6 +11,8 @@ public class EquipmentConfig : ScriptableObject
 
     public EEquipmentType Type;         //类型
 
+    public EEquipmentMateril Material;  //材质
+
     public string PrefabName;           //预设名字
 
     public int FirstSkill;              //起手技能(轻)

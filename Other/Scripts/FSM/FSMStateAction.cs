@@ -18,9 +18,6 @@ public class FSMStateAction : IFSMState
     private List<FSMTransition> m_Transitions;
 
     [SerializeField]
-    private object m_Agent;
-
-    [SerializeField]
     private string m_OnEnterMethod;
 
     [SerializeField]
@@ -28,6 +25,9 @@ public class FSMStateAction : IFSMState
 
     [SerializeField]
     private string m_OnUpdateMethod;
+
+    [SerializeField]
+    private Rect m_Rect;
 
     private MethodInfo m_OnEnter;
     private MethodInfo m_OnExit;
@@ -47,8 +47,7 @@ public class FSMStateAction : IFSMState
 
     public object Agent
     {
-        get { return m_Agent; }
-        set { m_Agent = value; }
+        get { return m_Controller.Agent; }
     }
 
     public string OnEnterMethod
@@ -69,6 +68,18 @@ public class FSMStateAction : IFSMState
         set { m_OnUpdateMethod = value; }
     }
 
+    public Rect Rect
+    {
+        get { return m_Rect; }
+        set { m_Rect = value; }
+    }
+
+    public int Id
+    {
+        get { return m_Id; }
+        set { m_Id = value; }
+    }
+
     public IFSMMachine GetController()
     {
         return m_Controller;
@@ -81,7 +92,7 @@ public class FSMStateAction : IFSMState
 
     public int GetId()
     {
-        return m_Id;
+        return Id;
     }
 
     public int HandleInput(EFSMInputType input, Message msg)
@@ -127,9 +138,9 @@ public class FSMStateAction : IFSMState
 
     public void OnEnter()
     {
-        if (m_Agent != null)
+        if (Agent != null)
         {
-            System.Type type = m_Agent.GetType();
+            System.Type type = Agent.GetType();
             if (m_OnEnter == null)
                 m_OnEnter = type.GetMethod(m_OnEnterMethod, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
             if (m_OnExit == null)
@@ -137,35 +148,48 @@ public class FSMStateAction : IFSMState
             if (m_OnUpdate == null)
                 m_OnUpdate = type.GetMethod(m_OnUpdateMethod, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
             if (m_OnEnter != null)
-                m_OnEnter.Invoke(m_Agent, null);
+                m_OnEnter.Invoke(Agent, null);
         }
-        Debug.Log(m_OnEnterMethod);
+        Debug.Log(StateName + " enter and call" + m_OnEnterMethod);
     }
 
     public void OnExit()
     {
-        if (m_Agent != null && m_OnExit != null)
-            m_OnExit.Invoke(m_Agent, null);
-        Debug.Log(m_OnExitMethod);
+        if (Agent != null && m_OnExit != null)
+            m_OnExit.Invoke(Agent, null);
+        Debug.Log(StateName + " exit and call" + m_OnExitMethod);
     }
 
     public int OnUpdate()
     {
-        if (m_Agent != null && m_OnUpdate != null)
+        if (Agent != null && m_OnUpdate != null)
         {
-            object obj = m_OnUpdate.Invoke(m_Agent, null);
-            return System.Convert.ToInt32(obj);
+            object obj = m_OnUpdate.Invoke(Agent, null);
+            return Id;
         }
-        return m_Id;
+        return Id;
     }
 
     public void AddTransition(FSMTransition transition)
     {
-        Transitions.Add(transition);
+        if (!ContainsTransition(transition.TargetStateId))
+            Transitions.Add(transition);
     }
 
     public void DeleteTransition(FSMTransition transition)
     {
         Transitions.Remove(transition);
+    }
+
+    private bool ContainsTransition(int targetId)
+    {
+        if (m_Transitions == null)
+            return false;
+        for (int i = 0; i < m_Transitions.Count; ++i)
+        {
+            if (m_Transitions[i].TargetStateId == targetId)
+                return true;
+        }
+        return false;
     }
 }

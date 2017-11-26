@@ -1,9 +1,9 @@
 ﻿
 public class CharacterState : FSMState
 {
-    protected BattleCharacter m_Character;
+    protected ICharacter m_Character;
 
-    public CharacterState(int id, BattleCharacter ch) : base(id)
+    public CharacterState(int id, ICharacter ch) : base(id)
     {
         m_Character = ch;
     }

@@ -8,9 +8,9 @@ public class MainMenuScene : BaseScene {
 
     public MainMenuScene(int id) : base("MainMenuScene", id) { }
 
-    public override void OnEnter()
+    protected override void OnLoaded()
     {
-        base.OnEnter();
+        base.OnLoaded();
         m_MainMenuUI = UIManager.Instance.OpenUI<UIMainMenu>();
         MessageProxy.SendSwitchSceneMsg(GameSceneManager.SCENE_ID_WORLD);
     }

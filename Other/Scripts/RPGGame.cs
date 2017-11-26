@@ -8,12 +8,17 @@ public class RPGGame : Singleton<RPGGame>
     private SkillSystem m_SkillSystem;           //技能系统
     private IGameCamera m_GameCamera;            //游戏相机
 
+    private UIMainHUD m_MainHUD;                 //主HUD界面
+
     public void Initialize()
     {
         //相机必须先被初始化
         m_GameCamera = new ThirdPersonCamera(this);
         m_CharacterSystem = new CharacterSystem(this);
         m_SkillSystem = new SkillSystem(this);
+
+        //创建HUD
+        m_MainHUD = UIManager.Instance.OpenUI<UIMainHUD>();
 
         InputSystem.Instance.AddInputEvent(OnInput, InputConst.INPUT_PRIORITY_WORLD);
     }
@@ -42,9 +47,9 @@ public class RPGGame : Singleton<RPGGame>
     }
 
     //执行技能
-    public Skill ExecuteSkill(ICharacter ch, int skillId)
+    public Skill ExecuteSkill(ICharacter ch, int skillId, IEquipment byWhichEquip)
     {
-        return m_SkillSystem.Execute(ch, skillId);
+        return m_SkillSystem.Execute(ch, skillId, byWhichEquip);
     }
 
     //创建玩家角色
@@ -53,16 +58,53 @@ public class RPGGame : Singleton<RPGGame>
         m_CharacterSystem.CreatePlayer();
     }
 
-    //创建NPC
-    public void CreateNPC(int id, Vector3 position, Quaternion rotation)
+    //得到玩家角色
+    public ICharacter GetPlayer()
     {
-        m_CharacterSystem.CreateNPC(id, position, rotation);
+        return m_CharacterSystem.GetPlayer();
+    }
+
+    //创建NPC
+    public ICharacter CreateNPC<T>(int id, Vector3 position, Quaternion rotation) where T : ICharacter, new()
+    {
+        return m_CharacterSystem.CreateNPC<T>(id, position, rotation);
+    }
+
+    //设置AI
+    public void SetAI(ICharacter ch, int fsmId)
+    {
+        m_CharacterSystem.SetAI(ch, fsmId);
+    }
+
+    //创建NPC并设置AI
+    public void CreateNPCAndSetAI<T>(int id, Vector3 position, Quaternion rotation, int fsmId) where T : ICharacter, new()
+    {
+        ICharacter ch = CreateNPC<T>(id, position, rotation);
+        m_CharacterSystem.SetAI(ch, fsmId);
     }
 
     //得到一个指定方向扇形范围内的角色
     public ICharacter GetACharacterWithFanShape(ICharacter self, Vector3 dir, float angle, float distance)
     {
         return m_CharacterSystem.GetACharacterWithFanShape(self, dir, angle, distance);
+    }
+
+    //得到指定方向扇形范围内的所有角色
+    public List<ICharacter> GetCharactersWithFanShape(ICharacter self, Vector3 dir, float angle, float distance)
+    {
+        return m_CharacterSystem.GetCharactersWithFanShape(self, dir, angle, distance);
+    }
+
+    //显示锁定敌人HUD
+    public void ShowLockTargetHUD(Transform target, Vector3 offset)
+    {
+        m_MainHUD.LockTarget(target, offset);
+    }
+
+    //取消显示锁定敌人HUD
+    public void HideLockTargetHUD()
+    {
+        m_MainHUD.UnlockTarget();
     }
 
     //向子系统发送消息

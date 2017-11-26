@@ -13,6 +13,7 @@ public class Skill
     private bool[] m_EventStates;               //各事件的触发状态
     private int m_Counter;                      //已经触发的事件计数
     private List<ISkillAction> m_Actions;       //技能操作
+    private IEquipment m_ByWhichEquip;          //被哪件装备使用的
 
     public bool Done { get { return m_bDone; } set { m_bDone = value; } }
 
@@ -26,8 +27,11 @@ public class Skill
 
     public int Id { get { return m_Config.Id; } }
 
-    public Skill(SkillSystem system, ICharacter owner, SkillConfig config)
+    public IEquipment ByWhichEquip { get { return m_ByWhichEquip; } }
+
+    public Skill(SkillSystem system, ICharacter owner, SkillConfig config, IEquipment byWhichEquip)
     {
+        m_ByWhichEquip = byWhichEquip;
         m_Character = owner;
         m_System = system;
         m_Config = config;
@@ -40,12 +44,14 @@ public class Skill
 
         if (m_Config.ToStiff)
         {
-            owner.Stiff = true;
+            owner.IsSkillStiff = true;
         }
     }
 
     public bool OnUpdate()
     {
+        if (m_bDone) return true;
+
         m_Timer += Time.deltaTime;
         //更新执行所有Event
         for (int i = 0; i < m_Config.Events.Count; ++i)

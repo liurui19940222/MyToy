@@ -60,23 +60,24 @@ public class ThirdPersonCamera : IGameCamera
             }
             else
             {
+                Vector3 lockPos = m_LockedEnemy.Transform.position + m_LockedEnemy.CenterPosition;
                 Vector3 targetPos = m_Character.Transform.position;
                 targetPos.y = m_Config.LockEnemyHeight;
-                Vector3 dir = targetPos - m_LockedEnemy.Transform.position;
+                Vector3 dir = targetPos - lockPos;
                 float dis = m_Config.LockEnemyDistance;
                 //限制一下距离特别近时的角度
-                float angle = Vector3.Angle(dir, m_Character.Transform.position - m_LockedEnemy.Transform.position);
-                if (angle > m_Config.LockEnemyMaxAngle)
-                {
-                    dis += (angle - m_Config.LockEnemyMaxAngle) * 0.05f;
-                    dir = (m_Character.Transform.position - m_LockedEnemy.Transform.position).normalized;
-                    dir = Quaternion.AngleAxis(m_Config.LockEnemyMaxAngle, Vector3.Cross(dir, Vector3.up)) * dir;
-                }
-                else
+                //float angle = Vector3.Angle(dir, m_Character.Transform.position - lockPos);
+                //if (angle > m_Config.LockEnemyMaxAngle)
+                //{
+                //    dis += (angle - m_Config.LockEnemyMaxAngle) * 0.05f;
+                //    dir = (m_Character.Transform.position - lockPos).normalized;
+                //    dir = Quaternion.AngleAxis(m_Config.LockEnemyMaxAngle, Vector3.Cross(dir, Vector3.up)) * dir;
+                //}
+                //else
                     dir.Normalize();
                 dir = dir * dis;
                 m_Transform.position = Vector3.Lerp(m_Transform.position, targetPos + dir, Time.deltaTime * 5);
-                m_Transform.LookAt(m_LockedEnemy.Position);
+                m_Transform.LookAt(lockPos);
             }
         }
     }

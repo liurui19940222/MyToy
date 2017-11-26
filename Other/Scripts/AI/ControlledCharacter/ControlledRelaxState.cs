@@ -5,7 +5,7 @@ public class ControlledRelaxState : ControlledState
 {
     private HandleInputResult m_Result;
 
-    public ControlledRelaxState(int id, BattleCharacter ch) : base(id, ch)
+    public ControlledRelaxState(int id, ICharacter ch) : base(id, ch)
     {
 
     }
@@ -19,7 +19,11 @@ public class ControlledRelaxState : ControlledState
     public override int OnUpdate()
     {
         m_Player.UpdateCamera();
-        if (!m_Player.Stiff)
+        if (m_Player.CanDoAction)
+        {
+            m_Player.UpdateMove(true);
+        }
+        else
         {
             m_Player.UpdateMove(true);
         }

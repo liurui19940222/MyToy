@@ -3,7 +3,7 @@
 /// </summary>
 public class IPartOfBody
 {
-    protected BattleCharacter m_Character;    //拥有者
+    protected ICharacter m_Character;    //拥有者
 
     protected IEquipment m_Euipment;          //该部位的装备
 
@@ -13,7 +13,7 @@ public class IPartOfBody
         set { m_Euipment = value; }
     }
 
-    public BattleCharacter Character
+    public ICharacter Character
     {
         get { return m_Character; }
         set { m_Character = value; }
@@ -28,6 +28,8 @@ public class IPartOfBody
 public class HandleInputResult
 {
     public Type ResultType;
+
+    public EPartOfBodyType ByWitchHand; //被哪只手处理的
 
     public int TargetSkillId;
 
@@ -53,6 +55,7 @@ public enum EPartOfBodyType
     RightHand,              //右手
     Legs,                   //腿
     Foots,                  //脚
+    None,
 }
 
 

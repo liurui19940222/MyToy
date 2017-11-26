@@ -9,7 +9,7 @@ public class ControlledCombatState : ControlledState
     private bool m_PutWeaponBack = false;
     private ICharacter m_LockTarget;
 
-    public ControlledCombatState(int id, BattleCharacter ch) : base(id, ch)
+    public ControlledCombatState(int id, ICharacter ch) : base(id, ch)
     {
 
     }
@@ -30,11 +30,11 @@ public class ControlledCombatState : ControlledState
         {
             if (m_PutWeaponBack)
             {
-                return AIConst.CONTROLLED_AI_STATE_RELAX;
+                //return AIConst.CONTROLLED_AI_STATE_RELAX;
             }
             else
             {
-                if (!m_Player.Stiff)
+                if (m_Player.CanDoAction)
                 {
                     m_Player.UpdateMove(true);
                 }
@@ -52,25 +52,19 @@ public class ControlledCombatState : ControlledState
         bool down = (bool)msg["down"];
         if (down)
         {
-            if (word == EInputWord.DPAD_RIGHT) //准备收起武器（因为有动作时间）
+            /*if (word == EInputWord.DPAD_RIGHT) //准备收起武器（因为有动作时间）
             {
                 m_PutWeaponBack = true;
                 m_Timer = 0;
+                //顺便取消锁定
+                m_LockTarget = null;
+                m_Player.UnlockEnemy();
             }
-            else if (word == EInputWord.R3) //锁定一个敌人
+            else */if (word == EInputWord.R3) //锁定一个敌人
             {
-                if (m_LockTarget == null)
-                {
-                    m_LockTarget = RPGGame.Instance.GetACharacterWithFanShape(m_Player, m_Player.Transform.forward, 120, 8);
-                    if (m_LockTarget != null) m_Player.LockEnemy(m_LockTarget);
-                }
-                else
-                {
-                    m_LockTarget = null;
-                    m_Player.UnlockEnemy();
-                }
+                m_Player.CheckLockEnemy();
             }
-            else if (InputTranslater.IsAttackWord(word) && !m_Player.Stiff)
+            else if (InputTranslater.IsAttackWord(word) && m_Player.CanDoAction)
             {
                 m_Result = m_Player.GetInputResult(word, down);
                 if (m_Result != null)

@@ -31,9 +31,15 @@ public class Factory : Singleton<Factory> {
     }
 
     //创建受玩家操作的AI
-    public CharacterFSMMachine CreateControlledAI(BattleCharacter ch, RPGGame game)
+    public CharacterFSMMachine CreateControlledAI(ICharacter ch, RPGGame game)
     {
         return m_AIFactory.CreateControlledAI(ch, game);
+    }
+
+    //创建FSM
+    public IFSMMachine CreateFSM<T>(T ch, int fsmId) where T : ICharacter
+    {
+        return m_AIFactory.CreateFSM(ch, fsmId);
     }
 
     //创建技能Action

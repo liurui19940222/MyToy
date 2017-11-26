@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "fsm_", menuName = "配置/状态机")]
@@ -13,7 +14,15 @@ public class FSMController : ScriptableObject, IFSMMachine
     [SerializeField]
     private List<FSMParameter> m_Paramaters;
 
+    [SerializeField]
+    private int m_StateIdSequence;
+
     private int m_CurState;
+
+    private object m_Agent;
+
+    [SerializeField]
+    private string m_AgentType;
 
     private FSMStateAction CurState
     {
@@ -43,6 +52,24 @@ public class FSMController : ScriptableObject, IFSMMachine
         set { m_DefaultState = value; }
     }
 
+    public int StateIdSequence
+    {
+        get { return m_StateIdSequence; }
+        set { m_StateIdSequence = value; }
+    }
+
+    public string AgentType
+    {
+        get { return m_AgentType; }
+        set { m_AgentType = value; }
+    }
+
+    public object Agent
+    {
+        get { return m_Agent; }
+        set { m_Agent = value; }
+    }
+
     public FSMController() { OnInitialize(); }
 
     public void OnInitialize()
@@ -55,14 +82,7 @@ public class FSMController : ScriptableObject, IFSMMachine
 
     public void AddState(IFSMState state)
     {
-        if (States.Count <= state.GetId())
-        {
-            while (States.Count <= state.GetId())
-            {
-                States.Add(null);
-            }
-        }
-        States[state.GetId()] = state as FSMStateAction;
+        States.Add(state as FSMStateAction);
     }
 
     public void AddParamater(FSMParameter paramater)
@@ -78,7 +98,14 @@ public class FSMController : ScriptableObject, IFSMMachine
 
     public IFSMState GetState(int id)
     {
-        return States[id];
+        for (int i = 0; i < m_States.Count; ++i)
+        {
+            if (m_States[i].Id == id)
+            {
+                return m_States[i];
+            }
+        }
+        return null;
     }
 
     public void HandleInput(EFSMInputType input, Message msg)
@@ -105,10 +132,10 @@ public class FSMController : ScriptableObject, IFSMMachine
         if (CurState != null)
         {
             int targetId = CurState.OnUpdate();
-            if (targetId != CurState.GetId())
-            {
-                SwitchToState(targetId);
-            }
+            //if (targetId != CurState.GetId())
+            //{
+            //    SwitchToState(targetId);
+            //}
         }
     }
 
@@ -117,6 +144,11 @@ public class FSMController : ScriptableObject, IFSMMachine
         if (CurState != null)
             return CurState.StateName;
         return string.Empty;
+    }
+
+    public int GetCurrentStateId()
+    {
+        return m_CurState;
     }
 
     Message m_TransitionMsg = new Message();
@@ -134,7 +166,14 @@ public class FSMController : ScriptableObject, IFSMMachine
 
     public void RemoveState(int id)
     {
-        States[id] = null;
+        for (int i = 0; i < m_States.Count; ++i)
+        {
+            if (m_States[i].Id == id)
+            {
+                m_States.RemoveAt(i);
+                return;
+            }
+        }
     }
 
     public void SetAsDefaultState(IFSMState state)
@@ -145,6 +184,13 @@ public class FSMController : ScriptableObject, IFSMMachine
     public void SetDefaultState(int id)
     {
         SetAsDefaultState(GetState(id));
+    }
+
+    public void SwitchToDefaultState()
+    {
+        m_CurState = m_DefaultState;
+        if (CurState != null)
+            CurState.OnEnter();
     }
 
     public void SwitchToState(int id)
@@ -255,6 +301,27 @@ public class FSMCondition
         }
         return checkSuccess;
     }
+
+    public void SetToDefaultType()
+    {
+        switch (Value.Type)
+        {
+            case EValueType.Int:
+                Type = EConditionType.Greater;
+                break;
+            case EValueType.Float:
+                Type = EConditionType.Greater;
+                break;
+            case EValueType.Bool:
+                Type = EConditionType.Whether;
+                break;
+            case EValueType.String:
+                break;
+            case EValueType.Trigger:
+                Type = EConditionType.Trigger;
+                break;
+        }
+    }
 }
 
 [System.Serializable]
@@ -271,6 +338,18 @@ public class ConditionValue
     public bool boolValue;
 
     public bool triggerValue;
+
+    public ConditionValue() { }
+
+    public ConditionValue(ConditionValue value)
+    {
+        this.Type = value.Type;
+        this.stringValue = value.stringValue;
+        this.intValue = value.intValue;
+        this.floatValue = value.floatValue;
+        this.boolValue = value.boolValue;
+        this.triggerValue = value.triggerValue;
+    }
 
     public static bool Greater(ConditionValue v1, ConditionValue v2)
     {
@@ -347,4 +426,14 @@ public class FSMTransition
 {
     public List<FSMCondition> Conditions;
     public int TargetStateId;
+}
+
+public class FSMCallClass : System.Attribute
+{
+
+}
+
+public class FSMCallMethod : System.Attribute
+{
+
 }

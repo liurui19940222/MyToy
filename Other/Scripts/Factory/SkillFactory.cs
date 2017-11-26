@@ -18,6 +18,7 @@ public class SkillFactory
                 skillAction = new PlaySoundAction(owner, _params);
                 break;
             case ESkillActionType.CheckHurt:
+                skillAction = new CheckHurtAction(owner, _params);
                 break;
             case ESkillActionType.TriggerBuff:
                 break;

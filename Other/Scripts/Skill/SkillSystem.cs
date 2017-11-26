@@ -50,7 +50,7 @@ public class SkillSystem : IGameSystem
     }
 
     //执行一个技能
-    public Skill Execute(ICharacter ch, int skillId)
+    public Skill Execute(ICharacter ch, int skillId, IEquipment byWhichEquip)
     {
         SkillConfig config = ResourceFactory.Instance.LoadSkillConfig(skillId);
         //检查技能的执行条件
@@ -59,7 +59,7 @@ public class SkillSystem : IGameSystem
             if (!ch.CheckSkillCondition(config.Conditions[i]))
                 return null;
         }
-        Skill skill = new Skill(this, ch, config);
+        Skill skill = new Skill(this, ch, config, byWhichEquip);
         AddSkill(ch.InstanceId ,skill);
         return skill;
     }
@@ -75,6 +75,18 @@ public class SkillSystem : IGameSystem
             if (!list[i].Done) return false;
         }
         return true;
+    }
+
+    //打断一个角色正在施放的技能
+    public void BreakAllSkills(int characterId)
+    {
+        if (!m_ExecutingSkills.ContainsKey(characterId))
+            return;
+        List<Skill> list = m_ExecutingSkills[characterId];
+        for (int i = 0; i < list.Count; ++i)
+        {
+            list[i].Break();
+        }
     }
 
     //添加技能

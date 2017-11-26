@@ -7,11 +7,6 @@ public class StartScene : BaseScene {
 
     public StartScene(int id) : base("StartScene", id) { }
 
-    public override void OnEnter()
-    {
-        base.OnEnter();
-    }
-
     protected override void OnLoaded()
     {
         base.OnLoaded();

@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc09b8d6d0c4e749a1824ce1dd60f58, type: 3}
+  m_Name: fsm_1
+  m_EditorClassIdentifier: 
+  m_States:
+  - m_StateName: Idle
+    m_Id: 6
+    m_Controller: {fileID: 11400000}
+    m_Transitions:
+    - Conditions:
+      - Name: Attack
+        Value:
+          Type: 2
+          stringValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 1
+          triggerValue: 0
+        Type: 2
+      TargetStateId: 8
+    - Conditions:
+      - Name: Defence
+        Value:
+          Type: 2
+          stringValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 1
+          triggerValue: 0
+        Type: 2
+      TargetStateId: 7
+    m_OnEnterMethod: 
+    m_OnExitMethod: 
+    m_OnUpdateMethod: UpdateTrace
+    m_Rect:
+      serializedVersion: 2
+      x: 412
+      y: 57
+      width: 150
+      height: 55
+  - m_StateName: Shield
+    m_Id: 7
+    m_Controller: {fileID: 11400000}
+    m_Transitions:
+    - Conditions:
+      - Name: Defence
+        Value:
+          Type: 2
+          stringValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          triggerValue: 0
+        Type: 2
+      TargetStateId: 6
+    m_OnEnterMethod: 
+    m_OnExitMethod: 
+    m_OnUpdateMethod: 
+    m_Rect:
+      serializedVersion: 2
+      x: 223
+      y: 229
+      width: 150
+      height: 55
+  - m_StateName: Attack
+    m_Id: 8
+    m_Controller: {fileID: 11400000}
+    m_Transitions:
+    - Conditions:
+      - Name: Attack
+        Value:
+          Type: 2
+          stringValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          triggerValue: 0
+        Type: 2
+      TargetStateId: 6
+    m_OnEnterMethod: AttackEnter
+    m_OnExitMethod: 
+    m_OnUpdateMethod: UpdateAttack
+    m_Rect:
+      serializedVersion: 2
+      x: 522
+      y: 242
+      width: 150
+      height: 55
+  m_DefaultState: 6
+  m_Paramaters:
+  - Name: Defence
+    Value:
+      Type: 2
+      stringValue: 
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      triggerValue: 0
+  - Name: Speed
+    Value:
+      Type: 1
+      stringValue: 
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      triggerValue: 0
+  - Name: Attack
+    Value:
+      Type: 2
+      stringValue: 
+      intValue: 0
+      floatValue: 0
+      boolValue: 1
+      triggerValue: 0
+  m_StateIdSequence: 9
+  m_AgentType: Enemy

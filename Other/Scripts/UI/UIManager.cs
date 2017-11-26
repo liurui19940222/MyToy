@@ -16,6 +16,11 @@ public class UIManager : SingletonMono<UIManager>
 
     private IUserInterface m_ActivatedUI;
 
+    public Camera Camera
+    {
+        get {  return m_Camera;  }
+    }
+
     protected override void Awake()
     {
         base.Awake();

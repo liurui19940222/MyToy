@@ -10,6 +10,7 @@ public class ReadyToNextAction : ISkillAction
     public override void Execute()
     {
         Debug.Log("准备好下一次");
+        m_Owner.Character.StopMove();
         m_Owner.ReadyToNext = true;
     }
 

@@ -2,7 +2,7 @@
 {
     protected Player m_Player;
 
-    public ControlledState(int id, BattleCharacter ch) : base(id, ch)
+    public ControlledState(int id, ICharacter ch) : base(id, ch)
     {
         m_Player = ch as Player;
     }
