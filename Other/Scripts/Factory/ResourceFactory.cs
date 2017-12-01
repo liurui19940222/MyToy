@@ -59,7 +59,7 @@ public class ResourceFactory : SingletonMono<ResourceFactory> {
     /// <summary>
     /// 加载装备预设
     /// </summary>
-    public Object LoadEquipment(int id)
+    public Object LoadEquipment(string name)
     {
         return LoadAsset<Object>(EQUIPMENT_PATH, name);
     }
@@ -110,5 +110,13 @@ public class ResourceFactory : SingletonMono<ResourceFactory> {
     public FSMController LoadFSM(int id)
     {
         return LoadAsset<FSMController>(FSM_CONFIG_PATH, "fsm_" + id);
+    }
+
+    /// <summary>
+    /// 加载特效
+    /// </summary>
+    public Object LoadEffect(string name)
+    {
+        return LoadAsset<Object>(EFFECT_PATH, name);
     }
 }

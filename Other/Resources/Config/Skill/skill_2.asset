@@ -42,13 +42,20 @@ MonoBehaviour:
       Param: 
     BreakSkillWhenConditionFail: 0
     ActionType: 3
-    Params: {fileID: 11400000, guid: 4b2b05e0519396f498afff497b358905, type: 2}
+    Params: {fileID: 11400000, guid: e1281cd639d5be94db20d22d4d8aa192, type: 2}
   - DelayTime: 0.5
     Condition:
       Condition: 0
       Param: 
     BreakSkillWhenConditionFail: 0
     ActionType: 7
+    Params: {fileID: 0}
+  - DelayTime: 0.9
+    Condition:
+      Condition: 0
+      Param: 
+    BreakSkillWhenConditionFail: 0
+    ActionType: 9
     Params: {fileID: 0}
   - DelayTime: 1.5
     Condition:

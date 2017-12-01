@@ -16,5 +16,18 @@ public class GameConfig : ScriptableObject
     }
 
     public string MainSceneName;
+
+    public Tag Tags;
+
+    [System.Serializable]
+    public class Tag
+    {
+        public string BornPoint;
+        public string Ground;
+        public string Character;
+        public string Obstacle;
+    }
 }
+
+
 

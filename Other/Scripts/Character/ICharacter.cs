@@ -19,6 +19,7 @@ public abstract class ICharacter : ICollisionObject
     protected CharacterConfig m_Config;               //角色配置
     protected IGameCamera m_GameCamera;               //跟随该角色的相机
     protected AnimationBehaviour m_AnimBehaviour;     //动画回调脚本
+    protected PlayerMonoScript m_MonoScript;          //Mono脚本
     private bool m_IsSkillStiff;                      //是否处于僵直状态
     private bool m_IsLocking;                         //是否在锁定敌人
     private bool m_IsCombating;                       //是否正在战斗状态
@@ -171,12 +172,21 @@ public abstract class ICharacter : ICollisionObject
 
     public bool IsHiting
     {
-        get {  return m_IsHiting;  }
+        get { return m_IsHiting; }
+    }
+
+    public PlayerMonoScript MonoScript
+    {
+        get { return m_MonoScript; }
+        set { m_MonoScript = value; }
     }
 
     public virtual void OnInitialize()
     {
         m_Body = Factory.Instance.CreateBody();
+        m_Body[(int)EPartOfBodyType.LeftHand].Transform = MonoScript.LeftHand;
+        m_Body[(int)EPartOfBodyType.RightHand].Transform = MonoScript.RightHand;
+        m_Body[(int)EPartOfBodyType.Waist].Transform = MonoScript.Waist;
     }
 
     public virtual void OnUpdate()
@@ -336,7 +346,7 @@ public abstract class ICharacter : ICollisionObject
     //更新转向
     private void UpdateRotation()
     {
-        if (!m_IsRotating && !CanDoAction)
+        if (!m_IsRotating || !CanDoAction)
             return;
         m_RotateTimer += Time.deltaTime;
         if (m_RotateTimer > m_RotateTime)
@@ -408,6 +418,7 @@ public abstract class ICharacter : ICollisionObject
             SoundManager.Instance.PlayShieldBlockSound(GetEqiupment(EPartOfBodyType.LeftHand), Position);
             m_Animator.SetTrigger("HurtOnSheild");
             m_Animator.SetFloat("HitStrength", 0.2f);
+            EffectManager.Instance.CreateSpark(EffectManager.Spark.Iron, MonoScript.LeftHand.position, Quaternion.identity);
             return false;
         }
         else

@@ -32,6 +32,9 @@ public class SkillFactory
             case ESkillActionType.End:
                 skillAction = new EndSkillAction(owner, _params);
                 break;
+            case ESkillActionType.StopToNext:
+                skillAction = new StopToNextAction(owner, _params);
+                break;
             default:
                 break;
         }

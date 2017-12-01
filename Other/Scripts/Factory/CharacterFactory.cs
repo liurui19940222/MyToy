@@ -17,6 +17,8 @@ public class CharacterFactory {
         character.Controller = go.GetComponentInChildren<CharacterController>();
         character.AnimBehaviour = character.Animator.gameObject.AddComponent<AnimationBehaviour>();
         character.AnimBehaviour.StepVoiceSound = ch_cfg.StepVoiceSound;
+        character.MonoScript = go.GetComponent<PlayerMonoScript>();
+        character.MonoScript.Character = character;
         character.OnInitialize();
         return character;
     }

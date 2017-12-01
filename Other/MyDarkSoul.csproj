@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.2f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -124,6 +126,7 @@
     <Compile Include="Assets\Scripts\Character\PartOfBody\Hand.cs" />
     <Compile Include="Assets\Scripts\Character\PartOfBody\IPartOfBody.cs" />
     <Compile Include="Assets\Scripts\Character\Player.cs" />
+    <Compile Include="Assets\Scripts\Character\PlayerMonoScript.cs" />
     <Compile Include="Assets\Scripts\Common\CollisionDetection.cs" />
     <Compile Include="Assets\Scripts\Common\GameConfig.cs" />
     <Compile Include="Assets\Scripts\Common\IRecyclableObject.cs" />
@@ -137,8 +140,10 @@
     <Compile Include="Assets\Scripts\Common\SingletonMono.cs" />
     <Compile Include="Assets\Scripts\Common\Util.cs" />
     <Compile Include="Assets\Scripts\Component\AnimationBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Effect\EffectManager.cs" />
     <Compile Include="Assets\Scripts\Equip\EquipmentConfig.cs" />
     <Compile Include="Assets\Scripts\Equip\IEquipment.cs" />
+    <Compile Include="Assets\Scripts\Equip\Weapon.cs" />
     <Compile Include="Assets\Scripts\FSM\FSMConst.cs" />
     <Compile Include="Assets\Scripts\FSM\FSMController.cs" />
     <Compile Include="Assets\Scripts\FSM\FSMMachine.cs" />
@@ -158,7 +163,7 @@
     <Compile Include="Assets\Scripts\Input\InputTranslater.cs" />
     <Compile Include="Assets\Scripts\Input\KeyboardInput.cs" />
     <Compile Include="Assets\Scripts\Input\XboxInput.cs" />
-    <Compile Include="Assets\Scripts\Music\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\Effect\SoundManager.cs" />
     <Compile Include="Assets\Scripts\RPGGame.cs" />
     <Compile Include="Assets\Scripts\Scene\BaseScene.cs" />
     <Compile Include="Assets\Scripts\Scene\GameSceneManager.cs" />
@@ -172,10 +177,12 @@
     <Compile Include="Assets\Scripts\Skill\Action\Params\PlayAnimActionParams.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\Params\PlayEffectActionParams.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\Params\PlaySoundActionParams.cs" />
+    <Compile Include="Assets\Scripts\Skill\Action\Params\RayTestCollisionParams.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\PlayAnimAction.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\PlayEffectAction.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\PlaySoundAction.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\ReadyToNextAction.cs" />
+    <Compile Include="Assets\Scripts\Skill\Action\StopToNextAction.cs" />
     <Compile Include="Assets\Scripts\Skill\Skill.cs" />
     <Compile Include="Assets\Scripts\Skill\SkillConfig.cs" />
     <Compile Include="Assets\Scripts\Skill\SkillConst.cs" />
@@ -194,6 +201,8 @@
     <None Include="Assets\Scripts\Common\DOTween\DOTween46.xml" />
     <None Include="Assets\Scripts\Common\DOTween\DOTween50.xml" />
     <None Include="Assets\Scripts\Common\DOTween\readme.txt" />
+    <None Include="Assets\Shader\GrabPassDistortion.cginc" />
+    <None Include="Assets\Shader\WeaponWave.shader" />
     <None Include="Assets\Source\Free medieval weapons\readme.txt" />
     <None Include="Assets\Source\LakeSideCabin\Shaders\Tree_Bark.shader" />
     <None Include="Assets\Source\LakeSideCabin\Shaders\Tree_Billboard.shader" />

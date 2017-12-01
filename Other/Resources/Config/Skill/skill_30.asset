@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4dbd91ee08fe074f9172ed87115433a, type: 3}
+  m_Name: skill_30
+  m_EditorClassIdentifier: 
+  Id: 30
+  Name: "\u706B\u7403"
+  Desc: "\u65B0\u624B\u9B54\u6CD5\u96BE\u9053\u8FD8\u80FD\u662F\u5176\u4ED6\u7684\uFF1F"
+  ToStiff: 1
+  Conditions: []
+  Transitions: []
+  Events:
+  - DelayTime: 0
+    Condition:
+      Condition: 0
+      Param: 
+    BreakSkillWhenConditionFail: 0
+    ActionType: 0
+    Params: {fileID: 11400000, guid: 62447573d6bf98f4b802cac368a0075e, type: 2}
+  - DelayTime: 0
+    Condition:
+      Condition: 0
+      Param: 
+    BreakSkillWhenConditionFail: 0
+    ActionType: 1
+    Params: {fileID: 11400000, guid: eea31a549d56ae34ca3c072efb242b5b, type: 2}
+  - DelayTime: 1.29
+    Condition:
+      Condition: 0
+      Param: 
+    BreakSkillWhenConditionFail: 0
+    ActionType: 7
+    Params: {fileID: 0}
+  - DelayTime: 1.3
+    Condition:
+      Condition: 0
+      Param: 
+    BreakSkillWhenConditionFail: 0
+    ActionType: 8
+    Params: {fileID: 0}

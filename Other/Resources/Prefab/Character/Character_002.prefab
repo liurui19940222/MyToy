@@ -1222,9 +1222,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4779598488114736}
   - component: {fileID: 143464741309102090}
+  - component: {fileID: 114881442712160036}
   m_Layer: 0
   m_Name: Character_002
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2485,7 +2486,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1331263488832792}
-  m_LocalRotation: {x: 0.63875484, y: -0.2521798, z: 0.31124696, w: 0.65690404}
+  m_LocalRotation: {x: 0.6387549, y: -0.25217983, z: 0.311247, w: 0.6569041}
   m_LocalPosition: {x: -0.03340866, y: 0.013345947, z: -0.03990034}
   m_LocalScale: {x: 1.0000001, y: 0.99999994, z: 0.9999997}
   m_Children:
@@ -4021,6 +4022,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114881442712160036
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1693069269563176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fde8a770e21c984381e173c5efc1dd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LeftHand: {fileID: 4976850013019108}
+  RightHand: {fileID: 4345395693292012}
+  Waist: {fileID: 4631635393940778}
 --- !u!137 &137201868794865820
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -4902,7 +4917,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 2
-  m_Radius: 0.29
+  m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08

@@ -127,6 +127,9 @@
     <Reference Include="UnityEditor.iOS.Extensions.Common">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
+    <Reference Include="ConsoleE">
+      <HintPath>Assets\Editor\ConsoleE\ConsoleE.dll</HintPath>
+    </Reference>
     <Reference Include="DOTweenEditor">
       <HintPath>Assets\Editor\DOTween\DOTweenEditor.dll</HintPath>
     </Reference>
@@ -141,9 +144,6 @@
     </Reference>
     <Reference Include="DOTween50">
       <HintPath>Assets\Scripts\Common\DOTween\DOTween50.dll</HintPath>
-    </Reference>
-    <Reference Include="ConsoleE">
-      <HintPath>Assets\Editor\ConsoleE\ConsoleE.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-UnityScript">
       <HintPath>Library\ScriptAssemblies\Assembly-UnityScript.dll</HintPath>
@@ -163,7 +163,6 @@
     <Compile Include="Assets\Editor\AStar\AStarEditor.cs" />
     <Compile Include="Assets\Editor\AStar\MapEditor.cs" />
     <Compile Include="Assets\Editor\CharacterEditor.cs" />
-    <Compile Include="Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs" />
     <Compile Include="Assets\Editor\EditorTools.cs" />
     <Compile Include="Assets\Editor\FSMEditor.cs" />
     <Compile Include="Assets\Editor\ImageEffects\AntialiasingEditor.cs" />
@@ -189,6 +188,8 @@
     <None Include="Assets\Scripts\Common\DOTween\DOTween46.xml" />
     <None Include="Assets\Scripts\Common\DOTween\DOTween50.xml" />
     <None Include="Assets\Scripts\Common\DOTween\readme.txt" />
+    <None Include="Assets\Shader\GrabPassDistortion.cginc" />
+    <None Include="Assets\Shader\WeaponWave.shader" />
     <None Include="Assets\Source\Free medieval weapons\readme.txt" />
     <None Include="Assets\Source\LakeSideCabin\Shaders\Tree_Bark.shader" />
     <None Include="Assets\Source\LakeSideCabin\Shaders\Tree_Billboard.shader" />

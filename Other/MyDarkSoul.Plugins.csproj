@@ -149,6 +149,8 @@
     <None Include="Assets\Scripts\Common\DOTween\DOTween46.xml" />
     <None Include="Assets\Scripts\Common\DOTween\DOTween50.xml" />
     <None Include="Assets\Scripts\Common\DOTween\readme.txt" />
+    <None Include="Assets\Shader\GrabPassDistortion.cginc" />
+    <None Include="Assets\Shader\WeaponWave.shader" />
     <None Include="Assets\Source\Free medieval weapons\readme.txt" />
     <None Include="Assets\Source\LakeSideCabin\Shaders\Tree_Bark.shader" />
     <None Include="Assets\Source\LakeSideCabin\Shaders\Tree_Billboard.shader" />

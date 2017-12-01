@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e963c1d676c2d494ebc64b140499df77, type: 3}
+  m_Name: equip_2
+  m_EditorClassIdentifier: 
+  Id: 2
+  Name: "\u67F4\u5200"
+  Desc: "\u780D\u67F4\u7528\u7684\u5200\uFF0C\u7528\u6765\u780D\u4EBA\u4E5F\u5F88\u5389\u5BB3"
+  Type: 8
+  Material: 1
+  PrefabName: sword_02
+  FirstSkill: 2
+  FirstHeavySkill: 3

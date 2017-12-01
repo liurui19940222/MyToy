@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class Hand : IPartOfBody
 {
@@ -22,6 +23,26 @@ public class Hand : IPartOfBody
             return result;
         }
         return null;
+    }
+
+    public override IEquipment Euipment
+    {
+        get
+        {
+            return base.Euipment;
+        }
+
+        set
+        {
+            base.Euipment = value;
+            if (value.Transform)
+            {
+                value.Transform.SetParent(Transform);
+                value.Transform.localScale = Vector3.one;
+                value.Transform.localPosition = Vector3.zero;
+                value.Transform.localRotation = Quaternion.identity;
+            }
+        }
     }
 }
 

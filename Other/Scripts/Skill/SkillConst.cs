@@ -31,6 +31,7 @@
         "显示(隐藏)Object",
         "可以触发下一个技能",
         "结束技能",
+        "结束触发下一个技能",
     };
 }
 
@@ -65,6 +66,7 @@ public enum ESkillActionType
     ShowObject,             //显示(隐藏)Object
     ReadyToNext,            //可以触发下一个技能
     End,                    //结束技能
+    StopToNext,             //结束触发下一个技能
 }
 
 //技能效果类型

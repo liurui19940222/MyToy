@@ -271,6 +271,8 @@ public class FSMEditor : EditorWindow
         if (m_ParamsList == null)
             CreateParamsList();
         m_ParamsList.DoLayoutList();
+
+        EditorUtility.SetDirty(m_Controller);
     }
 
     //绘制右边窗口

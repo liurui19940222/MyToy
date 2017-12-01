@@ -13,107 +13,166 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_States:
   - m_StateName: Idle
-    m_Id: 6
+    m_Id: 9
     m_Controller: {fileID: 11400000}
     m_Transitions:
     - Conditions:
-      - Name: Attack
+      - Name: Distance
         Value:
-          Type: 2
+          Type: 1
           stringValue: 
           intValue: 0
-          floatValue: 0
-          boolValue: 1
+          floatValue: 4
+          boolValue: 0
           triggerValue: 0
-        Type: 2
-      TargetStateId: 8
+        Type: 0
+      - Name: Distance
+        Value:
+          Type: 1
+          stringValue: 
+          intValue: 0
+          floatValue: 10
+          boolValue: 0
+          triggerValue: 0
+        Type: 1
+      TargetStateId: 10
     - Conditions:
-      - Name: Defence
+      - Name: Distance
         Value:
-          Type: 2
+          Type: 1
           stringValue: 
           intValue: 0
-          floatValue: 0
-          boolValue: 1
+          floatValue: 1.5
+          boolValue: 0
           triggerValue: 0
-        Type: 2
-      TargetStateId: 7
+        Type: 0
+      - Name: Distance
+        Value:
+          Type: 1
+          stringValue: 
+          intValue: 0
+          floatValue: 4
+          boolValue: 0
+          triggerValue: 0
+        Type: 1
+      TargetStateId: 11
+    - Conditions:
+      - Name: Distance
+        Value:
+          Type: 1
+          stringValue: 
+          intValue: 0
+          floatValue: 1.51
+          boolValue: 0
+          triggerValue: 0
+        Type: 1
+      TargetStateId: 12
+    m_OnEnterMethod: IdleEnter
+    m_OnExitMethod: IdleExit
+    m_OnUpdateMethod: UpdateIdle
+    m_Rect:
+      serializedVersion: 2
+      x: 358
+      y: 57
+      width: 150
+      height: 55
+  - m_StateName: TraceMove
+    m_Id: 10
+    m_Controller: {fileID: 11400000}
+    m_Transitions:
+    - Conditions:
+      - Name: Distance
+        Value:
+          Type: 1
+          stringValue: 
+          intValue: 0
+          floatValue: 1.51
+          boolValue: 0
+          triggerValue: 0
+        Type: 1
+      TargetStateId: 12
+    - Conditions:
+      - Name: Distance
+        Value:
+          Type: 1
+          stringValue: 
+          intValue: 0
+          floatValue: 4
+          boolValue: 0
+          triggerValue: 0
+        Type: 1
+      TargetStateId: 11
     m_OnEnterMethod: 
     m_OnExitMethod: 
     m_OnUpdateMethod: UpdateTrace
     m_Rect:
       serializedVersion: 2
-      x: 412
-      y: 57
+      x: 234
+      y: 161
       width: 150
       height: 55
-  - m_StateName: Shield
-    m_Id: 7
+  - m_StateName: ShieldMove
+    m_Id: 11
     m_Controller: {fileID: 11400000}
     m_Transitions:
     - Conditions:
-      - Name: Defence
+      - Name: Distance
         Value:
-          Type: 2
+          Type: 1
           stringValue: 
           intValue: 0
-          floatValue: 0
+          floatValue: 1.51
           boolValue: 0
           triggerValue: 0
-        Type: 2
-      TargetStateId: 6
-    m_OnEnterMethod: 
-    m_OnExitMethod: 
-    m_OnUpdateMethod: 
+        Type: 1
+      TargetStateId: 12
+    - Conditions:
+      - Name: Distance
+        Value:
+          Type: 1
+          stringValue: 
+          intValue: 0
+          floatValue: 4
+          boolValue: 0
+          triggerValue: 0
+        Type: 0
+      TargetStateId: 10
+    m_OnEnterMethod: ShieldMoveEnter
+    m_OnExitMethod: ShieldMoveExit
+    m_OnUpdateMethod: ShieldMoveUpdate
     m_Rect:
       serializedVersion: 2
-      x: 223
-      y: 229
+      x: 466
+      y: 168
       width: 150
       height: 55
   - m_StateName: Attack
-    m_Id: 8
+    m_Id: 12
     m_Controller: {fileID: 11400000}
     m_Transitions:
     - Conditions:
-      - Name: Attack
+      - Name: AttackingHaveDone
         Value:
-          Type: 2
+          Type: 4
           stringValue: 
           intValue: 0
           floatValue: 0
           boolValue: 0
           triggerValue: 0
-        Type: 2
-      TargetStateId: 6
+        Type: 3
+      TargetStateId: 9
     m_OnEnterMethod: AttackEnter
     m_OnExitMethod: 
     m_OnUpdateMethod: UpdateAttack
     m_Rect:
       serializedVersion: 2
-      x: 522
-      y: 242
+      x: 346
+      y: 260
       width: 150
       height: 55
-  m_DefaultState: 6
+  m_DefaultState: 9
   m_Paramaters:
-  - Name: Defence
-    Value:
-      Type: 2
-      stringValue: 
-      intValue: 0
-      floatValue: 0
-      boolValue: 0
-      triggerValue: 0
-  - Name: Speed
-    Value:
-      Type: 1
-      stringValue: 
-      intValue: 0
-      floatValue: 0
-      boolValue: 0
-      triggerValue: 0
-  - Name: Attack
+  - Name: HaveAShield
     Value:
       Type: 2
       stringValue: 
@@ -121,5 +180,29 @@ MonoBehaviour:
       floatValue: 0
       boolValue: 1
       triggerValue: 0
-  m_StateIdSequence: 9
+  - Name: ThinkingHaveDone
+    Value:
+      Type: 4
+      stringValue: 
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      triggerValue: 0
+  - Name: Distance
+    Value:
+      Type: 1
+      stringValue: 
+      intValue: 0
+      floatValue: 0.70636123
+      boolValue: 0
+      triggerValue: 0
+  - Name: AttackingHaveDone
+    Value:
+      Type: 4
+      stringValue: 
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      triggerValue: 0
+  m_StateIdSequence: 13
   m_AgentType: Enemy

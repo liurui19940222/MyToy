@@ -1,4 +1,6 @@
-﻿public class IEquipment
+﻿using UnityEngine;
+
+public class IEquipment
 {
     private EquipmentConfig m_Config;
 
@@ -10,16 +12,36 @@
 
     public int FirstHeavySkill { get { return m_Config.FirstHeavySkill; } }
 
-    public IEquipment(int id)
+    private Transform m_Transform;
+    private GameObject m_GameObject;
+
+    public Transform Transform
     {
-        m_Config = ResourceFactory.Instance.LoadEquipConfig(id);
+        get { return m_Transform; }
+        set { m_Transform = value; }
+    }
+
+    public GameObject GameObject
+    {
+        get { return m_GameObject; }
+        set { m_GameObject = value; }
+    }
+
+    public IEquipment(EquipmentConfig config)
+    {
+        m_Config = config;
+        if (!string.IsNullOrEmpty(m_Config.PrefabName))
+        {
+            m_GameObject = GameObject.Instantiate(ResourceFactory.Instance.LoadEquipment(m_Config.PrefabName)) as GameObject;
+            m_Transform = m_GameObject.transform;
+        }
     }
 
     //是否是利器
     public bool IsSharpWeapon()
     {
-        return Type == EEquipmentType.Rapier || Type == EEquipmentType.Sword || 
-            Type == EEquipmentType.DoubleSword || Type == EEquipmentType.GreatSword || 
+        return Type == EEquipmentType.Rapier || Type == EEquipmentType.Sword ||
+            Type == EEquipmentType.DoubleSword || Type == EEquipmentType.GreatSword ||
             Type == EEquipmentType.Dagger || Type == EEquipmentType.Axe;
     }
 
@@ -27,6 +49,23 @@
     public bool IsBluntWeapon()
     {
         return Type == EEquipmentType.Stick || Type == EEquipmentType.MagicStick;
+    }
+
+    //是否是武器
+    public static bool IsWeapon(EEquipmentType type)
+    {
+        switch (type)
+        {
+            case EEquipmentType.Hat:
+            case EEquipmentType.Clothes:
+            case EEquipmentType.Armguards:
+            case EEquipmentType.Trousers:
+            case EEquipmentType.Belt:
+            case EEquipmentType.Shoes:
+            case EEquipmentType.Shield:
+                return false;
+        }
+        return true;
     }
 }
 

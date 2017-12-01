@@ -4,7 +4,7 @@
 public class SkillEvent {
 
     public float DelayTime;                      //延迟时间
-    public SkillCondition Condition;            //条件
+    public SkillCondition Condition;             //条件
     public bool BreakSkillWhenConditionFail;     //条件不满足时是否中断技能
     public ESkillActionType ActionType;          //操作类型
     public Object Params;                        //参数

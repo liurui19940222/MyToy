@@ -57,5 +57,25 @@ public class Util
         return list;
     }
 
+    //在指定位置创建一个cube
+    private static List<GameObject> m_DebugGos = new List<GameObject>();
+    public static void DebugCube(Vector3 position, Vector3 scale, Color color)
+    {
+        GameObject go = GameObject.Instantiate( ResourceFactory.Instance.LoadAsset<UnityEngine.Object>("Debug/", "Cube")) as GameObject;
+        m_DebugGos.Add(go);
+        go.GetComponent<MeshRenderer>().material.color = color;
+        go.transform.localScale = scale;
+        go.transform.position = position;
+    }
+
+    //清除所有Debug生成的对象
+    public static void ClearDebug()
+    {
+        foreach (GameObject go in m_DebugGos)
+        {
+            GameObject.Destroy(go);
+        }
+        m_DebugGos.Clear();
+    }
 }
 
