@@ -152,6 +152,21 @@ public abstract class ICharacter : ICollisionObject
         set { m_IsCombating = value; }
     }
 
+    public Hand LeftHand
+    {
+        get {
+            return m_Body[(int)EPartOfBodyType.LeftHand] as Hand;
+        }
+    }
+
+    public Hand RightHand
+    {
+        get
+        {
+            return m_Body[(int)EPartOfBodyType.RightHand] as Hand;
+        }
+    }
+
     //能否行动
     public bool CanDoAction
     {
@@ -252,13 +267,19 @@ public abstract class ICharacter : ICollisionObject
     //穿戴装备
     public void Wear(EPartOfBodyType body, IEquipment equipment)
     {
-        m_Body[(int)body].Euipment = equipment;
+        m_Body[(int)body].Equipment = equipment;
+    }
+
+    //穿在副手
+    public void WearOnSecondHand(EPartOfBodyType hand, IEquipment equipment)
+    {
+        (m_Body[(int)hand] as Hand).SecondEquipment = equipment;
     }
 
     //得到一个部位的装备
     public IEquipment GetEqiupment(EPartOfBodyType part)
     {
-        return m_Body[(int)part].Euipment;
+        return m_Body[(int)part].Equipment;
     }
 
     //根据输入得到处理结果

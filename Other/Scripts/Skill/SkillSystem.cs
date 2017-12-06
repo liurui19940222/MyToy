@@ -50,7 +50,7 @@ public class SkillSystem : IGameSystem
     }
 
     //执行一个技能
-    public Skill Execute(ICharacter ch, int skillId, IEquipment byWhichEquip)
+    public Skill Execute(ICharacter ch, int skillId, IEquipment byWhichEquip, ICharacter target = null)
     {
         SkillConfig config = ResourceFactory.Instance.LoadSkillConfig(skillId);
         //检查技能的执行条件
@@ -59,7 +59,7 @@ public class SkillSystem : IGameSystem
             if (!ch.CheckSkillCondition(config.Conditions[i]))
                 return null;
         }
-        Skill skill = new Skill(this, ch, config, byWhichEquip);
+        Skill skill = new Skill(this, ch, config, byWhichEquip, target);
         AddSkill(ch.InstanceId ,skill);
         return skill;
     }

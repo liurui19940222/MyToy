@@ -34,6 +34,28 @@ public class Player : ICharacter
         Move(dir);
     }
 
+    //切换武器道具的输入
+    public void SwitchTools(EInputWord word, bool down)
+    {
+        if (!down) return;
+        if (word == EInputWord.DPAD_LEFT)
+        {
+            LeftHand.ChangeEquipmentWithBack();
+        }
+        else if (word == EInputWord.DPAD_RIGHT)
+        {
+            RightHand.ChangeEquipmentWithBack();
+        }
+        else if (word == EInputWord.DPAD_UP)
+        {
+
+        }
+        else if (word == EInputWord.DPAD_DOWN)
+        {
+
+        }
+    }
+
     //锁定敌人
     public void LockEnemy(ICharacter ch)
     {

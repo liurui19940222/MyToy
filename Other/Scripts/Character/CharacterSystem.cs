@@ -157,5 +157,9 @@ public class CharacterSystem : IGameSystem {
             if (ch.Config.DefaultEquipments[i] != 0)
                 ch.Wear((EPartOfBodyType)i, Factory.Instance.CreateEquipment(ch.Config.DefaultEquipments[i]));
         }
+        if (ch.Config.LeftHandSecondEquipment != 0)
+            ch.WearOnSecondHand(EPartOfBodyType.LeftHand, Factory.Instance.CreateEquipment(ch.Config.LeftHandSecondEquipment));
+        if (ch.Config.RightHandSecondEquipment != 0)
+            ch.WearOnSecondHand(EPartOfBodyType.RightHand, Factory.Instance.CreateEquipment(ch.Config.RightHandSecondEquipment));
     }
 }

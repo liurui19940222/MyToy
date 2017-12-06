@@ -47,9 +47,9 @@ public class RPGGame : Singleton<RPGGame>
     }
 
     //执行技能
-    public Skill ExecuteSkill(ICharacter ch, int skillId, IEquipment byWhichEquip)
+    public Skill ExecuteSkill(ICharacter ch, int skillId, IEquipment byWhichEquip, ICharacter target = null)
     {
-        return m_SkillSystem.Execute(ch, skillId, byWhichEquip);
+        return m_SkillSystem.Execute(ch, skillId, byWhichEquip, target);
     }
 
     //创建玩家角色

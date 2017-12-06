@@ -80,6 +80,7 @@ public class ControlledCombatState : ControlledState
                     }
                 }
             }
+            m_Player.SwitchTools(word, down);
         }
         return base.HandleInput(input, msg);
     }

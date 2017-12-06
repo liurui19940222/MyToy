@@ -18,6 +18,8 @@ public class CharacterEditor : Editor
         {
             config.DefaultEquipments[i] = EditorGUILayout.IntField(((EPartOfBodyType)i).ToString(), config.DefaultEquipments[i]);
         }
+        config.LeftHandSecondEquipment = EditorGUILayout.IntField("左手副装备", config.LeftHandSecondEquipment);
+        config.RightHandSecondEquipment = EditorGUILayout.IntField("右手副装备", config.RightHandSecondEquipment);
         EditorUtility.SetDirty(config);
     }
 }

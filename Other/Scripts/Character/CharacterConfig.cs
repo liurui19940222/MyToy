@@ -14,6 +14,8 @@ public class CharacterConfig : ScriptableObject {
     public Vector3 CenterPos;               //中心店
     public float AttackDistance;            //攻击距离
     public AttackSequence[] AttackSequence; //攻击序列
+    public int LeftHandSecondEquipment;     //左手第二个装备
+    public int RightHandSecondEquipment;    //右手第二个装备
 
     [HideInInspector]
     public int[] DefaultEquipments;         //默认装备

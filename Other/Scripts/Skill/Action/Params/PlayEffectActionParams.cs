@@ -8,10 +8,4 @@ public class PlayEffectActionParams : ScriptableObject
     public Quaternion PlayRotation;                 //播放旋转
     public float DestroyTime;                       //销毁时间
     public EBindPos BindPos;                        //绑定位置
-
-    public enum EBindPos
-    {
-        None,
-        MagicCore,
-    }
 }

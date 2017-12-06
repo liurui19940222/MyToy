@@ -39,4 +39,15 @@ public abstract class ISkillAction
 
     //分析参数
     protected abstract void UnpackParams(Object _params);
+
+    protected Transform GetBindPos(EBindPos pos)
+    {
+        Transform parent = null;
+        Weapon weapon = m_Owner.ByWhichEquip as Weapon;
+        if (pos == EBindPos.MagicCore)
+        {
+            parent = weapon.MagicCore;
+        }
+        return parent;
+    }
 }

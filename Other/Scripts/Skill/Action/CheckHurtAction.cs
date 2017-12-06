@@ -45,6 +45,8 @@ public class CheckHurtAction : ISkillAction
     /// <returns>是否攻击成功(没有被格挡或者闪避)</returns>
     private bool AttackEnemy(ICharacter enemy)
     {
+        if (enemy == m_Owner.Character)
+            return false;
         ICharacter.HurtByWhichSide dir = ICharacter.HurtByWhichSide.Forward;
         if (Vector3.Dot(enemy.GetForward(), (m_Owner.Character.Position - enemy.Position).normalized) > 0) //夹角小于90，说明被正前方的敌人所伤，受伤方向是向后
             dir = ICharacter.HurtByWhichSide.Back;

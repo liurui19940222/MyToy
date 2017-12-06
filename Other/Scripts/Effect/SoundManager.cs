@@ -43,6 +43,12 @@ public class SoundManager : SingletonMono<SoundManager>
         AudioSource.PlayClipAtPoint(clip, point);
     }
 
+    public void PlaySoundAtPoint(string soundName, Vector3 point)
+    {
+        AudioClip clip = ResourceFactory.Instance.LoadSound(soundName);
+        PlaySoundAtPoint(clip, point);
+    }
+
     //播放受伤音效
     public void PlayHitSound(IEquipment byWhatWeapon, Vector3 position)
     {

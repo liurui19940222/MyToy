@@ -8,13 +8,13 @@ public class Enemy : NonPlayerCharacter
     private Vector3 m_LastTraceTarget;      //上一次的追踪目标位置
     private float m_LastTraceTime;          //上一次追踪的时间
 
-    private float m_BeginToAttackTime;      //开始攻击的时间
+    private float m_BeginToCurStateTime;      //开始攻击的时间
     private int m_AttackCounter;            //攻击计数
 
     private float m_BeginToIdleTime;        //开始Idle的时间
     private float m_ThingkingTime = 1.2f;   //思考时间
 
-    private float m_AttackDelayTime;        //攻击的延迟时间（考虑到需要转向）
+    private float m_RotateCostTime;        //攻击的延迟时间（考虑到需要转向）
     private float m_AttackEnterTime;        //进入攻击状态时的时间（与延迟时间作计算）
     private AttackSequence m_AttackSequence;//当前攻击序列
     private Skill m_CurSkill;               //当前正在释放的技能
@@ -91,7 +91,7 @@ public class Enemy : NonPlayerCharacter
     public void AttackEnter()
     {
         m_AttackSequence = null;
-        m_BeginToAttackTime = Time.time;
+        m_BeginToCurStateTime = Time.time;
         m_AttackCounter = 0;
         //检查各种攻击组合是否满足
         for (int i = 0; i < m_Config.AttackSequence.Length; ++i)
@@ -111,17 +111,13 @@ public class Enemy : NonPlayerCharacter
                 }
             }
         }
-        Vector3 ToPlayerDir = Player.Position - Position;
-        if (Vector3.Angle(GetForward(), ToPlayerDir) > 45)
-        {
-            m_AttackDelayTime = RotateToTarget(Quaternion.LookRotation(ToPlayerDir, Vector3.up), 400);
-        }
+        CalcRotateTime();
     }
 
     [FSMCallMethod]
     public void UpdateAttack()
     {
-        if (Time.time - m_BeginToAttackTime < m_AttackDelayTime)
+        if (Time.time - m_BeginToCurStateTime < m_RotateCostTime)
             return;
         if (m_AttackSequence == null)
         {
@@ -140,7 +136,7 @@ public class Enemy : NonPlayerCharacter
                 m_AttackCounter++;
             }
         }
-        if (Time.time - m_BeginToAttackTime > 1.5f && CanDoAction)
+        if (Time.time - m_BeginToCurStateTime > 1.5f && CanDoAction)
         {
             FSMController.SetTrigger("AttackingHaveDone");
         }
@@ -178,5 +174,32 @@ public class Enemy : NonPlayerCharacter
     public void ShieldMoveExit()
     {
         Defend(false);
+    }
+
+    [FSMCallMethod]
+    public void DefenceEnter()
+    {
+        m_BeginToCurStateTime = Time.time;
+        Defend(true);
+        CalcRotateTime();
+    }
+
+    [FSMCallMethod]
+    public void DefenceUpdate()
+    {
+        if (Time.time - m_BeginToCurStateTime < m_RotateCostTime + 2)
+            return;
+        Move(Vector3.zero);
+        CalcRotateTime(100);
+    }
+
+    //计算转向
+    private void CalcRotateTime(float rotateSpeed = 400)
+    {
+        Vector3 ToPlayerDir = Player.Position - Position;
+        if (Vector3.Angle(GetForward(), ToPlayerDir) > 45)
+        {
+            m_RotateCostTime = RotateToTarget(Quaternion.LookRotation(ToPlayerDir, Vector3.up), rotateSpeed);
+        }
     }
 }

@@ -11,9 +11,11 @@ public class Skill
     private SkillSystem m_System;               //技能系统
     private float m_Timer;                      //局部时间
     private bool[] m_EventStates;               //各事件的触发状态
-    private int m_Counter;                      //已经触发的事件计数
+    private int m_EventCounter;                 //已经触发的事件计数
+    private int m_ActionCounter;                //已经触发的Action计数
     private List<ISkillAction> m_Actions;       //技能操作
     private IEquipment m_ByWhichEquip;          //被哪件装备使用的
+    private ICharacter m_TargetCharacter;       //技能目标（如果有）
 
     public bool Done { get { return m_bDone; } set { m_bDone = value; } }
 
@@ -29,9 +31,12 @@ public class Skill
 
     public IEquipment ByWhichEquip { get { return m_ByWhichEquip; } }
 
-    public Skill(SkillSystem system, ICharacter owner, SkillConfig config, IEquipment byWhichEquip)
+    public ICharacter TargetCharacter { get { return m_TargetCharacter; } }
+
+    public Skill(SkillSystem system, ICharacter owner, SkillConfig config, IEquipment byWhichEquip, ICharacter target)
     {
         m_ByWhichEquip = byWhichEquip;
+        m_TargetCharacter = target;
         m_Character = owner;
         m_System = system;
         m_Config = config;
@@ -50,7 +55,9 @@ public class Skill
 
     public bool OnUpdate()
     {
-        if (m_bDone) return true;
+        //如果执行完所有Action和Event，返回true移除该技能
+        if (m_bDone && m_ActionCounter >= m_Actions.Count && m_EventCounter >= m_EventStates.Length)
+            return true;
 
         m_Timer += Time.deltaTime;
         //更新执行所有Event
@@ -71,7 +78,7 @@ public class Skill
                     m_Actions[i].Begin = true;
                     m_Actions[i].Execute();
                     m_EventStates[i] = true;
-                    m_Counter++;
+                    m_EventCounter++;
                 }
             }
         }
@@ -85,12 +92,9 @@ public class Skill
             if (m_Actions[i].OnUpdate())
             {
                 m_Actions[i].End = true;
+                m_ActionCounter++;
             }
         }
-
-        //如果执行完所有Action和Event，返回true移除该技能
-        if (m_Actions.Count == 0 && m_Counter >= m_EventStates.Length)
-            return true;
 
         return false;
     }

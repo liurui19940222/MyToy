@@ -170,9 +170,11 @@
     <Compile Include="Assets\Scripts\Scene\MainMenuScene.cs" />
     <Compile Include="Assets\Scripts\Scene\StartScene.cs" />
     <Compile Include="Assets\Scripts\Scene\WorldScene.cs" />
+    <Compile Include="Assets\Scripts\Skill\Action\BallAction.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\CheckHurtAction.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\EndSkillAction.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\ISkillAction.cs" />
+    <Compile Include="Assets\Scripts\Skill\Action\Params\BallActionParams.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\Params\FanShapeCollisionParams.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\Params\PlayAnimActionParams.cs" />
     <Compile Include="Assets\Scripts\Skill\Action\Params\PlayEffectActionParams.cs" />

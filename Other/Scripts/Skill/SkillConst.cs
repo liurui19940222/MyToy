@@ -32,6 +32,7 @@
         "可以触发下一个技能",
         "结束技能",
         "结束触发下一个技能",
+        "球状碰撞物",
     };
 }
 
@@ -67,6 +68,7 @@ public enum ESkillActionType
     ReadyToNext,            //可以触发下一个技能
     End,                    //结束技能
     StopToNext,             //结束触发下一个技能
+    Ball,                   //球状碰撞物
 }
 
 //技能效果类型
@@ -75,4 +77,11 @@ public enum ESkillEffectType
     Hurt,                   //伤害
     Health,                 //恢复
     Buff,                   //持续性作用
+}
+
+//绑定位置（特效等）
+public enum EBindPos
+{
+    None,
+    MagicCore,
 }

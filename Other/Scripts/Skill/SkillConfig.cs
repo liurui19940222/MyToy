@@ -13,6 +13,8 @@ public class SkillConfig : ScriptableObject
 
     public bool ToStiff = true;                     //是否置释放者为僵直状态
 
+    public bool DeleteAtTheEnd = true;              //在技能所有事件结束后删除
+
     public List<SkillCondition> Conditions;         //释放前置条件
 
     public List<SkillTransition> Transitions;       //技能的跳转(该技能衔接下一个技能)，在ReadyToNext状态的时候判断是否跳转

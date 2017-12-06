@@ -11,17 +11,12 @@ public class PlayEffectAction : ISkillAction
 
     public override void Execute()
     {
-        if (m_Param.BindPos == PlayEffectActionParams.EBindPos.None)
+        if (m_Param.BindPos == EBindPos.None)
         {
             m_Effect = EffectManager.Instance.CreateEffect(m_Param.EffectName, m_Param.PlayPosition, m_Param.PlayRotation, m_Param.DestroyTime);
             return;
         }
-        Transform parent = null;
-        Weapon weapon = m_Owner.ByWhichEquip as Weapon;
-        if (m_Param.BindPos == PlayEffectActionParams.EBindPos.MagicCore)
-        {
-            parent = weapon.MagicCore;
-        }
+        Transform parent = GetBindPos(m_Param.BindPos);
         m_Effect = EffectManager.Instance.CreateEffect(parent, m_Param.EffectName, m_Param.PlayPosition, m_Param.PlayRotation, m_Param.DestroyTime);
     }
 

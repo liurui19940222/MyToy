@@ -15,6 +15,7 @@ MonoBehaviour:
   Name: "\u53F3\u624B\u6325\u780D\u8F7B2\u6BB5"
   Desc: 
   ToStiff: 1
+  DeleteAtTheEnd: 1
   Conditions: []
   Transitions:
   - Input: 14
@@ -50,7 +51,7 @@ MonoBehaviour:
     BreakSkillWhenConditionFail: 0
     ActionType: 7
     Params: {fileID: 0}
-  - DelayTime: 0.9
+  - DelayTime: 1.2
     Condition:
       Condition: 0
       Param: 

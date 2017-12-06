@@ -11,7 +11,7 @@ public class IPartOfBody
 
     private Transform transform;
 
-    public virtual IEquipment Euipment
+    public virtual IEquipment Equipment
     {
         get { return m_Euipment; }
         set { m_Euipment = value; }

@@ -50,6 +50,7 @@ public class SkillEditor : EditorWindow
         m_Config.Name = EditorGUILayout.TextField("技能名字", m_Config.Name);
         m_Config.Desc = EditorGUILayout.TextField("技能描述", m_Config.Desc, GUILayout.Height(50));
         m_Config.ToStiff = EditorGUILayout.Toggle("是否硬直", m_Config.ToStiff);
+        m_Config.DeleteAtTheEnd = EditorGUILayout.Toggle("事件完成后删除", m_Config.DeleteAtTheEnd);
         if (m_ConditionList != null)
             m_ConditionList.DoLayoutList();
 
