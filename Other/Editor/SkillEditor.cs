@@ -6,7 +6,7 @@ using UnityEditorInternal;
 
 public class SkillEditor : EditorWindow
 {
-
+    string[] EventTriggerTypeTexts = { "时间线", "动画事件" };
     SkillConfig m_Config;
 
     ReorderableList m_ConditionList = null;
@@ -144,7 +144,8 @@ public class SkillEditor : EditorWindow
             rect.height -= 4;
             rect.y += 2;
             List<float> weights = new List<float>();
-            weights.Add(0.08f);
+            weights.Add(0.14f);
+            weights.Add(0.01f);
             weights.Add(0.12f);
             weights.Add(0.1f);
             weights.Add(0.25f);
@@ -153,8 +154,12 @@ public class SkillEditor : EditorWindow
             weights.Add(0.2f);
             int i = 0;
             List<Rect> rects = Util.SplitRect(rect, weights);
-            EditorGUI.LabelField(rects[i++], "时间");
-            m_Config.Events[index].DelayTime = EditorGUI.FloatField(rects[i++], m_Config.Events[index].DelayTime);
+            SkillEvent.ETriggerType type = m_Config.Events[index].TriggerType = (SkillEvent.ETriggerType)EditorGUI.Popup(rects[i++], (int)m_Config.Events[index].TriggerType, EventTriggerTypeTexts);
+            i++;
+            if(type == SkillEvent.ETriggerType.TimeLine)
+                m_Config.Events[index].DelayTime = EditorGUI.FloatField(rects[i++], m_Config.Events[index].DelayTime);
+            else if(type == SkillEvent.ETriggerType.AnimEvent)
+                m_Config.Events[index].AnimEvent = EditorGUI.TextField(rects[i++], m_Config.Events[index].AnimEvent);
             EditorGUI.LabelField(rects[i++], " 操作");
             m_Config.Events[index].ActionType = (ESkillActionType)EditorGUI.EnumPopup(rects[i++], (ESkillActionType)m_Config.Events[index].ActionType);
             EditorGUI.LabelField(rects[i++], SkillConst.SkillActionTypeDesc[(int)m_Config.Events[index].ActionType]);

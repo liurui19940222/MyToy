@@ -85,3 +85,9 @@ public enum EBindPos
     None,
     MagicCore,
 }
+
+//技能消息类型
+public enum ESkillMessageType
+{
+    AnimationEvent,
+}

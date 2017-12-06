@@ -5,7 +5,7 @@ public class ControlledIdleState : ControlledState
 {
     private HandleInputResult m_Result;
 
-    public ControlledIdleState(int id, BattleCharacter ch) : base(id, ch)
+    public ControlledIdleState(int id, ICharacter ch) : base(id, ch)
     {
 
     }
@@ -19,7 +19,7 @@ public class ControlledIdleState : ControlledState
     public override int OnUpdate()
     {
         m_Player.UpdateCamera();
-        if (!m_Player.Stiff)
+        if (m_Player.CanDoAction)
         {
             m_Player.UpdateMove(true);
         }
@@ -33,7 +33,7 @@ public class ControlledIdleState : ControlledState
         if (down)
         {
             //转到施放状态来处理攻击消息
-            if (InputTranslater.IsAttackWord(word) && !m_Player.Stiff)
+            if (InputTranslater.IsAttackWord(word) && m_Player.CanDoAction)
             {
                 m_Result = m_Player.GetInputResult(word, down);
                 if (m_Result != null)

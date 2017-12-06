@@ -89,6 +89,18 @@ public class SkillSystem : IGameSystem
         }
     }
 
+    //向一个角色的技能派发事件
+    public void SendMessageToSkills(Message msg, int characterId)
+    {
+        if (!m_ExecutingSkills.ContainsKey(characterId))
+            return;
+        List<Skill> list = m_ExecutingSkills[characterId];
+        for (int i = 0; i < list.Count; ++i)
+        {
+            list[i].OnRecGameMsg(msg);
+        }
+    }
+
     //添加技能
     private void AddSkill(int characterId, Skill skill)
     {

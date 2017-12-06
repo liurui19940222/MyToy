@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Skill
 {
+    private const int TRIGGER_EVENT_RET_SUCCESSFUL = 0; //触发事件成功
+    private const int TRIGGER_EVENT_RET_FAILED = 1;     //触发事件失败
+    private const int TRIGGER_EVENT_RET_BREAK = 2;      //触发事件中断（中断整个技能）
+
     private ICharacter m_Character;             //发起技能的角色
     private bool m_bDone;                       //是否已经结束
     private bool m_ReadyToNext;                 //是否已经能被取消，进入下一个动作
@@ -63,23 +67,11 @@ public class Skill
         //更新执行所有Event
         for (int i = 0; i < m_Config.Events.Count; ++i)
         {
-            if (!m_EventStates[i] && m_Timer >= m_Config.Events[i].DelayTime)
+            //如果该事件没有被触发，并且是根据时间线来触发
+            if (!m_EventStates[i] && m_Config.Events[i].TriggerType == SkillEvent.ETriggerType.TimeLine && m_Timer >= m_Config.Events[i].DelayTime)
             {
-                if (!m_Character.CheckSkillCondition(m_Config.Events[i].Condition))
-                {
-                    if (m_Config.Events[i].BreakSkillWhenConditionFail)
-                    {
-                        Break();
-                        return true;
-                    }
-                }
-                else
-                {
-                    m_Actions[i].Begin = true;
-                    m_Actions[i].Execute();
-                    m_EventStates[i] = true;
-                    m_EventCounter++;
-                }
+                if (TriggerEvent(i) == TRIGGER_EVENT_RET_BREAK)
+                    return true;
             }
         }
 
@@ -123,6 +115,47 @@ public class Skill
                 return m_Config.Transitions[i].TargetSkillId;
         }
         return 0;
+    }
+
+    //接收一个消息
+    public void OnRecGameMsg(Message msg)
+    {
+        if (m_bDone || m_EventCounter >= m_Config.Events.Count)
+            return;
+        ESkillMessageType type = (ESkillMessageType)msg["type"];
+        if (type == ESkillMessageType.AnimationEvent)
+        {
+            for (int i = 0; i < m_Config.Events.Count; ++i)
+            {
+                if (!m_EventStates[i] && m_Config.Events[i].TriggerType == SkillEvent.ETriggerType.AnimEvent && m_Config.Events[i].AnimEvent == (string)msg["name"])
+                {
+                    if (TriggerEvent(i) == TRIGGER_EVENT_RET_BREAK)
+                        m_bDone = true;
+                }
+            }
+        }
+    }
+
+    //触发一个事件
+    private int TriggerEvent(int index)
+    {
+        if (!m_Character.CheckSkillCondition(m_Config.Events[index].Condition))
+        {
+            if (m_Config.Events[index].BreakSkillWhenConditionFail)
+            {
+                Break();
+                return TRIGGER_EVENT_RET_BREAK;
+            }
+        }
+        else
+        {
+            m_Actions[index].Begin = true;
+            m_Actions[index].Execute();
+            m_EventStates[index] = true;
+            m_EventCounter++;
+            return TRIGGER_EVENT_RET_SUCCESSFUL;
+        }
+        return TRIGGER_EVENT_RET_FAILED;
     }
 }
 
