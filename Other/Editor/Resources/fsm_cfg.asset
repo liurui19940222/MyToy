@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1332f9caf130bce48a61b91d24d70213, type: 3}
+  m_Name: fsm_cfg
+  m_EditorClassIdentifier: 
+  GlobalParamaters:
+  - Name: 
+    Value:
+      Type: 0
+      stringValue: 
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      triggerValue: 0
+  - Name: 
+    Value:
+      Type: 1
+      stringValue: 
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      triggerValue: 0
+  - Name: 
+    Value:
+      Type: 2
+      stringValue: 
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      triggerValue: 0
+  - Name: 
+    Value:
+      Type: 0
+      stringValue: 
+      intValue: 0
+      floatValue: 0
+      boolValue: 0
+      triggerValue: 0

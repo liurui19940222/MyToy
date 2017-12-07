@@ -52,6 +52,12 @@ MonoBehaviour:
     m_OnEnterMethod: idle enter
     m_OnExitMethod: idle exit
     m_OnUpdateMethod: 
+    m_Rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
   - m_StateName: Move
     m_Id: 1
     m_Controller: {fileID: 11400000}
@@ -92,6 +98,12 @@ MonoBehaviour:
     m_OnEnterMethod: move enter
     m_OnExitMethod: move exit
     m_OnUpdateMethod: 
+    m_Rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
   - m_StateName: Defence
     m_Id: 2
     m_Controller: {fileID: 11400000}
@@ -110,6 +122,12 @@ MonoBehaviour:
     m_OnEnterMethod: defence enter
     m_OnExitMethod: defence exit
     m_OnUpdateMethod: 
+    m_Rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
   - m_StateName: Attack
     m_Id: 3
     m_Controller: {fileID: 11400000}
@@ -128,6 +146,12 @@ MonoBehaviour:
     m_OnEnterMethod: attack enter
     m_OnExitMethod: attack exit
     m_OnUpdateMethod: 
+    m_Rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
   m_DefaultState: 0
   m_Paramaters:
   - Name: Speed
@@ -154,3 +178,5 @@ MonoBehaviour:
       floatValue: 0
       boolValue: 0
       triggerValue: 1
+  m_StateIdSequence: 0
+  m_AgentType: 

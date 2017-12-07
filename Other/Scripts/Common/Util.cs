@@ -61,7 +61,7 @@ public class Util
     private static List<GameObject> m_DebugGos = new List<GameObject>();
     public static void DebugCube(Vector3 position, Vector3 scale, Color color)
     {
-        GameObject go = GameObject.Instantiate( ResourceFactory.Instance.LoadAsset<UnityEngine.Object>("Debug/", "Cube")) as GameObject;
+        GameObject go = GameObject.Instantiate(ResourceFactory.Instance.LoadAsset<UnityEngine.Object>("Debug/", "Cube")) as GameObject;
         m_DebugGos.Add(go);
         go.GetComponent<MeshRenderer>().material.color = color;
         go.transform.localScale = scale;
@@ -76,6 +76,22 @@ public class Util
             GameObject.Destroy(go);
         }
         m_DebugGos.Clear();
+    }
+
+    //深拷贝
+    public static T DeepCopy<T>(T obj)
+    {
+        //如果是字符串或值类型则直接返回
+        if (obj is string || obj.GetType().IsValueType) return obj;
+
+        object retval = Activator.CreateInstance(obj.GetType());
+        FieldInfo[] fields = obj.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+        foreach (FieldInfo field in fields)
+        {
+            try { field.SetValue(retval, DeepCopy(field.GetValue(obj))); }
+            catch { }
+        }
+        return (T)retval;
     }
 }
 
