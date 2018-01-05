@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <windows.h>
 #include <stdio.h>
 #include <string.h>
@@ -96,9 +98,56 @@ void PrintThis(const wstring& path)
 	}
 }
 
+#define CLASS_NAME L"ABCDEFG"
+
+LRESULT CALLBACK WND(HWND hwnd, UINT msg, WPARAM w, LPARAM l)
+{
+	switch (msg)
+	{
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	}
+	return DefWindowProc(hwnd, msg, w, l);
+}
+
+void ACreateWindow()
+{
+	HINSTANCE hInstance = GetModuleHandle(NULL);
+	WNDCLASSEX pWndClass = {
+		sizeof(WNDCLASSEX),
+		CS_HREDRAW | CS_VREDRAW,
+		WND,
+		0, 0,
+		hInstance,
+		LoadIcon(NULL, IDI_APPLICATION),
+		LoadCursor(NULL, IDC_ARROW),
+		(HBRUSH)GetStockObject(WHITE_BRUSH),
+		NULL,
+		CLASS_NAME,
+		NULL,
+	};
+	RegisterClassEx(&pWndClass);
+	HWND hwnd = CreateWindowEx(0, CLASS_NAME, L"Hello Console", WS_OVERLAPPEDWINDOW, 0, 0, 800, 600, NULL, NULL, hInstance, 0);
+	ShowWindow(hwnd, SW_SHOW);
+	MSG msg;
+
+	while (true)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT)
+			{
+				break;
+			}
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		Sleep(33);
+	}
+}
+
 void main()
 {
-	PrintAll(L"D:\\by_apk");
-	//PrintThis(L"D:\\by_apk");
-	system("pause");
+	ACreateWindow();
 }

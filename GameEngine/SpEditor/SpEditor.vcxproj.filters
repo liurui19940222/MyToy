@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Library">
+      <UniqueIdentifier>{3d61f8f8-5fd5-4937-86a8-00859a2843ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{cd5a9381-39e2-4c94-a8e7-9d20b0ed8cd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\源文件">
+      <UniqueIdentifier>{d73302e7-6ef1-483f-8cd7-59d4cd641074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\头文件">
+      <UniqueIdentifier>{6f127191-f4b4-40d9-8ce3-c38d90c57c47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor">
+      <UniqueIdentifier>{73cf3244-d9a6-436b-84f5-da1c74477fa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Editor\源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Editor\Watcher">
+      <UniqueIdentifier>{bd58b3d9-507a-4ad1-b524-792c1ad0919f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Watcher\源文件">
+      <UniqueIdentifier>{c16724f5-108e-4c2d-8a62-35c8b8b65d3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Watcher\头文件">
+      <UniqueIdentifier>{ab7cff0c-472f-439c-9586-40c6de5d1bab}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GUIElement.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIManager.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Channel.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneWindow.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldTreeWindow.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleWindow.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WatcherWindow.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GLWindow.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GridLayout.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIText.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITexture.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIGroup.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIMesh.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ContextMenu.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITextEdit.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIHorizontalLayout.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectWatcher.cpp">
+      <Filter>Editor\Watcher\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Watcher.cpp">
+      <Filter>Editor\Watcher\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUICheckBox.cpp">
+      <Filter>GUI\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetsWindow.cpp">
+      <Filter>Editor\源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\DLLEXPORT\GameEngine.lib">
+      <Filter>Library</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GUIElement.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIManager.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>资源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MainWindow.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Channel.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneWindow.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldTreeWindow.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleWindow.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WatcherWindow.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SelfContainedGrid.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GLWindow.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GridLayout.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIText.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITexture.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIGroup.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIMesh.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITree.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ContextMenu.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUITextEdit.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIHorizontalLayout.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Watcher.h">
+      <Filter>Editor\Watcher\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectWatcher.h">
+      <Filter>Editor\Watcher\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUICheckBox.h">
+      <Filter>GUI\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetsWindow.h">
+      <Filter>Editor\头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SpEditor.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Config\engine.xml" />
+  </ItemGroup>
+</Project>

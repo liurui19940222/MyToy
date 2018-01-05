@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine>
+	<window
+    full_screen = "false"
+		width = "1600"
+    height = "900"
+		/>
+  <debug
+    draw_grid = "true"
+    grid_strength = "0.5"
+    draw_gizmos = "false"
+    draw_gui_layout = "false"
+    />
+  <project
+    path = "D:/Projects/TestProject"
+    />
+</engine>
