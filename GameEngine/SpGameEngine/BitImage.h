@@ -2,7 +2,7 @@
 #define _BIT_IMAGE_H_
 
 #include"SourceFile.h"
-#include"EngineDefine.h"
+#include"..\SpCommon\EngineDefine.h"
 #include"DynamicFactory.h"
 #include<freeimage\FreeImage.h>
 

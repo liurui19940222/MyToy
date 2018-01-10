@@ -3,7 +3,7 @@
 
 #include<Windows.h>
 #include<windowsx.h>
-#include"ApiDefine.h"
+#include"..\SpCommon\ApiDefine.h"
 
 class ENGINE_API CTime
 {

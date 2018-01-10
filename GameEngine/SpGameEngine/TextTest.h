@@ -1,11 +1,11 @@
 #ifndef _CTEXT_WINDOW_
 #define _CTEXT_WINDOW_
 
-#include"EngineDefine.h"
+#include"..\SpCommon\EngineDefine.h"
 #include"Math.h"
 #include"Application.h"
 #include"Input.h"
-#include"Debug.h"
+#include "..\SpCommon\Debug.h"
 #include"Time.h"
 #include"GameObject.h"
 #include"Camera.h"

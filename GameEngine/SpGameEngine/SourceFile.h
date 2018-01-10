@@ -1,7 +1,7 @@
 #ifndef _CSOURCE_FILE_
 #define _CSOURCE_FILE_
 
-#include"ApiDefine.h"
+#include"..\SpCommon\ApiDefine.h"
 
 class ENGINE_API ISourceFile
 {

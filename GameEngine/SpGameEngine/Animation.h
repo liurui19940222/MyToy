@@ -1,7 +1,7 @@
 #ifndef _ANIMATION_H_
 #define _ANIMATION_H_
 
-#include"ApiDefine.h"
+#include"..\SpCommon\ApiDefine.h"
 
 class ENGINE_API IAnimation
 {

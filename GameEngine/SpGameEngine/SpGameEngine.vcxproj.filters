@@ -113,13 +113,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Debug.h">
-      <Filter>Common\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="EditorTool.h">
-      <Filter>Common\头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineDefine.h">
       <Filter>Common\头文件</Filter>
     </ClInclude>
     <ClInclude Include="DynamicFactory.h">
@@ -257,9 +251,6 @@
     <ClInclude Include="Config.h">
       <Filter>Common\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Converter.h">
-      <Filter>Common\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="EngineSetting.h">
       <Filter>Common\头文件</Filter>
     </ClInclude>
@@ -289,9 +280,6 @@
     </ClInclude>
     <ClInclude Include="GUIDesigner.h">
       <Filter>GUISystem\头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ApiDefine.h">
-      <Filter>Common\头文件</Filter>
     </ClInclude>
     <ClInclude Include="RawRenderer.h">
       <Filter>Render\头文件</Filter>
@@ -343,13 +331,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Debug.cpp">
-      <Filter>Common\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="EditorTool.cpp">
-      <Filter>Common\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="EngineDefine.cpp">
       <Filter>Common\源文件</Filter>
     </ClCompile>
     <ClCompile Include="Math.cpp">

@@ -1,5 +1,5 @@
 #include"SpriteAnimation.h"
-#include"EngineDefine.h"
+#include"..\SpCommon\EngineDefine.h"
 #include"Application.h"
 #include"Time.h"
 #include"GameObject.h"

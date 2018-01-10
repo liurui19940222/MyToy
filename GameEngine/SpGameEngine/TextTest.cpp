@@ -1,5 +1,5 @@
 #include"TextTest.h"
-#include"Converter.h"
+#include"..\SpCommon\Converter.h"
 
 void CTextTest::OnStart()
 {

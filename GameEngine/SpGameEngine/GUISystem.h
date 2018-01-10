@@ -3,7 +3,7 @@
 
 #include<vector>
 #include<functional>
-#include"EngineDefine.h"
+#include"..\SpCommon\EngineDefine.h"
 #include"Math.h"
 #include"Component.h"
 #include"PriorityQueue.h"

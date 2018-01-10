@@ -3,7 +3,7 @@
 #include"Application.h"
 #include"Input.h"
 #include"Time.h"
-#include"Debug.h"
+#include "..\SpCommon\Debug.h"
 #include"GUISystem.h"
 #include"GameObject.h"
 #include"Config.h"

@@ -3,7 +3,7 @@
 
 #include"Math.h"
 #include"FontManager.h"
-#include"EngineDefine.h"
+#include"..\SpCommon\EngineDefine.h"
 #include"Renderer.h"
 #include"MeshBuffer.h"
 #include"Texture2D.h"

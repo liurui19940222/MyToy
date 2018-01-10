@@ -1,7 +1,7 @@
 #ifndef _LIGHT_H_
 #define _LIGHT_H_
 
-#include"EngineDefine.h"
+#include"..\SpCommon\EngineDefine.h"
 #include"Math.h"
 #include"Component.h"
 #include"RenderTexture.h"

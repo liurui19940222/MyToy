@@ -3,7 +3,7 @@
 
 #include"Component.h"
 #include"FontManager.h"
-#include"EngineDefine.h"
+#include"..\SpCommon\EngineDefine.h"
 #include"FontRenderer.h"
 
 

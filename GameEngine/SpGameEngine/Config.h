@@ -8,8 +8,8 @@
 #include<fstream>
 #include"include\rapidxml\rapidxml.hpp"
 #include"Singleton.h"
-#include"Converter.h"
-#include"ApiDefine.h"
+#include"..\SpCommon\Converter.h"
+#include"..\SpCommon\ApiDefine.h"
 
 using namespace std;
 using namespace rapidxml;

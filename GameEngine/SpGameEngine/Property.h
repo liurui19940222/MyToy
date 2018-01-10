@@ -2,7 +2,7 @@
 #define _PROPERTY_H_
 
 #include<functional>
-#include"ApiDefine.h"
+#include"..\SpCommon\ApiDefine.h"
 
 using namespace std;
 

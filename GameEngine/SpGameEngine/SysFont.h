@@ -2,7 +2,7 @@
 #define _SYS_FONT_H_
 
 #include<Windows.h>
-#include"ApiDefine.h"
+#include"..\SpCommon\ApiDefine.h"
 #include"Math.h"
 
 class ENGINE_API CSysFont

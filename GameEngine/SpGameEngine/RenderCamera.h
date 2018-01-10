@@ -2,7 +2,7 @@
 #define _RENDER_CAMERA_H_
 
 #include"Math.h"
-#include"EngineDefine.h"
+#include"..\SpCommon\EngineDefine.h"
 
 enum ENGINE_API EProjectionType
 {

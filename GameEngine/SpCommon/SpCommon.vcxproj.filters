@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{94ab18ae-ecc6-43af-8c01-8279416635e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{29227ccb-6471-434e-ac5d-3ba6f95bcaf3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Math.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="ApiDefine.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Converter.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineDefine.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Math.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineDefine.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

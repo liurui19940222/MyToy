@@ -11,7 +11,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpGameEngine", "SpGameEngin
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpRendering", "SpRendering\SpRendering.vcxproj", "{4DACD06A-D8CD-4D20-955E-BEE0BB0E9CD2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpCommon", "SpMath\SpMath.vcxproj", "{43ED9727-74EE-4AEA-873F-50F8A7C1B09C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpCommon", "SpCommon\SpCommon.vcxproj", "{43ED9727-74EE-4AEA-873F-50F8A7C1B09C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,7 +4,7 @@
 #include <Windows.h>
 #include <gl\glew.h>
 #include <string>  
-#include "Debug.h"
+#include "..\SpCommon\Debug.h"
 #include "SourceFile.h"
 
 struct ENGINE_API SImageInfo {

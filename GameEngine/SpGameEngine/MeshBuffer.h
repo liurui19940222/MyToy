@@ -4,7 +4,7 @@
 #include<gl\glew.h>
 #include"RenderBuffer.h"
 #include"Math.h"
-#include"EngineDefine.h"
+#include"..\SpCommon\EngineDefine.h"
 #include"SkeletonAnimation.h"
 
 #define VERTEX_POS			0

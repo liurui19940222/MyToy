@@ -3,7 +3,7 @@
 #include"EditorTool.h"
 #include"Engine.h"
 #include"Application.h"
-#include"Debug.h"
+#include "..\SpCommon\Debug.h"
 #include"GameObject.h"
 #include"Input.h"
 #include"Time.h"

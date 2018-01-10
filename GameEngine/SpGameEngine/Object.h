@@ -2,7 +2,7 @@
 #define _OBJECT_
 
 #include<string>
-#include"ApiDefine.h"
+#include"..\SpCommon\ApiDefine.h"
 
 using namespace std;
 

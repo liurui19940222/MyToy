@@ -12,7 +12,7 @@
 #include <string>
 #include <typeinfo>
 #include <iostream>
-#include"ApiDefine.h"
+#include"..\SpCommon\ApiDefine.h"
 
 using namespace std;
 

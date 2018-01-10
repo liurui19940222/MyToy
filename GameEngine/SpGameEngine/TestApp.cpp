@@ -4,7 +4,7 @@
 #include"RenderTexture.h"
 #include"3DSFile.h"
 #include"Resources.h"
-#include"Debug.h"
+#include "..\SpCommon\Debug.h"
 #include"Config.h"
 #include"MeshFactory.h"
 

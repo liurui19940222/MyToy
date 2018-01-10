@@ -2,11 +2,11 @@
 #define _COLLADA_FILE_H_
 
 #include<vector>
-#include"Converter.h"
+#include"..\SpCommon\Converter.h"
 #include"include\rapidxml\rapidxml.hpp"
 #include"ModelFile.h"
 #include"SkeletonAnimation.h"
-#include"Debug.h"
+#include "..\SpCommon\Debug.h"
 #include"MeshBuffer.h"
 
 using namespace std;

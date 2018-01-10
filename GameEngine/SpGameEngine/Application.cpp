@@ -2,7 +2,7 @@
 #include "Camera.h"
 #include "Application.h"
 #include "Time.h"
-#include "Debug.h"
+#include "..\SpCommon\Debug.h"
 #include "Config.h"
 
 LRESULT CALLBACK MainWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)

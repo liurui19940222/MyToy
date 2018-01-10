@@ -1,6 +1,6 @@
 #include"SkinnedMeshRenderer.h"
 #include"GameObject.h"
-#include"EngineDefine.h"
+#include"..\SpCommon\EngineDefine.h"
 #include"Engine.h"
 #include"Application.h"
 #include"EditorTool.h"

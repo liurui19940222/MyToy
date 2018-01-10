@@ -2,9 +2,9 @@
 #define _CEDITOR_TOOL_
 
 #include"Math.h"
-#include"EngineDefine.h"
 #include"SkeletonAnimation.h"
-#include"ApiDefine.h"
+#include"..\SpCommon\EngineDefine.h"
+#include"..\SpCommon\ApiDefine.h"
 
 class ENGINE_API CGameObject;
 

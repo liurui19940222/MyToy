@@ -4,8 +4,8 @@
 #include<string>
 #include<Windows.h>
 #include"Shader.h"
-#include"Debug.h"
-#include"Converter.h"
+#include "..\SpCommon\Debug.h"
+#include"..\SpCommon\Converter.h"
 
 using namespace std;
 

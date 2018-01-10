@@ -5,12 +5,12 @@
 CSkyBox* CSkyBox::Create(const char* top, const char* bottom, const char* front, const char* back, const char* left, const char* right)
 {
 	CSkyBox* box = _Maker->Instantiate<CSkyBox>();
-	box->m_textures[(int)ESkyBoxFace::Top] = CTexture2D::Create(top, ETexWrapMode::Clamp, ETexFilterMode::Linear, ETexEnvMode::Replace, true);
-	box->m_textures[(int)ESkyBoxFace::Bottom] = CTexture2D::Create(bottom, ETexWrapMode::Clamp, ETexFilterMode::Linear, ETexEnvMode::Replace, true);
-	box->m_textures[(int)ESkyBoxFace::Front] = CTexture2D::Create(front, ETexWrapMode::Clamp, ETexFilterMode::Linear, ETexEnvMode::Replace, true);
-	box->m_textures[(int)ESkyBoxFace::Back] = CTexture2D::Create(back, ETexWrapMode::Clamp, ETexFilterMode::Linear, ETexEnvMode::Replace, true);
-	box->m_textures[(int)ESkyBoxFace::Left] = CTexture2D::Create(left, ETexWrapMode::Clamp, ETexFilterMode::Linear, ETexEnvMode::Replace, true);
-	box->m_textures[(int)ESkyBoxFace::Right] = CTexture2D::Create(right, ETexWrapMode::Clamp, ETexFilterMode::Linear, ETexEnvMode::Replace, true);
+	box->m_textures[(int)ESkyBoxFace::Top] = CTexture2D::Create(top, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
+	box->m_textures[(int)ESkyBoxFace::Bottom] = CTexture2D::Create(bottom, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
+	box->m_textures[(int)ESkyBoxFace::Front] = CTexture2D::Create(front, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
+	box->m_textures[(int)ESkyBoxFace::Back] = CTexture2D::Create(back, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
+	box->m_textures[(int)ESkyBoxFace::Left] = CTexture2D::Create(left, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
+	box->m_textures[(int)ESkyBoxFace::Right] = CTexture2D::Create(right, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
 	return box;
 }
 

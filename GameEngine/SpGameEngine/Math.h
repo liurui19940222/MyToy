@@ -3,7 +3,7 @@
 
 #include<math.h>
 #include<string>
-#include"ApiDefine.h"
+#include"..\SpCommon\ApiDefine.h"
 
 template<typename VType> class ENGINE_API TmpVector2;
 template<typename VType> class ENGINE_API TmpVector3;

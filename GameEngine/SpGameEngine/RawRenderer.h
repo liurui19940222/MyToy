@@ -7,7 +7,7 @@
 #include"Math.h"
 #include"Texture.h"
 #include"Singleton.h"
-#include"ApiDefine.h"
+#include"..\SpCommon\ApiDefine.h"
 #include"SysFont.h"
 #include"FontRenderer.h"
 

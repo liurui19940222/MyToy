@@ -5,7 +5,7 @@
 #include<vector>
 #include<ft2build.h>
 #include FT_FREETYPE_H
-#include"EngineDefine.h"
+#include"..\SpCommon\EngineDefine.h"
 #include"Atlas.h"
 
 using namespace std;

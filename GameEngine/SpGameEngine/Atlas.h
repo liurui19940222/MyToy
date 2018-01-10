@@ -2,7 +2,8 @@
 #define _ATLAS_H_
 
 #include<Windows.h>
-#include"EngineDefine.h"
+#include"..\SpCommon\EngineDefine.h"
+#include"..\SpCommon\ApiDefine.h"
 
 class ENGINE_API CAtlas
 {

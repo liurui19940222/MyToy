@@ -5,9 +5,9 @@
 #include<vector>
 #include<map>
 #include"Math.h"
-#include"EngineDefine.h"
-#include"Debug.h"
-#include"ApiDefine.h"
+#include"..\SpCommon\EngineDefine.h"
+#include"..\SpCommon\Debug.h"
+#include"..\SpCommon\ApiDefine.h"
 
 using namespace std;
 
