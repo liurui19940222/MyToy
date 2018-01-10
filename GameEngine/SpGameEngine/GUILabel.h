@@ -2,7 +2,7 @@
 #define _GUI_LABLE_H_
 
 #include"GUISystem.h"
-#include"Texture.h"
+#include"..\SpRendering\Texture.h"
 #include"FontRenderer.h"
 
 namespace guisystem {

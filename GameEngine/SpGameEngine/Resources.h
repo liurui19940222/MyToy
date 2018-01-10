@@ -6,24 +6,24 @@
 #include<Windows.h>
 #include<map>
 #include<string>
-#include"SourceFile.h"
+#include"..\SpAssetLoader\IAssetLoader.h"
 #include"DynamicFactory.h"
-#include"Singleton.h"
-#include"SkeletonAnimation.h"
+#include"..\SpCommon\Singleton.h"
+#include"..\SpRendering\SkeletonAnimation.h"
 
 using namespace std;
 
 class ENGINE_API CResources : public CSingleton<CResources>
 {
 private:
-	map<string, ISourceFile*> m_sources;
+	map<string, IAssetLoader*> m_sources;
 
 public:
 	template<typename T>
 	T* Load(string path)
 	{
 		auto it = m_sources.find(path);
-		ISourceFile* sourceFile = NULL;
+		IAssetLoader* sourceFile = NULL;
 		if (it == m_sources.end())
 		{
 			sourceFile = new T();

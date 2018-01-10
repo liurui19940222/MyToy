@@ -12,9 +12,78 @@
     <ClInclude Include="Rendering.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="RenderTexture.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyBox.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshBuffer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshFactory.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderBuffer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderCamera.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="SkeletonAnimation.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rendering.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTexture.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyBox.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshBuffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshFactory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderCamera.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="SkeletonAnimation.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

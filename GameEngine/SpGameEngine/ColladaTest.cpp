@@ -1,9 +1,8 @@
 #include"ColladaTest.h"
-#include"ColladaFile.h"
+#include"..\SpAssetLoader\ColladaLoader.h"
 #include"Maker.h"
-#include"RawRenderer.h"
-#include"SkyBox.h"
-#include"MeshFactory.h"
+#include"..\SpRendering\SkyBox.h"
+#include"..\SpRendering\MeshFactory.h"
 #include<glm\glm.hpp>
 
 CSkyBox* box;
@@ -22,19 +21,19 @@ void CColladaTest::OnStart()
 	//model->SetLocalEulerAngles(Vector3(0, 90, 0));
 	//CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"))
 	//	->SetMainTexture(CTexture2D::Create("textures/longxia.png"));
-	//collada = _Resources->Load<CColladaFile>("models/longxia.xml");
+	//collada = _Resources->Load<ColladaLoader>("models/longxia.xml");
 
 	//model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 10);
 	//model->SetLocalEulerAngles(Vector3(0, 0, 0));
 	//CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"));
-	//collada = _Resources->Load<CColladaFile>("models/walk.xml");
+	//collada = _Resources->Load<ColladaLoader>("models/walk.xml");
 	
 	model->SetLocalPosition(Vector3(0, 1, 0));
 	model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 1.8);
 	model->SetLocalEulerAngles(Vector3(0, -70, 0));
 	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"))
 		->SetMainTexture(CTexture2D::Create("textures/shake.png"));
-	collada = _Resources->Load<CColladaFile>("models/shake_skin.xml");
+	collada = _Resources->Load<ColladaLoader>("models/shake_skin.xml");
 	m_model = collada->m_model;
 	Mesh* mesh = &m_model->m_meshes[0];
 	CMeshBuffer* buffer = new CMeshBuffer(*mesh, m_model->m_skeleton.m_weights, m_model->m_skeleton.m_indices);

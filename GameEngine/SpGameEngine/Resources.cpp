@@ -1,9 +1,9 @@
 #include"Resources.h"
-#include"ColladaFile.h"
+#include"..\SpAssetLoader\ColladaLoader.h"
 
 AnimationClip* CResources::LoadAnimation(string path)
 {
-	CColladaFile* modelFile = _Resources->Load<CColladaFile>(path);
+	ColladaLoader* modelFile = _Resources->Load<ColladaLoader>(path);
 	Model* model = modelFile->m_model;
 	AnimationClip* clip = NULL;
 	if (model->m_animationCount > 0)
@@ -26,7 +26,7 @@ void CResources::Unload(string& path)
 	auto it = m_sources.find(path);
 	if (it != m_sources.end())
 	{
-		ISourceFile* sourceFile = it->second;
+		IAssetLoader* sourceFile = it->second;
 		sourceFile->ReleaseSource();
 		m_sources.erase(it);
 		delete(sourceFile);

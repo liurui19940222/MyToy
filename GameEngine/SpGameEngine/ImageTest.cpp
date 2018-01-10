@@ -1,26 +1,27 @@
 #include"ImageTest.h"
-#include"MeshFactory.h"
+#include"..\SpRendering\MeshFactory.h"
+#include"..\SpAssetLoader\3DSModelLoader.h"
 
 void CImageTest::OnStart()
 {
 	_MainCamera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
 	_MainCamera->SetCameraClearColor(Color::Hex(0x314D79FF));
-	_MainCameraGo->SetLocalPosition(Vector3(0, 7, 10));
-	_MainCameraGo->SetLocalEulerAngles(Vector3(-30, 180, 0));
+	_MainCameraGo->SetLocalPosition(Vector3(0, 2, 10));
+	_MainCameraGo->SetLocalEulerAngles(Vector3(0, -180, 0));
 	InitLight();
-	CBitImage* image = _Resources->Load<CBitImage>("textures/model.png");
+	ImageLoader* image = _Resources->Load<ImageLoader>("textures/model.png");
 	CTexture* texture = CTexture2D::Create(image);
 	CMaterial* mat_model = _Maker->Instantiate<CMaterial>();
 	mat_model->SetShader(CShader::Get("texture"))->SetMainTexture(texture);
 	texture->SetEnvMode(ETexEnvMode::Modulate);
-	CModelFile* model = _Resources->Load<C3DSFile>("models/model.3DS");
+	ModelLoader* model = _Resources->Load<C3DSModelLoader>("models/model.3DS");
 	go = _Maker->Instantiate(L"model");
 	go->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f));
 	go->SetLocalEulerAngles(Vector3(0, 180, 0));
 	CMeshRenderer* renderer = go->AddComponent<CMeshRenderer>();
 	renderer->SetModel(new CMeshBuffer(model->m_model->m_meshes[0]))->SetMaterial(mat_model);
 
-	CBitImage* ground_image = _Resources->Load<CBitImage>("textures/dlg01.bmp");
+	ImageLoader* ground_image = _Resources->Load<ImageLoader>("textures/dlg01.bmp");
 	CTexture* ground_texture = CTexture2D::Create(ground_image);
 	CMaterial* mat_ground = _Maker->Instantiate<CMaterial>();
 	mat_ground->SetShader(CShader::Get("texture"))->SetMainTexture(ground_texture);

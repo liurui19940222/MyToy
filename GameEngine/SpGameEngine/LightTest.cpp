@@ -1,9 +1,8 @@
 #include"LightTest.h"
-#include"ColladaFile.h"
+#include"..\SpAssetLoader\ColladaLoader.h"
 #include"Maker.h"
-#include"RawRenderer.h"
-#include"SkyBox.h"
-#include"MeshFactory.h"
+#include"..\SpRendering\SkyBox.h"
+#include"..\SpRendering\MeshFactory.h"
 #include"Light.h"
 #include<glm\glm.hpp>
 
@@ -18,7 +17,7 @@ void CLightTest::OnStart()
 	model->SetLocalScale(Vector3::one * 0.05);
 	model->SetLocalEulerAngles(Vector3(0, 45, 0));
 	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("light"));
-	collada = _Resources->Load<CColladaFile>("models/scene07.xml");
+	collada = _Resources->Load<ColladaLoader>("models/scene07.xml");
 	m_model = collada->m_model;
 	Mesh* mesh = &m_model->m_meshes[0];
 	CMeshBuffer* buffer = new CMeshBuffer(*mesh, m_model->m_skeleton.m_weights, m_model->m_skeleton.m_indices);

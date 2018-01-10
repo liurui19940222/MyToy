@@ -1,13 +1,13 @@
 #ifndef _FONT_RENDERER_H_
 #define _FONT_RENDERER_H_
 
-#include"Math.h"
+#include"..\SpCommon\Math.h"
 #include"FontManager.h"
 #include"..\SpCommon\EngineDefine.h"
-#include"Renderer.h"
-#include"MeshBuffer.h"
-#include"Texture2D.h"
-#include"Material.h"
+#include"..\SpRendering\Renderer.h"
+#include"..\SpRendering\MeshBuffer.h"
+#include"..\SpRendering\Texture2D.h"
+#include"..\SpRendering\Material.h"
 
 #define TEXT_BUFFER_SIZE 2048
 

@@ -2,10 +2,10 @@
 #define _LIGHT_H_
 
 #include"..\SpCommon\EngineDefine.h"
-#include"Math.h"
+#include"..\SpCommon\Math.h"
 #include"Component.h"
-#include"RenderTexture.h"
-#include"Shader.h"
+#include"..\SpRendering\RenderTexture.h"
+#include"..\SpRendering\Shader.h"
 #include<vector>
 
 using namespace std;

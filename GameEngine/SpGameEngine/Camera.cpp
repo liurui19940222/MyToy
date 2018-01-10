@@ -3,8 +3,8 @@
 #include "..\SpCommon\EngineDefine.h"
 #include "Engine.h"
 #include "Application.h"
-#include "RenderTexture.h"
-#include "SkyBox.h"
+#include"..\SpRendering\RenderTexture.h"
+#include"..\SpRendering\SkyBox.h"
 
 IMPL_CLASS(CCamera)
 

@@ -7,7 +7,7 @@
 #include"Camera.h"
 #include"Engine.h"
 #include"GameWindow.h"
-#include"Singleton.h"
+#include"..\SpCommon\Singleton.h"
 
 #define _Application CApplication::GetInstance()
 

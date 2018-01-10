@@ -2,7 +2,7 @@
 #define _CCAMERA_
 
 #include"Component.h"
-#include"RenderCamera.h"
+#include"..\SpRendering\RenderCamera.h"
 #include"DynamicFactory.h"
 
 class ENGINE_API CCamera : public CComponent, public CRenderCamera

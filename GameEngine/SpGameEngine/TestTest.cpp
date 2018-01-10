@@ -1,5 +1,5 @@
 #include "TestTest.h"
-#include "MeshFactory.h"
+#include"..\SpRendering\MeshFactory.h"
 
 void CTestTest::OnStart() {
 	_MainCameraGo->SetLocalPosition(Vector3(0, 2, -10));

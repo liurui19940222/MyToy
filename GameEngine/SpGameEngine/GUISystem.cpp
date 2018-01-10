@@ -2,9 +2,9 @@
 #include "Engine.h"
 #include "Application.h"
 #include "Input.h"
-#include "Object.h"
+#include"..\SpCommon\Object.h"
 #include "GameObject.h"
-#include "MeshFactory.h"
+#include"..\SpRendering\MeshFactory.h"
 using namespace guisystem;
 using namespace container;
 
@@ -529,7 +529,7 @@ void CGUISystem::OnUpdate()
 	if (!_MainCamera) return;
 	Vector2 mousePos = CInput::InputMousePosition();
 	mousePos.y = _SCH - mousePos.y;
-	mousePos = _MainCamera->ScreenPosToViewPort(mousePos);
+	mousePos = _MainCamera->ScreenPosToViewPort(mousePos, _SCW, _SCH);
 	ForeachWidghtR([this, &mousePos](CGUIWidget* widget) {
 		if (!widget->IsState(EWidgetState::Disabled) && widget->IsCollide())
 		{

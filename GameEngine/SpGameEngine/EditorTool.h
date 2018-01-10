@@ -1,8 +1,8 @@
 #ifndef _CEDITOR_TOOL_
 #define _CEDITOR_TOOL_
 
-#include"Math.h"
-#include"SkeletonAnimation.h"
+#include"..\SpCommon\Math.h"
+#include"..\SpRendering\SkeletonAnimation.h"
 #include"..\SpCommon\EngineDefine.h"
 #include"..\SpCommon\ApiDefine.h"
 

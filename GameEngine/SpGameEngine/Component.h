@@ -1,7 +1,7 @@
 #ifndef _COMPONENT_H_
 #define _COMPONENT_H_
 
-#include"Object.h"
+#include"..\SpCommon\Object.h"
 #include"DynamicFactory.h"
 #include"EditorTool.h"
 

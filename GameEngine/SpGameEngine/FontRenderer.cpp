@@ -1,9 +1,9 @@
 #include"FontRenderer.h"
-#include"BitImage.h"
+#include"..\SpAssetLoader\ImageLoader.h"
 #include"EditorTool.h"
-#include"MeshFactory.h"
+#include"..\SpRendering\MeshFactory.h"
 #include"Maker.h"
-#include"BitImage.h"
+#include"..\SpAssetLoader\ImageLoader.h"
 
 CCharacterPrimitiveBase::CCharacterPrimitiveBase(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels) :left(left_padding), top(top), advance_x(advance_x)
 {
@@ -13,7 +13,7 @@ CCharacterPrimitiveBase::CCharacterPrimitiveBase(int left_padding, int top, int 
 	this->height_y = height * pixelScale;
 	m_texture = CTexture2D::Create((UCHAR*)pixels, width, height);
 	m_texture->SetWrapMode(ETexWrapMode::Clamp)->SetFilterMode(ETexFilterMode::Linear);
-	//CBitImage::Create(width, height, 32, (UCHAR*)pixels)->Save("F://1.png", FREE_IMAGE_FORMAT::FIF_PNG);
+	//ImageLoader::Create(width, height, 32, (UCHAR*)pixels)->Save("F://1.png", FREE_IMAGE_FORMAT::FIF_PNG);
 }
 
 CCharacterPrimitiveSmart::CCharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels)

@@ -1,16 +1,15 @@
 #ifndef _SKINNED_MESH_RENDERER_H_
 #define _SKINNED_MESH_RENDERER_H_
 
-#include"Texture.h"
-#include"FileHead.h"
+#include"..\SpRendering\Texture.h"
 #include"Component.h"
 #include"DynamicFactory.h"
-#include"Shader.h"
-#include"Renderer.h"
-#include"Material.h"
-#include"SkeletonAnimation.h"
-#include"MeshBuffer.h"
-#include"ColladaFile.h"
+#include"..\SpRendering\Shader.h"
+#include"..\SpRendering\Renderer.h"
+#include"..\SpRendering\Material.h"
+#include"..\SpRendering\SkeletonAnimation.h"
+#include"..\SpRendering\MeshBuffer.h"
+#include"..\SpAssetLoader\ColladaLoader.h"
 
 class ENGINE_API CSkinnedMeshRenderer : public CComponent, public IRenderer
 {

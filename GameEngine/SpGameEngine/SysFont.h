@@ -3,7 +3,7 @@
 
 #include<Windows.h>
 #include"..\SpCommon\ApiDefine.h"
-#include"Math.h"
+#include"..\SpCommon\Math.h"
 
 class ENGINE_API CSysFont
 {

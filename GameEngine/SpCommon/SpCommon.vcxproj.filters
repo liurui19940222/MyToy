@@ -24,6 +24,15 @@
     <ClInclude Include="EngineDefine.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="Property.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -33,6 +42,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="EngineDefine.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

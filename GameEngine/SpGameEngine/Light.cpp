@@ -1,7 +1,7 @@
 #include"Light.h"
 #include"GameObject.h"
 #include"Maker.h"
-#include"RenderTexture.h"
+#include"..\SpRendering\RenderTexture.h"
 
 Color CLight::color_buffer[LIGHT_MAX_NUM];
 Vector3 CLight::pos_buffer[LIGHT_MAX_NUM];

@@ -3,13 +3,13 @@
 #include"..\SpCommon\EngineDefine.h"
 #include"Input.h"
 #include"Time.h"
-#include"RenderTexture.h"
-#include"3DSFile.h"
+#include"..\SpRendering\RenderTexture.h"
+#include"..\SpAssetLoader\3DSModelLoader.h"
 #include"Resources.h"
 #include "..\SpCommon\Debug.h"
 #include"Config.h"
 #include"SkinnedMeshRenderer.h"
-#include"ColladaFile.h"
+#include"..\SpAssetLoader\ColladaLoader.h"
 #include"Light.h"
 #include<vector>
 
@@ -17,7 +17,7 @@ using namespace std;
 
 class CLightTest : public CGameWindow
 {
-	CColladaFile* collada;
+	ColladaLoader* collada;
 	Model* m_model;
 	CGameObject* model;
 	CGameObject* directionalGo;

@@ -6,16 +6,16 @@
 #include<string>
 #include<functional>
 #include<gl\glew.h>
-#include"Object.h"
+#include"..\SpCommon\Object.h"
 #include"Camera.h"
-#include"Texture.h"
-#include"Texture2D.h"
+#include"..\SpRendering\Texture.h"
+#include"..\SpRendering\Texture2D.h"
 #include"IncludeComponent.h"
 #include"PriorityQueue.h"
 #include"Resources.h"
 #include"Maker.h"
-#include"Singleton.h"
-#include"Property.h"
+#include"..\SpCommon\Singleton.h"
+#include"..\SpCommon\Property.h"
 #include"TaskManager.h"
 
 inline CCamera* GetMainCamera()

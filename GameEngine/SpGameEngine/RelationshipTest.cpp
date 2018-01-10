@@ -1,6 +1,6 @@
 #include "RelationshipTest.h"
-#include "RenderCamera.h"
-#include "MeshFactory.h"
+#include"..\SpRendering\RenderCamera.h"
+#include"..\SpRendering\MeshFactory.h"
 
 void CRelationshipTest::OnStart()
 {
@@ -11,13 +11,15 @@ void CRelationshipTest::OnStart()
 	_MainCameraGo->SetLocalPosition(Vector3(0, 2, 10));
 	_MainCameraGo->SetLocalEulerAngles(Vector3(0, -180, 0));
 	CTexture* texture = CTexture2D::Create("textures/dlg01.bmp");
+	CMaterial* material = _Maker->Instantiate<CMaterial>();
+	material->SetShader(CShader::Get("texture"))->SetMainTexture(texture);
 	go = _Maker->Instantiate(L"testGo");
-	go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube));
+	go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube))->SetMaterial(material);
 	go->SetLocalPosition(Vector3(-2, 1.0, 0));
 	go->SetLocalScale(Vector3::one * 1);
 
 	axis = _Maker->Instantiate(L"axis");
-	axis->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube));
+	axis->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube))->SetMaterial(material);
 	axis->SetLocalScale(Vector3(0.2f, 0.2f, 10.0f));
 	CEditorTool::PrintTree();
 }

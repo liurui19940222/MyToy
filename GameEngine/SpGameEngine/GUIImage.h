@@ -2,7 +2,7 @@
 #define _GUI_IMAGE_H_
 
 #include"GUISystem.h"
-#include"Texture.h"
+#include"..\SpRendering\Texture.h"
 
 namespace guisystem {
 

@@ -4,7 +4,7 @@
 #include"Engine.h"
 #include"Application.h"
 #include"EditorTool.h"
-#include"ColladaFile.h"
+#include"..\SpAssetLoader\ColladaLoader.h"
 
 IMPL_CLASS(CSkinnedMeshRenderer)
 

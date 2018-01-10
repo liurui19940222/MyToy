@@ -105,8 +105,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\SpCommon\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SpCommon.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\SpAssetLoader\lib;..\SpRendering\lib;..\SpCommon\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SpCommon.lib;SpRendering.lib;SpAssetLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(SolutionDir)$(Configuration)\SpGameEngine.dll $(SolutionDir)\SpEditor\ 
@@ -129,8 +129,8 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\SpCommon\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SpCommon.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\SpRendering\lib;..\SpAssetLoader\lib;..\SpCommon\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SpCommon.lib;SpRendering.lib;SpAssetLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -152,11 +152,9 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="3DSFile.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Atlas.h" />
-    <ClInclude Include="BitImage.h" />
     <ClInclude Include="DirectoryInfo.h" />
     <ClInclude Include="FileInfo.h" />
     <ClInclude Include="FileSystemInfo.h" />
@@ -166,12 +164,7 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     <ClInclude Include="LightTest.h" />
     <ClInclude Include="MessageCenter.h" />
     <ClInclude Include="MessageDef.h" />
-    <ClInclude Include="Property.h" />
-    <ClInclude Include="RawRenderer.h" />
-    <ClInclude Include="ShadowMap.h" />
-    <ClInclude Include="SkeletonAnimation.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="ColladaFile.h" />
     <ClInclude Include="ColladaTest.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Config.h" />
@@ -181,8 +174,6 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     <ClInclude Include="EngineSetting.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="FontRenderer.h" />
-    <ClInclude Include="MeshFactory.h" />
-    <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="GUIImage.h" />
@@ -192,21 +183,11 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     <ClInclude Include="ImageTest.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Maker.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="MeshBuffer.h" />
     <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="RelationshipTest.h" />
-    <ClInclude Include="Math.h" />
-    <ClInclude Include="ModelFile.h" />
     <ClInclude Include="MeshRenderer.h" />
-    <ClInclude Include="RenderBuffer.h" />
-    <ClInclude Include="RenderCamera.h" />
-    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resources.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="Singleton.h" />
     <ClInclude Include="SkinnedMeshRenderer.h" />
-    <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SpriteAnimation.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="SysFont.h" />
@@ -215,21 +196,13 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     <ClInclude Include="TestTest.h" />
     <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="TextTest.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Texture2D.h" />
     <ClInclude Include="Time.h" />
-    <ClInclude Include="ImageFile.h" />
-    <ClInclude Include="FileHead.h" />
-    <ClInclude Include="SourceFile.h" />
-    <ClInclude Include="Object.h" />
     <ClInclude Include="TrueTypeFont.h" />
     <ClInclude Include="IncludeComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="3DSFile.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Atlas.cpp" />
-    <ClCompile Include="BitImage.cpp" />
     <ClCompile Include="DirectoryInfo.cpp" />
     <ClCompile Include="FileInfo.cpp" />
     <ClCompile Include="FileSystemInfo.cpp" />
@@ -238,12 +211,7 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LightTest.cpp" />
     <ClCompile Include="MessageCenter.cpp" />
-    <ClCompile Include="RawRenderer.cpp" />
-    <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="ShadowMap.cpp" />
-    <ClCompile Include="SkeletonAnimation.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="ColladaFile.cpp" />
     <ClCompile Include="ColladaTest.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Config.cpp" />
@@ -252,8 +220,6 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     <ClCompile Include="EngineSetting.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="FontRenderer.cpp" />
-    <ClCompile Include="MeshFactory.cpp" />
-    <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="GUIImage.cpp" />
@@ -264,16 +230,10 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maker.cpp" />
-    <ClCompile Include="Material.cpp" />
-    <ClCompile Include="MeshBuffer.cpp" />
     <ClCompile Include="RelationshipTest.cpp" />
-    <ClCompile Include="Math.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
-    <ClCompile Include="RenderCamera.cpp" />
     <ClCompile Include="Resources.cpp" />
-    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkinnedMeshRenderer.cpp" />
-    <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SpriteAnimation.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SysFont.cpp" />
@@ -282,11 +242,7 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     <ClCompile Include="TestTest.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="TextTest.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="Time.cpp" />
-    <ClCompile Include="ImageFile.cpp" />
-    <ClCompile Include="Object.cpp" />
     <ClCompile Include="TrueTypeFont.cpp" />
   </ItemGroup>
   <ItemGroup>

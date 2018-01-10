@@ -2,7 +2,7 @@
 #define _FONT_MANAGER_H_
 
 #include"TrueTypeFont.h"
-#include"Singleton.h"
+#include"..\SpCommon\Singleton.h"
 
 #define _LoadFont(fontId, file_name) CFontManager::GetInstance()->LoadFont(fontId, file_name)
 #define _GetFont(fontId) CFontManager::GetInstance()->GetFont(fontId)

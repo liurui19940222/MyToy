@@ -32,7 +32,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -72,12 +72,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <TargetExt>.lib</TargetExt>
+    <OutDir>$(SolutionDir)SpRendering\lib</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -147,10 +149,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="MeshBuffer.h" />
+    <ClInclude Include="MeshFactory.h" />
+    <ClInclude Include="RenderBuffer.h" />
+    <ClInclude Include="RenderCamera.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Rendering.h" />
+    <ClInclude Include="RenderTexture.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="SkeletonAnimation.h" />
+    <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Texture2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="MeshBuffer.cpp" />
+    <ClCompile Include="MeshFactory.cpp" />
+    <ClCompile Include="RenderCamera.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Rendering.cpp" />
+    <ClCompile Include="RenderTexture.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SkeletonAnimation.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,14 +1,13 @@
 #ifndef _MESH_RENDERER_H_
 #define _MESH_RENDERER_H_
 
-#include"Texture.h"
-#include"FileHead.h"
+#include"..\SpRendering\Texture.h"
 #include"Component.h"
 #include"DynamicFactory.h"
-#include"Shader.h"
-#include"Renderer.h"
-#include"Material.h"
-#include"MeshBuffer.h"
+#include"..\SpRendering\Shader.h"
+#include"..\SpRendering\Renderer.h"
+#include"..\SpRendering\Material.h"
+#include"..\SpRendering\MeshBuffer.h"
 
 class ENGINE_API CMeshRenderer : public CComponent, public IRenderer
 {
