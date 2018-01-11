@@ -97,7 +97,7 @@ private:
 		bool begin = false;
 		TValue* valueArray = (TValue*)malloc(sizeof(TValue) * count);
 		memset(valueArray, 0, sizeof(TValue) * count);
-		for (size_t i = 0; i <= total_size; ++i)
+		for (int i = 0; i <= total_size; ++i)
 		{
 			if (str[i] != ' ' && str[i] != '\r' && str[i] != '\n' && i < total_size)
 			{

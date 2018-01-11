@@ -68,7 +68,7 @@ vector<string> ColladaLoader::UnpackValues(string& str, size_t count)
 	int start_pos = 0, array_index = 0, str_size = 0, total_size = str.size();
 	bool begin = false;
 	vector<string> list;
-	for (size_t i = 0; i <= total_size; ++i)
+	for (int i = 0; i <= total_size; ++i)
 	{
 		if (str[i] != ' ' && str[i] != '\r' && str[i] != '\n' && i < total_size)
 		{
@@ -264,7 +264,7 @@ void ColladaLoader::ReadSkin(xml_node<>* root, vector<Vector4>& weights, vector<
 		v += num * 2;
 	}
 
-	for (int i = 0; i < joint_source.size(); i++)
+	for (uint i = 0; i < joint_source.size(); i++)
 	{
 		Joint& joint = *m_model->m_skeleton.GetJoint(joint_source[i]);
 		joint.m_invBindPose = matrix_source[i];

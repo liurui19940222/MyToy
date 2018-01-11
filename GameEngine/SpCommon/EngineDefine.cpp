@@ -22,7 +22,7 @@ vector<SRect2D> SRect2D::Split(vector<float> weights)
 	float halfWidth = 0;
 	float w = 0;
 	vector<SRect2D> list;
-	for (int i = 0; i < weights.size(); ++i)
+	for (uint i = 0; i < weights.size(); ++i)
 	{
 		w += weights[i] * maxWidth;
 		halfWidth = weights[i] * maxWidth * 0.5f;
@@ -172,10 +172,10 @@ Color32::Color32(byte r, byte g, byte b, byte a)
 
 Color32::Color32(const Color& color)
 {
-	this->a = color.a * 255 + 0.5f;
-	this->r = color.r * 255 + 0.5f;
-	this->g = color.g * 255 + 0.5f;
-	this->b = color.b * 255 + 0.5f;
+	this->a = (byte)(color.a * 255 + 0.5f);
+	this->r = (byte)(color.r * 255 + 0.5f);
+	this->g = (byte)(color.g * 255 + 0.5f);
+	this->b = (byte)(color.b * 255 + 0.5f);
 }
 
 Color32::Color32(uint color)
@@ -203,7 +203,7 @@ bool Color32::operator!=(const Color32& value) const
 
 Color32 Color32::operator*(const Color& color) const
 {
-	return Color32(this->r * color.r, this->g * color.g, this->b * color.b, this->a * color.a);
+	return Color32((byte)(this->r * color.r), (byte)(this->g * color.g), (byte)(this->b * color.b), (byte)(this->a * color.a));
 }
 
 Color32 Color32::Hex(int hexColor)

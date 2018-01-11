@@ -197,9 +197,6 @@
     <ClInclude Include="LightTest.h">
       <Filter>Application\头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Component\头文件</Filter>
-    </ClInclude>
     <ClInclude Include="ImageHandle.h">
       <Filter>Common\头文件</Filter>
     </ClInclude>
@@ -217,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Common\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LightComponent.h">
+      <Filter>Component\头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -331,9 +331,6 @@
     <ClCompile Include="LightTest.cpp">
       <Filter>Application\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Component\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="ImageHandle.cpp">
       <Filter>Common\源文件</Filter>
     </ClCompile>
@@ -348,6 +345,9 @@
     </ClCompile>
     <ClCompile Include="Resources.cpp">
       <Filter>Common\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LightComponent.cpp">
+      <Filter>Component\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -5,7 +5,7 @@
 #include"..\SpRendering\MeshFactory.h"
 #include"MessageCenter.h"
 #include"MessageDef.h"
-#include"Light.h"
+#include"LightComponent.h"
 
 void CMaker::OnInitialize()
 {
@@ -220,7 +220,7 @@ CGameObject* CMaker::CreateDirectionalLight()
 {
 	CGameObject* directionalGo = _Maker->Instantiate(L"DirectionLight");
 	directionalGo->SetLocalEulerAngles(Vector3(50, 0, 0));
-	CLight* light0 = directionalGo->AddComponent<CLight>();
+	CLight* light0 = directionalGo->AddComponent<CLightComponent>();
 	light0->SetColor(Color::white);
 	light0->SetIntensity(1.0f);
 	light0->SetCastShadow(false);
@@ -230,7 +230,7 @@ CGameObject* CMaker::CreateDirectionalLight()
 CGameObject* CMaker::CreatePointLight()
 {
 	CGameObject* pointGo = _Maker->Instantiate(L"light1");
-	CLight* pointLight = pointGo->AddComponent<CLight>();
+	CLight* pointLight = pointGo->AddComponent<CLightComponent>();
 	pointLight->SetType(ELightType::Point);
 	pointLight->SetColor(Color::white);
 	pointLight->SetIntensity(1.0f);

@@ -92,7 +92,7 @@ Matrix4x4 CRenderCamera::GetProjectionMatrix() const { return m_projectionMat; }
 Vector3 CRenderCamera::WorldPosToScreen(Vector3 worldPos, float viewport_w, float viewport_h)
 {
 	Vector4 pos = m_projectionMat * m_viewMat * Vector4(worldPos, 1.0f);
-	float w = 1.0 / pos.w;
+	float w = 1.0f / pos.w;
 	pos.x *= w; pos.y *= w; pos.z *= w;
 	pos.x = viewport_w * (pos.x + 0.5f);
 	pos.y = viewport_h - viewport_h * (pos.y + 0.5f);

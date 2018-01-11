@@ -9,6 +9,7 @@
 using namespace std;
 
 #define _RGBA32(r, g, b, a) (a << 24) + (b << 16) + (g << 8) + r
+#define _ToCppBool(_boolean) _boolean != 0
 #define CH_MAP_BITMAP_SIZE_W 512
 #define CH_MAP_BITMAP_SIZE_H 512
 

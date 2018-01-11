@@ -39,7 +39,7 @@ vector<JointPose> CSkeletonAnimation::Sample(AnimationClip& clip, Skeleton& skel
 	if (t > clip.m_length || t < 0 || clip.m_aSamples.size() == 0)
 		return poses;
 	poses.resize(skeleton.GetSize());
-	for (int i = 0; i < clip.m_aSamples.size() - 1; i++)
+	for (uint i = 0; i < clip.m_aSamples.size() - 1; i++)
 	{
 		AnimationSample& a = clip.m_aSamples[i];
 		AnimationSample& b = clip.m_aSamples[i + 1];
@@ -79,9 +79,9 @@ vector<JointPose> CSkeletonAnimation::FullMatchSample(AnimationClip& clip, Skele
 	{
 		AnimationSample* a = NULL;
 		AnimationSample* b = NULL;
-		for (int i = 0; i < clip.m_aSamples.size() && (!a || !b); i++)
+		for (uint i = 0; i < clip.m_aSamples.size() && (!a || !b); i++)
 		{
-			index = clip.m_aSamples.size() - i - 1;
+			index = (byte)(clip.m_aSamples.size() - i - 1);
 			if (!a && clip.m_aSamples[index].m_time <= t && clip.m_aSamples[index].m_jointPoses.find(joint) != clip.m_aSamples[index].m_jointPoses.end())
 				a = &clip.m_aSamples[index];
 			if (!b && clip.m_aSamples[i].m_time >= t && clip.m_aSamples[i].m_jointPoses.find(joint) != clip.m_aSamples[i].m_jointPoses.end())
@@ -110,7 +110,7 @@ vector<JointPose> CSkeletonAnimation::Blend(AnimationClip** clips, float* timePo
 		vector<JointPose> poses = Sample(*clips[i], skeleton, timePos[i], weights[i] * total_weight);
 		if(poses.size())
 		{
-			for (int j = 0; j < poses.size(); j++)
+			for (uint j = 0; j < poses.size(); j++)
 			{
 				jointPoses[j].m_matrix += poses[j].m_matrix;
 			}
@@ -157,7 +157,7 @@ void CSkeletonAnimation::CalculateSkinningMatrix(Skeleton& skeleton)
 {
 	Matrix4x4 mat;
 	vector<Joint>& joints = skeleton.GetJoints();
-	for (int i = 0; i < joints.size(); ++i)
+	for (uint i = 0; i < joints.size(); ++i)
 	{
 		mat.MakeZero();
 		mat += skeleton.m_globalPoses[i] * joints[i].m_invBindPose * skeleton.m_bindShapeMat;

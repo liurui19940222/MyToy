@@ -48,6 +48,9 @@
     <ClInclude Include="SkeletonAnimation.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rendering.cpp">
@@ -84,6 +87,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="SkeletonAnimation.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -160,7 +160,7 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     <ClInclude Include="FileSystemInfo.h" />
     <ClInclude Include="GUIDesigner.h" />
     <ClInclude Include="ImageHandle.h" />
-    <ClInclude Include="Light.h" />
+    <ClInclude Include="LightComponent.h" />
     <ClInclude Include="LightTest.h" />
     <ClInclude Include="MessageCenter.h" />
     <ClInclude Include="MessageDef.h" />
@@ -208,7 +208,7 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     <ClCompile Include="FileSystemInfo.cpp" />
     <ClCompile Include="GUIDesigner.cpp" />
     <ClCompile Include="ImageHandle.cpp" />
-    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LightComponent.cpp" />
     <ClCompile Include="LightTest.cpp" />
     <ClCompile Include="MessageCenter.cpp" />
     <ClCompile Include="Camera.cpp" />

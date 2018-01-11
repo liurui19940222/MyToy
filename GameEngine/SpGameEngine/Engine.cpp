@@ -8,7 +8,7 @@
 #include"GameObject.h"
 #include"Config.h"
 #include"EngineSetting.h"
-#include"Light.h"
+#include"LightComponent.h"
 
 using namespace guisystem;
 
@@ -141,7 +141,7 @@ void CEngine::Render()
 	}
 
 	CLight* light = CLight::PrepareLight();
-	CLight::RenderShadowMap(light);
+	CLightComponent::RenderShadowMap(dynamic_cast<CLightComponent*>(light));
 
 	m_cameras.ForeachInverse([this](CCamera* camera) {
 		camera->BeginOneFrame();

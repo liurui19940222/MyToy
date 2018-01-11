@@ -1,5 +1,8 @@
 #include"Material.h"
 #include"Texture2D.h"
+#include"Light.h"
+#include"..\SpCommon\EngineDefine.h"
+
 map<EPiplelineStateType, bool> CMaterial::m_pushStates;
 CMaterial* CMaterial::m_defaultMaterial = NULL;
 
@@ -20,7 +23,7 @@ void CMaterial::SaveState(EPiplelineStateType state)
 {
 	GLboolean bstate;
 	glGetBooleanv((GLenum)state, &bstate);
-	SetState(m_pushStates, state, (bool)bstate);
+	SetState(m_pushStates, state, _ToCppBool(bstate));
 }
 
 void CMaterial::ApplyStates(map<EPiplelineStateType, bool>& states)
@@ -103,7 +106,7 @@ CMaterial* CMaterial::Bind()
 		SetParam("MainTex", 0);
 	}
 	SetParam("Color", m_color);
-	//CLight::SetUniformParams(m_shader);
+	CLight::SetUniformParams(m_shader);
 	return this;
 }
 

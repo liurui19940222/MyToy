@@ -3,7 +3,7 @@
 #include"Maker.h"
 #include"..\SpRendering\SkyBox.h"
 #include"..\SpRendering\MeshFactory.h"
-#include"Light.h"
+#include"LightComponent.h"
 #include<glm\glm.hpp>
 
 void CLightTest::OnStart()
@@ -26,7 +26,7 @@ void CLightTest::OnStart()
 
 	directionalGo = _Maker->Instantiate(L"light0");
 	directionalGo->SetLocalEulerAngles(Vector3(50, 0, 0));
-	CLight* light0 = directionalGo->AddComponent<CLight>();
+	CLightComponent* light0 = directionalGo->AddComponent<CLightComponent>();
 	light0->SetColor(Color::white);
 	light0->SetIntensity(0.8);
 	light0->SetCastShadow(true);
@@ -35,7 +35,7 @@ void CLightTest::OnStart()
 	pointGo->SetLocalPosition(Vector3(0, 0.5, 0));
 	pointGo->SetLocalScale(Vector3::one * 0.1);
 	//pointGo->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube));
-	pointLight = pointGo->AddComponent<CLight>();
+	pointLight = pointGo->AddComponent<CLightComponent>();
 	pointLight->SetType(ELightType::Point);
 	pointLight->SetColor(Color::blue);
 	pointLight->SetIntensity(0.6);

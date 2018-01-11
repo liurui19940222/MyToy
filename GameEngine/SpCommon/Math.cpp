@@ -856,8 +856,8 @@ Quaternion Quaternion::LookRotation(const Vector3& pForward, const Vector3& pUp)
 			i = 2;
 		}
 
-		int j = _next[i];
-		int k = _next[j];
+		int j = (int)_next[i];
+		int k = (int)_next[j];
 
 		float t = rot[i][i] - rot[j][j] - rot[k][k] + 1;
 		float s = 0.5f / sqrt(t);
