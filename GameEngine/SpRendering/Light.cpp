@@ -52,6 +52,9 @@ Matrix4x4 CLight::GetShadowMapMatrix()
 
 void CLight::SetUniformParams(CShader* shader)
 {
+	if (shadowMap == NULL)
+		return;
+
 	shader->SetUniformParam("LightColor", color_buffer, lights.size());
 	shader->SetUniformParam("LightType", type_buffer, lights.size());
 	shader->SetUniformParam("LightIntensity", intensity_buffer, lights.size());

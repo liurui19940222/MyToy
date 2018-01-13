@@ -8,6 +8,7 @@
 #include"..\SpRendering\Material.h"
 #include"..\SpRendering\MeshBuffer.h"
 #include"..\SpRendering\MeshFactory.h"
+#include"..\SpRendering\Texture2D.h"
 
 const int width = 800;
 const int height = 600;
@@ -31,19 +32,28 @@ LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 	switch (uMsg)
 	{
 	case WM_CREATE:
+	{	
 		GLRenderingStartUpParams params;
-		params.m_HWND = m_Hwnd;
+		params.m_HWND = hWnd;
 		params.m_ScreenWidth = width;
 		params.m_ScreenHeight = height;
 		rendering = new GLRendering();
 		rendering->StartUp(&params);
 
+		//glMatrixMode(GL_PROJECTION);
+		//glLoadIdentity();
+		//gluPerspective(45, width / (float)height, 0.1, 1000);
+		//glMatrixMode(GL_MODELVIEW);
+		//glLoadIdentity();
+		//gluLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0);
+
 		obj.material = new CMaterial();
-		obj.material->SetShader(CShader::Get("texture"));
+		obj.material->SetShader(CShader::Get("texture"))->SetMainTexture(CTexture2D::Create("D:\\GitHub\\MyToy\\GameEngine\\SpGameEngine\\textures\\shake.png"));
 		obj.mesh = _MeshFactory->SharedBuffer(EMeshType::Cube);
 
 		isCreated = true;
-		break;
+	}
+	break;
 	case WM_DESTROY:
 	case WM_QUIT:
 	case WM_CLOSE:
@@ -115,37 +125,45 @@ void Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0, 0, 0, 1);
+
+	modelMat = Matrix4x4::Rotate(0, GetTickCount() / 10, 0);
+
 	rendering->Render(&obj, modelMat, viewMat, projectionMat);
+
+
+	//glBegin(GL_TRIANGLES);
+	//glVertex3f(0, 1, 0);
+	//glVertex3f(-1, -1, 0);
+	//glVertex3f(1, -1, 0);
+	//glEnd();
 }
 
 int GameLoop()
 {
 	MSG msg;
-
+	HDC hdc = GetDC(m_Hwnd);
 	while (!isExiting)
 	{
-		if (isCreated)
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
-			Render();
-			SwapBuffers(rendering->GetHDC());
-		}
-
-		while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
-		{
-			if (!GetMessage(&msg, NULL, 0, 0))
+			if (msg.message == WM_QUIT)
 			{
-				isExiting = true;
 				break;
 			}
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+		if (isCreated)
+		{
+			Render();
+			SwapBuffers(hdc);
+		}
 	}
 
-	return (int)msg.wParam;
+	return 0;
 }
 
-void main()
+int main()
 {
 	CreateApp();
 
@@ -158,6 +176,5 @@ void main()
 
 
 	GameLoop();
-
-	system("pause");
+	return 0;
 }

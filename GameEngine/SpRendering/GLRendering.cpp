@@ -3,13 +3,13 @@
 
 void GLRendering::StartUp(const RenderingStartUpParams* params)
 {
-	glewExperimental = GL_TRUE;
-	glewInit();
 	GLRenderingStartUpParams* _params = (GLRenderingStartUpParams*)params;
 	m_HDC = GetDC(_params->m_HWND);
 	SetupPixelFormat(m_HDC);
 	m_HRC = wglCreateContext(m_HDC);
 	MakeRenderContext();
+	glewExperimental = GL_TRUE;
+	glewInit();
 }
 
 void GLRendering::ShutDown()

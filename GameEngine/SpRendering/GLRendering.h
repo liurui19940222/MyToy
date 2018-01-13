@@ -19,8 +19,6 @@ public:
 	virtual void MakeRenderContext() override;
 	virtual void ShutDown() override;
 
-	inline HDC GetHDC() { return m_HDC; }
-
 private:
 	void SetupPixelFormat(HDC hDC);
 
