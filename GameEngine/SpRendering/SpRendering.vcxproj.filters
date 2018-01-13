@@ -7,6 +7,15 @@
     <Filter Include="src">
       <UniqueIdentifier>{5716852c-f4f1-4ce6-b3fc-642a99e8b16e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GLRendering">
+      <UniqueIdentifier>{17d60818-d5ce-47b0-8c00-7efeae0476c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GLRendering\include">
+      <UniqueIdentifier>{66b1493a-cb22-486f-b1fd-4309eec728eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GLRendering\src">
+      <UniqueIdentifier>{58608345-b7a7-413e-ae47-5bbd48427748}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rendering.h">
@@ -51,6 +60,9 @@
     <ClInclude Include="Light.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="GLRendering.h">
+      <Filter>GLRendering\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rendering.cpp">
@@ -91,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="GLRendering.cpp">
+      <Filter>GLRendering\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

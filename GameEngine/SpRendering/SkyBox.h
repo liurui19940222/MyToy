@@ -18,7 +18,9 @@ enum class ESkyBoxFace
 class CSkyBox : public Object{
 	CTexture2D* m_textures[6];
 	CMeshBuffer m_buffer[6];
+	void InitBuffer();
 public:
+	CSkyBox();
 	static CSkyBox* Create(const char* top, const char* bottom, const char* front, const char* back, const char* left, const char* right);
 	void Render(const Matrix4x4& model, const Matrix4x4& view, const Matrix4x4& projection);
 	virtual void OnInitialize() override;

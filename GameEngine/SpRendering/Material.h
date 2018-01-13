@@ -29,7 +29,7 @@ private:
 	CShader* m_shader = 0;
 	CTexture* m_mainTexture = 0;
 
-	void OnInitialize();
+	virtual void OnInitialize() override;
 	void SaveState(EPiplelineStateType state);
 	void ApplyStates(map<EPiplelineStateType, bool>& states);
 	CMaterial* SetState(map<EPiplelineStateType, bool>& states, EPiplelineStateType state, bool open);
@@ -37,6 +37,8 @@ private:
 	void PopState();
 	bool HasState(EPiplelineStateType state);
 public:
+	CMaterial();
+
 	CMaterial* SetState(EPiplelineStateType state, bool open);
 	CMaterial* SetColor(const Color& color);
 	CMaterial* SetShader(CShader* shader);

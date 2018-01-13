@@ -13,7 +13,12 @@ CSkyBox* CSkyBox::Create(const char* top, const char* bottom, const char* front,
 	return box;
 }
 
-void CSkyBox::OnInitialize()
+CSkyBox::CSkyBox()
+{
+	InitBuffer();
+}
+
+void CSkyBox::InitBuffer()
 {
 	//front
 	Vector3 front[] = {
@@ -85,6 +90,11 @@ void CSkyBox::OnInitialize()
 	m_buffer[(int)ESkyBoxFace::Right].MakeBuffer(right, NULL, NULL, uv, 6);
 }
 
+void CSkyBox::OnInitialize()
+{
+	
+}
+
 void CSkyBox::OnRelease()
 {
 	for (int i = 0; i < 6; ++i)
@@ -105,6 +115,7 @@ void CSkyBox::Render(const Matrix4x4& model, const Matrix4x4& view, const Matrix
 		shader->Run();
 		m_textures[i]->Bind();
 		shader->SetUniformParam("Color", Color::white);
+		glActiveTexture(GL_TEXTURE0);
 		shader->SetUniformParam("MainTex", 0);
 		shader->SetUniformParam("M", model);
 		shader->SetUniformParam("V", view);

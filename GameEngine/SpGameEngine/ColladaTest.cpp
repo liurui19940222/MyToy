@@ -12,7 +12,8 @@ void CColladaTest::OnStart()
 	_MainCamera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
 	_MainCamera->SetCameraClearColor(Color::Hex(0x314D79FF));
 	_MainCameraGo->SetLocalPosition(Vector3(0, 6.8, 10));
-
+	_MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
+	
 	FontManager->LoadFont(1, "C:/Windows/Fonts/simsun.ttc");
 
 	model = _Maker->Instantiate(L"model");
@@ -37,7 +38,9 @@ void CColladaTest::OnStart()
 	m_model = collada->m_model;
 	Mesh* mesh = &m_model->m_meshes[0];
 	CMeshBuffer* buffer = new CMeshBuffer(*mesh, m_model->m_skeleton.m_weights, m_model->m_skeleton.m_indices);
+
 	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, &m_model->m_skeleton)->SetMaterial(model_mat);
+	
 	_MainCameraGo->LookAt(model->GetLocalPosition());
 
 	m_clips.push_back(_Resources->LoadAnimation("models/shake_move.xml"));
@@ -48,18 +51,18 @@ void CColladaTest::OnStart()
 
 	//m_texture = CTexture2D::Create("textures/shake.png");
 
-	m_texture = CRenderTexture::Create(512, 512, true);
+	//m_texture = CRenderTexture::Create(512, 512, true);
 
-	CCamera* camera = _Maker->Instantiate(L"Camera")->AddComponent<CCamera>();
-	camera->LayerMask() = Layer::Default;
-	camera->Perspective(54.0f, _SCW / _SCH, 1.0f, 1000.0f);
-	camera->UpdateViewMatrix();
-	camera->SetRenderTexture((CRenderTexture*)m_texture);
-	camera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
-	camera->gameObject->SetTag("CRTes");
-	camera->gameObject->SetLocalPosition(_MainCameraGo->GetLocalPosition());
-	camera->gameObject->SetLocalEulerAngles(_MainCameraGo->GetLocalEulerAngles());
-	camera->gameObject->LookAt(model->GetLocalPosition());
+	//CCamera* camera = _Maker->Instantiate(L"Camera")->AddComponent<CCamera>();
+	//camera->LayerMask() = Layer::Default;
+	//camera->Perspective(54.0f, _SCW / _SCH, 1.0f, 1000.0f);
+	//camera->UpdateViewMatrix();
+	//camera->SetRenderTexture((CRenderTexture*)m_texture);
+	//camera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
+	//camera->gameObject->SetTag("CRTes");
+	//camera->gameObject->SetLocalPosition(_MainCameraGo->GetLocalPosition());
+	//camera->gameObject->SetLocalEulerAngles(_MainCameraGo->GetLocalEulerAngles());
+	//camera->gameObject->LookAt(model->GetLocalPosition());
 
 	//box = CSkyBox::Create("textures/skybox/top.jpg", 
 	//	NULL, 
@@ -76,6 +79,13 @@ void CColladaTest::OnStart()
 		"textures/skybox2/right.tga");
 
 	_MainCamera->SetSkyBox(box);
+	
+	CTexture2D* texture = CTexture2D::Create("textures/skybox2/top.tga");
+	CMaterial* cubeMat = new CMaterial();
+	cubeMat->SetMainTexture(texture)->SetShader(CShader::Get("texture"));
+	CGameObject* cube = _Maker->Instantiate(L"cube");
+	cube->SetLocalScale(Vector3::one * 5);
+	cube->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Quad))->SetMaterial(cubeMat);
 }
 
 void CColladaTest::OnUpdate()

@@ -7,8 +7,6 @@
 #define GL_BGRA_EXT                       0x80E1
 #endif
 
-#pragma comment(lib, "lib/FreeImage.lib")
-
 ImageLoader::ImageLoader()
 {
 }

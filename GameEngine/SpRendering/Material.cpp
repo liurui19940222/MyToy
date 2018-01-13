@@ -6,7 +6,7 @@
 map<EPiplelineStateType, bool> CMaterial::m_pushStates;
 CMaterial* CMaterial::m_defaultMaterial = NULL;
 
-void CMaterial::OnInitialize()
+CMaterial::CMaterial()
 {
 	m_shader = CShader::GetDefault();
 	m_mainTexture = CTexture2D::GetOneInStore(EStoreTexture2DId::White8x8);
@@ -17,6 +17,11 @@ void CMaterial::OnInitialize()
 	SetState(EPiplelineStateType::CullFace, false);
 	SetState(EPiplelineStateType::Texture2D, true);
 	SetState(EPiplelineStateType::Fog, false);
+}
+
+void CMaterial::OnInitialize()
+{
+
 }
 
 void CMaterial::SaveState(EPiplelineStateType state)
@@ -102,6 +107,7 @@ CMaterial* CMaterial::Bind()
 	if (m_mainTexture && HasState(EPiplelineStateType::Texture2D))
 	{
 		glEnable(GL_TEXTURE_2D);
+		glActiveTexture(GL_TEXTURE0);
 		m_mainTexture->Bind();
 		SetParam("MainTex", 0);
 	}
@@ -112,13 +118,13 @@ CMaterial* CMaterial::Bind()
 
 CMaterial* CMaterial::Unbind()
 {
-	glUseProgram(0);
 	glBindVertexArray(0);
 	if (m_mainTexture && HasState(EPiplelineStateType::Texture2D))
 	{
 		glDisable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
+	glUseProgram(0);
 	PopState();
 	return this;
 }
