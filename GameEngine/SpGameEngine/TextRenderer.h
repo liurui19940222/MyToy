@@ -2,10 +2,9 @@
 #define _TEXT_RENDERER_H_
 
 #include"Component.h"
-#include"FontManager.h"
-#include"..\SpCommon\EngineDefine.h"
-#include"FontRenderer.h"
-
+#include"SpRendering\FontManager.h"
+#include"SpRendering\FontRenderer.h"]
+#include"SpCommon\EngineDefine.h"
 
 class ENGINE_API CTextRenderer : public CFontRenderer, public CComponent, public IRenderer
 {

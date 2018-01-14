@@ -3,7 +3,7 @@
 
 #include"Texture2D.h"
 #include"MeshBuffer.h"
-#include"..\SpCommon\Object.h"
+#include"SpCommon\Object.hpp"
 
 enum class ESkyBoxFace
 {

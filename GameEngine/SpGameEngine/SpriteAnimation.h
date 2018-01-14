@@ -1,7 +1,7 @@
 #ifndef _SPRITEANIMTION_H_
 #define _SPRITEANIMTION_H_
 
-#include"..\SpRendering\Texture.h"
+#include"SpRendering\Texture.h"
 #include"Animation.h"
 #include"DynamicFactory.h"
 #include"Component.h"

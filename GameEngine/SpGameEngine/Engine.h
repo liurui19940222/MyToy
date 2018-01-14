@@ -1,21 +1,21 @@
-#ifndef _CENGINE_
-#define _CENGINE_
+#ifndef _ENGINE_H_
+#define _ENGINE_H_
 
 #include<map>
 #include<vector>
 #include<string>
 #include<functional>
 #include<gl\glew.h>
-#include"..\SpCommon\Object.h"
+#include"SpCommon\Object.hpp"
 #include"Camera.h"
-#include"..\SpRendering\Texture.h"
-#include"..\SpRendering\Texture2D.h"
+#include"SpRendering\Texture.h"
+#include"SpRendering\Texture2D.h"
 #include"IncludeComponent.h"
 #include"PriorityQueue.h"
 #include"Resources.h"
 #include"Maker.h"
-#include"..\SpCommon\Singleton.h"
-#include"..\SpCommon\Property.h"
+#include"SpCommon\Singleton.h"
+#include"SpCommon\Property.h"
 #include"TaskManager.h"
 
 inline CCamera* GetMainCamera()

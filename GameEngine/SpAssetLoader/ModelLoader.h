@@ -1,7 +1,7 @@
 #ifndef _CMODEL_FILE_
 #define _CMODEL_FILE_
 
-#include"..\SpRendering\SkeletonAnimation.h"
+#include"SpRendering\SkeletonAnimation.h"
 #include"IAssetLoader.h"
 
 class ModelLoader : public IAssetLoader

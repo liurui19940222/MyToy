@@ -6,10 +6,10 @@
 #include<Windows.h>
 #include<map>
 #include<string>
-#include"..\SpAssetLoader\IAssetLoader.h"
+#include"SpAssetLoader\IAssetLoader.h"
 #include"DynamicFactory.h"
-#include"..\SpCommon\Singleton.h"
-#include"..\SpRendering\SkeletonAnimation.h"
+#include"SpCommon\Singleton.h"
+#include"SpRendering\SkeletonAnimation.h"
 
 using namespace std;
 

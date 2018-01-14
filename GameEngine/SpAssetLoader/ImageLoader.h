@@ -2,7 +2,7 @@
 #define _BIT_IMAGE_H_
 
 #include"IAssetLoader.h"
-#include"..\SpCommon\EngineDefine.h"
+#include"SpCommon\EngineDefine.h"
 #include<freeimage\FreeImage.h>
 
 class ImageLoader : public IAssetLoader

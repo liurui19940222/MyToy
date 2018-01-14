@@ -1,10 +1,10 @@
 #include "Camera.h"
 #include "GameObject.h"
-#include "..\SpCommon\EngineDefine.h"
+#include "SpCommon\EngineDefine.h"
 #include "Engine.h"
 #include "Application.h"
-#include"..\SpRendering\RenderTexture.h"
-#include"..\SpRendering\SkyBox.h"
+#include"SpRendering\RenderTexture.h"
+#include"SpRendering\SkyBox.h"
 
 IMPL_CLASS(CCamera)
 

@@ -5,8 +5,8 @@
 #include<string>
 #include<gl\glew.h>
 #include"Math.h"
-#include"..\SpCommon\EngineDefine.h"
-#include"..\SpCommon\Object.h"
+#include"SpCommon\EngineDefine.h"
+#include"SpCommon\Object.hpp"
 
 using namespace std;
 
@@ -35,7 +35,7 @@ enum class EShaderParamType
 	SAMPLER_2D_SHADOW = GL_SAMPLER_2D_SHADOW,
 };
 
-class CShader : public Object{
+class CShader : public Object {
 private:
 	static map<string, CShader*> m_store;
 

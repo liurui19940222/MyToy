@@ -1,6 +1,6 @@
 #include "GUITest.h"
 #include "GUISystem.h"
-#include"..\SpRendering\MeshFactory.h"
+#include"SpRendering\MeshFactory.h"
 
 CGameObject* r;
 void GUITest::OnStart()

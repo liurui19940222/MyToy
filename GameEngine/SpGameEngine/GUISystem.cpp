@@ -2,9 +2,9 @@
 #include "Engine.h"
 #include "Application.h"
 #include "Input.h"
-#include"..\SpCommon\Object.h"
+#include "SpCommon\Object.hpp"
 #include "GameObject.h"
-#include"..\SpRendering\MeshFactory.h"
+#include "SpRendering\MeshFactory.h"
 using namespace guisystem;
 using namespace container;
 

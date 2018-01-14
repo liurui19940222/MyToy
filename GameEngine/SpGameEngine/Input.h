@@ -7,8 +7,8 @@
 #include<windowsx.h>
 #include<string>
 #include<dinput.h>
-#include"..\SpCommon\Math.h"
-#include"..\SpCommon\ApiDefine.h"
+#include"SpCommon\Math.h"
+#include"SpCommon\ApiDefine.h"
 
 using namespace std;
 

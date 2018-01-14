@@ -4,11 +4,11 @@
 #include<map>
 #include<vector>
 #include<functional>
-#include"..\SpCommon\Object.h"
+#include"SpCommon\Object.hpp"
 #include"GameObject.h"
 #include"DynamicFactory.h"
-#include"..\SpCommon\Singleton.h"
-#include"..\SpCommon\Math.h"
+#include"SpCommon\Singleton.h"
+#include"SpCommon\Math.h"
 
 #define _Maker CMaker::GetInstance()
 

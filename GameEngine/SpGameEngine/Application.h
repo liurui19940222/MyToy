@@ -3,11 +3,11 @@
 
 #include<Windows.h>
 #include<windowsx.h>
-#include"..\SpCommon\ApiDefine.h"
+#include"SpCommon\ApiDefine.h"
 #include"Camera.h"
 #include"Engine.h"
 #include"GameWindow.h"
-#include"..\SpCommon\Singleton.h"
+#include"SpCommon\Singleton.h"
 
 #define _Application CApplication::GetInstance()
 

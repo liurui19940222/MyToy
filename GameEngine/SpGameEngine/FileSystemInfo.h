@@ -5,7 +5,7 @@
 #include<stdio.h>
 #include<string>
 #include<memory>
-#include"..\SpCommon\ApiDefine.h"
+#include"SpCommon\ApiDefine.h"
 
 using namespace std;
 

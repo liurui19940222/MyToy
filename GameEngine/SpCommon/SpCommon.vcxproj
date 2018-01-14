@@ -20,19 +20,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApiDefine.h" />
+    <ClInclude Include="Atlas.h" />
     <ClInclude Include="Converter.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="EngineDefine.h" />
     <ClInclude Include="Math.h" />
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="Object.hpp" />
     <ClInclude Include="Property.h" />
     <ClInclude Include="Singleton.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Atlas.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="EngineDefine.cpp" />
     <ClCompile Include="Math.cpp" />
-    <ClCompile Include="Object.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{43ED9727-74EE-4AEA-873F-50F8A7C1B09C}</ProjectGuid>

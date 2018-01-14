@@ -93,6 +93,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;SPRENDERING_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="FontManager.h" />
+    <ClInclude Include="FontRenderer.h" />
     <ClInclude Include="GLRendering.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
@@ -163,10 +166,14 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkeletonAnimation.h" />
     <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="SysFont.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture2D.h" />
+    <ClInclude Include="TrueTypeFont.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FontManager.cpp" />
+    <ClCompile Include="FontRenderer.cpp" />
     <ClCompile Include="GLRendering.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -179,8 +186,10 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkeletonAnimation.cpp" />
     <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="SysFont.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Texture2D.cpp" />
+    <ClCompile Include="TrueTypeFont.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

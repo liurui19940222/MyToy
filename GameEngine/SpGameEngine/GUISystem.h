@@ -3,14 +3,14 @@
 
 #include<vector>
 #include<functional>
-#include"..\SpCommon\EngineDefine.h"
-#include"..\SpCommon\Math.h"
+#include"SpCommon\EngineDefine.h"
+#include"SpCommon\Math.h"
 #include"Component.h"
 #include"PriorityQueue.h"
-#include"..\SpCommon\Singleton.h"
-#include"..\SpRendering\Renderer.h"
-#include"..\SpRendering\MeshBuffer.h"
-#include"..\SpRendering\Material.h"
+#include"SpCommon\Singleton.h"
+#include"SpRendering\Renderer.h"
+#include"SpRendering\MeshBuffer.h"
+#include"SpRendering\Material.h"
 
 #define _GUISystem guisystem::CGUISystem::GetInstance()
 

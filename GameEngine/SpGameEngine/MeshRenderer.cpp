@@ -1,6 +1,6 @@
 #include"MeshRenderer.h"
 #include"GameObject.h"
-#include"..\SpCommon\EngineDefine.h"
+#include"SpCommon\EngineDefine.h"
 #include"Engine.h"
 #include"Application.h"
 #include"EditorTool.h"

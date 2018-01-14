@@ -30,7 +30,10 @@
     <ClInclude Include="Singleton.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
+    <ClInclude Include="Atlas.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.hpp">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,7 +47,7 @@
     <ClCompile Include="EngineDefine.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
+    <ClCompile Include="Atlas.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

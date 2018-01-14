@@ -1,7 +1,7 @@
 #ifndef _RENDER_BUFFER_H_
 #define _RENDER_BUFFER_H_
 
-class CRenderBuffer
+class IRenderBuffer
 {
 public:
 

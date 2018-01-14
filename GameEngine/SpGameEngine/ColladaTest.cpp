@@ -1,8 +1,8 @@
 #include"ColladaTest.h"
-#include"..\SpAssetLoader\ColladaLoader.h"
+#include"SpAssetLoader\ColladaLoader.h"
 #include"Maker.h"
-#include"..\SpRendering\SkyBox.h"
-#include"..\SpRendering\MeshFactory.h"
+#include"SpRendering\SkyBox.h"
+#include"SpRendering\MeshFactory.h"
 #include<glm\glm.hpp>
 
 CSkyBox* box;

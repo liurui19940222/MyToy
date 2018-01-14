@@ -1,5 +1,5 @@
 #include"ImageHandle.h"
-#include"..\SpAssetLoader\ImageLoader.h"
+#include"SpAssetLoader\ImageLoader.h"
 
 bool ChangeImageSize(const char* srcPath, const char* dstPath, int width, int height)
 {

@@ -2,8 +2,8 @@
 #define _GUI_LABLE_H_
 
 #include"GUISystem.h"
-#include"..\SpRendering\Texture.h"
-#include"FontRenderer.h"
+#include"SpRendering\Texture.h"
+#include"SpRendering\FontRenderer.h"
 
 namespace guisystem {
 

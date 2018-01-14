@@ -4,7 +4,7 @@
 #include<gl\glew.h>
 #include"RenderBuffer.h"
 #include"Math.h"
-#include"..\SpCommon\EngineDefine.h"
+#include"SpCommon\EngineDefine.h"
 #include"SkeletonAnimation.h"
 
 #define VERTEX_POS			0
@@ -14,7 +14,7 @@
 #define JOINT_INDEX_POS		4
 #define JOINT_WEIGHT_POS	5
 
-class CMeshBuffer : public CRenderBuffer
+class CMeshBuffer : public IRenderBuffer
 {
 private:
 	int m_vertexNum;

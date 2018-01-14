@@ -1,6 +1,6 @@
 #include"LightComponent.h"
 #include"Maker.h"
-#include"..\SpRendering\Renderer.h"
+#include"SpRendering\Renderer.h"
 
 void CLightComponent::RenderShadowMap(CLightComponent* light)
 {

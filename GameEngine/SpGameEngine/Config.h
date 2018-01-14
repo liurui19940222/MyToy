@@ -6,10 +6,10 @@
 #include<map>
 #include<sstream>
 #include<fstream>
-#include"..\DependentInclude\rapidxml\rapidxml.hpp"
-#include"..\SpCommon\Singleton.h"
-#include"..\SpCommon\Converter.h"
-#include"..\SpCommon\ApiDefine.h"
+#include"DependentInclude\rapidxml\rapidxml.hpp"
+#include"SpCommon\Singleton.h"
+#include"SpCommon\Converter.h"
+#include"SpCommon\ApiDefine.h"
 
 using namespace std;
 using namespace rapidxml;

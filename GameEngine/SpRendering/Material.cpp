@@ -1,7 +1,7 @@
 #include"Material.h"
 #include"Texture2D.h"
 #include"Light.h"
-#include"..\SpCommon\EngineDefine.h"
+#include"SpCommon\EngineDefine.h"
 
 map<EPiplelineStateType, bool> CMaterial::m_pushStates;
 CMaterial* CMaterial::m_defaultMaterial = NULL;

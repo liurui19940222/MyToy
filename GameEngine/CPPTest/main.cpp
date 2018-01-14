@@ -3,22 +3,25 @@
 #include <windows.h>
 #include <stdio.h>
 #include <string.h>
-#include"..\SpCommon\Math.h"
-#include"..\SpRendering\GLRendering.h"
-#include"..\SpRendering\Material.h"
-#include"..\SpRendering\MeshBuffer.h"
-#include"..\SpRendering\MeshFactory.h"
-#include"..\SpRendering\Texture2D.h"
+#include"SpRendering/GLRendering.h"
+#include"SpRendering/Material.h"
+#include"SpRendering/MeshBuffer.h"
+#include"SpRendering/MeshFactory.h"
+#include"SpRendering/Texture2D.h"
+#include"SpRendering/FontRenderer.h"
 
 const int width = 800;
 const int height = 600;
 bool isExiting = false;
 GLRendering* rendering;
+CFontRenderer* font;
 HWND m_Hwnd;
 RenderingObject obj;
+Matrix4x4 textMat;
 Matrix4x4 modelMat;
 Matrix4x4 viewMat;
 Matrix4x4 projectionMat;
+
 #define CLASS_NAME L"NAME"
 
 bool isCreated = false;
@@ -40,15 +43,12 @@ LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 		rendering = new GLRendering();
 		rendering->StartUp(&params);
 
-		//glMatrixMode(GL_PROJECTION);
-		//glLoadIdentity();
-		//gluPerspective(45, width / (float)height, 0.1, 1000);
-		//glMatrixMode(GL_MODELVIEW);
-		//glLoadIdentity();
-		//gluLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0);
+		CTrueTypeFont* f = FontManager->LoadFont(1, "C:/Windows/Fonts/StencilStd.otf");
+		font = new CFontRenderer();
+		font->SetFont(f)->SetColor(Color::green)->SetFontSize(100)->SetTextAlignment(EAlignment::CENTER_MIDDLE)->SetRenderType(ERenderType::Smart)->SetTextRect(SRect2D(0,0,50, 50))->SetText(L"HelloWorld");
 
 		obj.material = new CMaterial();
-		obj.material->SetShader(CShader::Get("texture"))->SetMainTexture(CTexture2D::Create("D:\\GitHub\\MyToy\\GameEngine\\SpGameEngine\\textures\\shake.png"));
+		obj.material->SetShader(CShader::Get("texture"))->SetMainTexture(CTexture2D::Create("D://GitHub//MyToy//GameEngine//SpGameEngine//textures//shake.png"));
 		obj.mesh = _MeshFactory->SharedBuffer(EMeshType::Cube);
 
 		isCreated = true;
@@ -127,15 +127,10 @@ void Render()
 	glClearColor(0, 0, 0, 1);
 
 	modelMat = Matrix4x4::Rotate(0, GetTickCount() / 10, 0);
+	textMat = Matrix4x4::Translate(Vector3(0, 2, 0)) * Matrix4x4::Rotate(0, GetTickCount() / -10, 0);
 
 	rendering->Render(&obj, modelMat, viewMat, projectionMat);
-
-
-	//glBegin(GL_TRIANGLES);
-	//glVertex3f(0, 1, 0);
-	//glVertex3f(-1, -1, 0);
-	//glVertex3f(1, -1, 0);
-	//glEnd();
+	font->OnRender(textMat, viewMat, projectionMat);
 }
 
 int GameLoop()
@@ -167,13 +162,9 @@ int main()
 {
 	CreateApp();
 
-
-
 	modelMat = Matrix4x4::Identity();
 	viewMat = Matrix4x4::LookAt(Vector3(0, 0, 10), Vector3::zero, Vector3::up);
 	projectionMat = Matrix4x4::Perspective(45, width / (float)height, 0.1, 1000);
-
-
 
 	GameLoop();
 	return 0;

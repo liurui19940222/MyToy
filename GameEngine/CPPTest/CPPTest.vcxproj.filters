@@ -18,25 +18,5 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystemInfo.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="FileInfo.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectoryInfo.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="FileSystemInfo.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="FileInfo.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectoryInfo.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

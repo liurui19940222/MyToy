@@ -1,12 +1,12 @@
 #include"TestApp.h"
 #include"Input.h"
 #include"Time.h"
-#include"..\SpRendering\RenderTexture.h"
-#include"..\SpAssetLoader\3DSModelLoader.h"
+#include"SpRendering\RenderTexture.h"
+#include"SpAssetLoader\3DSModelLoader.h"
 #include"Resources.h"
-#include "..\SpCommon\Debug.h"
+#include "SpCommon\Debug.h"
 #include"Config.h"
-#include"..\SpRendering\MeshFactory.h"
+#include"SpRendering\MeshFactory.h"
 
 void CTestApp::OnStart()
 {

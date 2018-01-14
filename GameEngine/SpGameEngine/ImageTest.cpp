@@ -1,6 +1,6 @@
 #include"ImageTest.h"
-#include"..\SpRendering\MeshFactory.h"
-#include"..\SpAssetLoader\3DSModelLoader.h"
+#include"SpRendering\MeshFactory.h"
+#include"SpAssetLoader\3DSModelLoader.h"
 
 void CImageTest::OnStart()
 {

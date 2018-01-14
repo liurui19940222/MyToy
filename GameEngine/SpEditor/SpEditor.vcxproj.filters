@@ -110,9 +110,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\DLLEXPORT\GameEngine.lib">
-      <Filter>Library</Filter>
-    </Library>
+    <Library Include="..\DLLEXPORT\SpGameEngine.lib" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUIElement.h">

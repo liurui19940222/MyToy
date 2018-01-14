@@ -2,8 +2,8 @@
 #define _TEXTURE_H_
 
 #include<gl\glew.h>
-#include"..\SpCommon\EngineDefine.h"
-#include"..\SpCommon\Object.h"
+#include"SpCommon\EngineDefine.h"
+#include"SpCommon\Object.hpp"
 
 enum ETexWrapMode
 {

@@ -1,7 +1,7 @@
 #ifndef _COMPONENT_H_
 #define _COMPONENT_H_
 
-#include"..\SpCommon\Object.h"
+#include"SpCommon\Object.hpp"
 #include"DynamicFactory.h"
 #include"EditorTool.h"
 
@@ -14,7 +14,7 @@ public:
 	CGameObject* gameObject;
 
 	CComponent();
-	~CComponent();
+	virtual ~CComponent();
 
 	virtual void OnStart();
 	virtual void OnUpdate();

@@ -5,7 +5,7 @@
 #include<Windows.h>
 #include<string>
 #include"Math.h"
-#include"..\SpCommon\EngineDefine.h"
+#include"EngineDefine.h"
 
 using namespace std;
 

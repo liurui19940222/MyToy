@@ -1,6 +1,6 @@
 #include"Application.h"
 #include"Engine.h"
-#include"..\SpCommon\EngineDefine.h"
+#include"SpCommon\EngineDefine.h"
 
 class CTestApp : public CGameWindow
 {

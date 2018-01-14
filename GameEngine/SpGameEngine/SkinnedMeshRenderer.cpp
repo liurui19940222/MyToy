@@ -1,10 +1,10 @@
 #include"SkinnedMeshRenderer.h"
 #include"GameObject.h"
-#include"..\SpCommon\EngineDefine.h"
+#include"SpCommon\EngineDefine.h"
 #include"Engine.h"
 #include"Application.h"
 #include"EditorTool.h"
-#include"..\SpAssetLoader\ColladaLoader.h"
+#include"SpAssetLoader\ColladaLoader.h"
 
 IMPL_CLASS(CSkinnedMeshRenderer)
 

@@ -2,7 +2,7 @@
 #define _CGAME_WINDOW_
 
 #include"Application.h"
-#include"..\SpCommon\ApiDefine.h"
+#include"SpCommon\ApiDefine.h"
 
 struct ENGINE_API SApplicationInfo;
 

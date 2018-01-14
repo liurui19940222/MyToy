@@ -5,7 +5,7 @@
 #include<gl\glew.h>
 #include"Shader.h"
 #include"Texture.h"
-#include"..\SpCommon\Object.h"
+#include"SpCommon\Object.hpp"
 
 using namespace std;
 

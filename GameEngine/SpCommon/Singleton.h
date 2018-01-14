@@ -2,7 +2,7 @@
 #define _SINGLETON_H_
 
 #include<Windows.h>
-#include"..\SpCommon\ApiDefine.h"
+#include"ApiDefine.h"
 
 template<typename T>
 class ENGINE_API_TEMPLATE CSingleton

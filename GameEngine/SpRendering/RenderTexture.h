@@ -5,7 +5,7 @@
 #include"Texture.h"
 #include"RenderBuffer.h"
 
-class CRenderTexture : public CTexture, public CRenderBuffer
+class CRenderTexture : public CTexture, public IRenderBuffer
 {
 private:
 	GLuint m_fboHandle;

@@ -1,10 +1,10 @@
 #ifndef _CEDITOR_TOOL_
 #define _CEDITOR_TOOL_
 
-#include"..\SpCommon\Math.h"
-#include"..\SpRendering\SkeletonAnimation.h"
-#include"..\SpCommon\EngineDefine.h"
-#include"..\SpCommon\ApiDefine.h"
+#include"SpCommon\Math.h"
+#include"SpRendering\SkeletonAnimation.h"
+#include"SpCommon\EngineDefine.h"
+#include"SpCommon\ApiDefine.h"
 
 class ENGINE_API CGameObject;
 

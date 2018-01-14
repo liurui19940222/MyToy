@@ -1,6 +1,6 @@
 #include "RelationshipTest.h"
-#include"..\SpRendering\RenderCamera.h"
-#include"..\SpRendering\MeshFactory.h"
+#include"SpRendering\RenderCamera.h"
+#include"SpRendering\MeshFactory.h"
 
 void CRelationshipTest::OnStart()
 {

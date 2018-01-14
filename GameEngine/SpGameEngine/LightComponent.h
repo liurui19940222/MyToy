@@ -1,7 +1,7 @@
 #pragma once
 
 #include"Component.h"
-#include"..\SpRendering\Light.h"
+#include"SpRendering\Light.h"
 
 class CLightComponent : public CLight, public CComponent
 {

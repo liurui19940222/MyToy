@@ -1,17 +1,17 @@
 #ifndef _CMAIN_WINDOW_
 #define _CMAIN_WINDOW_
 
-#include"..\SpCommon\EngineDefine.h"
-#include"..\SpCommon\Math.h"
+#include"SpCommon\EngineDefine.h"
+#include"SpCommon\Math.h"
 #include"Application.h"
 #include"Input.h"
-#include "..\SpCommon\Debug.h"
+#include "SpCommon\Debug.h"
 #include"Time.h"
 #include"GameObject.h"
 #include"Camera.h"
-#include"..\SpRendering\Shader.h"
-#include"..\SpRendering\MeshBuffer.h"
-#include"..\SpRendering\RenderCamera.h"
+#include"SpRendering\Shader.h"
+#include"SpRendering\MeshBuffer.h"
+#include"SpRendering\RenderCamera.h"
 
 using namespace std;
 

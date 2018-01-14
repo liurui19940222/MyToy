@@ -1,5 +1,5 @@
 #include"Config.h"
-#include "..\SpCommon\Debug.h"
+#include "SpCommon\Debug.h"
 
 void CConfig::OnInitialize()
 {

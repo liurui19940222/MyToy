@@ -3,7 +3,7 @@
 
 #include<iostream>
 #include<functional>
-#include"..\SpCommon\ApiDefine.h"
+#include"SpCommon\ApiDefine.h"
 
 using namespace std::tr1;
 

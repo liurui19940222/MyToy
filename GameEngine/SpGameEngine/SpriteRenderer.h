@@ -2,7 +2,7 @@
 #define _SPRITE_H_
 
 #include"Component.h"
-#include"..\SpRendering\Texture.h"
+#include"SpRendering\Texture.h"
 
 class ENGINE_API CSpriteRenderer : public CComponent
 {

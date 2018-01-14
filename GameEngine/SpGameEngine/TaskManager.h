@@ -3,7 +3,7 @@
 
 #include<functional>
 #include<map>
-#include"..\SpCommon\ApiDefine.h"
+#include"SpCommon\ApiDefine.h"
 
 using namespace std;
 
