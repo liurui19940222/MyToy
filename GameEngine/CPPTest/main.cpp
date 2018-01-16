@@ -22,13 +22,15 @@ Matrix4x4 modelMat;
 Matrix4x4 viewMat;
 Matrix4x4 projectionMat;
 
+const int font_size = 64;
 const int canvas_w = 512;
 const int canvas_h = 512;
 uint pixels[canvas_w * canvas_h];
 CTexture2D* canvasTexture;
 
 #define FONT_PATH "D:/GitHub/MyToy/GameEngine/SpGameEngine/fonts/msyh.ttf"
-#define SHOW_TEXT L"/* handle to face object2018北美车展：新款MINI家族正式发布"
+//#define SHOW_TEXT L"/* handle to face object2018北美车展：新款MINI家族正式发布"
+#define SHOW_TEXT L"MIN"
 
 #define CLASS_NAME L"NAME"
 
@@ -80,7 +82,7 @@ void CreateText(const wchar_t* text)
 	error = FT_Set_Char_Size(
 		face,    /* handle to face object           */
 		0,       /* char_width in 1/64th of points  */
-		10 * 64,   /* char_height in 1/64th of points */
+		font_size * 64,   /* char_height in 1/64th of points */
 		0,     /* horizontal device resolution    */
 		128);   /* vertical device resolution      */
 
@@ -139,7 +141,7 @@ LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 		CTrueTypeFont* f = FontManager->LoadFont(1, FONT_PATH);
 		font = new CFontRenderer();
-		font->SetFont(f)->SetColor(Color::white)->SetFontSize(24)->SetTextAlignment(EAlignment::CENTER_MIDDLE)->SetRenderType(ERenderType::Smart)->SetTextRect(SRect2D(0,0,50, 50))->SetText(SHOW_TEXT);
+		font->SetFont(f)->SetColor(Color::white)->SetFontSize(font_size)->SetTextAlignment(EAlignment::CENTER_MIDDLE)->SetRenderType(ERenderType::Smart)->SetTextRect(SRect2D(0,0,50, 50))->SetText(SHOW_TEXT);
 
 		obj.material = new CMaterial();
 		obj.material->SetShader(CShader::Get("texture"))->SetMainTexture(/*CTexture2D::Create("D://GitHub//MyToy//GameEngine//SpGameEngine//textures//shake.png")*/canvasTexture);
