@@ -22,15 +22,15 @@ Matrix4x4 modelMat;
 Matrix4x4 viewMat;
 Matrix4x4 projectionMat;
 
-const int font_size = 64;
+const int font_size = 12;
 const int canvas_w = 512;
 const int canvas_h = 512;
 uint pixels[canvas_w * canvas_h];
 CTexture2D* canvasTexture;
 
 #define FONT_PATH "D:/GitHub/MyToy/GameEngine/SpGameEngine/fonts/msyh.ttf"
-//#define SHOW_TEXT L"/* handle to face object2018北美车展：新款MINI家族正式发布"
-#define SHOW_TEXT L"MIN"
+#define SHOW_TEXT L"/* handle to face object2018北美车展：新款MINI家族正式发布"
+//#define SHOW_TEXT L"MIN"
 
 #define CLASS_NAME L"NAME"
 

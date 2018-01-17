@@ -281,8 +281,9 @@ void CFontRenderer::Rebuild()
 	CTextOneLineData* lineData = new CTextOneLineData();
 	lineDatas.push_back(lineData);
 	float pixelScale = GetPixelScale();
-	interval_x = 0;//记得删这一行
+	interval_x = 0.00f;//记得删这一行
 	float lastWidth = 0;
+
 	for (size_t i = 0; i < primitives.size(); ++i)
 	{
 		//if (text[i] == *L"\n" && !singleLine)
@@ -296,7 +297,6 @@ void CFontRenderer::Rebuild()
 		float top = primitives[i]->top * pixelScale;
 		float left = primitives[i]->left * pixelScale;
 		float adv_x = primitives[i]->advance_x * pixelScale;
-
 		//if (start_x + adv_x + interval_x >= rect.half_size_x && !singleLine)
 		//{
 		//	start_x = -rect.half_size_x;
@@ -307,11 +307,11 @@ void CFontRenderer::Rebuild()
 		//}
 		//if (start_y - top - interval_y < -rect.half_size_y && lineDatas.size() > 1)
 		//	break;
-		if (i == 0)
-			primitives[i]->position = Vector3{ start_x, start_y - top * 0.5f, 0 };
-		else
-			primitives[i]->position = Vector3{ start_x + adv_x * 0.5f, start_y - top * 0.5f, 0 };
-		start_x += adv_x * 0.5f + interval_x;
+		//if (i == 0)
+		//	primitives[i]->position = Vector3{ start_x, start_y - top * 0.5f, 0 };
+		//else
+			primitives[i]->position = Vector3{ start_x + left + adv_x * 0.5f, start_y - top * 0.5f, 0 };
+		start_x += adv_x + interval_x;
 		//lineData->line_width += adv_x + interval_x;
 		if (primitives[i]->height_y > lineData->line_height)
 			lineData->line_height = primitives[i]->height_y;
