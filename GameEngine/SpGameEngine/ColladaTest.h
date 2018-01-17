@@ -1,7 +1,7 @@
 #include"Application.h"
 #include"Engine.h"
 #include"SpCommon\EngineDefine.h"
-#include"Input.h"
+#include"SpCommon\Input.h"
 #include"Time.h"
 #include"SpRendering\RenderTexture.h"
 #include"SpAssetLoader\3DSModelLoader.h"

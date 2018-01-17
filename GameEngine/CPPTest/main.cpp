@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+ï»¿#define _CRT_SECURE_NO_WARNINGS
 
 #include <windows.h>
 #include <stdio.h>
@@ -9,9 +9,11 @@
 #include"SpRendering/MeshFactory.h"
 #include"SpRendering/Texture2D.h"
 #include"SpRendering/FontRenderer.h"
+#include"SpCommon/FastPainter.h"
+#include"SpCommon/Input.h"
 
-const int width = 800;
-const int height = 600;
+const int width = 1280;
+const int height = 720;
 bool isExiting = false;
 GLRendering* rendering;
 CFontRenderer* font;
@@ -22,16 +24,16 @@ Matrix4x4 modelMat;
 Matrix4x4 viewMat;
 Matrix4x4 projectionMat;
 
-const int font_size = 12;
+const int font_size = 24;
 const int canvas_w = 512;
 const int canvas_h = 512;
 uint pixels[canvas_w * canvas_h];
 CTexture2D* canvasTexture;
 
 #define FONT_PATH "D:/GitHub/MyToy/GameEngine/SpGameEngine/fonts/msyh.ttf"
-#define SHOW_TEXT L"/* handle to face object2018±±ÃÀ³µÕ¹£ºÐÂ¿îMINI¼Ò×åÕýÊ½·¢²¼"
-//#define SHOW_TEXT L"MIN"
-
+//#define FONT_PATH "C:/Windows/Fonts/DengXian.ttf"
+#define SHOW_TEXT L"/* handle to face object2018åŒ—ç¾Žè½¦å±•ï¼šæ–°æ¬¾MINIå®¶æ—æ­£å¼å‘å¸ƒ"
+//#define SHOW_TEXT L"+-*()[]{}:;',.?!"
 #define CLASS_NAME L"NAME"
 
 bool isCreated = false;
@@ -89,7 +91,7 @@ void CreateText(const wchar_t* text)
 	FT_GlyphSlot  slot = face->glyph;  /* a small shortcut */
 	int           pen_x, pen_y, n;
 	pen_x = 0;
-	pen_y = 30;
+	pen_y = 100;
 
 	for (n = 0; n < lstrlenW(text); n++)
 	{
@@ -141,7 +143,7 @@ LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 		CTrueTypeFont* f = FontManager->LoadFont(1, FONT_PATH);
 		font = new CFontRenderer();
-		font->SetFont(f)->SetColor(Color::white)->SetFontSize(font_size)->SetTextAlignment(EAlignment::CENTER_MIDDLE)->SetRenderType(ERenderType::Smart)->SetTextRect(SRect2D(0,0,50, 50))->SetText(SHOW_TEXT);
+		font->SetFont(f)->SetColor(Color::white)->SetFontSize(font_size)->SetTextAlignment(EAlignment::CENTER_MIDDLE)->SetRenderType(ERenderType::Smart)->SetTextRect(SRect2D(0,0,4, 1))->SetText(SHOW_TEXT);
 
 		obj.material = new CMaterial();
 		obj.material->SetShader(CShader::Get("texture"))->SetMainTexture(/*CTexture2D::Create("D://GitHub//MyToy//GameEngine//SpGameEngine//textures//shake.png")*/canvasTexture);
@@ -156,7 +158,13 @@ LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 		PostQuitMessage(0);
 		break;
 	case WM_SIZE:
-
+	{
+		int height = HIWORD(lParam);
+		int width = LOWORD(lParam);
+		glViewport(0, 0, width, height);
+		projectionMat = Matrix4x4::Perspective(45, width / (float)height, 0.1, 1000);
+		FastPainter::Perspective(45, width / (float)height, 0.1, 1000);
+	}
 		break;
 	case WM_MOVE:
 
@@ -215,6 +223,67 @@ void CreateApp()
 
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
+
+	CInput::Init(mHIntance, hwnd);
+}
+
+void Update()
+{
+	CInput::GetState(RECT{});
+
+	if (CInput::GetKeyDown(DIK_NUMPAD1))
+	{
+		font->SetTextAlignment(EAlignment::LEFT_BOTTOM);
+	}
+	if (CInput::GetKeyDown(DIK_NUMPAD2))
+	{
+		font->SetTextAlignment(EAlignment::CENTER_BOTTOM);
+	}
+	if (CInput::GetKeyDown(DIK_NUMPAD3))
+	{
+		font->SetTextAlignment(EAlignment::RIGHT_BOTTOM);
+	}
+	if (CInput::GetKeyDown(DIK_NUMPAD4))
+	{
+		font->SetTextAlignment(EAlignment::LEFT_MIDDLE);
+	}
+	if (CInput::GetKeyDown(DIK_NUMPAD5))
+	{
+		font->SetTextAlignment(EAlignment::CENTER_MIDDLE);
+	}
+	if (CInput::GetKeyDown(DIK_NUMPAD6))
+	{
+		font->SetTextAlignment(EAlignment::RIGHT_MIDDLE);
+	}
+	if (CInput::GetKeyDown(DIK_NUMPAD7))
+	{
+		font->SetTextAlignment(EAlignment::LEFT_TOP);
+	}
+	if (CInput::GetKeyDown(DIK_NUMPAD8))
+	{
+		font->SetTextAlignment(EAlignment::CENTER_TOP);
+	}
+	if (CInput::GetKeyDown(DIK_NUMPAD9))
+	{
+		font->SetTextAlignment(EAlignment::RIGHT_TOP);
+	}
+
+	if (CInput::GetKeyDown(DIK_1))
+	{
+		font->SetColor(Color::orange);
+	}
+	if (CInput::GetKeyDown(DIK_2))
+	{
+		font->SetColor(Color::cyan);
+	}
+	if (CInput::GetKeyDown(DIK_3))
+	{
+		font->SetColor(Color::green);
+	}
+	if (CInput::GetKeyDown(DIK_4))
+	{
+		font->SetColor(Color::red);
+	}
 }
 
 void Render()
@@ -226,8 +295,11 @@ void Render()
 	//modelMat = Matrix4x4::Rotate(0, GetTickCount() / 10, 0);
 	textMat = Matrix4x4::Identity();
 
-	rendering->Render(&obj, modelMat, viewMat, projectionMat);
+	//rendering->Render(&obj, modelMat, viewMat, projectionMat);
 	font->OnRender(textMat, viewMat, projectionMat);
+
+	glUseProgram(0);
+	FastPainter::DrawRect(font->GetTextRect(), textMat * Matrix4x4::Scale(Vector3::one));
 }
 
 int GameLoop()
@@ -247,6 +319,7 @@ int GameLoop()
 		}
 		if (isCreated)
 		{
+			Update();
 			Render();
 			SwapBuffers(hdc);
 		}
@@ -262,6 +335,8 @@ int main()
 	modelMat = Matrix4x4::Identity();
 	viewMat = Matrix4x4::LookAt(Vector3(0, 0, 10), Vector3::zero, Vector3::up);
 	projectionMat = Matrix4x4::Perspective(45, width / (float)height, 0.1, 1000);
+
+	FastPainter::LookAt(Vector3(0, 0, 10), Vector3::zero, Vector3::up);
 
 	GameLoop();
 	return 0;

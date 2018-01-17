@@ -13,8 +13,8 @@ void CTextTest::OnStart()
 	text = go->AddComponent<CTextRenderer>();
 	text->SetFont(font)->SetFontSize(30)->SetTextRect(SRect2D{ 0, 0, 5, 1 })->SetColor(Color::green)->SetSingleLine(true);
 	//text->SetText(L"那么照此格式输出的字母都能以基线对齐，。 \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson");
-	text->SetText(L"哈哈");
-	//text->SetText(L"那么照此格式输出的字母都能以基线对齐。但是所有的字都比设置的位置要低一些，想问一下我的计算方式是不是不对，网上都是这么计算的  ……");
+	//text->SetText(L"哈哈");
+	text->SetText(L"那么照此格式输出的字母都能以基线对齐。但是所有的字都比设置的位置要低一些，想问一下我的计算方式是不是不对，网上都是这么计算的  ……");
 	Vector2() + Vector2();
 	//CAtlas* atlas = (*font->GetAtlases(10))[0];
 	//CTexture* tex = CTexture::Create((UCHAR*)(atlas->GetPixels()), atlas->GetWidth(), atlas->GetHeight());

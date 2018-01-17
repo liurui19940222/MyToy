@@ -79,13 +79,6 @@ void CColladaTest::OnStart()
 		"textures/skybox2/right.tga");
 
 	_MainCamera->SetSkyBox(box);
-	
-	CTexture2D* texture = CTexture2D::Create("textures/skybox2/top.tga");
-	CMaterial* cubeMat = new CMaterial();
-	cubeMat->SetMainTexture(texture)->SetShader(CShader::Get("texture"));
-	CGameObject* cube = _Maker->Instantiate(L"cube");
-	cube->SetLocalScale(Vector3::one * 5);
-	cube->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Quad))->SetMaterial(cubeMat);
 }
 
 void CColladaTest::OnUpdate()

@@ -38,6 +38,7 @@ void CCharacterPrimitiveSmart::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMat
 	m_material->SetParam("M", modelMatrix * Matrix4x4::Translate(pos) * Matrix4x4::Scale(size));
 	m_material->SetParam("V", viewMatrix);
 	m_material->SetParam("P", projectionMatrix);
+	m_material->SetParam("Color", color);
 	m_buffer.BindBuffer();
 	glDrawArrays(GL_TRIANGLES, 0, m_buffer.GetVertexNum());
 	m_material->Unbind();
@@ -113,7 +114,7 @@ void CFontRenderer::OnRender(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matr
 
 void CFontRenderer::OnRenderDebug(Matrix4x4& modelMatrix)
 {
-	
+
 }
 
 CFontRenderer* CFontRenderer::SetFont(CTrueTypeFont* font)
@@ -159,7 +160,6 @@ CFontRenderer* CFontRenderer::SetIntervalY(float y)
 CFontRenderer* CFontRenderer::SetFontSize(int size)
 {
 	this->font_size = size;
-	this->interval_y = font_size * GetPixelScale();
 	return this;
 }
 
@@ -168,7 +168,6 @@ CFontRenderer* CFontRenderer::SetColor(Color color)
 	if (this->color == color)
 		return this;
 	this->color = color;
-	Rebuild();
 	return this;
 }
 
@@ -247,18 +246,19 @@ float CFontRenderer::GetOffsetY()
 	}
 	else if (alignment_v == EAlignmentVertical::MIDDLE)
 	{
-		return -(rect.half_size_y * 2 - interval_y  * ((lineDatas.size() - 1))) * 0.5f;
+		return -(rect.half_size_y * 2 - m_TotalHeight) * 0.5f;
 	}
 	else if (alignment_v == EAlignmentVertical::BOTTOM)
 	{
 		float lastLineHalfHeight = lineDatas[lineDatas.size() - 1]->line_height * 0.5f;
-		return -(rect.half_size_y * 2 - interval_y * (lineDatas.size())) - lastLineHalfHeight;
+		return -(rect.half_size_y * 2 - m_TotalHeight) - lastLineHalfHeight;
 	}
 	return 0;
 }
 
 void CFontRenderer::Rebuild()
 {
+	static float top, left, adv_x, width, pixelScale, start_x, start_y, prevHeight;
 	if (!font) return;
 	ClearPrimitive();
 	ClearLineData();
@@ -274,47 +274,47 @@ void CFontRenderer::Rebuild()
 		free(bitmap.buffer);
 	}
 
-	static float start_x = 0;
-	static float start_y = 0;
 	start_x = -rect.half_size_x;
 	start_y = +rect.half_size_y;
 	CTextOneLineData* lineData = new CTextOneLineData();
 	lineDatas.push_back(lineData);
-	float pixelScale = GetPixelScale();
-	interval_x = 0.00f;//记得删这一行
-	float lastWidth = 0;
+	pixelScale = GetPixelScale();
 
+	prevHeight = 0;
+	m_TotalHeight = 0;
 	for (size_t i = 0; i < primitives.size(); ++i)
 	{
-		//if (text[i] == *L"\n" && !singleLine)
-		//{
-		//	start_x = -rect.half_size_x;
-		//	start_y -= interval_y;
-		//	lineData = new CTextOneLineData();
-		//	lineDatas.push_back(lineData);
-		//	continue;
-		//}
-		float top = primitives[i]->top * pixelScale;
-		float left = primitives[i]->left * pixelScale;
-		float adv_x = primitives[i]->advance_x * pixelScale;
-		//if (start_x + adv_x + interval_x >= rect.half_size_x && !singleLine)
-		//{
-		//	start_x = -rect.half_size_x;
-		//	start_y -= interval_y;
-
-		//	lineData = new CTextOneLineData();
-		//	lineDatas.push_back(lineData);
-		//}
-		//if (start_y - top - interval_y < -rect.half_size_y && lineDatas.size() > 1)
-		//	break;
-		//if (i == 0)
-		//	primitives[i]->position = Vector3{ start_x, start_y - top * 0.5f, 0 };
-		//else
-			primitives[i]->position = Vector3{ start_x + left + adv_x * 0.5f, start_y - top * 0.5f, 0 };
+		if (text[i] == *L"\n" && !singleLine)
+		{
+			start_x = -rect.half_size_x;
+			start_y -= prevHeight - interval_y;
+			m_TotalHeight += prevHeight - interval_y;
+			lineData = new CTextOneLineData();
+			lineDatas.push_back(lineData);
+			continue;
+		}
+		top = primitives[i]->top * pixelScale;
+		left = primitives[i]->left * pixelScale;
+		adv_x = primitives[i]->advance_x * pixelScale;
+		width = primitives[i]->width_x;
+		if (start_x + adv_x + interval_x >= rect.half_size_x && !singleLine)
+		{
+			start_x = -rect.half_size_x;
+			start_y -= prevHeight - interval_y;
+			m_TotalHeight += prevHeight - interval_y;
+			lineData = new CTextOneLineData();
+			lineDatas.push_back(lineData);
+		}
+		if (start_y - top - prevHeight - interval_y < -rect.half_size_y && lineDatas.size() > 1)
+			break;
+		primitives[i]->position = Vector3{ start_x + left + width * 0.5f, start_y - top * 0.5f, 0 };
 		start_x += adv_x + interval_x;
-		//lineData->line_width += adv_x + interval_x;
+		lineData->line_width += adv_x + interval_x;
 		if (primitives[i]->height_y > lineData->line_height)
+		{
 			lineData->line_height = primitives[i]->height_y;
+			prevHeight = lineData->line_height;
+		}
 		lineData->primitives.push_back(primitives[i]);
 	}
 }

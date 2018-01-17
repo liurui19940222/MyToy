@@ -1,7 +1,7 @@
 #include "GUISystem.h"
 #include "Engine.h"
 #include "Application.h"
-#include "Input.h"
+#include"SpCommon\Input.h"
 #include "SpCommon\Object.hpp"
 #include "GameObject.h"
 #include "SpRendering\MeshFactory.h"

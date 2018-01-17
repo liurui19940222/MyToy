@@ -54,9 +54,6 @@
     <Filter Include="Container">
       <UniqueIdentifier>{a99bae24-83a5-44fa-b3bf-dbe911d2b9bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader">
-      <UniqueIdentifier>{9853b6b4-ddbe-4782-bb29-26c5af0affa0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="IO">
       <UniqueIdentifier>{c9fa8315-4c23-45fb-9606-297b0380bac6}</UniqueIdentifier>
     </Filter>
@@ -102,9 +99,6 @@
       <Filter>Core\头文件</Filter>
     </ClInclude>
     <ClInclude Include="GameWindow.h">
-      <Filter>Core\头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
       <Filter>Core\头文件</Filter>
     </ClInclude>
     <ClInclude Include="RelationshipTest.h">
@@ -229,9 +223,6 @@
     <ClCompile Include="GameWindow.cpp">
       <Filter>Core\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Core\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Application\源文件</Filter>
     </ClCompile>
@@ -312,76 +303,26 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="dinput8.lib">
-      <Filter>Library</Filter>
-    </Library>
-    <Library Include="dxguid.lib">
-      <Filter>Library</Filter>
-    </Library>
-    <Library Include="lib\lib3ds.lib">
-      <Filter>Library</Filter>
-    </Library>
-    <Library Include="lib\freetype.lib">
-      <Filter>Library</Filter>
-    </Library>
-    <Library Include="lib\FreeImage.lib">
-      <Filter>Library</Filter>
-    </Library>
-    <Library Include="lib\assimp-vc140-mt.lib">
-      <Filter>Library</Filter>
-    </Library>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shader\basic.frag">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\basic.vert">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\color.frag">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\color.vert">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\texture.frag">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\texture.vert">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\light.vert">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\light.frag">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\skinning.frag">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\skinning.vert">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\font.frag">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\font.vert">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\gui.frag">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\gui.vert">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\shadow.frag">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\shadow.vert">
-      <Filter>Shader</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Xml Include="Config\engine.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\ExternLibrary\assimp-vc140-mt.lib">
+      <Filter>Library</Filter>
+    </Library>
+    <Library Include="..\ExternLibrary\dinput8.lib">
+      <Filter>Library</Filter>
+    </Library>
+    <Library Include="..\ExternLibrary\dxguid.lib">
+      <Filter>Library</Filter>
+    </Library>
+    <Library Include="..\ExternLibrary\FreeImage.lib">
+      <Filter>Library</Filter>
+    </Library>
+    <Library Include="..\ExternLibrary\freetype.lib">
+      <Filter>Library</Filter>
+    </Library>
+    <Library Include="..\ExternLibrary\lib3ds.lib">
+      <Filter>Library</Filter>
+    </Library>
   </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
 #include"Application.h"
 #include "SpCommon\Debug.h"
 #include"GameObject.h"
-#include"Input.h"
+#include"SpCommon\Input.h"
 #include"Time.h"
 #include"EngineSetting.h"
 

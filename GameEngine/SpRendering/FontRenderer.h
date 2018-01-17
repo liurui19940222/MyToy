@@ -68,6 +68,7 @@ private:
 	CTrueTypeFont* font;
 	float interval_x;
 	float interval_y;
+	float m_TotalHeight;
 	int font_size;
 	bool singleLine;
 	Color color;

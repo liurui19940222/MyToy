@@ -4,7 +4,7 @@
 #include<vector>
 #include"ModelLoader.h"
 #include"SpCommon\Converter.h"
-#include"DependentInclude\rapidxml\rapidxml.hpp"
+#include"ExternInclude\rapidxml\rapidxml.hpp"
 #include"SpRendering\SkeletonAnimation.h"
 #include"SpCommon\Debug.h"
 

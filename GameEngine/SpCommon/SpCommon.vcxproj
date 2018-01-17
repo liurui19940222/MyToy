@@ -24,6 +24,8 @@
     <ClInclude Include="Converter.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="EngineDefine.h" />
+    <ClInclude Include="FastPainter.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="Property.h" />
@@ -33,6 +35,8 @@
     <ClCompile Include="Atlas.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="EngineDefine.cpp" />
+    <ClCompile Include="FastPainter.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Math.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

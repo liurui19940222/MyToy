@@ -290,8 +290,8 @@ CShader* CShader::Get(const string& shaderName)
 	auto it = m_store.find(shaderName);
 	if (it == m_store.end())
 	{
-		string vt = "Shader/" + shaderName + ".vert";
-		string fg = "Shader/" + shaderName + ".frag";
+		string vt = "../Shaders/" + shaderName + ".vert";
+		string fg = "../Shaders/" + shaderName + ".frag";
 		shader = new CShader(vt.c_str(), fg.c_str());
 		m_store.insert(make_pair(shaderName, shader));
 	}

@@ -111,8 +111,7 @@
       <AdditionalDependencies>SpCommon.lib;SpRendering.lib;SpAssetLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)$(Configuration)\SpGameEngine.dll $(SolutionDir)\SpEditor\ 
-copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command>
+      <Command>copy $(SolutionDir)$(Configuration)\SpGameEngine.dll $(SolutionDir)\SpEditor\ </Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
@@ -180,7 +179,6 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     <ClInclude Include="GUISystem.h" />
     <ClInclude Include="GUITest.h" />
     <ClInclude Include="ImageTest.h" />
-    <ClInclude Include="Input.h" />
     <ClInclude Include="Maker.h" />
     <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="RelationshipTest.h" />
@@ -221,7 +219,6 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     <ClCompile Include="GUISystem.cpp" />
     <ClCompile Include="GUITest.cpp" />
     <ClCompile Include="ImageTest.cpp" />
-    <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maker.cpp" />
     <ClCompile Include="RelationshipTest.cpp" />
@@ -238,35 +235,17 @@ copy $(SolutionDir)SpGameEngine\Shader\ $(SolutionDir)\SpEditor\Shader\</Command
     <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="dinput8.lib" />
-    <Library Include="dxguid.lib" />
-    <Library Include="lib\assimp-vc140-mt.lib" />
-    <Library Include="lib\FreeImage.lib" />
-    <Library Include="lib\freetype.lib" />
-    <Library Include="lib\lib3ds.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shader\basic.frag" />
-    <None Include="Shader\basic.vert" />
-    <None Include="Shader\color.frag" />
-    <None Include="Shader\color.vert" />
-    <None Include="Shader\font.frag" />
-    <None Include="Shader\font.vert" />
-    <None Include="Shader\gui.frag" />
-    <None Include="Shader\gui.vert" />
-    <None Include="Shader\light.frag" />
-    <None Include="Shader\light.vert" />
-    <None Include="Shader\shadow.frag" />
-    <None Include="Shader\shadow.vert" />
-    <None Include="Shader\skinning.frag" />
-    <None Include="Shader\skinning.vert" />
-    <None Include="Shader\texture.frag" />
-    <None Include="Shader\texture.vert" />
-  </ItemGroup>
-  <ItemGroup>
     <Xml Include="Config\engine.xml">
       <SubType>Designer</SubType>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\ExternLibrary\assimp-vc140-mt.lib" />
+    <Library Include="..\ExternLibrary\dinput8.lib" />
+    <Library Include="..\ExternLibrary\dxguid.lib" />
+    <Library Include="..\ExternLibrary\FreeImage.lib" />
+    <Library Include="..\ExternLibrary\freetype.lib" />
+    <Library Include="..\ExternLibrary\lib3ds.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

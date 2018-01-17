@@ -1,14 +1,14 @@
 #include"Engine.h"
 #include"EditorTool.h"
 #include"Application.h"
-#include"Input.h"
 #include"Time.h"
-#include "SpCommon\Debug.h"
+#include"SpCommon\Debug.h"
 #include"GUISystem.h"
 #include"GameObject.h"
 #include"Config.h"
 #include"EngineSetting.h"
 #include"LightComponent.h"
+#include"..\SpCommon\Input.h"
 
 using namespace guisystem;
 
@@ -120,7 +120,7 @@ void CEngine::EndOrtho()
 
 void CEngine::Update()
 {
-	CInput::GetState();
+	CInput::GetState(ClientRect);
 	_GUISystem->OnUpdate();
 	CheckShortcuts();
 

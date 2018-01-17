@@ -36,6 +36,12 @@
     <ClInclude Include="Object.hpp">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="FastPainter.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -48,6 +54,12 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="Atlas.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="FastPainter.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,5 @@
 #include"TestApp.h"
-#include"Input.h"
+#include"SpCommon\Input.h"
 #include"Time.h"
 #include"SpRendering\RenderTexture.h"
 #include"SpAssetLoader\3DSModelLoader.h"

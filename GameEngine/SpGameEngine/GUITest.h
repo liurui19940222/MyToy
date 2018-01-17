@@ -1,7 +1,7 @@
 #include"SpCommon\EngineDefine.h"
 #include"SpCommon\Math.h"
 #include"Application.h"
-#include"Input.h"
+#include"SpCommon\Input.h"
 #include "SpCommon\Debug.h"
 #include"Time.h"
 #include"GameObject.h"

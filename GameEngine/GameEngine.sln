@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CPPTest", "CPPTest\CPPTest.vcxproj", "{02E16804-E455-4981-9822-873BAA90B1CD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpTest", "CPPTest\CPPTest.vcxproj", "{02E16804-E455-4981-9822-873BAA90B1CD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpEditor", "SpEditor\SpEditor.vcxproj", "{8FFBE724-272F-4F96-BA75-A22234423C87}"
 EndProject
@@ -14,6 +14,26 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpCommon", "SpCommon\SpCommon.vcxproj", "{43ED9727-74EE-4AEA-873F-50F8A7C1B09C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpAssetLoader", "SpAssetLoader\SpAssetLoader.vcxproj", "{CC145246-6B08-414E-910F-EAF619E48116}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{DB0A8D4E-EE75-4687-AFC7-3253FB6C4062}"
+	ProjectSection(SolutionItems) = preProject
+		Shaders\basic.frag = Shaders\basic.frag
+		Shaders\basic.vert = Shaders\basic.vert
+		Shaders\color.frag = Shaders\color.frag
+		Shaders\color.vert = Shaders\color.vert
+		Shaders\font.frag = Shaders\font.frag
+		Shaders\font.vert = Shaders\font.vert
+		Shaders\gui.frag = Shaders\gui.frag
+		Shaders\gui.vert = Shaders\gui.vert
+		Shaders\light.frag = Shaders\light.frag
+		Shaders\light.vert = Shaders\light.vert
+		Shaders\shadow.frag = Shaders\shadow.frag
+		Shaders\shadow.vert = Shaders\shadow.vert
+		Shaders\skinning.frag = Shaders\skinning.frag
+		Shaders\skinning.vert = Shaders\skinning.vert
+		Shaders\texture.frag = Shaders\texture.frag
+		Shaders\texture.vert = Shaders\texture.vert
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
