@@ -51,9 +51,8 @@ CCharacterInfo* CTrueTypeFontSize::GetCharacter(int code)
 		int height = slot->bitmap.rows;
 		FT_Pos max_height = (*ft_face)->size->metrics.ascender >> 6;
 		chInfo->left_padding = slot->bitmap_left;
-		chInfo->top = max_height - slot->bitmap_top;
+		chInfo->top = /*max_height - */slot->bitmap_top;
 		chInfo->advance_x = slot->advance.x >> 6;
-		//chInfo->advance_x = width;
 		CAtlas* atlas = GetEnoughAtlas(width, height, max_height);
 		atlas->Push(width, height, max_height + 5, slot->bitmap.buffer, RGB{ 255, 255, 255 }, &(chInfo->rect));
 		chInfo->atlas = atlas;

@@ -36,7 +36,7 @@ CTexture2D* canvasTexture;
 //#define FONT_PATH "C:/Windows/Fonts/DengXian.ttf"
 //#define SHOW_TEXT L"/* handle to face object2018北美车展：新款MINI家族正式发布 handle to face object2018北美车展：新款MINI家族正式发布"
 //#define SHOW_TEXT L"/*款MINI家族正式发布 handle to face object"
-//#define SHOW_TEXT L"D:/GitHub/MyToy/GameEngine/SpGameEngine/fonts/msyh.ttf"
+#define SHOW_TEXT L"D:/GitHub/MyToy/GameEngine/SpGameEngine/fonts/msyh.ttf\nD:/GitHub/MyToy/GameEngine/SpGameEngine/"
 //#define SHOW_TEXT L"+-*()[]{}:;',.?!"
 #define CLASS_NAME L"NAME"
 
@@ -151,7 +151,7 @@ LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 			->SetRenderType(ERenderType::Smart)->SetTextRect(SRect2D(0,0,4, 1))->SetText(SHOW_TEXT)->SetIntervalX(font_interval_x)->SetIntervalY(font_interval_y);
 
 		obj.material = new CMaterial();
-		obj.material->SetShader(CShader::Get("texture"))->SetMainTexture(CTexture2D::Create("D://GitHub//MyToy//GameEngine//SpGameEngine//textures//shake.png"));
+		obj.material->SetShader(CShader::Get("texture"))->SetMainTexture(/*CTexture2D::Create("D://GitHub//MyToy//GameEngine//SpGameEngine//textures//shake.png"*/canvasTexture);
 		obj.mesh = _MeshFactory->SharedBuffer(EMeshType::Cube);
 
 		isCreated = true;
@@ -299,7 +299,7 @@ void Update()
 	}
 	if (v != 0.0f)
 	{
-		font_interval_y += v * 0.01f;
+		font_interval_y += v * 0.02f;
 		font->SetIntervalY(font_interval_y);
 	}
 }
@@ -309,11 +309,11 @@ void Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0, 0, 0, 1);
 
-	//modelMat = Matrix4x4::Rotate(0, 0, 180) * Matrix4x4::Scale(Vector3::one * 5);
+	modelMat = Matrix4x4::Rotate(0, 0, 180) * Matrix4x4::Scale(Vector3::one * 5);
 	//modelMat = Matrix4x4::Rotate(0, GetTickCount() / 10, 0);
 	textMat = Matrix4x4::Identity();
 
-	//rendering->Render(&obj, Matrix4x4::Translate(Vector3(-4, 0, 0)) * Matrix4x4::Scale(Vector3::one * 0.2f), viewMat, projectionMat);
+	rendering->Render(&obj, modelMat, viewMat, projectionMat);
 	font->OnRender(textMat, viewMat, projectionMat);
 
 	glUseProgram(0);
@@ -325,8 +325,8 @@ void Render()
 	//glMatrixMode(GL_MODELVIEW);
 	FastPainter::DrawRect(font->GetTextRect(), textMat * Matrix4x4::Scale(Vector3::one));
 
-	FastPainter::DrawQuad(Vector3(4, 0, 0), Color::blue, 0.1f);
-	FastPainter::DrawQuad(Vector3(-4, 0, 0), Color::blue, 0.1f);
+	//FastPainter::DrawQuad(Vector3(4, 0, 0), Color::blue, 0.1f);
+	//FastPainter::DrawQuad(Vector3(-4, 0, 0), Color::blue, 0.1f);
 }
 
 int GameLoop()

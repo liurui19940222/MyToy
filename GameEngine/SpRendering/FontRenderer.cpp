@@ -92,7 +92,7 @@ CTextOneLineData::~CTextOneLineData()
 
 void CFontRenderer::OnRender(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
 {
-	if (!font || text.size() == 0) return;
+	if (!font || lineDatas.size() == 0) return;
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -243,11 +243,13 @@ float CFontRenderer::GetOffsetY()
 {
 	if (alignment_v == EAlignmentVertical::TOP)
 	{
-		return  -lineDatas[0]->line_height * 0.5;
+		float firstLineHalfHeight = lineDatas[0]->line_height * 0.5f;
+		return  -lineDatas[0]->line_height * 0.5 - firstLineHalfHeight;
 	}
 	else if (alignment_v == EAlignmentVertical::MIDDLE)
 	{
-		return -(rect.half_size_y * 2 - m_TotalHeight) * 0.5f;
+		float firstLineHalfHeight = lineDatas[0]->line_height * 0.5f;
+		return -(rect.half_size_y * 2 - m_TotalHeight) * 0.5f - firstLineHalfHeight;
 	}
 	else if (alignment_v == EAlignmentVertical::BOTTOM)
 	{
@@ -283,13 +285,14 @@ void CFontRenderer::Rebuild()
 	pixelScale = GetPixelScale();
 
 	prevHeight = 0;
+	float firstLineHeight = 0;
 	m_TotalHeight = 0;
 	for (size_t i = 0; i < primitives.size(); ++i)
 	{
 		if (text[i] == *L"\n" && !singleLine)
 		{
 			start_x = -rect.half_size_x;
-			start_y -= prevHeight + interval_y;
+			start_y -= (prevHeight + interval_y);
 			m_TotalHeight += prevHeight + interval_y;
 			lineData = new CTextOneLineData();
 			lineData->line_width = -interval_x;
@@ -304,16 +307,22 @@ void CFontRenderer::Rebuild()
 		if (start_x + left + width >= rect.half_size_x && !singleLine)
 		{
 			start_x = -rect.half_size_x;
-			start_y -= prevHeight + interval_y;
+			start_y -= (prevHeight + interval_y);
 			m_TotalHeight += prevHeight + interval_y;
 			lineData = new CTextOneLineData();
 			lineData->line_width = -interval_x;
 			lineDatas.push_back(lineData);
 		}
 
-		if (start_y - top - prevHeight - interval_y < -rect.half_size_y && lineDatas.size() > 1)
+		//if (start_y - top - prevHeight - interval_y < -rect.half_size_y && lineDatas.size() > 1)
+		if (start_y + top - primitives[i]->height_y - firstLineHeight * 0.5f <= -rect.half_size_y)
+		{
+			if (lineDatas.size() > 0)
+				lineDatas.erase(lineDatas.begin() + lineDatas.size() - 1);
 			break;
-		primitives[i]->position = Vector3{ start_x + left + width * 0.5f, start_y - top * 0.5f, 0 };
+		}
+
+		primitives[i]->position = Vector3{ start_x + left + width * 0.5f, start_y + top - primitives[i]->height_y * 0.5f, 0 };
 
 		start_x += adv_x + interval_x;
 		lineData->line_width += adv_x + interval_x;
@@ -321,6 +330,8 @@ void CFontRenderer::Rebuild()
 		{
 			lineData->line_height = primitives[i]->height_y;
 			prevHeight = lineData->line_height;
+			if (lineDatas.size() == 1)
+				firstLineHeight = prevHeight;
 		}
 		lineData->primitives.push_back(primitives[i]);
 	}
