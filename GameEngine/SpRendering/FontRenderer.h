@@ -25,6 +25,7 @@ public:
 	float height_y;
 
 	CCharacterPrimitiveBase(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
+	virtual ~CCharacterPrimitiveBase();
 	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color) = 0;
 };
 
@@ -35,7 +36,7 @@ public:
 	CMaterial* m_material;
 
 	CCharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
-	~CCharacterPrimitiveSmart();
+	virtual ~CCharacterPrimitiveSmart();
 	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color) override;
 };
 
@@ -43,7 +44,7 @@ class CCharacterPrimitiveFixed : public CCharacterPrimitiveBase
 {
 public:
 	CCharacterPrimitiveFixed(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
-	~CCharacterPrimitiveFixed();
+	virtual ~CCharacterPrimitiveFixed();
 	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color) override;
 };
 
@@ -51,7 +52,7 @@ class CTextOneLineData
 {
 public:
 	CTextOneLineData();
-	~CTextOneLineData();
+	virtual ~CTextOneLineData();
 
 	float line_width;
 	float line_height;

@@ -47,13 +47,14 @@ private:
 
 	CShader();
 	CShader(const char* vtfilename, const char* fgfilename);
+	virtual ~CShader();
 
 	void ShowShaderLog(GLuint shader);
 	void ShowProgramLog();
 	bool Compile(GLuint shader);
 	bool Link();
 	GLuint UniformParamLocation(const char* paramName);
-	virtual void OnRelease() override;
+	void Release();
 public:
 
 	bool MakeShader(const char* vtfilename, const char* fgfilename);

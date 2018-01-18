@@ -21,9 +21,14 @@ CShader::CShader(const char* vtfilename, const char* fgfilename) : CShader()
 	MakeShader(vtfilename, fgfilename);
 }
 
+CShader::~CShader()
+{
+	Release();
+}
+
 bool CShader::MakeShader(const char* vtfilename, const char* fgfilename)
 {
-	OnRelease();
+	Release();
 	m_vtfilename = vtfilename;
 	m_fgfilename = fgfilename;
 	if (m_vt == 0)
@@ -131,7 +136,7 @@ void CShader::ShowProgramLog()
 	}
 }
 
-void CShader::OnRelease()
+void CShader::Release()
 {
 	if (m_program)
 	{

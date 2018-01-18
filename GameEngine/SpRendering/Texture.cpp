@@ -1,5 +1,10 @@
 #include "Texture.h"
 
+CTexture::~CTexture()
+{
+	Release();
+}
+
 CTexture* CTexture::Bind()
 {
 	glBindTexture(GL_TEXTURE_2D, m_texId);
@@ -40,7 +45,11 @@ ETexEnvMode CTexture::GetEnvMode() const { return m_envMode; }
 ETexFilterMode CTexture::GetFilterMode() const { return m_filterMode; }
 ETexWrapMode CTexture::GetWrapMode() const { return m_wrapMode; }
 
-void CTexture::OnRelease()
+void CTexture::Release()
 {
-	glDeleteTextures(1, &m_texId);
+	if (m_texId)
+	{
+		glDeleteTextures(1, &m_texId);
+		m_texId = 0;
+	}
 }

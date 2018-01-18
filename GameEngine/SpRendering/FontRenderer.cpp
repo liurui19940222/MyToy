@@ -13,6 +13,11 @@ CCharacterPrimitiveBase::CCharacterPrimitiveBase(int left_padding, int top, int 
 	m_texture->SetWrapMode(ETexWrapMode::Clamp)->SetFilterMode(ETexFilterMode::Linear);
 }
 
+CCharacterPrimitiveBase::~CCharacterPrimitiveBase()
+{
+	delete m_texture;
+}
+
 CCharacterPrimitiveSmart::CCharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels)
 	: CCharacterPrimitiveBase(left_padding, top, advance_x, width, height, pixelScale, pixels)
 {
@@ -22,13 +27,12 @@ CCharacterPrimitiveSmart::CCharacterPrimitiveSmart(int left_padding, int top, in
 	m_material->SetShader(CShader::Get("font"));
 	Mesh* mesh = _MeshFactory->CreateRectMesh(width_x, height_y);
 	m_buffer.MakeBuffer(*mesh);
-	delete(mesh);
+	delete mesh;
 }
 
 CCharacterPrimitiveSmart::~CCharacterPrimitiveSmart()
 {
 	m_buffer.ReleaseBuffer();
-	delete m_texture;
 	delete m_material;
 }
 
@@ -53,7 +57,7 @@ CCharacterPrimitiveFixed::CCharacterPrimitiveFixed(int left_padding, int top, in
 
 CCharacterPrimitiveFixed::~CCharacterPrimitiveFixed()
 {
-	delete m_texture;
+
 }
 
 void CCharacterPrimitiveFixed::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color)
@@ -92,6 +96,8 @@ CTextOneLineData::~CTextOneLineData()
 
 void CFontRenderer::OnRender(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
 {
+	static Vector3 pos;
+	static float halfLineHeight;
 	if (!font || lineDatas.size() == 0) return;
 
 	glEnable(GL_BLEND);
@@ -102,11 +108,13 @@ void CFontRenderer::OnRender(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matr
 	offset_y = GetOffsetY();
 	for (size_t i = 0; i < lineDatas.size(); ++i)
 	{
+		halfLineHeight = lineDatas[i]->line_height * 0.5f;
 		for (size_t j = 0; j < lineDatas[i]->primitives.size(); ++j)
 		{
 			offset_x = GetOffsetX(i);
+			pos = lineDatas[i]->primitives[j]->position + Vector3(offset_x, offset_y, 0);
 			lineDatas[i]->primitives[j]->Render(modelMatrix, viewMatrix, projectionMatrix,
-				lineDatas[i]->primitives[j]->position + Vector3(offset_x, offset_y, 0), Vector3{ 1.0f, -1.0f, 1 }, color);
+				pos, Vector3{ 1.0f, -1.0f, 1 }, color);
 		}
 	}
 
@@ -171,6 +179,7 @@ CFontRenderer* CFontRenderer::SetColor(Color color)
 	if (this->color == color)
 		return this;
 	this->color = color;
+	Rebuild();
 	return this;
 }
 
@@ -314,14 +323,6 @@ void CFontRenderer::Rebuild()
 			lineDatas.push_back(lineData);
 		}
 
-		//if (start_y - top - prevHeight - interval_y < -rect.half_size_y && lineDatas.size() > 1)
-		if (start_y + top - primitives[i]->height_y - firstLineHeight * 0.5f <= -rect.half_size_y)
-		{
-			if (lineDatas.size() > 0)
-				lineDatas.erase(lineDatas.begin() + lineDatas.size() - 1);
-			break;
-		}
-
 		primitives[i]->position = Vector3{ start_x + left + width * 0.5f, start_y + top - primitives[i]->height_y * 0.5f, 0 };
 
 		start_x += adv_x + interval_x;
@@ -334,6 +335,24 @@ void CFontRenderer::Rebuild()
 				firstLineHeight = prevHeight;
 		}
 		lineData->primitives.push_back(primitives[i]);
+	}
+
+	static float offset_y, halfLineHeight, pos_y;
+	offset_y = GetOffsetY();
+	for (int i = (int)lineDatas.size() - 1; i >= 0; i--)
+	{
+		halfLineHeight = lineDatas[i]->line_height * 0.5f;
+		for (size_t j = 0; j < lineDatas[i]->primitives.size(); ++j)
+		{
+			pos_y = lineDatas[i]->primitives[j]->position.y + offset_y;
+			if (pos_y + halfLineHeight > rect.half_size_y || pos_y - halfLineHeight < -rect.half_size_y)
+			{
+				CTextOneLineData* lineData = lineDatas[i];
+				lineDatas.erase(lineDatas.begin() + i);
+				delete lineData;
+				break;
+			}
+		}
 	}
 }
 
@@ -352,10 +371,7 @@ void CFontRenderer::ClearPrimitive()
 {
 	for (size_t i = 0; i < primitives.size(); ++i)
 	{
-		if (m_renderType == ERenderType::Fixed)
-			delete (CCharacterPrimitiveFixed*)primitives[i];
-		else
-			delete (CCharacterPrimitiveSmart*)primitives[i];
+		delete primitives[i];
 	}
 	primitives.clear();
 }
@@ -364,7 +380,7 @@ void CFontRenderer::ClearLineData()
 {
 	for (size_t i = 0; i < lineDatas.size(); ++i)
 	{
-		delete(lineDatas[i]);
+		delete lineDatas[i];
 	}
 	lineDatas.clear();
 }

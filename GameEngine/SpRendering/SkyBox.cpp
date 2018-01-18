@@ -18,6 +18,11 @@ CSkyBox::CSkyBox()
 	InitBuffer();
 }
 
+CSkyBox::~CSkyBox()
+{
+	Release();
+}
+
 void CSkyBox::InitBuffer()
 {
 	//front
@@ -95,11 +100,11 @@ void CSkyBox::OnInitialize()
 	
 }
 
-void CSkyBox::OnRelease()
+void CSkyBox::Release()
 {
 	for (int i = 0; i < 6; ++i)
 	{
-		m_textures[i]->OnRelease();
+		delete m_textures[i];
 		m_buffer[i].ReleaseBuffer();
 	}
 }

@@ -128,6 +128,8 @@ void CMeshBuffer::ReleaseBuffer()
 	if (m_vboNormalHandle) glDeleteBuffers(1, &m_vboNormalHandle);
 	if (m_vboVertexHandle) glDeleteBuffers(1, &m_vboVertexHandle);
 	if (m_vaoHandle) glDeleteVertexArrays(1, &m_vaoHandle);
+	if (m_vboJointIndexHandle) glDeleteBuffers(1, &m_vboJointIndexHandle);
+	if (m_vboJointWeightHandle) glDeleteVertexArrays(1, &m_vboJointWeightHandle);
 }
 
 int CMeshBuffer::GetVertexNum() const

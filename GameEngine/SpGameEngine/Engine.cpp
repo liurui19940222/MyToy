@@ -165,7 +165,7 @@ void CEngine::Quit()
 	_GUISystem->Quit();
 	CInput::ShutDown();
 	_Maker->ForeachGameObject([](CGameObject* go, int depth) {
-		go->OnRelease();
+		//go->OnRelease();
 	});
 	wglMakeCurrent(m_hdc, NULL);
 	wglDeleteContext(m_hrc);

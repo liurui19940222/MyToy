@@ -61,7 +61,7 @@ void CMaker::DestroyGameObject(CGameObject* go)
 	vector<CGameObject*> list;
 	ForeachGameObject(go, [&list](CGameObject* go, int depth) {
 		go->OnDestroy();
-		go->OnRelease();
+		//go->OnRelease();
 		list.push_back(go);
 	});
 	for (int i = list.size() - 1; i >= 0; --i)

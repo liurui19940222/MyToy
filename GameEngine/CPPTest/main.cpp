@@ -299,7 +299,7 @@ void Update()
 	}
 	if (v != 0.0f)
 	{
-		font_interval_y += v * 0.02f;
+		font_interval_y += v * 0.05f;
 		font->SetIntervalY(font_interval_y);
 	}
 }
@@ -313,7 +313,7 @@ void Render()
 	//modelMat = Matrix4x4::Rotate(0, GetTickCount() / 10, 0);
 	textMat = Matrix4x4::Identity();
 
-	rendering->Render(&obj, modelMat, viewMat, projectionMat);
+	//rendering->Render(&obj, modelMat, viewMat, projectionMat);
 	font->OnRender(textMat, viewMat, projectionMat);
 
 	glUseProgram(0);
@@ -323,6 +323,7 @@ void Render()
 	//FastPainter::Perspective(45, width / (float)height, 0.1, 1000);
 
 	//glMatrixMode(GL_MODELVIEW);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	FastPainter::DrawRect(font->GetTextRect(), textMat * Matrix4x4::Scale(Vector3::one));
 
 	//FastPainter::DrawQuad(Vector3(4, 0, 0), Color::blue, 0.1f);

@@ -39,6 +39,7 @@ protected:
 	ETexWrapMode m_wrapMode = ETexWrapMode::ClampToEdge;
 
 public:
+	virtual ~CTexture();
 	int GetWidth() const;
 	int GetHeight() const;
 	int GetFormat() const;
@@ -51,7 +52,7 @@ public:
 	CTexture* SetEnvMode(ETexEnvMode mode);
 	CTexture* SetWrapMode(ETexWrapMode mode);
 	CTexture* SetFilterMode(ETexFilterMode mode);
-	virtual void OnRelease() override;
+	void Release();
 };
 
 #endif

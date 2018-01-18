@@ -21,10 +21,11 @@ class CSkyBox : public Object{
 	void InitBuffer();
 public:
 	CSkyBox();
+	virtual ~CSkyBox();
 	static CSkyBox* Create(const char* top, const char* bottom, const char* front, const char* back, const char* left, const char* right);
 	void Render(const Matrix4x4& model, const Matrix4x4& view, const Matrix4x4& projection);
+	void Release();
 	virtual void OnInitialize() override;
-	virtual void OnRelease() override;
 };
 
 #endif

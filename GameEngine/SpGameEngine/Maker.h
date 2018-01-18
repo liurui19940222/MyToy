@@ -76,7 +76,7 @@ public:
 			{
 				m_objects.erase(it);
 			}
-			obj->OnRelease();
+			//obj->OnRelease();
 			delete(obj);
 		}
 	}

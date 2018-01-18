@@ -24,7 +24,7 @@ public:
 		this->m_Name = name;
 	}
 
-	inline virtual ~Object() { }
+	virtual ~Object() { }
 
 	inline int GetInstanceId() { return m_InstanceId; }
 
@@ -33,8 +33,6 @@ public:
 	inline wstring& GetName() { return this->m_Name; }
 
 	virtual void OnInitialize() { }
-
-	virtual void OnRelease() { }
 };
 
 #endif
