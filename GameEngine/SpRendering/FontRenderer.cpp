@@ -1,6 +1,7 @@
 #include"FontRenderer.h"
 #include"SpAssetLoader\ImageLoader.h"
 #include"SpRendering\MeshFactory.h"
+#include"SpCommon\FastPainter.h"
 
 CCharacterPrimitiveBase::CCharacterPrimitiveBase(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels) :left(left_padding), top(top), advance_x(advance_x)
 {
@@ -148,12 +149,14 @@ const wstring& CFontRenderer::GetText()
 CFontRenderer* CFontRenderer::SetIntervalX(float x)
 {
 	this->interval_x = x;
+	Rebuild();
 	return this;
 }
 
 CFontRenderer* CFontRenderer::SetIntervalY(float y)
 {
 	this->interval_y = y;
+	Rebuild();
 	return this;
 }
 
@@ -223,17 +226,15 @@ float CFontRenderer::GetOffsetX(int line_index)
 	float line_width = lineDatas[line_index]->line_width;
 	if (alignment_h == EAlignmentHorizontal::LEFT)
 	{
-		return lineDatas[line_index]->primitives[0]->width_x * 0.5f;
+		return 0.0f;
 	}
 	else if (alignment_h == EAlignmentHorizontal::CENTER)
 	{
-		float firstWordHalfWidth = lineDatas[line_index]->primitives[0]->width_x * 0.5f;
-		return (rect.half_size_x * 2 - line_width) * 0.5f + firstWordHalfWidth;
+		return (rect.half_size_x * 2 - line_width) * 0.5f;
 	}
 	else if (alignment_h == EAlignmentHorizontal::RIGHT)
 	{
-		float lastWordHalfWidth = lineDatas[line_index]->primitives[lineDatas[line_index]->primitives.size() - 1]->width_x * 0.5f;
-		return rect.half_size_x * 2 - line_width + lastWordHalfWidth;
+		return rect.half_size_x * 2 - line_width;
 	}
 	return 0;
 }
@@ -242,7 +243,7 @@ float CFontRenderer::GetOffsetY()
 {
 	if (alignment_v == EAlignmentVertical::TOP)
 	{
-		return  -interval_y * 0.5;
+		return  -lineDatas[0]->line_height * 0.5;
 	}
 	else if (alignment_v == EAlignmentVertical::MIDDLE)
 	{
@@ -251,7 +252,7 @@ float CFontRenderer::GetOffsetY()
 	else if (alignment_v == EAlignmentVertical::BOTTOM)
 	{
 		float lastLineHalfHeight = lineDatas[lineDatas.size() - 1]->line_height * 0.5f;
-		return -(rect.half_size_y * 2 - m_TotalHeight) - lastLineHalfHeight;
+		return -(rect.half_size_y * 2 - m_TotalHeight) + lastLineHalfHeight;
 	}
 	return 0;
 }
@@ -277,6 +278,7 @@ void CFontRenderer::Rebuild()
 	start_x = -rect.half_size_x;
 	start_y = +rect.half_size_y;
 	CTextOneLineData* lineData = new CTextOneLineData();
+	lineData->line_width = -interval_x;
 	lineDatas.push_back(lineData);
 	pixelScale = GetPixelScale();
 
@@ -287,9 +289,10 @@ void CFontRenderer::Rebuild()
 		if (text[i] == *L"\n" && !singleLine)
 		{
 			start_x = -rect.half_size_x;
-			start_y -= prevHeight - interval_y;
-			m_TotalHeight += prevHeight - interval_y;
+			start_y -= prevHeight + interval_y;
+			m_TotalHeight += prevHeight + interval_y;
 			lineData = new CTextOneLineData();
+			lineData->line_width = -interval_x;
 			lineDatas.push_back(lineData);
 			continue;
 		}
@@ -297,17 +300,21 @@ void CFontRenderer::Rebuild()
 		left = primitives[i]->left * pixelScale;
 		adv_x = primitives[i]->advance_x * pixelScale;
 		width = primitives[i]->width_x;
-		if (start_x + adv_x + interval_x >= rect.half_size_x && !singleLine)
+
+		if (start_x + left + width >= rect.half_size_x && !singleLine)
 		{
 			start_x = -rect.half_size_x;
-			start_y -= prevHeight - interval_y;
-			m_TotalHeight += prevHeight - interval_y;
+			start_y -= prevHeight + interval_y;
+			m_TotalHeight += prevHeight + interval_y;
 			lineData = new CTextOneLineData();
+			lineData->line_width = -interval_x;
 			lineDatas.push_back(lineData);
 		}
+
 		if (start_y - top - prevHeight - interval_y < -rect.half_size_y && lineDatas.size() > 1)
 			break;
 		primitives[i]->position = Vector3{ start_x + left + width * 0.5f, start_y - top * 0.5f, 0 };
+
 		start_x += adv_x + interval_x;
 		lineData->line_width += adv_x + interval_x;
 		if (primitives[i]->height_y > lineData->line_height)

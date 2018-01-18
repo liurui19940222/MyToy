@@ -12,8 +12,8 @@
 #include"SpCommon/FastPainter.h"
 #include"SpCommon/Input.h"
 
-const int width = 1280;
-const int height = 720;
+int width = 800;
+int height = 600;
 bool isExiting = false;
 GLRendering* rendering;
 CFontRenderer* font;
@@ -24,15 +24,19 @@ Matrix4x4 modelMat;
 Matrix4x4 viewMat;
 Matrix4x4 projectionMat;
 
-const int font_size = 24;
+const int font_size = 14;
 const int canvas_w = 512;
 const int canvas_h = 512;
+float font_interval_x = 0.0f;
+float font_interval_y = 0.0f;
 uint pixels[canvas_w * canvas_h];
 CTexture2D* canvasTexture;
 
 #define FONT_PATH "D:/GitHub/MyToy/GameEngine/SpGameEngine/fonts/msyh.ttf"
 //#define FONT_PATH "C:/Windows/Fonts/DengXian.ttf"
-#define SHOW_TEXT L"/* handle to face object2018北美车展：新款MINI家族正式发布"
+//#define SHOW_TEXT L"/* handle to face object2018北美车展：新款MINI家族正式发布 handle to face object2018北美车展：新款MINI家族正式发布"
+//#define SHOW_TEXT L"/*款MINI家族正式发布 handle to face object"
+//#define SHOW_TEXT L"D:/GitHub/MyToy/GameEngine/SpGameEngine/fonts/msyh.ttf"
 //#define SHOW_TEXT L"+-*()[]{}:;',.?!"
 #define CLASS_NAME L"NAME"
 
@@ -143,10 +147,11 @@ LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 		CTrueTypeFont* f = FontManager->LoadFont(1, FONT_PATH);
 		font = new CFontRenderer();
-		font->SetFont(f)->SetColor(Color::white)->SetFontSize(font_size)->SetTextAlignment(EAlignment::CENTER_MIDDLE)->SetRenderType(ERenderType::Smart)->SetTextRect(SRect2D(0,0,4, 1))->SetText(SHOW_TEXT);
+		font->SetFont(f)->SetColor(Color::white)->SetFontSize(font_size)->SetTextAlignment(EAlignment::CENTER_MIDDLE)
+			->SetRenderType(ERenderType::Smart)->SetTextRect(SRect2D(0,0,4, 1))->SetText(SHOW_TEXT)->SetIntervalX(font_interval_x)->SetIntervalY(font_interval_y);
 
 		obj.material = new CMaterial();
-		obj.material->SetShader(CShader::Get("texture"))->SetMainTexture(/*CTexture2D::Create("D://GitHub//MyToy//GameEngine//SpGameEngine//textures//shake.png")*/canvasTexture);
+		obj.material->SetShader(CShader::Get("texture"))->SetMainTexture(CTexture2D::Create("D://GitHub//MyToy//GameEngine//SpGameEngine//textures//shake.png"));
 		obj.mesh = _MeshFactory->SharedBuffer(EMeshType::Cube);
 
 		isCreated = true;
@@ -159,8 +164,8 @@ LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 		break;
 	case WM_SIZE:
 	{
-		int height = HIWORD(lParam);
-		int width = LOWORD(lParam);
+		height = HIWORD(lParam);
+		width = LOWORD(lParam);
 		glViewport(0, 0, width, height);
 		projectionMat = Matrix4x4::Perspective(45, width / (float)height, 0.1, 1000);
 		FastPainter::Perspective(45, width / (float)height, 0.1, 1000);
@@ -284,6 +289,19 @@ void Update()
 	{
 		font->SetColor(Color::red);
 	}
+
+	float h = CInput::GetAxis("Horizontal");
+	float v = CInput::GetAxis("Vertical");
+	if (h != 0.0f)
+	{
+		font_interval_x += h * 0.01f;
+		font->SetIntervalX(font_interval_x);
+	}
+	if (v != 0.0f)
+	{
+		font_interval_y += v * 0.01f;
+		font->SetIntervalY(font_interval_y);
+	}
 }
 
 void Render()
@@ -291,15 +309,24 @@ void Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0, 0, 0, 1);
 
-	modelMat = Matrix4x4::Rotate(0, 0, 180) * Matrix4x4::Scale(Vector3::one * 5);
+	//modelMat = Matrix4x4::Rotate(0, 0, 180) * Matrix4x4::Scale(Vector3::one * 5);
 	//modelMat = Matrix4x4::Rotate(0, GetTickCount() / 10, 0);
 	textMat = Matrix4x4::Identity();
 
-	//rendering->Render(&obj, modelMat, viewMat, projectionMat);
+	//rendering->Render(&obj, Matrix4x4::Translate(Vector3(-4, 0, 0)) * Matrix4x4::Scale(Vector3::one * 0.2f), viewMat, projectionMat);
 	font->OnRender(textMat, viewMat, projectionMat);
 
 	glUseProgram(0);
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+	//glLoadMatrixf((float*)&projectionMat);
+	//FastPainter::Perspective(45, width / (float)height, 0.1, 1000);
+
+	//glMatrixMode(GL_MODELVIEW);
 	FastPainter::DrawRect(font->GetTextRect(), textMat * Matrix4x4::Scale(Vector3::one));
+
+	FastPainter::DrawQuad(Vector3(4, 0, 0), Color::blue, 0.1f);
+	FastPainter::DrawQuad(Vector3(-4, 0, 0), Color::blue, 0.1f);
 }
 
 int GameLoop()

@@ -20,11 +20,11 @@ void FastPainter::LookAt(const Vector3& eye, const Vector3& center, const Vector
 
 void FastPainter::Perspective(float fov, float aspect, float znear, float zfar)
 {
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(fov, aspect, znear, zfar);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void FastPainter::Viewport(int x, int y, int width, int height)
@@ -51,11 +51,12 @@ void FastPainter::SetupPixelFormat(HDC hDC)
 	SetPixelFormat(hDC, pixelFormat, &pfd);
 }
 
-void FastPainter::DrawQuad(const Vector3& position, float size)
+void FastPainter::DrawQuad(const Vector3& position, const Color& color, float size)
 {
 	glPushMatrix();
 	glTranslatef(position.x, position.y, position.z);
 	float halfSize = size * 0.5f;
+	glColor3f(color.r, color.g, color.b);
 	glBegin(GL_QUADS);
 	glVertex3f(-halfSize, halfSize, 0);
 	glVertex3f(-halfSize, -halfSize, 0);
@@ -154,7 +155,7 @@ void FastPainter::DrawRect(const SRect2D& rect, const Matrix4x4& modelToWorldMat
 	glColor3f(color.r, color.g, color.b);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	for (int i = 0; i < 4; ++i) DrawQuad(vertices[i], 0.03f * (rect.half_size_x + rect.half_size_y));
+	for (int i = 0; i < 4; ++i) DrawQuad(vertices[i], Color::white, 0.03f * (rect.half_size_x + rect.half_size_y));
 
 	glEnable(GL_DEPTH_TEST);
 

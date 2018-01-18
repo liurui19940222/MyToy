@@ -19,6 +19,7 @@ private:
 public:
 	static void Init(HWND hwnd);
 	static void Log(const string str, ...);
+	static void Log(const wstring str, ...);
 	static void Log(const char* text, ...);
 	static void Log(const wchar_t* text, ...);
 	static void Log(Matrix4x4& mat);

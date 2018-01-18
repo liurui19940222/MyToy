@@ -26,6 +26,17 @@ void CDebug::Log(const string str, ...)
 	va_end(ap);
 }
 
+void CDebug::Log(const wstring str, ...)
+{
+	va_list ap;
+	va_start(ap, str);
+	memset(w_buffer, 0, sizeof(w_buffer));
+	vswprintf_s(w_buffer, str.c_str(), ap);
+	OutputDebugStringW(w_buffer);
+	OutputDebugStringW(L"\n");
+	va_end(ap);
+}
+
 void CDebug::Log(const char* text, ...)
 {
 	va_list ap;

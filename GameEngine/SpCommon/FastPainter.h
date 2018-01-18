@@ -16,7 +16,7 @@ public:
 	static void Viewport(int x, int y, int width, int height);
 	static void Perspective(float fov, float aspect, float znear, float zfar);
 
-	static void DrawQuad(const Vector3& position, float size);
+	static void DrawQuad(const Vector3& position, const Color& color, float size);
 	static void DrawGrid(const Vector3& cameraPos, const Vector3& pos, const Color& color);
 	static void DrawCone(const Matrix4x4& matrix, const Color& color, float radius, float height);
 	static void DrawRect(const SRect2D& rect, const Matrix4x4& modelToWorldMatrix);
