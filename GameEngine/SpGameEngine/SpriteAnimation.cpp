@@ -16,7 +16,7 @@ CSpriteAnimation::~CSpriteAnimation()
 }
 
 
-void CSpriteAnimation::Initialize(CTexture** frames, int frameCount, int* indexList, int length, float rate, bool releaseMemoryOnDestroy)
+void CSpriteAnimation::Initialize(vector<PTexture> frames, int frameCount, int* indexList, int length, float rate)
 {
 	this->isPlay = true;
 	this->frames = frames;
@@ -25,7 +25,6 @@ void CSpriteAnimation::Initialize(CTexture** frames, int frameCount, int* indexL
 	this->length = length;
 	this->rate = rate;
 	this->fps = 1 / rate;
-	this->releaseMemoryOnDestroy = releaseMemoryOnDestroy;
 	this->renderer->SetTexture(frames[indexList[0]]);
 }
 
@@ -93,21 +92,7 @@ void CSpriteAnimation::OnUpdate()
 
 void CSpriteAnimation::OnDestroy()
 {
-	if (releaseMemoryOnDestroy)
-	{
-		if (frames)
-		{
-			for (int i = 0; i < frameCount; i++)
-			{
-				_Maker->Destroy(frames[i]);
-			}
-			delete[] frames;
-		}
-		if (indexList)
-		{
-			delete indexList;
-		}
-	}
+
 }
 
 //------------------------------------------

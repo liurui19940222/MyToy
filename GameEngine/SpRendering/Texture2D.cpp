@@ -1,8 +1,8 @@
 #include "Texture2D.h"
 
-CTexture2D* CTexture2D::m_store[2] = { NULL, NULL };
+PTexture2D Texture2D::m_store[2] = { NULL, NULL };
 
-CTexture2D* CTexture2D::Init(CTexture2D* texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data)
+PTexture2D Texture2D::Init(PTexture2D texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data)
 {
 	glEnable(GL_TEXTURE_2D);
 	texture->m_wrapMode = wrapMode;
@@ -16,6 +16,7 @@ CTexture2D* CTexture2D::Init(CTexture2D* texture, ETexWrapMode wrapMode, ETexFil
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMode);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMode);
+
 	if (mipmaps)
 		gluBuild2DMipmaps(GL_TEXTURE_2D, internalFormat, width, height, format, GL_UNSIGNED_BYTE, data);
 	else
@@ -24,49 +25,51 @@ CTexture2D* CTexture2D::Init(CTexture2D* texture, ETexWrapMode wrapMode, ETexFil
 	return texture;
 }
 
-CTexture2D* CTexture2D::Create(const char* filename)
+PTexture2D Texture2D::Create(const char* filename)
 {
 	if (!filename) return NULL;
 	ImageLoader* image = new ImageLoader(filename);
-	CTexture2D* texture = Create(image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
+	PTexture2D texture = Create(image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
 	image->ReleaseSource();
+	delete image;
 	return texture;
 }
 
-CTexture2D* CTexture2D::Create(ImageLoader* image)
+PTexture2D Texture2D::Create(ImageLoader* image)
 {
 	return Create(image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
 }
 
-CTexture2D* CTexture2D::Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
+PTexture2D Texture2D::Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
 {
 	if (!filename) return NULL;
 	ImageLoader* image = new ImageLoader(filename);
-	CTexture2D* texture = Create(image, wrapMode, filterMode, envMode, mipmaps);
+	PTexture2D texture = Create(image, wrapMode, filterMode, envMode, mipmaps);
 	image->ReleaseSource();
+	delete image;
 	return texture;
 }
 
-CTexture2D* CTexture2D::Create(ImageLoader* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
+PTexture2D Texture2D::Create(ImageLoader* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
 {
-	CTexture2D* texture = new CTexture2D();
+	PTexture2D texture(new Texture2D());
 	Init(texture, wrapMode, filterMode, envMode, mipmaps, image->GetWidth(), image->GetHeight(), image->GetFormat(), image->GetInternalFormat(), image->GetBytes());
 	return texture;
 }
 
-CTexture2D* CTexture2D::Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
+PTexture2D Texture2D::Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
 {
-	CTexture2D* texture = new CTexture2D();
+	PTexture2D texture(new Texture2D());
 	Init(texture, wrapMode, filterMode, envMode, mipmaps, width, height, GL_RGBA, GL_RGBA, pixels);
 	return texture;
 }
 
-CTexture2D* CTexture2D::Create(UCHAR* pixels, int width, int height)
+PTexture2D Texture2D::Create(UCHAR* pixels, int width, int height)
 {
 	return Create(pixels, width, height, ETexWrapMode::Repeat, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
 }
 
-CTexture2D* CTexture2D::GetOneInStore(EStoreTexture2DId id)
+PTexture2D Texture2D::GetOneInStore(EStoreTexture2DId id)
 {
 	if (m_store[id] == NULL)
 	{
@@ -77,6 +80,7 @@ CTexture2D* CTexture2D::GetOneInStore(EStoreTexture2DId id)
 		else
 			memset(pixels, 0, size);
 		m_store[id] = Create(pixels, 8, 8);
+		free(pixels);
 	}
 	return m_store[id];
 }

@@ -17,7 +17,7 @@ void GLRendering::ShutDown()
 	wglDeleteContext(m_HRC);
 }
 
-void GLRendering::Render(const RenderingObject* obj, Matrix4x4& modelMatrix,
+void GLRendering::Render(PRenderingObject obj, Matrix4x4& modelMatrix,
 	Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
 {
 	if (obj == NULL) return;

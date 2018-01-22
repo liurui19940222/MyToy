@@ -32,7 +32,7 @@ Mesh::~Mesh()
 	if (m_colors) free(m_colors);
 }
 
-vector<JointPose> CSkeletonAnimation::Sample(AnimationClip& clip, Skeleton& skeleton, float t, float weight)
+vector<JointPose> SkeletonAnimation::Sample(AnimationClip& clip, Skeleton& skeleton, float t, float weight)
 {
 	vector<JointPose> poses;
 	t = clip.m_isLooping ? fmod(t, clip.m_length) : t;
@@ -68,7 +68,7 @@ vector<JointPose> CSkeletonAnimation::Sample(AnimationClip& clip, Skeleton& skel
 	return poses;
 }
 
-vector<JointPose> CSkeletonAnimation::FullMatchSample(AnimationClip& clip, Skeleton& skeleton, float t, float weight)
+vector<JointPose> SkeletonAnimation::FullMatchSample(AnimationClip& clip, Skeleton& skeleton, float t, float weight)
 {
 	vector<JointPose> poses;
 	t = clip.m_isLooping ? fmod(t, clip.m_length) : t;
@@ -96,7 +96,7 @@ vector<JointPose> CSkeletonAnimation::FullMatchSample(AnimationClip& clip, Skele
 	return poses;
 }
 
-vector<JointPose> CSkeletonAnimation::Blend(AnimationClip** clips, float* timePos, float* weights, int count, Skeleton& skeleton)
+vector<JointPose> SkeletonAnimation::Blend(AnimationClip** clips, float* timePos, float* weights, int count, Skeleton& skeleton)
 {
 	float total_weight = 0;
 	for (int i = 0; i < count; ++i)
@@ -119,7 +119,7 @@ vector<JointPose> CSkeletonAnimation::Blend(AnimationClip** clips, float* timePo
 	return jointPoses;
 }
 
-void CSkeletonAnimation::CalculateGlobalMatrix(Skeleton& skeleton)
+void SkeletonAnimation::CalculateGlobalMatrix(Skeleton& skeleton)
 {
 	for (Joint& joint : skeleton.GetJoints())
 	{
@@ -135,7 +135,7 @@ void CSkeletonAnimation::CalculateGlobalMatrix(Skeleton& skeleton)
 	}
 }
 
-void CSkeletonAnimation::CalculateGlobalMatrix(Skeleton& skeleton, vector<JointPose> localPoses)
+void SkeletonAnimation::CalculateGlobalMatrix(Skeleton& skeleton, vector<JointPose> localPoses)
 {
 	if (!localPoses.size())
 		return;
@@ -153,7 +153,7 @@ void CSkeletonAnimation::CalculateGlobalMatrix(Skeleton& skeleton, vector<JointP
 	}
 }
 
-void CSkeletonAnimation::CalculateSkinningMatrix(Skeleton& skeleton)
+void SkeletonAnimation::CalculateSkinningMatrix(Skeleton& skeleton)
 {
 	Matrix4x4 mat;
 	vector<Joint>& joints = skeleton.GetJoints();

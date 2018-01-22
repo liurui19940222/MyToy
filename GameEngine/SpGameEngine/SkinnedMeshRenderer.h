@@ -16,18 +16,18 @@ class ENGINE_API CSkinnedMeshRenderer : public CComponent, public IRenderer
 	REFLECT_CLASS(CSkinnedMeshRenderer)
 private:
 	Skeleton* m_skeleton;
-	CMeshBuffer* m_mesh;
-	CMaterial* m_material;
+	PMeshBuffer m_mesh;
+	PMaterial m_material;
 
 public:
 
-	CSkinnedMeshRenderer* SetSkinningMesh(CMeshBuffer* mesh, Skeleton* skeleton);
+	CSkinnedMeshRenderer* SetSkinningMesh(PMeshBuffer mesh, Skeleton* skeleton);
 
-	CSkinnedMeshRenderer* SetMaterial(CMaterial* material);
+	CSkinnedMeshRenderer* SetMaterial(PMaterial material);
 
 	virtual void OnStart() override;
 	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix) override;
-	virtual void Render(CShader* shader) override;
+	virtual void Render(PShader shader) override;
 	virtual void RenderDebug(Matrix4x4& modelMatrix) override;
 };
 

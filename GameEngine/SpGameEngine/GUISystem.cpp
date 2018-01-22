@@ -356,9 +356,9 @@ void CGUIWidget::OnStart()
 	gameObject->SetLayer(Layer::Overlay2D);
 	SetAlignment(EAlignment::CENTER_MIDDLE);
 	SetAnchorPosition(Vector3::zero);
-	m_buffer.MakeBuffer(*_MeshFactory->SharedMesh(EMeshType::Quad));
-	m_material = _Maker->Instantiate<CMaterial>();
-	m_material->SetShader(CShader::Get("gui"))->SetState(EPiplelineStateType::DepthTest, false);
+	m_buffer.MakeBuffer(_MeshFactory->SharedMesh(EMeshType::Quad));
+	m_material = _Maker->Instantiate<Material>();
+	m_material->SetShader(Shader::Get("gui"))->SetState(EPiplelineStateType::DepthTest, false);
 }
 
 void CGUIWidget::OnDestroy()

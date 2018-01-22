@@ -2,6 +2,10 @@
 #define _OBJECT_
 
 #include<string>
+#include<memory>
+
+#define SMART_CLASS(CLASS_NAME) class CLASS_NAME;  typedef std::shared_ptr<CLASS_NAME> P##CLASS_NAME;
+#define SMART_STRUCT(CLASS_NAME) struct CLASS_NAME;  typedef std::shared_ptr<CLASS_NAME> P##CLASS_NAME;
 
 using namespace std;
 

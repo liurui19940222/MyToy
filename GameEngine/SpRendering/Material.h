@@ -19,47 +19,47 @@ enum class EPiplelineStateType
 	Fog = GL_FOG,
 };
 
-class CMaterial : public Object
+SMART_CLASS(Material) class Material : public Object
 {
 private:
-	static CMaterial* m_defaultMaterial;
+	static PMaterial m_defaultMaterial;
 	static map<EPiplelineStateType, bool> m_pushStates;
 	map<EPiplelineStateType, bool> m_states;
 	Color m_color = Color::white;
-	CShader* m_shader = 0;
-	CTexture* m_mainTexture = 0;
+	PShader m_shader = 0;
+	PTexture m_mainTexture = 0;
 
 	virtual void OnInitialize() override;
 	void SaveState(EPiplelineStateType state);
 	void ApplyStates(map<EPiplelineStateType, bool>& states);
-	CMaterial* SetState(map<EPiplelineStateType, bool>& states, EPiplelineStateType state, bool open);
+	Material* SetState(map<EPiplelineStateType, bool>& states, EPiplelineStateType state, bool open);
 	void PushState();
 	void PopState();
 	bool HasState(EPiplelineStateType state);
 public:
-	CMaterial();
+	Material();
 
-	CMaterial* SetState(EPiplelineStateType state, bool open);
-	CMaterial* SetColor(const Color& color);
-	CMaterial* SetShader(CShader* shader);
-	CMaterial* SetMainTexture(CTexture* texture);
-	CMaterial* Bind();
-	CMaterial* Unbind();
+	Material* SetState(EPiplelineStateType state, bool open);
+	Material* SetColor(const Color& color);
+	Material* SetShader(PShader shader);
+	Material* SetMainTexture(PTexture texture);
+	void Bind();
+	void Unbind();
 	
 	template<typename T>
-	inline CMaterial* SetParam(const char* paramName, T t)
+	inline Material& SetParam(const char* paramName, T t)
 	{
 		if (m_shader) m_shader->SetUniformParam(paramName, t);
-		return this;
+		return *this;
 	}
 
-	inline CMaterial* SetParam(const char* paramName, const Matrix4x4* matrices, int count)
+	inline Material& SetParam(const char* paramName, const Matrix4x4* matrices, int count)
 	{
 		if (m_shader) m_shader->SetUniformParam(paramName, matrices, count);
-		return this;
+		return *this;
 	}
 
-	static CMaterial* GetDefaltMaterial();
+	static PMaterial GetDefaltMaterial();
 };
 
 #endif

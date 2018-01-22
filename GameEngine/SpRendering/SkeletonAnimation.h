@@ -8,13 +8,14 @@
 #include"SpCommon\EngineDefine.h"
 #include"SpCommon\Debug.h"
 #include"SpCommon\ApiDefine.h"
+#include"SpCommon\Object.hpp"
 
 using namespace std;
 
 typedef TmpVector4<byte> BVector4;
 struct JointPose;
 
-struct Joint
+SMART_STRUCT(Joint) struct Joint
 {
 	string m_name;				//关节名字
 	byte m_Index;				//在数组中的索引
@@ -28,7 +29,7 @@ struct Joint
 	}
 };
 
-struct Skeleton
+SMART_STRUCT(Skeleton) struct Skeleton
 {
 	vector<Joint> m_joints;
 	vector<JointPose> m_localPoses;
@@ -83,25 +84,25 @@ struct Skeleton
 	}
 };
 
-struct JointPose
+SMART_STRUCT(JointPose) struct JointPose
 {
 	Matrix4x4 m_matrix;			//变换矩阵
 };
 
-struct AnimationSample
+SMART_STRUCT(AnimationSample) struct AnimationSample
 {
 	float m_time;			//该采样的时间点
 	map<byte, JointPose> m_jointPoses;	//该采样所引用的关节和对应的局部姿势
 };
 
-struct AnimationClip
+SMART_STRUCT(AnimationClip) struct AnimationClip
 {
 	vector<AnimationSample> m_aSamples;
 	float m_length;
 	bool m_isLooping;
 };
 
-struct Mesh
+SMART_STRUCT(Mesh) struct Mesh
 {
 	Vector3* m_vertices = NULL;
 	Vector3* m_normals = NULL;
@@ -114,7 +115,7 @@ struct Mesh
 	~Mesh();
 };
 
-struct Model
+SMART_STRUCT(Model) struct Model 
 {
 	Skeleton m_skeleton;
 	Mesh* m_meshes = NULL;
@@ -123,7 +124,7 @@ struct Model
 	int m_animationCount = 0;
 };
 
-class CSkeletonAnimation {
+class SkeletonAnimation {
 
 public:
 	static vector<JointPose> Sample(AnimationClip& clip, Skeleton& skeleton, float t, float weight);

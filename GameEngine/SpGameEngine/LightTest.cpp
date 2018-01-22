@@ -6,7 +6,7 @@
 #include"LightComponent.h"
 #include<glm\glm.hpp>
 
-void CLightTest::OnStart()
+void LightTest::OnStart()
 {
 	_MainCamera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
 	_MainCamera->SetCameraClearColor(Color::Hex(0x314D79FF));
@@ -16,17 +16,18 @@ void CLightTest::OnStart()
 	model->SetLocalPosition(Vector3(0, -3.5, 0));
 	model->SetLocalScale(Vector3::one * 0.05);
 	model->SetLocalEulerAngles(Vector3(0, 45, 0));
-	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("light"));
+	PMaterial model_mat(new Material());
+	model_mat->SetShader(Shader::Get("light"));
 	collada = _Resources->Load<ColladaLoader>("models/scene07.xml");
-	m_model = collada->m_model;
-	Mesh* mesh = &m_model->m_meshes[0];
-	CMeshBuffer* buffer = new CMeshBuffer(*mesh, m_model->m_skeleton.m_weights, m_model->m_skeleton.m_indices);
+	m_model = PModel(collada->m_model);
+	PMesh mesh(&m_model->m_meshes[0]);
+	PMeshBuffer buffer(new MeshBuffer(mesh, m_model->m_skeleton.m_weights, m_model->m_skeleton.m_indices));
 	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, &m_model->m_skeleton)->SetMaterial(model_mat);
 	_MainCameraGo->LookAt(model->GetLocalPosition());
 
 	directionalGo = _Maker->Instantiate(L"light0");
 	directionalGo->SetLocalEulerAngles(Vector3(50, 0, 0));
-	CLightComponent* light0 = directionalGo->AddComponent<CLightComponent>();
+	LightComponent* light0 = directionalGo->AddComponent<LightComponent>();
 	light0->SetColor(Color::white);
 	light0->SetIntensity(0.8);
 	light0->SetCastShadow(true);
@@ -35,13 +36,13 @@ void CLightTest::OnStart()
 	pointGo->SetLocalPosition(Vector3(0, 0.5, 0));
 	pointGo->SetLocalScale(Vector3::one * 0.1);
 	//pointGo->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube));
-	pointLight = pointGo->AddComponent<CLightComponent>();
+	pointLight = pointGo->AddComponent<LightComponent>();
 	pointLight->SetType(ELightType::Point);
 	pointLight->SetColor(Color::blue);
 	pointLight->SetIntensity(0.6);
 }
 
-void CLightTest::OnUpdate()
+void LightTest::OnUpdate()
 {
 	float h = CInput::GetAxis("Horizontal") * CTime::deltaTime * 30;
 	float v = CInput::GetAxis("Vertical") * CTime::deltaTime * 30;
@@ -59,17 +60,17 @@ void CLightTest::OnUpdate()
 	//directionalGo->SetLocalEulerAngles(euler);
 }
 
-void CLightTest::OnRender()
+void LightTest::OnRender()
 {
 	//CEditorTool::DrawVector(directionalGo->GetForward(), directionalGo->GetLocalPosition(), Color::red);
 }
 
-void CLightTest::OnClose()
+void LightTest::OnClose()
 {
 
 }
 
-void CLightTest::GetApplicationInfo(SApplicationInfo* info)
+void LightTest::GetApplicationInfo(SApplicationInfo* info)
 {
 	if (info)
 	{

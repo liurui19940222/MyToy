@@ -35,9 +35,9 @@ enum class EShaderParamType
 	SAMPLER_2D_SHADOW = GL_SAMPLER_2D_SHADOW,
 };
 
-class CShader : public Object {
+SMART_CLASS(Shader) class Shader : public Object {
 private:
-	static map<string, CShader*> m_store;
+	static map<string, PShader> m_store;
 
 	GLuint m_program;
 	GLuint m_vt;
@@ -45,9 +45,8 @@ private:
 	const char* m_vtfilename;
 	const char* m_fgfilename;
 
-	CShader();
-	CShader(const char* vtfilename, const char* fgfilename);
-	virtual ~CShader();
+	Shader();
+	Shader(const char* vtfilename, const char* fgfilename);
 
 	void ShowShaderLog(GLuint shader);
 	void ShowProgramLog();
@@ -56,7 +55,7 @@ private:
 	GLuint UniformParamLocation(const char* paramName);
 	void Release();
 public:
-
+	virtual ~Shader();
 	bool MakeShader(const char* vtfilename, const char* fgfilename);
 	void Run();
 	GLuint GetProgram();
@@ -76,8 +75,8 @@ public:
 	void SetUniformParam(const char* paramName, const Matrix4x4* value, int count);
 	map<string, EShaderParamType> GetAllOfUniformParams();
 
-	static CShader* Get(const string& shaderName);
-	static CShader* GetDefault();
+	static PShader Get(const string& shaderName);
+	static PShader GetDefault();
 };
 
 #endif

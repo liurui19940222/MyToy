@@ -8,11 +8,11 @@ class ENGINE_API CSpriteRenderer : public CComponent
 {
 	REFLECT_CLASS(CSpriteRenderer)
 private:
-	CTexture* texture;
+	PTexture texture;
 
 public:
 
-	CSpriteRenderer* SetTexture(CTexture* texture);
+	CSpriteRenderer* SetTexture(PTexture texture);
 
 	virtual void OnStart() override;
 

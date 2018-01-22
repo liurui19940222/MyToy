@@ -1,12 +1,13 @@
 #include "TestTest.h"
 #include"SpRendering\MeshFactory.h"
+#include<memory>
 
 void CTestTest::OnStart() {
 	_MainCameraGo->SetLocalPosition(Vector3(0, 2, -10));
 	go = _Maker->Instantiate(L"NewGameObject");
 	go2 = _Maker->Instantiate(L"2");
-	CMaterial* mat = _Maker->Instantiate<CMaterial>();
-	mat->SetMainTexture(CTexture2D::Create("textures/dlg01.bmp"))->SetShader(CShader::Get("texture"));
+	PMaterial mat = make_shared<Material>();
+	mat->SetMainTexture(Texture2D::Create("textures/dlg01.bmp"))->SetShader(Shader::Get("texture"));
 	go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube))
 		->SetMaterial(mat);
 

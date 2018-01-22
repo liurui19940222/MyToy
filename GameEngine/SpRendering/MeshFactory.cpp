@@ -1,6 +1,6 @@
 #include "MeshFactory.h"
 
-Mesh* CMeshFactory::CreateCube()
+PMesh MeshFactory::CreateCube()
 {
 	static const int VERTEX_NUM = 36;
 	static const Vector3 vertices[VERTEX_NUM] = {
@@ -104,7 +104,7 @@ Mesh* CMeshFactory::CreateCube()
 	return CreateMesh(vertices, texcoords, normals, VERTEX_NUM);
 }
 
-Mesh* CMeshFactory::CreateQuad()
+PMesh MeshFactory::CreateQuad()
 {
 	static const int VERTEX_NUM = 6;
 	static const Vector3 vertices[VERTEX_NUM] = {
@@ -135,9 +135,9 @@ Mesh* CMeshFactory::CreateQuad()
 	return CreateMesh(vertices, texcoords, normals, VERTEX_NUM);
 }
 
-Mesh* CMeshFactory::CreateMesh(const Vector3* vertices, const Vector2* texcoords, const Vector3* normals, int count)
+PMesh MeshFactory::CreateMesh(const Vector3* vertices, const Vector2* texcoords, const Vector3* normals, int count)
 {
-	Mesh* mesh = new Mesh;
+	PMesh mesh(new Mesh);
 	mesh->m_vertexCount = count;
 	if (vertices)
 	{
@@ -158,7 +158,7 @@ Mesh* CMeshFactory::CreateMesh(const Vector3* vertices, const Vector2* texcoords
 	return mesh;
 }
 
-Mesh* CMeshFactory::CreateRectMesh(float width, float height)
+PMesh MeshFactory::CreateRectMesh(float width, float height)
 {
 	float half_w = width * 0.5f;
 	float half_h = height * 0.5f;
@@ -182,7 +182,7 @@ Mesh* CMeshFactory::CreateRectMesh(float width, float height)
 	return CreateMesh(vertices, texcoords, NULL, VERTEX_NUM);
 }
 
-Mesh* CMeshFactory::CreateMesh(EMeshType type)
+PMesh MeshFactory::CreateMesh(EMeshType type)
 {
 	switch (type)
 	{
@@ -194,33 +194,32 @@ Mesh* CMeshFactory::CreateMesh(EMeshType type)
 	return NULL;
 }
 
-Mesh* CMeshFactory::SharedMesh(EMeshType type)
+PMesh MeshFactory::SharedMesh(EMeshType type)
 {
 	auto it = m_meshes.find(type);
 	if (it == m_meshes.end())
 	{
-		Mesh* mesh = CreateMesh(type);
+		PMesh mesh = CreateMesh(type);
 		m_meshes.insert(make_pair(type, mesh));
 		return mesh;
 	}
 	return it->second;
 }
 
-CMeshBuffer* CMeshFactory::CreateBuffer(EMeshType type)
+PMeshBuffer MeshFactory::CreateBuffer(EMeshType type)
 {
-	Mesh* mesh = CreateMesh(type);
-	CMeshBuffer* buffer = new CMeshBuffer(*CreateMesh(type));
-	free(mesh);
+	PMesh mesh = CreateMesh(type);
+	PMeshBuffer buffer(new MeshBuffer(CreateMesh(type)));
 	return buffer;
 }
 
-CMeshBuffer* CMeshFactory::SharedBuffer(EMeshType type)
+PMeshBuffer MeshFactory::SharedBuffer(EMeshType type)
 {
-	Mesh* mesh = SharedMesh(type);
+	PMesh mesh = SharedMesh(type);
 	auto it = m_buffers.find(type);
 	if (it == m_buffers.end())
 	{
-		CMeshBuffer* buffer = new CMeshBuffer(*mesh);
+		PMeshBuffer buffer(new MeshBuffer(mesh));
 		m_buffers.insert(make_pair(type, buffer));
 		return buffer;
 	}

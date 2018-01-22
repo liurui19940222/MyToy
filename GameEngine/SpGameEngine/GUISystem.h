@@ -103,8 +103,8 @@ namespace guisystem {
 		bool m_collide;
 		bool m_fill;
 		bool m_enable;
-		CMeshBuffer m_buffer;
-		CMaterial* m_material;
+		MeshBuffer m_buffer;
+		Material* m_material;
 		Color m_fillColor;
 		Color m_addColor;
 		SRect2D m_rect;

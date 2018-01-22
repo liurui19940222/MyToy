@@ -1,24 +1,24 @@
 #include "MeshBuffer.h"
 
-CMeshBuffer::CMeshBuffer() : m_vaoHandle(0), m_vboColorHandle(0), 
+MeshBuffer::MeshBuffer() : m_vaoHandle(0), m_vboColorHandle(0), 
 	m_vboNormalHandle(0), m_vboUVHandle(0), m_vboVertexHandle(0),
 	m_vboJointIndexHandle(0), m_vboJointWeightHandle(0), m_vertexNum(0)
 {
 
 }
 
-CMeshBuffer::CMeshBuffer(const Mesh& mesh) : CMeshBuffer()
+MeshBuffer::MeshBuffer(PMesh mesh) : MeshBuffer()
 {
 	MakeBuffer(mesh);
 }
 
-CMeshBuffer::CMeshBuffer(const Mesh& mesh, const vector<Vector4>& weights, const vector<BVector4>& indices) : CMeshBuffer()
+MeshBuffer::MeshBuffer(PMesh mesh, const vector<Vector4>& weights, const vector<BVector4>& indices) : MeshBuffer()
 {
 	MakeBuffer(mesh);
 	MakeJointBuffer(weights, indices);
 }
 
-void CMeshBuffer::MakeBuffer(const Vector3* vertices, const Color* colors, const Vector3* normals, const Vector2* uvs, int size)
+void MeshBuffer::MakeBuffer(const Vector3* vertices, const Color* colors, const Vector3* normals, const Vector2* uvs, int size)
 {
 	MakeVertexBuffer(vertices, size);
 	MakeColorBuffer(colors, size);
@@ -26,7 +26,12 @@ void CMeshBuffer::MakeBuffer(const Vector3* vertices, const Color* colors, const
 	MakeUVBuffer(uvs, size);
 }
 
-void CMeshBuffer::MakeVertexBuffer(const Vector3* vertices, int size)
+MeshBuffer::~MeshBuffer()
+{
+	ReleaseBuffer();
+}
+
+void MeshBuffer::MakeVertexBuffer(const Vector3* vertices, int size)
 {
 	if (!m_vaoHandle) glGenVertexArrays(1, &m_vaoHandle);
 	glBindVertexArray(m_vaoHandle);
@@ -41,7 +46,7 @@ void CMeshBuffer::MakeVertexBuffer(const Vector3* vertices, int size)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void CMeshBuffer::MakeColorBuffer(const Color* colors, int size)
+void MeshBuffer::MakeColorBuffer(const Color* colors, int size)
 {
 	if (!m_vaoHandle) glGenVertexArrays(1, &m_vaoHandle);
 	glBindVertexArray(m_vaoHandle);
@@ -55,7 +60,7 @@ void CMeshBuffer::MakeColorBuffer(const Color* colors, int size)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void CMeshBuffer::MakeUVBuffer(const Vector2* uvs, int size)
+void MeshBuffer::MakeUVBuffer(const Vector2* uvs, int size)
 {
 	if (!m_vaoHandle) glGenVertexArrays(1, &m_vaoHandle);
 	glBindVertexArray(m_vaoHandle);
@@ -69,7 +74,7 @@ void CMeshBuffer::MakeUVBuffer(const Vector2* uvs, int size)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void CMeshBuffer::MakeNormalBuffer(const Vector3* normals, int size)
+void MeshBuffer::MakeNormalBuffer(const Vector3* normals, int size)
 {
 	if (!m_vaoHandle) glGenVertexArrays(1, &m_vaoHandle);
 	glBindVertexArray(m_vaoHandle);
@@ -83,7 +88,7 @@ void CMeshBuffer::MakeNormalBuffer(const Vector3* normals, int size)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void CMeshBuffer::MakeJointBuffer(const vector<Vector4>& weights, const vector<BVector4>& indices)
+void MeshBuffer::MakeJointBuffer(const vector<Vector4>& weights, const vector<BVector4>& indices)
 {
 	if (!m_vaoHandle) glGenVertexArrays(1, &m_vaoHandle);
 	glBindVertexArray(m_vaoHandle);
@@ -104,24 +109,24 @@ void CMeshBuffer::MakeJointBuffer(const vector<Vector4>& weights, const vector<B
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void CMeshBuffer::MakeBuffer(const Mesh& mesh)
+void MeshBuffer::MakeBuffer(PMesh mesh)
 {
-	MakeBuffer(mesh.m_vertices, mesh.m_colors, mesh.m_normals, mesh.m_texcoords, mesh.m_vertexCount);
+	MakeBuffer(mesh->m_vertices, mesh->m_colors, mesh->m_normals, mesh->m_texcoords, mesh->m_vertexCount);
 }
 
-void CMeshBuffer::UpdateVertices(const Vector3* vertices, int offset, int size)
+void MeshBuffer::UpdateVertices(const Vector3* vertices, int offset, int size)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_vboVertexHandle);
 	glBufferSubData(GL_ARRAY_BUFFER, offset, size * sizeof(Vector3), vertices);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void CMeshBuffer::BindBuffer()
+void MeshBuffer::BindBuffer()
 {
 	glBindVertexArray(m_vaoHandle);
 }
 
-void CMeshBuffer::ReleaseBuffer()
+void MeshBuffer::ReleaseBuffer()
 {
 	if (m_vboColorHandle) glDeleteBuffers(1, &m_vboColorHandle);
 	if (m_vboUVHandle) glDeleteBuffers(1, &m_vboUVHandle);
@@ -132,7 +137,7 @@ void CMeshBuffer::ReleaseBuffer()
 	if (m_vboJointWeightHandle) glDeleteVertexArrays(1, &m_vboJointWeightHandle);
 }
 
-int CMeshBuffer::GetVertexNum() const
+int MeshBuffer::GetVertexNum() const
 {
 	return m_vertexNum;
 }

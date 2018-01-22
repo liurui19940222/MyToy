@@ -198,8 +198,8 @@ CGameObject* CMaker::FindGameObjectWithName(const wstring& name)
 
 CGameObject* CMaker::CreateCube()
 {
-	CMaterial* mat = _Maker->Instantiate<CMaterial>();
-	mat->SetShader(CShader::Get("light"));
+	PMaterial mat(new Material());
+	mat->SetShader(Shader::Get("light"));
 	mat->SetColor(Color::white);
 	CGameObject* go = _Maker->Instantiate(L"Cube");
 	go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube))->SetMaterial(mat);
@@ -208,8 +208,8 @@ CGameObject* CMaker::CreateCube()
 
 CGameObject* CMaker::CreateQuad()
 {
-	CMaterial* mat = _Maker->Instantiate<CMaterial>();
-	mat->SetShader(CShader::Get("light"));
+	PMaterial mat(new Material());
+	mat->SetShader(Shader::Get("light"));
 	mat->SetColor(Color::white);
 	CGameObject* go = _Maker->Instantiate(L"Quad");
 	go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Quad))->SetMaterial(mat);
@@ -220,7 +220,7 @@ CGameObject* CMaker::CreateDirectionalLight()
 {
 	CGameObject* directionalGo = _Maker->Instantiate(L"DirectionLight");
 	directionalGo->SetLocalEulerAngles(Vector3(50, 0, 0));
-	CLight* light0 = directionalGo->AddComponent<CLightComponent>();
+	Light* light0 = directionalGo->AddComponent<LightComponent>();
 	light0->SetColor(Color::white);
 	light0->SetIntensity(1.0f);
 	light0->SetCastShadow(false);
@@ -230,7 +230,7 @@ CGameObject* CMaker::CreateDirectionalLight()
 CGameObject* CMaker::CreatePointLight()
 {
 	CGameObject* pointGo = _Maker->Instantiate(L"light1");
-	CLight* pointLight = pointGo->AddComponent<CLightComponent>();
+	Light* pointLight = pointGo->AddComponent<LightComponent>();
 	pointLight->SetType(ELightType::Point);
 	pointLight->SetColor(Color::white);
 	pointLight->SetIntensity(1.0f);

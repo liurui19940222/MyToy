@@ -10,7 +10,7 @@ IMPL_CLASS(CSkinnedMeshRenderer)
 
 void CSkinnedMeshRenderer::OnStart()
 {
-	m_material = CMaterial::GetDefaltMaterial();
+	m_material = Material::GetDefaltMaterial();
 }
 
 void CSkinnedMeshRenderer::RenderDebug(Matrix4x4& modelMatrix)
@@ -32,21 +32,21 @@ void CSkinnedMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix,
 	m_material->Unbind();
 }
 
-void CSkinnedMeshRenderer::Render(CShader* shader)
+void CSkinnedMeshRenderer::Render(PShader shader)
 {
 	if (!m_mesh) return;
 	m_mesh->BindBuffer();
 	glDrawArrays(GL_TRIANGLES, 0, m_mesh->GetVertexNum());
 }
 
-CSkinnedMeshRenderer* CSkinnedMeshRenderer::SetSkinningMesh(CMeshBuffer* mesh, Skeleton* skeleton)
+CSkinnedMeshRenderer* CSkinnedMeshRenderer::SetSkinningMesh(PMeshBuffer mesh, Skeleton* skeleton)
 {
 	this->m_mesh = mesh;
 	this->m_skeleton = skeleton;
 	return this;
 }
 
-CSkinnedMeshRenderer* CSkinnedMeshRenderer::SetMaterial(CMaterial* material)
+CSkinnedMeshRenderer* CSkinnedMeshRenderer::SetMaterial(PMaterial material)
 {
 	this->m_material = material;
 	return this;

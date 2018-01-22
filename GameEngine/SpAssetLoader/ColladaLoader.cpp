@@ -435,8 +435,8 @@ void ColladaLoader::LoadFromFile(const char* filename)
 	ReadSkin(root, weights, indices);
 	ReadMesh(root, weights, indices);
 	ReadAnimation(root);
-	CSkeletonAnimation::CalculateGlobalMatrix(m_model->m_skeleton);
-	CSkeletonAnimation::CalculateSkinningMatrix(m_model->m_skeleton);
+	SkeletonAnimation::CalculateGlobalMatrix(m_model->m_skeleton);
+	SkeletonAnimation::CalculateSkinningMatrix(m_model->m_skeleton);
 }
 
 void ColladaLoader::ReleaseSource()

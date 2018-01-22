@@ -18,7 +18,7 @@ void CGUIImage::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4&
 	CGUIWidget::Render(modelMatrix, viewMatrix, projectionMatrix);
 }
 
-CGUIImage* CGUIImage::SetTexture(CTexture* texture)
+CGUIImage* CGUIImage::SetTexture(PTexture texture)
 {
 	m_texture = texture;
 	m_texture->SetEnvMode(ETexEnvMode::Modulate);

@@ -9,24 +9,24 @@
 
 using namespace std;
 
-map<string, CShader*> CShader::m_store;
+map<string, PShader> Shader::m_store;
 
-CShader::CShader() : m_vtfilename(NULL), m_fgfilename(NULL), m_program(0)
+Shader::Shader() : m_vtfilename(NULL), m_fgfilename(NULL), m_program(0)
 {
 
 }
 
-CShader::CShader(const char* vtfilename, const char* fgfilename) : CShader()
+Shader::Shader(const char* vtfilename, const char* fgfilename) : Shader()
 {
 	MakeShader(vtfilename, fgfilename);
 }
 
-CShader::~CShader()
+Shader::~Shader()
 {
 	Release();
 }
 
-bool CShader::MakeShader(const char* vtfilename, const char* fgfilename)
+bool Shader::MakeShader(const char* vtfilename, const char* fgfilename)
 {
 	Release();
 	m_vtfilename = vtfilename;
@@ -60,7 +60,7 @@ bool CShader::MakeShader(const char* vtfilename, const char* fgfilename)
 	return true;
 }
 
-bool CShader::Compile(GLuint shader)
+bool Shader::Compile(GLuint shader)
 {
 	glCompileShader(shader);
 	GLint result;
@@ -73,7 +73,7 @@ bool CShader::Compile(GLuint shader)
 	return true;
 }
 
-bool CShader::Link()
+bool Shader::Link()
 {
 	if (!m_program)
 		m_program = glCreateProgram();
@@ -90,18 +90,18 @@ bool CShader::Link()
 	return true;
 }
 
-GLuint CShader::UniformParamLocation(const char* paramName)
+GLuint Shader::UniformParamLocation(const char* paramName)
 {
 	return glGetUniformLocation(m_program, paramName);
 }
 
-void CShader::Run()
+void Shader::Run()
 {
 	if (m_program)
 		glUseProgram(m_program);
 }
 
-void CShader::ShowShaderLog(GLuint shader)
+void Shader::ShowShaderLog(GLuint shader)
 {
 	GLint len;
 	glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len);
@@ -121,7 +121,7 @@ void CShader::ShowShaderLog(GLuint shader)
 	}
 }
 
-void CShader::ShowProgramLog()
+void Shader::ShowProgramLog()
 {
 	GLint len;
 	glGetProgramiv(m_program, GL_INFO_LOG_LENGTH, &len);
@@ -136,7 +136,7 @@ void CShader::ShowProgramLog()
 	}
 }
 
-void CShader::Release()
+void Shader::Release()
 {
 	if (m_program)
 	{
@@ -152,12 +152,12 @@ void CShader::Release()
 		glDeleteShader(m_fg);
 }
 
-GLuint CShader::GetProgram()
+GLuint Shader::GetProgram()
 {
 	return m_program;
 }
 
-void CShader::SetUniformParam(const char* paramName, int value)
+void Shader::SetUniformParam(const char* paramName, int value)
 {
 	GLuint location = UniformParamLocation(paramName);
 	if (location >= 0)
@@ -166,7 +166,7 @@ void CShader::SetUniformParam(const char* paramName, int value)
 	}
 }
 
-void CShader::SetUniformParam(const char* paramName, float value)
+void Shader::SetUniformParam(const char* paramName, float value)
 {
 	GLuint location = UniformParamLocation(paramName);
 	if (location >= 0)
@@ -175,7 +175,7 @@ void CShader::SetUniformParam(const char* paramName, float value)
 	}
 }
 
-void CShader::SetUniformParam(const char* paramName, const Color& value)
+void Shader::SetUniformParam(const char* paramName, const Color& value)
 {
 	GLuint location = UniformParamLocation(paramName);
 	if (location >= 0)
@@ -184,7 +184,7 @@ void CShader::SetUniformParam(const char* paramName, const Color& value)
 	}
 }
 
-void CShader::SetUniformParam(const char* paramName, const Vector2& value)
+void Shader::SetUniformParam(const char* paramName, const Vector2& value)
 {
 	GLuint location = UniformParamLocation(paramName);
 	if (location >= 0)
@@ -193,7 +193,7 @@ void CShader::SetUniformParam(const char* paramName, const Vector2& value)
 	}
 }
 
-void CShader::SetUniformParam(const char* paramName, const Vector3& value)
+void Shader::SetUniformParam(const char* paramName, const Vector3& value)
 {
 	GLuint location = UniformParamLocation(paramName);
 	if (location >= 0)
@@ -202,7 +202,7 @@ void CShader::SetUniformParam(const char* paramName, const Vector3& value)
 	}
 }
 
-void CShader::SetUniformParam(const char* paramName, const Matrix4x4& value)
+void Shader::SetUniformParam(const char* paramName, const Matrix4x4& value)
 {
 	GLuint location = UniformParamLocation(paramName);
 	if (location >= 0)
@@ -211,7 +211,7 @@ void CShader::SetUniformParam(const char* paramName, const Matrix4x4& value)
 	}
 }
 
-void CShader::SetUniformParam(const char* paramName, int* value, int count)
+void Shader::SetUniformParam(const char* paramName, int* value, int count)
 {
 	GLuint location = UniformParamLocation(paramName);
 	if (location >= 0)
@@ -220,7 +220,7 @@ void CShader::SetUniformParam(const char* paramName, int* value, int count)
 	}
 }
 
-void CShader::SetUniformParam(const char* paramName, float* value, int count)
+void Shader::SetUniformParam(const char* paramName, float* value, int count)
 {
 	GLuint location = UniformParamLocation(paramName);
 	if (location >= 0)
@@ -229,7 +229,7 @@ void CShader::SetUniformParam(const char* paramName, float* value, int count)
 	}
 }
 
-void CShader::SetUniformParam(const char* paramName, const Color* value, int count)
+void Shader::SetUniformParam(const char* paramName, const Color* value, int count)
 {
 	GLuint location = UniformParamLocation(paramName);
 	if (location >= 0)
@@ -238,7 +238,7 @@ void CShader::SetUniformParam(const char* paramName, const Color* value, int cou
 	}
 }
 
-void CShader::SetUniformParam(const char* paramName, const Vector2* value, int count)
+void Shader::SetUniformParam(const char* paramName, const Vector2* value, int count)
 {
 	GLuint location = UniformParamLocation(paramName);
 	if (location >= 0)
@@ -247,7 +247,7 @@ void CShader::SetUniformParam(const char* paramName, const Vector2* value, int c
 	}
 }
 
-void CShader::SetUniformParam(const char* paramName, const Vector3* value, int count)
+void Shader::SetUniformParam(const char* paramName, const Vector3* value, int count)
 {
 	GLuint location = UniformParamLocation(paramName);
 	if (location >= 0)
@@ -256,7 +256,7 @@ void CShader::SetUniformParam(const char* paramName, const Vector3* value, int c
 	}
 }
 
-void CShader::SetUniformParam(const char* paramName, const Matrix4x4* value, int count)
+void Shader::SetUniformParam(const char* paramName, const Matrix4x4* value, int count)
 {
 	GLuint location = UniformParamLocation(paramName);
 	if (location >= 0)
@@ -265,7 +265,7 @@ void CShader::SetUniformParam(const char* paramName, const Matrix4x4* value, int
 	}
 }
 
-map<string, EShaderParamType> CShader::GetAllOfUniformParams()
+map<string, EShaderParamType> Shader::GetAllOfUniformParams()
 {
 	map<string, EShaderParamType> list;
 	GLint maxUniformLen;
@@ -289,15 +289,15 @@ map<string, EShaderParamType> CShader::GetAllOfUniformParams()
 	return list;
 }
 
-CShader* CShader::Get(const string& shaderName)
+PShader Shader::Get(const string& shaderName)
 {
-	CShader* shader = NULL;
+	PShader shader;
 	auto it = m_store.find(shaderName);
 	if (it == m_store.end())
 	{
 		string vt = "../Shaders/" + shaderName + ".vert";
 		string fg = "../Shaders/" + shaderName + ".frag";
-		shader = new CShader(vt.c_str(), fg.c_str());
+		shader.reset(new Shader(vt.c_str(), fg.c_str()));
 		m_store.insert(make_pair(shaderName, shader));
 	}
 	else
@@ -307,7 +307,7 @@ CShader* CShader::Get(const string& shaderName)
 	return shader;
 }
 
-CShader* CShader::GetDefault()
+PShader Shader::GetDefault()
 {
 	return Get("basic");
 }

@@ -14,7 +14,7 @@
 class CCharacterPrimitiveBase
 {
 public:
-	CTexture2D* m_texture;
+	PTexture2D m_texture;
 	Vector3 position;
 	int left;
 	int top;
@@ -32,8 +32,8 @@ public:
 class CCharacterPrimitiveSmart : public CCharacterPrimitiveBase
 {
 public:
-	CMeshBuffer m_buffer;
-	CMaterial* m_material;
+	PMeshBuffer m_buffer;
+	shared_ptr<Material> m_material;
 
 	CCharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
 	virtual ~CCharacterPrimitiveSmart();

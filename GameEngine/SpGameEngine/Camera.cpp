@@ -23,38 +23,33 @@ void CCamera::OnUpdate()
 
 }
 
-CRenderCamera* CCamera::Perspective(float fov, float aspect, float znear, float zfar)
+void CCamera::Perspective(float fov, float aspect, float znear, float zfar)
 {
-	CRenderCamera::Perspective(fov, aspect, znear, zfar);
-	return this;
+	RenderCamera::Perspective(fov, aspect, znear, zfar);
 }
 
-CRenderCamera* CCamera::Ortho(float left, float right, float bottom, float top, float znear, float zfar)
+void CCamera::Ortho(float left, float right, float bottom, float top, float znear, float zfar)
 {
-	CRenderCamera::Ortho(left, right, bottom, top, znear, zfar);
-	return this;
+	RenderCamera::Ortho(left, right, bottom, top, znear, zfar);
 }
 
-CRenderCamera* CCamera::Ortho(float halfSize, float aspect)
+void CCamera::Ortho(float halfSize, float aspect)
 {
-	CRenderCamera::Ortho(halfSize, aspect);
-	return this;
+	RenderCamera::Ortho(halfSize, aspect);
 }
 
-CRenderCamera* CCamera::LookAt(const Vector3& eye, const Vector3& center, const Vector3& up)
+void CCamera::LookAt(const Vector3& eye, const Vector3& center, const Vector3& up)
 {
-	CRenderCamera::LookAt(eye, center, up);
+	RenderCamera::LookAt(eye, center, up);
 	if (gameObject->GetTag() == "MainCamera")
 		gluLookAt(m_eyePos.x, m_eyePos.y, m_eyePos.z, m_centerPos.x, m_centerPos.y, m_centerPos.z, m_up.x, m_up.y, m_up.z);
-	return this;
 }
 
-CRenderCamera* CCamera::SetDepth(int depth)
+void CCamera::SetDepth(int depth)
 {
-	CRenderCamera::SetDepth(depth);
+	RenderCamera::SetDepth(depth);
 	_Engine->RemoveCamera(this);
 	_Engine->AddCamera(this);
-	return this;
 }
 
 CCamera* CCamera::UpdateViewMatrix()

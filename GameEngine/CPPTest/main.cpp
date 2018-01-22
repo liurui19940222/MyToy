@@ -1,8 +1,11 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+﻿#define _TEST_
+#ifdef _TEST_
+#define _CRT_SECURE_NO_WARNINGS
 
-#include <windows.h>
-#include <stdio.h>
-#include <string.h>
+#include<windows.h>
+#include<stdio.h>
+#include<string.h>
+#include<memory>
 #include"SpRendering/GLRendering.h"
 #include"SpRendering/Material.h"
 #include"SpRendering/MeshBuffer.h"
@@ -30,13 +33,13 @@ const int canvas_h = 512;
 float font_interval_x = 0.0f;
 float font_interval_y = 0.0f;
 uint pixels[canvas_w * canvas_h];
-CTexture2D* canvasTexture;
+PTexture2D canvasTexture;
 
 #define FONT_PATH "D:/GitHub/MyToy/GameEngine/SpGameEngine/fonts/msyh.ttf"
 //#define FONT_PATH "C:/Windows/Fonts/DengXian.ttf"
 //#define SHOW_TEXT L"/* handle to face object2018北美车展：新款MINI家族正式发布 handle to face object2018北美车展：新款MINI家族正式发布"
 //#define SHOW_TEXT L"/*款MINI家族正式发布 handle to face object"
-#define SHOW_TEXT L"D:/GitHub/MyToy/GameEngine/SpGameEngine/fonts/msyh.ttf\nD:/GitHub/MyToy/GameEngine/SpGameEngine/"
+#define SHOW_TEXT L"D:/GitHub/MyToy/GameEngine/SpGameEngine/fonts/msyh.ttf/nD:/GitHub/MyToy/GameEngine/SpGameEngine/"
 //#define SHOW_TEXT L"+-*()[]{}:;',.?!"
 #define CLASS_NAME L"NAME"
 
@@ -126,7 +129,7 @@ void CreateText(const wchar_t* text)
 	}
 
 	//memset(pixels, 255, sizeof(uint) * canvas_w * canvas_h);
-	canvasTexture = CTexture2D::Create((UCHAR*)pixels, canvas_w, canvas_h);
+	canvasTexture = Texture2D::Create((UCHAR*)pixels, canvas_w, canvas_h);
 	canvasTexture->SetWrapMode(ETexWrapMode::Clamp);
 }
 
@@ -147,12 +150,21 @@ LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 		CTrueTypeFont* f = FontManager->LoadFont(1, FONT_PATH);
 		font = new CFontRenderer();
-		font->SetFont(f)->SetColor(Color::white)->SetFontSize(font_size)->SetTextAlignment(EAlignment::CENTER_MIDDLE)
-			->SetRenderType(ERenderType::Smart)->SetTextRect(SRect2D(0,0,4, 1))->SetText(SHOW_TEXT)->SetIntervalX(font_interval_x)->SetIntervalY(font_interval_y);
-
-		obj.material = new CMaterial();
-		obj.material->SetShader(CShader::Get("texture"))->SetMainTexture(/*CTexture2D::Create("D://GitHub//MyToy//GameEngine//SpGameEngine//textures//shake.png"*/canvasTexture);
+		font->SetFont(f);
+		font->SetColor(Color::white);
+		font->SetFontSize(font_size); 
+		font->SetTextAlignment(EAlignment::CENTER_MIDDLE);
+		font->SetRenderType(ERenderType::Smart);
+		font->SetTextRect(SRect2D(0, 0, 4, 1)); 
+		font->SetText(SHOW_TEXT); 
+		font->SetIntervalX(font_interval_x); 
+		font->SetIntervalY(font_interval_y);
+		obj.material = make_shared<Material>();
+		obj.material->SetShader(Shader::Get("texture"))->SetMainTexture(/*Texture2D::Create("D://GitHub//MyToy//GameEngine//SpGameEngine//textures//shake.png"*/canvasTexture);
 		obj.mesh = _MeshFactory->SharedBuffer(EMeshType::Cube);
+
+		shared_ptr<Material> m = make_shared<Material>();
+		m->SetMainTexture(Texture2D::Create("D://GitHub//MyToy//GameEngine//SpGameEngine//textures//shake.png"));
 
 		isCreated = true;
 	}
@@ -313,21 +325,13 @@ void Render()
 	//modelMat = Matrix4x4::Rotate(0, GetTickCount() / 10, 0);
 	textMat = Matrix4x4::Identity();
 
-	//rendering->Render(&obj, modelMat, viewMat, projectionMat);
 	font->OnRender(textMat, viewMat, projectionMat);
 
 	glUseProgram(0);
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	//glLoadMatrixf((float*)&projectionMat);
-	//FastPainter::Perspective(45, width / (float)height, 0.1, 1000);
 
-	//glMatrixMode(GL_MODELVIEW);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	FastPainter::DrawRect(font->GetTextRect(), textMat * Matrix4x4::Scale(Vector3::one));
 
-	//FastPainter::DrawQuad(Vector3(4, 0, 0), Color::blue, 0.1f);
-	//FastPainter::DrawQuad(Vector3(-4, 0, 0), Color::blue, 0.1f);
 }
 
 int GameLoop()
@@ -369,3 +373,4 @@ int main()
 	GameLoop();
 	return 0;
 }
+#endif

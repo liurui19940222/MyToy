@@ -10,18 +10,18 @@ class RenderingStartUpParams
 
 };
 
-class RenderingObject
+SMART_CLASS(RenderingObject) class RenderingObject
 {
 public:
-	CMeshBuffer* mesh;
-	CMaterial* material;
+	PMeshBuffer mesh;
+	shared_ptr<Material> material;
 };
 
 class IRenderingInterface
 {
 public:
 	virtual void StartUp(const RenderingStartUpParams* params) = 0;
-	virtual void Render(const RenderingObject* obj, Matrix4x4& modelMatrix, 
+	virtual void Render(PRenderingObject obj, Matrix4x4& modelMatrix, 
 		Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix) = 0;
 	virtual void MakeRenderContext() = 0;
 	virtual void ShutDown() = 0;

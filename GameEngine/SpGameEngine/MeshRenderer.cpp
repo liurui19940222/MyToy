@@ -9,7 +9,7 @@ IMPL_CLASS(CMeshRenderer)
 
 void CMeshRenderer::OnStart()
 {
-	m_material = CMaterial::GetDefaltMaterial();
+	m_material = Material::GetDefaltMaterial();
 }
 
 void CMeshRenderer::RenderDebug(Matrix4x4& modelMatrix)
@@ -29,20 +29,20 @@ void CMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix
 	m_material->Unbind();
 }
 
-void CMeshRenderer::Render(CShader* shader)
+void CMeshRenderer::Render(PShader shader)
 {
 	if (!m_mesh) return;
 	m_mesh->BindBuffer();
 	glDrawArrays(GL_TRIANGLES, 0, m_mesh->GetVertexNum());
 }
 
-CMeshRenderer* CMeshRenderer::SetModel(CMeshBuffer* mesh)
+CMeshRenderer* CMeshRenderer::SetModel(PMeshBuffer mesh)
 {
 	this->m_mesh = mesh;
 	return this;
 }
 
-CMeshRenderer* CMeshRenderer::SetMaterial(CMaterial* material)
+CMeshRenderer* CMeshRenderer::SetMaterial(PMaterial material)
 {
 	this->m_material = material;
 	return this;

@@ -5,7 +5,7 @@
 #include"Texture.h"
 #include"RenderBuffer.h"
 
-class CRenderTexture : public CTexture, public IRenderBuffer
+SMART_CLASS(RenderTexture) class RenderTexture : public Texture, public IRenderBuffer
 {
 private:
 	GLuint m_fboHandle;
@@ -18,7 +18,7 @@ public:
 
 	virtual void ReleaseBuffer() override;
 
-	static CRenderTexture* Create(int width, int height, bool depthBuffer);
+	static PRenderTexture Create(int width, int height, bool depthBuffer);
 };
 
 #endif

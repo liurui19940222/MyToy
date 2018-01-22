@@ -3,6 +3,7 @@
 
 #include"SpCommon\Math.h"
 #include"SpCommon\EngineDefine.h"
+#include"SpCommon\Object.hpp"
 
 enum EProjectionType
 {
@@ -10,23 +11,23 @@ enum EProjectionType
 	Ortho
 };
 
-enum ECameraClearFlag
+enum class ECameraClearFlag
 {
 	SolidColor,
 	DontClear,
 	SkyBox,
 };
 
-class CRenderTexture;
-class CSkyBox;
+SMART_CLASS(RenderTexture) class RenderTexture;
+SMART_CLASS(SkyBox) class SkyBox;
 
-class CRenderCamera
+SMART_CLASS(RenderCamera) class RenderCamera
 {
 protected:
 	EProjectionType m_projectionType;
 	ECameraClearFlag m_cameraClearFlag;
-	CRenderTexture* m_renderTexture;
-	CSkyBox* m_skybox;
+	PRenderTexture m_renderTexture;
+	PSkyBox m_skybox;
 	float m_fov;
 	float m_aspect;
 	float m_near;
@@ -46,20 +47,20 @@ protected:
 	Matrix4x4 m_projectionMat;
 
 public:
-	CRenderCamera();
+	RenderCamera();
 
-	virtual CRenderCamera* Perspective(float fov, float aspect, float znear, float zfar);
-	virtual CRenderCamera* Ortho(float left, float right, float bottom, float top, float znear, float zfar);
-	virtual CRenderCamera* Ortho(float halfSize, float aspect);
-	virtual CRenderCamera* LookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
-	virtual CRenderCamera* SetDepth(int depth);
-	CRenderCamera* SetCameraClearFlag(ECameraClearFlag flag);
-	CRenderCamera* SetCameraClearColor(const Color& color);
-	CRenderCamera* SetRenderTexture(CRenderTexture* texture);
-	CRenderCamera* SetSkyBox(CSkyBox* skybox);
+	virtual void Perspective(float fov, float aspect, float znear, float zfar);
+	virtual void Ortho(float left, float right, float bottom, float top, float znear, float zfar);
+	virtual void Ortho(float halfSize, float aspect);
+	virtual void LookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
+	virtual void SetDepth(int depth);
+	RenderCamera* SetCameraClearFlag(ECameraClearFlag flag);
+	RenderCamera* SetCameraClearColor(const Color& color);
+	RenderCamera* SetRenderTexture(PRenderTexture texture);
+	RenderCamera* SetSkyBox(PSkyBox skybox);
 	EProjectionType GetProjectionType() const;
 	ECameraClearFlag GetCameraClearFlag() const;
-	CRenderTexture* GetRenderTexture() const;
+	PRenderTexture GetRenderTexture() const;
 	const Color& GetCameraClearColor() const;
 	float GetFov() const;
 	float GetAspect() const;

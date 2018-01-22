@@ -11,17 +11,8 @@ void CTextTest::OnStart()
 	go->SetLocalPosition(Vector3(0, 0, 0));
 	go->SetLayer(Layer::Default);
 	text = go->AddComponent<CTextRenderer>();
-	text->SetFont(font)->SetFontSize(30)->SetTextRect(SRect2D{ 0, 0, 5, 1 })->SetColor(Color::green)->SetSingleLine(true);
-	//text->SetText(L"那么照此格式输出的字母都能以基线对齐，。 \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson");
-	//text->SetText(L"哈哈");
+	text->SetFont(font)->SetFontSize(30)->SetTextRect(SRect2D{ 0, 0, 3, 1 })->SetColor(Color::green)->SetSingleLine(false);
 	text->SetText(L"那么照此格式输出的字母都能以基线对齐。但是所有的字都比设置的位置要低一些，想问一下我的计算方式是不是不对，网上都是这么计算的  ……");
-	Vector2() + Vector2();
-	//CAtlas* atlas = (*font->GetAtlases(10))[0];
-	//CTexture* tex = CTexture::Create((UCHAR*)(atlas->GetPixels()), atlas->GetWidth(), atlas->GetHeight());
-	//textureGo = _Engine->CreateGameObject();
-	//textureGo->AddComponent<CSpriteRenderer>()->SetTexture(tex);
-	//textureGo->SetLocalScale(Vector3(0.25, 0.25, 0.25));
-	//textureGo->SetLocalPosition(Vector3(-1, 0, 0));
 }
 
 void CTextTest::OnUpdate()

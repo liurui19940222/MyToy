@@ -5,7 +5,7 @@
 #include"SpRendering\MeshFactory.h"
 #include<glm\glm.hpp>
 
-CSkyBox* box;
+PSkyBox box;
 
 void CColladaTest::OnStart()
 {
@@ -20,26 +20,27 @@ void CColladaTest::OnStart()
 
 	//model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 2);
 	//model->SetLocalEulerAngles(Vector3(0, 90, 0));
-	//CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"))
-	//	->SetMainTexture(CTexture2D::Create("textures/longxia.png"));
+	//Material* model_mat = _Maker->Instantiate<Material>()->SetShader(Shader::Get("skinning"))
+	//	->SetMainTexture(Texture2D::Create("textures/longxia.png"));
 	//collada = _Resources->Load<ColladaLoader>("models/longxia.xml");
 
 	//model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 10);
 	//model->SetLocalEulerAngles(Vector3(0, 0, 0));
-	//CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"));
+	//Material* model_mat = _Maker->Instantiate<Material>()->SetShader(Shader::Get("skinning"));
 	//collada = _Resources->Load<ColladaLoader>("models/walk.xml");
 	
 	model->SetLocalPosition(Vector3(0, 1, 0));
 	model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 1.8);
 	model->SetLocalEulerAngles(Vector3(0, -70, 0));
-	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("skinning"))
-		->SetMainTexture(CTexture2D::Create("textures/shake.png"));
+	PMaterial model_mat = make_shared<Material>();
+	model_mat->SetShader(Shader::Get("skinning"))
+		->SetMainTexture(Texture2D::Create("textures/shake.png"));
 	collada = _Resources->Load<ColladaLoader>("models/shake_skin.xml");
-	m_model = collada->m_model;
+	m_model = PModel(collada->m_model);
 	Mesh* mesh = &m_model->m_meshes[0];
-	CMeshBuffer* buffer = new CMeshBuffer(*mesh, m_model->m_skeleton.m_weights, m_model->m_skeleton.m_indices);
+	MeshBuffer* buffer = new MeshBuffer(PMesh(mesh), m_model->m_skeleton.m_weights, m_model->m_skeleton.m_indices);
 
-	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, &m_model->m_skeleton)->SetMaterial(model_mat);
+	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(PMeshBuffer(buffer), &m_model->m_skeleton)->SetMaterial(model_mat);
 	
 	_MainCameraGo->LookAt(model->GetLocalPosition());
 
@@ -49,29 +50,29 @@ void CColladaTest::OnStart()
 	m_clips[1]->m_isLooping = true;
 	m_clips[2]->m_isLooping = false;
 
-	//m_texture = CTexture2D::Create("textures/shake.png");
+	//m_texture = Texture2D::Create("textures/shake.png");
 
-	//m_texture = CRenderTexture::Create(512, 512, true);
+	//m_texture = RenderTexture::Create(512, 512, true);
 
 	//CCamera* camera = _Maker->Instantiate(L"Camera")->AddComponent<CCamera>();
 	//camera->LayerMask() = Layer::Default;
 	//camera->Perspective(54.0f, _SCW / _SCH, 1.0f, 1000.0f);
 	//camera->UpdateViewMatrix();
-	//camera->SetRenderTexture((CRenderTexture*)m_texture);
+	//camera->SetRenderTexture((RenderTexture*)m_texture);
 	//camera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
 	//camera->gameObject->SetTag("CRTes");
 	//camera->gameObject->SetLocalPosition(_MainCameraGo->GetLocalPosition());
 	//camera->gameObject->SetLocalEulerAngles(_MainCameraGo->GetLocalEulerAngles());
 	//camera->gameObject->LookAt(model->GetLocalPosition());
 
-	//box = CSkyBox::Create("textures/skybox/top.jpg", 
+	//box = SkyBox::Create("textures/skybox/top.jpg", 
 	//	NULL, 
 	//	"textures/skybox/front.jpg", 
 	//	"textures/skybox/back.jpg", 
 	//	"textures/skybox/left.jpg", 
 	//	"textures/skybox/right.jpg");
 
-	box = CSkyBox::Create("textures/skybox2/top.tga",
+	box = SkyBox::Create("textures/skybox2/top.tga",
 		"textures/skybox2/bottom.tga",
 		"textures/skybox2/front.tga",
 		"textures/skybox2/back.tga",
@@ -97,10 +98,10 @@ void CColladaTest::OnUpdate()
 		v[1] = m_clips[1];
 		float times[] = { CTime::time, CTime::time };
 		float weights[] = { 1.0f, 0.0f };
-		vector<JointPose> jointPoses = CSkeletonAnimation::Blend(&v[0], times, weights, 2, m_model->m_skeleton);
-		//vector<JointPose> jointPoses = CSkeletonAnimation::Sample(*m_clips[1], m_model->m_skeleton, CTime::time, 1);
-		CSkeletonAnimation::CalculateGlobalMatrix(m_model->m_skeleton, jointPoses);
-		CSkeletonAnimation::CalculateSkinningMatrix(m_model->m_skeleton);
+		vector<JointPose> jointPoses = SkeletonAnimation::Blend(&v[0], times, weights, 2, m_model->m_skeleton);
+		//vector<JointPose> jointPoses = SkeletonAnimation::Sample(*m_clips[1], m_model->m_skeleton, CTime::time, 1);
+		SkeletonAnimation::CalculateGlobalMatrix(m_model->m_skeleton, jointPoses);
+		SkeletonAnimation::CalculateSkinningMatrix(m_model->m_skeleton);
 	}
 
 	CEditorTool::WatchTarget(*_MainCameraGo, model->GetLocalPosition());

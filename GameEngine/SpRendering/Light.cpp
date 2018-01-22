@@ -1,29 +1,29 @@
 #include"Light.h"
 #include"SpRendering\RenderTexture.h"
 
-Color CLight::color_buffer[LIGHT_MAX_NUM];
-Vector3 CLight::pos_buffer[LIGHT_MAX_NUM];
-float CLight::intensity_buffer[LIGHT_MAX_NUM];
-int CLight::type_buffer[LIGHT_MAX_NUM];
-Matrix4x4 CLight::shadowMapMatrix;
-CRenderTexture* CLight::shadowMap;
-vector<CLight*> CLight::lights;
-int CLight::shadowCasterIndex;
+Color Light::color_buffer[LIGHT_MAX_NUM];
+Vector3 Light::pos_buffer[LIGHT_MAX_NUM];
+float Light::intensity_buffer[LIGHT_MAX_NUM];
+int Light::type_buffer[LIGHT_MAX_NUM];
+Matrix4x4 Light::shadowMapMatrix;
+PRenderTexture Light::shadowMap;
+vector<PLight> Light::lights;
+int Light::shadowCasterIndex;
 
-void CLight::SetShadowMapSize(int width, int height)
+void Light::SetShadowMapSize(int width, int height)
 {
-	if (shadowMap)
-		delete shadowMap;
-	shadowMap = CRenderTexture::Create(1024, 1024, true);
+	if (shadowMap.get())
+		shadowMap->Release();
+	shadowMap = RenderTexture::Create(1024, 1024, true);
 }
 
-CLight* CLight::PrepareLight()
+PLight Light::PrepareLight()
 {
 	memset(color_buffer, 0, sizeof(Color) * LIGHT_MAX_NUM);
 	memset(pos_buffer, 0, sizeof(Vector3) * LIGHT_MAX_NUM);
 	memset(intensity_buffer, 0, sizeof(float) * LIGHT_MAX_NUM);
 	memset(type_buffer, 0, sizeof(int) * LIGHT_MAX_NUM);
-	CLight* light = NULL;
+	PLight light;
 	shadowCasterIndex = -1;
 	for (uint i = 0; i < lights.size(); ++i)
 	{
@@ -40,17 +40,17 @@ CLight* CLight::PrepareLight()
 	return light;
 }
 
-CRenderTexture* CLight::GetShadowMap()
+PRenderTexture Light::GetShadowMap()
 {
 	return shadowMap;
 }
 
-Matrix4x4 CLight::GetShadowMapMatrix()
+Matrix4x4 Light::GetShadowMapMatrix()
 {
 	return shadowMapMatrix;
 }
 
-void CLight::SetUniformParams(CShader* shader)
+void Light::SetUniformParams(PShader shader)
 {
 	if (shadowMap == NULL)
 		return;

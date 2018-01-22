@@ -1,29 +1,29 @@
 #include"SkyBox.h"
 #include"Shader.h"
 
-CSkyBox* CSkyBox::Create(const char* top, const char* bottom, const char* front, const char* back, const char* left, const char* right)
+PSkyBox SkyBox::Create(const char* top, const char* bottom, const char* front, const char* back, const char* left, const char* right)
 {
-	CSkyBox* box = new CSkyBox();
-	box->m_textures[(int)ESkyBoxFace::Top] = CTexture2D::Create(top, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
-	box->m_textures[(int)ESkyBoxFace::Bottom] = CTexture2D::Create(bottom, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
-	box->m_textures[(int)ESkyBoxFace::Front] = CTexture2D::Create(front, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
-	box->m_textures[(int)ESkyBoxFace::Back] = CTexture2D::Create(back, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
-	box->m_textures[(int)ESkyBoxFace::Left] = CTexture2D::Create(left, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
-	box->m_textures[(int)ESkyBoxFace::Right] = CTexture2D::Create(right, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
-	return box;
+	SkyBox* box = new SkyBox();
+	box->m_textures[(int)ESkyBoxFace::Top] = Texture2D::Create(top, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
+	box->m_textures[(int)ESkyBoxFace::Bottom] = Texture2D::Create(bottom, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
+	box->m_textures[(int)ESkyBoxFace::Front] = Texture2D::Create(front, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
+	box->m_textures[(int)ESkyBoxFace::Back] = Texture2D::Create(back, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
+	box->m_textures[(int)ESkyBoxFace::Left] = Texture2D::Create(left, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
+	box->m_textures[(int)ESkyBoxFace::Right] = Texture2D::Create(right, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
+	return PSkyBox(box);
 }
 
-CSkyBox::CSkyBox()
+SkyBox::SkyBox()
 {
 	InitBuffer();
 }
 
-CSkyBox::~CSkyBox()
+SkyBox::~SkyBox()
 {
 	Release();
 }
 
-void CSkyBox::InitBuffer()
+void SkyBox::InitBuffer()
 {
 	//front
 	Vector3 front[] = {
@@ -87,33 +87,29 @@ void CSkyBox::InitBuffer()
 		Vector2(1.0f, 0.0f),
 		Vector2(1.0f, 1.0f),
 	};
-	m_buffer[(int)ESkyBoxFace::Top].MakeBuffer(top, NULL, NULL, uv, 6);
-	m_buffer[(int)ESkyBoxFace::Bottom].MakeBuffer(bottom, NULL, NULL, uv, 6);
-	m_buffer[(int)ESkyBoxFace::Front].MakeBuffer(front, NULL, NULL, uv, 6);
-	m_buffer[(int)ESkyBoxFace::Back].MakeBuffer(back, NULL, NULL, uv, 6);
-	m_buffer[(int)ESkyBoxFace::Left].MakeBuffer(left, NULL, NULL, uv, 6);
-	m_buffer[(int)ESkyBoxFace::Right].MakeBuffer(right, NULL, NULL, uv, 6);
+	m_buffer[(int)ESkyBoxFace::Top]->MakeBuffer(top, NULL, NULL, uv, 6);
+	m_buffer[(int)ESkyBoxFace::Bottom]->MakeBuffer(bottom, NULL, NULL, uv, 6);
+	m_buffer[(int)ESkyBoxFace::Front]->MakeBuffer(front, NULL, NULL, uv, 6);
+	m_buffer[(int)ESkyBoxFace::Back]->MakeBuffer(back, NULL, NULL, uv, 6);
+	m_buffer[(int)ESkyBoxFace::Left]->MakeBuffer(left, NULL, NULL, uv, 6);
+	m_buffer[(int)ESkyBoxFace::Right]->MakeBuffer(right, NULL, NULL, uv, 6);
 }
 
-void CSkyBox::OnInitialize()
+void SkyBox::OnInitialize()
 {
 	
 }
 
-void CSkyBox::Release()
+void SkyBox::Release()
 {
-	for (int i = 0; i < 6; ++i)
-	{
-		delete m_textures[i];
-		m_buffer[i].ReleaseBuffer();
-	}
+
 }
 
-void CSkyBox::Render(const Matrix4x4& model, const Matrix4x4& view, const Matrix4x4& projection)
+void SkyBox::Render(const Matrix4x4& model, const Matrix4x4& view, const Matrix4x4& projection)
 {
 	glDisable(GL_DEPTH_TEST);
 
-	CShader* shader = CShader::Get("texture");
+	PShader shader = Shader::Get("texture");
 	for (int i = 0; i < 6; ++i)
 	{
 		if (!m_textures[i]) continue;
@@ -125,7 +121,7 @@ void CSkyBox::Render(const Matrix4x4& model, const Matrix4x4& view, const Matrix
 		shader->SetUniformParam("M", model);
 		shader->SetUniformParam("V", view);
 		shader->SetUniformParam("P", projection);
-		m_buffer[i].BindBuffer();
+		m_buffer[i]->BindBuffer();
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	}
 

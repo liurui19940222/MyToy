@@ -8,7 +8,7 @@
 enum ETexWrapMode
 {
 	Clamp = 0x2900,
-	ClampToEdge = 1,
+	ClampToEdge = 0x812F,
 	Repeat = 0x2901,
 };
 
@@ -26,7 +26,7 @@ enum ETexEnvMode
 	Add = 0x0104,
 };
 
-class CTexture : public Object
+SMART_CLASS(Texture) class Texture : public Object
 {
 protected:
 	uint m_texId;
@@ -39,7 +39,7 @@ protected:
 	ETexWrapMode m_wrapMode = ETexWrapMode::ClampToEdge;
 
 public:
-	virtual ~CTexture();
+	virtual ~Texture();
 	int GetWidth() const;
 	int GetHeight() const;
 	int GetFormat() const;
@@ -48,10 +48,10 @@ public:
 	ETexEnvMode GetEnvMode() const;
 	ETexFilterMode GetFilterMode() const;
 	ETexWrapMode GetWrapMode() const;
-	CTexture* Bind();
-	CTexture* SetEnvMode(ETexEnvMode mode);
-	CTexture* SetWrapMode(ETexWrapMode mode);
-	CTexture* SetFilterMode(ETexFilterMode mode);
+	Texture* Bind();
+	Texture* SetEnvMode(ETexEnvMode mode);
+	Texture* SetWrapMode(ETexWrapMode mode);
+	Texture* SetFilterMode(ETexFilterMode mode);
 	void Release();
 };
 

@@ -2,6 +2,7 @@
 #include"SpAssetLoader\ImageLoader.h"
 #include"SpRendering\MeshFactory.h"
 #include"SpCommon\FastPainter.h"
+#include"Texture2D.h"
 
 CCharacterPrimitiveBase::CCharacterPrimitiveBase(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels) :left(left_padding), top(top), advance_x(advance_x)
 {
@@ -9,31 +10,30 @@ CCharacterPrimitiveBase::CCharacterPrimitiveBase(int left_padding, int top, int 
 	this->height = height;
 	this->width_x = width * pixelScale;
 	this->height_y = height * pixelScale;
-	m_texture = CTexture2D::Create((UCHAR*)pixels, width, height);
+	m_texture = Texture2D::Create((UCHAR*)pixels, width, height);
 	m_texture->SetWrapMode(ETexWrapMode::Clamp)->SetFilterMode(ETexFilterMode::Linear);
 }
 
 CCharacterPrimitiveBase::~CCharacterPrimitiveBase()
 {
-	delete m_texture;
+
 }
 
 CCharacterPrimitiveSmart::CCharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels)
 	: CCharacterPrimitiveBase(left_padding, top, advance_x, width, height, pixelScale, pixels)
 {
 	m_texture->SetEnvMode(ETexEnvMode::Replace);
-	m_material = new CMaterial();
+	m_material = make_shared<Material>();
 	m_material->SetMainTexture(m_texture)->SetState(EPiplelineStateType::DepthTest, false);
-	m_material->SetShader(CShader::Get("font"));
-	Mesh* mesh = _MeshFactory->CreateRectMesh(width_x, height_y);
-	m_buffer.MakeBuffer(*mesh);
-	delete mesh;
+	m_material->SetShader(Shader::Get("font"));
+	PMesh mesh = _MeshFactory->CreateRectMesh(width_x, height_y);
+	m_buffer = make_shared<MeshBuffer>();
+	m_buffer->MakeBuffer(mesh);
 }
 
 CCharacterPrimitiveSmart::~CCharacterPrimitiveSmart()
 {
-	m_buffer.ReleaseBuffer();
-	delete m_material;
+
 }
 
 void CCharacterPrimitiveSmart::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color)
@@ -44,8 +44,8 @@ void CCharacterPrimitiveSmart::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMat
 	m_material->SetParam("V", viewMatrix);
 	m_material->SetParam("P", projectionMatrix);
 	m_material->SetParam("Color", color);
-	m_buffer.BindBuffer();
-	glDrawArrays(GL_TRIANGLES, 0, m_buffer.GetVertexNum());
+	m_buffer->BindBuffer();
+	glDrawArrays(GL_TRIANGLES, 0, m_buffer->GetVertexNum());
 	m_material->Unbind();
 }
 
@@ -209,7 +209,7 @@ CFontRenderer* CFontRenderer::SetRenderType(ERenderType type)
 
 CTextOneLineData* CFontRenderer::GetLineData(int rowIndex)
 {
-	if (rowIndex >= lineDatas.size())
+	if (rowIndex >= (int)lineDatas.size())
 		return NULL;
 	return lineDatas[rowIndex];
 }
@@ -253,7 +253,7 @@ float CFontRenderer::GetOffsetY()
 	if (alignment_v == EAlignmentVertical::TOP)
 	{
 		float firstLineHalfHeight = lineDatas[0]->line_height * 0.5f;
-		return  -lineDatas[0]->line_height * 0.5 - firstLineHalfHeight;
+		return  -lineDatas[0]->line_height * 0.5f - firstLineHalfHeight;
 	}
 	else if (alignment_v == EAlignmentVertical::MIDDLE)
 	{
@@ -274,7 +274,7 @@ void CFontRenderer::Rebuild()
 	if (!font) return;
 	ClearPrimitive();
 	ClearLineData();
-	for (int i = 0; i < text.size(); i++)
+	for (int i = 0; i < (int)text.size(); i++)
 	{
 		CCharacterInfo* chInfo = font->GetCharacter(text[i], font_size);
 		SBitmapData bitmap;

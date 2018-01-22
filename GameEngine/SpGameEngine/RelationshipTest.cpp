@@ -5,14 +5,14 @@
 void CRelationshipTest::OnStart()
 {
 	model = Matrix4x4::Identity();
-	CRenderCamera* batch = new CRenderCamera;
+	RenderCamera* batch = new RenderCamera;
 	_MainCamera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
 	_MainCamera->SetCameraClearColor(Color::Hex(0x314D79FF));
 	_MainCameraGo->SetLocalPosition(Vector3(0, 2, 10));
 	_MainCameraGo->SetLocalEulerAngles(Vector3(0, -180, 0));
-	CTexture* texture = CTexture2D::Create("textures/dlg01.bmp");
-	CMaterial* material = _Maker->Instantiate<CMaterial>();
-	material->SetShader(CShader::Get("texture"))->SetMainTexture(texture);
+	PTexture texture = Texture2D::Create("textures/dlg01.bmp");
+	PMaterial material(new Material());
+	material->SetShader(Shader::Get("texture"))->SetMainTexture(texture);
 	go = _Maker->Instantiate(L"testGo");
 	go->AddComponent<CMeshRenderer>()->SetModel(_MeshFactory->SharedBuffer(EMeshType::Cube))->SetMaterial(material);
 	go->SetLocalPosition(Vector3(-2, 1.0, 0));

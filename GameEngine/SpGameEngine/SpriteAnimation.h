@@ -14,7 +14,7 @@ private:
 	CSpriteRenderer* renderer;
 
 	//每一帧的贴图
-	CTexture** frames;
+	vector<PTexture> frames;
 	int frameCount;
 
 	//播放列表的下标
@@ -29,13 +29,12 @@ private:
 	float speed;
 
 	bool isPlay;
-	bool releaseMemoryOnDestroy;
 
 public:
 	CSpriteAnimation();
 	~CSpriteAnimation();
 
-	void Initialize(CTexture** frames, int frameCount, int* indexList, int length, float rate, bool releaseMemoryOnDestroy);
+	void Initialize(vector<PTexture> frames, int frameCount, int* indexList, int length, float rate);
 
 	//IAnimation---------------------------------
 	virtual void SetSpeed(float speed) override;

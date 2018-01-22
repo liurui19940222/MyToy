@@ -2,17 +2,17 @@
 #include"Maker.h"
 #include"SpRendering\Renderer.h"
 
-void CLightComponent::RenderShadowMap(CLightComponent* light)
+void LightComponent::RenderShadowMap(LightComponent* light)
 {
 	if (!light) return;
 
-	CRenderTexture* renderTex = CLight::GetShadowMap();
-	CShader* shadowShader = CShader::Get("shadow");
+	PRenderTexture renderTex = Light::GetShadowMap();
+	PShader shadowShader = Shader::Get("shadow");
 	Matrix4x4 shadow_view = Matrix4x4::LookAt(-light->gameObject->GetForward(), Vector3::zero, Vector3::forward);
 	Matrix4x4 shadow_projection = Matrix4x4::Ortho(-10, 10, -10, 10, -10, 20);
 	shadowMapMatrix = Matrix4x4::Translate(Vector3(0.5, 0.5, 0.5)) * Matrix4x4::Scale(Vector3(0.5, 0.5, 0.5)) * shadow_projection * shadow_view;
 
-	CLight::GetShadowMap()->BindBuffer();
+	Light::GetShadowMap()->BindBuffer();
 	glPushAttrib(GL_VIEWPORT_BIT | GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, renderTex->GetWidth(), renderTex->GetHeight());
 	glClearColor(0, 0, 0, 1);
@@ -35,18 +35,18 @@ void CLightComponent::RenderShadowMap(CLightComponent* light)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void CLightComponent::OnStart()
+void LightComponent::OnStart()
 {
 	CComponent::OnStart();
-	lights.push_back(this);
+	lights.push_back(PLight(this));
 }
 
-void CLightComponent::OnDestroy()
+void LightComponent::OnDestroy()
 {
 	CComponent::OnDestroy();
 	for (auto it = lights.begin(); it != lights.end(); ++it)
 	{
-		if (*it == this)
+		if ((*it).get() == this)
 		{
 			lights.erase(it);
 			return;
@@ -54,7 +54,7 @@ void CLightComponent::OnDestroy()
 	}
 }
 
-Vector3 CLightComponent::GetLightPosOrDirection() const
+Vector3 LightComponent::GetLightPosOrDirection() const
 {
 	if (m_type == ELightType::Directional)
 		return gameObject->GetForward();

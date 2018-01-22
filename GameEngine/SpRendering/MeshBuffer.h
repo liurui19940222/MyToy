@@ -5,6 +5,7 @@
 #include"RenderBuffer.h"
 #include"Math.h"
 #include"SpCommon\EngineDefine.h"
+#include"SpCommon\Object.hpp"
 #include"SkeletonAnimation.h"
 
 #define VERTEX_POS			0
@@ -14,7 +15,7 @@
 #define JOINT_INDEX_POS		4
 #define JOINT_WEIGHT_POS	5
 
-class CMeshBuffer : public IRenderBuffer
+SMART_CLASS(MeshBuffer) class MeshBuffer : public IRenderBuffer
 {
 private:
 	int m_vertexNum;
@@ -27,16 +28,17 @@ private:
 	GLuint m_vboJointWeightHandle;
 
 public:
-	CMeshBuffer();
-	CMeshBuffer(const Mesh& mesh);
-	CMeshBuffer(const Mesh& mesh, const vector<Vector4>& weights, const vector<BVector4>& indices);
+	MeshBuffer();
+	MeshBuffer(PMesh mesh);
+	MeshBuffer(PMesh mesh, const vector<Vector4>& weights, const vector<BVector4>& indices);
+	virtual ~MeshBuffer();
 	void MakeBuffer(const Vector3* vertices, const Color* colors, const Vector3* normals, const Vector2* uvs, int size);
 	void MakeVertexBuffer(const Vector3* vertices, int size);
 	void MakeColorBuffer(const Color* colors, int size);
 	void MakeUVBuffer(const Vector2* uvs, int size);
 	void MakeNormalBuffer(const Vector3* normals, int size);
 	void MakeJointBuffer(const vector<Vector4>& weights, const vector<BVector4>& indices);
-	void MakeBuffer(const Mesh& mesh);
+	void MakeBuffer(const PMesh mesh);
 	void UpdateVertices(const Vector3* vertices, int offset, int size);
 	virtual void BindBuffer() override;
 	virtual void ReleaseBuffer() override;

@@ -3,13 +3,13 @@
 #include"Light.h"
 #include"SpCommon\EngineDefine.h"
 
-map<EPiplelineStateType, bool> CMaterial::m_pushStates;
-CMaterial* CMaterial::m_defaultMaterial = NULL;
+map<EPiplelineStateType, bool> Material::m_pushStates;
+PMaterial Material::m_defaultMaterial = NULL;
 
-CMaterial::CMaterial()
+Material::Material()
 {
-	m_shader = CShader::GetDefault();
-	m_mainTexture = CTexture2D::GetOneInStore(EStoreTexture2DId::White8x8);
+	m_shader = Shader::GetDefault();
+	m_mainTexture = Texture2D::GetOneInStore(EStoreTexture2DId::White8x8);
 
 	SetState(EPiplelineStateType::AlphaTest, false);
 	SetState(EPiplelineStateType::DepthTest, true);
@@ -19,19 +19,19 @@ CMaterial::CMaterial()
 	SetState(EPiplelineStateType::Fog, false);
 }
 
-void CMaterial::OnInitialize()
+void Material::OnInitialize()
 {
 
 }
 
-void CMaterial::SaveState(EPiplelineStateType state)
+void Material::SaveState(EPiplelineStateType state)
 {
 	GLboolean bstate;
 	glGetBooleanv((GLenum)state, &bstate);
 	SetState(m_pushStates, state, _ToCppBool(bstate));
 }
 
-void CMaterial::ApplyStates(map<EPiplelineStateType, bool>& states)
+void Material::ApplyStates(map<EPiplelineStateType, bool>& states)
 {
 	auto it = states.begin();
 	while (it != states.end())
@@ -44,7 +44,7 @@ void CMaterial::ApplyStates(map<EPiplelineStateType, bool>& states)
 	}
 }
 
-void CMaterial::PushState()
+void Material::PushState()
 {
 	SaveState(EPiplelineStateType::AlphaTest);
 	SaveState(EPiplelineStateType::DepthTest);
@@ -55,12 +55,12 @@ void CMaterial::PushState()
 	ApplyStates(m_states);
 }
 
-void CMaterial::PopState()
+void Material::PopState()
 {
 	ApplyStates(m_pushStates);
 }
 
-bool CMaterial::HasState(EPiplelineStateType state)
+bool Material::HasState(EPiplelineStateType state)
 {
 	auto it = m_states.find(state);
 	if (it != m_states.end())
@@ -68,7 +68,7 @@ bool CMaterial::HasState(EPiplelineStateType state)
 	return false;
 }
 
-CMaterial* CMaterial::SetState(map<EPiplelineStateType, bool>& states, EPiplelineStateType state, bool open)
+Material* Material::SetState(map<EPiplelineStateType, bool>& states, EPiplelineStateType state, bool open)
 {
 	if (states.find(state) != states.end())
 		states[state] = open;
@@ -77,30 +77,30 @@ CMaterial* CMaterial::SetState(map<EPiplelineStateType, bool>& states, EPiplelin
 	return this;
 }
 
-CMaterial* CMaterial::SetState(EPiplelineStateType state, bool open)
+Material* Material::SetState(EPiplelineStateType state, bool open)
 {
 	return SetState(m_states, state, open);
 }
 
-CMaterial* CMaterial::SetColor(const Color& color)
+Material* Material::SetColor(const Color& color)
 {
 	m_color = color;
 	return this;
 }
 
-CMaterial* CMaterial::SetShader(CShader* shader)
+Material* Material::SetShader(PShader shader)
 {
 	m_shader = shader;
 	return this;
 }
 
-CMaterial* CMaterial::SetMainTexture(CTexture* texture)
+Material* Material::SetMainTexture(PTexture texture)
 {
 	m_mainTexture = texture;
 	return this;
 }
 
-CMaterial* CMaterial::Bind()
+void Material::Bind()
 {
 	PushState();
 	m_shader->Run();
@@ -112,11 +112,10 @@ CMaterial* CMaterial::Bind()
 		SetParam("MainTex", 0);
 	}
 	SetParam("Color", m_color);
-	CLight::SetUniformParams(m_shader);
-	return this;
+	Light::SetUniformParams(m_shader);
 }
 
-CMaterial* CMaterial::Unbind()
+void Material::Unbind()
 {
 	glBindVertexArray(0);
 	if (m_mainTexture && HasState(EPiplelineStateType::Texture2D))
@@ -126,14 +125,13 @@ CMaterial* CMaterial::Unbind()
 	}
 	glUseProgram(0);
 	PopState();
-	return this;
 }
 
-CMaterial* CMaterial::GetDefaltMaterial()
+PMaterial Material::GetDefaltMaterial()
 {
-	if (m_defaultMaterial == NULL)
+	if (m_defaultMaterial.get() == NULL)
 	{
-		m_defaultMaterial = new CMaterial();
+		m_defaultMaterial.reset(new Material());
 	}
 	return m_defaultMaterial;
 }

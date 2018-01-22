@@ -1,7 +1,7 @@
 #ifndef _MESH_FACTORY_H_
 #define _MESH_FACTORY_H_
 
-#define _MeshFactory CMeshFactory::GetInstance()
+#define _MeshFactory MeshFactory::GetInstance()
 
 #include<map>
 #include"SpCommon\Singleton.h"
@@ -16,21 +16,21 @@ enum class EMeshType
 	Quad,
 };
 
-class CMeshFactory : public CSingleton<CMeshFactory>
+class MeshFactory : public CSingleton<MeshFactory>
 {
-	map<EMeshType, Mesh*> m_meshes;
-	map<EMeshType, CMeshBuffer*> m_buffers;
+	map<EMeshType, PMesh> m_meshes;
+	map<EMeshType, PMeshBuffer> m_buffers;
 
-	Mesh* CreateCube();
-	Mesh* CreateQuad();
-	Mesh* CreateMesh(const Vector3* vertices, const Vector2* texcoords, const Vector3* normals, int count);
+	PMesh CreateCube();
+	PMesh CreateQuad();
+	PMesh CreateMesh(const Vector3* vertices, const Vector2* texcoords, const Vector3* normals, int count);
 
 public:
-	Mesh* CreateRectMesh(float width, float height);
-	Mesh* CreateMesh(EMeshType type);
-	Mesh* SharedMesh(EMeshType type);
-	CMeshBuffer* CreateBuffer(EMeshType type);
-	CMeshBuffer* SharedBuffer(EMeshType type);
+	PMesh CreateRectMesh(float width, float height);
+	PMesh CreateMesh(EMeshType type);
+	PMesh SharedMesh(EMeshType type);
+	PMeshBuffer CreateBuffer(EMeshType type);
+	PMeshBuffer SharedBuffer(EMeshType type);
 };
 
 #endif

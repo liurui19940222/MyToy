@@ -1,24 +1,24 @@
 #include "Texture.h"
 
-CTexture::~CTexture()
+Texture::~Texture()
 {
 	Release();
 }
 
-CTexture* CTexture::Bind()
+Texture* Texture::Bind()
 {
 	glBindTexture(GL_TEXTURE_2D, m_texId);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, m_envMode);
 	return this;
 }
 
-CTexture* CTexture::SetEnvMode(ETexEnvMode mode)
+Texture* Texture::SetEnvMode(ETexEnvMode mode)
 {
 	m_envMode = mode;
 	return this;
 }
 
-CTexture* CTexture::SetWrapMode(ETexWrapMode mode)
+Texture* Texture::SetWrapMode(ETexWrapMode mode)
 {
 	m_wrapMode = mode;
 	glBindTexture(GL_TEXTURE_2D, m_texId);
@@ -27,7 +27,7 @@ CTexture* CTexture::SetWrapMode(ETexWrapMode mode)
 	return this;
 }
 
-CTexture* CTexture::SetFilterMode(ETexFilterMode mode)
+Texture* Texture::SetFilterMode(ETexFilterMode mode)
 {
 	m_filterMode = mode;
 	glBindTexture(GL_TEXTURE_2D, m_texId);
@@ -36,16 +36,16 @@ CTexture* CTexture::SetFilterMode(ETexFilterMode mode)
 	return this;
 }
 
-int CTexture::GetWidth() const { return m_width; }
-int CTexture::GetHeight() const { return m_height; }
-int CTexture::GetFormat() const { return m_format; }
-int CTexture::GetInternalFormat() const { return m_internalFormat; }
-uint CTexture::GetTextureId() const { return m_texId; }
-ETexEnvMode CTexture::GetEnvMode() const { return m_envMode; }
-ETexFilterMode CTexture::GetFilterMode() const { return m_filterMode; }
-ETexWrapMode CTexture::GetWrapMode() const { return m_wrapMode; }
+int Texture::GetWidth() const { return m_width; }
+int Texture::GetHeight() const { return m_height; }
+int Texture::GetFormat() const { return m_format; }
+int Texture::GetInternalFormat() const { return m_internalFormat; }
+uint Texture::GetTextureId() const { return m_texId; }
+ETexEnvMode Texture::GetEnvMode() const { return m_envMode; }
+ETexFilterMode Texture::GetFilterMode() const { return m_filterMode; }
+ETexWrapMode Texture::GetWrapMode() const { return m_wrapMode; }
 
-void CTexture::Release()
+void Texture::Release()
 {
 	if (m_texId)
 	{

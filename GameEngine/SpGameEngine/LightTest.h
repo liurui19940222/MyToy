@@ -15,16 +15,16 @@
 
 using namespace std;
 
-class CLightTest : public CGameWindow
+class LightTest : public CGameWindow
 {
 	ColladaLoader* collada;
-	Model* m_model;
+	PModel m_model;
 	CGameObject* model;
 	CGameObject* directionalGo;
 	CGameObject* pointGo;
-	CLightComponent* pointLight;
+	LightComponent* pointLight;
 	vector<AnimationClip*> m_clips;
-	CTexture* m_texture;
+	PTexture m_texture;
 public:
 	virtual void OnStart();
 

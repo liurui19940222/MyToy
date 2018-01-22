@@ -92,9 +92,6 @@
     <ClCompile Include="Rendering.cpp">
       <Filter>Object\src</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Object\src</Filter>
-    </ClCompile>
     <ClCompile Include="RenderTexture.cpp">
       <Filter>Object\src</Filter>
     </ClCompile>

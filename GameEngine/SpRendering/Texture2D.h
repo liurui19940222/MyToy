@@ -10,22 +10,23 @@ enum EStoreTexture2DId
 	White8x8 = 1,
 };
 
-class CTexture2D : public CTexture
+SMART_CLASS(Texture2D) class Texture2D : public Texture
 {
-private:
-	static CTexture2D* m_store[2];
 
-	static CTexture2D* Init(CTexture2D* texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data);
+private:
+	static PTexture2D m_store[2];
+
+	static PTexture2D Init(PTexture2D texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data);
 
 public:
-	static CTexture2D* Create(const char* filename);
-	static CTexture2D* Create(ImageLoader* image);
-	static CTexture2D* Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-	static CTexture2D* Create(ImageLoader* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-	static CTexture2D* Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-	static CTexture2D* Create(UCHAR* pixels, int width, int height);
+	static PTexture2D Create(const char* filename);
+	static PTexture2D Create(ImageLoader* image);
+	static PTexture2D Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
+	static PTexture2D Create(ImageLoader* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
+	static PTexture2D Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
+	static PTexture2D Create(UCHAR* pixels, int width, int height);
 
-	static CTexture2D* GetOneInStore(EStoreTexture2DId id);
+	static PTexture2D GetOneInStore(EStoreTexture2DId id);
 };
 
 #endif

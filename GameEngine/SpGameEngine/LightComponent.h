@@ -3,10 +3,10 @@
 #include"Component.h"
 #include"SpRendering\Light.h"
 
-class CLightComponent : public CLight, public CComponent
+class LightComponent : public Light, public CComponent
 {
 public:
-	static void RenderShadowMap(CLightComponent* light);
+	static void RenderShadowMap(LightComponent* light);
 	virtual void OnStart() override;
 	virtual void OnDestroy() override;
 	virtual Vector3 GetLightPosOrDirection() const override;

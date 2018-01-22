@@ -18,7 +18,7 @@ enum class ELightType
 	Spot = 2,
 };
 
-class CLight
+SMART_CLASS(Light) class Light
 {
 protected:
 	static Color color_buffer[LIGHT_MAX_NUM];
@@ -26,8 +26,8 @@ protected:
 	static float intensity_buffer[LIGHT_MAX_NUM];
 	static int type_buffer[LIGHT_MAX_NUM];
 	static Matrix4x4 shadowMapMatrix;
-	static CRenderTexture* shadowMap;
-	static vector<CLight*> lights;
+	static PRenderTexture shadowMap;
+	static vector<PLight> lights;
 	static int shadowCasterIndex;
 
 protected:
@@ -39,10 +39,10 @@ protected:
 public:
 
 	static void SetShadowMapSize(int width, int height);
-	static CRenderTexture* GetShadowMap();
+	static PRenderTexture GetShadowMap();
 	static Matrix4x4 GetShadowMapMatrix();
-	static void SetUniformParams(CShader* shader);
-	static CLight* PrepareLight();
+	static void SetUniformParams(PShader shader);
+	static PLight PrepareLight();
 	inline virtual void SetColor(Color color) { m_color = color; }
 	inline virtual void SetIntensity(float intensity) { m_intensity = intensity; }
 	inline virtual void SetType(ELightType type) { m_type = type; }

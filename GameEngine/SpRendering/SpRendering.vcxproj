@@ -180,7 +180,6 @@
     <ClCompile Include="MeshBuffer.cpp" />
     <ClCompile Include="MeshFactory.cpp" />
     <ClCompile Include="RenderCamera.cpp" />
-    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Rendering.cpp" />
     <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="Shader.cpp" />

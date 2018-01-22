@@ -21,7 +21,7 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd, float clientWidth, float
 	CTime::InitTime();
 	CTime::SetTargetFrameCount(60);
 	CEngineSetting::Init();
-	CLight::SetShadowMapSize(1024, 1024);
+	Light::SetShadowMapSize(1024, 1024);
 	m_hInstance = instance;
 	WindowHandle = hwnd;
 
@@ -40,7 +40,8 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd, float clientWidth, float
 	uiCamera->gameObject->SetLocalPosition(Vector3(0, 0, 10));
 	uiCamera->gameObject->SetLocalEulerAngles(Vector3(0, 180, 0));
 	uiCamera->SetCameraClearFlag(ECameraClearFlag::DontClear);
-	uiCamera->SetDepth(99)->LayerMask() = Layer::Overlay2D;
+	uiCamera->SetDepth(99);
+	uiCamera->LayerMask() = Layer::Overlay2D;
 	uiCamera->Ortho(clientHeight * 0.5f, clientWidth / clientHeight);
 	uiCamera->UpdateViewMatrix();
 
@@ -140,8 +141,8 @@ void CEngine::Render()
 		return;
 	}
 
-	CLight* light = CLight::PrepareLight();
-	CLightComponent::RenderShadowMap(dynamic_cast<CLightComponent*>(light));
+	PLight light = Light::PrepareLight();
+	LightComponent::RenderShadowMap((LightComponent*)light.get());
 
 	m_cameras.ForeachInverse([this](CCamera* camera) {
 		camera->BeginOneFrame();

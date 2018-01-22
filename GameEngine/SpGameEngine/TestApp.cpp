@@ -15,22 +15,29 @@ void CTestApp::OnStart()
 	_MainCameraGo->SetLocalPosition(Vector3(0, 0, 5));
 	_MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
 	camera = _Maker->Instantiate(L"Camera");
-	CRenderTexture* renderTexture = CRenderTexture::Create(400, 400, true);
+	PRenderTexture renderTexture = RenderTexture::Create(400, 400, true);
 	CCamera* c = camera->AddComponent<CCamera>();
 	c->Perspective(54.0f, _SCW / _SCH, 0.1f, 1000.0f);
-	c->SetCameraClearFlag(ECameraClearFlag::SolidColor)->SetCameraClearColor(Color::black)->SetDepth(1)->SetRenderTexture(renderTexture);
+	c->SetCameraClearFlag(ECameraClearFlag::SolidColor);
+	c->SetCameraClearColor(Color::black);
+	c->SetDepth(1);
+	c-> SetRenderTexture(renderTexture);
 	c->SetName(L"camera");
 	camera->SetLocalPosition(Vector3(100, 3, -10));
 	model = _Maker->Instantiate(L"model");
 	model->SetLocalPosition(Vector3(100, 0, 0));
 	model->SetLocalScale(Vector3(0.12f, 0.12f, 0.12f));
-	CMaterial* model_mat = _Maker->Instantiate<CMaterial>()->SetShader(CShader::Get("texture"));
-	model_mat->SetMainTexture(CTexture2D::Create("textures/model.png"));
-	model->AddComponent<CMeshRenderer>()->SetModel(new CMeshBuffer(_Resources->Load<C3DSModelLoader>("models/model.3DS")->m_model->m_meshes[0]))->SetMaterial(model_mat);
+	shared_ptr<Material> model_mat = make_shared<Material>();
+	model_mat->SetShader(Shader::Get("texture"));
+	model_mat->SetMainTexture(Texture2D::Create("textures/model.png"));
 
-	CMaterial* material = _Maker->Instantiate<CMaterial>();
-	material->SetMainTexture(renderTexture)->SetShader(CShader::Get("texture"));
-	CMeshBuffer* quad = _MeshFactory->SharedBuffer(EMeshType::Cube);
+	C3DSModelLoader* loader = _Resources->Load<C3DSModelLoader>("models/model.3DS");
+	PMeshBuffer buff(new MeshBuffer(PMesh(&loader->m_model->m_meshes[0])));
+	model->AddComponent<CMeshRenderer>()->SetModel(buff)->SetMaterial(model_mat);
+
+	PMaterial material(new Material());
+	material->SetMainTexture(renderTexture)->SetShader(Shader::Get("texture"));
+	PMeshBuffer quad = _MeshFactory->SharedBuffer(EMeshType::Cube);
 	go1 = _Maker->Instantiate(L"parent");
 	go1->AddComponent<CMeshRenderer>()->SetModel(quad)->SetMaterial(material);
 

@@ -1,6 +1,6 @@
 #include"RenderTexture.h"
 
-void CRenderTexture::MakeBuffer(int width, int height, bool depthBuffer)
+void RenderTexture::MakeBuffer(int width, int height, bool depthBuffer)
 {
 	if (!m_fboHandle) glGenFramebuffers(1, &m_fboHandle);
 	glBindFramebuffer(GL_FRAMEBUFFER, m_fboHandle);
@@ -29,20 +29,20 @@ void CRenderTexture::MakeBuffer(int width, int height, bool depthBuffer)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void CRenderTexture::BindBuffer()
+void RenderTexture::BindBuffer()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, m_fboHandle);
 }
 
-void CRenderTexture::ReleaseBuffer()
+void RenderTexture::ReleaseBuffer()
 {
 	if (m_rboHandle) glDeleteRenderbuffers(1, &m_rboHandle);
 	if (m_fboHandle) glDeleteFramebuffers(1, &m_fboHandle);
 }
 
-CRenderTexture* CRenderTexture::Create(int width, int height, bool depthBuffer)
+PRenderTexture RenderTexture::Create(int width, int height, bool depthBuffer)
 {
-	CRenderTexture* texture = new CRenderTexture();
+	PRenderTexture texture(new RenderTexture());
 	texture->m_width = width;
 	texture->m_height = height;
 	texture->MakeBuffer(width, height, depthBuffer);
