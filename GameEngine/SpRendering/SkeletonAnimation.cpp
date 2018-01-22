@@ -26,10 +26,10 @@ Mesh::Mesh(const Mesh& mesh)
 
 Mesh::~Mesh()
 {
-	if (m_vertices) free(m_vertices);
-	if (m_normals) free(m_normals);
-	if (m_texcoords) free(m_texcoords);
-	if (m_colors) free(m_colors);
+	if (m_vertices) { free(m_vertices); m_vertices = NULL; }
+	if (m_normals) { free(m_normals); m_normals = NULL; }
+	if (m_texcoords) { free(m_texcoords); m_texcoords = NULL; }
+	if (m_colors) { free(m_colors); m_colors = NULL; }
 }
 
 vector<JointPose> SkeletonAnimation::Sample(AnimationClip& clip, Skeleton& skeleton, float t, float weight)

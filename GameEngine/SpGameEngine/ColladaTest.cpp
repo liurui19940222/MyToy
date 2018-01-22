@@ -6,6 +6,7 @@
 #include<glm\glm.hpp>
 
 PSkyBox box;
+PMesh mesh;
 
 void CColladaTest::OnStart()
 {
@@ -18,17 +19,6 @@ void CColladaTest::OnStart()
 
 	model = _Maker->Instantiate(L"model");
 
-	//model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 2);
-	//model->SetLocalEulerAngles(Vector3(0, 90, 0));
-	//Material* model_mat = _Maker->Instantiate<Material>()->SetShader(Shader::Get("skinning"))
-	//	->SetMainTexture(Texture2D::Create("textures/longxia.png"));
-	//collada = _Resources->Load<ColladaLoader>("models/longxia.xml");
-
-	//model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 10);
-	//model->SetLocalEulerAngles(Vector3(0, 0, 0));
-	//Material* model_mat = _Maker->Instantiate<Material>()->SetShader(Shader::Get("skinning"));
-	//collada = _Resources->Load<ColladaLoader>("models/walk.xml");
-	
 	model->SetLocalPosition(Vector3(0, 1, 0));
 	model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 1.8);
 	model->SetLocalEulerAngles(Vector3(0, -70, 0));
@@ -37,8 +27,8 @@ void CColladaTest::OnStart()
 		->SetMainTexture(Texture2D::Create("textures/shake.png"));
 	collada = _Resources->Load<ColladaLoader>("models/shake_skin.xml");
 	m_model = PModel(collada->m_model);
-	Mesh* mesh = &m_model->m_meshes[0];
-	MeshBuffer* buffer = new MeshBuffer(PMesh(mesh), m_model->m_skeleton.m_weights, m_model->m_skeleton.m_indices);
+	mesh = PMesh(&m_model->m_meshes[0]);
+	MeshBuffer* buffer = new MeshBuffer(mesh, m_model->m_skeleton.m_weights, m_model->m_skeleton.m_indices);
 
 	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(PMeshBuffer(buffer), &m_model->m_skeleton)->SetMaterial(model_mat);
 	
@@ -49,28 +39,6 @@ void CColladaTest::OnStart()
 	m_clips.push_back(_Resources->LoadAnimation("models/shake_death.xml"));
 	m_clips[1]->m_isLooping = true;
 	m_clips[2]->m_isLooping = false;
-
-	//m_texture = Texture2D::Create("textures/shake.png");
-
-	//m_texture = RenderTexture::Create(512, 512, true);
-
-	//CCamera* camera = _Maker->Instantiate(L"Camera")->AddComponent<CCamera>();
-	//camera->LayerMask() = Layer::Default;
-	//camera->Perspective(54.0f, _SCW / _SCH, 1.0f, 1000.0f);
-	//camera->UpdateViewMatrix();
-	//camera->SetRenderTexture((RenderTexture*)m_texture);
-	//camera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
-	//camera->gameObject->SetTag("CRTes");
-	//camera->gameObject->SetLocalPosition(_MainCameraGo->GetLocalPosition());
-	//camera->gameObject->SetLocalEulerAngles(_MainCameraGo->GetLocalEulerAngles());
-	//camera->gameObject->LookAt(model->GetLocalPosition());
-
-	//box = SkyBox::Create("textures/skybox/top.jpg", 
-	//	NULL, 
-	//	"textures/skybox/front.jpg", 
-	//	"textures/skybox/back.jpg", 
-	//	"textures/skybox/left.jpg", 
-	//	"textures/skybox/right.jpg");
 
 	box = SkyBox::Create("textures/skybox2/top.tga",
 		"textures/skybox2/bottom.tga",

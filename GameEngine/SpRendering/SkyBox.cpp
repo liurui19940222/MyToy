@@ -87,6 +87,12 @@ void SkyBox::InitBuffer()
 		Vector2(1.0f, 0.0f),
 		Vector2(1.0f, 1.0f),
 	};
+	m_buffer[(int)ESkyBoxFace::Top] = make_shared<MeshBuffer>();
+	m_buffer[(int)ESkyBoxFace::Bottom] = make_shared<MeshBuffer>();
+	m_buffer[(int)ESkyBoxFace::Front] = make_shared<MeshBuffer>();
+	m_buffer[(int)ESkyBoxFace::Back] = make_shared<MeshBuffer>();
+	m_buffer[(int)ESkyBoxFace::Left] = make_shared<MeshBuffer>();
+	m_buffer[(int)ESkyBoxFace::Right] = make_shared<MeshBuffer>();
 	m_buffer[(int)ESkyBoxFace::Top]->MakeBuffer(top, NULL, NULL, uv, 6);
 	m_buffer[(int)ESkyBoxFace::Bottom]->MakeBuffer(bottom, NULL, NULL, uv, 6);
 	m_buffer[(int)ESkyBoxFace::Front]->MakeBuffer(front, NULL, NULL, uv, 6);
