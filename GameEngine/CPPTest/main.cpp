@@ -37,9 +37,9 @@ PTexture2D canvasTexture;
 
 #define FONT_PATH "D:/GitHub/MyToy/GameEngine/SpGameEngine/fonts/msyh.ttf"
 //#define FONT_PATH "C:/Windows/Fonts/DengXian.ttf"
-//#define SHOW_TEXT L"/* handle to face object2018北美车展：新款MINI家族正式发布 handle to face object2018北美车展：新款MINI家族正式发布"
+#define SHOW_TEXT L"/* handle to face object2018北美车展：新款MINI家族正式发布 handle to face object2018北美车展：新款MINI家族正式发布"
 //#define SHOW_TEXT L"/*款MINI家族正式发布 handle to face object"
-#define SHOW_TEXT L"D:/GitHub/MyToy/GameEngine/SpGameEngine/fonts/msyh.ttf/nD:/GitHub/MyToy/GameEngine/SpGameEngine/"
+//#define SHOW_TEXT L"D:/GitHub/MyToy/GameEngine/SpGameEngine/fonts/msyh.ttf/nD:/GitHub/MyToy/GameEngine/SpGameEngine/"
 //#define SHOW_TEXT L"+-*()[]{}:;',.?!"
 #define CLASS_NAME L"NAME"
 
@@ -151,7 +151,8 @@ LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 		CTrueTypeFont* f = FontManager->LoadFont(1, FONT_PATH);
 		font = new CFontRenderer();
 		font->SetFont(f);
-		font->SetColor(Color::white);
+		font->SetColor(Color::green);
+		font->SetEffect(EFontEffect::Shadow)->SetEffectVector(Vector3(1, -1, 0))->SetEffectColor(Color::black);
 		font->SetFontSize(font_size); 
 		font->SetTextAlignment(EAlignment::CENTER_MIDDLE);
 		font->SetRenderType(ERenderType::Smart);
@@ -319,7 +320,7 @@ void Update()
 void Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0, 0, 0, 1);
+	glClearColor(1.0f, 1.0f, 1.0f, 1);
 
 	modelMat = Matrix4x4::Rotate(0, 0, 180) * Matrix4x4::Scale(Vector3::one * 5);
 	//modelMat = Matrix4x4::Rotate(0, GetTickCount() / 10, 0);

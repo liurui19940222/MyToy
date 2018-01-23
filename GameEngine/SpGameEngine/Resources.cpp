@@ -1,22 +1,13 @@
 #include"Resources.h"
 #include"SpAssetLoader\ColladaLoader.h"
 
-AnimationClip* CResources::LoadAnimation(string path)
+PAnimationClip CResources::LoadAnimation(string path)
 {
 	ColladaLoader* modelFile = _Resources->Load<ColladaLoader>(path);
-	Model* model = modelFile->m_model;
-	AnimationClip* clip = NULL;
-	if (model->m_animationCount > 0)
-		clip = &model->m_animations[0];
-	for (int i = 0; i < model->m_meshCount; ++i)
-	{
-		delete(&model->m_meshes[i]);
-	}
-	for (int i = 1; i < model->m_animationCount; ++i)
-	{
-		delete(&model->m_animations[i]);
-	}
-	delete(model);
+	PModel model = modelFile->m_model;
+	PAnimationClip clip;
+	if (model->animationsCount() > 0)
+		clip = model->m_animations[0];
 	delete(modelFile);
 	return clip;
 }

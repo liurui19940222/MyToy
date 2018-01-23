@@ -5,9 +5,6 @@
 #include"SpRendering\MeshFactory.h"
 #include<glm\glm.hpp>
 
-PSkyBox box;
-PMesh mesh;
-
 void CColladaTest::OnStart()
 {
 	_MainCamera->SetCameraClearFlag(ECameraClearFlag::SolidColor);
@@ -26,11 +23,10 @@ void CColladaTest::OnStart()
 	model_mat->SetShader(Shader::Get("skinning"))
 		->SetMainTexture(Texture2D::Create("textures/shake.png"));
 	collada = _Resources->Load<ColladaLoader>("models/shake_skin.xml");
-	m_model = PModel(collada->m_model);
-	mesh = PMesh(&m_model->m_meshes[0]);
-	MeshBuffer* buffer = new MeshBuffer(mesh, m_model->m_skeleton.m_weights, m_model->m_skeleton.m_indices);
+	m_model = collada->m_model;
+	MeshBuffer* buffer = new MeshBuffer(m_model->m_meshes[0], m_model->m_skeleton->m_weights, m_model->m_skeleton->m_indices);
 
-	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(PMeshBuffer(buffer), &m_model->m_skeleton)->SetMaterial(model_mat);
+	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(PMeshBuffer(buffer), m_model->m_skeleton)->SetMaterial(model_mat);
 	
 	_MainCameraGo->LookAt(model->GetLocalPosition());
 
@@ -47,21 +43,14 @@ void CColladaTest::OnStart()
 		"textures/skybox2/left.tga",
 		"textures/skybox2/right.tga");
 
-	_MainCamera->SetSkyBox(box);
+	//_MainCamera->SetSkyBox(box);
 }
 
 void CColladaTest::OnUpdate()
 {
-	float h = CInput::GetAxis("Horizontal") * CTime::deltaTime * 100;
-	float v = CInput::GetAxis("Vertical") * CTime::deltaTime * 100;
-
-	Vector3 euler = model->GetLocalEulerAngles();
-	euler.y += h;
-	model->SetLocalEulerAngles(euler);
-
 	if (m_clips.size() > 0)
 	{
-		vector<AnimationClip*> v(2);
+		vector<PAnimationClip> v(2);
 		v[0] = m_clips[0];
 		v[1] = m_clips[1];
 		float times[] = { CTime::time, CTime::time };

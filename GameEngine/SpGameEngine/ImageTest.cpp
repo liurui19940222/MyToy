@@ -19,8 +19,7 @@ void CImageTest::OnStart()
 	go->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f));
 	go->SetLocalEulerAngles(Vector3(0, 180, 0));
 	CMeshRenderer* renderer = go->AddComponent<CMeshRenderer>();
-	PMesh m(&model->m_model->m_meshes[0]);
-	renderer->SetModel(PMeshBuffer(new MeshBuffer(m)))->SetMaterial(mat_model);
+	renderer->SetModel(PMeshBuffer(new MeshBuffer(model->m_model->m_meshes[0])))->SetMaterial(mat_model);
 
 	ImageLoader* ground_image = _Resources->Load<ImageLoader>("textures/dlg01.bmp");
 	PTexture ground_texture = Texture2D::Create(ground_image);

@@ -137,6 +137,7 @@ map<string, vector<string>> ColladaLoader::ReadSources(xml_node<>* node)
 
 void ColladaLoader::ReadSkeleton(xml_node<>* node)
 {
+	m_model->m_skeleton = make_shared<Skeleton>();
 	xml_node<>* scene_root = GetNodeByName(node, "library_visual_scenes")->first_node();
 	for (xml_node<> *it = scene_root->first_node(); it; it = it->next_sibling())
 	{
@@ -145,9 +146,9 @@ void ColladaLoader::ReadSkeleton(xml_node<>* node)
 			ReadJoint(it, 0xFF, 0);
 		}
 	}
-	m_model->m_skeleton.m_globalPoses.resize(m_model->m_skeleton.GetSize());
-	m_model->m_skeleton.m_localPoses.resize(m_model->m_skeleton.GetSize());
-	m_model->m_skeleton.m_skiningMatrices.resize(m_model->m_skeleton.GetSize());
+	m_model->m_skeleton->m_globalPoses.resize(m_model->m_skeleton->GetSize());
+	m_model->m_skeleton->m_localPoses.resize(m_model->m_skeleton->GetSize());
+	m_model->m_skeleton->m_skiningMatrices.resize(m_model->m_skeleton->GetSize());
 }
 
 void ColladaLoader::ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth)
@@ -158,9 +159,9 @@ void ColladaLoader::ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth
 	joint.m_localMatrix = Matrix4x4(m);
 	joint.m_name = GetAttribute(joint_node, "name");
 	joint.m_iParent = parent_ref;
-	joint.m_Index = m_model->m_skeleton.GetSize();
-	m_model->m_skeleton.AddJoint(joint);
-	byte index = m_model->m_skeleton.GetSize() - 1;
+	joint.m_Index = m_model->m_skeleton->GetSize();
+	m_model->m_skeleton->AddJoint(joint);
+	byte index = m_model->m_skeleton->GetSize() - 1;
 	//--------------------打印关节树----------------------
 	//string str;
 	//for (int i = 0; i < depth; i++)
@@ -186,7 +187,7 @@ void ColladaLoader::ReadSkin(xml_node<>* root, vector<Vector4>& weights, vector<
 	xml_node<>* skin_node = GetNodeByName(root, "library_controllers")->first_node()->first_node();
 	string mat_value = GetNodeByName(skin_node, "bind_shape_matrix")->value();
 	float* p_mat = UnpackValues<float>(mat_value, 16);
-	m_model->m_skeleton.m_bindShapeMat = p_mat;
+	m_model->m_skeleton->m_bindShapeMat = p_mat;
 	free(p_mat);
 	xml_node<>* joint_node = GetNodeByName(skin_node, "joints");
 	vector<xml_node<>*> joint_inputs = GetNodesByName(joint_node, "input");
@@ -258,7 +259,7 @@ void ColladaLoader::ReadSkin(xml_node<>* root, vector<Vector4>& weights, vector<
 		int num = vcount[i];
 		for (int j = 0; j < num; j++)
 		{
-			indices[i][j] = m_model->m_skeleton.GetJointIndex(joint_source[v_array[weights_offsets[0] + v + j * 2]]);
+			indices[i][j] = m_model->m_skeleton->GetJointIndex(joint_source[v_array[weights_offsets[0] + v + j * 2]]);
 			weights[i][j] = weight_source[v_array[weights_offsets[1] + v + j * 2]];
 		}
 		v += num * 2;
@@ -266,7 +267,7 @@ void ColladaLoader::ReadSkin(xml_node<>* root, vector<Vector4>& weights, vector<
 
 	for (uint i = 0; i < joint_source.size(); i++)
 	{
-		Joint& joint = *m_model->m_skeleton.GetJoint(joint_source[i]);
+		Joint& joint = *m_model->m_skeleton->GetJoint(joint_source[i]);
 		joint.m_invBindPose = matrix_source[i];
 	}
 }
@@ -297,8 +298,8 @@ void ColladaLoader::ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<
 	{
 		m_triangleNum += GetAttribute<int>(*it, "count");
 	}
-	Mesh* p_mesh = m_model->m_meshes = new Mesh[1];
-	m_model->m_meshCount = 1;
+	PMesh p_mesh = make_shared<Mesh>();
+	m_model->m_meshes.push_back(p_mesh);
 	p_mesh->m_vertexCount = m_triangleNum * 3;
 
 	int vertIndex = 0, normalIndex = 0, uvIndex = 0; //读取时已到达的索引
@@ -306,8 +307,8 @@ void ColladaLoader::ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<
 	p_mesh->m_normals = (Vector3*)malloc(sizeof(Vector3) * p_mesh->m_vertexCount);
 	p_mesh->m_texcoords = (Vector2*)malloc(sizeof(Vector2) * p_mesh->m_vertexCount);
 
-	m_model->m_skeleton.m_weights.resize(p_mesh->m_vertexCount);
-	m_model->m_skeleton.m_indices.resize(p_mesh->m_vertexCount);
+	m_model->m_skeleton->m_weights.resize(p_mesh->m_vertexCount);
+	m_model->m_skeleton->m_indices.resize(p_mesh->m_vertexCount);
 
 	int index_num = 0;
 	bool hasSkeletonInfo = weights.size() > 0;
@@ -345,8 +346,8 @@ void ColladaLoader::ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<
 			int vi = indices[i + offsets[0]];
 			if (hasSkeletonInfo)
 			{
-				m_model->m_skeleton.m_weights[vertIndex] = weights[vi];
-				m_model->m_skeleton.m_indices[vertIndex] = weight_indices[vi];
+				m_model->m_skeleton->m_weights[vertIndex] = weights[vi];
+				m_model->m_skeleton->m_indices[vertIndex] = weight_indices[vi];
 			}
 			if (flags[0])
 				p_mesh->m_vertices[vertIndex++] = ((Vector3*)source_map[sourceIds[0]].array)[vi];
@@ -375,7 +376,7 @@ void ColladaLoader::ReadAnimation(xml_node<>* root)
 		string channel_source_id = RemoveAtFirst(GetAttribute(channel_node, "source"));
 		string channel_target_joint = GetAttribute(channel_node, "target");
 		channel_target_joint = channel_target_joint.substr(0, channel_target_joint.find('/'));
-		byte joint_index = m_model->m_skeleton.GetJointIndex(channel_target_joint);
+		byte joint_index = m_model->m_skeleton->GetJointIndex(channel_target_joint);
 		Matrix4x4* matrices = NULL;
 		float* times = NULL;
 		int sample_count = 0;
@@ -410,8 +411,8 @@ void ColladaLoader::ReadAnimation(xml_node<>* root)
 		free(matrices);
 		free(times);
 	}
-	AnimationClip* clip = m_model->m_animations = new AnimationClip[1];
-	m_model->m_animationCount = 0;
+	PAnimationClip clip = make_shared<AnimationClip>();
+	m_model->m_animations.push_back(clip);
 	clip->m_isLooping = true;
 	clip->m_aSamples.clear();
 	int index = 0;
@@ -420,13 +421,12 @@ void ColladaLoader::ReadAnimation(xml_node<>* root)
 	if (clip->m_aSamples.size() > 0)
 	{
 		clip->m_length = clip->m_aSamples[clip->m_aSamples.size() - 1].m_time;
-		m_model->m_animationCount = 1;
 	}
 }
 
 void ColladaLoader::LoadFromFile(const char* filename)
 {
-	m_model = new Model;
+	ReleaseSource();
 	LoadXmlDocument(filename);
 	xml_node<>* root = m_xmlDoc.first_node();
 	ReadSkeleton(root);
@@ -441,5 +441,9 @@ void ColladaLoader::LoadFromFile(const char* filename)
 
 void ColladaLoader::ReleaseSource()
 {
-	free(m_xmlData);
+	if (m_xmlData)
+	{
+		free(m_xmlData);
+		m_xmlData;
+	}
 }

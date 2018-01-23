@@ -5,7 +5,7 @@ CSysFont::CSysFont(wchar_t* name, int size)
 {
 	HFONT hFont;
 
-	m_fontListBase = glGenLists(96);
+	m_FontListBase = glGenLists(96);
 
 	hFont = CreateFont(size, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 		ANSI_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS,
@@ -15,23 +15,23 @@ CSysFont::CSysFont(wchar_t* name, int size)
 
 CSysFont::~CSysFont()
 {
-	if (m_fontListBase != 0)
-		glDeleteLists(m_fontListBase, 96);
+	if (m_FontListBase != 0)
+		glDeleteLists(m_FontListBase, 96);
 }
 
 void CSysFont::Render(const char* text, const Vector3& position, HDC hdc)
 {
-	if ((m_fontListBase == 0) || (strlen(text) == 0))
+	if ((m_FontListBase == 0) || (strlen(text) == 0))
 		return;
 
-	SelectObject(hdc, m_hfont);
-	wglUseFontBitmaps(hdc, 32, 96, m_fontListBase);
+	SelectObject(hdc, m_HFont);
+	wglUseFontBitmaps(hdc, 32, 96, m_FontListBase);
 
 	glPushMatrix();
 	glRasterPos2i(position.x, position.y);
 
 	glPushAttrib(GL_LIST_BIT);
-	glListBase(m_fontListBase - 32);
+	glListBase(m_FontListBase - 32);
 	glCallLists((int)strlen(text), GL_UNSIGNED_BYTE, text);
 	glPopAttrib();
 

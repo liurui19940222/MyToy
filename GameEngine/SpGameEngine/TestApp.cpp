@@ -32,7 +32,7 @@ void CTestApp::OnStart()
 	model_mat->SetMainTexture(Texture2D::Create("textures/model.png"));
 
 	C3DSModelLoader* loader = _Resources->Load<C3DSModelLoader>("models/model.3DS");
-	PMeshBuffer buff(new MeshBuffer(PMesh(&loader->m_model->m_meshes[0])));
+	PMeshBuffer buff(new MeshBuffer(loader->m_model->m_meshes[0]));
 	model->AddComponent<CMeshRenderer>()->SetModel(buff)->SetMaterial(model_mat);
 
 	PMaterial material(new Material());

@@ -39,7 +39,7 @@ void CSkinnedMeshRenderer::Render(PShader shader)
 	glDrawArrays(GL_TRIANGLES, 0, m_mesh->GetVertexNum());
 }
 
-CSkinnedMeshRenderer* CSkinnedMeshRenderer::SetSkinningMesh(PMeshBuffer mesh, Skeleton* skeleton)
+CSkinnedMeshRenderer* CSkinnedMeshRenderer::SetSkinningMesh(PMeshBuffer mesh, PSkeleton skeleton)
 {
 	this->m_mesh = mesh;
 	this->m_skeleton = skeleton;

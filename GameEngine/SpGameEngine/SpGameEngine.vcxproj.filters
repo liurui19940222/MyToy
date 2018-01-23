@@ -223,21 +223,6 @@
     <ClCompile Include="GameWindow.cpp">
       <Filter>Core\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Application\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="RelationshipTest.cpp">
-      <Filter>Application\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="TextTest.cpp">
-      <Filter>Application\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageTest.cpp">
-      <Filter>Application\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="GUITest.cpp">
-      <Filter>Application\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="MeshRenderer.cpp">
       <Filter>Component\源文件</Filter>
     </ClCompile>
@@ -246,9 +231,6 @@
     </ClCompile>
     <ClCompile Include="Maker.cpp">
       <Filter>Core\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="TestApp.cpp">
-      <Filter>Application\源文件</Filter>
     </ClCompile>
     <ClCompile Include="Config.cpp">
       <Filter>Common\源文件</Filter>
@@ -265,9 +247,6 @@
     <ClCompile Include="SkinnedMeshRenderer.cpp">
       <Filter>Component\源文件</Filter>
     </ClCompile>
-    <ClCompile Include="TestTest.cpp">
-      <Filter>Application\源文件</Filter>
-    </ClCompile>
     <ClCompile Include="GUILabel.cpp">
       <Filter>GUISystem\源文件</Filter>
     </ClCompile>
@@ -279,9 +258,6 @@
     </ClCompile>
     <ClCompile Include="TaskManager.cpp">
       <Filter>Common\源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="LightTest.cpp">
-      <Filter>Application\源文件</Filter>
     </ClCompile>
     <ClCompile Include="ImageHandle.cpp">
       <Filter>Common\源文件</Filter>
@@ -300,6 +276,30 @@
     </ClCompile>
     <ClCompile Include="LightComponent.cpp">
       <Filter>Component\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TestTest.cpp">
+      <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TestApp.cpp">
+      <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUITest.cpp">
+      <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TextTest.cpp">
+      <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RelationshipTest.cpp">
+      <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LightTest.cpp">
+      <Filter>Application\源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageTest.cpp">
+      <Filter>Application\源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

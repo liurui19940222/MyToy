@@ -7,7 +7,8 @@
 class ModelLoader : public IAssetLoader
 {
 public:
-	Model* m_model = NULL;
+	ModelLoader() { m_model = make_shared<Model>(); }
+	PModel m_model = NULL;
 };
 
 #endif

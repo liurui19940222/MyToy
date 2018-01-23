@@ -6,8 +6,8 @@
 
 class CSysFont
 {
-	unsigned int m_fontListBase;
-	HFONT m_hfont;
+	unsigned int		m_FontListBase;
+	HFONT				m_HFont;
 
 	~CSysFont();
 public:

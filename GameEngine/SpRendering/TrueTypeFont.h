@@ -14,12 +14,12 @@ using namespace std;
 class CCharacterInfo
 {
 public:
-	CAtlas* atlas;
-	int code;
-	Rect2D rect;
-	int left_padding;
-	int top;
-	int advance_x;
+	CAtlas*					m_Atlas;
+	int						m_Code;
+	Rect2D					m_Rect;
+	int						m_LeftPadding;
+	int						m_Top;
+	int						m_AdvanceX;
 
 	CCharacterInfo(int code);
 
@@ -31,14 +31,11 @@ public:
 class CTrueTypeFontSize
 {
 private:
-	int fontSize;
-
-	FT_Library* ft_lib;
-	FT_Face* ft_face;
-
-	map<int, CCharacterInfo*> characters;
-
-	vector<CAtlas*> atlases;
+	int						m_FontSize;
+	FT_Library*				m_FtLib;
+	FT_Face*				m_FtFace;
+	vector<CAtlas*>			m_Atlases;
+	map<int, CCharacterInfo*> m_Characters;
 
 	CAtlas* GetEnoughAtlas(int width, int height,int max_height);
 
@@ -57,12 +54,11 @@ public:
 class CTrueTypeFont
 {
 private:
-	int id;
-	const char* name;
-	FT_Library ft_lib;
-	FT_Face ft_face;
-
-	map<int, CTrueTypeFontSize*> sizeMap;
+	int						m_Id;
+	const char*				m_Name;
+	FT_Library				m_FtLib;
+	FT_Face					m_FtFace;
+	map<int, CTrueTypeFontSize*> m_SizeMap;
 
 public:
 	CTrueTypeFont(int id);

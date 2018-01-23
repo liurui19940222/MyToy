@@ -139,8 +139,6 @@ private:
 #pragma endregion
 
 public:
-	Model* m_model;
-
 	virtual void LoadFromFile(const char* filename) override;
 	virtual void ReleaseSource() override;
 };

@@ -37,7 +37,7 @@ public:
 		return dynamic_cast<T*>(sourceFile);
 	}
 
-	AnimationClip* LoadAnimation(string path);
+	PAnimationClip LoadAnimation(string path);
 
 	void Unload(string& path);
 };

@@ -15,13 +15,13 @@ class ENGINE_API CSkinnedMeshRenderer : public CComponent, public IRenderer
 {
 	REFLECT_CLASS(CSkinnedMeshRenderer)
 private:
-	Skeleton* m_skeleton;
+	PSkeleton m_skeleton;
 	PMeshBuffer m_mesh;
 	PMaterial m_material;
 
 public:
 
-	CSkinnedMeshRenderer* SetSkinningMesh(PMeshBuffer mesh, Skeleton* skeleton);
+	CSkinnedMeshRenderer* SetSkinningMesh(PMeshBuffer mesh, PSkeleton skeleton);
 
 	CSkinnedMeshRenderer* SetMaterial(PMaterial material);
 

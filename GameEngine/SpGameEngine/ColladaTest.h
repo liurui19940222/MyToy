@@ -17,9 +17,10 @@ using namespace std;
 class CColladaTest : public CGameWindow
 {
 	ColladaLoader* collada;
+	PSkyBox box;
 	PModel m_model;
 	CGameObject* model;
-	vector<AnimationClip*> m_clips;
+	vector<PAnimationClip> m_clips;
 	PTexture m_texture;
 public:
 	virtual void OnStart();

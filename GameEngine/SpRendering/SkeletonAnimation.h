@@ -117,22 +117,23 @@ SMART_STRUCT(Mesh) struct Mesh
 
 SMART_STRUCT(Model) struct Model 
 {
-	Skeleton m_skeleton;
-	Mesh* m_meshes = NULL;
-	int m_meshCount = 0;
-	AnimationClip* m_animations = NULL;
-	int m_animationCount = 0;
+	PSkeleton m_skeleton;
+	vector<PMesh> m_meshes;
+	vector<PAnimationClip> m_animations;
+
+	inline size_t meshesCount() { return m_meshes.size(); }
+	inline size_t animationsCount() { return m_animations.size(); }
 };
 
 class SkeletonAnimation {
 
 public:
-	static vector<JointPose> Sample(AnimationClip& clip, Skeleton& skeleton, float t, float weight);
-	static vector<JointPose> FullMatchSample(AnimationClip& clip, Skeleton& skeleton, float t, float weight);
-	static vector<JointPose> Blend(AnimationClip** clips, float* timePos, float* weights, int count, Skeleton& skeleton);
-	static void CalculateGlobalMatrix(Skeleton& skeleton);
-	static void CalculateGlobalMatrix(Skeleton& skeleton, vector<JointPose> localPoses);
-	static void CalculateSkinningMatrix(Skeleton& skeleton);
+	static vector<JointPose> Sample(PAnimationClip clip, PSkeleton skeleton, float t, float weight);
+	static vector<JointPose> FullMatchSample(PAnimationClip clip, PSkeleton skeleton, float t, float weight);
+	static vector<JointPose> Blend(PAnimationClip* clips, float* timePos, float* weights, int count, PSkeleton skeleton);
+	static void CalculateGlobalMatrix(PSkeleton skeleton);
+	static void CalculateGlobalMatrix(PSkeleton skeleton, vector<JointPose> localPoses);
+	static void CalculateSkinningMatrix(PSkeleton skeleton);
 };
 
 #endif

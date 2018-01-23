@@ -201,9 +201,12 @@
     <ClCompile Include="FileInfo.cpp" />
     <ClCompile Include="FileSystemInfo.cpp" />
     <ClCompile Include="GUIDesigner.cpp" />
+    <ClCompile Include="GUITest.cpp" />
     <ClCompile Include="ImageHandle.cpp" />
+    <ClCompile Include="ImageTest.cpp" />
     <ClCompile Include="LightComponent.cpp" />
     <ClCompile Include="LightTest.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="MessageCenter.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColladaTest.cpp" />
@@ -217,12 +220,9 @@
     <ClCompile Include="GUIImage.cpp" />
     <ClCompile Include="GUILabel.cpp" />
     <ClCompile Include="GUISystem.cpp" />
-    <ClCompile Include="GUITest.cpp" />
-    <ClCompile Include="ImageTest.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Maker.cpp" />
-    <ClCompile Include="RelationshipTest.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
+    <ClCompile Include="RelationshipTest.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="SkinnedMeshRenderer.cpp" />
     <ClCompile Include="SpriteAnimation.cpp" />

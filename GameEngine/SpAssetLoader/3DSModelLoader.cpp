@@ -2,7 +2,7 @@
 
 void C3DSModelLoader::LoadFromFile(const char* filename)
 {
-	m_model = new Model;
+	m_model = make_shared<Model>();
 	lib3dsfile = lib3ds_file_load(filename);
 	int m_triangleNum = lib3dsfile->meshes->faces;
 	int m_vertexNum = m_triangleNum * 3;
@@ -48,12 +48,11 @@ void C3DSModelLoader::LoadFromFile(const char* filename)
 		memcpy(&m_normalArray[index++], &(normalBuffer[face->points[1]]), sizeof(Vector3));
 		memcpy(&m_normalArray[index++], &(normalBuffer[face->points[2]]), sizeof(Vector3));
 	}
-	m_model->m_meshCount = 1;
-	m_model->m_meshes = new Mesh[1];
-	m_model->m_meshes[0].m_vertices = (Vector3*)m_triangleArray;
-	m_model->m_meshes[0].m_normals = m_normalArray;
-	m_model->m_meshes[0].m_texcoords = m_uvArray;
-	m_model->m_meshes[0].m_vertexCount = m_vertexNum;
+	m_model->m_meshes.push_back(make_shared<Mesh>());
+	m_model->m_meshes[0]->m_vertices = (Vector3*)m_triangleArray;
+	m_model->m_meshes[0]->m_normals = m_normalArray;
+	m_model->m_meshes[0]->m_texcoords = m_uvArray;
+	m_model->m_meshes[0]->m_vertexCount = m_vertexNum;
 }
 
 void C3DSModelLoader::ReleaseSource()
