@@ -4,34 +4,33 @@
 #include"SpAssetLoader\ImageLoader.h"
 #include"Texture.h"
 
-namespace spgameengine
+BEGIN_NAMESPACE_ENGINE
+
+enum EStoreTexture2DId
+{
+	Black8x8 = 0,
+	White8x8 = 1,
+};
+
+SMART_CLASS(Texture2D) class Texture2D : public Texture
 {
 
-	enum EStoreTexture2DId
-	{
-		Black8x8 = 0,
-		White8x8 = 1,
-	};
+private:
+	static PTexture2D m_store[2];
 
-	SMART_CLASS(Texture2D) class Texture2D : public Texture
-	{
+	static PTexture2D Init(PTexture2D texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data);
 
-	private:
-		static PTexture2D m_store[2];
+public:
+	static PTexture2D Create(const char* filename);
+	static PTexture2D Create(ImageLoader* image);
+	static PTexture2D Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
+	static PTexture2D Create(ImageLoader* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
+	static PTexture2D Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
+	static PTexture2D Create(UCHAR* pixels, int width, int height);
 
-		static PTexture2D Init(PTexture2D texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data);
+	static PTexture2D GetOneInStore(EStoreTexture2DId id);
+};
 
-	public:
-		static PTexture2D Create(const char* filename);
-		static PTexture2D Create(ImageLoader* image);
-		static PTexture2D Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-		static PTexture2D Create(ImageLoader* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-		static PTexture2D Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-		static PTexture2D Create(UCHAR* pixels, int width, int height);
-
-		static PTexture2D GetOneInStore(EStoreTexture2DId id);
-	};
-
-}
+END_NAMESPACE_ENGINE
 
 #endif

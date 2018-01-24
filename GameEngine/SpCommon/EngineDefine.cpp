@@ -1,7 +1,7 @@
 #include "EngineDefine.h"
 #include "Math.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 SRect2D::SRect2D() : center(0, 0), halfSize(0, 0) {}
 

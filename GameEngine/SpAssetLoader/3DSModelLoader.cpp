@@ -1,6 +1,6 @@
 #include"3DSModelLoader.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 void C3DSModelLoader::LoadFromFile(const char* filename)
 {

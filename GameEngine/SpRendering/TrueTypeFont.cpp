@@ -5,7 +5,7 @@
 #include <freetype/fttrigon.h>
 #include <freetype/ftbitmap.h>
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 #pragma region CCharacterInfo
 

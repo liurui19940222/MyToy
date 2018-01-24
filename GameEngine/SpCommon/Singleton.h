@@ -4,33 +4,32 @@
 #include<Windows.h>
 #include"ApiDefine.h"
 
-namespace spgameengine
+BEGIN_NAMESPACE_ENGINE
+
+template<typename T>
+class ENGINE_API_TEMPLATE CSingleton
 {
+	static T* m_instance;
 
-	template<typename T>
-	class ENGINE_API_TEMPLATE CSingleton
+protected:
+	CSingleton() {}
+	virtual ~CSingleton() {}
+	virtual void OnInitialize() {}
+
+public:
+	static T* GetInstance()
 	{
-		static T* m_instance;
-
-	protected:
-		CSingleton() {}
-		virtual ~CSingleton() {}
-		virtual void OnInitialize() {}
-
-	public:
-		static T* GetInstance()
+		if (m_instance == NULL)
 		{
-			if (m_instance == NULL)
-			{
-				m_instance = new T();
-				m_instance->OnInitialize();
-			}
-			return m_instance;
+			m_instance = new T();
+			m_instance->OnInitialize();
 		}
-	};
+		return m_instance;
+	}
+};
 
-	template<typename T>T* CSingleton<T>::m_instance;
+template<typename T>T* CSingleton<T>::m_instance;
 
-}
+END_NAMESPACE_ENGINE
 
 #endif

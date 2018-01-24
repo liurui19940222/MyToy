@@ -1,7 +1,7 @@
 #include"SkyBox.h"
 #include"Shader.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 PSkyBox SkyBox::Create(const char* top, const char* bottom, const char* front, const char* back, const char* left, const char* right)
 {

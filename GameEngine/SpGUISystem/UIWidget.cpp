@@ -1,11 +1,7 @@
 #include "stdafx.h"
 #include "UIWidget.h"
 
-
-UIWidget::UIWidget()
-{
-}
-
+USING_NAMESPACE_GUI;
 
 UIWidget::~UIWidget()
 {
@@ -51,5 +47,27 @@ UIWidget* UIWidget::SetGlobalPosition(const Vector2& pos)
 		this->m_Rect.center = pos - m_Parent->GetGlobalPosition();
 	else
 		this->m_Rect.center = pos;
+	return this;
+}
+
+UIWidget* UIWidget::AddChild(PUIWidget widget)
+{
+	m_Childreen.push_back(widget);
+	return this;
+}
+
+UIWidget* UIWidget::RemoveChild(PUIWidget widget)
+{
+	if (widget.get())
+	{
+		for (auto it = m_Childreen.begin(); it != m_Childreen.end(); ++it)
+		{
+			if (it->get() == widget.get())
+			{
+				m_Childreen.erase(it);
+				break;
+			}
+		}
+	}
 	return this;
 }

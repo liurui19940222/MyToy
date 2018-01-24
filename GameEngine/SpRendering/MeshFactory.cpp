@@ -1,6 +1,6 @@
 #include "MeshFactory.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 PMesh MeshFactory::CreateCube()
 {

@@ -3,7 +3,7 @@
 #include"Light.h"
 #include"SpCommon\EngineDefine.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 map<EPiplelineStateType, bool> Material::m_pushStates;
 PMaterial Material::m_defaultMaterial = NULL;

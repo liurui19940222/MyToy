@@ -1,6 +1,6 @@
 #include "FastPainter.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 HDC FastPainter::hdc;
 HGLRC FastPainter::hrc;

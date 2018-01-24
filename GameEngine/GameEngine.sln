@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{DB0A
 		Shaders\skinning.vert = Shaders\skinning.vert
 		Shaders\texture.frag = Shaders\texture.frag
 		Shaders\texture.vert = Shaders\texture.vert
+		Shaders\ui_default.frag = Shaders\ui_default.frag
+		Shaders\ui_default.vert = Shaders\ui_default.vert
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpGUISystem", "SpGUISystem\SpGUISystem.vcxproj", "{98C157AA-9D30-4C39-A66E-657AB8780536}"

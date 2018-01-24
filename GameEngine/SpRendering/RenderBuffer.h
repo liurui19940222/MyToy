@@ -1,16 +1,19 @@
 #ifndef _RENDER_BUFFER_H_
 #define _RENDER_BUFFER_H_
 
-namespace spgameengine
+#include"SpCommon\ApiDefine.h"
+
+BEGIN_NAMESPACE_ENGINE
+
+class IRenderBuffer
 {
+public:
 
-	class IRenderBuffer
-	{
-	public:
+	virtual void BindBuffer() = 0;
 
-		virtual void BindBuffer() = 0;
+	virtual void ReleaseBuffer() = 0;
+};
 
-		virtual void ReleaseBuffer() = 0;
-	};
-}
+END_NAMESPACE_ENGINE
+
 #endif

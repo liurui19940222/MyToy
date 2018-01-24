@@ -1,6 +1,6 @@
 #include "ImageLoader.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 #ifndef GL_BGR_EXT
 #define GL_BGR_EXT                        0x80E0

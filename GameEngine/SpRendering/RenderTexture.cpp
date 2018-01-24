@@ -1,6 +1,6 @@
 #include"RenderTexture.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 void RenderTexture::MakeBuffer(int width, int height, bool depthBuffer)
 {

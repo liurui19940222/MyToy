@@ -10,20 +10,22 @@
 #include<lib3ds/vector.h>
 #include<lib3ds/light.h>
 #include"ModelLoader.h"
+#include"SpCommon\ApiDefine.h"
 
-namespace spgameengine
+BEGIN_NAMESPACE_ENGINE
+
+class C3DSModelLoader : public ModelLoader
 {
-	class C3DSModelLoader : public ModelLoader
-	{
-	private:
-		Lib3dsFile* lib3dsfile;
+private:
+	Lib3dsFile* lib3dsfile;
 
-	public:
+public:
 
-		virtual void LoadFromFile(const char* filename) override;
+	virtual void LoadFromFile(const char* filename) override;
 
-		virtual void ReleaseSource() override;
-	};
-}
+	virtual void ReleaseSource() override;
+};
+
+END_NAMESPACE_ENGINE
 
 #endif

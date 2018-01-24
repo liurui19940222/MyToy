@@ -1,6 +1,6 @@
 #include"SkeletonAnimation.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 Mesh::Mesh(const Mesh& mesh)
 {

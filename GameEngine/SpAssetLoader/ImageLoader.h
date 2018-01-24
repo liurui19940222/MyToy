@@ -4,43 +4,46 @@
 #include"IAssetLoader.h"
 #include"SpCommon\EngineDefine.h"
 #include<freeimage\FreeImage.h>
-namespace spgameengine
+
+BEGIN_NAMESPACE_ENGINE
+
+class ImageLoader : public IAssetLoader
 {
-	class ImageLoader : public IAssetLoader
-	{
-		FIBITMAP* m_pFI;
+	FIBITMAP* m_pFI;
 
-		int m_format;
+	int m_format;
 
-		int m_internalFormat;
+	int m_internalFormat;
 
-	public:
-		ImageLoader();
+public:
+	ImageLoader();
 
-		ImageLoader(const char* filename);
-		~ImageLoader();
+	ImageLoader(const char* filename);
+	~ImageLoader();
 
-		virtual void LoadFromFile(const char* filename) override;
+	virtual void LoadFromFile(const char* filename) override;
 
-		virtual void ReleaseSource() override;
+	virtual void ReleaseSource() override;
 
-		uint GetWidth();
+	uint GetWidth();
 
-		uint GetHeight();
+	uint GetHeight();
 
-		uint GetBPP();
+	uint GetBPP();
 
-		int GetFormat();
+	int GetFormat();
 
-		int GetInternalFormat();
+	int GetInternalFormat();
 
-		BYTE* GetBytes();
+	BYTE* GetBytes();
 
-		bool ChangeSize(int width, int height);
+	bool ChangeSize(int width, int height);
 
-		bool Save(const char* path, FREE_IMAGE_FORMAT fif);
+	bool Save(const char* path, FREE_IMAGE_FORMAT fif);
 
-		static ImageLoader* Create(int width, int height, int bpp, BYTE* data);
-	};
-}
+	static ImageLoader* Create(int width, int height, int bpp, BYTE* data);
+};
+
+END_NAMESPACE_ENGINE
+
 #endif

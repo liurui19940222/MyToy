@@ -15,12 +15,21 @@
     <ClInclude Include="UIWidget.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="UIView.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIDefines.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GUISystem.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="UIWidget.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="UIView.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 Texture::~Texture()
 {

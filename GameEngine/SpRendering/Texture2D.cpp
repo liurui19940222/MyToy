@@ -1,6 +1,6 @@
 #include "Texture2D.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 PTexture2D Texture2D::m_store[2] = { NULL, NULL };
 

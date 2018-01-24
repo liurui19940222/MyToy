@@ -1,7 +1,7 @@
 #include "GLRendering.h"
 #include <gl\glew.h>
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 void GLRendering::StartUp(const RenderingStartUpParams* params)
 {

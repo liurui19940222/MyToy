@@ -1,7 +1,7 @@
 #include "Atlas.h"
 #include <math.h>
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 CAtlas::CAtlas(int width, int height) : Object()
 {

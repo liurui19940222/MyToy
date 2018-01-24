@@ -19,11 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GUIDefines.h" />
     <ClInclude Include="GUISystem.h" />
+    <ClInclude Include="UIView.h" />
     <ClInclude Include="UIWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GUISystem.cpp" />
+    <ClCompile Include="UIView.cpp" />
     <ClCompile Include="UIWidget.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

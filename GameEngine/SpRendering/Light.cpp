@@ -1,7 +1,7 @@
 #include"Light.h"
 #include"SpRendering\RenderTexture.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 Color Light::color_buffer[LIGHT_MAX_NUM];
 Vector3 Light::pos_buffer[LIGHT_MAX_NUM];

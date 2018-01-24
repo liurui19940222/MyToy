@@ -1,6 +1,6 @@
 #include "FontManager.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 CTrueTypeFont* CFontManager::LoadFont(int fontId, const char* file_name)
 {

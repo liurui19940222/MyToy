@@ -14,7 +14,7 @@
 #include"SpCommon/FastPainter.h"
 #include"SpCommon/Input.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 int width = 800;
 int height = 600;

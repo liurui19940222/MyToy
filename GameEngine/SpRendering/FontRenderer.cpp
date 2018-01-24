@@ -4,7 +4,7 @@
 #include"SpCommon\FastPainter.h"
 #include"Texture2D.h"
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 CCharacterPrimitiveBase::CCharacterPrimitiveBase(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels) :m_Left(left_padding), m_Top(top), m_AdvanceX(advance_x)
 {

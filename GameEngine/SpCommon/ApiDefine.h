@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef _API_DEFINE_H_
 #define _API_DEFINE_H_
 
@@ -14,3 +16,7 @@
 #   endif
 
 #endif
+
+#define BEGIN_NAMESPACE_ENGINE namespace spgameengine {
+#define END_NAMESPACE_ENGINE }
+#define USING_NAMESPACE_ENGINE using namespace spgameengine;

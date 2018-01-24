@@ -2,7 +2,7 @@
 #include<assert.h>
 #include<Windows.h>
 
-using namespace spgameengine;
+USING_NAMESPACE_ENGINE
 
 const Vector2 Vector2::zero(0.0f, 0.0f);
 const Vector2 Vector2::one(1.0f, 1.0f);
