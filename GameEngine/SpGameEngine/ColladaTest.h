@@ -13,6 +13,7 @@
 #include<vector>
 
 using namespace std;
+using namespace spgameengine;
 
 class CColladaTest : public CGameWindow
 {

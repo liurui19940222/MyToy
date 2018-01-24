@@ -6,6 +6,9 @@
 
 using namespace std;
 
+namespace spgameengine
+{
+
 #define setter(variableType)[&](variableType value) 
 #define getter(variableType)[&]()
 #define _prop(type, set, get) property<type>(setter(type) {\
@@ -17,83 +20,85 @@ using namespace std;
 #define _prop_r(type, get) property_r<type>(getter(type) { get })
 #define _prop_w(type, set) property_w<type>(setter(type) { set })
 
-template<typename T> class ENGINE_API_TEMPLATE property
-{
-	typedef function<void(T)> Setter;
-	typedef function<T()> Getter;
-
-public:
-	property(Setter setter, Getter getter) : m_setter(setter), m_getter(getter) {}
-
-	property& operator=(const property& pro)
+	template<typename T> class ENGINE_API_TEMPLATE property
 	{
-		m_setter(pro.m_getter());
-		return *this;
-	}
+		typedef function<void(T)> Setter;
+		typedef function<T()> Getter;
 
-	property& operator=(const T& v)
+	public:
+		property(Setter setter, Getter getter) : m_setter(setter), m_getter(getter) {}
+
+		property& operator=(const property& pro)
+		{
+			m_setter(pro.m_getter());
+			return *this;
+		}
+
+		property& operator=(const T& v)
+		{
+			m_setter(v);
+			return *this;
+		}
+
+		operator T() const
+		{
+			return m_getter();
+		}
+
+		const T& value() const
+		{
+			return m_getter();
+		}
+
+	private:
+		Setter m_setter;
+		Getter m_getter;
+	};
+
+	template<typename T> class ENGINE_API_TEMPLATE property_r
 	{
-		m_setter(v);
-		return *this;
-	}
+		typedef function<T()> Getter;
 
-	operator T() const
+	public:
+		property_r(Getter getter) : m_getter(getter) {}
+
+		operator T() const
+		{
+			return m_getter();
+		}
+
+		const T& value() const
+		{
+			return m_getter();
+		}
+
+	private:
+		Getter m_getter;
+	};
+
+	template<typename T> class ENGINE_API_TEMPLATE property_w
 	{
-		return m_getter();
-	}
+		typedef function<void(T)> Setter;
 
-	const T& value() const
-	{
-		return m_getter();
-	}
+	public:
+		property_w(Setter setter) : m_setter(setter) {}
 
-private:
-	Setter m_setter;
-	Getter m_getter;
-};
+		property_w& operator=(const property_w& pro)
+		{
+			m_setter(pro.m_setter());
+			return *this;
+		}
 
-template<typename T> class ENGINE_API_TEMPLATE property_r
-{
-	typedef function<T()> Getter;
+		property_w& operator=(const T& v)
+		{
+			m_setter(v);
+			return *this;
+		}
 
-public:
-	property_r(Getter getter) : m_getter(getter) {}
+	private:
+		Setter m_setter;
+	};
 
-	operator T() const
-	{
-		return m_getter();
-	}
-
-	const T& value() const
-	{
-		return m_getter();
-	}
-
-private:
-	Getter m_getter;
-};
-
-template<typename T> class ENGINE_API_TEMPLATE property_w
-{
-	typedef function<void(T)> Setter;
-
-public:
-	property_w(Setter setter) : m_setter(setter) {}
-
-	property_w& operator=(const property_w& pro)
-	{
-		m_setter(pro.m_setter());
-		return *this;
-	}
-
-	property_w& operator=(const T& v)
-	{
-		m_setter(v);
-		return *this;
-	}
-
-private:
-	Setter m_setter;
-};
+}
 
 #endif

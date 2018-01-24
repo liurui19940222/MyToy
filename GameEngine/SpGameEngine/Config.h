@@ -13,6 +13,7 @@
 
 using namespace std;
 using namespace rapidxml;
+using namespace spgameengine;
 
 class ENGINE_API CConfig : public CSingleton<CConfig>
 {

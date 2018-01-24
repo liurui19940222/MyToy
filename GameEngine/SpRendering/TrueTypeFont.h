@@ -9,69 +9,73 @@
 #include"SpCommon\Atlas.h"
 
 using namespace std;
-
-//单个字符信息
-class CCharacterInfo
+namespace spgameengine
 {
-public:
-	CAtlas*					m_Atlas;
-	int						m_Code;
-	Rect2D					m_Rect;
-	int						m_LeftPadding;
-	int						m_Top;
-	int						m_AdvanceX;
 
-	CCharacterInfo(int code);
+	//单个字符信息
+	class CCharacterInfo
+	{
+	public:
+		CAtlas*					m_Atlas;
+		int						m_Code;
+		Rect2D					m_Rect;
+		int						m_LeftPadding;
+		int						m_Top;
+		int						m_AdvanceX;
 
-	bool GetBitmap(SBitmapData* out_bitmap, Color color);
-};
+		CCharacterInfo(int code);
 
-//某个字号的所有字体
-//可包含多张图集，图集的大小预定义
-class CTrueTypeFontSize
-{
-private:
-	int						m_FontSize;
-	FT_Library*				m_FtLib;
-	FT_Face*				m_FtFace;
-	vector<CAtlas*>			m_Atlases;
-	map<int, CCharacterInfo*> m_Characters;
+		bool GetBitmap(SBitmapData* out_bitmap, Color color);
+	};
 
-	CAtlas* GetEnoughAtlas(int width, int height,int max_height);
+	//某个字号的所有字体
+	//可包含多张图集，图集的大小预定义
+	class CTrueTypeFontSize
+	{
+	private:
+		int						m_FontSize;
+		FT_Library*				m_FtLib;
+		FT_Face*				m_FtFace;
+		vector<CAtlas*>			m_Atlases;
+		map<int, CCharacterInfo*> m_Characters;
 
-public:
-	CTrueTypeFontSize(int size, FT_Library* ft_lib, FT_Face* ft_face);
+		CAtlas* GetEnoughAtlas(int width, int height, int max_height);
 
-	CCharacterInfo* GetCharacter(int code);
+	public:
+		CTrueTypeFontSize(int size, FT_Library* ft_lib, FT_Face* ft_face);
 
-	vector<CAtlas*>* GetAtlases();
+		CCharacterInfo* GetCharacter(int code);
 
-	void Release();
-};
+		vector<CAtlas*>* GetAtlases();
 
-//一个字体类
-//按字号包含该字号的图所有信息
-class CTrueTypeFont
-{
-private:
-	int						m_Id;
-	const char*				m_Name;
-	FT_Library				m_FtLib;
-	FT_Face					m_FtFace;
-	map<int, CTrueTypeFontSize*> m_SizeMap;
+		void Release();
+	};
 
-public:
-	CTrueTypeFont(int id);
+	//一个字体类
+	//按字号包含该字号的图所有信息
+	class CTrueTypeFont
+	{
+	private:
+		int						m_Id;
+		const char*				m_Name;
+		FT_Library				m_FtLib;
+		FT_Face					m_FtFace;
+		map<int, CTrueTypeFontSize*> m_SizeMap;
 
-	CTrueTypeFont(int id, const char* file_name);
+	public:
+		CTrueTypeFont(int id);
 
-	bool LoadFromPath(const char* file_name);
+		CTrueTypeFont(int id, const char* file_name);
 
-	CCharacterInfo* GetCharacter(wchar_t ch, int size);
+		bool LoadFromPath(const char* file_name);
 
-	vector<CAtlas*>* GetAtlases(int size);
+		CCharacterInfo* GetCharacter(wchar_t ch, int size);
 
-	void Release();
-};
+		vector<CAtlas*>* GetAtlases(int size);
+
+		void Release();
+	};
+
+}
 
 #endif

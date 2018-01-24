@@ -1,42 +1,42 @@
 #ifndef _OBJECT_
 #define _OBJECT_
-
 #include<string>
 #include<memory>
+using namespace std;
 
 #define SMART_CLASS(CLASS_NAME) class CLASS_NAME;  typedef std::shared_ptr<CLASS_NAME> P##CLASS_NAME;
 #define SMART_STRUCT(CLASS_NAME) struct CLASS_NAME;  typedef std::shared_ptr<CLASS_NAME> P##CLASS_NAME;
 
-using namespace std;
-
-class Object
+namespace spgameengine
 {
-protected:
-	int m_InstanceId;
-	wstring m_Name;
-
-public:
-	inline Object()
+	class Object
 	{
-		static int id = 0;
-		m_InstanceId = ++id;
-		OnInitialize();
-	}
+	protected:
+		int m_InstanceId;
+		wstring m_Name;
 
-	inline Object(std::wstring& name) : Object()
-	{
-		this->m_Name = name;
-	}
+	public:
+		inline Object()
+		{
+			static int id = 0;
+			m_InstanceId = ++id;
+			OnInitialize();
+		}
 
-	virtual ~Object() { }
+		inline Object(wstring& name) : Object()
+		{
+			this->m_Name = name;
+		}
 
-	inline int GetInstanceId() { return m_InstanceId; }
+		virtual ~Object() { }
 
-	inline void SetName(const wstring& name) { this->m_Name = name; }
+		inline int GetInstanceId() { return m_InstanceId; }
 
-	inline wstring& GetName() { return this->m_Name; }
+		inline void SetName(const wstring& name) { this->m_Name = name; }
 
-	virtual void OnInitialize() { }
-};
+		inline wstring& GetName() { return this->m_Name; }
 
+		virtual void OnInitialize() { }
+	};
+}
 #endif

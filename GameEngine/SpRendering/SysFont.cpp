@@ -1,6 +1,8 @@
 #include"SysFont.h"
 #include<gl\glew.h>
 
+using namespace spgameengine;
+
 CSysFont::CSysFont(wchar_t* name, int size)
 {
 	HFONT hFont;

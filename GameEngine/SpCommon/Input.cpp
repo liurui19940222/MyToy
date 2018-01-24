@@ -1,5 +1,7 @@
 #include"Input.h"
 
+using namespace spgameengine;
+
 EMouseMode CInput::Mode = EMouseMode::Relative;
 LPDIRECTINPUT8 CInput::lpDI;
 LPDIRECTINPUTDEVICE8 CInput::lpDIKeyboard;

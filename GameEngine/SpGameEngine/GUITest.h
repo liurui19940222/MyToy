@@ -12,6 +12,7 @@
 
 using namespace std;
 using namespace guisystem;
+using namespace spgameengine;
 
 class GUITest : public CGameWindow
 {

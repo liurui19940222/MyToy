@@ -1,5 +1,7 @@
 #include "FastPainter.h"
 
+using namespace spgameengine;
+
 HDC FastPainter::hdc;
 HGLRC FastPainter::hrc;
 
@@ -137,10 +139,10 @@ void FastPainter::DrawCone(const Matrix4x4& matrix, const Color& color, float ra
 void FastPainter::DrawRect(const SRect2D& rect, const Matrix4x4& modelToWorldMatrix)
 {
 	static Vector3 vertices[4];
-	vertices[0].x = -rect.half_size_x; vertices[0].y = rect.half_size_y; vertices[0].z = 0;
-	vertices[1].x = -rect.half_size_x; vertices[1].y = -rect.half_size_y; vertices[1].z = 0;
-	vertices[2].x = rect.half_size_x; vertices[2].y = -rect.half_size_y; vertices[2].z = 0;
-	vertices[3].x = rect.half_size_x; vertices[3].y = rect.half_size_y; vertices[3].z = 0;
+	vertices[0].x = -rect.halfSize.x; vertices[0].y = rect.halfSize.y; vertices[0].z = 0;
+	vertices[1].x = -rect.halfSize.x; vertices[1].y = -rect.halfSize.y; vertices[1].z = 0;
+	vertices[2].x = rect.halfSize.x; vertices[2].y = -rect.halfSize.y; vertices[2].z = 0;
+	vertices[3].x = rect.halfSize.x; vertices[3].y = rect.halfSize.y; vertices[3].z = 0;
 	glPushMatrix();
 	glMultMatrixf((float*)&modelToWorldMatrix);
 
@@ -155,7 +157,7 @@ void FastPainter::DrawRect(const SRect2D& rect, const Matrix4x4& modelToWorldMat
 	glColor3f(color.r, color.g, color.b);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	for (int i = 0; i < 4; ++i) DrawQuad(vertices[i], Color::white, 0.03f * (rect.half_size_x + rect.half_size_y));
+	for (int i = 0; i < 4; ++i) DrawQuad(vertices[i], Color::white, 0.03f * (rect.halfSize.x + rect.halfSize.y));
 
 	glEnable(GL_DEPTH_TEST);
 

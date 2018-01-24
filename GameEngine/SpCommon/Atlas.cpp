@@ -1,6 +1,8 @@
 #include "Atlas.h"
 #include <math.h>
 
+using namespace spgameengine;
+
 CAtlas::CAtlas(int width, int height) : Object()
 {
 	static int id = 1;

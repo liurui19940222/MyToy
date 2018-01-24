@@ -2,6 +2,8 @@
 #include"Engine.h"
 #include"SpCommon\EngineDefine.h"
 
+using namespace spgameengine;
+
 class CTestApp : public CGameWindow
 {
 	int window_width = 800;

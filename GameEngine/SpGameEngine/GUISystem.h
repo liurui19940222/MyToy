@@ -17,6 +17,7 @@
 using namespace std;
 using namespace std::tr1;
 using namespace container;
+using namespace spgameengine;
 
 namespace guisystem {
 

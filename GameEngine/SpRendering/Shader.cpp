@@ -8,6 +8,7 @@
 #include"SpCommon\Converter.h"
 
 using namespace std;
+using namespace spgameengine;
 
 map<string, PShader> Shader::m_store;
 

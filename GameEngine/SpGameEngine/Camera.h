@@ -5,6 +5,8 @@
 #include"SpRendering\RenderCamera.h"
 #include"DynamicFactory.h"
 
+using namespace spgameengine;
+
 class ENGINE_API CCamera : public CComponent, public RenderCamera
 {
 	REFLECT_CLASS(CCamera)

@@ -1,6 +1,8 @@
 #include "GLRendering.h"
 #include <gl\glew.h>
 
+using namespace spgameengine;
+
 void GLRendering::StartUp(const RenderingStartUpParams* params)
 {
 	GLRenderingStartUpParams* _params = (GLRenderingStartUpParams*)params;

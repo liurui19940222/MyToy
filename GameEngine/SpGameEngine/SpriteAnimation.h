@@ -7,6 +7,8 @@
 #include"Component.h"
 #include"SpriteRenderer.h"
 
+using namespace spgameengine;
+
 class ENGINE_API CSpriteAnimation : public CComponent, public IAnimation
 {
 	REFLECT_CLASS(CSpriteAnimation)

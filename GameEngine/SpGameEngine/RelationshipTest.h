@@ -14,6 +14,7 @@
 #include"SpRendering\RenderCamera.h"
 
 using namespace std;
+using namespace spgameengine;
 
 class CRelationshipTest : public CGameWindow
 {

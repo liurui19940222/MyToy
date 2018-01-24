@@ -5,20 +5,25 @@
 #include"Texture.h"
 #include"RenderBuffer.h"
 
-SMART_CLASS(RenderTexture) class RenderTexture : public Texture, public IRenderBuffer
+namespace spgameengine
 {
-private:
-	GLuint m_fboHandle;
-	GLuint m_rboHandle;
 
-public:
-	void MakeBuffer(int width, int height, bool depthBuffer);
+	SMART_CLASS(RenderTexture) class RenderTexture : public Texture, public IRenderBuffer
+	{
+	private:
+		GLuint m_fboHandle;
+		GLuint m_rboHandle;
 
-	virtual void BindBuffer() override;
+	public:
+		void MakeBuffer(int width, int height, bool depthBuffer);
 
-	virtual void ReleaseBuffer() override;
+		virtual void BindBuffer() override;
 
-	static PRenderTexture Create(int width, int height, bool depthBuffer);
-};
+		virtual void ReleaseBuffer() override;
+
+		static PRenderTexture Create(int width, int height, bool depthBuffer);
+	};
+
+}
 
 #endif

@@ -18,6 +18,8 @@
 #include"SpCommon\Property.h"
 #include"TaskManager.h"
 
+using namespace spgameengine;
+
 inline CCamera* GetMainCamera()
 {
 	CGameObject* go = _Maker->FindGameObjectWithTag("MainCamera");

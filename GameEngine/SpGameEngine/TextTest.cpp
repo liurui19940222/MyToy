@@ -74,14 +74,14 @@ void CTextTest::OnUpdate()
 	if (CInput::GetKey(DIK_N))
 	{
 		SRect2D rect = text->GetTextRect();
-		rect.half_size_x -= CTime::deltaTime * 10;
+		rect.halfSize.x -= CTime::deltaTime * 10;
 		text->SetTextRect(rect);
 	}
 
 	if (CInput::GetKey(DIK_M))
 	{
 		SRect2D rect = text->GetTextRect();
-		rect.half_size_x += CTime::deltaTime * 10;
+		rect.halfSize.x += CTime::deltaTime * 10;
 		text->SetTextRect(rect);
 	}
 	

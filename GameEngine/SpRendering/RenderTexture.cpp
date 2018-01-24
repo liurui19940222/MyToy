@@ -1,5 +1,7 @@
 #include"RenderTexture.h"
 
+using namespace spgameengine;
+
 void RenderTexture::MakeBuffer(int width, int height, bool depthBuffer)
 {
 	if (!m_fboHandle) glGenFramebuffers(1, &m_fboHandle);

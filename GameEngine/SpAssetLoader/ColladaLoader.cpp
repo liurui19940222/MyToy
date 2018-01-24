@@ -4,6 +4,7 @@
 
 using namespace std;
 using namespace rapidxml;
+using namespace spgameengine;
 
 void ColladaLoader::LoadXmlDocument(const char* filename)
 {

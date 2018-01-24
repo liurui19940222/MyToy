@@ -1,5 +1,7 @@
 #include "Texture2D.h"
 
+using namespace spgameengine;
+
 PTexture2D Texture2D::m_store[2] = { NULL, NULL };
 
 PTexture2D Texture2D::Init(PTexture2D texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data)

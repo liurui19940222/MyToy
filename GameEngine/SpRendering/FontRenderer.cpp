@@ -4,6 +4,8 @@
 #include"SpCommon\FastPainter.h"
 #include"Texture2D.h"
 
+using namespace spgameengine;
+
 CCharacterPrimitiveBase::CCharacterPrimitiveBase(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels) :m_Left(left_padding), m_Top(top), m_AdvanceX(advance_x)
 {
 	this->m_Width = width * pixelScale;
@@ -265,11 +267,11 @@ float CFontRenderer::GetOffsetX(int line_index)
 	}
 	else if (m_AlignmentH == EAlignmentHorizontal::CENTER)
 	{
-		return (m_Rect.half_size_x * 2 - line_width) * 0.5f;
+		return (m_Rect.halfSize.x * 2 - line_width) * 0.5f;
 	}
 	else if (m_AlignmentH == EAlignmentHorizontal::RIGHT)
 	{
-		return m_Rect.half_size_x * 2 - line_width;
+		return m_Rect.halfSize.x * 2 - line_width;
 	}
 	return 0;
 }
@@ -284,12 +286,12 @@ float CFontRenderer::GetOffsetY()
 	else if (m_AlignmentV == EAlignmentVertical::MIDDLE)
 	{
 		float firstLineHalfHeight = m_LineDatas[0]->m_LineHeight * 0.5f;
-		return -(m_Rect.half_size_y * 2 - m_TotalHeight) * 0.5f - firstLineHalfHeight;
+		return -(m_Rect.halfSize.y * 2 - m_TotalHeight) * 0.5f - firstLineHalfHeight;
 	}
 	else if (m_AlignmentV == EAlignmentVertical::BOTTOM)
 	{
 		float lastLineHalfHeight = m_LineDatas[m_LineDatas.size() - 1]->m_LineHeight * 0.5f;
-		return -(m_Rect.half_size_y * 2 - m_TotalHeight) + lastLineHalfHeight;
+		return -(m_Rect.halfSize.y * 2 - m_TotalHeight) + lastLineHalfHeight;
 	}
 	return 0;
 }
@@ -312,8 +314,8 @@ void CFontRenderer::Rebuild()
 		free(bitmap.buffer);
 	}
 
-	start_x = -m_Rect.half_size_x;
-	start_y = +m_Rect.half_size_y;
+	start_x = -m_Rect.halfSize.x;
+	start_y = +m_Rect.halfSize.y;
 	CTextOneLineData* lineData = new CTextOneLineData();
 	lineData->m_LineWidth = -m_Interval_x;
 	m_LineDatas.push_back(lineData);
@@ -326,7 +328,7 @@ void CFontRenderer::Rebuild()
 	{
 		if (m_Text[i] == *L"\n" && !m_bSingleLine)
 		{
-			start_x = -m_Rect.half_size_x;
+			start_x = -m_Rect.halfSize.x;
 			start_y -= (prevHeight + m_Interval_y);
 			m_TotalHeight += prevHeight + m_Interval_y;
 			lineData = new CTextOneLineData();
@@ -339,9 +341,9 @@ void CFontRenderer::Rebuild()
 		adv_x = m_Primitives[i]->m_AdvanceX * pixelScale;
 		width = m_Primitives[i]->m_Width;
 
-		if (start_x + left + width >= m_Rect.half_size_x && !m_bSingleLine)
+		if (start_x + left + width >= m_Rect.halfSize.x && !m_bSingleLine)
 		{
-			start_x = -m_Rect.half_size_x;
+			start_x = -m_Rect.halfSize.x;
 			start_y -= (prevHeight + m_Interval_y);
 			m_TotalHeight += prevHeight + m_Interval_y;
 			lineData = new CTextOneLineData();
@@ -371,7 +373,7 @@ void CFontRenderer::Rebuild()
 		for (size_t j = 0; j < m_LineDatas[i]->primitives.size(); ++j)
 		{
 			pos_y = m_LineDatas[i]->primitives[j]->m_Position.y + offset_y;
-			if (pos_y + halfLineHeight > m_Rect.half_size_y || pos_y - halfLineHeight < -m_Rect.half_size_y)
+			if (pos_y + halfLineHeight > m_Rect.halfSize.y || pos_y - halfLineHeight < -m_Rect.halfSize.y)
 			{
 				CTextOneLineData* lineData = m_LineDatas[i];
 				m_LineDatas.erase(m_LineDatas.begin() + i);

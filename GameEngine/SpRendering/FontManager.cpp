@@ -1,5 +1,7 @@
 #include "FontManager.h"
 
+using namespace spgameengine;
+
 CTrueTypeFont* CFontManager::LoadFont(int fontId, const char* file_name)
 {
 	if (fontMap.find(fontId) == fontMap.end())

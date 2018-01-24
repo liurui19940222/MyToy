@@ -9,6 +9,8 @@
 #include"SpRendering\Material.h"
 #include"SpRendering\MeshBuffer.h"
 
+using namespace spgameengine;
+
 class ENGINE_API CMeshRenderer : public CComponent, public IRenderer
 {
 	REFLECT_CLASS(CMeshRenderer)

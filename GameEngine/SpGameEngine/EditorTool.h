@@ -6,6 +6,8 @@
 #include"SpCommon\EngineDefine.h"
 #include"SpCommon\ApiDefine.h"
 
+using namespace spgameengine;
+
 class ENGINE_API CGameObject;
 
 class ENGINE_API CEditorTool

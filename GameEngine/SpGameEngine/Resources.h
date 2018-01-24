@@ -12,6 +12,7 @@
 #include"SpRendering\SkeletonAnimation.h"
 
 using namespace std;
+using namespace spgameengine;
 
 class ENGINE_API CResources : public CSingleton<CResources>
 {

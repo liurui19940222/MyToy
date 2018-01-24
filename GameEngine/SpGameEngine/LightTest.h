@@ -14,6 +14,7 @@
 #include<vector>
 
 using namespace std;
+using namespace spgameengine;
 
 class LightTest : public CGameWindow
 {

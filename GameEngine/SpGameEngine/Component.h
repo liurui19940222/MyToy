@@ -5,6 +5,8 @@
 #include"DynamicFactory.h"
 #include"EditorTool.h"
 
+using namespace spgameengine;
+
 class ENGINE_API CGameObject;
 
 class ENGINE_API CComponent : public Object

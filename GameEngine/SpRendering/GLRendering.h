@@ -2,28 +2,32 @@
 
 #include"Rendering.h"
 
-class GLRenderingStartUpParams : public RenderingStartUpParams
+namespace spgameengine
 {
-public:
-	HWND m_HWND;
-	int m_ScreenWidth;
-	int m_ScreenHeight;
-};
 
-class GLRendering : public IRenderingInterface
-{
-public:
-	virtual void StartUp(const RenderingStartUpParams* params) override;
-	virtual void Render(PRenderingObject obj, Matrix4x4& modelMatrix,
-		Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix) override;
-	virtual void MakeRenderContext() override;
-	virtual void ShutDown() override;
+	class GLRenderingStartUpParams : public RenderingStartUpParams
+	{
+	public:
+		HWND m_HWND;
+		int m_ScreenWidth;
+		int m_ScreenHeight;
+	};
 
-private:
-	void SetupPixelFormat(HDC hDC);
+	class GLRendering : public IRenderingInterface
+	{
+	public:
+		virtual void StartUp(const RenderingStartUpParams* params) override;
+		virtual void Render(PRenderingObject obj, Matrix4x4& modelMatrix,
+			Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix) override;
+		virtual void MakeRenderContext() override;
+		virtual void ShutDown() override;
 
-	HDC m_HDC;
-	HGLRC m_HRC;
-	HWND m_HWND;
-};
+	private:
+		void SetupPixelFormat(HDC hDC);
 
+		HDC m_HDC;
+		HGLRC m_HRC;
+		HWND m_HWND;
+	};
+
+}

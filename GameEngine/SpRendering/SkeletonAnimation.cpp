@@ -1,5 +1,7 @@
 #include"SkeletonAnimation.h"
 
+using namespace spgameengine;
+
 Mesh::Mesh(const Mesh& mesh)
 {
 	if (mesh.m_vertices)

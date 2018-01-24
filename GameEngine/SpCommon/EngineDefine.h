@@ -14,169 +14,172 @@ using namespace std;
 #define CH_MAP_BITMAP_SIZE_H 512
 
 typedef unsigned char uint8;
+typedef unsigned char byte;
 typedef unsigned short uint16;
 typedef unsigned int uint32;
 typedef unsigned int uint;
-typedef TmpVector2<float> Vector2;
 
-struct Color;
-struct Color32
+namespace spgameengine
 {
-	byte r, g, b, a;
+	typedef TmpVector2<float> Vector2;
 
-	Color32();
+	struct Color;
+	struct Color32
+	{
+		byte r, g, b, a;
 
-	Color32(byte r, byte g, byte b, byte a);
+		Color32();
 
-	Color32(const Color& color);
+		Color32(byte r, byte g, byte b, byte a);
 
-	Color32(uint color);
+		Color32(const Color& color);
 
-	int ToInt32();
+		Color32(uint color);
 
-	bool operator==(const Color32& value) const;
+		int ToInt32();
 
-	bool operator!=(const Color32& value) const;
+		bool operator==(const Color32& value) const;
 
-	Color32 operator*(const Color& color) const;
+		bool operator!=(const Color32& value) const;
 
-	static Color32 Hex(int hexColor);
-};
+		Color32 operator*(const Color& color) const;
 
-struct Color
-{
-	float r, g, b, a;
+		static Color32 Hex(int hexColor);
+	};
 
-	Color();
+	struct Color
+	{
+		float r, g, b, a;
 
-	Color(float r, float g, float b, float a);
+		Color();
 
-	Color(const Color32& color32);
+		Color(float r, float g, float b, float a);
 
-	Color(int color);
+		Color(const Color32& color32);
 
-	int ToInt32() const;
+		Color(int color);
 
-	void Shrink();
+		int ToInt32() const;
 
-	Color operator+(float value) const;
+		void Shrink();
 
-	Color operator-(float value) const;
+		Color operator+(float value) const;
 
-	Color operator*(float value) const;
+		Color operator-(float value) const;
 
-	Color operator/(float value) const;
+		Color operator*(float value) const;
 
-	Color operator+(const Color& value) const;
+		Color operator/(float value) const;
 
-	Color operator-(const Color& value) const;
+		Color operator+(const Color& value) const;
 
-	Color operator*(const Color& value) const;
+		Color operator-(const Color& value) const;
 
-	Color operator/(const Color& value) const;
+		Color operator*(const Color& value) const;
 
-	bool operator==(const Color& value) const;
+		Color operator/(const Color& value) const;
 
-	bool operator!=(const Color& value) const;
+		bool operator==(const Color& value) const;
 
-	static Color Hex(int hex);
+		bool operator!=(const Color& value) const;
 
-	static const Color red;
-	static const Color blue;
-	static const Color green;
-	static const Color grey;
-	static const Color black;
-	static const Color cyan;
-	static const Color purple;
-	static const Color white;
-	static const Color orange;
-};
+		static Color Hex(int hex);
 
-struct SRect2D
-{
-	float center_x;
-	float center_y;
-	float half_size_x;
-	float half_size_y;
+		static const Color red;
+		static const Color blue;
+		static const Color green;
+		static const Color grey;
+		static const Color black;
+		static const Color cyan;
+		static const Color purple;
+		static const Color white;
+		static const Color orange;
+	};
 
-	SRect2D();
+	struct SRect2D
+	{
+		Vector2 center;
+		Vector2 halfSize;
 
-	SRect2D(float center_x, float center_y, float half_size_x, float half_size_y);
+		SRect2D();
+		SRect2D(Vector2 center, Vector2 halfSize);
+		SRect2D(float center_x, float center_y, float half_size_x, float half_size_y);
 
-	bool Overlay(const Vector2& pos) const;
-	vector<SRect2D> Split(vector<float> weights);
+		bool Overlay(const Vector2& pos) const;
+		vector<SRect2D> Split(vector<float> weights);
 
-	bool operator==(const SRect2D& rect);
-	bool operator!=(const SRect2D& rect);
-	void operator*=(float scale);
-	SRect2D operator*(float scale);
-};
+		bool operator==(const SRect2D& rect);
+		bool operator!=(const SRect2D& rect);
+		void operator*=(float scale);
+		SRect2D operator*(float scale);
+	};
 
-LPWSTR AnsiToUnicode(LPCSTR lpcstr);
+	LPWSTR AnsiToUnicode(LPCSTR lpcstr);
 
-struct RGB
-{
-	uint8 r, g, b;
-};
+	struct RGB
+	{
+		uint8 r, g, b;
+	};
 
-struct Point2D
-{
-	int x, y;
-};
+	struct Point2D
+	{
+		int x, y;
+	};
 
-struct SBitmapData
-{
-	uint32* buffer;
-	int width;
-	int height;
-};
+	struct SBitmapData
+	{
+		uint32* buffer;
+		int width;
+		int height;
+	};
 
-struct Rect2D
-{
-	int x, y, width, height;
-};
+	struct Rect2D
+	{
+		int x, y, width, height;
+	};
 
-struct FRect
-{
-	float left, top, right, bottom;
-};
+	struct FRect
+	{
+		float left, top, right, bottom;
+	};
 
-enum EAlignment
-{
-	LEFT_TOP		= 1 << 16 | 1,
-	LEFT_MIDDLE		= 1 << 16 | 2,
-	LEFT_BOTTOM		= 1 << 16 | 3,
-	CENTER_TOP		= 2 << 16 | 1,
-	CENTER_MIDDLE	= 2 << 16 | 2,
-	CENTER_BOTTOM	= 2 << 16 | 3,
-	RIGHT_TOP		= 3 << 16 | 1,
-	RIGHT_MIDDLE	= 3 << 16 | 2,
-	RIGHT_BOTTOM	= 3 << 16 | 3,
-};
+	enum EAlignment
+	{
+		LEFT_TOP = 1 << 16 | 1,
+		LEFT_MIDDLE = 1 << 16 | 2,
+		LEFT_BOTTOM = 1 << 16 | 3,
+		CENTER_TOP = 2 << 16 | 1,
+		CENTER_MIDDLE = 2 << 16 | 2,
+		CENTER_BOTTOM = 2 << 16 | 3,
+		RIGHT_TOP = 3 << 16 | 1,
+		RIGHT_MIDDLE = 3 << 16 | 2,
+		RIGHT_BOTTOM = 3 << 16 | 3,
+	};
 
 #define _GetHorizontal(alignment) (EAlignmentHorizontal)(alignment >> 16)
 #define _GetVertical(alignment) (EAlignmentVertical)(alignment & 0xffff)
 #define _GetAlignment(h, v) (EAlignment)(h << 16 | v)
 
-enum EAlignmentHorizontal
-{
-	LEFT = 1,
-	CENTER = 2,
-	RIGHT = 3,
-};
+	enum EAlignmentHorizontal
+	{
+		LEFT = 1,
+		CENTER = 2,
+		RIGHT = 3,
+	};
 
-enum EAlignmentVertical
-{
-	TOP = 1,
-	MIDDLE = 2,
-	BOTTOM = 3,
-};
+	enum EAlignmentVertical
+	{
+		TOP = 1,
+		MIDDLE = 2,
+		BOTTOM = 3,
+	};
 
-struct Layer
-{
-	static const int Default;
-	static const int UI;
-	static const int Overlay2D;
-};
+	struct Layer
+	{
+		static const int Default;
+		static const int UI;
+		static const int Overlay2D;
+	};
+}
 
 #endif

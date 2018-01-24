@@ -4,6 +4,8 @@
 #include<stdio.h>
 #include<atltime.h>
 
+using namespace spgameengine;
+
 wchar_t CDebug::w_buffer[DEBUG_BUFFER_SIZE];
 
 char CDebug::c_buffer[DEBUG_BUFFER_SIZE];

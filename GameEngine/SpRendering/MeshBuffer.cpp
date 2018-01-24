@@ -1,5 +1,7 @@
 #include "MeshBuffer.h"
 
+using namespace spgameengine;
+
 MeshBuffer::MeshBuffer() : m_vaoHandle(0), m_vboColorHandle(0), 
 	m_vboNormalHandle(0), m_vboUVHandle(0), m_vboVertexHandle(0),
 	m_vboJointIndexHandle(0), m_vboJointWeightHandle(0), m_vertexNum(0)

@@ -3,8 +3,10 @@
 
 #include"Component.h"
 #include"SpRendering\FontManager.h"
-#include"SpRendering\FontRenderer.h"]
+#include"SpRendering\FontRenderer.h"
 #include"SpCommon\EngineDefine.h"
+
+using namespace spgameengine;
 
 class ENGINE_API CTextRenderer : public CFontRenderer, public CComponent, public IRenderer
 {

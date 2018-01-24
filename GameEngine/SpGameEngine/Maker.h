@@ -13,6 +13,7 @@
 #define _Maker CMaker::GetInstance()
 
 using namespace std;
+using namespace spgameengine;
 
 typedef function<bool(CGameObject*, int)> ForeachGoCallbackR;
 typedef function<void(CGameObject*, int)> ForeachGoCallback;

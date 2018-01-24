@@ -3,12 +3,13 @@
 
 #include"SpRendering\SkeletonAnimation.h"
 #include"IAssetLoader.h"
-
-class ModelLoader : public IAssetLoader
+namespace spgameengine
 {
-public:
-	ModelLoader() { m_model = make_shared<Model>(); }
-	PModel m_model = NULL;
-};
-
+	class ModelLoader : public IAssetLoader
+	{
+	public:
+		ModelLoader() { m_model = make_shared<Model>(); }
+		PModel m_model = NULL;
+	};
+}
 #endif

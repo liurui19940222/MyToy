@@ -1,6 +1,5 @@
 ﻿#define _TEST_
 #ifdef _TEST_
-#define _CRT_SECURE_NO_WARNINGS
 
 #include<windows.h>
 #include<stdio.h>
@@ -14,6 +13,8 @@
 #include"SpRendering/FontRenderer.h"
 #include"SpCommon/FastPainter.h"
 #include"SpCommon/Input.h"
+
+using namespace spgameengine;
 
 int width = 800;
 int height = 600;
@@ -61,7 +62,7 @@ void my_draw_bitmap(FT_Bitmap* bm, FT_Int left, FT_Int top)
 			if (x < 0 || x >= canvas_w || y < 0 || y >= canvas_h)
 				continue;
 			float grey = bm->buffer[j * bm->width + i];
-			pixels[y * canvas_w + x] = _RGBA32((int)grey, (int)grey, (int)grey, 255);
+			pixels[y * canvas_w + x] = _RGBA32((byte)grey, (byte)grey, (byte)grey, 255);
 		}
 	}
 }

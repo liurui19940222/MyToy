@@ -11,6 +11,8 @@
 #include"Camera.h"
 
 using namespace std;
+using namespace spgameengine;
+
 class CTextTest : public CGameWindow
 {
 	CGameObject* go;

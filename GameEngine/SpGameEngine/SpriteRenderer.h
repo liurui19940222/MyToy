@@ -4,6 +4,8 @@
 #include"Component.h"
 #include"SpRendering\Texture.h"
 
+using namespace spgameengine;
+
 class ENGINE_API CSpriteRenderer : public CComponent
 {
 	REFLECT_CLASS(CSpriteRenderer)

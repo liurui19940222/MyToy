@@ -1,5 +1,7 @@
 #include"3DSModelLoader.h"
 
+using namespace spgameengine;
+
 void C3DSModelLoader::LoadFromFile(const char* filename)
 {
 	m_model = make_shared<Model>();

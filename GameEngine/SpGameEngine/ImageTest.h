@@ -8,6 +8,7 @@
 #include"Camera.h"
 
 using namespace std;
+using namespace spgameengine;
 
 class CImageTest : public CGameWindow
 {

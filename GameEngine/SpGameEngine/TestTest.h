@@ -7,6 +7,8 @@
 #include"GameObject.h"
 #include"Camera.h"
 
+using namespace spgameengine;
+
 class CTestTest : public CGameWindow
 {
 	CGameObject* go;

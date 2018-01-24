@@ -1,24 +1,28 @@
 #include "EngineDefine.h"
 #include "Math.h"
 
-SRect2D::SRect2D() : center_x(0), center_y(0), half_size_x(0), half_size_y(0) {}
+using namespace spgameengine;
+
+SRect2D::SRect2D() : center(0, 0), halfSize(0, 0) {}
+
+SRect2D::SRect2D(Vector2 center, Vector2 halfSize) : center(center), halfSize(halfSize) {}
 
 SRect2D::SRect2D(float center_x, float center_y, float half_size_x, float half_size_y) : 
-	center_x(center_x), center_y(center_y), half_size_x(half_size_x), half_size_y(half_size_y) {}
+	center(center_x, center_y), halfSize(half_size_x, half_size_y) {}
 
 bool SRect2D::Overlay(const Vector2& pos) const
 {
-	if (pos.x < center_x - half_size_x) return false;
-	else if (pos.x > center_x + half_size_x) return false;
-	else if (pos.y > center_y + half_size_y) return false;
-	else if (pos.y < center_y - half_size_y) return false;
+	if (pos.x < center.x - halfSize.x) return false;
+	else if (pos.x > center.x + halfSize.x) return false;
+	else if (pos.y > center.y + halfSize.y) return false;
+	else if (pos.y < center.y - halfSize.y) return false;
 	return true;
 }
 
 vector<SRect2D> SRect2D::Split(vector<float> weights)
 {
-	float maxWidth = half_size_x * 2;
-	float leftPos = center_x - half_size_x;
+	float maxWidth = halfSize.x * 2;
+	float leftPos = center.x - halfSize.x;
 	float halfWidth = 0;
 	float w = 0;
 	vector<SRect2D> list;
@@ -26,32 +30,32 @@ vector<SRect2D> SRect2D::Split(vector<float> weights)
 	{
 		w += weights[i] * maxWidth;
 		halfWidth = weights[i] * maxWidth * 0.5f;
-		list.push_back(SRect2D{ leftPos + w - halfWidth, center_y,  halfWidth , half_size_y });
+		list.push_back(SRect2D{ leftPos + w - halfWidth, center.y,  halfWidth , halfSize.y });
 	}
 	return list;
 }
 
 bool SRect2D::operator==(const SRect2D& rect)
 {
-	return this->half_size_x == rect.half_size_x && this->half_size_y == rect.half_size_y 
-		&& this->center_x == rect.center_x && this->center_y == rect.center_y;
+	return this->halfSize.x == rect.halfSize.x && this->halfSize.y == rect.halfSize.y 
+		&& this->center.x == rect.center.x && this->center.y == rect.center.y;
 }
 
 bool SRect2D::operator!=(const SRect2D& rect)
 {
-	return this->half_size_x != rect.half_size_x || this->half_size_y != rect.half_size_y
-		|| this->center_x != rect.center_x || this->center_y != rect.center_y;
+	return this->halfSize.x != rect.halfSize.x || this->halfSize.y != rect.halfSize.y
+		|| this->center.x != rect.center.x || this->center.y != rect.center.y;
 }
 
 void SRect2D::operator*=(float scale)
 {
-	half_size_x *= scale;
-	half_size_y *= scale;
+	halfSize.x *= scale;
+	halfSize.y *= scale;
 }
 
 SRect2D SRect2D::operator*(float scale)
 {
-	return SRect2D(center_x, center_y, half_size_x * scale, half_size_y * scale);
+	return SRect2D(center.x, center.y, halfSize.x * scale, halfSize.y * scale);
 }
 
 Color::Color(){}

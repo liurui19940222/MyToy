@@ -3,6 +3,8 @@
 #include"Component.h"
 #include"SpRendering\Light.h"
 
+using namespace spgameengine;
+
 class LightComponent : public Light, public CComponent
 {
 public:

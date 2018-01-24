@@ -11,16 +11,19 @@
 #include<lib3ds/light.h>
 #include"ModelLoader.h"
 
-class C3DSModelLoader : public ModelLoader
+namespace spgameengine
 {
-private:
-	Lib3dsFile* lib3dsfile;
+	class C3DSModelLoader : public ModelLoader
+	{
+	private:
+		Lib3dsFile* lib3dsfile;
 
-public:
+	public:
 
-	virtual void LoadFromFile(const char* filename) override;
+		virtual void LoadFromFile(const char* filename) override;
 
-	virtual void ReleaseSource() override;
-};
+		virtual void ReleaseSource() override;
+	};
+}
 
 #endif

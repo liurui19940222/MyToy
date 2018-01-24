@@ -9,6 +9,8 @@
 #include"GameWindow.h"
 #include"SpCommon\Singleton.h"
 
+using namespace spgameengine;
+
 #define _Application CApplication::GetInstance()
 
 typedef function<LRESULT CALLBACK(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)> WndProcFunc;

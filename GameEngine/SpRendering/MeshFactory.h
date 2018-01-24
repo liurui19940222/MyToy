@@ -8,29 +8,31 @@
 #include"SkeletonAnimation.h"
 #include"MeshBuffer.h"
 
-using namespace std;
-
-enum class EMeshType
+namespace spgameengine
 {
-	Cube,
-	Quad,
-};
+	using namespace std;
 
-class MeshFactory : public CSingleton<MeshFactory>
-{
-	map<EMeshType, PMesh> m_meshes;
-	map<EMeshType, PMeshBuffer> m_buffers;
+	enum class EMeshType
+	{
+		Cube,
+		Quad,
+	};
 
-	PMesh CreateCube();
-	PMesh CreateQuad();
-	PMesh CreateMesh(const Vector3* vertices, const Vector2* texcoords, const Vector3* normals, int count);
+	class MeshFactory : public CSingleton<MeshFactory>
+	{
+		map<EMeshType, PMesh> m_meshes;
+		map<EMeshType, PMeshBuffer> m_buffers;
 
-public:
-	PMesh CreateRectMesh(float width, float height);
-	PMesh CreateMesh(EMeshType type);
-	PMesh SharedMesh(EMeshType type);
-	PMeshBuffer CreateBuffer(EMeshType type);
-	PMeshBuffer SharedBuffer(EMeshType type);
-};
+		PMesh CreateCube();
+		PMesh CreateQuad();
+		PMesh CreateMesh(const Vector3* vertices, const Vector2* texcoords, const Vector3* normals, int count);
 
+	public:
+		PMesh CreateRectMesh(float width, float height);
+		PMesh CreateMesh(EMeshType type);
+		PMesh SharedMesh(EMeshType type);
+		PMeshBuffer CreateBuffer(EMeshType type);
+		PMeshBuffer SharedBuffer(EMeshType type);
+	};
+}
 #endif

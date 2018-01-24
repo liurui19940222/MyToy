@@ -11,6 +11,8 @@
 #include"SpRendering\MeshBuffer.h"
 #include"SpAssetLoader\ColladaLoader.h"
 
+using namespace spgameengine;
+
 class ENGINE_API CSkinnedMeshRenderer : public CComponent, public IRenderer
 {
 	REFLECT_CLASS(CSkinnedMeshRenderer)

@@ -1,6 +1,8 @@
 #include"ImageHandle.h"
 #include"SpAssetLoader\ImageLoader.h"
 
+using namespace spgameengine;
+
 bool ChangeImageSize(const char* srcPath, const char* dstPath, int width, int height)
 {
 	bool result = false;

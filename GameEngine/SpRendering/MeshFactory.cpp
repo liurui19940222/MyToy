@@ -1,5 +1,7 @@
 #include "MeshFactory.h"
 
+using namespace spgameengine;
+
 PMesh MeshFactory::CreateCube()
 {
 	static const int VERTEX_NUM = 36;

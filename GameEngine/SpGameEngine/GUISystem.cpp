@@ -100,8 +100,8 @@ CGUIWidget* CGUIWidget::SetFillColor(Color fillColor)
 CGUIWidget* CGUIWidget::SetRect(SRect2D rect)
 {
 	this->m_rect = rect;
-	this->m_width = rect.half_size_x * 2;
-	this->m_height = rect.half_size_y * 2;
+	this->m_width = rect.halfSize.x * 2;
+	this->m_height = rect.halfSize.y * 2;
 	UpdateVertices();
 	return this;
 }
@@ -125,7 +125,7 @@ CGUIWidget* CGUIWidget::SetLayer(int layer)
 CGUIWidget* CGUIWidget::SetWidth(float width)
 {
 	this->m_width = width;
-	this->m_rect.half_size_x = width * 0.5f;
+	this->m_rect.halfSize.x = width * 0.5f;
 	UpdateVertices();
 	return this;
 }
@@ -133,7 +133,7 @@ CGUIWidget* CGUIWidget::SetWidth(float width)
 CGUIWidget* CGUIWidget::SetHeight(float height)
 {
 	this->m_height = height;
-	this->m_rect.half_size_y = height * 0.5f;
+	this->m_rect.halfSize.y = height * 0.5f;
 	UpdateVertices();
 	return this;
 }
@@ -375,12 +375,12 @@ void CGUIWidget::OnUIUpdate()
 
 void CGUIWidget::UpdateVertices()
 {
-	m_vertices[0].x = -m_rect.half_size_x; m_vertices[0].y = m_rect.half_size_y; m_vertices[0].z = 0;
-	m_vertices[1].x = -m_rect.half_size_x; m_vertices[1].y = -m_rect.half_size_y; m_vertices[1].z = 0;
-	m_vertices[2].x = m_rect.half_size_x; m_vertices[2].y = -m_rect.half_size_y; m_vertices[2].z = 0;
-	m_vertices[3].x = m_rect.half_size_x; m_vertices[3].y = -m_rect.half_size_y; m_vertices[3].z = 0;
-	m_vertices[4].x = m_rect.half_size_x; m_vertices[4].y = m_rect.half_size_y; m_vertices[4].z = 0;
-	m_vertices[5].x = -m_rect.half_size_x; m_vertices[5].y = m_rect.half_size_y; m_vertices[5].z = 0;
+	m_vertices[0].x = -m_rect.halfSize.x; m_vertices[0].y = m_rect.halfSize.y; m_vertices[0].z = 0;
+	m_vertices[1].x = -m_rect.halfSize.x; m_vertices[1].y = -m_rect.halfSize.y; m_vertices[1].z = 0;
+	m_vertices[2].x = m_rect.halfSize.x; m_vertices[2].y = -m_rect.halfSize.y; m_vertices[2].z = 0;
+	m_vertices[3].x = m_rect.halfSize.x; m_vertices[3].y = -m_rect.halfSize.y; m_vertices[3].z = 0;
+	m_vertices[4].x = m_rect.halfSize.x; m_vertices[4].y = m_rect.halfSize.y; m_vertices[4].z = 0;
+	m_vertices[5].x = -m_rect.halfSize.x; m_vertices[5].y = m_rect.halfSize.y; m_vertices[5].z = 0;
 }
 
 void CGUIWidget::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)

@@ -5,6 +5,8 @@
 #include <freetype/fttrigon.h>
 #include <freetype/ftbitmap.h>
 
+using namespace spgameengine;
+
 #pragma region CCharacterInfo
 
 CCharacterInfo::CCharacterInfo(int code) : m_Code(code) {}
