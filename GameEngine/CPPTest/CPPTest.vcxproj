@@ -96,8 +96,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\ExternLibrary;..\SpAssetLoader\lib;..\SpRendering\lib;..\SpCommon\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SpCommon.lib;SpRendering.lib;SpAssetLoader.lib;FreeImage.lib;freetype.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\GLAppBase\lib;..\ExternLibrary;..\SpAssetLoader\lib;..\SpRendering\lib;..\SpCommon\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SpCommon.lib;SpRendering.lib;SpAssetLoader.lib;GLAppBase.lib;FreeImage.lib;freetype.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -153,7 +153,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Entry.cpp" />
+    <ClCompile Include="InstanceDraw.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TestApp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="InstanceDraw.h" />
+    <ClInclude Include="TestApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

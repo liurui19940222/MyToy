@@ -1,4 +1,4 @@
-﻿#define _TEST_
+﻿//#define _TEST_
 #ifdef _TEST_
 
 #include<windows.h>

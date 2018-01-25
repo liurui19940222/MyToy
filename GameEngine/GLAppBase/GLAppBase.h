@@ -1,0 +1,42 @@
+#pragma once
+
+#include<Windows.h>
+#include<gl\glew.h>
+
+using namespace std;
+
+class GLAppBase
+{
+public:
+	GLAppBase(const wchar_t* className, const wchar_t* title, int width, int height);
+
+	void CreateMainWindow();
+	void Run();
+
+protected:
+	virtual void OnInitialize();
+	virtual void OnUpdate(float deltaTime);
+	virtual void OnRender();
+	virtual void OnWindowSizeChanged(int width, int height);
+	virtual void OnRelease();
+
+private:
+	void InitGL(HWND hwnd);
+	void MakeRenderContext();
+	void SetupPixelFormat(HDC hDC);
+
+	static LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+	HWND			m_Hwnd;
+	HDC				m_HDC;
+	HGLRC			m_HRC;
+	int				m_WindowWidth;
+	int				m_WindowHeight;
+	const wchar_t*  m_ClassName;
+	const wchar_t*	m_WindowName;
+
+public:
+	static GLAppBase* AppInstance;
+};
+
+extern GLAppBase* CreateApp();

@@ -2,7 +2,6 @@
 layout(location = 0) in vec3 a_VertexPosition;
 layout(location = 2) in vec2 a_VertexCoord;
 
-uniform vec2 u_InstanceSize;
 uniform mat4 u_M;
 uniform mat4 u_V;
 uniform mat4 u_P;

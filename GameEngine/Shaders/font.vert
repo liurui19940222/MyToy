@@ -1,4 +1,4 @@
-#version 400
+#version 410
 layout(location = 0) in vec3 VertexPosition;
 layout(location = 2) in vec2 VertexCoord;
 
@@ -6,10 +6,12 @@ uniform mat4 M;
 uniform mat4 V;
 uniform mat4 P;
 
-out vec2 uv;
+out VERTEX{
+	vec2 uv;
+}vertex;
 
 void main()
 {
-	uv = VertexCoord;
+	vertex.uv = VertexCoord;
 	gl_Position = P * V * M * vec4(VertexPosition, 1.0);
 }
