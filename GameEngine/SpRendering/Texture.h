@@ -28,6 +28,12 @@ enum ETexEnvMode
 	Add = 0x0104,
 };
 
+struct TexcoordRange
+{
+	Vector2		m_StartingPoint;
+	Vector2		m_Size;
+};
+
 SMART_CLASS(Texture) class Texture : public Object
 {
 protected:

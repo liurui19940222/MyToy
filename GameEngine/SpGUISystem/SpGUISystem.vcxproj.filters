@@ -9,9 +9,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GUISystem.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="UIWidget.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -21,15 +18,18 @@
     <ClInclude Include="GUIDefines.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="UISystem.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GUISystem.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="UIWidget.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="UIView.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="UISystem.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

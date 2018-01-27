@@ -32,6 +32,15 @@ void GLRendering::Render(PRenderingObject obj, Matrix4x4& modelMatrix,
 	obj->material->Unbind();
 }
 
+void GLRendering::RerderInstance(PRenderingObject obj, uint instanceCount)
+{
+	if (obj == NULL) return;
+	obj->material->Bind();
+	obj->mesh->BindBuffer();
+	glDrawArraysInstanced(GL_TRIANGLES, 0, obj->mesh->GetVertexNum(), instanceCount);
+	obj->material->Unbind();
+}
+
 void GLRendering::MakeRenderContext()
 {
 	wglMakeCurrent(m_HDC, m_HRC);

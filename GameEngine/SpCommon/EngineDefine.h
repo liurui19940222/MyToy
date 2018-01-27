@@ -13,6 +13,7 @@ using namespace std;
 #define _ToCppBool(_boolean) _boolean != 0
 #define CH_MAP_BITMAP_SIZE_W 512
 #define CH_MAP_BITMAP_SIZE_H 512
+#define IS_TYPE(T, p) dynamic_cast<T*>(p) != NULL
 
 typedef unsigned char uint8;
 typedef unsigned char byte;

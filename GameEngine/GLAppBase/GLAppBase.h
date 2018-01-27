@@ -27,11 +27,13 @@ private:
 
 	static LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
+protected:
 	HWND			m_Hwnd;
 	HDC				m_HDC;
 	HGLRC			m_HRC;
 	int				m_WindowWidth;
 	int				m_WindowHeight;
+	float			m_TimeSinceStarUp;
 	const wchar_t*  m_ClassName;
 	const wchar_t*	m_WindowName;
 

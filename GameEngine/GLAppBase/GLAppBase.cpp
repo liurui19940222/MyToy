@@ -115,6 +115,7 @@ void GLAppBase::Run()
 		SwapBuffers(hdc);
 		Sleep(16);
 		deltaTime = (GetTickCount() - lastFrameTime) * 0.001f;
+		m_TimeSinceStarUp += deltaTime;
 	}
 	OnRelease();
 }

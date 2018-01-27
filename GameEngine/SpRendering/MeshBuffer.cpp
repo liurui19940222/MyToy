@@ -1,6 +1,6 @@
 #include "MeshBuffer.h"
 
-USING_NAMESPACE_ENGINE
+USING_NAMESPACE_ENGINE;
 
 MeshBuffer::MeshBuffer() : m_vaoHandle(0), m_vboColorHandle(0), 
 	m_vboNormalHandle(0), m_vboUVHandle(0), m_vboVertexHandle(0),

@@ -96,8 +96,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\GLAppBase\lib;..\ExternLibrary;..\SpAssetLoader\lib;..\SpRendering\lib;..\SpCommon\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SpCommon.lib;SpRendering.lib;SpAssetLoader.lib;GLAppBase.lib;FreeImage.lib;freetype.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\ExternLibrary;D:\GitHub\MyToy\GameEngine\Build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SpCommon.lib;SpRendering.lib;SpAssetLoader.lib;SpGUISystem.lib;GLAppBase.lib;FreeImage.lib;freetype.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -157,10 +157,12 @@
     <ClCompile Include="InstanceDraw.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TestApp.cpp" />
+    <ClCompile Include="UITest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InstanceDraw.h" />
     <ClInclude Include="TestApp.h" />
+    <ClInclude Include="UITest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

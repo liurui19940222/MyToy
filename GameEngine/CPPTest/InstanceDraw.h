@@ -10,7 +10,7 @@ USING_NAMESPACE_ENGINE;
 class InstanceDraw : public GLAppBase
 {
 	const int INSTANCE_NUM = 10;
-	const int MODEL_MATRIX_POS = 2;
+	const int MODEL_MATRIX_POS = 3;
 public:
 	InstanceDraw(const wchar_t* className, const wchar_t* title, int width, int height);
 

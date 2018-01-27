@@ -8,19 +8,26 @@ BEGIN_NAMESPACE_GUI
 
 SMART_CLASS(UIView) class UIView : public UIWidget
 {
-	friend class GUISystem;
+	friend class UISystem;
 public:
 	UIView();
 	virtual ~UIView();
 
+	inline void SetMaterial(PMaterial mat) { m_Material = mat; }
+	inline int GetMaterialId() { return m_Material ? m_Material->GetInstanceId() : 0; }
+	inline PMaterial GetMaterial() const { return m_Material; }
+
 protected:
 	virtual void OnUpdate() {}
 	virtual void OnRender() {}
+	virtual TexcoordRange GetTexcoordRange() 
+	{
+		static TexcoordRange range{ Vector2::zero, Vector2::one };
+		return range;
+	}
 
 private:
-	GUISystem*			m_System;
 	PMaterial			m_Material;
-	PMeshBuffer			m_Buffer;
 };
 
 END_NAMESPACE_GUI

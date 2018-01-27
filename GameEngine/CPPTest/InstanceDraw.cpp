@@ -64,7 +64,8 @@ void InstanceDraw::OnInitialize()
 	glBindVertexArray(0);
 
 	m_ViewMatrix = Matrix4x4::LookAt(Vector3(0, 0, 10), Vector3::zero, Vector3::up);
-	m_Texture = Texture2D::Create("../Assets/star.png");
+	m_Texture = Texture2D::Create("../Assets/lightning.png");
+	m_Texture->SetWrapMode(ETexWrapMode::Repeat);
 	m_Shader = Shader::Get("instance_draw");
 
 	glEnable(GL_BLEND);
@@ -96,12 +97,10 @@ void InstanceDraw::OnRender()
 {
 	GLAppBase::OnRender();
 
-	m_ModelMatrix = Matrix4x4::Identity();
-
 	m_Shader->Run();
-	m_Shader->SetUniformParam("u_M", m_ModelMatrix);
 	m_Shader->SetUniformParam("u_V", m_ViewMatrix);
 	m_Shader->SetUniformParam("u_P", m_ProjMatrix);
+	m_Shader->SetUniformParam("u_Time", m_TimeSinceStarUp * 20);
 	glActiveTexture(GL_TEXTURE0);
 	m_Texture->Bind();
 	m_Shader->SetUniformParam("u_MainTex", 0);

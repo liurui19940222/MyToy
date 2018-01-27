@@ -16,7 +16,7 @@ SMART_CLASS(RenderingObject) class RenderingObject
 {
 public:
 	PMeshBuffer mesh;
-	shared_ptr<Material> material;
+	PMaterial material;
 };
 
 class IRenderingInterface
@@ -25,6 +25,7 @@ public:
 	virtual void StartUp(const RenderingStartUpParams* params) = 0;
 	virtual void Render(PRenderingObject obj, Matrix4x4& modelMatrix,
 		Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix) = 0;
+	virtual void RerderInstance(PRenderingObject obj, uint instanceCount) = 0;
 	virtual void MakeRenderContext() = 0;
 	virtual void ShutDown() = 0;
 };

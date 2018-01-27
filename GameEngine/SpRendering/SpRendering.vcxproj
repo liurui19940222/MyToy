@@ -72,7 +72,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <TargetExt>.lib</TargetExt>
-    <OutDir>$(SolutionDir)SpRendering\lib</OutDir>
+    <OutDir>$(SolutionDir)Build</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -166,6 +166,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkeletonAnimation.h" />
     <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="SysFont.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture2D.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkeletonAnimation.cpp" />
     <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SysFont.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Texture2D.cpp" />

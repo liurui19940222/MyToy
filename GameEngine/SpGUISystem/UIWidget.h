@@ -6,8 +6,10 @@
 
 BEGIN_NAMESPACE_GUI
 
-SMART_CLASS(UIWidget) class UIWidget
+SMART_CLASS(UIWidget) class UIWidget : public Object
 {
+	friend class UISystem;
+
 public:
 	virtual ~UIWidget();
 
@@ -30,14 +32,15 @@ public:
 			return m_Parent->GetGlobalPosition() + m_Rect.center;
 		return m_Rect.center;
 	}
+	inline Vector2 GetHalfSize() const { return m_Rect.halfSize; }
+	inline Vector2 GetSize() const { return m_Rect.halfSize * 2; }
 
-private:
-
-private:
+protected:
 	SRect2D					m_Rect;
 	float					m_Width;
 	float					m_Height;
 	PUIWidget				m_Parent;
+	UISystem*				m_System;
 	vector<PUIWidget>		m_Childreen;
 };
 

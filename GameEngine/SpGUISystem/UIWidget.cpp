@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "UIWidget.h"
 
 USING_NAMESPACE_GUI;
@@ -53,6 +52,7 @@ UIWidget* UIWidget::SetGlobalPosition(const Vector2& pos)
 UIWidget* UIWidget::AddChild(PUIWidget widget)
 {
 	m_Childreen.push_back(widget);
+	widget->m_System = m_System;
 	return this;
 }
 

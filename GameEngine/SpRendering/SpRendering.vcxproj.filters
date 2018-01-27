@@ -87,6 +87,9 @@
     <ClInclude Include="FontManager.h">
       <Filter>Text\include</Filter>
     </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Object\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RenderTexture.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="FontRenderer.cpp">
       <Filter>Text\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Object\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
