@@ -1,8 +1,8 @@
 #version 400
 
 layout(location = 0) in vec3 VertexPosition;
-layout(location = 2) in vec2 TextureCoord;
-layout(location = 3) in vec3 VertexNormal;
+layout(location = 1) in vec2 TextureCoord;
+layout(location = 2) in vec3 VertexNormal;
 const int LIGHT_MAX_NUM = 12;
 uniform vec3 LightDir[LIGHT_MAX_NUM];
 uniform int LightType[LIGHT_MAX_NUM];

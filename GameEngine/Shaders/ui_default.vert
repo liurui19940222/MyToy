@@ -1,6 +1,6 @@
 #version 400
 layout(location = 0) in vec3 a_VertexPosition;
-layout(location = 2) in vec2 a_VertexCoord;
+layout(location = 1) in vec2 a_VertexCoord;
 
 uniform mat4 u_M;
 uniform mat4 u_V;

@@ -157,6 +157,10 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MeshBuffer.h" />
+    <ClInclude Include="MeshBufferColor.h" />
+    <ClInclude Include="MeshBufferNormal.h" />
+    <ClInclude Include="MeshBufferSkinning.h" />
+    <ClInclude Include="MeshBufferTexcoord.h" />
     <ClInclude Include="MeshFactory.h" />
     <ClInclude Include="RenderBuffer.h" />
     <ClInclude Include="RenderCamera.h" />
@@ -179,6 +183,10 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MeshBuffer.cpp" />
+    <ClCompile Include="MeshBufferColor.cpp" />
+    <ClCompile Include="MeshBufferNormal.cpp" />
+    <ClCompile Include="MeshBufferSkinning.cpp" />
+    <ClCompile Include="MeshBufferTexcoord.cpp" />
     <ClCompile Include="MeshFactory.cpp" />
     <ClCompile Include="RenderCamera.cpp" />
     <ClCompile Include="RenderTexture.cpp" />

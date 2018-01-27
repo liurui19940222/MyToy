@@ -20,7 +20,7 @@ void LightTest::OnStart()
 	model_mat->SetShader(Shader::Get("light"));
 	collada = _Resources->Load<ColladaLoader>("models/scene07.xml");
 	m_model = PModel(collada->m_model);
-	PMeshBuffer buffer(new MeshBuffer(m_model->m_meshes[0], m_model->m_skeleton->m_weights, m_model->m_skeleton->m_indices));
+	PMeshBuffer buffer(new MeshBuffer(m_model->m_meshes[0]));
 	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, m_model->m_skeleton)->SetMaterial(model_mat);
 	_MainCameraGo->LookAt(model->GetLocalPosition());
 

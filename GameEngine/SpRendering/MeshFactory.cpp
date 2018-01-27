@@ -1,4 +1,5 @@
 #include "MeshFactory.h"
+#include "MeshBufferNormal.h"
 
 USING_NAMESPACE_ENGINE
 
@@ -211,7 +212,7 @@ PMesh MeshFactory::SharedMesh(EMeshType type)
 PMeshBuffer MeshFactory::CreateBuffer(EMeshType type)
 {
 	PMesh mesh = CreateMesh(type);
-	PMeshBuffer buffer(new MeshBuffer(CreateMesh(type)));
+	PMeshBufferNormal buffer(new MeshBufferNormal(CreateMesh(type)));
 	return buffer;
 }
 
@@ -221,7 +222,7 @@ PMeshBuffer MeshFactory::SharedBuffer(EMeshType type)
 	auto it = m_buffers.find(type);
 	if (it == m_buffers.end())
 	{
-		PMeshBuffer buffer(new MeshBuffer(mesh));
+		PMeshBufferNormal buffer(new MeshBufferNormal(mesh));
 		m_buffers.insert(make_pair(type, buffer));
 		return buffer;
 	}

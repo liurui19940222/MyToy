@@ -10,41 +10,42 @@
 
 BEGIN_NAMESPACE_ENGINE
 
-#define VERTEX_POS			0
-#define COLOR_POS			1
-#define UV_POS				2
-#define NORMAL_POS			3
-#define JOINT_INDEX_POS		4
-#define JOINT_WEIGHT_POS	5
+enum class EBufferType
+{
+	VertexData = 0,
+	IndexData = 1,
+};
+
+enum class EBufferUsage
+{
+	StaticDraw = GL_STATIC_DRAW,
+	DynamicDraw = GL_DYNAMIC_DRAW,
+};
 
 SMART_CLASS(MeshBuffer) class MeshBuffer : public IRenderBuffer
 {
-private:
-	int m_vertexNum;
-	GLuint m_vaoHandle;
-	GLuint m_vboVertexHandle;
-	GLuint m_vboColorHandle;
-	GLuint m_vboNormalHandle;
-	GLuint m_vboUVHandle;
-	GLuint m_vboJointIndexHandle;
-	GLuint m_vboJointWeightHandle;
-
 public:
 	MeshBuffer();
 	MeshBuffer(PMesh mesh);
-	MeshBuffer(PMesh mesh, const vector<Vector4>& weights, const vector<BVector4>& indices);
 	virtual ~MeshBuffer();
-	void MakeBuffer(const Vector3* vertices, const Color* colors, const Vector3* normals, const Vector2* uvs, int size);
-	void MakeVertexBuffer(const Vector3* vertices, int size);
-	void MakeColorBuffer(const Color* colors, int size);
-	void MakeUVBuffer(const Vector2* uvs, int size);
-	void MakeNormalBuffer(const Vector3* normals, int size);
-	void MakeJointBuffer(const vector<Vector4>& weights, const vector<BVector4>& indices);
-	void MakeBuffer(const PMesh mesh);
+
+	void MakePositionBuffer(const Vector3* vertices, int size);
 	void UpdateVertices(const Vector3* vertices, int offset, int size);
+	virtual void MakeBuffer(PMesh mesh);
 	virtual void BindBuffer() override;
 	virtual void ReleaseBuffer() override;
-	int GetVertexNum() const;
+	inline void UnbindBuffer() { glBindVertexArray(0); }
+	inline int GetVertexNum() const { return m_VertexNum; }
+
+	static void MakeVertexBuffer(GLuint* bufferId, int dataSize, int componentCount, const void* pointer, int attrPos, EBufferUsage usage);
+	static void MakeIndexBuffer(GLuint* bufferId, int dataSize, const void* pointer);
+	static void UpdateVertexBuffer(GLuint bufferId, int offset, int dataSize, const void* pointer);
+	static void DeleteBufer(GLuint* bufferId);
+
+private:
+	int				m_VertexNum;
+	GLuint			m_VaoHandle;
+	GLuint			m_VboPositionHandle;
 };
 
 END_NAMESPACE_ENGINE

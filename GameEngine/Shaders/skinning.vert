@@ -1,10 +1,10 @@
 #version 400
 
 layout(location = 0) in vec3 VertexPosition;
-layout(location = 2) in vec2 TextureCoord;
-layout(location = 3) in vec3 VertexNormal;
-layout(location = 4) in ivec4 JointIndex;
-layout(location = 5) in vec4 JointWeight;
+layout(location = 1) in vec2 TextureCoord;
+layout(location = 2) in vec3 VertexNormal;
+layout(location = 3) in ivec4 JointIndex;
+layout(location = 4) in vec4 JointWeight;
 
 const int MAX_LIGHT_NUM = 2;
 vec3 lightDir[MAX_LIGHT_NUM];

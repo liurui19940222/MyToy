@@ -5,7 +5,7 @@
 #include"FontManager.h"
 #include"SpCommon\EngineDefine.h"
 #include"SpRendering\Renderer.h"
-#include"SpRendering\MeshBuffer.h"
+#include"SpRendering\MeshBufferTexcoord.h"
 #include"SpRendering\Texture2D.h"
 #include"SpRendering\Material.h"
 
@@ -38,7 +38,7 @@ public:
 class CCharacterPrimitiveSmart : public CCharacterPrimitiveBase
 {
 public:
-	PMeshBuffer				m_Buffer;
+	PMeshBufferTexcoord		m_Buffer;
 	shared_ptr<Material>	m_Material;
 
 	CCharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);

@@ -28,6 +28,15 @@
     <Filter Include="Object\src">
       <UniqueIdentifier>{5716852c-f4f1-4ce6-b3fc-642a99e8b16e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Buffer">
+      <UniqueIdentifier>{02f0efbc-0596-40eb-9afb-26e53eddb55c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Buffer\include">
+      <UniqueIdentifier>{90e7e514-0cfd-4135-a726-df311baa410a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Buffer\src">
+      <UniqueIdentifier>{947fea72-f0d9-424b-ab96-172c0dda0f51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rendering.h">
@@ -51,13 +60,7 @@
     <ClInclude Include="Material.h">
       <Filter>Object\include</Filter>
     </ClInclude>
-    <ClInclude Include="MeshBuffer.h">
-      <Filter>Object\include</Filter>
-    </ClInclude>
     <ClInclude Include="MeshFactory.h">
-      <Filter>Object\include</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderBuffer.h">
       <Filter>Object\include</Filter>
     </ClInclude>
     <ClInclude Include="RenderCamera.h">
@@ -90,6 +93,24 @@
     <ClInclude Include="Sprite.h">
       <Filter>Object\include</Filter>
     </ClInclude>
+    <ClInclude Include="MeshBuffer.h">
+      <Filter>Buffer\include</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderBuffer.h">
+      <Filter>Buffer\include</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshBufferSkinning.h">
+      <Filter>Buffer\include</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshBufferColor.h">
+      <Filter>Buffer\include</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshBufferTexcoord.h">
+      <Filter>Buffer\include</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshBufferNormal.h">
+      <Filter>Buffer\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RenderTexture.cpp">
@@ -108,9 +129,6 @@
       <Filter>Object\src</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">
-      <Filter>Object\src</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshBuffer.cpp">
       <Filter>Object\src</Filter>
     </ClCompile>
     <ClCompile Include="MeshFactory.cpp">
@@ -142,6 +160,21 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Object\src</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshBuffer.cpp">
+      <Filter>Buffer\src</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshBufferSkinning.cpp">
+      <Filter>Buffer\src</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshBufferColor.cpp">
+      <Filter>Buffer\src</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshBufferTexcoord.cpp">
+      <Filter>Buffer\src</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshBufferNormal.cpp">
+      <Filter>Buffer\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #include"ImageTest.h"
 #include"SpRendering\MeshFactory.h"
 #include"SpAssetLoader\3DSModelLoader.h"
+#include"SpRendering\MeshBufferNormal.h"
 
 void CImageTest::OnStart()
 {
@@ -19,7 +20,7 @@ void CImageTest::OnStart()
 	go->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f));
 	go->SetLocalEulerAngles(Vector3(0, 180, 0));
 	CMeshRenderer* renderer = go->AddComponent<CMeshRenderer>();
-	renderer->SetModel(PMeshBuffer(new MeshBuffer(model->m_model->m_meshes[0])))->SetMaterial(mat_model);
+	renderer->SetModel(PMeshBufferNormal(new MeshBufferNormal(model->m_model->m_meshes[0])))->SetMaterial(mat_model);
 
 	ImageLoader* ground_image = _Resources->Load<ImageLoader>("textures/dlg01.bmp");
 	PTexture ground_texture = Texture2D::Create(ground_image);

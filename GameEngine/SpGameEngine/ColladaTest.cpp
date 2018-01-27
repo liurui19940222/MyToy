@@ -3,6 +3,7 @@
 #include"Maker.h"
 #include"SpRendering\SkyBox.h"
 #include"SpRendering\MeshFactory.h"
+#include"SpRendering\MeshBufferSkinning.h"
 #include<glm\glm.hpp>
 
 void CColladaTest::OnStart()
@@ -24,9 +25,10 @@ void CColladaTest::OnStart()
 		->SetMainTexture(Texture2D::Create("textures/shake.png"));
 	collada = _Resources->Load<ColladaLoader>("models/shake_skin.xml");
 	m_model = collada->m_model;
-	MeshBuffer* buffer = new MeshBuffer(m_model->m_meshes[0], m_model->m_skeleton->m_weights, m_model->m_skeleton->m_indices);
+	//MeshBuffer* buffer = new MeshBuffer(m_model->m_meshes[0], m_model->m_skeleton->m_weights, m_model->m_skeleton->m_indices);
+	PMeshBufferSkinning buffer = make_shared<MeshBufferSkinning>(m_model->m_meshes[0], m_model->m_skeleton->m_weights, m_model->m_skeleton->m_indices);
 
-	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(PMeshBuffer(buffer), m_model->m_skeleton)->SetMaterial(model_mat);
+	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, m_model->m_skeleton)->SetMaterial(model_mat);
 	
 	_MainCameraGo->LookAt(model->GetLocalPosition());
 
@@ -36,12 +38,12 @@ void CColladaTest::OnStart()
 	m_clips[1]->m_isLooping = true;
 	m_clips[2]->m_isLooping = false;
 
-	box = SkyBox::Create("textures/skybox2/top.tga",
-		"textures/skybox2/bottom.tga",
-		"textures/skybox2/front.tga",
-		"textures/skybox2/back.tga",
-		"textures/skybox2/left.tga",
-		"textures/skybox2/right.tga");
+	//box = SkyBox::Create("textures/skybox2/top.tga",
+	//	"textures/skybox2/bottom.tga",
+	//	"textures/skybox2/front.tga",
+	//	"textures/skybox2/back.tga",
+	//	"textures/skybox2/left.tga",
+	//	"textures/skybox2/right.tga");
 
 	//_MainCamera->SetSkyBox(box);
 }

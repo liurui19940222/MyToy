@@ -27,8 +27,7 @@ CCharacterPrimitiveSmart::CCharacterPrimitiveSmart(int left_padding, int top, in
 	m_Material->SetMainTexture(m_Texture)->SetState(EPiplelineStateType::DepthTest, false);
 	m_Material->SetShader(Shader::Get("font"));
 	PMesh mesh = _MeshFactory->CreateRectMesh(m_Width, m_Height);
-	m_Buffer = make_shared<MeshBuffer>();
-	m_Buffer->MakeBuffer(mesh);
+	m_Buffer = make_shared<MeshBufferTexcoord>(mesh);
 }
 
 CCharacterPrimitiveSmart::~CCharacterPrimitiveSmart()

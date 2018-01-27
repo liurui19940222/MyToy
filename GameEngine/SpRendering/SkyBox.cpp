@@ -89,18 +89,24 @@ void SkyBox::InitBuffer()
 		Vector2(1.0f, 0.0f),
 		Vector2(1.0f, 1.0f),
 	};
-	m_buffer[(int)ESkyBoxFace::Top] = make_shared<MeshBuffer>();
-	m_buffer[(int)ESkyBoxFace::Bottom] = make_shared<MeshBuffer>();
-	m_buffer[(int)ESkyBoxFace::Front] = make_shared<MeshBuffer>();
-	m_buffer[(int)ESkyBoxFace::Back] = make_shared<MeshBuffer>();
-	m_buffer[(int)ESkyBoxFace::Left] = make_shared<MeshBuffer>();
-	m_buffer[(int)ESkyBoxFace::Right] = make_shared<MeshBuffer>();
-	m_buffer[(int)ESkyBoxFace::Top]->MakeBuffer(top, NULL, NULL, uv, 6);
-	m_buffer[(int)ESkyBoxFace::Bottom]->MakeBuffer(bottom, NULL, NULL, uv, 6);
-	m_buffer[(int)ESkyBoxFace::Front]->MakeBuffer(front, NULL, NULL, uv, 6);
-	m_buffer[(int)ESkyBoxFace::Back]->MakeBuffer(back, NULL, NULL, uv, 6);
-	m_buffer[(int)ESkyBoxFace::Left]->MakeBuffer(left, NULL, NULL, uv, 6);
-	m_buffer[(int)ESkyBoxFace::Right]->MakeBuffer(right, NULL, NULL, uv, 6);
+	m_buffer[(int)ESkyBoxFace::Top] = make_shared<MeshBufferTexcoord>();
+	m_buffer[(int)ESkyBoxFace::Bottom] = make_shared<MeshBufferTexcoord>();
+	m_buffer[(int)ESkyBoxFace::Front] = make_shared<MeshBufferTexcoord>();
+	m_buffer[(int)ESkyBoxFace::Back] = make_shared<MeshBufferTexcoord>();
+	m_buffer[(int)ESkyBoxFace::Left] = make_shared<MeshBufferTexcoord>();
+	m_buffer[(int)ESkyBoxFace::Right] = make_shared<MeshBufferTexcoord>();
+	m_buffer[(int)ESkyBoxFace::Top]->MakePositionBuffer(top, 6);
+	m_buffer[(int)ESkyBoxFace::Bottom]->MakePositionBuffer(bottom, 6);
+	m_buffer[(int)ESkyBoxFace::Front]->MakePositionBuffer(front, 6);
+	m_buffer[(int)ESkyBoxFace::Back]->MakePositionBuffer(back, 6);
+	m_buffer[(int)ESkyBoxFace::Left]->MakePositionBuffer(left, 6);
+	m_buffer[(int)ESkyBoxFace::Right]->MakePositionBuffer(right, 6);
+	m_buffer[(int)ESkyBoxFace::Top]->MakeTexcoordBuffer(uv, 6);
+	m_buffer[(int)ESkyBoxFace::Bottom]->MakeTexcoordBuffer(uv, 6);
+	m_buffer[(int)ESkyBoxFace::Front]->MakeTexcoordBuffer(uv, 6);
+	m_buffer[(int)ESkyBoxFace::Back]->MakeTexcoordBuffer(uv, 6);
+	m_buffer[(int)ESkyBoxFace::Left]->MakeTexcoordBuffer(uv, 6);
+	m_buffer[(int)ESkyBoxFace::Right]->MakeTexcoordBuffer(uv, 6);
 }
 
 void SkyBox::OnInitialize()
