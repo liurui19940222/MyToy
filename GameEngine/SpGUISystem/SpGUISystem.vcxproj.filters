@@ -21,6 +21,9 @@
     <ClInclude Include="UISystem.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="MeshBufferUIInstance.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UIWidget.cpp">
@@ -30,6 +33,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="UISystem.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshBufferUIInstance.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

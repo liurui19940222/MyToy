@@ -35,10 +35,10 @@ void UISystem::SetSize(int width, int height)
 void UISystem::RenderAll()
 {
 	/*
-	* 深度遍历所有View，加入到一个线性表
+	* 深度遍历所有View，计算模型矩阵，加入到一个线性表
 	*/
 	m_ForRenderList.clear();
-	ForeachAll([this](PUIWidget widget) {
+	ForeachAllWithModelMatrix([this](PUIWidget widget) {
 		if (IS_TYPE(UIView, widget.get()))
 			m_ForRenderList.push_back((UIView*)widget.get());
 	});
@@ -60,7 +60,7 @@ void UISystem::RenderAll()
 		materialId = m_ForRenderList[i]->GetMaterialId();
 		if (materialId != beginMaterialId)
 		{
-			SubmitBatch(m_ForRenderList, materialId ? m_ForRenderList[i - 1]->m_Material 
+			SubmitBatch(m_ForRenderList, materialId ? m_ForRenderList[i - 1]->m_Material
 				: m_SharedMaterial, beginIndex, i - beginIndex);
 			beginIndex = i;
 			beginMaterialId = materialId;
@@ -75,7 +75,7 @@ void UISystem::RenderAll()
 
 void UISystem::SubmitBatch(const vector<UIView*> list, PMaterial mat, int startingIndex, int count)
 {
-	
+
 }
 
 void UISystem::AddChild(PUIWidget widget)
@@ -100,4 +100,19 @@ void UISystem::Foreach(PUIWidget widget, ForeachCallback callback)
 void UISystem::ForeachAll(ForeachCallback callback)
 {
 	Foreach(m_Root, callback);
+}
+
+void UISystem::ForeachWithModelMatrix(PUIWidget widget, Matrix4x4& baseMatrix, ForeachCallback callback)
+{
+	widget->CalcModelMatrix(baseMatrix);
+	callback(widget);
+	for (PUIWidget w : widget->m_Childreen)
+	{
+		ForeachWithModelMatrix(w, w->m_ModelMatrix, callback);
+	}
+}
+
+void UISystem::ForeachAllWithModelMatrix(ForeachCallback callback)
+{
+	ForeachWithModelMatrix(m_Root, Matrix4x4::Identity(), callback);
 }

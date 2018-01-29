@@ -25,9 +25,9 @@ public:
 private:
 	void SetupPixelFormat(HDC hDC);
 
-	HDC m_HDC;
-	HGLRC m_HRC;
-	HWND m_HWND;
+	HDC			m_HDC;
+	HGLRC		m_HRC;
+	HWND		m_HWND;
 };
 
 END_NAMESPACE_ENGINE

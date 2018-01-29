@@ -33,6 +33,8 @@ public:
 	void RemoveChild(PUIWidget widget);
 	void Foreach(PUIWidget widget, ForeachCallback callback);
 	void ForeachAll(ForeachCallback callback);
+	void ForeachWithModelMatrix(PUIWidget widget, Matrix4x4& baseMatrix, ForeachCallback callback);
+	void ForeachAllWithModelMatrix(ForeachCallback callback);
 
 private:
 	Matrix4x4			m_ViewMatrix;

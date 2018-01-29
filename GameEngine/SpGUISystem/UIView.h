@@ -10,8 +10,6 @@ SMART_CLASS(UIView) class UIView : public UIWidget
 {
 	friend class UISystem;
 public:
-	UIView();
-	virtual ~UIView();
 
 	inline void SetMaterial(PMaterial mat) { m_Material = mat; }
 	inline int GetMaterialId() { return m_Material ? m_Material->GetInstanceId() : 0; }

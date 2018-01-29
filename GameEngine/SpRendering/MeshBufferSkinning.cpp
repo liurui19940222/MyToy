@@ -15,7 +15,7 @@ MeshBufferSkinning::MeshBufferSkinning(PMesh mesh, const vector<Vector4>& weight
 void MeshBufferSkinning::MakeJointBuffer(const vector<Vector4>& weights, const vector<BVector4>& indices)
 {
 	BindBuffer();
-	MakeVertexBuffer(&m_VboJointIndexHandle, sizeof(BVector4) * indices.size(), 4, &indices[0], ATTR_POS_JOINT_INDEX, EBufferUsage::StaticDraw);
+	MakeIntegerVertexBuffer(&m_VboJointIndexHandle, sizeof(BVector4) * indices.size(), 4, &indices[0], ATTR_POS_JOINT_INDEX, EBufferUsage::StaticDraw, EDataType::UNSIGNED_BYTE);
 	MakeVertexBuffer(&m_VboJointWeightHandle, sizeof(Vector4) * weights.size(), 4, &weights[0], ATTR_POS_JOINT_WEIGHT, EBufferUsage::StaticDraw);
 	UnbindBuffer();
 }

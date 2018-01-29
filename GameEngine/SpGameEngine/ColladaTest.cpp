@@ -26,7 +26,8 @@ void CColladaTest::OnStart()
 	collada = _Resources->Load<ColladaLoader>("models/shake_skin.xml");
 	m_model = collada->m_model;
 	//MeshBuffer* buffer = new MeshBuffer(m_model->m_meshes[0], m_model->m_skeleton->m_weights, m_model->m_skeleton->m_indices);
-	PMeshBufferSkinning buffer = make_shared<MeshBufferSkinning>(m_model->m_meshes[0], m_model->m_skeleton->m_weights, m_model->m_skeleton->m_indices);
+	PMeshBufferSkinning buffer = make_shared<MeshBufferSkinning>(m_model->m_meshes[0]);
+	buffer->MakeJointBuffer(m_model->m_skeleton->m_weights, m_model->m_skeleton->m_indices);
 
 	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, m_model->m_skeleton)->SetMaterial(model_mat);
 	

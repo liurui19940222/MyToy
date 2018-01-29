@@ -39,9 +39,13 @@ protected:
 	SRect2D					m_Rect;
 	float					m_Width;
 	float					m_Height;
+	Matrix4x4				m_ModelMatrix;
 	PUIWidget				m_Parent;
 	UISystem*				m_System;
 	vector<PUIWidget>		m_Childreen;
+
+private:
+	void CalcModelMatrix(Matrix4x4& baseMatrix);
 };
 
 END_NAMESPACE_GUI

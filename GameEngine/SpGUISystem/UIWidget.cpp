@@ -71,3 +71,11 @@ UIWidget* UIWidget::RemoveChild(PUIWidget widget)
 	}
 	return this;
 }
+
+void UIWidget::CalcModelMatrix(Matrix4x4& baseMatrix)
+{
+	static Matrix4x4 translate, scale;
+	translate.MakeTranslate(m_Rect.center);
+	scale.MakeScale(m_Rect.halfSize * 2);
+	m_ModelMatrix = translate * scale * baseMatrix;
+}

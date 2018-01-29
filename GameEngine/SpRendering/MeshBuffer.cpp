@@ -46,14 +46,25 @@ void MeshBuffer::ReleaseBuffer()
 	DeleteBufer(&m_VboPositionHandle);
 }
 
-void MeshBuffer::MakeVertexBuffer(GLuint *bufferId, int size, int componentCount, const void* pointer, int attrPos, EBufferUsage usage)
+void MeshBuffer::MakeVertexBuffer(GLuint *bufferId, int size, int componentCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType)
 {
 	if (!(*bufferId)) 
 		glGenBuffers(1, bufferId);
 	glBindBuffer(GL_ARRAY_BUFFER, *bufferId);
 	glBufferData(GL_ARRAY_BUFFER, size, pointer, (GLenum)usage);
 	glEnableVertexAttribArray(attrPos);
-	glVertexAttribPointer(attrPos, componentCount, GL_FLOAT, GL_FALSE, 0, NULL);
+	glVertexAttribPointer(attrPos, componentCount, (GLenum)dataType, GL_FALSE, 0, NULL);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void MeshBuffer::MakeIntegerVertexBuffer(GLuint *bufferId, int size, int componentCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType)
+{
+	if (!(*bufferId))
+		glGenBuffers(1, bufferId);
+	glBindBuffer(GL_ARRAY_BUFFER, *bufferId);
+	glBufferData(GL_ARRAY_BUFFER, size, pointer, (GLenum)usage);
+	glEnableVertexAttribArray(attrPos);
+	glVertexAttribIPointer(attrPos, componentCount, (GLenum)dataType, 0, NULL);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -63,6 +74,20 @@ void MeshBuffer::MakeIndexBuffer(GLuint* bufferId, int dataSize, const void* poi
 		glGenBuffers(1, bufferId);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *bufferId);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, dataSize, pointer, GL_STATIC_DRAW);
+}
+
+void MeshBuffer::MakeInstanceVertexBuffer(GLuint* bufferId, int dataSize, int componentCount, int instanceCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType)
+{
+	glGenBuffers(1, bufferId);
+	glBindBuffer(GL_ARRAY_BUFFER, *bufferId);
+	glBufferData(GL_ARRAY_BUFFER, dataSize * instanceCount, pointer, (GLenum)usage);
+	int oneSize = dataSize / componentCount;
+	for (int i = 0; i < oneSize; ++i)
+	{
+		glVertexAttribPointer(attrPos + i, 4, (GLenum)dataType, GL_FALSE, dataSize, (void*)(sizeof(Vector4) * i));
+		glEnableVertexAttribArray(attrPos + i);
+		glVertexAttribDivisor(attrPos + i, 1);
+	}
 }
 
 void MeshBuffer::UpdateVertexBuffer(GLuint bufferId, int offset, int dataSize, const void* pointer)

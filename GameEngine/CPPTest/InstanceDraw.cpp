@@ -1,4 +1,5 @@
 #include "InstanceDraw.h"
+#include "SpRendering\MeshBuffer.h"
 
 InstanceDraw::InstanceDraw(const wchar_t* className, const wchar_t* title, int width, int height)
 	: GLAppBase(className, title, width, height) {}
@@ -47,15 +48,16 @@ void InstanceDraw::OnInitialize()
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 
-	glGenBuffers(1, &m_ModelMatrixHandle);
-	glBindBuffer(GL_ARRAY_BUFFER, m_ModelMatrixHandle);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Matrix4x4) * INSTANCE_NUM, &m_InstanceMatrices[0], GL_DYNAMIC_DRAW);
-	for (int i = 0; i < 4; ++i)
-	{
-		glVertexAttribPointer(MODEL_MATRIX_POS + i, 4, GL_FLOAT, GL_FALSE, sizeof(Matrix4x4), (void*)(sizeof(Vector4) * i));
-		glEnableVertexAttribArray(MODEL_MATRIX_POS + i);
-		glVertexAttribDivisor(MODEL_MATRIX_POS + i, 1);
-	}
+	//glGenBuffers(1, &m_ModelMatrixHandle);
+	//glBindBuffer(GL_ARRAY_BUFFER, m_ModelMatrixHandle);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(Matrix4x4) * INSTANCE_NUM, &m_InstanceMatrices[0], GL_DYNAMIC_DRAW);
+	//for (int i = 0; i < 4; ++i)
+	//{
+	//	glVertexAttribPointer(MODEL_MATRIX_POS + i, 4, GL_FLOAT, GL_FALSE, sizeof(Matrix4x4), (void*)(sizeof(Vector4) * i));
+	//	glEnableVertexAttribArray(MODEL_MATRIX_POS + i);
+	//	glVertexAttribDivisor(MODEL_MATRIX_POS + i, 1);
+	//}
+	MeshBuffer::MakeInstanceVertexBuffer(&m_ModelMatrixHandle, sizeof(Matrix4x4), 16, INSTANCE_NUM, &m_InstanceMatrices[0], MODEL_MATRIX_POS, EBufferUsage::DynamicDraw, EDataType::FLOAT);
 
 	glGenBuffers(1, &m_IndicesHandle);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndicesHandle);
