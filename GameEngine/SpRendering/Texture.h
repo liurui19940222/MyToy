@@ -32,6 +32,10 @@ struct TexcoordRange
 {
 	Vector2		m_StartingPoint;
 	Vector2		m_Size;
+
+	TexcoordRange();
+	TexcoordRange(float startingX, float startingY, float sizeX, float sizeY);
+	TexcoordRange(Vector2 staringPoint, Vector2 size);
 };
 
 SMART_CLASS(Texture) class Texture : public Object

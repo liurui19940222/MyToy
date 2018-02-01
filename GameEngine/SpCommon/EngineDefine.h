@@ -14,6 +14,7 @@ using namespace std;
 #define CH_MAP_BITMAP_SIZE_W 512
 #define CH_MAP_BITMAP_SIZE_H 512
 #define IS_TYPE(T, p) dynamic_cast<T*>(p) != NULL
+#define SECURITY(p) if(p) p
 
 typedef unsigned char uint8;
 typedef unsigned char byte;
@@ -96,6 +97,7 @@ struct Color
 	static const Color purple;
 	static const Color white;
 	static const Color orange;
+	static const Color yellow;
 };
 
 struct SRect2D
@@ -181,6 +183,12 @@ struct Layer
 	static const int Default;
 	static const int UI;
 	static const int Overlay2D;
+};
+
+class EngineToolkit
+{
+public:
+	static RECT GetGlobalRect(HWND& hwnd, int width, int height);
 };
 
 END_NAMESPACE_ENGINE

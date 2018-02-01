@@ -76,15 +76,15 @@ void MeshBuffer::MakeIndexBuffer(GLuint* bufferId, int dataSize, const void* poi
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, dataSize, pointer, GL_STATIC_DRAW);
 }
 
-void MeshBuffer::MakeInstanceVertexBuffer(GLuint* bufferId, int dataSize, int componentCount, int instanceCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType)
+void MeshBuffer::MakeInstanceVertexBuffer(GLuint* bufferId, int structSize, int componentCount, int instanceCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType)
 {
 	glGenBuffers(1, bufferId);
 	glBindBuffer(GL_ARRAY_BUFFER, *bufferId);
-	glBufferData(GL_ARRAY_BUFFER, dataSize * instanceCount, pointer, (GLenum)usage);
-	int oneSize = dataSize / componentCount;
+	glBufferData(GL_ARRAY_BUFFER, structSize * instanceCount, pointer, (GLenum)usage);
+	int oneSize = structSize / componentCount;
 	for (int i = 0; i < oneSize; ++i)
 	{
-		glVertexAttribPointer(attrPos + i, 4, (GLenum)dataType, GL_FALSE, dataSize, (void*)(sizeof(Vector4) * i));
+		glVertexAttribPointer(attrPos + i, 4, (GLenum)dataType, GL_FALSE, structSize, (void*)(sizeof(Vector4) * i));
 		glEnableVertexAttribArray(attrPos + i);
 		glVertexAttribDivisor(attrPos + i, 1);
 	}

@@ -20,13 +20,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUIDefines.h" />
+    <ClInclude Include="IInteractable.h" />
     <ClInclude Include="MeshBufferUIInstance.h" />
+    <ClInclude Include="UIInteractor.h" />
     <ClInclude Include="UISystem.h" />
     <ClInclude Include="UIView.h" />
     <ClInclude Include="UIWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MeshBufferUIInstance.cpp" />
+    <ClCompile Include="UIInteractor.cpp" />
     <ClCompile Include="UISystem.cpp" />
     <ClCompile Include="UIView.cpp" />
     <ClCompile Include="UIWidget.cpp" />

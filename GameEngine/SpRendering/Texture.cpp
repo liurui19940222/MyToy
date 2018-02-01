@@ -1,6 +1,14 @@
 #include "Texture.h"
 
-USING_NAMESPACE_ENGINE
+USING_NAMESPACE_ENGINE;
+
+TexcoordRange::TexcoordRange() : m_StartingPoint(0.0f, 0.0f), m_Size(0.0f, 0.0f) {}
+
+TexcoordRange::TexcoordRange(float startingX, float startingY, float sizeX, float sizeY)
+	: m_StartingPoint(startingX, startingY), m_Size(sizeX, sizeY) {}
+
+TexcoordRange::TexcoordRange(Vector2 staringPoint, Vector2 size)
+	: m_StartingPoint(staringPoint), m_Size(size) {}
 
 Texture::~Texture()
 {

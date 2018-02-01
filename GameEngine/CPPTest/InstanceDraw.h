@@ -24,6 +24,7 @@ private:
 	GLuint			m_VAO;
 	GLuint			m_VertexHandle;
 	GLuint			m_TexcoordHandle;
+	GLuint			m_TexcoordRangeHandle;
 	GLuint			m_ModelMatrixHandle;
 	GLuint			m_IndicesHandle;
 	PShader			m_Shader;
@@ -32,6 +33,7 @@ private:
 	Matrix4x4		m_ViewMatrix;
 	Matrix4x4		m_ProjMatrix;
 	float			m_Angle;
-	vector<Matrix4x4>	m_InstanceMatrices;
+	vector<TexcoordRange>	m_InstanceTexcoordRange;
+	vector<Matrix4x4>		m_InstanceMatrices;
 };
 

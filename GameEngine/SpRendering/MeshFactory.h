@@ -31,8 +31,14 @@ public:
 	PMesh CreateRectMesh(float width, float height);
 	PMesh CreateMesh(EMeshType type);
 	PMesh SharedMesh(EMeshType type);
-	PMeshBuffer CreateBuffer(EMeshType type);
 	PMeshBuffer SharedBuffer(EMeshType type);
+
+	template<typename T> shared_ptr<T> CreateBuffer(EMeshType type)
+	{
+		PMesh mesh = CreateMesh(type);
+		shared_ptr<T> buffer(new T(CreateMesh(type)));
+		return buffer;
+	}
 };
 
 END_NAMESPACE_ENGINE

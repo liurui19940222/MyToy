@@ -24,6 +24,12 @@
     <ClInclude Include="MeshBufferUIInstance.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="IInteractable.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="UIInteractor.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UIWidget.cpp">
@@ -36,6 +42,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="MeshBufferUIInstance.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="UIInteractor.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

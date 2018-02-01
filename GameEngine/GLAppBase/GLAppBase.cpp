@@ -140,6 +140,8 @@ void GLAppBase::OnRender()
 
 void GLAppBase::OnWindowSizeChanged(int width, int height)
 {
+	m_WindowWidth = width;
+	m_WindowHeight = height;
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(45.0f, width / (float)height, 0.01f, 1000.0f);

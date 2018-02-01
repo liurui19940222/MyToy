@@ -54,7 +54,7 @@ public:
 
 	static void MakeVertexBuffer(GLuint* bufferId, int dataSize, int componentCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType = EDataType::FLOAT);
 	static void MakeIntegerVertexBuffer(GLuint* bufferId, int dataSize, int componentCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType = EDataType::INT);
-	static void MakeInstanceVertexBuffer(GLuint* bufferId, int dataSize, int componentCount, int instanceCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType = EDataType::FLOAT);
+	static void MakeInstanceVertexBuffer(GLuint* bufferId, int structSize, int componentCount, int instanceCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType = EDataType::FLOAT);
 	static void MakeIndexBuffer(GLuint* bufferId, int dataSize, const void* pointer);
 	static void UpdateVertexBuffer(GLuint bufferId, int offset, int dataSize, const void* pointer);
 	static void DeleteBufer(GLuint* bufferId);

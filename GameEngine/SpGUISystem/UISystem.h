@@ -1,7 +1,8 @@
 #pragma once
 
 #include"SpRendering\Material.h"
-#include"SpRendering\MeshBuffer.h"
+#include"SpRendering\Rendering.h"
+#include"MeshBufferUIInstance.h"
 #include"GUIDefines.h"
 #include"UIView.h"
 #include<functional>
@@ -23,12 +24,12 @@ public:
 	UISystem();
 	~UISystem();
 
-	void StartUp(int width, int height);
+	void StartUp(IRenderingInterface* ri, int width, int height);
 	void SetSize(int width, int height);
 	void ShutDown();
+	void UpdateAll(SMouseState mouseState);
 	void RenderAll();
-	void SubmitBatch(const vector<UIView*> list, PMaterial mat
-		, int startingIndex, int count);
+	void SubmitBatch(const vector<UIView*> list, PMaterial mat, int startingIndex, int count);
 	void AddChild(PUIWidget widget);
 	void RemoveChild(PUIWidget widget);
 	void Foreach(PUIWidget widget, ForeachCallback callback);
@@ -36,14 +37,31 @@ public:
 	void ForeachWithModelMatrix(PUIWidget widget, Matrix4x4& baseMatrix, ForeachCallback callback);
 	void ForeachAllWithModelMatrix(ForeachCallback callback);
 
+	inline PUIWidget GetRoot() const { return m_Root; }
+	inline Vector2 ScreenPointToView(const Vector2& point) { return point - m_Root->GetHalfSize(); }
+	inline Vector2 ViewPointToScreen(const Vector2& point) { return point + m_Root->GetHalfSize(); }
+
+	template<typename T> shared_ptr<T> Create()
+	{
+		shared_ptr<T> ptr = make_shared<T>();
+		ptr->m_System = this;
+		return ptr;
+	}
+
 private:
-	Matrix4x4			m_ViewMatrix;
-	Matrix4x4			m_ProjMatrix;
-	PMeshBuffer			m_SharedMesh;
-	PMaterial			m_SharedMaterial;
-	PUIWidget			m_Root;
-	vector<UIView*>		m_ForRenderList;
-	vector<UIBatch>		m_Batchs;
+	IRenderingInterface*	m_RI;
+	Matrix4x4				m_ViewMatrix;
+	Matrix4x4				m_ProjMatrix;
+	PMeshBufferUIInstance	m_SharedMesh;
+	PMaterial				m_SharedMaterial;
+	PUIWidget				m_Root;
+	IInteractable*			m_LastIntracted;
+	vector<UIView*>			m_ForRenderList;
+	vector<IInteractable*>	m_ForInteractList;
+	vector<TexcoordRange>	m_TexcoordRanges;
+	vector<Color>			m_Colors;
+	vector<SRect2D>			m_RectList;
+	vector<Matrix4x4>		m_ModelMatrices;
 };
 
 END_NAMESPACE_GUI

@@ -209,13 +209,6 @@ PMesh MeshFactory::SharedMesh(EMeshType type)
 	return it->second;
 }
 
-PMeshBuffer MeshFactory::CreateBuffer(EMeshType type)
-{
-	PMesh mesh = CreateMesh(type);
-	PMeshBufferNormal buffer(new MeshBufferNormal(CreateMesh(type)));
-	return buffer;
-}
-
 PMeshBuffer MeshFactory::SharedBuffer(EMeshType type)
 {
 	PMesh mesh = SharedMesh(type);

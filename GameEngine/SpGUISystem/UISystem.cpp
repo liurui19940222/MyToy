@@ -9,15 +9,18 @@ UISystem::UISystem()
 {
 }
 
-
 UISystem::~UISystem()
 {
 }
 
-void UISystem::StartUp(int width, int height)
+void UISystem::StartUp(IRenderingInterface* ri, int width, int height)
 {
-	m_SharedMesh = _MeshFactory->CreateBuffer(EMeshType::Quad);
+	m_RI = ri;
+	m_SharedMesh = _MeshFactory->CreateBuffer<MeshBufferUIInstance>(EMeshType::Quad);
 	m_SharedMaterial = make_shared<Material>();
+	m_SharedMaterial->SetShader(Shader::Get("ui_instance"));
+	m_SharedMaterial->SetState(EPiplelineStateType::DepthTest, false);
+	m_SharedMaterial->SetState(EPiplelineStateType::Blend, true);
 	m_Root = make_shared<UIWidget>();
 	m_Root->m_System = this;
 	m_ViewMatrix = Matrix4x4::LookAt(Vector3(0, 0, 100), Vector3::zero, Vector3::up);
@@ -32,17 +35,46 @@ void UISystem::SetSize(int width, int height)
 	m_ProjMatrix = Matrix4x4::Ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, ZNEAR, ZFAR);
 }
 
-void UISystem::RenderAll()
+void UISystem::UpdateAll(SMouseState mouseState)
 {
+	mouseState.m_MousePosition = ScreenPointToView(mouseState.m_MousePosition);
 	/*
 	* 深度遍历所有View，计算模型矩阵，加入到一个线性表
 	*/
 	m_ForRenderList.clear();
+	m_ForInteractList.clear();
 	ForeachAllWithModelMatrix([this](PUIWidget widget) {
 		if (IS_TYPE(UIView, widget.get()))
 			m_ForRenderList.push_back((UIView*)widget.get());
+		if (IS_TYPE(IInteractable, widget.get()))
+			m_ForInteractList.push_back(dynamic_cast<IInteractable*>(widget.get()));
 	});
 
+	int size = (int)((IInteractable*)(UIInteractor*)NULL);
+
+	/*
+	* 检测鼠标与UI的交互
+	*/
+	IInteractable* result = NULL;
+	for (auto it = m_ForInteractList.rbegin(); it != m_ForInteractList.rend(); ++it)
+	{
+		if (!((*it)->IsInteractive()))
+			continue;
+
+		if ((*it)->Interact(mouseState))
+		{
+			if (m_LastIntracted != (*it))
+				SECURITY(m_LastIntracted)->LostFocus(mouseState);
+			m_LastIntracted = (*it);
+			result = (*it);
+			break;
+		}
+	}
+	if (!result) SECURITY(m_LastIntracted)->LostFocus(mouseState);
+}
+
+void UISystem::RenderAll()
+{
 	int size = m_ForRenderList.size();
 
 	if (size == 0)
@@ -75,7 +107,22 @@ void UISystem::RenderAll()
 
 void UISystem::SubmitBatch(const vector<UIView*> list, PMaterial mat, int startingIndex, int count)
 {
-
+	m_TexcoordRanges.resize(count);
+	m_Colors.resize(count);
+	m_RectList.resize(count);
+	m_ModelMatrices.resize(count);
+	for (int i = 0, j = 0; i < count; ++i, ++j)
+	{
+		m_TexcoordRanges[i] = list[j]->GetTexcoordRange();
+		m_Colors[i] = list[j]->GetColor();
+		m_RectList[i] = list[j]->m_Rect;
+		m_ModelMatrices[i] = list[j]->m_ModelMatrix;
+	}
+	m_SharedMesh->MakeInstanceBuffer(m_TexcoordRanges, m_Colors, m_RectList, m_ModelMatrices, count);
+	mat->Bind();
+	mat->SetParam("u_V", m_ViewMatrix);
+	mat->SetParam("u_P", m_ProjMatrix);
+	m_RI->RerderInstance(RenderingObject{ m_SharedMesh.get(), m_SharedMaterial.get() }, count);
 }
 
 void UISystem::AddChild(PUIWidget widget)
@@ -108,7 +155,7 @@ void UISystem::ForeachWithModelMatrix(PUIWidget widget, Matrix4x4& baseMatrix, F
 	callback(widget);
 	for (PUIWidget w : widget->m_Childreen)
 	{
-		ForeachWithModelMatrix(w, w->m_ModelMatrix, callback);
+		ForeachWithModelMatrix(w, widget->m_ModelMatrix, callback);
 	}
 }
 

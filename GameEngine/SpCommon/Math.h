@@ -51,7 +51,9 @@ public:
 
 	inline TmpVector2<VType> operator-(const TmpVector2<VType>& vec) const { return TmpVector2<VType>(this->x - vec.x, this->y - vec.y); }
 
-	inline TmpVector2<VType> operator*(const VType value) const { return TmpVector2<VType>(this->x * value, this->y*value); }
+	inline TmpVector2<VType> operator*(const VType value) const { return TmpVector2<VType>(this->x * value, this->y * value); }
+
+	inline TmpVector2<VType> operator*(const TmpVector2<VType>& vec) const { return TmpVector2<VType>(this->x * vec.x, this->y * vec.y);}
 
 	inline TmpVector2<VType> operator/(const VType value) const { return TmpVector2<VType>(this->x / value, this->y / value); }
 
@@ -75,6 +77,12 @@ public:
 	{
 		x *= value;
 		y *= value;
+	}
+
+	inline void operator*=(const TmpVector2<VType>& vec)
+	{
+		x *= vec.x;
+		y *= vec.y;
 	}
 
 	inline void operator/=(const VType value) { (*this) *= (1.0f / value); }
@@ -260,6 +268,8 @@ public:
 
 	void MakeRotate(float pitch, float yaw, float roll);
 
+	void MakeRotate(const Vector3& eulerAngles);
+
 	void MakeRotate(const Quaternion& q);
 
 	void MakeRotateUVN(const Vector3& targetPos, const Vector3& selfPos);
@@ -279,6 +289,8 @@ public:
 	static Matrix4x4 Identity();
 
 	static Matrix4x4 Rotate(float pitch, float yaw, float roll);
+
+	static Matrix4x4 Rotate(const Vector3& eulerAngles);
 
 	static Matrix4x4 RotateUVN(const Vector3& targetPos, const Vector3& selfPos);
 

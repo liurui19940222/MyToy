@@ -19,26 +19,20 @@ void GLRendering::ShutDown()
 	wglDeleteContext(m_HRC);
 }
 
-void GLRendering::Render(PRenderingObject obj, Matrix4x4& modelMatrix,
-	Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
+void GLRendering::Render(RenderingObject obj)
 {
-	if (obj == NULL) return;
-	obj->material->Bind();
-	obj->material->SetParam("M", modelMatrix);
-	obj->material->SetParam("V", viewMatrix);
-	obj->material->SetParam("P", projectionMatrix);
-	obj->mesh->BindBuffer();
-	glDrawArrays(GL_TRIANGLES, 0, obj->mesh->GetVertexNum());
-	obj->material->Unbind();
+	obj.material->Bind();
+	obj.mesh->BindBuffer();
+	glDrawArrays(GL_TRIANGLES, 0, obj.mesh->GetVertexNum());
+	obj.material->Unbind();
 }
 
-void GLRendering::RerderInstance(PRenderingObject obj, uint instanceCount)
+void GLRendering::RerderInstance(RenderingObject obj, uint instanceCount)
 {
-	if (obj == NULL) return;
-	obj->material->Bind();
-	obj->mesh->BindBuffer();
-	glDrawArraysInstanced(GL_TRIANGLES, 0, obj->mesh->GetVertexNum(), instanceCount);
-	obj->material->Unbind();
+	obj.material->Bind();
+	obj.mesh->BindBuffer();
+	glDrawArraysInstanced(GL_TRIANGLES, 0, obj.mesh->GetVertexNum(), instanceCount);
+	obj.material->Unbind();
 }
 
 void GLRendering::MakeRenderContext()

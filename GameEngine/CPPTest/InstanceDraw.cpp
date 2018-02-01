@@ -27,10 +27,12 @@ void InstanceDraw::OnInitialize()
 	};
 
 	m_InstanceMatrices.resize(INSTANCE_NUM);
+	m_InstanceTexcoordRange.resize(INSTANCE_NUM);
 	float x_pos = -INSTANCE_NUM * 0.5f + 0.5;
 	for (int i = 0; i < INSTANCE_NUM; ++i)
 	{
 		m_InstanceMatrices[i] = Matrix4x4::Translate(Vector3(x_pos + i, 0.0f, 0.0f)) * Matrix4x4::Scale(Vector3::one * 0.5f);
+		m_InstanceTexcoordRange[i] = TexcoordRange(0.25f * (floor(m_TimeSinceStarUp) + i), 0.0f, 0.25f, 1.0f);
 	}
 
 	glGenVertexArrays(1, &m_VAO);
@@ -48,16 +50,8 @@ void InstanceDraw::OnInitialize()
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 
-	//glGenBuffers(1, &m_ModelMatrixHandle);
-	//glBindBuffer(GL_ARRAY_BUFFER, m_ModelMatrixHandle);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(Matrix4x4) * INSTANCE_NUM, &m_InstanceMatrices[0], GL_DYNAMIC_DRAW);
-	//for (int i = 0; i < 4; ++i)
-	//{
-	//	glVertexAttribPointer(MODEL_MATRIX_POS + i, 4, GL_FLOAT, GL_FALSE, sizeof(Matrix4x4), (void*)(sizeof(Vector4) * i));
-	//	glEnableVertexAttribArray(MODEL_MATRIX_POS + i);
-	//	glVertexAttribDivisor(MODEL_MATRIX_POS + i, 1);
-	//}
-	MeshBuffer::MakeInstanceVertexBuffer(&m_ModelMatrixHandle, sizeof(Matrix4x4), 16, INSTANCE_NUM, &m_InstanceMatrices[0], MODEL_MATRIX_POS, EBufferUsage::DynamicDraw, EDataType::FLOAT);
+	MeshBuffer::MakeInstanceVertexBuffer(&m_TexcoordRangeHandle, sizeof(TexcoordRange), 4, INSTANCE_NUM, &m_InstanceTexcoordRange[0], MODEL_MATRIX_POS - 1, EBufferUsage::DynamicDraw);
+	MeshBuffer::MakeInstanceVertexBuffer(&m_ModelMatrixHandle, sizeof(Matrix4x4), 16, INSTANCE_NUM, &m_InstanceMatrices[0], MODEL_MATRIX_POS, EBufferUsage::DynamicDraw);
 
 	glGenBuffers(1, &m_IndicesHandle);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndicesHandle);
@@ -88,8 +82,16 @@ void InstanceDraw::OnUpdate(float deltaTime)
 	for (int i = 0; i < INSTANCE_NUM; ++i)
 	{
 		m_Angle += deltaTime * 100;
-		matrices[i] = Matrix4x4::Translate(Vector3(x_pos + i, 0.0f, 0.0f)) 
+		matrices[i] = Matrix4x4::Translate(Vector3(x_pos + i, 0.0f, 0.0f))
 			* Matrix4x4::Rotate(0.0f, 0.0f, m_Angle * (!(i % 2) ? -1.0f : 1.0f)) * Matrix4x4::Scale(Vector3::one * 0.5f);
+	}
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_TexcoordRangeHandle);
+	TexcoordRange* ranges = (TexcoordRange*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+	for (int i = 0; i < INSTANCE_NUM; ++i)
+	{
+		ranges[i] = TexcoordRange(0.25f * (floor(m_TimeSinceStarUp * 20) + i), 0.0f, 0.25f, 1.0f);
 	}
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

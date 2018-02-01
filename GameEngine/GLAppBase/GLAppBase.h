@@ -5,6 +5,8 @@
 
 using namespace std;
 
+#define IS_KEY_DOWN(code) GetAsyncKeyState(code) & 0x8000
+
 class GLAppBase
 {
 public:
@@ -14,6 +16,7 @@ public:
 	void Run();
 
 protected:
+	virtual void InitGL(HWND hwnd);
 	virtual void OnInitialize();
 	virtual void OnUpdate(float deltaTime);
 	virtual void OnRender();
@@ -21,7 +24,6 @@ protected:
 	virtual void OnRelease();
 
 private:
-	void InitGL(HWND hwnd);
 	void MakeRenderContext();
 	void SetupPixelFormat(HDC hDC);
 

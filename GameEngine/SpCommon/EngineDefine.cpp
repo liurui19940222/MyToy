@@ -163,6 +163,7 @@ const Color Color::cyan(0.0f, 1.0f, 1.0f, 1.0f);
 const Color Color::purple(1.0f, 0.0f, 1.0f, 1.0f);
 const Color Color::white(1.0f, 1.0f, 1.0f, 1.0f);
 const Color Color::orange(1.0f, 0.5f, 0.0f, 1.0f);
+const Color Color::yellow(1.0f, 1.0f, 0.0f, 1.0f);
 
 Color32::Color32(){}
 
@@ -229,3 +230,16 @@ LPWSTR AnsiToUnicode(LPCSTR lpcstr)   //参数lpcstr类型也可是char*
 const int Layer::Default = 1;
 const int Layer::UI = 10;
 const int Layer::Overlay2D = 30;
+
+RECT EngineToolkit::GetGlobalRect(HWND& hwnd, int width, int height)
+{
+	RECT rect;
+	POINT p{ 0, 0 };
+	p.x = 0; p.y = 0;
+	ClientToScreen(hwnd, &p);
+	rect.left = p.x;
+	rect.right = p.x + width;
+	rect.top = p.y;
+	rect.bottom = p.y + height;
+	return rect;
+}

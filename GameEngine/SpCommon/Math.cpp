@@ -179,6 +179,13 @@ Matrix4x4 Matrix4x4::Rotate(float pitch, float yaw, float roll)
 	return m;
 }
 
+Matrix4x4 Matrix4x4::Rotate(const Vector3& eulerAngles)
+{
+	Matrix4x4 m;
+	Rotate(m, eulerAngles.x, eulerAngles.y, eulerAngles.z);
+	return m;
+}
+
 Matrix4x4 Matrix4x4::Ortho(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	Matrix4x4 m;
@@ -335,6 +342,11 @@ void Matrix4x4::MakeZero()
 void Matrix4x4::MakeRotate(float pitch, float yaw, float roll)
 {
 	Rotate(*this, pitch, yaw, roll);
+}
+
+void Matrix4x4::MakeRotate(const Vector3& eulerAngles)
+{
+	Rotate(*this, eulerAngles.x, eulerAngles.y, eulerAngles.z);
 }
 
 void Matrix4x4::MakeRotate(const Quaternion& q)

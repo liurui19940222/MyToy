@@ -17,6 +17,6 @@ void main()
 {
 	vertex.uv = a_Texcoord;
 	vertex.range = a_TexRange;
-	vertex.range = vec4(0.25 * (floor(u_Time) + gl_InstanceID), 0, 0.25, 1);
+	//vertex.range = vec4(0.25 * (floor(u_Time) + gl_InstanceID), 0, 0.25, 1);
 	gl_Position = u_P * u_V * a_ModelMatrix * a_VertexPosition;
 }
