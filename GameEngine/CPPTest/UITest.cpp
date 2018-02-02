@@ -49,7 +49,7 @@ void UITest::OnInitialize()
 	m_MovedWidget = view2;
 	m_MovedWidget->SetInteract(true);
 
-	m_MovedWidget->AddMouseDownListener([](const Vector2& pos) {
+	/*m_MovedWidget->AddMouseDownListener([](const Vector2& pos) {
 		CDebug::Log(L"parent mouse down");
 	});
 
@@ -67,12 +67,12 @@ void UITest::OnInitialize()
 
 	m_MovedWidget->AddMouseOverListener([](const Vector2& pos) {
 		CDebug::Log(L"parent mouse over");
-	});
+	});*/
 
 	m_SubWidget = view3;
 	m_SubWidget->SetInteract(true);
 
-	m_SubWidget->AddMouseDownListener([](const Vector2& pos) {
+	/*m_SubWidget->AddMouseDownListener([](const Vector2& pos) {
 		CDebug::Log(L"sub mouse down");
 	});
 
@@ -90,7 +90,7 @@ void UITest::OnInitialize()
 
 	m_SubWidget->AddMouseOverListener([](const Vector2& pos) {
 		CDebug::Log(L"sub mouse over");
-	});
+	});*/
 }
 
 void UITest::OnUpdate(float deltaTime)
