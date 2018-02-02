@@ -21,29 +21,31 @@ void UITest::InitGL(HWND hwnd)
 void UITest::OnInitialize()
 {
 	GLAppBase::OnInitialize();
+	Color color = Color::Hex(0x314D79FF);
+	SetBackgroundColor(color.r, color.g, color.b, color.a);
 	CInput::Init(GetModuleHandle(NULL), m_Hwnd);
+
+	PTexture2D tex = Texture2D::Create("D:\\GitHub\\MyToy\\GameEngine\\Assets\\gift_7.png");
+	PTexture2D tex2 = Texture2D::Create("D:\\GitHub\\MyToy\\GameEngine\\Assets\\addtext_19.png");
 
 	m_UISystem = new UISystem();
 	m_UISystem->StartUp(m_RI, m_WindowWidth, m_WindowHeight);
-	PMaterial mat = make_shared<Material>();
 	//PUIView view1 = m_UISystem->Create<UIView>();
-	PUIView view2 = m_UISystem->Create<UIView>();
-	PUIView view3 = m_UISystem->Create<UIView>();
+	PUIImage view2 = m_UISystem->Create<UIImage>();
+	PUIImage view3 = m_UISystem->Create<UIImage>();
 	//PUIView view4 = make_shared<UIView>();
 	//PUIView view5 = make_shared<UIView>();
 	//view1->SetWidth(100);
 	view2->SetRect(SRect2D(0.0f, 0.0f, 120.0f, 55.0f));
-	//view2->SetPivot(Vector2::zero);
-	view2->SetColor(Color::white * 0.1f);
-	view3->SetColor(Color::white * 0.2f);
 	view3->SetRect(SRect2D(0.0f, 0.0f, 50.0f, 30.0f));
+	view3->SetSprite(Sprite::CreateSprite(tex2, TexcoordRange::full), true);
+	view2->SetSprite(Sprite::CreateSprite(tex, TexcoordRange::full), true);
 	//view4->SetMaterial(mat);
 	//m_UISystem->AddChild(view1);
 	m_UISystem->AddChild(view2);
 	//m_UISystem->AddChild(view4);
 	//m_UISystem->AddChild(view5);
 	view2->AddChild(view3);
-	//view2->RemoveChild(view3);
 	m_MovedWidget = view2;
 	m_MovedWidget->SetInteract(true);
 

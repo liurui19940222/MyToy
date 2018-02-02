@@ -21,6 +21,19 @@ enum class EPiplelineStateType
 	Fog = GL_FOG,
 };
 
+enum class EBlendFactor
+{
+	SRC_COLOR = GL_SRC_COLOR,
+	ONE_MINUS_SRC_COLOR = GL_ONE_MINUS_SRC_COLOR,
+	SRC_ALPHA = GL_SRC_ALPHA,
+	ONE_MINUS_SRC_ALPHA = GL_ONE_MINUS_SRC_ALPHA,
+	DST_ALPHA = GL_DST_ALPHA,
+	ONE_MINUS_DST_ALPHA = GL_ONE_MINUS_DST_ALPHA,
+	DST_COLOR = GL_DST_COLOR,
+	ONE_MINUS_DST_COLOR = GL_ONE_MINUS_DST_COLOR,
+	SRC_ALPHA_SATURATE = GL_SRC_ALPHA_SATURATE,
+};
+
 SMART_CLASS(Material) class Material : public Object
 {
 private:
@@ -45,7 +58,10 @@ public:
 	Material* SetColor(const Color& color);
 	Material* SetShader(PShader shader);
 	Material* SetMainTexture(PTexture texture);
+	Material* SetBlendFunc(EBlendFactor src, EBlendFactor dst);
+	PTexture GetMainTexture() const;
 	void Bind();
+	void BindTexture(const char* paramName, uint texture);
 	void Unbind();
 
 	template<typename T>

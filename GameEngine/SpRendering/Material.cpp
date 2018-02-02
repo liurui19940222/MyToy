@@ -102,6 +102,17 @@ Material* Material::SetMainTexture(PTexture texture)
 	return this;
 }
 
+Material* Material::SetBlendFunc(EBlendFactor src, EBlendFactor dst)
+{
+	glBlendFunc((GLenum)src, (GLenum)dst);
+	return this;
+}
+
+PTexture Material::GetMainTexture() const
+{
+	return m_mainTexture;
+}
+
 void Material::Bind()
 {
 	PushState();
@@ -117,13 +128,21 @@ void Material::Bind()
 	Light::SetUniformParams(m_shader);
 }
 
+void Material::BindTexture(const char* paramName, uint texture)
+{
+	glEnable(GL_TEXTURE_2D);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	SetParam("u_MainTex", 0);
+}
+
 void Material::Unbind()
 {
 	glBindVertexArray(0);
 	if (m_mainTexture && HasState(EPiplelineStateType::Texture2D))
 	{
-		glDisable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, 0);
+		glDisable(GL_TEXTURE_2D);
 	}
 	glUseProgram(0);
 	PopState();

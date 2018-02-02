@@ -14,6 +14,7 @@ public:
 
 	void CreateMainWindow();
 	void Run();
+	void SetBackgroundColor(float r, float g, float b, float a);
 
 protected:
 	virtual void InitGL(HWND hwnd);
@@ -36,6 +37,7 @@ protected:
 	int				m_WindowWidth;
 	int				m_WindowHeight;
 	float			m_TimeSinceStarUp;
+	float			m_BackgroundColor[4];
 	const wchar_t*  m_ClassName;
 	const wchar_t*	m_WindowName;
 

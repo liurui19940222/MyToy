@@ -7,9 +7,10 @@
 GLAppBase* GLAppBase::AppInstance(NULL);
 
 GLAppBase::GLAppBase(const wchar_t* className, const wchar_t* title, int width, int height)
-	: m_ClassName(className), m_WindowName(title), m_WindowWidth(width), m_WindowHeight(height)
+	: m_ClassName(className), m_WindowName(title), m_WindowWidth(width), m_WindowHeight(height), 
+	m_BackgroundColor{ 0.0f, 0.0f, 0.0f, 1.0f }
 {
-
+	
 }
 
 void GLAppBase::CreateMainWindow()
@@ -120,6 +121,14 @@ void GLAppBase::Run()
 	OnRelease();
 }
 
+void GLAppBase::SetBackgroundColor(float r, float g, float b, float a)
+{
+	m_BackgroundColor[0] = r;
+	m_BackgroundColor[1] = g;
+	m_BackgroundColor[2] = b;
+	m_BackgroundColor[3] = a;
+}
+
 void GLAppBase::OnInitialize() 
 {
 	glMatrixMode(GL_MODELVIEW);
@@ -135,7 +144,7 @@ void GLAppBase::OnUpdate(float deltaTime)
 void GLAppBase::OnRender() 
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(m_BackgroundColor[0], m_BackgroundColor[1], m_BackgroundColor[2], m_BackgroundColor[3]);
 }
 
 void GLAppBase::OnWindowSizeChanged(int width, int height)

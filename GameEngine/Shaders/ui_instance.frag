@@ -1,6 +1,6 @@
 layout(location = 0) out vec4 FragColor;
 
-uniform sampler2D u_MainTex;
+uniform sampler2D MainTex;
 
 in VERTEX{
 	vec2 uv;
@@ -11,6 +11,6 @@ in VERTEX{
 void main()
 {
 	vec2 uv = vertex.uv.xy * vertex.range.zw + vertex.range.xy;
-	vec4 color = texture2D(u_MainTex, uv) * vertex.color;
+	vec4 color = texture2D(MainTex, uv) * vertex.color;
 	FragColor = color;
 }

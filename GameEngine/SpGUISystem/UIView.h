@@ -14,18 +14,16 @@ public:
 	UIView();
 	inline void SetMaterial(PMaterial mat) { m_Material = mat; }
 	inline int GetMaterialId() { return m_Material ? m_Material->GetInstanceId() : 0; }
-	inline PMaterial GetMaterial() const { return m_Material; }
 	inline void SetColor(const Color& color) { m_Color = color; }
 	inline Color GetColor() const { return m_Color; }
 
 protected:
 	virtual void OnUpdate() {}
 	virtual void OnRender() {}
-	virtual TexcoordRange GetTexcoordRange() 
-	{
-		static TexcoordRange range{ Vector2::zero, Vector2::one };
-		return range;
-	}
+	virtual TexcoordRange GetTexcoordRange();
+	virtual uint GetTextureId();
+	virtual PTexture GetTexture();
+	virtual PMaterial GetMaterial() const;
 
 private:
 	Color				m_Color;

@@ -6,6 +6,7 @@
 #include"SpRendering\Texture2D.h"
 #include"SpRendering\GLRendering.h"
 #include"SpGUISystem\UISystem.h"
+#include"SpGUISystem\UIImage.h"
 
 USING_NAMESPACE_GUI;
 
@@ -25,7 +26,7 @@ private:
 	UISystem*				m_UISystem;
 	IRenderingInterface*	m_RI;
 
-	PUIView					m_MovedWidget;
-	PUIView					m_SubWidget;
+	PUIImage				m_MovedWidget;
+	PUIImage				m_SubWidget;
 };
 

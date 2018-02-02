@@ -5,6 +5,9 @@
 
 USING_NAMESPACE_GUI;
 
+#define CHOOSE_TEX(textureId, index) textureId == 0 ? m_SharedTexture : m_ForRenderList[index]->GetTexture()
+#define CHOOSE_MAT(materialId, index) materialId == 0 ? m_SharedMaterial : m_ForRenderList[index]->m_Material
+
 UISystem::UISystem()
 {
 }
@@ -18,9 +21,11 @@ void UISystem::StartUp(IRenderingInterface* ri, int width, int height)
 	m_RI = ri;
 	m_SharedMesh = _MeshFactory->CreateBuffer<MeshBufferUIInstance>(EMeshType::Quad);
 	m_SharedMaterial = make_shared<Material>();
+	m_SharedMaterial->SetBlendFunc(EBlendFactor::SRC_ALPHA, EBlendFactor::ONE_MINUS_SRC_ALPHA);
 	m_SharedMaterial->SetShader(Shader::Get("ui_instance"));
 	m_SharedMaterial->SetState(EPiplelineStateType::DepthTest, false);
 	m_SharedMaterial->SetState(EPiplelineStateType::Blend, true);
+	m_SharedTexture = m_SharedMaterial->GetMainTexture();
 	m_Root = make_shared<UIWidget>();
 	m_Root->m_System = this;
 	m_ViewMatrix = Matrix4x4::LookAt(Vector3(0, 0, 100), Vector3::zero, Vector3::up);
@@ -33,6 +38,11 @@ void UISystem::SetSize(int width, int height)
 	float halfHeight = (float)height * 0.5f;
 	m_Root->SetRect(SRect2D(0, 0, halfWidth, halfHeight));
 	m_ProjMatrix = Matrix4x4::Ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, ZNEAR, ZFAR);
+}
+
+void UISystem::ShutDown()
+{
+	
 }
 
 void UISystem::UpdateAll(SMouseState mouseState)
@@ -85,33 +95,35 @@ void UISystem::RenderAll()
 	* 按提交给GPU渲染
 	*/
 	int beginMaterialId = m_ForRenderList[0]->GetMaterialId();
+	uint beginTextureId = m_ForRenderList[0]->GetTextureId();
 	int beginIndex = 0;
 	int materialId = 0;
+	uint textureId = 0;
 	for (int i = 0; i < size; ++i)
 	{
 		materialId = m_ForRenderList[i]->GetMaterialId();
-		if (materialId != beginMaterialId)
+		textureId = m_ForRenderList[i]->GetTextureId();
+		if (materialId != beginMaterialId || textureId != beginTextureId)
 		{
-			SubmitBatch(m_ForRenderList, materialId ? m_ForRenderList[i - 1]->m_Material
-				: m_SharedMaterial, beginIndex, i - beginIndex);
+			SubmitBatch(m_ForRenderList, CHOOSE_MAT(beginMaterialId , beginIndex), CHOOSE_TEX(beginTextureId, beginIndex), beginIndex, i - beginIndex);
 			beginIndex = i;
 			beginMaterialId = materialId;
+			beginTextureId = textureId;
 		}
 	}
 	if (beginIndex < size)
 	{
-		SubmitBatch(m_ForRenderList, materialId ? m_ForRenderList[beginIndex]->m_Material
-			: m_SharedMaterial, beginIndex, size - beginIndex);
+		SubmitBatch(m_ForRenderList, CHOOSE_MAT(materialId, size - 1), CHOOSE_TEX(textureId, size - 1), beginIndex, size - beginIndex);
 	}
 }
 
-void UISystem::SubmitBatch(const vector<UIView*> list, PMaterial mat, int startingIndex, int count)
+void UISystem::SubmitBatch(const vector<UIView*> list, PMaterial mat, PTexture texture, int startingIndex, int count)
 {
 	m_TexcoordRanges.resize(count);
 	m_Colors.resize(count);
 	m_RectList.resize(count);
 	m_ModelMatrices.resize(count);
-	for (int i = 0, j = 0; i < count; ++i, ++j)
+	for (int i = 0, j = startingIndex; i < count; ++i, ++j)
 	{
 		m_TexcoordRanges[i] = list[j]->GetTexcoordRange();
 		m_Colors[i] = list[j]->GetColor();
@@ -119,10 +131,11 @@ void UISystem::SubmitBatch(const vector<UIView*> list, PMaterial mat, int starti
 		m_ModelMatrices[i] = list[j]->m_ModelMatrix;
 	}
 	m_SharedMesh->MakeInstanceBuffer(m_TexcoordRanges, m_Colors, m_RectList, m_ModelMatrices, count);
+	mat->SetMainTexture(texture);
 	mat->Bind();
 	mat->SetParam("u_V", m_ViewMatrix);
 	mat->SetParam("u_P", m_ProjMatrix);
-	m_RI->RerderInstance(RenderingObject{ m_SharedMesh.get(), m_SharedMaterial.get() }, count);
+	m_RI->RerderInstance(RenderingObject{ m_SharedMesh.get(), mat.get() }, count);
 }
 
 void UISystem::AddChild(PUIWidget widget)

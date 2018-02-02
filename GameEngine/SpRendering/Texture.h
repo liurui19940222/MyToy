@@ -36,6 +36,9 @@ struct TexcoordRange
 	TexcoordRange();
 	TexcoordRange(float startingX, float startingY, float sizeX, float sizeY);
 	TexcoordRange(Vector2 staringPoint, Vector2 size);
+
+	static const TexcoordRange none;
+	static const TexcoordRange full;
 };
 
 SMART_CLASS(Texture) class Texture : public Object

@@ -29,7 +29,7 @@ public:
 	void ShutDown();
 	void UpdateAll(SMouseState mouseState);
 	void RenderAll();
-	void SubmitBatch(const vector<UIView*> list, PMaterial mat, int startingIndex, int count);
+	void SubmitBatch(const vector<UIView*> list, PMaterial mat, PTexture texture, int startingIndex, int count);
 	void AddChild(PUIWidget widget);
 	void RemoveChild(PUIWidget widget);
 	void Foreach(PUIWidget widget, ForeachCallback callback);
@@ -37,6 +37,8 @@ public:
 	void ForeachWithModelMatrix(PUIWidget widget, Matrix4x4& baseMatrix, ForeachCallback callback);
 	void ForeachAllWithModelMatrix(ForeachCallback callback);
 
+	inline PTexture GetSharedTexture() const { return m_SharedTexture; }
+	inline PMaterial GetSharedMaterial() const { return m_SharedMaterial; }
 	inline PUIWidget GetRoot() const { return m_Root; }
 	inline Vector2 ScreenPointToView(const Vector2& point) { return point - m_Root->GetHalfSize(); }
 	inline Vector2 ViewPointToScreen(const Vector2& point) { return point + m_Root->GetHalfSize(); }
@@ -53,6 +55,7 @@ private:
 	Matrix4x4				m_ViewMatrix;
 	Matrix4x4				m_ProjMatrix;
 	PMeshBufferUIInstance	m_SharedMesh;
+	PTexture				m_SharedTexture;
 	PMaterial				m_SharedMaterial;
 	PUIWidget				m_Root;
 	IInteractable*			m_LastIntracted;

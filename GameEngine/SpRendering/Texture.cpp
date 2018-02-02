@@ -10,6 +10,9 @@ TexcoordRange::TexcoordRange(float startingX, float startingY, float sizeX, floa
 TexcoordRange::TexcoordRange(Vector2 staringPoint, Vector2 size)
 	: m_StartingPoint(staringPoint), m_Size(size) {}
 
+const TexcoordRange TexcoordRange::none(0.0f, 0.0f, 0.0f, 0.0f);
+const TexcoordRange TexcoordRange::full(0.0f, 0.0f, 1.0f, 1.0f);
+
 Texture::~Texture()
 {
 	Release();
