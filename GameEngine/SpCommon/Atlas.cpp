@@ -42,8 +42,6 @@ void CAtlas::Set(int target_x, int target_y, int width, int height, uint8* grey_
 			if (x >= m_width || x < 0 || y >= m_height || y < 0)
 				continue;
 			uint8* p = grey_buffer + index_x + index_y * width;
-			//float v = pow((*p) / 255.0f, 1.0f / 2.2f);
-			//float v = (*p) / 255.0f;
 			bitmap.buffer[x + y * m_width] = _RGBA32(rgb.r, rgb.g, rgb.b, (*p));
 		}
 	}
@@ -115,12 +113,6 @@ bool CAtlas::Get(Rect2D* rect_in_atlas, uint32* out_pixels, Color color)
 
 	return true;
 }
-
-int CAtlas::GetWidth() { return m_width; }
-
-int CAtlas::GetHeight() { return m_height; }
-
-uint32* CAtlas::GetPixels() { return bitmap.buffer; }
 
 void CAtlas::Clear()
 {

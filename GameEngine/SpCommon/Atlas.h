@@ -6,7 +6,6 @@
 #include"ApiDefine.h"
 #include"Object.hpp"
 
-
 BEGIN_NAMESPACE_ENGINE
 
 class CAtlas : public Object
@@ -33,11 +32,11 @@ public:
 
 	bool Get(Rect2D* rect_in_atlas, uint32* out_pixels, Color color);
 
-	int GetWidth();
+	inline int GetWidth() const { return m_width; }
 
-	int GetHeight();
+	inline int GetHeight() const { return m_height; }
 
-	uint32* GetPixels();
+	inline uint32* GetPixels() const { return bitmap.buffer; }
 
 	void Clear();
 

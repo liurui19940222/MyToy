@@ -18,12 +18,7 @@ PTexture2D Texture2D::Init(PTexture2D texture, ETexWrapMode wrapMode, ETexFilter
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMode);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMode);
-
-	if (mipmaps)
-		gluBuild2DMipmaps(GL_TEXTURE_2D, internalFormat, width, height, format, GL_UNSIGNED_BYTE, data);
-	else
-		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-
+	texture->UpdateData(width, height, format, internalFormat, data, mipmaps);
 	return texture;
 }
 

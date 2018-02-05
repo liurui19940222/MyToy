@@ -157,11 +157,13 @@
     <ClCompile Include="InstanceDraw.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TestApp.cpp" />
+    <ClCompile Include="TextApp.cpp" />
     <ClCompile Include="UITest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InstanceDraw.h" />
     <ClInclude Include="TestApp.h" />
+    <ClInclude Include="TextApp.h" />
     <ClInclude Include="UITest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

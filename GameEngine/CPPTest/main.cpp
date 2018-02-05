@@ -14,7 +14,7 @@
 #include"SpCommon/FastPainter.h"
 #include"SpCommon/Input.h"
 
-USING_NAMESPACE_ENGINE
+USING_NAMESPACE_ENGINE;
 
 int width = 800;
 int height = 600;
@@ -161,9 +161,9 @@ LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 		font->SetText(SHOW_TEXT); 
 		font->SetIntervalX(font_interval_x); 
 		font->SetIntervalY(font_interval_y);
-		obj.material = make_shared<Material>();
+		obj.material = new Material();
 		obj.material->SetShader(Shader::Get("texture"))->SetMainTexture(/*Texture2D::Create("D://GitHub//MyToy//GameEngine//SpGameEngine//textures//shake.png"*/canvasTexture);
-		obj.mesh = _MeshFactory->SharedBuffer(EMeshType::Cube);
+		obj.mesh = _MeshFactory->SharedBuffer(EMeshType::Cube).get();
 
 		shared_ptr<Material> m = make_shared<Material>();
 		m->SetMainTexture(Texture2D::Create("D://GitHub//MyToy//GameEngine//SpGameEngine//textures//shake.png"));

@@ -49,6 +49,15 @@ Texture* Texture::SetFilterMode(ETexFilterMode mode)
 	return this;
 }
 
+Texture* Texture::UpdateData(int width, int height, int format, int internalFormat, UCHAR* data, bool mipmaps)
+{
+	if (mipmaps)
+		gluBuild2DMipmaps(GL_TEXTURE_2D, internalFormat, width, height, format, GL_UNSIGNED_BYTE, data);
+	else
+		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+	return this;
+}
+
 int Texture::GetWidth() const { return m_width; }
 int Texture::GetHeight() const { return m_height; }
 int Texture::GetFormat() const { return m_format; }

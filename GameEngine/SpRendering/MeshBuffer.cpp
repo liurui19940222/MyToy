@@ -48,7 +48,7 @@ void MeshBuffer::ReleaseBuffer()
 
 void MeshBuffer::MakeVertexBuffer(GLuint *bufferId, int size, int componentCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType)
 {
-	if (!(*bufferId)) 
+	if (!(*bufferId))
 		glGenBuffers(1, bufferId);
 	glBindBuffer(GL_ARRAY_BUFFER, *bufferId);
 	glBufferData(GL_ARRAY_BUFFER, size, pointer, (GLenum)usage);
@@ -78,7 +78,8 @@ void MeshBuffer::MakeIndexBuffer(GLuint* bufferId, int dataSize, const void* poi
 
 void MeshBuffer::MakeInstanceVertexBuffer(GLuint* bufferId, int structSize, int componentCount, int instanceCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType)
 {
-	glGenBuffers(1, bufferId);
+	if (!(*bufferId))
+		glGenBuffers(1, bufferId);
 	glBindBuffer(GL_ARRAY_BUFFER, *bufferId);
 	glBufferData(GL_ARRAY_BUFFER, structSize * instanceCount, pointer, (GLenum)usage);
 	int oneSize = structSize / componentCount;
@@ -97,7 +98,7 @@ void MeshBuffer::UpdateVertexBuffer(GLuint bufferId, int offset, int dataSize, c
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void MeshBuffer::DeleteBufer(GLuint* bufferId) 
+void MeshBuffer::DeleteBufer(GLuint* bufferId)
 {
 	if (bufferId && *bufferId)
 		glDeleteBuffers(1, bufferId);

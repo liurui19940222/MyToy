@@ -67,6 +67,7 @@ public:
 	Texture* SetEnvMode(ETexEnvMode mode);
 	Texture* SetWrapMode(ETexWrapMode mode);
 	Texture* SetFilterMode(ETexFilterMode mode);
+	Texture* UpdateData(int width, int height, int format, int internalFormat, UCHAR* data, bool mipmaps);
 	void Release();
 };
 

@@ -55,7 +55,7 @@ CCharacterInfo* CTrueTypeFontSize::GetCharacter(int code)
 		chInfo->m_LeftPadding = slot->bitmap_left;
 		chInfo->m_Top = slot->bitmap_top;
 		chInfo->m_AdvanceX = slot->advance.x >> 6;
-		CAtlas* atlas = GetEnoughAtlas(width, height, max_height);
+		PCharacterAtlas atlas = GetEnoughAtlas(width, height, max_height);
 		atlas->Push(width, height, max_height + 5, slot->bitmap.buffer, RGB{ 255, 255, 255 }, &(chInfo->m_Rect));
 		chInfo->m_Atlas = atlas;
 	}
@@ -67,9 +67,9 @@ CCharacterInfo* CTrueTypeFontSize::GetCharacter(int code)
 	return chInfo;
 }
 
-CAtlas* CTrueTypeFontSize::GetEnoughAtlas(int width, int height, int max_height)
+PCharacterAtlas CTrueTypeFontSize::GetEnoughAtlas(int width, int height, int max_height)
 {
-	for (vector<CAtlas*>::iterator it = m_Atlases.begin(); it != m_Atlases.end(); ++it)
+	for (vector<PCharacterAtlas>::iterator it = m_Atlases.begin(); it != m_Atlases.end(); ++it)
 	{
 		if ((*it)->TryPush(width, height, max_height))
 		{
@@ -77,21 +77,24 @@ CAtlas* CTrueTypeFontSize::GetEnoughAtlas(int width, int height, int max_height)
 		}
 	}
 	CAtlas* atlas = new CAtlas(CH_MAP_BITMAP_SIZE_W, CH_MAP_BITMAP_SIZE_H);
-	m_Atlases.push_back(atlas);
-	return atlas;
+	PCharacterAtlas catlas = make_shared<CharacterAtlas>();
+	catlas->m_Atlas = atlas;
+	catlas->m_Texture = Texture2D::Create(NULL, atlas->GetWidth(), atlas->GetHeight());
+	m_Atlases.push_back(catlas);
+	return catlas;
 }
 
 void CTrueTypeFontSize::Release()
 {
 	m_FtLib = nullptr;
 	m_FtFace = nullptr;
-	for (vector<CAtlas*>::iterator it; it != m_Atlases.end(); ++it)
+	for (vector<PCharacterAtlas>::iterator it; it != m_Atlases.end(); ++it)
 	{
 		(*it)->Release();
 	}
 }
 
-vector<CAtlas*>* CTrueTypeFontSize::GetAtlases()
+vector<PCharacterAtlas>* CTrueTypeFontSize::GetAtlases()
 {
 	return &m_Atlases;
 }
@@ -130,7 +133,7 @@ CCharacterInfo* CTrueTypeFont::GetCharacter(wchar_t ch, int size)
 	return m_SizeMap[size]->GetCharacter(code);
 }
 
-vector<CAtlas*>* CTrueTypeFont::GetAtlases(int size)
+vector<PCharacterAtlas>* CTrueTypeFont::GetAtlases(int size)
 {
 	if (m_SizeMap.find(size) != m_SizeMap.end())
 	{

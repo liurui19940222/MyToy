@@ -28,5 +28,6 @@ private:
 
 	PUIImage				m_MovedWidget;
 	PUIImage				m_SubWidget;
+	GLuint					m_TexId;
 };
 
