@@ -7,7 +7,8 @@
 
 USING_NAMESPACE_ENGINE;
 
-#define SHOW_TEXT L"/* handle to face object2018北美车展：新款MINI家族正式发布 handle to face object2018北美车展：新款MINI家族正式发布"
+//#define SHOW_TEXT L"/* handle to face object2018北美车展：新款MINI家族正式发布 handle to face object2018北美车展：新款MINI家族正式发布"
+#define SHOW_TEXT L"h新款MINI家族正式发布 handle to face object2018北美车展：新款MINI家族正式发布"
 #define FONT_PATH "D:/GitHub/MyToy/GameEngine/SpGameEngine/fonts/msyh.ttf"
 
 class TextApp : public GLAppBase

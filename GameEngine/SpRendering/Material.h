@@ -11,15 +11,21 @@ using namespace std;
 
 BEGIN_NAMESPACE_ENGINE
 
-enum class EPiplelineStateType
+namespace statetype
 {
-	Texture2D = GL_TEXTURE_2D,
-	DepthTest = GL_DEPTH_TEST,
-	AlphaTest = GL_ALPHA_TEST,
-	CullFace = GL_CULL_FACE,
-	Blend = GL_BLEND,
-	Fog = GL_FOG,
-};
+	enum EPiplelineStateType
+	{
+		Texture2D = 0,
+		DepthTest = 1,
+		AlphaTest = 2,
+		CullFace = 3,
+		Blend = 4,
+		Fog = 5,
+		Count,
+	};
+
+	extern GLenum type[EPiplelineStateType::Count];
+}
 
 enum class EBlendFactor
 {
@@ -37,24 +43,17 @@ enum class EBlendFactor
 SMART_CLASS(Material) class Material : public Object
 {
 private:
-	static PMaterial m_defaultMaterial;
-	static map<EPiplelineStateType, bool> m_pushStates;
-	map<EPiplelineStateType, bool> m_states;
-	Color m_color = Color::white;
-	PShader m_shader = 0;
-	PTexture m_mainTexture = 0;
-
 	virtual void OnInitialize() override;
-	void SaveState(EPiplelineStateType state);
-	void ApplyStates(map<EPiplelineStateType, bool>& states);
-	Material* SetState(map<EPiplelineStateType, bool>& states, EPiplelineStateType state, bool open);
+	void SaveState(statetype::EPiplelineStateType state);
+	void ApplyStates(bool states[statetype::Count]);
+	Material* SetStateWithArray(bool states[statetype::Count], statetype::EPiplelineStateType state, bool open);
 	void PushState();
 	void PopState();
-	bool HasState(EPiplelineStateType state);
+	bool HasState(statetype::EPiplelineStateType state);
 public:
 	Material();
 
-	Material* SetState(EPiplelineStateType state, bool open);
+	Material* SetState(statetype::EPiplelineStateType state, bool open);
 	Material* SetColor(const Color& color);
 	Material* SetShader(PShader shader);
 	Material* SetMainTexture(PTexture texture);
@@ -67,17 +66,24 @@ public:
 	template<typename T>
 	inline Material& SetParam(const char* paramName, T t)
 	{
-		if (m_shader) m_shader->SetUniformParam(paramName, t);
+		if (m_Shader) m_Shader->SetUniformParam(paramName, t);
 		return *this;
 	}
 
 	inline Material& SetParam(const char* paramName, const Matrix4x4* matrices, int count)
 	{
-		if (m_shader) m_shader->SetUniformParam(paramName, matrices, count);
+		if (m_Shader) m_Shader->SetUniformParam(paramName, matrices, count);
 		return *this;
 	}
 
 	static PMaterial GetDefaltMaterial();
+private:
+	static PMaterial	m_DefaultMaterial;
+	static bool			m_PushStates[statetype::Count];
+	Color				m_Color = Color::white;
+	PShader				m_Shader = 0;
+	PTexture			m_MainTexture = 0;
+	bool				m_States[statetype::Count];
 };
 
 END_NAMESPACE_ENGINE

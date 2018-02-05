@@ -23,8 +23,8 @@ void TextApp::OnInitialize()
 	CTrueTypeFont* f = FontManager->LoadFont(1, FONT_PATH);
 	font = new CFontRenderer();
 	font->SetFont(f);
-	font->SetColor(Color::green);
-	font->SetEffect(EFontEffect::Shadow)->SetEffectVector(Vector3(1, -1, 0))->SetEffectColor(Color::black);
+	font->SetColor(Color::white);
+	font->SetEffect(EFontEffect::None)->SetEffectVector(Vector3(1, -1, 0))->SetEffectColor(Color::black);
 	font->SetFontSize(font_size);
 	font->SetTextAlignment(EAlignment::CENTER_MIDDLE);
 	font->SetRenderType(ERenderType::Smart);
@@ -122,17 +122,9 @@ void TextApp::OnRender()
 {
 	GLAppBase::OnRender();
 
-	glPushMatrix();
-	glRotatef(m_Angle, 0, 0, 1);
-	glBegin(GL_QUADS);
-	glVertex3f(-1.0f, 1.0f, 0.0f);
-	glVertex3f(-1.0f, -1.0f, 0.0f);
-	glVertex3f(1.0f, -1.0f, 0.0f);
-	glVertex3f(1.0f, 1.0f, 0.0f);
-	glEnd();
-	glPopMatrix();
+	
 
 	font->OnRender(modelMat, viewMat, projectionMat);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glUseProgram(0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
+	//glUseProgram(0);
 }

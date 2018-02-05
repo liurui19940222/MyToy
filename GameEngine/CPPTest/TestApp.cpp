@@ -14,6 +14,7 @@ void TestApp::OnRender()
 {
 	GLAppBase::OnRender();
 
+	glColor3f(1.0f, 1.0f, 1.0f);
 	glPushMatrix();
 	glRotatef(m_Angle, 0, 0, 1);
 	glBegin(GL_QUADS);

@@ -35,7 +35,7 @@ void UIImage::SetRawSize()
 { 
 	if (m_Sprite) 
 	{ 
-		SetWidth(m_Sprite->m_Texture->GetWidth());
-		SetHeight(m_Sprite->m_Texture->GetHeight());
+		SetWidth((float)m_Sprite->m_Texture->GetWidth());
+		SetHeight((float)m_Sprite->m_Texture->GetHeight());
 	}
 }

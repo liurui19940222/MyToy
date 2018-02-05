@@ -90,7 +90,6 @@ Matrix4x4 Matrix4x4::Multiply(Matrix4x4& mat)
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
 			temp[j][i] = mat[j][0] * m[0][i] + mat[j][1] * m[1][i] + mat[j][2] * m[2][i] + mat[j][3] * m[3][i];
-
 	return temp;
 }
 
@@ -132,36 +131,6 @@ void Matrix4x4::operator-=(Matrix4x4& matrix)
 	m[0][1] -= matrix[0][1]; m[1][1] -= matrix[1][1]; m[2][1] -= matrix[2][1]; m[3][1] -= matrix[3][1];
 	m[0][2] -= matrix[0][2]; m[1][2] -= matrix[1][2]; m[2][2] -= matrix[2][2]; m[3][2] -= matrix[3][2];
 	m[0][3] -= matrix[0][3]; m[1][3] -= matrix[1][3]; m[2][3] -= matrix[2][3]; m[3][3] -= matrix[3][3];
-}
-
-Matrix4x4 Matrix4x4::operator*(Matrix4x4& matrix)
-{
-	return Multiply(matrix);
-}
-
-Vector3 Matrix4x4::operator*(const Vector3& v)
-{
-	return Multiply(v);
-}
-
-Vector4 Matrix4x4::operator*(const Vector4& v)
-{
-	return Multiply(v);
-}
-
-Matrix4x4 Matrix4x4::operator*(float value)
-{
-	return Multiply(value);
-}
-
-Matrix4x4 Matrix4x4::operator/(float value)
-{
-	return Multiply(1.0f / value);
-}
-
-Vector4& Matrix4x4::operator[](size_t index)
-{
-	return m[index];
 }
 
 Matrix4x4 Matrix4x4::Identity()
@@ -400,6 +369,13 @@ void Matrix4x4::Identity(Matrix4x4& mat)
 	mat[1][0] = 0; mat[1][1] = 1; mat[1][2] = 0; mat[1][3] = 0;
 	mat[2][0] = 0; mat[2][1] = 0; mat[2][2] = 1; mat[2][3] = 0;
 	mat[3][0] = 0; mat[3][1] = 0; mat[3][2] = 0; mat[3][3] = 1;
+}
+
+void Matrix4x4::Multiply(Matrix4x4& result, Matrix4x4& a, Matrix4x4& b)
+{
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
+			result[j][i] = b[j][0] * a[0][i] + b[j][1] * a[1][i] + b[j][2] * a[2][i] + b[j][3] * a[3][i];
 }
 
 void Matrix4x4::Rotate(Matrix4x4& mat, float pitch, float yaw, float roll)
@@ -662,32 +638,6 @@ const float CMath::QUARTER_PI = PI * 0.25f;
 const float CMath::DegToRad = PI / 180.0f;
 const float CMath::RadToDeg = 180.0f / PI;
 const float CMath::HalfDegToRad = 0.5f * DegToRad;
-
-float CMath::Random()
-{
-	static float max_rec = 1 / (float)RAND_MAX;
-	return rand() * max_rec;
-}
-
-float CMath::Random(float max)
-{
-	return Random() * (max);
-}
-
-float CMath::Random(float min, float max)
-{
-	return Random() * (max - min) + min;
-}
-
-int CMath::Random(int max)
-{
-	return (int)(Random((float)max) + 0.5f);
-}
-
-int CMath::Random(int min, int max)
-{
-	return (int)(Random((float)min, (float)max) + 0.5f);
-}
 
 #pragma endregion
 

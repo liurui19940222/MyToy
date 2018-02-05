@@ -24,7 +24,7 @@ CCharacterPrimitiveSmart::CCharacterPrimitiveSmart(int left_padding, int top, in
 {
 	m_Texture->SetEnvMode(ETexEnvMode::Replace);
 	m_Material = make_shared<Material>();
-	m_Material->SetMainTexture(m_Texture)->SetState(EPiplelineStateType::DepthTest, false);
+	m_Material->SetMainTexture(m_Texture)->SetState(statetype::DepthTest, false);
 	m_Material->SetShader(Shader::Get("font"));
 	PMesh mesh = _MeshFactory->CreateRectMesh(m_Width, m_Height);
 	m_Buffer = make_shared<MeshBufferTexcoord>(mesh);
@@ -39,7 +39,12 @@ void CCharacterPrimitiveSmart::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMat
 {
 	m_Material->SetColor(color);
 	m_Material->Bind();
-	m_Material->SetParam("M", modelMatrix * Matrix4x4::Translate(pos) * Matrix4x4::Scale(size));
+	static Matrix4x4 mat;
+	mat.MakeTranslate(pos);
+	mat[0][0] *= size.x;
+	mat[1][1] *= size.y;
+	mat[2][2] *= size.z;
+	m_Material->SetParam("M", modelMatrix * mat);
 	m_Material->SetParam("V", viewMatrix);
 	m_Material->SetParam("P", projectionMatrix);
 	m_Material->SetParam("Color", color);

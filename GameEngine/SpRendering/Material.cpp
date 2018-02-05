@@ -5,20 +5,31 @@
 
 USING_NAMESPACE_ENGINE
 
-map<EPiplelineStateType, bool> Material::m_pushStates;
-PMaterial Material::m_defaultMaterial = NULL;
+GLenum statetype::type[] = {
+	GL_TEXTURE_2D,
+	GL_DEPTH_TEST,
+	GL_ALPHA_TEST,
+	GL_CULL_FACE,
+	GL_BLEND,
+	GL_FOG,
+};
+
+bool Material::m_PushStates[statetype::Count];
+PMaterial Material::m_DefaultMaterial = NULL;
+
+#define GL_ENABLE(type, enable) enable ? glEnable(type) : glDisable(type)
 
 Material::Material()
 {
-	m_shader = Shader::GetDefault();
-	m_mainTexture = Texture2D::GetOneInStore(EStoreTexture2DId::White8x8);
+	m_Shader = Shader::GetDefault();
+	m_MainTexture = Texture2D::GetOneInStore(EStoreTexture2DId::White8x8);
 
-	SetState(EPiplelineStateType::AlphaTest, false);
-	SetState(EPiplelineStateType::DepthTest, true);
-	SetState(EPiplelineStateType::Blend, true);
-	SetState(EPiplelineStateType::CullFace, false);
-	SetState(EPiplelineStateType::Texture2D, true);
-	SetState(EPiplelineStateType::Fog, false);
+	SetState(statetype::AlphaTest, false);
+	SetState(statetype::DepthTest, true);
+	SetState(statetype::Blend, true);
+	SetState(statetype::CullFace, false);
+	SetState(statetype::Texture2D, true);
+	SetState(statetype::Fog, false);
 }
 
 void Material::OnInitialize()
@@ -26,79 +37,70 @@ void Material::OnInitialize()
 
 }
 
-void Material::SaveState(EPiplelineStateType state)
+void Material::SaveState(statetype::EPiplelineStateType state)
 {
 	GLboolean bstate;
-	glGetBooleanv((GLenum)state, &bstate);
-	SetState(m_pushStates, state, _ToCppBool(bstate));
+	glGetBooleanv(statetype::type[state], &bstate);
+	SetStateWithArray(m_PushStates, state, _ToCppBool(bstate));
 }
 
-void Material::ApplyStates(map<EPiplelineStateType, bool>& states)
+void Material::ApplyStates(bool states[statetype::Count])
 {
-	auto it = states.begin();
-	while (it != states.end())
-	{
-		if (it->second)
-			glEnable((GLenum)it->first);
-		else
-			glDisable((GLenum)it->first);
-		it++;
-	}
+	GL_ENABLE(statetype::type[statetype::Texture2D], states[statetype::Texture2D]);
+	GL_ENABLE(statetype::type[statetype::DepthTest], states[statetype::DepthTest]);
+	GL_ENABLE(statetype::type[statetype::AlphaTest], states[statetype::AlphaTest]);
+	GL_ENABLE(statetype::type[statetype::CullFace], states[statetype::CullFace]);
+	GL_ENABLE(statetype::type[statetype::Blend], states[statetype::Blend]);
+	GL_ENABLE(statetype::type[statetype::Fog], states[statetype::Fog]);
 }
 
 void Material::PushState()
 {
-	SaveState(EPiplelineStateType::AlphaTest);
-	SaveState(EPiplelineStateType::DepthTest);
-	SaveState(EPiplelineStateType::Blend);
-	SaveState(EPiplelineStateType::CullFace);
-	SaveState(EPiplelineStateType::Texture2D);
-	SaveState(EPiplelineStateType::Fog);
-	ApplyStates(m_states);
+	SaveState(statetype::AlphaTest);
+	SaveState(statetype::DepthTest);
+	SaveState(statetype::Blend);
+	SaveState(statetype::CullFace);
+	SaveState(statetype::Texture2D);
+	SaveState(statetype::Fog);
+	ApplyStates(m_States);
 }
 
 void Material::PopState()
 {
-	ApplyStates(m_pushStates);
+	ApplyStates(m_PushStates);
 }
 
-bool Material::HasState(EPiplelineStateType state)
+bool Material::HasState(statetype::EPiplelineStateType state)
 {
-	auto it = m_states.find(state);
-	if (it != m_states.end())
-		return it->second;
-	return false;
+	return m_States[state];
 }
 
-Material* Material::SetState(map<EPiplelineStateType, bool>& states, EPiplelineStateType state, bool open)
+Material* Material::SetStateWithArray(bool states[statetype::Count], statetype::EPiplelineStateType state, bool open)
 {
-	if (states.find(state) != states.end())
-		states[state] = open;
-	else
-		states.insert(make_pair(state, open));
+	states[state] = open;
 	return this;
 }
 
-Material* Material::SetState(EPiplelineStateType state, bool open)
+Material* Material::SetState(statetype::EPiplelineStateType state, bool open)
 {
-	return SetState(m_states, state, open);
+	return SetStateWithArray(m_States, state, open);
 }
 
 Material* Material::SetColor(const Color& color)
 {
-	m_color = color;
+	m_Color = color;
 	return this;
 }
 
 Material* Material::SetShader(PShader shader)
 {
-	m_shader = shader;
+	m_Shader = shader;
 	return this;
 }
 
 Material* Material::SetMainTexture(PTexture texture)
 {
-	m_mainTexture = texture;
+	m_MainTexture = texture;
 	return this;
 }
 
@@ -110,22 +112,22 @@ Material* Material::SetBlendFunc(EBlendFactor src, EBlendFactor dst)
 
 PTexture Material::GetMainTexture() const
 {
-	return m_mainTexture;
+	return m_MainTexture;
 }
 
 void Material::Bind()
 {
 	PushState();
-	m_shader->Run();
-	if (m_mainTexture && HasState(EPiplelineStateType::Texture2D))
+	m_Shader->Run();
+	if (m_MainTexture && HasState(statetype::Texture2D))
 	{
 		glEnable(GL_TEXTURE_2D);
 		glActiveTexture(GL_TEXTURE0);
-		m_mainTexture->Bind();
+		m_MainTexture->Bind();
 		SetParam("MainTex", 0);
 	}
-	SetParam("Color", m_color);
-	Light::SetUniformParams(m_shader);
+	SetParam("Color", m_Color);
+	Light::SetUniformParams(m_Shader);
 }
 
 void Material::BindTexture(const char* paramName, uint texture)
@@ -139,7 +141,7 @@ void Material::BindTexture(const char* paramName, uint texture)
 void Material::Unbind()
 {
 	glBindVertexArray(0);
-	if (m_mainTexture && HasState(EPiplelineStateType::Texture2D))
+	if (m_MainTexture && HasState(statetype::Texture2D))
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glDisable(GL_TEXTURE_2D);
@@ -150,9 +152,9 @@ void Material::Unbind()
 
 PMaterial Material::GetDefaltMaterial()
 {
-	if (m_defaultMaterial.get() == NULL)
+	if (m_DefaultMaterial.get() == NULL)
 	{
-		m_defaultMaterial.reset(new Material());
+		m_DefaultMaterial.reset(new Material());
 	}
-	return m_defaultMaterial;
+	return m_DefaultMaterial;
 }

@@ -23,8 +23,8 @@ void UISystem::StartUp(IRenderingInterface* ri, int width, int height)
 	m_SharedMaterial = make_shared<Material>();
 	m_SharedMaterial->SetBlendFunc(EBlendFactor::SRC_ALPHA, EBlendFactor::ONE_MINUS_SRC_ALPHA);
 	m_SharedMaterial->SetShader(Shader::Get("ui_instance"));
-	m_SharedMaterial->SetState(EPiplelineStateType::DepthTest, false);
-	m_SharedMaterial->SetState(EPiplelineStateType::Blend, true);
+	m_SharedMaterial->SetState(statetype::DepthTest, false);
+	m_SharedMaterial->SetState(statetype::Blend, true);
 	m_SharedTexture = m_SharedMaterial->GetMainTexture();
 	m_Root = make_shared<UIWidget>();
 	m_Root->m_System = this;

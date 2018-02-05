@@ -1,4 +1,5 @@
-#include "GLAppBase.h"
+#include"GLAppBase.h"
+#include<stdio.h>
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
@@ -112,9 +113,10 @@ void GLAppBase::Run()
 			DispatchMessage(&msg);
 		}
 		OnUpdate(deltaTime);
+		ComputeFPS();
 		OnRender();
+		DrawInfo();
 		SwapBuffers(hdc);
-		Sleep(16);
 		deltaTime = (GetTickCount() - lastFrameTime) * 0.001f;
 		m_TimeSinceStarUp += deltaTime;
 	}
@@ -127,6 +129,66 @@ void GLAppBase::SetBackgroundColor(float r, float g, float b, float a)
 	m_BackgroundColor[1] = g;
 	m_BackgroundColor[2] = b;
 	m_BackgroundColor[3] = a;
+}
+
+void GLAppBase::DrawString(const char* str)
+{
+	static int isFirstCall = 1;
+	static GLuint lists;
+
+	if (isFirstCall) { 
+
+		isFirstCall = 0;
+
+		lists = glGenLists(MAX_CHAR);
+
+		wglUseFontBitmaps(wglGetCurrentDC(), 0, MAX_CHAR, lists);
+	}
+	for (; *str != '\0'; ++str)
+		glCallList(lists + *str);
+}
+
+void GLAppBase::BeginOrtho()
+{
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, m_WindowWidth, 0, m_WindowHeight, -1, 1000);
+	glMatrixMode(GL_MODELVIEW);
+	glDisable(GL_DEPTH_TEST);
+}
+
+void GLAppBase::EndOrtho()
+{
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45.0f, m_WindowWidth / (float)m_WindowHeight, 0.01f, 1000.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glEnable(GL_DEPTH_TEST);
+}
+
+void GLAppBase::ComputeFPS()
+{
+	static float updateInterval = 0.5f;
+	static float lastUpdateTime = 0.0f;
+	static float frame = 0.0f;
+	frame++;
+	if (m_TimeSinceStarUp - lastUpdateTime > updateInterval)
+	{
+		m_FPS = frame / (m_TimeSinceStarUp - lastUpdateTime);
+		lastUpdateTime = m_TimeSinceStarUp;
+		frame = 0;
+	}
+}
+
+void GLAppBase::DrawInfo()
+{
+	BeginOrtho();
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glRasterPos2f(0.0f, m_WindowHeight - 10);
+	char text[128];
+	sprintf_s(text, "FPS:%d", (int)m_FPS);
+	DrawString(text);
+	EndOrtho();
 }
 
 void GLAppBase::OnInitialize() 
@@ -179,8 +241,8 @@ LRESULT CALLBACK GLAppBase::MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, L
 		break;
 	case WM_SIZE:
 	{
-		float height = HIWORD(lParam);
-		float width = LOWORD(lParam);
+		int height = HIWORD(lParam);
+		int width = LOWORD(lParam);
 		glViewport(0, 0, width, height);
 		AppInstance->OnWindowSizeChanged(width, height);
 	}

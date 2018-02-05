@@ -53,7 +53,7 @@ public:
 
 	inline TmpVector2<VType> operator*(const VType value) const { return TmpVector2<VType>(this->x * value, this->y * value); }
 
-	inline TmpVector2<VType> operator*(const TmpVector2<VType>& vec) const { return TmpVector2<VType>(this->x * vec.x, this->y * vec.y);}
+	inline TmpVector2<VType> operator*(const TmpVector2<VType>& vec) const { return TmpVector2<VType>(this->x * vec.x, this->y * vec.y); }
 
 	inline TmpVector2<VType> operator/(const VType value) const { return TmpVector2<VType>(this->x / value, this->y / value); }
 
@@ -234,7 +234,7 @@ public:
 
 	Vector4 Multiply(const Vector4& v4);
 
-	Matrix4x4 Multiply(Matrix4x4& matrix4x4);
+	inline Matrix4x4 Multiply(Matrix4x4& mat);
 
 	Matrix4x4 Multiply(float value);
 
@@ -246,17 +246,17 @@ public:
 
 	void operator-=(Matrix4x4& matrix);
 
-	Matrix4x4 operator*(Matrix4x4& matrix);
+	inline Matrix4x4 operator*(Matrix4x4& matrix) { return Multiply(matrix); }
 
-	Vector3 operator*(const Vector3& v);
+	inline Vector3 operator*(const Vector3& v) { return Multiply(v); }
 
-	Vector4 operator*(const Vector4& v);
+	inline Vector4 operator*(const Vector4& v) { return Multiply(v); }
 
-	Matrix4x4 operator*(float value);
+	inline Matrix4x4 operator*(float value) { return Multiply(value); }
 
-	Matrix4x4 operator/(float value);
+	inline Matrix4x4 operator/(float value) { return Multiply(1.0f / value); }
 
-	Vector4& operator[](size_t index);
+	inline Vector4& operator[](size_t index) { return m[index]; }
 
 	Matrix4x4 Transpose();
 
@@ -308,33 +308,35 @@ public:
 
 	static Quaternion ToQuaternion(Matrix4x4& mat);
 
-	static void Zero(Matrix4x4& mat);
+	static void Zero(Matrix4x4& result);
 
-	static void Identity(Matrix4x4& mat);
+	static void Identity(Matrix4x4& result);
 
-	static void Rotate(Matrix4x4& mat, float pitch, float yaw, float roll);
+	static void Multiply(Matrix4x4& result, Matrix4x4& a, Matrix4x4& b);
 
-	static void Rotate(Matrix4x4& mat, const Quaternion& q);
+	static void Rotate(Matrix4x4& result, float pitch, float yaw, float roll);
 
-	static void RotateUVN(Matrix4x4& mat, const Vector3& targetPos, const Vector3& selfPos);
+	static void Rotate(Matrix4x4& result, const Quaternion& q);
 
-	static void Translate(Matrix4x4& mat, const Vector3& translate);
+	static void RotateUVN(Matrix4x4& result, const Vector3& targetPos, const Vector3& selfPos);
 
-	static void Scale(Matrix4x4& mat, const Vector3& scale);
+	static void Translate(Matrix4x4& result, const Vector3& translate);
 
-	static void Ortho(Matrix4x4& mat, float left, float right, float bottom, float top, float zNear, float zFar);
+	static void Scale(Matrix4x4& result, const Vector3& scale);
 
-	static void Perspective(Matrix4x4& mat, float fov, float aspect, float near, float far);
+	static void Ortho(Matrix4x4& result, float left, float right, float bottom, float top, float zNear, float zFar);
 
-	static void LookAt(Matrix4x4& mat, const Vector3& eye, const Vector3& center, const Vector3& up);
+	static void Perspective(Matrix4x4& result, float fov, float aspect, float near, float far);
 
-	static void GetUVN(Matrix4x4& mat, Vector3* u, Vector3* v, Vector3* n);
+	static void LookAt(Matrix4x4& result, const Vector3& eye, const Vector3& center, const Vector3& up);
 
-	static void GetUVN(Matrix4x4& mat, const Vector3& scale, Vector3* u, Vector3* v, Vector3* n);
+	static void GetUVN(Matrix4x4& result, Vector3* u, Vector3* v, Vector3* n);
 
-	static void GetPosition(Matrix4x4& mat, Vector3* position);
+	static void GetUVN(Matrix4x4& result, const Vector3& scale, Vector3* u, Vector3* v, Vector3* n);
 
-	static void Lerp(Matrix4x4& mat, Matrix4x4& a, Matrix4x4& b, float t);
+	static void GetPosition(Matrix4x4& result, Vector3* position);
+
+	static void Lerp(Matrix4x4& result, Matrix4x4& a, Matrix4x4& b, float t);
 
 private:
 	Vector4 m[4];
@@ -395,11 +397,16 @@ public:
 	static const float RadToDeg;
 	static const float HalfDegToRad;
 
-	static float Random();
-	static float Random(float max);
-	static float Random(float min, float max);
-	static int Random(int max);
-	static int Random(int min, int max);
+	inline static float Random()
+	{
+		static float max_rec = 1 / (float)RAND_MAX;
+		return rand() * max_rec;
+	}
+
+	inline static float Random(float max) { return Random() * (max); }
+	inline static float Random(float min, float max) { return Random() * (max - min) + min; }
+	inline static int Random(int max) { return (int)(Random((float)max) + 0.5f); }
+	inline static int Random(int min, int max) { return (int)(Random((float)min, (float)max) + 0.5f); }
 
 	inline static bool Approximately(float f0, float f1)
 	{
