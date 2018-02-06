@@ -19,6 +19,7 @@ PTexture2D Texture2D::Init(PTexture2D texture, ETexWrapMode wrapMode, ETexFilter
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMode);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMode);
 	texture->UpdateData(width, height, format, internalFormat, data, mipmaps);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	return texture;
 }
 

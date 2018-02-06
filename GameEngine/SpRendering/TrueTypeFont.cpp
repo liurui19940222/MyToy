@@ -76,10 +76,11 @@ PCharacterAtlas CTrueTypeFontSize::GetEnoughAtlas(int width, int height, int max
 			return *it;
 		}
 	}
-	CAtlas* atlas = new CAtlas(CH_MAP_BITMAP_SIZE_W, CH_MAP_BITMAP_SIZE_H);
+	Atlas* atlas = new Atlas(CH_MAP_BITMAP_SIZE_W, CH_MAP_BITMAP_SIZE_H, 2);
 	PCharacterAtlas catlas = make_shared<CharacterAtlas>();
 	catlas->m_Atlas = atlas;
 	catlas->m_Texture = Texture2D::Create(NULL, atlas->GetWidth(), atlas->GetHeight());
+	catlas->m_Texture->SetWrapMode(ETexWrapMode::Clamp)->SetFilterMode(ETexFilterMode::Linear);
 	m_Atlases.push_back(catlas);
 	return catlas;
 }

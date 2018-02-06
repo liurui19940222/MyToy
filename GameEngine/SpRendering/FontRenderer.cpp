@@ -10,8 +10,6 @@ CCharacterPrimitiveBase::CCharacterPrimitiveBase(int left_padding, int top, int 
 {
 	this->m_Width = width * pixelScale;
 	this->m_Height = height * pixelScale;
-	m_Texture = Texture2D::Create((UCHAR*)pixels, width, height);
-	m_Texture->SetWrapMode(ETexWrapMode::Clamp)->SetFilterMode(ETexFilterMode::Linear);
 }
 
 CCharacterPrimitiveBase::~CCharacterPrimitiveBase()
@@ -19,13 +17,15 @@ CCharacterPrimitiveBase::~CCharacterPrimitiveBase()
 
 }
 
-CCharacterPrimitiveSmart::CCharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels)
+CCharacterPrimitiveSmart::CCharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels, PSprite sprite)
 	: CCharacterPrimitiveBase(left_padding, top, advance_x, width, height, pixelScale, pixels)
 {
-	m_Texture->SetEnvMode(ETexEnvMode::Replace);
+	m_Sprite = sprite;
 	m_Material = make_shared<Material>();
-	m_Material->SetMainTexture(m_Texture)->SetState(statetype::DepthTest, false);
+	m_Material->SetMainTexture(m_Sprite->m_Texture)->SetState(statetype::DepthTest, false);
 	m_Material->SetShader(Shader::Get("font"));
+	m_Material->SetState(statetype::Blend, true);
+	m_Material->SetBlendFunc(EBlendFactor::SRC_ALPHA, EBlendFactor::ONE_MINUS_SRC_ALPHA);
 	PMesh mesh = _MeshFactory->CreateRectMesh(m_Width, m_Height);
 	m_Buffer = make_shared<MeshBufferTexcoord>(mesh);
 }
@@ -47,6 +47,7 @@ void CCharacterPrimitiveSmart::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMat
 	m_Material->SetParam("M", modelMatrix * mat);
 	m_Material->SetParam("V", viewMatrix);
 	m_Material->SetParam("P", projectionMatrix);
+	m_Material->SetParam("TexRange", *(Vector4*)&(m_Sprite->m_Range));
 	m_Material->SetParam("Color", color);
 	m_Buffer->BindBuffer();
 	glDrawArrays(GL_TRIANGLES, 0, m_Buffer->GetVertexNum());
@@ -56,6 +57,8 @@ void CCharacterPrimitiveSmart::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMat
 CCharacterPrimitiveFixed::CCharacterPrimitiveFixed(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels)
 	: CCharacterPrimitiveBase(left_padding, top, advance_x, width, height, pixelScale, pixels)
 {
+	m_Texture = Texture2D::Create((UCHAR*)pixels, width, height);
+	m_Texture->SetWrapMode(ETexWrapMode::Clamp)->SetFilterMode(ETexFilterMode::Linear);
 	m_Texture->SetEnvMode(ETexEnvMode::Modulate);
 }
 
@@ -121,18 +124,12 @@ void CFontRenderer::RenderAllPrimitives(Matrix4x4& modelMatrix, Matrix4x4& viewM
 
 void CFontRenderer::OnRender(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
 {
-
 	if (!m_Font || m_LineDatas.size() == 0) return;
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	if (m_Effect == EFontEffect::Shadow)
 		RenderAllPrimitives(modelMatrix, viewMatrix, projectionMatrix, m_EffectVector, m_EffectColor);
 
 	RenderAllPrimitives(modelMatrix, viewMatrix, projectionMatrix, Vector3::zero, m_Color);
-
-	glDisable(GL_BLEND);
 }
 
 void CFontRenderer::OnRenderDebug(Matrix4x4& modelMatrix)
@@ -312,12 +309,24 @@ void CFontRenderer::Rebuild()
 		SBitmapData bitmap;
 		chInfo->GetBitmap(&bitmap, Color::white);
 		if (m_RenderType == ERenderType::Fixed)
-			m_Primitives.push_back(new CCharacterPrimitiveFixed(chInfo->m_LeftPadding, chInfo->m_Top, chInfo->m_AdvanceX, bitmap.width, bitmap.height, GetPixelScale(), bitmap.buffer));
+		{
+			m_Primitives.push_back(new CCharacterPrimitiveFixed(chInfo->m_LeftPadding, chInfo->m_Top, 
+				chInfo->m_AdvanceX, bitmap.width, bitmap.height, GetPixelScale(), bitmap.buffer));
+		}
 		else
-			m_Primitives.push_back(new CCharacterPrimitiveSmart(chInfo->m_LeftPadding, chInfo->m_Top, chInfo->m_AdvanceX, bitmap.width, bitmap.height, GetPixelScale(), bitmap.buffer));
+		{
+			PSprite sprite = make_shared<Sprite>();
+			sprite->m_Texture = chInfo->m_Atlas->m_Texture;
+			sprite->m_Range.m_StartingPoint.x = chInfo->m_Rect.x / (float)chInfo->m_Atlas->width();
+			sprite->m_Range.m_StartingPoint.y = chInfo->m_Rect.y / (float)chInfo->m_Atlas->height();
+			sprite->m_Range.m_Size.x = chInfo->m_Rect.width / (float)chInfo->m_Atlas->width();
+			sprite->m_Range.m_Size.y = chInfo->m_Rect.height / (float)chInfo->m_Atlas->height();
+			m_Primitives.push_back(new CCharacterPrimitiveSmart(chInfo->m_LeftPadding, chInfo->m_Top, 
+				chInfo->m_AdvanceX, bitmap.width, bitmap.height, GetPixelScale(), bitmap.buffer, sprite));
+		}
 		free(bitmap.buffer);
 	}
-
+	
 	start_x = -m_Rect.halfSize.x;
 	start_y = +m_Rect.halfSize.y;
 	CTextOneLineData* lineData = new CTextOneLineData();

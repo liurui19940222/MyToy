@@ -203,6 +203,15 @@ void Shader::SetUniformParam(const char* paramName, const Vector3& value)
 	}
 }
 
+void Shader::SetUniformParam(const char* paramName, const Vector4& value)
+{
+	GLuint location = UniformParamLocation(paramName);
+	if (location >= 0)
+	{
+		glUniform4f(location, value.x, value.y, value.z, value.w);
+	}
+}
+
 void Shader::SetUniformParam(const char* paramName, const Matrix4x4& value)
 {
 	GLuint location = UniformParamLocation(paramName);

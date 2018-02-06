@@ -18,7 +18,7 @@ enum ETexFilterMode
 {
 	Point = GL_NEAREST,
 	Linear = GL_LINEAR,
-	Mipmap = GL_LINEAR_MIPMAP_LINEAR,
+	MipmapLinear = GL_LINEAR_MIPMAP_LINEAR,
 };
 
 enum ETexEnvMode

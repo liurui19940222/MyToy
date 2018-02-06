@@ -9,22 +9,29 @@
 #include"SpCommon\Atlas.h"
 #include"Texture2D.h"
 
-#define CH_MAP_BITMAP_SIZE_W 512
-#define CH_MAP_BITMAP_SIZE_H 512
+#define CH_MAP_BITMAP_SIZE_W 256
+#define CH_MAP_BITMAP_SIZE_H 256
 
 using namespace std;
 BEGIN_NAMESPACE_ENGINE
 
 SMART_STRUCT(CharacterAtlas) struct CharacterAtlas
 {
-	CAtlas*					m_Atlas;
+	Atlas*					m_Atlas;
 	PTexture				m_Texture;
 
+	inline int width() const { return m_Atlas->GetWidth(); }
+	inline int height() const { return m_Atlas->GetHeight(); }
 	inline bool Get(Rect2D* rect_in_atlas, uint32* out_pixels, Color color) { return m_Atlas->Get(rect_in_atlas, out_pixels, color); }
 	inline bool TryPush(int width, int height, int max_height) { return m_Atlas->TryPush(width, height, max_height); }
-	inline bool Push(int width, int height, int max_height, uint8* grey_buffer, RGB rgb, Rect2D* out_rect_in_atlas) {
-		return m_Atlas->Push(width, height, max_height, grey_buffer, rgb, out_rect_in_atlas); }
+	inline bool Push(int width, int height, int max_height, uint8* grey_buffer, RGB rgb, Rect2D* out_rect_in_atlas) 
+	{
+		bool result = m_Atlas->Push(width, height, max_height, grey_buffer, rgb, out_rect_in_atlas); 
+		UpdateTexture();
+		return result;
+	}
 	inline void Release() { m_Atlas->Release(); }
+	inline void UpdateTexture() { m_Texture->UpdateData(m_Atlas->GetWidth(), m_Atlas->GetHeight(), GL_RGBA, GL_RGBA, (UCHAR*)m_Atlas->GetPixels(), false); }
 };
 
 //单个字符信息

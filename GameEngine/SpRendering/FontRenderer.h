@@ -8,6 +8,7 @@
 #include"SpRendering\MeshBufferTexcoord.h"
 #include"SpRendering\Texture2D.h"
 #include"SpRendering\Material.h"
+#include"SpRendering\Sprite.h"
 
 BEGIN_NAMESPACE_ENGINE
 
@@ -28,7 +29,6 @@ public:
 	float					m_Width;
 	float					m_Height;
 	Vector3					m_Position;
-	PTexture2D				m_Texture;
 
 	CCharacterPrimitiveBase(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
 	virtual ~CCharacterPrimitiveBase();
@@ -40,14 +40,16 @@ class CCharacterPrimitiveSmart : public CCharacterPrimitiveBase
 public:
 	PMeshBufferTexcoord		m_Buffer;
 	shared_ptr<Material>	m_Material;
+	PSprite					m_Sprite;
 
-	CCharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
+	CCharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels, PSprite sprite);
 	virtual ~CCharacterPrimitiveSmart();
 	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color) override;
 };
 
 class CCharacterPrimitiveFixed : public CCharacterPrimitiveBase
 {
+	PTexture2D				m_Texture;
 public:
 	CCharacterPrimitiveFixed(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
 	virtual ~CCharacterPrimitiveFixed();

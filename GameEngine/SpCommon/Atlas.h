@@ -8,17 +8,17 @@
 
 BEGIN_NAMESPACE_ENGINE
 
-class CAtlas : public Object
+class Atlas : public Object
 {
 private:
-	SBitmapData bitmap;
-	Point2D endingPos;
-	int m_width;
-	int m_height;
-	int instanceId;
+	SBitmapData			m_Bitmap;
+	Point2D				m_EndingPos;
+	int					m_Width;
+	int					m_Height;
+	int					m_Border;
 
 public:
-	CAtlas(int width, int height);
+	Atlas(int width, int height, int border);
 
 	bool Push(int width, int heightint, int max_height, uint8* grey_buffer, RGB rgb, Rect2D* out_rect_in_atlas = NULL);
 
@@ -32,11 +32,11 @@ public:
 
 	bool Get(Rect2D* rect_in_atlas, uint32* out_pixels, Color color);
 
-	inline int GetWidth() const { return m_width; }
+	inline int GetWidth() const { return m_Width; }
 
-	inline int GetHeight() const { return m_height; }
+	inline int GetHeight() const { return m_Height; }
 
-	inline uint32* GetPixels() const { return bitmap.buffer; }
+	inline uint32* GetPixels() const { return m_Bitmap.buffer; }
 
 	void Clear();
 

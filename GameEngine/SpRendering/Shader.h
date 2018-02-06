@@ -67,6 +67,7 @@ public:
 	void SetUniformParam(const char* paramName, const Color& value);
 	void SetUniformParam(const char* paramName, const Vector2& value);
 	void SetUniformParam(const char* paramName, const Vector3& value);
+	void SetUniformParam(const char* paramName, const Vector4& value);
 	void SetUniformParam(const char* paramName, const Matrix4x4& value);
 
 	void SetUniformParam(const char* paramName, int* value, int count);

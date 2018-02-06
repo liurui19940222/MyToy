@@ -33,5 +33,6 @@ private:
 	Matrix4x4				projectionMat;
 	CFontRenderer*			font;
 	IRenderingInterface*	m_RI;
+	PTexture				m_Texture;
 };
 

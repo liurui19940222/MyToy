@@ -18,6 +18,8 @@ void TextApp::InitGL(HWND hwnd)
 void TextApp::OnInitialize()
 {
 	GLAppBase::OnInitialize();
+	Color color = Color::Hex(0x314D79FF);
+	SetBackgroundColor(color.r, color.g, color.b, color.a);
 	CInput::Init(GetModuleHandle(NULL), m_Hwnd);
 
 	CTrueTypeFont* f = FontManager->LoadFont(1, FONT_PATH);
@@ -35,6 +37,8 @@ void TextApp::OnInitialize()
 
 	modelMat = Matrix4x4::Identity();
 	viewMat = Matrix4x4::LookAt(Vector3(0, 0, 10), Vector3::zero, Vector3::up);
+	m_Texture = Texture2D::Create("D:/GitHub/MyToy/GameEngine/Assets/shake.png");
+	m_Texture = (*f->GetAtlases(font_size))[0]->m_Texture;
 }
 
 void TextApp::OnWindowSizeChanged(int width, int height)
@@ -122,9 +126,24 @@ void TextApp::OnRender()
 {
 	GLAppBase::OnRender();
 
-	
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	m_Texture->Bind();
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glPushMatrix();
+	glScalef(1, -1, 1);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 1);
+	glVertex3f(-1.0f, 1.0f, 0.0f);
+	glTexCoord2f(0, 0);
+	glVertex3f(-1.0f, -1.0f, 0.0f);
+	glTexCoord2f(1, 0);
+	glVertex3f(1.0f, -1.0f, 0.0f);
+	glTexCoord2f(1, 1);
+	glVertex3f(1.0f, 1.0f, 0.0f);
+	glEnd();
+	glPopMatrix();
+	glDisable(GL_BLEND);
 
-	font->OnRender(modelMat, viewMat, projectionMat);
-	//glBindTexture(GL_TEXTURE_2D, 0);
-	//glUseProgram(0);
+	font->OnRender(modelMat, viewMat, projectionMat);;
 }
