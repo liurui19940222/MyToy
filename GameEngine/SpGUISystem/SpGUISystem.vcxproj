@@ -24,6 +24,7 @@
     <ClInclude Include="MeshBufferUIInstance.h" />
     <ClInclude Include="UIImage.h" />
     <ClInclude Include="UIInteractor.h" />
+    <ClInclude Include="UILabel.h" />
     <ClInclude Include="UISystem.h" />
     <ClInclude Include="UIView.h" />
     <ClInclude Include="UIWidget.h" />
@@ -32,6 +33,7 @@
     <ClCompile Include="MeshBufferUIInstance.cpp" />
     <ClCompile Include="UIImage.cpp" />
     <ClCompile Include="UIInteractor.cpp" />
+    <ClCompile Include="UILabel.cpp" />
     <ClCompile Include="UISystem.cpp" />
     <ClCompile Include="UIView.cpp" />
     <ClCompile Include="UIWidget.cpp" />

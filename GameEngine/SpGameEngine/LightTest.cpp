@@ -3,6 +3,7 @@
 #include"Maker.h"
 #include"SpRendering\SkyBox.h"
 #include"SpRendering\MeshFactory.h"
+#include"SpRendering\MeshBufferNormal.h"
 #include"LightComponent.h"
 #include<glm\glm.hpp>
 
@@ -20,7 +21,7 @@ void LightTest::OnStart()
 	model_mat->SetShader(Shader::Get("light"));
 	collada = _Resources->Load<ColladaLoader>("models/scene07.xml");
 	m_model = PModel(collada->m_model);
-	PMeshBuffer buffer(new MeshBuffer(m_model->m_meshes[0]));
+	PMeshBuffer buffer = make_shared<MeshBufferNormal>(m_model->m_meshes[0]);
 	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, m_model->m_skeleton)->SetMaterial(model_mat);
 	_MainCameraGo->LookAt(model->GetLocalPosition());
 
@@ -39,6 +40,12 @@ void LightTest::OnStart()
 	pointLight->SetType(ELightType::Point);
 	pointLight->SetColor(Color::blue);
 	pointLight->SetIntensity(0.6);
+
+	//CGameObject* go = _Maker->CreateQuad();
+	//go->GetComponent<CMeshRenderer>()->SetMaterial(model_mat);
+	//go->SetLocalEulerAngles(Vector3(90, 0, 0));
+	//go->SetLocalScale(Vector3::one * 10);
+	//go->SetLocalPosition(Vector3(0, 0, 0));
 }
 
 void LightTest::OnUpdate()
@@ -56,7 +63,7 @@ void LightTest::OnUpdate()
 	//sprite->LookAt(_MainCameraGo->GetLocalPosition());
 	Vector3 euler = directionalGo->GetLocalEulerAngles();
 	euler.y += CTime::deltaTime * 20;
-	//directionalGo->SetLocalEulerAngles(euler);
+	directionalGo->SetLocalEulerAngles(euler);
 }
 
 void LightTest::OnRender()

@@ -17,7 +17,7 @@ class GLRendering : public IRenderingInterface
 public:
 	virtual void StartUp(const RenderingStartUpParams* params) override;
 	virtual void Render(RenderingObject obj) override;
-	virtual void RerderInstance(RenderingObject obj, uint instanceCount) override;
+	virtual void RenderInstance(RenderingObject obj, uint instanceCount) override;
 	virtual void MakeRenderContext() override;
 	virtual void ShutDown() override;
 	

@@ -31,7 +31,7 @@ SMART_STRUCT(CharacterAtlas) struct CharacterAtlas
 		return result;
 	}
 	inline void Release() { m_Atlas->Release(); }
-	inline void UpdateTexture() { m_Texture->UpdateData(m_Atlas->GetWidth(), m_Atlas->GetHeight(), GL_RGBA, GL_RGBA, (UCHAR*)m_Atlas->GetPixels(), false); }
+	inline void UpdateTexture() { m_Texture->UpdateData(m_Atlas->GetWidth(), m_Atlas->GetHeight(), GL_RGBA, GL_RGBA, (UCHAR*)m_Atlas->GetPixels(), true); }
 };
 
 //单个字符信息

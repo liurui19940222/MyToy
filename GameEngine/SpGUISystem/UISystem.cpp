@@ -129,13 +129,14 @@ void UISystem::SubmitBatch(const vector<UIView*> list, PMaterial mat, PTexture t
 		m_Colors[i] = list[j]->GetColor();
 		m_RectList[i] = list[j]->m_Rect;
 		m_ModelMatrices[i] = list[j]->m_ModelMatrix;
+	
 	}
 	m_SharedMesh->MakeInstanceBuffer(m_TexcoordRanges, m_Colors, m_RectList, m_ModelMatrices, count);
 	mat->SetMainTexture(texture);
 	mat->Bind();
 	mat->SetParam("u_V", m_ViewMatrix);
 	mat->SetParam("u_P", m_ProjMatrix);
-	m_RI->RerderInstance(RenderingObject{ m_SharedMesh.get(), mat.get() }, count);
+	m_RI->RenderInstance(RenderingObject{ m_SharedMesh.get(), mat.get() }, count);
 }
 
 void UISystem::AddChild(PUIWidget widget)

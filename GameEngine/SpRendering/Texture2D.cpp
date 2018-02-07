@@ -62,9 +62,9 @@ PTexture2D Texture2D::Create(UCHAR* pixels, int width, int height, ETexWrapMode 
 	return texture;
 }
 
-PTexture2D Texture2D::Create(UCHAR* pixels, int width, int height)
+PTexture2D Texture2D::Create(UCHAR* pixels, int width, int height, bool mipmaps)
 {
-	return Create(pixels, width, height, ETexWrapMode::Repeat, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
+	return Create(pixels, width, height, ETexWrapMode::Repeat, ETexFilterMode::Linear, ETexEnvMode::Replace, mipmaps);
 }
 
 PTexture2D Texture2D::GetOneInStore(EStoreTexture2DId id)

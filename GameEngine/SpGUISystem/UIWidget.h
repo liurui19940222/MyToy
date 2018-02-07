@@ -1,5 +1,4 @@
 #pragma once
-
 #include"SpCommon\EngineDefine.h"
 #include"SpCommon\Object.hpp"
 #include"GUIDefines.h"
@@ -12,7 +11,6 @@ SMART_CLASS(UIWidget) class UIWidget : public Object
 public:
 	UIWidget();
 	virtual ~UIWidget();
-
 	UIWidget* SetWidth(float width);
 	UIWidget* SetHeight(float height);
 	UIWidget* SetRect(const SRect2D& rect);
@@ -20,9 +18,7 @@ public:
 	UIWidget* AddChild(PUIWidget widget);
 	UIWidget* RemoveChild(PUIWidget widget);
 	UIWidget* SetAlignment(EAlignment alignment);
-
 	bool Overlay(const Vector2& point);
-
 	inline float GetWidth() const { return m_Width; }
 	inline float GetHeight() const { return m_Height; }
 	inline SRect2D GetRect() const { return m_Rect; }

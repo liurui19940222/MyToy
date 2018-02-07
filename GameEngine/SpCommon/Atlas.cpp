@@ -50,9 +50,9 @@ void Atlas::Set(int target_x, int target_y, int width, int height, uint8* grey_b
 bool Atlas::BeginPush(int width, int height, int max_height)
 {
 	int y = m_EndingPos.y;
-	if (m_EndingPos.x + width >= m_Width)
+	if (m_EndingPos.x + m_Border + width >= m_Width)
 	{
-		y = m_EndingPos.y + max_height;
+		y = m_EndingPos.y + m_Border + max_height;
 		m_EndingPos.x = 0;
 	}
 
@@ -67,9 +67,9 @@ bool Atlas::BeginPush(int width, int height, int max_height)
 bool Atlas::TryPush(int width, int height, int max_height)
 {
 	int y = m_EndingPos.y + height;
-	if (m_EndingPos.x + width >= m_Width)
+	if (m_EndingPos.x + m_Border + width >= m_Width)
 	{
-		y = m_EndingPos.y + max_height * 2;
+		y = m_EndingPos.y + m_Border + max_height * 2;
 	}
 
 	if (y >= m_Height)
@@ -81,7 +81,7 @@ bool Atlas::TryPush(int width, int height, int max_height)
 
 void Atlas::EndPush(int width, int height, int max_height)
 {
-	m_EndingPos.x += width;
+	m_EndingPos.x += m_Border + width;
 	if (m_EndingPos.x >= m_Width)
 	{
 		m_EndingPos.x = 0;

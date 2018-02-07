@@ -23,7 +23,7 @@ class IRenderingInterface
 public:
 	virtual void StartUp(const RenderingStartUpParams* params) = 0;
 	virtual void Render(RenderingObject obj) = 0;
-	virtual void RerderInstance(RenderingObject obj, uint instanceCount) = 0;
+	virtual void RenderInstance(RenderingObject obj, uint instanceCount) = 0;
 	virtual void MakeRenderContext() = 0;
 	virtual void ShutDown() = 0;
 };

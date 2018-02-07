@@ -102,8 +102,8 @@ void GLAppBase::Run()
 	float deltaTime = 0.0f;
 	while (!isExiting)
 	{
-		lastFrameTime = GetTickCount();
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		lastFrameTime = GetTickCount();				  //记录一帧开始的时间
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) //处理Windows消息
 		{
 			if (msg.message == WM_QUIT)
 			{
@@ -112,13 +112,13 @@ void GLAppBase::Run()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		OnUpdate(deltaTime);
-		ComputeFPS();
-		OnRender();
-		DrawInfo();
-		SwapBuffers(hdc);
-		deltaTime = (GetTickCount() - lastFrameTime) * 0.001f;
-		m_TimeSinceStarUp += deltaTime;
+		OnUpdate(deltaTime);						  //更新所有逻辑	
+		ComputeFPS();								  //计算FPS
+		OnRender();									  //渲染
+		DrawInfo();									  
+		SwapBuffers(hdc);						      //交换缓冲区
+		deltaTime = (GetTickCount() - lastFrameTime) * 0.001f;   //用当前时间-开始这一帧时的时间得到时间差，然后转成秒
+		m_TimeSinceStarUp += deltaTime;				  
 	}
 	OnRelease();
 }

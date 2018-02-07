@@ -33,6 +33,9 @@
     <ClInclude Include="UIImage.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="UILabel.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UIWidget.cpp">
@@ -51,6 +54,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="UIImage.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="UILabel.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

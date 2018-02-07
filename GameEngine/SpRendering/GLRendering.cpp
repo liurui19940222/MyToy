@@ -27,7 +27,7 @@ void GLRendering::Render(RenderingObject obj)
 	obj.material->Unbind();
 }
 
-void GLRendering::RerderInstance(RenderingObject obj, uint instanceCount)
+void GLRendering::RenderInstance(RenderingObject obj, uint instanceCount)
 {
 	obj.material->Bind();
 	obj.mesh->BindBuffer();

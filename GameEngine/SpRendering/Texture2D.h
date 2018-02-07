@@ -26,7 +26,7 @@ public:
 	static PTexture2D Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
 	static PTexture2D Create(ImageLoader* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
 	static PTexture2D Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-	static PTexture2D Create(UCHAR* pixels, int width, int height);
+	static PTexture2D Create(UCHAR* pixels, int width, int height, bool mipmaps = false);
 
 	static PTexture2D GetOneInStore(EStoreTexture2DId id);
 };
