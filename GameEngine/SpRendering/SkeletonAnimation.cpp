@@ -38,7 +38,7 @@ vector<JointPose> SkeletonAnimation::Sample(PAnimationClip clip, PSkeleton skele
 {
 	vector<JointPose> poses;
 	t = clip->m_isLooping ? fmod(t, clip->m_length) : t;
-	if (t > clip->m_length || t < 0 || clip->m_aSamples.size() == 0)
+	if (t > clip->m_length || t < 0 || clip->m_aSamples.empty())
 		return poses;
 	poses.resize(skeleton->GetSize());
 	for (uint i = 0; i < clip->m_aSamples.size() - 1; i++)
@@ -74,7 +74,7 @@ vector<JointPose> SkeletonAnimation::FullMatchSample(PAnimationClip clip, PSkele
 {
 	vector<JointPose> poses;
 	t = clip->m_isLooping ? fmod(t, clip->m_length) : t;
-	if (t > clip->m_length || t < 0 || clip->m_aSamples.size() == 0)
+	if (t > clip->m_length || t < 0 || clip->m_aSamples.empty())
 		return poses;
 	poses.resize(skeleton->GetSize());
 	for (byte joint = 0, index = 0; joint < skeleton->GetSize(); joint++)

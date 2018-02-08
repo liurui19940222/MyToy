@@ -1,5 +1,6 @@
 #include "UIWidget.h"
 #include "UISystem.h"
+#include <algorithm>
 
 USING_NAMESPACE_GUI;
 
@@ -62,16 +63,13 @@ UIWidget* UIWidget::RemoveChild(PUIWidget widget)
 {
 	if (widget.get())
 	{
-		for (auto it = m_Childreen.begin(); it != m_Childreen.end(); ++it)
+		auto it = find_if(m_Childreen.begin(), m_Childreen.end(), [&widget](PUIWidget item) { return item.get() == widget.get(); });
+		if (it != m_Childreen.end())
 		{
-			if (it->get() == widget.get())
-			{
-				m_Childreen.erase(it);
-				break;
-			}
+			m_Childreen.erase(it);
+			m_System->AddChild(widget);
 		}
 	}
-	m_System->AddChild(widget);
 	return this;
 }
 
@@ -109,5 +107,5 @@ Vector2 UIWidget::GetOffset() const
 	return selfOffset + baseOffset;
 }
 
- 
+
 

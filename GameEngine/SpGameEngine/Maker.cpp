@@ -6,6 +6,7 @@
 #include"MessageCenter.h"
 #include"MessageDef.h"
 #include"LightComponent.h"
+#include<algorithm>
 
 void CMaker::OnInitialize()
 {
@@ -81,7 +82,7 @@ void CMaker::ForeachGameObjectR(CGameObject* go, ForeachGoCallbackR callback)
 
 void CMaker::ForeachGameObjectR(ForeachGoCallbackR callback)
 {
-	if (m_gameObjects.size() == 0 || callback == NULL) return;
+	if (m_gameObjects.empty() || callback == NULL) return;
 	auto it = m_gameObjects.begin();
 	while (it != m_gameObjects.end())
 	{
@@ -119,7 +120,7 @@ void CMaker::ForeachGameObject(CGameObject* go, ForeachGoCallback callback)
 
 void CMaker::ForeachGameObject(ForeachGoCallback callback)
 {
-	if (m_gameObjects.size() == 0 || callback == NULL) return;
+	if (m_gameObjects.empty() || callback == NULL) return;
 	auto it = m_gameObjects.begin();
 	while (it != m_gameObjects.end())
 	{
@@ -136,7 +137,7 @@ void CMaker::ForeachGameObject(CGameObject* go, ForeachGoCallbackMatrix callback
 
 void CMaker::ForeachGameObject(ForeachGoCallbackMatrix callback)
 {
-	if (m_gameObjects.size() == 0 || callback == NULL) return;
+	if (m_gameObjects.empty() || callback == NULL) return;
 	auto it = m_gameObjects.begin();
 	while (it != m_gameObjects.end())
 	{

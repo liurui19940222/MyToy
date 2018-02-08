@@ -111,6 +111,9 @@
     <ClInclude Include="MeshBufferNormal.h">
       <Filter>Buffer\include</Filter>
     </ClInclude>
+    <ClInclude Include="FontMeshGenerator.h">
+      <Filter>Text\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RenderTexture.cpp">
@@ -175,6 +178,9 @@
     </ClCompile>
     <ClCompile Include="MeshBufferNormal.cpp">
       <Filter>Buffer\src</Filter>
+    </ClCompile>
+    <ClCompile Include="FontMeshGenerator.cpp">
+      <Filter>Text\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

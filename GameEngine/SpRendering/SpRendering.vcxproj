@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="FontManager.h" />
+    <ClInclude Include="FontMeshGenerator.h" />
     <ClInclude Include="FontRenderer.h" />
     <ClInclude Include="GLRendering.h" />
     <ClInclude Include="Light.h" />
@@ -178,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FontManager.cpp" />
+    <ClCompile Include="FontMeshGenerator.cpp" />
     <ClCompile Include="FontRenderer.cpp" />
     <ClCompile Include="GLRendering.cpp" />
     <ClCompile Include="Light.cpp" />

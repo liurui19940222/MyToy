@@ -104,6 +104,11 @@ void UITest::OnUpdate(float deltaTime)
 	KeyState(EMouseKey::Right);
 	m_UISystem->UpdateAll(mouseState);
 
+	if (CInput::GetKeyDown(DIK_R))
+	{
+		m_MovedWidget->RemoveChild(m_SubWidget);
+	}
+
 	static bool shift = false, ctrl = false, rb = false;
 	if (CInput::GetKeyDown(DIK_LSHIFT))
 	{

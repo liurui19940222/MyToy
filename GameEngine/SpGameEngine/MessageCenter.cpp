@@ -1,4 +1,5 @@
 #include "MessageCenter.h"
+#include <algorithm>
 
 map<string, vector<IReceiver*>> CMessageCenter::m_map;
 
@@ -17,14 +18,8 @@ void CMessageCenter::Unregister(const string& msg_type, IReceiver* receiver)
 	if (it != m_map.end())
 	{
 		vector<IReceiver*>& list = m_map[msg_type];
-		for (int i = 0; i < list.size(); ++i)
-		{
-			if (list[i] == receiver)
-			{
-				list.erase(list.begin() + i);
-				return;
-			}
-		}
+		auto it = find_if(list.begin(), list.end(), [&receiver](IReceiver* item) { return receiver == item; });
+		if (it != list.end()) list.erase(it);
 	}
 }
 

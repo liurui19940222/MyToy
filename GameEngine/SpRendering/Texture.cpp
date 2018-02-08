@@ -53,9 +53,10 @@ Texture* Texture::UpdateData(int width, int height, int format, int internalForm
 {
 	glBindTexture(GL_TEXTURE_2D, m_texId);
 	if (mipmaps)
-		gluBuild2DMipmaps(GL_TEXTURE_2D, internalFormat, width, height, format, GL_UNSIGNED_BYTE, data);
-	else
-		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+	{
+		if (data) gluBuild2DMipmaps(GL_TEXTURE_2D, internalFormat, width, height, format, GL_UNSIGNED_BYTE, data);
+	}
+	else  glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	return this;
 }

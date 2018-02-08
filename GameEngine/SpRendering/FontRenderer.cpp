@@ -124,7 +124,7 @@ void CFontRenderer::RenderAllPrimitives(Matrix4x4& modelMatrix, Matrix4x4& viewM
 
 void CFontRenderer::OnRender(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix)
 {
-	if (!m_Font || m_LineDatas.size() == 0) return;
+	if (!m_Font || m_LineDatas.empty()) return;
 
 	if (m_Effect == EFontEffect::Shadow)
 		RenderAllPrimitives(modelMatrix, viewMatrix, projectionMatrix, m_EffectVector, m_EffectColor);

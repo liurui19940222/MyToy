@@ -4,6 +4,8 @@
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "glew32.lib")
 
+using namespace std;
+
 TextApp::TextApp(const wchar_t* className, const wchar_t* title, int width, int height)
 	: GLAppBase(className, title, width, height) {}
 
