@@ -14,8 +14,8 @@ MeshBuffer::MeshBuffer(PMesh mesh) : MeshBuffer()
 
 MeshBuffer::~MeshBuffer()
 {
-	ReleaseBuffer();
-	DeleteBufer(&m_VaoHandle);
+	DeleteBufer(&m_VboPositionHandle);
+	glDeleteVertexArrays(1, &m_VaoHandle);
 }
 
 void MeshBuffer::MakePositionBuffer(const Vector3* vertices, int size)
@@ -39,11 +39,6 @@ void MeshBuffer::MakeBuffer(PMesh mesh)
 void MeshBuffer::BindBuffer()
 {
 	glBindVertexArray(m_VaoHandle);
-}
-
-void MeshBuffer::ReleaseBuffer()
-{
-	DeleteBufer(&m_VboPositionHandle);
 }
 
 void MeshBuffer::MakeVertexBuffer(GLuint *bufferId, int size, int componentCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType)
@@ -101,6 +96,8 @@ void MeshBuffer::UpdateVertexBuffer(GLuint bufferId, int offset, int dataSize, c
 void MeshBuffer::DeleteBufer(GLuint* bufferId)
 {
 	if (bufferId && *bufferId)
+	{
 		glDeleteBuffers(1, bufferId);
+	}
 	*bufferId = 0;
 }

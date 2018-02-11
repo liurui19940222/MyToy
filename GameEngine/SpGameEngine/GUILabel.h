@@ -7,12 +7,12 @@
 
 namespace guisystem {
 
-	class ENGINE_API CGUILabel : public CGUIWidget, public CFontRenderer
+	class ENGINE_API CGUILabel : public CGUIWidget, public FontRenderer
 	{
 		REFLECT_CLASS(CGUILabel)
 	protected:
 		virtual void OnStart() override;
-		virtual CFontRenderer* SetTextRect(SRect2D rect) override;
+		virtual FontRenderer* SetTextRect(SRect2D rect) override;
 	public:
 		CGUILabel();
 

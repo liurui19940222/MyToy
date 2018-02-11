@@ -7,13 +7,13 @@
 BEGIN_NAMESPACE_ENGINE
 
 template<typename T>
-class ENGINE_API_TEMPLATE CSingleton
+class ENGINE_API_TEMPLATE Singleton
 {
 	static T* m_instance;
 
 protected:
-	CSingleton() {}
-	virtual ~CSingleton() {}
+	Singleton() {}
+	virtual ~Singleton() {}
 	virtual void OnInitialize() {}
 
 public:
@@ -28,7 +28,7 @@ public:
 	}
 };
 
-template<typename T>T* CSingleton<T>::m_instance;
+template<typename T>T* Singleton<T>::m_instance;
 
 END_NAMESPACE_ENGINE
 

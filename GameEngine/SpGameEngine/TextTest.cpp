@@ -6,7 +6,7 @@ void CTextTest::OnStart()
 	_MainCameraGo->SetLocalPosition(Vector3(0, 0, 10));
 	_MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
 
-	CTrueTypeFont* font = FontManager->LoadFont(1, "C:/Windows/Fonts/simkai.ttf");
+	PTrueTypeFont font = _FontManager->LoadFont(1, "C:/Windows/Fonts/simkai.ttf");
 	go = _Maker->Instantiate();
 	go->SetLocalPosition(Vector3(0, 0, 0));
 	go->SetLayer(Layer::Default);

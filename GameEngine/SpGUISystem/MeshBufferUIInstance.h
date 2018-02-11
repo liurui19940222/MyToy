@@ -15,9 +15,9 @@ SMART_CLASS(MeshBufferUIInstance) class MeshBufferUIInstance : public MeshBuffer
 public:
 	MeshBufferUIInstance();
 	MeshBufferUIInstance(PMesh mesh);
+	virtual ~MeshBufferUIInstance();
 	void MakeInstanceBuffer(vector<TexcoordRange>& ranges, vector<Color>& colors, 
 		vector<SRect2D>& sizelist, vector<Matrix4x4>& matrices, int instanceCount);
-	virtual void ReleaseBuffer() override;
 
 private:
 	GLuint			m_VboTexRangeHandle;

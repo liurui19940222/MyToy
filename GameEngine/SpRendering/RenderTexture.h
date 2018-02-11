@@ -10,15 +10,15 @@ BEGIN_NAMESPACE_ENGINE
 SMART_CLASS(RenderTexture) class RenderTexture : public Texture, public IRenderBuffer
 {
 private:
-	GLuint m_fboHandle;
-	GLuint m_rboHandle;
+	GLuint m_FboHandle;
+	GLuint m_RboHandle;
 
 public:
+	RenderTexture();
+	virtual ~RenderTexture();
 	void MakeBuffer(int width, int height, bool depthBuffer);
 
 	virtual void BindBuffer() override;
-
-	virtual void ReleaseBuffer() override;
 
 	static PRenderTexture Create(int width, int height, bool depthBuffer);
 };

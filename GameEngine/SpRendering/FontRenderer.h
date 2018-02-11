@@ -20,7 +20,7 @@ enum class EFontEffect {
 	Outline,
 };
 
-class CCharacterPrimitiveBase
+class CharacterPrimitiveBase : public Object
 {
 public:
 	int						m_Left;
@@ -30,44 +30,34 @@ public:
 	float					m_Height;
 	Vector3					m_Position;
 
-	CCharacterPrimitiveBase(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
-	virtual ~CCharacterPrimitiveBase();
+	virtual ~CharacterPrimitiveBase();
+	CharacterPrimitiveBase(int left_padding, int top, int advance_x, int width, int height, float pixelScale);
 	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color) = 0;
 };
 
-class CCharacterPrimitiveSmart : public CCharacterPrimitiveBase
+SMART_CLASS(CharacterPrimitiveSmart) class CharacterPrimitiveSmart : public CharacterPrimitiveBase
 {
 public:
 	PMeshBufferTexcoord		m_Buffer;
-	shared_ptr<Material>	m_Material;
+	PMaterial				m_Material;
 	PSprite					m_Sprite;
 
-	CCharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels, PSprite sprite);
-	virtual ~CCharacterPrimitiveSmart();
+	virtual ~CharacterPrimitiveSmart();
+	CharacterPrimitiveSmart(int left_padding, int top, int advance_x, int width, int height, float pixelScale, PSprite sprite, PMaterial mat);
 	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color) override;
 };
 
-class CCharacterPrimitiveFixed : public CCharacterPrimitiveBase
-{
-	PTexture2D				m_Texture;
-public:
-	CCharacterPrimitiveFixed(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
-	virtual ~CCharacterPrimitiveFixed();
-	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color) override;
-};
-
-class CTextOneLineData
+SMART_CLASS(TextOneLineData) class TextOneLineData : public Object
 {
 public:
-	float					m_LineWidth;
-	float					m_LineHeight;
-
-	CTextOneLineData();
-	virtual ~CTextOneLineData();
-	vector<CCharacterPrimitiveBase*> primitives;
+	float								m_LineWidth;
+	float								m_LineHeight;
+	vector<PCharacterPrimitiveSmart>	primitives;
+	TextOneLineData();
+	~TextOneLineData();
 };
 
-class CFontRenderer
+class FontRenderer
 {
 private:
 	float					m_Interval_x;
@@ -80,15 +70,14 @@ private:
 	Color					m_Color;
 	wchar_t					m_TextBuffer[TEXT_BUFFER_SIZE];
 	EFontEffect				m_Effect = EFontEffect::None;
-	ERenderType				m_RenderType = ERenderType::Smart;
 	wstring					m_Text;
-	CTrueTypeFont*			m_Font;
+	PTrueTypeFont			m_Font;
 	SRect2D					m_Rect;
 	EAlignment				m_Alignment;
 	EAlignmentHorizontal	m_AlignmentH;
 	EAlignmentVertical		m_AlignmentV;
-	vector<CTextOneLineData*>		 m_LineDatas;
-	vector<CCharacterPrimitiveBase*> m_Primitives;
+	vector<PTextOneLineData>		 m_LineDatas;
+	vector<PCharacterPrimitiveSmart> m_Primitives;
 
 protected:
 	void ClearPrimitive();
@@ -97,29 +86,29 @@ protected:
 	float GetOffsetX(int line_index);
 	float GetOffsetY();
 	void Rebuild();
-	void Init(CTrueTypeFont* font, int font_size, float interval_x, Color color, EAlignment alignment, SRect2D rect);
+	void Init(PTrueTypeFont font, int font_size, float interval_x, Color color, EAlignment alignment, SRect2D rect);
 	void RenderAllPrimitives(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 offset, const Color& color);
 
 public:
 	void OnRender(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix);
 	void OnRenderDebug(Matrix4x4& modelMatrix);
-	virtual CFontRenderer* SetTextRect(SRect2D rect);
+	virtual FontRenderer* SetTextRect(SRect2D rect);
 	SRect2D GetTextRect();
-	CFontRenderer* SetFont(CTrueTypeFont* font);
-	CTrueTypeFont* GetFont();
-	CFontRenderer* SetText(const wstring text);
+	FontRenderer* SetFont(PTrueTypeFont font);
+	PTrueTypeFont GetFont();
+	FontRenderer* SetText(const wstring text);
 	const wstring& GetText();
-	CFontRenderer* SetIntervalX(float x);
-	CFontRenderer* SetIntervalY(float y);
-	CFontRenderer* SetFontSize(int size);
-	CFontRenderer* SetColor(Color color);
-	CFontRenderer* SetSingleLine(bool isSingle);
-	CFontRenderer* SetTextAlignment(EAlignment alignment);
-	CFontRenderer* SetRenderType(ERenderType type);
-	CFontRenderer* SetEffect(EFontEffect effect);
-	CFontRenderer* SetEffectVector(const Vector3& v);
-	CFontRenderer* SetEffectColor(const Color& color);
-	CTextOneLineData* GetLineData(int rowIndex);
+	FontRenderer* SetIntervalX(float x);
+	FontRenderer* SetIntervalY(float y);
+	FontRenderer* SetFontSize(int size);
+	FontRenderer* SetColor(Color color);
+	FontRenderer* SetSingleLine(bool isSingle);
+	FontRenderer* SetTextAlignment(EAlignment alignment);
+	FontRenderer* SetEffect(EFontEffect effect);
+	FontRenderer* SetEffectVector(const Vector3& v);
+	FontRenderer* SetEffectColor(const Color& color);
+	PTextOneLineData GetLineData(int rowIndex);
+	static PMaterial GetDefaultMaterial();
 };
 
 END_NAMESPACE_ENGINE

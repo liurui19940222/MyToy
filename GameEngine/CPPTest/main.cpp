@@ -20,7 +20,7 @@ int width = 800;
 int height = 600;
 bool isExiting = false;
 GLRendering* rendering;
-CFontRenderer* font;
+FontRenderer* font;
 HWND m_Hwnd;
 RenderingObject obj;
 Matrix4x4 textMat;
@@ -149,8 +149,8 @@ LRESULT CALLBACK MessageHandle(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 		CreateText(SHOW_TEXT);
 
-		CTrueTypeFont* f = FontManager->LoadFont(1, FONT_PATH);
-		font = new CFontRenderer();
+		TrueTypeFont* f = _FontManager->LoadFont(1, FONT_PATH);
+		font = new FontRenderer();
 		font->SetFont(f);
 		font->SetColor(Color::green);
 		font->SetEffect(EFontEffect::Shadow)->SetEffectVector(Vector3(1, -1, 0))->SetEffectColor(Color::black);

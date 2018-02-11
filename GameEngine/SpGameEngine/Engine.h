@@ -37,7 +37,7 @@ using namespace container;
 
 int CompareCamera(CCamera* a, CCamera* b);
 
-class ENGINE_API CEngine : public CSingleton<CEngine>
+class ENGINE_API CEngine : public Singleton<CEngine>
 {
 public:
 	void InitEngine(HINSTANCE instance, HWND hwnd, float screenWidth, float screenHeight);

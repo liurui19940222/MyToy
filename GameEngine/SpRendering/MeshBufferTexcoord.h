@@ -12,10 +12,10 @@ protected:
 public:
 	MeshBufferTexcoord();
 	MeshBufferTexcoord(PMesh mesh);
+	virtual ~MeshBufferTexcoord();
 
 	void MakeTexcoordBuffer(const Vector2* uvs, int size);
 	virtual void MakeBuffer(PMesh mesh) override;
-	virtual void ReleaseBuffer() override;
 
 private:
 	GLuint		 m_VboTexcoordHandle;

@@ -364,7 +364,6 @@ void CGUIWidget::OnStart()
 void CGUIWidget::OnDestroy()
 {
 	_GUISystem->DestroyWidget(this);
-	m_buffer.ReleaseBuffer();
 	_Maker->Destroy(m_material);
 }
 

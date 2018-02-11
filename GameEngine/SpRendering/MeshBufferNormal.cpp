@@ -11,6 +11,11 @@ MeshBufferNormal::MeshBufferNormal(PMesh mesh) : MeshBufferTexcoord(mesh), m_Vbo
 	MakeNormalBuffer(mesh->m_normals, mesh->m_vertexCount);
 }
 
+MeshBufferNormal::~MeshBufferNormal() 
+{
+	DeleteBufer(&m_VboNormalHandle);
+}
+
 void MeshBufferNormal::MakeNormalBuffer(const Vector3* normals, int size)
 {
 	BindBuffer();
@@ -22,10 +27,4 @@ void MeshBufferNormal::MakeBuffer(PMesh mesh)
 {
 	MeshBufferTexcoord::MakeBuffer(mesh);
 	MakeNormalBuffer(mesh->m_normals, mesh->m_vertexCount);
-}
-
-void MeshBufferNormal::ReleaseBuffer()
-{
-	DeleteBufer(&m_VboNormalHandle);
-	MeshBufferTexcoord::ReleaseBuffer();
 }

@@ -6,19 +6,19 @@
 
 BEGIN_NAMESPACE_ENGINE
 
-#define _LoadFont(fontId, file_name) CFontManager::GetInstance()->LoadFont(fontId, file_name)
-#define _GetFont(fontId) CFontManager::GetInstance()->GetFont(fontId)
-#define FontManager CFontManager::GetInstance()
+#define _LoadFont(fontId, file_name) FontManager::GetInstance()->LoadFont(fontId, file_name)
+#define _GetFont(fontId) FontManager::GetInstance()->GetFont(fontId)
+#define _FontManager FontManager::GetInstance()
 
-class CFontManager : public CSingleton<CFontManager>
+class FontManager : public Singleton<FontManager>
 {
 private:
-	map<int, CTrueTypeFont*> fontMap;
+	map<int, PTrueTypeFont> fontMap;
 
 public:
-	CTrueTypeFont* LoadFont(int fontId, const char* file_name);
+	PTrueTypeFont LoadFont(int fontId, const char* file_name);
 
-	CTrueTypeFont* GetFont(int fontId);
+	PTrueTypeFont GetFont(int fontId);
 };
 
 END_NAMESPACE_ENGINE

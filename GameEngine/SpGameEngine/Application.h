@@ -40,7 +40,7 @@ enum class ENGINE_API EDisplayMode
 
 class ENGINE_API CGameWindow;
 
-class ENGINE_API CApplication : public CSingleton<CApplication>
+class ENGINE_API CApplication : public Singleton<CApplication>
 {
 public:
 

@@ -9,6 +9,12 @@ MeshBufferUIInstance::MeshBufferUIInstance() :
 MeshBufferUIInstance::MeshBufferUIInstance(PMesh mesh) : 
 	MeshBufferTexcoord(mesh), m_VboTexRangeHandle(0), m_VboModelMatrixHandle(0), m_VboColorHandle(0), m_VboRectSizeHandle(0) {}
 
+MeshBufferUIInstance::~MeshBufferUIInstance()
+{
+	DeleteBufer(&m_VboTexRangeHandle);
+	DeleteBufer(&m_VboModelMatrixHandle);
+}
+
 void MeshBufferUIInstance::MakeInstanceBuffer(vector<TexcoordRange>& ranges, vector<Color>& colors, vector<SRect2D>& sizelist, vector<Matrix4x4>& matrices, int instanceCount)
 {
 	BindBuffer();
@@ -17,11 +23,4 @@ void MeshBufferUIInstance::MakeInstanceBuffer(vector<TexcoordRange>& ranges, vec
 	MeshBuffer::MakeInstanceVertexBuffer(&m_VboRectSizeHandle, sizeof(SRect2D), 4, instanceCount, &sizelist[0], ATTR_POS_RECTSIZE, EBufferUsage::StaticDraw);
 	MeshBuffer::MakeInstanceVertexBuffer(&m_VboModelMatrixHandle, sizeof(Matrix4x4), 16, instanceCount, &matrices[0], ATTR_POS_MODELMATRIX, EBufferUsage::StaticDraw);
 	UnbindBuffer();
-}
-
-void MeshBufferUIInstance::ReleaseBuffer()
-{
-	DeleteBufer(&m_VboTexRangeHandle);
-	DeleteBufer(&m_VboModelMatrixHandle);
-	MeshBufferTexcoord::ReleaseBuffer();
 }

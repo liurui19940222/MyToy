@@ -13,9 +13,9 @@ public:
 	MeshBufferSkinning();
 	MeshBufferSkinning(PMesh mesh);
 	MeshBufferSkinning(PMesh mesh, const vector<Vector4>& weights, const vector<BVector4>& indices);
+	virtual ~MeshBufferSkinning();
 
 	void MakeJointBuffer(const vector<Vector4>& weights, const vector<BVector4>& indices);
-	virtual void ReleaseBuffer() override;
 
 private:
 	GLuint		m_VboJointIndexHandle;

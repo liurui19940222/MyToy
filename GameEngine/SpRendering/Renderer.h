@@ -6,12 +6,6 @@
 
 BEGIN_NAMESPACE_ENGINE
 
-enum class ERenderType
-{
-	Fixed,
-	Smart,
-};
-
 class IRenderer {
 
 public:

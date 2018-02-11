@@ -15,9 +15,9 @@ void CGUILabel::OnStart()
 	Init(NULL, 18, 0, Color::white, EAlignment::CENTER_MIDDLE, SRect2D(0.0f, 0.0f, 100.0f, 100.0f));
 }
 
-CFontRenderer* CGUILabel::SetTextRect(SRect2D rect)
+FontRenderer* CGUILabel::SetTextRect(SRect2D rect)
 {
-	return CFontRenderer::SetTextRect(rect);
+	return FontRenderer::SetTextRect(rect);
 }
 
 float CGUILabel::GetPixelScale()

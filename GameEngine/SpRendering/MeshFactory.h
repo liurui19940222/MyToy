@@ -18,7 +18,7 @@ enum class EMeshType
 	Quad,
 };
 
-class MeshFactory : public CSingleton<MeshFactory>
+class MeshFactory : public Singleton<MeshFactory>
 {
 	map<EMeshType, PMesh> m_meshes;
 	map<EMeshType, PMeshBuffer> m_buffers;

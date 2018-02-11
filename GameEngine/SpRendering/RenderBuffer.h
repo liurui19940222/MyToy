@@ -11,7 +11,6 @@ public:
 
 	virtual void BindBuffer() = 0;
 
-	virtual void ReleaseBuffer() = 0;
 };
 
 END_NAMESPACE_ENGINE

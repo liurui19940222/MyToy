@@ -5,7 +5,7 @@
 CGameObject* r;
 void GUITest::OnStart()
 {
-	FontManager->LoadFont(2, "C:/Windows/Fonts/simsun.ttc");
+	_FontManager->LoadFont(2, "C:/Windows/Fonts/simsun.ttc");
 	Texture* tex = Texture2D::Create("F://monthad_1.png").get();
 	Texture* tex2 = Texture2D::Create("F://avatar_15.png").get();
 	go = _Maker->Instantiate(L"widget");
@@ -16,7 +16,7 @@ void GUITest::OnStart()
 	widget->SetPivot(Vector2(0.5f, 0.5f));
 	widget->SetCollide(false)->SetFill(false);
 	widget->SetFillColor(Color::grey);
-	widget->SetFont(FontManager->GetFont(2));
+	widget->SetFont(_FontManager->GetFont(2));
 	widget->SetText(L"Button");
 	widget->AddOnMouseClickListener([](Vector2 mousepos) {
 		CDebug::Box(L"x:%g y:%g", mousepos.x, mousepos.y);
@@ -50,17 +50,17 @@ void GUITest::OnStart()
 	widget2->SetAlignment(EAlignment::CENTER_MIDDLE);
 	widget2->SetPivot(Vector2(0.5f, 0.5f));
 	widget2->SetCollide(false);
-	CTrueTypeFont* font = FontManager->LoadFont(1, "fonts/msyh.ttf");
+	TrueTypeFont* font = _FontManager->LoadFont(1, "fonts/msyh.ttf");
 	widget2->SetColor(Color::red)->SetFont(font)->SetFontSize(5)->SetIntervalY(25)->SetText(L"Sams Publishing & Pearson Education Inc., \nCD-ROM and software copyright (C) 2003 Sams Publishing & Pearson");
 	*/
 
 
 
-	//FontManager->LoadFont(2, "fonts/msyh.ttf");
+	//_FontManager->LoadFont(2, "fonts/msyh.ttf");
 	//CGameObject* texGo = _Engine->CreateGameObject("Text");
 	//texGo->SetLocalPosition(Vector3(-4.75f, 4.05f, 0));
 	//text = texGo->AddComponent<CTextRenderer>();
-	//text->Init(FontManager->GetFont(2), NULL, 8, 0, 0.5f, Color::green(), EAlignment::LEFT_TOP, SRect2D(0, 0, 2, 1));
+	//text->Init(_FontManager->GetFont(2), NULL, 8, 0, 0.5f, Color::green(), EAlignment::LEFT_TOP, SRect2D(0, 0, 2, 1));
 	CEditorTool::PrintTree();
 }
 

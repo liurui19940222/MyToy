@@ -14,7 +14,7 @@
 using namespace std;
 using namespace spgameengine;
 
-class ENGINE_API CResources : public CSingleton<CResources>
+class ENGINE_API CResources : public Singleton<CResources>
 {
 private:
 	map<string, IAssetLoader*> m_sources;

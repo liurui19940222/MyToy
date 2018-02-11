@@ -15,10 +15,10 @@ using namespace std;
 using namespace rapidxml;
 using namespace spgameengine;
 
-class ENGINE_API CConfig : public CSingleton<CConfig>
+class ENGINE_API CConfig : public Singleton<CConfig>
 {
 private:
-	friend class CSingleton<CConfig>;
+	friend class Singleton<CConfig>;
 	map<string,map<string, string>> m_configs;
 
 	template<typename TKey, typename TValue>

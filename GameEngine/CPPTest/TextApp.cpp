@@ -24,14 +24,13 @@ void TextApp::OnInitialize()
 	SetBackgroundColor(color.r, color.g, color.b, color.a);
 	CInput::Init(GetModuleHandle(NULL), m_Hwnd);
 
-	CTrueTypeFont* f = FontManager->LoadFont(1, FONT_PATH);
-	font = new CFontRenderer();
+	PTrueTypeFont f = _FontManager->LoadFont(1, FONT_PATH);
+	font = new FontRenderer();
 	font->SetFont(f);
 	font->SetColor(Color::white);
 	font->SetEffect(EFontEffect::None)->SetEffectVector(Vector3(1, -1, 0))->SetEffectColor(Color::black);
 	font->SetFontSize(font_size);
 	font->SetTextAlignment(EAlignment::CENTER_MIDDLE);
-	font->SetRenderType(ERenderType::Smart);
 	font->SetTextRect(SRect2D(0, 0, 4, 1));
 	font->SetText(SHOW_TEXT);
 	font->SetIntervalX(font_interval_x);
@@ -40,7 +39,7 @@ void TextApp::OnInitialize()
 	modelMat = Matrix4x4::Identity();
 	viewMat = Matrix4x4::LookAt(Vector3(0, 0, 10), Vector3::zero, Vector3::up);
 	m_Texture = Texture2D::Create("D:/GitHub/MyToy/GameEngine/Assets/shake.png");
-	m_Texture = (*f->GetAtlases(font_size))[0]->m_Texture;
+	m_Texture = (f->GetAtlases(font_size))[0]->m_Texture;
 }
 
 void TextApp::OnWindowSizeChanged(int width, int height)
@@ -128,11 +127,33 @@ void TextApp::OnRender()
 {
 	GLAppBase::OnRender();
 
+	DrawAtlas();
+
+	font->OnRender(modelMat, viewMat, projectionMat);
+}
+
+void TextApp::DrawAtlas()
+{
+	glDisable(GL_DEPTH_TEST);
+	glPushMatrix();
+	glDisable(GL_BLEND);
+	glTranslatef(-2, 2, 0);
+	glColor3f(0, 0, 0);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 1);
+	glVertex3f(-1.0f, 1.0f, 0.0f);
+	glTexCoord2f(0, 0);
+	glVertex3f(-1.0f, -1.0f, 0.0f);
+	glTexCoord2f(1, 0);
+	glVertex3f(1.0f, -1.0f, 0.0f);
+	glTexCoord2f(1, 1);
+	glVertex3f(1.0f, 1.0f, 0.0f);
+	glEnd();
+
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	m_Texture->Bind();
 	glColor3f(1.0f, 1.0f, 1.0f);
-	glPushMatrix();
 	glScalef(1, -1, 1);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 1);
@@ -144,8 +165,8 @@ void TextApp::OnRender()
 	glTexCoord2f(1, 1);
 	glVertex3f(1.0f, 1.0f, 0.0f);
 	glEnd();
+
 	glPopMatrix();
 	glDisable(GL_BLEND);
-
-	font->OnRender(modelMat, viewMat, projectionMat);;
+	glEnable(GL_DEPTH_TEST);
 }

@@ -8,7 +8,7 @@
 
 using namespace spgameengine;
 
-class ENGINE_API CTextRenderer : public CFontRenderer, public CComponent, public IRenderer
+class ENGINE_API CTextRenderer : public FontRenderer, public CComponent, public IRenderer
 {
 	REFLECT_CLASS(CTextRenderer)
 private:

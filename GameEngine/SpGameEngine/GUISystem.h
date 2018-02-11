@@ -142,7 +142,7 @@ namespace guisystem {
 		virtual void OnDestroy() override;
 	};
 
-	class ENGINE_API CGUISystem : public CSingleton<CGUISystem>
+	class ENGINE_API CGUISystem : public Singleton<CGUISystem>
 	{
 		typedef function<void(CGUIWidget*)> WidghtForeachCallback;
 		typedef function<bool(CGUIWidget*)> WidghtForeachCallbackR;

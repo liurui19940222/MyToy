@@ -11,6 +11,11 @@ MeshBufferTexcoord::MeshBufferTexcoord(PMesh mesh) : MeshBuffer(mesh), m_VboTexc
 	MakeTexcoordBuffer(mesh->m_texcoords, mesh->m_vertexCount);
 }
 
+MeshBufferTexcoord::~MeshBufferTexcoord()
+{
+	DeleteBufer(&m_VboTexcoordHandle);
+}
+
 void MeshBufferTexcoord::MakeTexcoordBuffer(const Vector2* uvs, int size)
 {
 	BindBuffer();
@@ -22,10 +27,4 @@ void MeshBufferTexcoord::MakeBuffer(PMesh mesh)
 {
 	MeshBuffer::MakeBuffer(mesh);
 	MakeTexcoordBuffer(mesh->m_texcoords, mesh->m_vertexCount);
-}
-
-void MeshBufferTexcoord::ReleaseBuffer()
-{
-	DeleteBufer(&m_VboTexcoordHandle);
-	MeshBuffer::ReleaseBuffer();
 }

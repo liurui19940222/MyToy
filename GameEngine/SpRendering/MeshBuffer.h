@@ -37,7 +37,7 @@ enum class EDataType
 	DOUBLE = GL_DOUBLE,
 };
 
-SMART_CLASS(MeshBuffer) class MeshBuffer : public IRenderBuffer
+SMART_CLASS(MeshBuffer) class MeshBuffer : public Object, public IRenderBuffer
 {
 public:
 	MeshBuffer();
@@ -48,7 +48,6 @@ public:
 	void UpdateVertices(const Vector3* vertices, int offset, int size);
 	virtual void MakeBuffer(PMesh mesh);
 	virtual void BindBuffer() override;
-	virtual void ReleaseBuffer() override;
 	inline void UnbindBuffer() { glBindVertexArray(0); }
 	inline int GetVertexNum() const { return m_VertexNum; }
 

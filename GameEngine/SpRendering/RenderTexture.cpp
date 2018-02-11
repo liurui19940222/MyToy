@@ -1,16 +1,27 @@
 #include"RenderTexture.h"
 
-USING_NAMESPACE_ENGINE
+USING_NAMESPACE_ENGINE;
+
+RenderTexture::RenderTexture() : m_RboHandle(0), m_FboHandle(0)
+{
+	
+}
+
+RenderTexture::~RenderTexture()
+{
+	if (m_RboHandle) glDeleteRenderbuffers(1, &m_RboHandle);
+	if (m_FboHandle) glDeleteFramebuffers(1, &m_FboHandle);
+}
 
 void RenderTexture::MakeBuffer(int width, int height, bool depthBuffer)
 {
-	if (!m_fboHandle) glGenFramebuffers(1, &m_fboHandle);
-	glBindFramebuffer(GL_FRAMEBUFFER, m_fboHandle);
+	if (!m_FboHandle) glGenFramebuffers(1, &m_FboHandle);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_FboHandle);
 
 	if (depthBuffer)
 	{
-		if (!m_rboHandle) glGenRenderbuffers(1, &m_rboHandle);
-		glBindRenderbuffer(GL_RENDERBUFFER, m_rboHandle);
+		if (!m_RboHandle) glGenRenderbuffers(1, &m_RboHandle);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_RboHandle);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
 		glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	}
@@ -26,20 +37,14 @@ void RenderTexture::MakeBuffer(int width, int height, bool depthBuffer)
 	m_format = GL_RGBA;
 	m_internalFormat = GL_RGBA8;
 
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rboHandle);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_RboHandle);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_texId, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void RenderTexture::BindBuffer()
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, m_fboHandle);
-}
-
-void RenderTexture::ReleaseBuffer()
-{
-	if (m_rboHandle) glDeleteRenderbuffers(1, &m_rboHandle);
-	if (m_fboHandle) glDeleteFramebuffers(1, &m_fboHandle);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_FboHandle);
 }
 
 PRenderTexture RenderTexture::Create(int width, int height, bool depthBuffer)

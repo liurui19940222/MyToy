@@ -5,7 +5,7 @@
 #include"GUIImage.h"
 #include"GUILabel.h"
 
-class ENGINE_API CGUIDesigner : public CSingleton<CGUIDesigner>
+class ENGINE_API CGUIDesigner : public Singleton<CGUIDesigner>
 {
 public:
 

@@ -8,7 +8,7 @@
 
 BEGIN_NAMESPACE_ENGINE
 
-class Atlas : public Object
+SMART_CLASS(Atlas) class Atlas : public Object
 {
 private:
 	SBitmapData			m_Bitmap;
@@ -17,8 +17,10 @@ private:
 	int					m_Height;
 	int					m_Border;
 
+	void Release();
 public:
 	Atlas(int width, int height, int border);
+	~Atlas();
 
 	bool Push(int width, int heightint, int max_height, uint8* grey_buffer, RGB rgb, Rect2D* out_rect_in_atlas = NULL);
 
@@ -39,8 +41,6 @@ public:
 	inline uint32* GetPixels() const { return m_Bitmap.buffer; }
 
 	void Clear();
-
-	void Release();
 };
 
 END_NAMESPACE_ENGINE

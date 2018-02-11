@@ -13,7 +13,7 @@ void CColladaTest::OnStart()
 	_MainCameraGo->SetLocalPosition(Vector3(0, 6.8, 10));
 	_MainCameraGo->SetLocalEulerAngles(Vector3(0, 180, 0));
 	
-	FontManager->LoadFont(1, "C:/Windows/Fonts/simsun.ttc");
+	_FontManager->LoadFont(1, "C:/Windows/Fonts/simsun.ttc");
 
 	model = _Maker->Instantiate(L"model");
 

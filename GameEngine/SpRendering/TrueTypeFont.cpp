@@ -5,13 +5,13 @@
 #include <freetype/fttrigon.h>
 #include <freetype/ftbitmap.h>
 
-USING_NAMESPACE_ENGINE
+USING_NAMESPACE_ENGINE;
 
-#pragma region CCharacterInfo
+#pragma region CharacterInfo
 
-CCharacterInfo::CCharacterInfo(int code) : m_Code(code) {}
+CharacterInfo::CharacterInfo(int code) : m_Code(code) {}
 
-bool CCharacterInfo::GetBitmap(SBitmapData* out_bitmap, Color color)
+bool CharacterInfo::GetBitmap(SBitmapData* out_bitmap, Color color)
 {
 	if (!out_bitmap)
 		return false;
@@ -27,17 +27,17 @@ bool CCharacterInfo::GetBitmap(SBitmapData* out_bitmap, Color color)
 
 #pragma endregion
 
-#pragma region CTrueTypeFontSize
+#pragma region TrueTypeFontSize
 
-CTrueTypeFontSize::CTrueTypeFontSize(int size, FT_Library* ft_lib, FT_Face* ft_face) 
+TrueTypeFontSize::TrueTypeFontSize(int size, FT_Library* ft_lib, FT_Face* ft_face) 
 	: m_FontSize(size), m_FtLib(ft_lib), m_FtFace(ft_face) {}
 
-CCharacterInfo* CTrueTypeFontSize::GetCharacter(int code)
+PCharacterInfo TrueTypeFontSize::GetCharacter(int code)
 {
-	CCharacterInfo* chInfo = nullptr;
+	PCharacterInfo chInfo;
 	if (m_Characters.find(code) == m_Characters.end())
 	{
-		chInfo = new CCharacterInfo(code);
+		chInfo = make_shared<CharacterInfo>(code);
 		m_Characters.insert(make_pair(code, chInfo));
 
 		FT_Set_Char_Size(*m_FtFace, 0, (int)m_FontSize * 64, 0, 128);
@@ -67,7 +67,7 @@ CCharacterInfo* CTrueTypeFontSize::GetCharacter(int code)
 	return chInfo;
 }
 
-PCharacterAtlas CTrueTypeFontSize::GetEnoughAtlas(int width, int height, int max_height)
+PCharacterAtlas TrueTypeFontSize::GetEnoughAtlas(int width, int height, int max_height)
 {
 	for (vector<PCharacterAtlas>::iterator it = m_Atlases.begin(); it != m_Atlases.end(); ++it)
 	{
@@ -76,7 +76,7 @@ PCharacterAtlas CTrueTypeFontSize::GetEnoughAtlas(int width, int height, int max
 			return *it;
 		}
 	}
-	Atlas* atlas = new Atlas(CH_MAP_BITMAP_SIZE_W, CH_MAP_BITMAP_SIZE_H, 1);
+	PAtlas atlas = make_shared<Atlas>(CH_MAP_BITMAP_SIZE_W, CH_MAP_BITMAP_SIZE_H, 1);
 	PCharacterAtlas catlas = make_shared<CharacterAtlas>();
 	catlas->m_Atlas = atlas;
 	catlas->m_Texture = Texture2D::Create(NULL, atlas->GetWidth(), atlas->GetHeight(), true);
@@ -85,35 +85,25 @@ PCharacterAtlas CTrueTypeFontSize::GetEnoughAtlas(int width, int height, int max
 	return catlas;
 }
 
-void CTrueTypeFontSize::Release()
+vector<PCharacterAtlas>& TrueTypeFontSize::GetAtlases()
 {
-	m_FtLib = nullptr;
-	m_FtFace = nullptr;
-	for (vector<PCharacterAtlas>::iterator it; it != m_Atlases.end(); ++it)
-	{
-		(*it)->Release();
-	}
-}
-
-vector<PCharacterAtlas>* CTrueTypeFontSize::GetAtlases()
-{
-	return &m_Atlases;
+	return m_Atlases;
 }
 
 
 #pragma endregion
 
-#pragma region CCharacterInfo
+#pragma region CharacterInfo
 
-CTrueTypeFont::CTrueTypeFont(int id) : m_Id(id) { }
+TrueTypeFont::TrueTypeFont(int id) : m_Id(id) { }
 
-CTrueTypeFont::CTrueTypeFont(int id, const char* file_name)
+TrueTypeFont::TrueTypeFont(int id, const char* file_name)
 {
-	CTrueTypeFont::CTrueTypeFont(id);
+	TrueTypeFont::TrueTypeFont(id);
 	LoadFromPath(file_name);
 }
 
-bool CTrueTypeFont::LoadFromPath(const char* file_name)
+bool TrueTypeFont::LoadFromPath(const char* file_name)
 {
 	if (FT_Init_FreeType(&m_FtLib) || FT_New_Face(m_FtLib, file_name, 0, &m_FtFace))
 	{
@@ -123,33 +113,24 @@ bool CTrueTypeFont::LoadFromPath(const char* file_name)
 	return true;
 }
 
-CCharacterInfo* CTrueTypeFont::GetCharacter(wchar_t ch, int size)
+PCharacterInfo TrueTypeFont::GetCharacter(wchar_t ch, int size)
 {
 	if (m_SizeMap.find(size) == m_SizeMap.end())
 	{
-		CTrueTypeFontSize* fontSize = new CTrueTypeFontSize(size, &m_FtLib, &m_FtFace);
+		PTrueTypeFontSize fontSize = make_shared<TrueTypeFontSize>(size, &m_FtLib, &m_FtFace);
 		m_SizeMap.insert(make_pair( size, fontSize));
 	}
 	long code = FT_Get_Char_Index(m_FtFace, ch);
 	return m_SizeMap[size]->GetCharacter(code);
 }
 
-vector<PCharacterAtlas>* CTrueTypeFont::GetAtlases(int size)
+vector<PCharacterAtlas>& TrueTypeFont::GetAtlases(int size)
 {
 	if (m_SizeMap.find(size) != m_SizeMap.end())
 	{
 		return m_SizeMap[size]->GetAtlases();
 	}
-	return nullptr;
-}
-
-void CTrueTypeFont::Release()
-{
-	map<int, CTrueTypeFontSize*>::iterator it = m_SizeMap.begin();
-	while (it != m_SizeMap.end())
-	{
-		(*it).second->Release();
-	}
+	return vector<PCharacterAtlas>();
 }
 
 #pragma endregion

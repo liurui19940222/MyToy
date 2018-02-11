@@ -8,7 +8,8 @@
 USING_NAMESPACE_ENGINE;
 
 //#define SHOW_TEXT L"/* handle to face object2018北美车展：新款MINI家族正式发布 handle to face object2018北美车展：新款MINI家族正式发布"
-#define SHOW_TEXT L"h新款MINI家族正式发布 handle to face object2018北美车展：新款MINI家族正式发布"
+//#define SHOW_TEXT L"h新款MINI家族正式发布 handle to face object2018北美车展：新款MINI家族正式发布"
+#define SHOW_TEXT L"我 "
 #define FONT_PATH "../Assets/Arial.ttf"
 
 class TextApp : public GLAppBase
@@ -21,6 +22,8 @@ protected:
 	virtual void OnWindowSizeChanged(int width, int height) override;
 	virtual void OnRender() override;
 
+	void DrawAtlas();
+
 public:
 	TextApp(const wchar_t* className, const wchar_t* title, int width, int height);
 
@@ -31,7 +34,7 @@ private:
 	Matrix4x4				modelMat;
 	Matrix4x4				viewMat;
 	Matrix4x4				projectionMat;
-	CFontRenderer*			font;
+	FontRenderer*			font;
 	IRenderingInterface*	m_RI;
 	PTexture				m_Texture;
 };

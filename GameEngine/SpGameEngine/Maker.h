@@ -19,11 +19,11 @@ typedef function<bool(CGameObject*, int)> ForeachGoCallbackR;
 typedef function<void(CGameObject*, int)> ForeachGoCallback;
 typedef function<void(CGameObject*, int, Matrix4x4&)> ForeachGoCallbackMatrix;
 
-class ENGINE_API CMaker : public CSingleton<CMaker>
+class ENGINE_API CMaker : public Singleton<CMaker>
 {
 private:
 	friend class CGameObject;
-	friend class CSingleton<CMaker>;
+	friend class Singleton<CMaker>;
 
 	//所有的根节点(没有父物体的)GameObject
 	vector<CGameObject*> m_gameObjects;

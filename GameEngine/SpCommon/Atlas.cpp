@@ -1,7 +1,7 @@
 #include "Atlas.h"
 #include <math.h>
 
-USING_NAMESPACE_ENGINE
+USING_NAMESPACE_ENGINE;
 
 Atlas::Atlas(int width, int height, int border) : Object()
 {
@@ -15,6 +15,11 @@ Atlas::Atlas(int width, int height, int border) : Object()
 	memset(m_Bitmap.buffer, 0, sizeof(uint32) * width * height);
 	m_EndingPos.x = 0;
 	m_EndingPos.y = 0;
+}
+
+Atlas::~Atlas()
+{
+	Release();
 }
 
 bool Atlas::Push(int width, int height, int max_height, uint8* grey_buffer, RGB rgb, Rect2D* out_rect_in_atlas)
