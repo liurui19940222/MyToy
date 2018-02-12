@@ -267,8 +267,9 @@ void FontRenderer::Rebuild()
 		sprite->m_Range.m_StartingPoint.y = chInfo->m_Rect.y / (float)chInfo->m_Atlas->height();
 		sprite->m_Range.m_Size.x = chInfo->m_Rect.width / (float)chInfo->m_Atlas->width();
 		sprite->m_Range.m_Size.y = chInfo->m_Rect.height / (float)chInfo->m_Atlas->height();
-		m_Primitives.push_back(make_shared<CharacterPrimitiveSmart>(chInfo->m_LeftPadding, chInfo->m_Top,
-			chInfo->m_AdvanceX, chInfo->m_Rect.width, chInfo->m_Rect.height, GetPixelScale(), sprite, GetDefaultMaterial()));
+		PCharacterPrimitiveSmart smart = make_shared<CharacterPrimitiveSmart>(chInfo->m_LeftPadding, chInfo->m_Top,
+			chInfo->m_AdvanceX, chInfo->m_Rect.width, chInfo->m_Rect.height, GetPixelScale(), sprite, GetDefaultMaterial());
+		m_Primitives.push_back(smart);
 	}
 
 	start_x = -m_Rect.halfSize.x;
@@ -330,6 +331,7 @@ void FontRenderer::Rebuild()
 		halfLineHeight = m_LineDatas[i]->m_LineHeight * 0.5f;
 		for (size_t j = 0; j < m_LineDatas[i]->primitives.size(); ++j)
 		{
+			PCharacterPrimitiveSmart smart = m_LineDatas[i]->primitives[j];
 			pos_y = m_LineDatas[i]->primitives[j]->m_Position.y + offset_y;
 			if (pos_y + halfLineHeight > m_Rect.halfSize.y || pos_y - halfLineHeight < -m_Rect.halfSize.y)
 			{

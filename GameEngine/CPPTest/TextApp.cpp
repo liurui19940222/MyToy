@@ -127,7 +127,7 @@ void TextApp::OnRender()
 {
 	GLAppBase::OnRender();
 
-	DrawAtlas();
+	//DrawAtlas();
 
 	font->OnRender(modelMat, viewMat, projectionMat);
 }

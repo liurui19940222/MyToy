@@ -1,13 +1,15 @@
 #pragma once
-#if false
+
+#include<vector>
 #include"SpCommon\EngineDefine.h"
 #include"FontManager.h"
+#include"Sprite.h"
 
 BEGIN_NAMESPACE_ENGINE
 
 #define TEXT_BUFFER_SIZE 2048
 
-class CharacterPrimitiveBase
+SMART_CLASS(CharacterPrimitive) class CharacterPrimitive
 {
 public:
 	int						m_Left;
@@ -16,65 +18,100 @@ public:
 	float					m_Width;
 	float					m_Height;
 	Vector3					m_Position;
+	PSprite					m_Sprite;
 
-	CharacterPrimitiveBase(int left_padding, int top, int advance_x, int width, int height, float pixelScale, uint32* pixels);
-	virtual ~CharacterPrimitiveBase();
-	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 pos, Vector3 size, Color color) = 0;
+	CharacterPrimitive();
+	CharacterPrimitive(int left_padding, int top, int advance_x, int width, int height, PSprite sprite);
+
+	inline SRect2D GetRect()
+	{
+		return SRect2D(m_Position.x, m_Position.y, m_Width * 0.5f, m_Height * 0.5f);
+	}
 };
 
-class TextOneLineData
+SMART_CLASS(TextLineData) class TextLineData
 {
 public:
-	float					m_LineWidth;
-	float					m_LineHeight;
+	float								m_LineWidth;
+	float								m_LineHeight;
+	vector<PCharacterPrimitive>			m_Primitives;
 
-	TextOneLineData();
-	virtual ~TextOneLineData();
-	vector<CharacterPrimitiveBase*> primitives;
+	TextLineData();
 };
 
 class FontMeshGenerator
 {
 private:
-	float					m_Interval_x;
-	float					m_Interval_y;
-	float					m_TotalHeight;
-	int						m_FontSize;
-	bool					m_bSingleLine;
-	wchar_t					m_TextBuffer[TEXT_BUFFER_SIZE];
-	wstring					m_Text;
-	TrueTypeFont*			m_Font;
-	SRect2D					m_Rect;
-	EAlignment				m_Alignment;
-	EAlignmentHorizontal	m_AlignmentH;
-	EAlignmentVertical		m_AlignmentV;
-	vector<TextOneLineData*>		 m_LineDatas;
-	vector<CharacterPrimitiveBase*> m_Primitives;
+	float								m_Interval_x;
+	float								m_Interval_y;
+	float								m_TotalHeight;
+	float								m_PixelScale;
+	int									m_FontSize;
+	PTrueTypeFont						m_Font;
+	SRect2D								m_Rect;
+	EAlignment							m_Alignment;
+	EAlignmentHorizontal				m_AlignmentH;
+	EAlignmentVertical					m_AlignmentV;
+	vector<PTextLineData>				m_LineDatas;
+	vector<PCharacterPrimitive>			m_Primitives;
+	vector<TexcoordRange>				m_TexcoordRanges;
+	vector<Color>						m_Colors;
+	vector<SRect2D>						m_RectList;
+	vector<Matrix4x4>					m_ModelMatrices;
+	bool								m_bSingleLine;
+	bool								m_bNeedRebuild;
+	wchar_t								m_TextBuffer[TEXT_BUFFER_SIZE];
+	wstring								m_Text;
 
 protected:
-	void ClearPrimitive();
-	void ClearLineData();
-	virtual float GetPixelScale();
+	void RebuildShapes();
+	void Init(PTrueTypeFont font, int font_size, float interval_x, EAlignment alignment, SRect2D rect);
 	float GetOffsetX(int line_index);
 	float GetOffsetY();
-	void Rebuild();
-	void Init(TrueTypeFont* font, int font_size, float interval_x, Color color, EAlignment alignment, SRect2D rect);
-	void RenderAllPrimitives(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix, Vector3 offset, const Color& color);
+
+	inline void ClearPrimitive() { m_Primitives.clear(); }
+	inline void ClearLineData() { m_LineDatas.clear(); }
+	inline float GetPixelScale() { return m_PixelScale; }
+
+	template<typename T>
+	void Set(T* a, T* b, bool update)
+	{
+		if (*a != *b)
+		{
+			*a = *b;
+			m_bNeedRebuild |= update;
+		}
+	}
 
 public:
-	virtual FontMeshGenerator* SetTextRect(SRect2D rect);
-	SRect2D GetTextRect();
-	FontMeshGenerator* SetFont(TrueTypeFont* font);
-	FontMeshGenerator* GetFont();
-	FontMeshGenerator* SetText(const wstring text);
-	const wstring GetText();
-	FontMeshGenerator* SetIntervalX(float x);
-	FontMeshGenerator* SetIntervalY(float y);
-	FontMeshGenerator* SetFontSize(int size);
-	FontMeshGenerator* SetSingleLine(bool isSingle);
-	FontMeshGenerator* SetTextAlignment(EAlignment alignment);
-	TextOneLineData* GetLineData(int rowIndex);
+	void BuildInstanceData(Matrix4x4& modelMatrix);
+	inline wstring GetText() const { return m_Text; }
+	inline SRect2D GetTextRect() const { return m_Rect; }
+	inline PTrueTypeFont GetFont() const { return m_Font; }
+	inline vector<TexcoordRange>& texcoordRanges() { return m_TexcoordRanges; }
+	inline vector<Color>& colors() { return m_Colors; }
+	inline vector<SRect2D>&	rects() { return m_RectList; }
+	inline vector<Matrix4x4>& modelMatrices() { return m_ModelMatrices; }
+	inline void SetFont(PTrueTypeFont font) { Set(&m_Font, &font, true); }
+	inline void SetText(const wstring text) { Set(&m_Text, const_cast<wstring*>(&text), true); }
+	inline void SetTextRect(SRect2D rect) { Set(&m_Rect, &rect, true); }
+	inline void SetIntervalX(float x) { Set(&m_Interval_x, &x, true); }
+	inline void SetIntervalY(float y) { Set(&m_Interval_y, &y, true); }
+	inline void SetFontSize(int size) { Set(&m_FontSize, &size, true); }
+	inline void SetSingleLine(bool isSingle) { Set(&m_bSingleLine, &isSingle, true); }
+	inline void SetPixelScale(float pixelScale) { Set(&m_PixelScale, &pixelScale, true); }
+	inline void SetTextAlignment(EAlignment alignment)
+	{
+		this->m_Alignment = alignment;
+		this->m_AlignmentH = _GetHorizontal(alignment);
+		this->m_AlignmentV = _GetVertical(alignment);
+	}
+	inline PTextLineData GetLineData(int rowIndex)
+	{
+		if (rowIndex >= (int)m_LineDatas.size())
+			return NULL;
+		return m_LineDatas[rowIndex];
+	}
 };
 
 END_NAMESPACE_ENGINE
-#endif

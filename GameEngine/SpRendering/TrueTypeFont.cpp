@@ -9,7 +9,7 @@ USING_NAMESPACE_ENGINE;
 
 #pragma region CharacterInfo
 
-CharacterInfo::CharacterInfo(int code) : m_Code(code) {}
+CharacterInfo::CharacterInfo(int code) : m_Code(code), m_Rect{0, 0, 0, 0} {}
 
 bool CharacterInfo::GetBitmap(SBitmapData* out_bitmap, Color color)
 {

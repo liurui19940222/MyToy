@@ -30,21 +30,17 @@ void UITest::OnInitialize()
 
 	m_UISystem = new UISystem();
 	m_UISystem->StartUp(m_RI, m_WindowWidth, m_WindowHeight);
-	//PUIView view1 = m_UISystem->Create<UIView>();
+
 	PUIImage view2 = m_UISystem->Create<UIImage>();
 	PUIImage view3 = m_UISystem->Create<UIImage>();
-	//PUIView view4 = make_shared<UIView>();
-	//PUIView view5 = make_shared<UIView>();
-	//view1->SetWidth(100);
+
 	view2->SetRect(SRect2D(0.0f, 0.0f, 120.0f, 55.0f));
 	view3->SetRect(SRect2D(0.0f, 0.0f, 50.0f, 30.0f));
 	view3->SetSprite(Sprite::CreateSprite(tex2, TexcoordRange::full), true);
 	view2->SetSprite(Sprite::CreateSprite(tex, TexcoordRange::full), true);
-	//view4->SetMaterial(mat);
-	//m_UISystem->AddChild(view1);
+
 	m_UISystem->AddChild(view2);
-	//m_UISystem->AddChild(view4);
-	//m_UISystem->AddChild(view5);
+
 	view2->AddChild(view3);
 	m_MovedWidget = view2;
 	m_MovedWidget->SetInteract(true);
@@ -91,6 +87,20 @@ void UITest::OnInitialize()
 	m_SubWidget->AddMouseOverListener([](const Vector2& pos) {
 		CDebug::Log(L"sub mouse over");
 	});*/
+
+	PTrueTypeFont f = _FontManager->LoadFont(1, FONT_PATH);
+	m_FMG = new FontMeshGenerator();
+	m_FMG->SetFont(f);
+	m_FMG->SetFontSize(FONT_SIZE);
+	m_FMG->SetTextAlignment(EAlignment::CENTER_MIDDLE);
+	m_FMG->SetTextRect(SRect2D(0, 0, 400, 100));
+	m_FMG->SetText(SHOW_TEXT);
+	m_FMG->SetIntervalX(0);
+	m_FMG->SetIntervalY(0);
+	m_FMG->SetPixelScale(1.0f);
+	m_FMG->BuildInstanceData(Matrix4x4::Translate(Vector3(0, -0, 0)) * Matrix4x4::Scale(Vector3::one));
+
+	m_Texture = (f->GetAtlases(FONT_SIZE))[0]->m_Texture;
 }
 
 void UITest::OnUpdate(float deltaTime)
@@ -263,6 +273,7 @@ void UITest::OnRender()
 	GLAppBase::OnRender();
 
 	m_UISystem->RenderAll();
+	m_UISystem->DrawCall(m_FMG->texcoordRanges(), m_FMG->colors(), m_FMG->rects(), m_FMG->modelMatrices(), m_Texture);
 }
 
 void UITest::OnWindowSizeChanged(int width, int height)

@@ -129,7 +129,6 @@ void UISystem::SubmitBatch(const vector<UIView*> list, PMaterial mat, PTexture t
 		m_Colors[i] = list[j]->GetColor();
 		m_RectList[i] = list[j]->m_Rect;
 		m_ModelMatrices[i] = list[j]->m_ModelMatrix;
-	
 	}
 	m_SharedMesh->MakeInstanceBuffer(m_TexcoordRanges, m_Colors, m_RectList, m_ModelMatrices, count);
 	mat->SetMainTexture(texture);
@@ -137,6 +136,17 @@ void UISystem::SubmitBatch(const vector<UIView*> list, PMaterial mat, PTexture t
 	mat->SetParam("u_V", m_ViewMatrix);
 	mat->SetParam("u_P", m_ProjMatrix);
 	m_RI->RenderInstance(RenderingObject{ m_SharedMesh.get(), mat.get() }, count);
+}
+
+void UISystem::DrawCall(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors, vector<SRect2D>& rects, vector<Matrix4x4>& modelMatrices, PTexture texture)
+{
+	size_t size = texcoordRanges.size();
+	m_SharedMesh->MakeInstanceBuffer(texcoordRanges, colors, rects, modelMatrices, size);
+	m_SharedMaterial->SetMainTexture(texture);
+	m_SharedMaterial->Bind();
+	m_SharedMaterial->SetParam("u_V", m_ViewMatrix);
+	m_SharedMaterial->SetParam("u_P", m_ProjMatrix);
+	m_RI->RenderInstance(RenderingObject{ m_SharedMesh.get(), m_SharedMaterial.get() }, size);
 }
 
 void UISystem::AddChild(PUIWidget widget)

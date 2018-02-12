@@ -30,6 +30,7 @@ public:
 	void UpdateAll(SMouseState mouseState);
 	void RenderAll();
 	void SubmitBatch(const vector<UIView*> list, PMaterial mat, PTexture texture, int startingIndex, int count);
+	void DrawCall(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors, vector<SRect2D>& rects, vector<Matrix4x4>& modelMatrices, PTexture texture);
 	void AddChild(PUIWidget widget);
 	void RemoveChild(PUIWidget widget);
 	void Foreach(PUIWidget widget, ForeachCallback callback);
