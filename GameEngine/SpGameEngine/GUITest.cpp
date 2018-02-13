@@ -19,7 +19,7 @@ void GUITest::OnStart()
 	widget->SetFont(_FontManager->GetFont(2));
 	widget->SetText(L"Button");
 	widget->AddOnMouseClickListener([](Vector2 mousepos) {
-		CDebug::Box(L"x:%g y:%g", mousepos.x, mousepos.y);
+		Debug::Box(L"x:%g y:%g", mousepos.x, mousepos.y);
 	});
 
 	CGameObject* imgGo = _Maker->Instantiate(L"Button");
@@ -27,7 +27,7 @@ void GUITest::OnStart()
 	widget2->SetTexture(Texture2D::Create("textures/dlg01.bmp"));
 	widget2->SetWidth(128)->SetHeight(128)->SetCollide(true);
 	widget2->AddOnMouseClickListener([](Vector2 mousepos) {
-		CDebug::Box(L"x:%g y:%g", mousepos.x, mousepos.y);
+		Debug::Box(L"x:%g y:%g", mousepos.x, mousepos.y);
 	});
 	imgGo->SetSibling(0);
 

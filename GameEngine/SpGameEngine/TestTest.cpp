@@ -20,16 +20,16 @@ void CTestTest::OnStart() {
 	Quaternion q1 = Quaternion::AngleAxis(Vector3::up, 20);
 	Quaternion q2 = Quaternion::AngleAxis(Vector3::right, 20);
 	Quaternion q3 = q1 * q2;
-	CDebug::Log(q1);
-	CDebug::Log(q2);
-	CDebug::Log(q3);
+	Debug::Log(q1);
+	Debug::Log(q2);
+	Debug::Log(q3);
 	Matrix4x4 matrix;
 	matrix.MakeRotate(q3);
-	CDebug::Log(matrix);
+	Debug::Log(matrix);
 	Quaternion q5 = Quaternion::LookRotation(Vector3(-9.99, 20.66, -9.3), Vector3::up);
-	CDebug::Log(q5);
+	Debug::Log(q5);
 	Quaternion q6 = Quaternion::Lerp(q1 * q3, q2 * q3, 0.99f);
-	CDebug::Log(q6);
+	Debug::Log(q6);
 }
 
 void CTestTest::OnUpdate() 

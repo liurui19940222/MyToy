@@ -1,6 +1,7 @@
 #include"FontMeshGenerator.h"
 #include"SpCommon\Debug.h"
 #include<assert.h>
+#include<algorithm>
 
 USING_NAMESPACE_ENGINE;
 
@@ -52,13 +53,13 @@ float FontMeshGenerator::GetOffsetY()
 void FontMeshGenerator::RebuildShapes()
 {
 	static float top, left, adv_x, width, pixelScale, start_x, start_y, prevHeight;
+	static int i = 0, size = 0;
 	if (!m_Font || m_Text.empty()) return;
 	ClearLineData();
 	ClearPrimitive();
 	m_Primitives.assign(m_Text.size(), PCharacterPrimitive());
-	for (int i = 0; i < (int)m_Text.size(); i++)
-	{
-		PCharacterInfo chInfo = m_Font->GetCharacter(m_Text[i], m_FontSize);
+	for_each(m_Text.begin(), m_Text.end(), [&](wchar_t ch) {
+		PCharacterInfo chInfo = m_Font->GetCharacter(ch, m_FontSize);
 		PSprite sprite = make_shared<Sprite>();
 		sprite->m_Texture = chInfo->m_Atlas->m_Texture;
 		sprite->m_Range.m_StartingPoint.x = chInfo->m_Rect.x / (float)chInfo->m_Atlas->width();
@@ -67,8 +68,8 @@ void FontMeshGenerator::RebuildShapes()
 		sprite->m_Range.m_Size.y = chInfo->m_Rect.height / (float)chInfo->m_Atlas->height();
 		PCharacterPrimitive smart = make_shared<CharacterPrimitive>(chInfo->m_LeftPadding, chInfo->m_Top,
 			chInfo->m_AdvanceX, chInfo->m_Rect.width * GetPixelScale(), chInfo->m_Rect.height * GetPixelScale(), sprite);
-		m_Primitives[i] = smart;
-	}
+		m_Primitives[i++] = smart;
+	});
 
 	start_x = -m_Rect.halfSize.x;
 	start_y = +m_Rect.halfSize.y;
@@ -80,10 +81,11 @@ void FontMeshGenerator::RebuildShapes()
 	prevHeight = 0;
 	float firstLineHeight = 0;
 	m_TotalHeight = 0;
-	size_t size = m_Primitives.size();
-	for (size_t i = 0; i < size; ++i)
+	size = (int)m_Primitives.size();
+	for (i = 0; i < size; ++i)
 	{
-		if (m_Text[i] == *L"\n" && !m_bSingleLine)
+		// is wchar the '\n'
+		if (m_Text[i] == 10 && !m_bSingleLine)
 		{
 			start_x = -m_Rect.halfSize.x;
 			start_y -= (prevHeight + m_Interval_y);
@@ -124,7 +126,7 @@ void FontMeshGenerator::RebuildShapes()
 
 	static float offset_y, halfLineHeight, pos_y;
 	offset_y = GetOffsetY();
-	for (int i = (int)m_LineDatas.size() - 1; i >= 0; i--)
+	for (i = (int)m_LineDatas.size() - 1; i >= 0; i--)
 	{
 		halfLineHeight = m_LineDatas[i]->m_LineHeight * 0.5f;
 		for (size_t j = 0; j < m_LineDatas[i]->m_Primitives.size(); ++j)
@@ -142,7 +144,7 @@ void FontMeshGenerator::RebuildShapes()
 
 void FontMeshGenerator::BuildInstanceData(Matrix4x4& modelMatrix)
 {
-	long t = GetTickCount();
+	Debug::BeginTiming(L"build textmesh cost of millisecond %d");
 	if (!m_bNeedRebuild)
 		return;
 	RebuildShapes();
@@ -178,8 +180,7 @@ void FontMeshGenerator::BuildInstanceData(Matrix4x4& modelMatrix)
 	}
 
 	m_bNeedRebuild = false;
-	long time = GetTickCount() - t;
-	CDebug::Log("cost time %d", time);
+	Debug::EndTiming();
 }
 
 void FontMeshGenerator::Init(PTrueTypeFont font, int font_size, float interval_x, EAlignment alignment, SRect2D rect)

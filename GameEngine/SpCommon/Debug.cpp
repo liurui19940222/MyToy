@@ -6,18 +6,18 @@
 
 USING_NAMESPACE_ENGINE
 
-wchar_t CDebug::w_buffer[DEBUG_BUFFER_SIZE];
+wchar_t Debug::w_buffer[DEBUG_BUFFER_SIZE];
+char Debug::c_buffer[DEBUG_BUFFER_SIZE];
+HWND Debug::hwnd = NULL;
+wstring Debug::timingtemp;
+long Debug::timingBeginningTime = 0;
 
-char CDebug::c_buffer[DEBUG_BUFFER_SIZE];
-
-HWND CDebug::hwnd = NULL;
-
-void CDebug::Init(HWND _hwnd)
+void Debug::Init(HWND _hwnd)
 {
 	hwnd = _hwnd;
 }
 
-void CDebug::Log(const string str, ...)
+void Debug::Log(const string str, ...)
 {
 	va_list ap;
 	va_start(ap, str);
@@ -28,7 +28,7 @@ void CDebug::Log(const string str, ...)
 	va_end(ap);
 }
 
-void CDebug::Log(const wstring str, ...)
+void Debug::Log(const wstring str, ...)
 {
 	va_list ap;
 	va_start(ap, str);
@@ -39,7 +39,7 @@ void CDebug::Log(const wstring str, ...)
 	va_end(ap);
 }
 
-void CDebug::Log(const char* text, ...)
+void Debug::Log(const char* text, ...)
 {
 	va_list ap;
 	va_start(ap, text);
@@ -50,7 +50,7 @@ void CDebug::Log(const char* text, ...)
 	va_end(ap);
 }
 
-void CDebug::Log(const wchar_t* text, ...)
+void Debug::Log(const wchar_t* text, ...)
 {
 	va_list ap;
 	va_start(ap, text);
@@ -61,7 +61,7 @@ void CDebug::Log(const wchar_t* text, ...)
 	va_end(ap);
 }
 
-void CDebug::Log(Matrix4x4& mat)
+void Debug::Log(Matrix4x4& mat)
 {
 	Log("%g \t\t%g \t\t%g \t\t%g\n%g \t\t%g \t\t%g \t\t%g\n%g \t\t%g \t\t%g \t\t%g\n%g \t\t%g \t\t%g \t\t%g\n", 
 		mat[0][0], mat[1][0], mat[2][0], mat[3][0], 
@@ -71,27 +71,27 @@ void CDebug::Log(Matrix4x4& mat)
 		);
 }
 
-void CDebug::Log(const Vector3& v)
+void Debug::Log(const Vector3& v)
 {
 	Log("%g %g %g", v.x, v.y, v.z);
 }
 
-void CDebug::Log(const Vector4& v)
+void Debug::Log(const Vector4& v)
 {
 	Log("%g %g %g %g", v.x, v.y, v.z, v.w);
 }
 
-void CDebug::Log(const Quaternion& q)
+void Debug::Log(const Quaternion& q)
 {
 	Log("%g %g %g %g", q.x, q.y, q.z, q.w);
 }
 
-void CDebug::Log(const Color& color)
+void Debug::Log(const Color& color)
 {
 	Log("%g %g %g %g", color.r, color.g, color.b, color.a);
 }
 
-void CDebug::Box(const char* text, ...)
+void Debug::Box(const char* text, ...)
 {
 	va_list ap;
 	va_start(ap, text);
@@ -103,7 +103,7 @@ void CDebug::Box(const char* text, ...)
 	va_end(ap);
 }
 
-void CDebug::Box(const wchar_t* text, ...)
+void Debug::Box(const wchar_t* text, ...)
 {
 	va_list ap;
 	va_start(ap, text);
@@ -111,4 +111,19 @@ void CDebug::Box(const wchar_t* text, ...)
 	vswprintf_s(w_buffer, text, ap);
 	MessageBoxExW(hwnd, w_buffer, L"", MB_OK, 0);
 	va_end(ap);
+}
+
+void Debug::BeginTiming(const wchar_t* text)
+{
+	timingtemp.clear();
+	timingtemp.append(text);
+	timingBeginningTime = GetTickCount();
+}
+
+void Debug::EndTiming()
+{
+	if (timingtemp.empty())
+		return;
+	Debug::Log(timingtemp.c_str(), GetTickCount() - timingBeginningTime);
+	timingtemp.clear();
 }

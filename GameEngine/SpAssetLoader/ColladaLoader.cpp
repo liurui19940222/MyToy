@@ -169,7 +169,7 @@ void ColladaLoader::ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth
 	//{
 	//	str += "   ";
 	//}
-	//CDebug::Log("%s p:%d i:%d", (str + GetAttribute(joint_node, "name")).c_str(), parent_ref, joint.m_Index);
+	//Debug::Log("%s p:%d i:%d", (str + GetAttribute(joint_node, "name")).c_str(), parent_ref, joint.m_Index);
 
 	for (xml_node<> *it = joint_node->first_node(); it; it = it->next_sibling())
 	{

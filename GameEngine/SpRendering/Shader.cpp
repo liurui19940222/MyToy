@@ -117,7 +117,7 @@ void Shader::ShowShaderLog(GLuint shader)
 			title = "vertex shader error\n" + title;
 		else if (shader == m_fg)
 			title = "fragment shader error\n" + title;
-		CDebug::Box(title.c_str());
+		Debug::Box(title.c_str());
 		std::free(log);
 	}
 }
@@ -132,7 +132,7 @@ void Shader::ShowProgramLog()
 		glGetProgramInfoLog(m_program, len, NULL, log);
 		OutputDebugStringA(log);
 		OutputDebugStringA("\n");
-		CDebug::Box(log);
+		Debug::Box(log);
 		std::free(log);
 	}
 }

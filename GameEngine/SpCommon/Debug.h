@@ -12,12 +12,14 @@ using namespace std;
 
 BEGIN_NAMESPACE_ENGINE
 
-class CDebug
+class Debug
 {
 private:
 	static wchar_t w_buffer[DEBUG_BUFFER_SIZE];
 	static char c_buffer[DEBUG_BUFFER_SIZE];
 	static HWND hwnd;
+	static wstring timingtemp;
+	static long timingBeginningTime;
 
 public:
 	static void Init(HWND hwnd);
@@ -32,6 +34,8 @@ public:
 	static void Log(const Color& color);
 	static void Box(const char* text, ...);
 	static void Box(const wchar_t* text, ...);
+	static void BeginTiming(const wchar_t* text);
+	static void EndTiming();
 };
 
 END_NAMESPACE_ENGINE

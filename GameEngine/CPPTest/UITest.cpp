@@ -46,46 +46,46 @@ void UITest::OnInitialize()
 	m_MovedWidget->SetInteract(true);
 
 	/*m_MovedWidget->AddMouseDownListener([](const Vector2& pos) {
-		CDebug::Log(L"parent mouse down");
+		Debug::Log(L"parent mouse down");
 	});
 
 	m_MovedWidget->AddMouseUpListener([](const Vector2& pos) {
-		CDebug::Log(L"parent mouse up");
+		Debug::Log(L"parent mouse up");
 	});
 
 	m_MovedWidget->AddMouseEnterListener([](const Vector2& pos) {
-		CDebug::Log(L"parent mouse enter");
+		Debug::Log(L"parent mouse enter");
 	});
 
 	m_MovedWidget->AddMouseExitListener([](const Vector2& pos) {
-		CDebug::Log(L"parent mouse exit");
+		Debug::Log(L"parent mouse exit");
 	});
 
 	m_MovedWidget->AddMouseOverListener([](const Vector2& pos) {
-		CDebug::Log(L"parent mouse over");
+		Debug::Log(L"parent mouse over");
 	});*/
 
 	m_SubWidget = view3;
 	m_SubWidget->SetInteract(true);
 
 	/*m_SubWidget->AddMouseDownListener([](const Vector2& pos) {
-		CDebug::Log(L"sub mouse down");
+		Debug::Log(L"sub mouse down");
 	});
 
 	m_SubWidget->AddMouseUpListener([](const Vector2& pos) {
-		CDebug::Log(L"sub mouse up");
+		Debug::Log(L"sub mouse up");
 	});
 
 	m_SubWidget->AddMouseEnterListener([](const Vector2& pos) {
-		CDebug::Log(L"sub mouse enter");
+		Debug::Log(L"sub mouse enter");
 	});
 
 	m_SubWidget->AddMouseExitListener([](const Vector2& pos) {
-		CDebug::Log(L"sub mouse exit");
+		Debug::Log(L"sub mouse exit");
 	});
 
 	m_SubWidget->AddMouseOverListener([](const Vector2& pos) {
-		CDebug::Log(L"sub mouse over");
+		Debug::Log(L"sub mouse over");
 	});*/
 
 	PTrueTypeFont f = _FontManager->LoadFont(1, FONT_PATH);

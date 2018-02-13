@@ -226,20 +226,20 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 
 void CEditorTool::PrintTree(bool showDepth)
 {
-	CDebug::Log("---------------the scene's tree---------------");
+	Debug::Log("---------------the scene's tree---------------");
 	_Maker->ForeachGameObject([showDepth](CGameObject* go, int depth) {
 		PrintTree(go, depth, showDepth);
 	});
-	CDebug::Log("----------------------------------------------");
+	Debug::Log("----------------------------------------------");
 }
 
 void CEditorTool::PrintTree(CGameObject* go, bool showDepth)
 {
-	CDebug::Log("---------------the scene's tree---------------");
+	Debug::Log("---------------the scene's tree---------------");
 	_Maker->ForeachGameObject(go, [showDepth](CGameObject* go, int depth) {
 		PrintTree(go, depth, showDepth);
 	});
-	CDebug::Log("----------------------------------------------");
+	Debug::Log("----------------------------------------------");
 }
 
 void CEditorTool::PrintTree(CGameObject* go, int depth, bool showDepth)
@@ -253,7 +253,7 @@ void CEditorTool::PrintTree(CGameObject* go, int depth, bool showDepth)
 		str = str + go->GetName() + L" " + (wchar_t)('0' + depth);
 	else
 		str = str + go->GetName();
-	CDebug::Log(str.c_str());
+	Debug::Log(str.c_str());
 }
 
 void CEditorTool::WatchTarget(CGameObject& camera, const Vector3& targetPos)

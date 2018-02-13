@@ -16,7 +16,7 @@ void CEngine::InitEngine(HINSTANCE instance, HWND hwnd, float clientWidth, float
 {
 	glewExperimental = GL_TRUE;
 	glewInit();
-	CDebug::Init(hwnd);
+	Debug::Init(hwnd);
 	CInput::Init(instance, hwnd);
 	CTime::InitTime();
 	CTime::SetTargetFrameCount(60);
