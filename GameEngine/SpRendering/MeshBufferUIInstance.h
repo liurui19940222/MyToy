@@ -1,10 +1,9 @@
 #pragma once
 
-#include"GUIDefines.h"
 #include"SpRendering\MeshBufferTexcoord.h"
 #include"SpRendering\Texture.h"
 
-BEGIN_NAMESPACE_GUI
+BEGIN_NAMESPACE_ENGINE
 
 SMART_CLASS(MeshBufferUIInstance) class MeshBufferUIInstance : public MeshBufferTexcoord
 {
@@ -26,4 +25,4 @@ private:
 	GLuint			m_VboModelMatrixHandle;
 };
 
-END_NAMESPACE_GUI
+END_NAMESPACE_ENGINE

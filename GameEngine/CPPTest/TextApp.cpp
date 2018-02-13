@@ -25,20 +25,32 @@ void TextApp::OnInitialize()
 	CInput::Init(GetModuleHandle(NULL), m_Hwnd);
 
 	PTrueTypeFont f = _FontManager->LoadFont(1, FONT_PATH);
-	font = new FontRenderer();
+	font = new FontRenderer(m_RI);
 	font->SetFont(f);
 	font->SetColor(Color::white);
-	font->SetEffect(EFontEffect::None)->SetEffectVector(Vector3(1, -1, 0))->SetEffectColor(Color::black);
+	font->SetEffect(EFontEffect::None);
+	font->SetEffectVector(Vector3(1, -1, 0));
+	font->SetEffectColor(Color::black);
 	font->SetFontSize(font_size);
 	font->SetTextAlignment(EAlignment::CENTER_MIDDLE);
-	font->SetTextRect(SRect2D(0, 0, 4, 1));
+	//font->SetTextRect(SRect2D(0, 0, 4, 1));
 	font->SetText(SHOW_TEXT);
 	font->SetIntervalX(font_interval_x);
 	font->SetIntervalY(font_interval_y);
+	font->SetPixelScale(1.0f);
+	//font->SetFont(f);
+	//font->SetFontSize(font_size);
+	//font->SetTextAlignment(EAlignment::CENTER_MIDDLE);
+	font->SetTextRect(SRect2D(0, 0, 400, 100));
+	//font->SetText(SHOW_TEXT);
+	//font->SetIntervalX(0);
+	//font->SetIntervalY(0);
+	//font->SetPixelScale(1.0f);
+	font->BuildInstanceData(Matrix4x4::Translate(Vector3(0, -0, 0)) * Matrix4x4::Scale(Vector3::one * 0.01f));
 
 	modelMat = Matrix4x4::Identity();
 	viewMat = Matrix4x4::LookAt(Vector3(0, 0, 10), Vector3::zero, Vector3::up);
-	m_Texture = Texture2D::Create("D:/GitHub/MyToy/GameEngine/Assets/shake.png");
+	font->BuildInstanceData(modelMat);
 	m_Texture = (f->GetAtlases(font_size))[0]->m_Texture;
 }
 
@@ -127,7 +139,7 @@ void TextApp::OnRender()
 {
 	GLAppBase::OnRender();
 
-	//DrawAtlas();
+	DrawAtlas();
 
 	font->OnRender(modelMat, viewMat, projectionMat);
 }

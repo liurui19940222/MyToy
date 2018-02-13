@@ -52,18 +52,19 @@ private:
 	EAlignment							m_Alignment;
 	EAlignmentHorizontal				m_AlignmentH;
 	EAlignmentVertical					m_AlignmentV;
+	bool								m_bSingleLine;
+	bool								m_bNeedRebuild;
+	wchar_t								m_TextBuffer[TEXT_BUFFER_SIZE];
+
+protected:
 	vector<PTextLineData>				m_LineDatas;
 	vector<PCharacterPrimitive>			m_Primitives;
+	wstring								m_Text;
 	vector<TexcoordRange>				m_TexcoordRanges;
 	vector<Color>						m_Colors;
 	vector<SRect2D>						m_RectList;
 	vector<Matrix4x4>					m_ModelMatrices;
-	bool								m_bSingleLine;
-	bool								m_bNeedRebuild;
-	wchar_t								m_TextBuffer[TEXT_BUFFER_SIZE];
-	wstring								m_Text;
 
-protected:
 	void RebuildShapes();
 	void Init(PTrueTypeFont font, int font_size, float interval_x, EAlignment alignment, SRect2D rect);
 	float GetOffsetX(int line_index);

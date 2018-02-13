@@ -162,6 +162,7 @@
     <ClInclude Include="MeshBufferNormal.h" />
     <ClInclude Include="MeshBufferSkinning.h" />
     <ClInclude Include="MeshBufferTexcoord.h" />
+    <ClInclude Include="MeshBufferUIInstance.h" />
     <ClInclude Include="MeshFactory.h" />
     <ClInclude Include="RenderBuffer.h" />
     <ClInclude Include="RenderCamera.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="MeshBufferNormal.cpp" />
     <ClCompile Include="MeshBufferSkinning.cpp" />
     <ClCompile Include="MeshBufferTexcoord.cpp" />
+    <ClCompile Include="MeshBufferUIInstance.cpp" />
     <ClCompile Include="MeshFactory.cpp" />
     <ClCompile Include="RenderCamera.cpp" />
     <ClCompile Include="RenderTexture.cpp" />

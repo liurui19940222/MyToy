@@ -21,9 +21,6 @@
     <ClInclude Include="UISystem.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="MeshBufferUIInstance.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="IInteractable.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -45,9 +42,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="UISystem.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshBufferUIInstance.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="UIInteractor.cpp">

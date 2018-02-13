@@ -1,7 +1,6 @@
-#include "stdafx.h"
 #include "MeshBufferUIInstance.h"
 
-USING_NAMESPACE_GUI;
+USING_NAMESPACE_ENGINE;
 
 MeshBufferUIInstance::MeshBufferUIInstance() : 
 	MeshBufferTexcoord(), m_VboTexRangeHandle(0), m_VboModelMatrixHandle(0), m_VboColorHandle(0), m_VboRectSizeHandle(0) {}
