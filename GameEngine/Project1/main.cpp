@@ -1,54 +1,76 @@
 #include<iostream>
+#include"ArrayList.h"
 
 using namespace std;
+using namespace my_collection;
 
-class Vector2
+void Print(ArrayList<int>& list)
 {
-public:
-	int x;
-	int y;
+	list.Foreach([](int& i) { cout << i << endl; return false; });
+	cout << "Capacity:" << list.capacity() << " Size:" << list.size() << endl;
+}
 
-	Vector2() : x(0), y(0) { cout << "无参构造函数" << endl; }
-	Vector2(int x, int y) : x(x), y(y) { cout << "有参构造函数" << endl; }
-
-	Vector2(const Vector2& v) 
-	{
-		x = v.x;
-		y = v.y;
-		cout << "调用拷贝构造函数" << endl;
-	}
-
-	Vector2(Vector2&& v) noexcept = default;
-
-	void operator=(const Vector2& v)
-	{
-		x = v.x;
-		y = v.y;
-		cout << "拷贝赋值运算" << endl;
-	}
-
-	void operator=(Vector2&& v) noexcept
-	{
-		x = v.x;
-		y = v.y;
-		v.x = 999;
-		v.y = 888;
-		cout << "移动赋值运算" << endl;
-	}
-};
-
-Vector2 get()
+int Add(int a, int b)
 {
-	return Vector2(5 , 6);
+	int ra = a ^ b;
+	int rb = a & b;
+	return rb ? Add(ra, rb << 1) : ra;
+}
+
+int Sub(int a, int b)
+{
+	return Add(a, -b);
+}
+
+int Mul(int a, int b)
+{
+	int result = 0;
+	for (int i = 0; i < b; i = Add(i, 1))
+	{
+		result = Add(result, a);
+	}
+	return result;
+}
+
+int Div(int a, int b)
+{
+	if (b == 0)
+		assert(0);
+	int result = 0;
+	while(a > b)
+	{
+		a = Sub(a, b);
+		result = Add(result, 1);
+	}
+	return result;
 }
 
 int main()
 {
-	Vector2 a(3, 3);
-	cout << "a:" << &a << endl;
-	Vector2 b = std::move(a);
-	cout << "a:" << &a << endl;
-	cout << "b:" << &b << endl;
+	int a = 5, b = 6;
+	_asm {
+		mov eax, dword ptr ds:[a]
+		mov ebx, dword ptr ds:[b]
+		mov dword ptr ds:[b], eax
+		mov dword ptr ds:[a], ebx
+	}
+	//int result = Div(5, 6);
+	//result = Div(5, 7);
+	//result = Div(5, 8);
+	//result = Div(5, 2);
+	//ArrayList<int> list;
+	//list.PushBack(10);
+	//list.PushBack(5);
+	//list.Insert(1, 3);
+	//list[1] = 4;
+	//Print(list);
+	//list.PushBack(99);
+	//list.PushBack(88);
+	//list.Erase(88);
+	//list.PushBack(77);
+	//list.PushBack(66);
+	//Print(list);
+	//cout << list[2] << endl;
 	system("pause");
 	return 0;
 }

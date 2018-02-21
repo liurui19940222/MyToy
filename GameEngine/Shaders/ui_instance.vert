@@ -1,4 +1,4 @@
-#version 410
+#version 430
 layout(location = 0) in vec4 a_VertexPosition;
 layout(location = 1) in vec2 a_Texcoord;
 layout(location = 2) in vec4 a_TexRange;
