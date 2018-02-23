@@ -4,6 +4,7 @@
 #include"SpCommon\EngineDefine.h"
 #include"FontManager.h"
 #include"Sprite.h"
+#include"Material.h"
 
 BEGIN_NAMESPACE_ENGINE
 
@@ -85,7 +86,7 @@ protected:
 	}
 
 public:
-	void BuildInstanceData(Matrix4x4& modelMatrix);
+	void BuildInstanceData();
 	inline wstring GetText() const { return m_Text; }
 	inline SRect2D GetTextRect() const { return m_Rect; }
 	inline PTrueTypeFont GetFont() const { return m_Font; }
@@ -113,6 +114,7 @@ public:
 			return NULL;
 		return m_LineDatas[rowIndex];
 	}
+	static PMaterial GetDefaultMaterial();
 };
 
 END_NAMESPACE_ENGINE

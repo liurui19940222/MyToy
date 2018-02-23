@@ -338,6 +338,8 @@ public:
 
 	static void Lerp(Matrix4x4& result, Matrix4x4& a, Matrix4x4& b, float t);
 
+	static const Matrix4x4 identity;
+
 private:
 	Vector4 m[4];
 };

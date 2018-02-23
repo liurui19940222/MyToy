@@ -14,11 +14,9 @@ using namespace std;
 #define IS_TYPE(T, p) dynamic_cast<T*>(p) != NULL
 #define SECURITY(p) if(p) p
 
-typedef unsigned char uint8;
-typedef unsigned char byte;
-typedef unsigned short uint16;
-typedef unsigned int uint32;
-typedef unsigned int uint;
+typedef unsigned char uint8, byte;
+typedef unsigned short uint16, ushort;
+typedef unsigned int uint32, uint;
 
 BEGIN_NAMESPACE_ENGINE
 

@@ -46,11 +46,10 @@ void TextApp::OnInitialize()
 	//font->SetIntervalX(0);
 	//font->SetIntervalY(0);
 	//font->SetPixelScale(1.0f);
-	font->BuildInstanceData(Matrix4x4::Translate(Vector3(0, -0, 0)) * Matrix4x4::Scale(Vector3::one * 0.01f));
+	font->BuildInstanceData(/*Matrix4x4::Translate(Vector3(0, -0, 0)) * Matrix4x4::Scale(Vector3::one * 0.01f)*/);
 
-	modelMat = Matrix4x4::Identity();
 	viewMat = Matrix4x4::LookAt(Vector3(0, 0, 10), Vector3::zero, Vector3::up);
-	font->BuildInstanceData(modelMat);
+	font->BuildInstanceData();
 	m_Texture = (f->GetAtlases(font_size))[0]->m_Texture;
 }
 

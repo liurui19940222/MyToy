@@ -2,6 +2,7 @@
 #include "SpRendering\MeshFactory.h"
 #include "SpCommon\EngineDefine.h"
 #include "SpCommon\Debug.h"
+#include "UILabel.h"
 
 USING_NAMESPACE_GUI;
 
@@ -42,7 +43,7 @@ void UISystem::SetSize(int width, int height)
 
 void UISystem::ShutDown()
 {
-	
+
 }
 
 void UISystem::UpdateAll(SMouseState mouseState)
@@ -53,11 +54,13 @@ void UISystem::UpdateAll(SMouseState mouseState)
 	*/
 	m_ForRenderList.clear();
 	m_ForInteractList.clear();
+	m_InstanceCount = -1;
 	ForeachAllWithModelMatrix([this](PUIWidget widget) {
 		if (IS_TYPE(UIView, widget.get()))
 			m_ForRenderList.push_back((UIView*)widget.get());
 		if (IS_TYPE(IInteractable, widget.get()))
 			m_ForInteractList.push_back(dynamic_cast<IInteractable*>(widget.get()));
+		m_InstanceCount++;
 	});
 
 	int size = (int)((IInteractable*)(UIInteractor*)NULL);
@@ -89,7 +92,7 @@ void UISystem::RenderAll()
 
 	if (size == 0)
 		return;
-
+	m_DrawCalls = 0;
 	/*
 	* 遍历所有的View，根据使用的Material来组合成不同的批次
 	* 按提交给GPU渲染
@@ -105,12 +108,31 @@ void UISystem::RenderAll()
 		textureId = m_ForRenderList[i]->GetTextureId();
 		if (materialId != beginMaterialId || textureId != beginTextureId)
 		{
-			SubmitBatch(m_ForRenderList, CHOOSE_MAT(beginMaterialId , beginIndex), CHOOSE_TEX(beginTextureId, beginIndex), beginIndex, i - beginIndex);
-			beginIndex = i;
-			beginMaterialId = materialId;
-			beginTextureId = textureId;
+			//如果是字体渲染，先将之前的所有view提交，再提交字体的mesh，然后将begin跳到i+1的位置
+			if (IS_TYPE(UILabel, m_ForRenderList[i]))
+			{
+				SubmitBatch(m_ForRenderList, CHOOSE_MAT(beginMaterialId, beginIndex), CHOOSE_TEX(beginTextureId, beginIndex), beginIndex, i - beginIndex);
+				UILabel* label = dynamic_cast<UILabel*>(m_ForRenderList[i]);
+				label->BuildInstanceData();
+				DrawInstance(label->texcoordRanges(), label->colors(), label->rects(), label->modelMatrices(), label->m_ModelMatrix, label->GetTexture());
+				beginIndex = ++i;
+				if (i < size)
+				{
+					materialId = beginMaterialId = m_ForRenderList[i]->GetMaterialId();
+					textureId = beginTextureId = m_ForRenderList[i]->GetTextureId();
+				}
+			}
+			//如果是非字体渲染，将从begin开始到i-1的位置全部提交，重新记录开始点
+			else
+			{
+				SubmitBatch(m_ForRenderList, CHOOSE_MAT(beginMaterialId, beginIndex), CHOOSE_TEX(beginTextureId, beginIndex), beginIndex, i - beginIndex);
+				beginIndex = i;
+				beginMaterialId = materialId;
+				beginTextureId = textureId;
+			}
 		}
 	}
+	//如果还有未提交的view，全部提交
 	if (beginIndex < size)
 	{
 		SubmitBatch(m_ForRenderList, CHOOSE_MAT(materialId, size - 1), CHOOSE_TEX(textureId, size - 1), beginIndex, size - beginIndex);
@@ -133,20 +155,24 @@ void UISystem::SubmitBatch(const vector<UIView*> list, PMaterial mat, PTexture t
 	m_SharedMesh->MakeInstanceBuffer(m_TexcoordRanges, m_Colors, m_RectList, m_ModelMatrices, count);
 	mat->SetMainTexture(texture);
 	mat->Bind();
+	mat->SetParam("u_M", Matrix4x4::identity);
 	mat->SetParam("u_V", m_ViewMatrix);
 	mat->SetParam("u_P", m_ProjMatrix);
 	m_RI->RenderInstance(RenderingObject{ m_SharedMesh.get(), mat.get() }, count);
+	m_DrawCalls++;
 }
 
-void UISystem::DrawCall(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors, vector<SRect2D>& rects, vector<Matrix4x4>& modelMatrices, PTexture texture)
+void UISystem::DrawInstance(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors, vector<SRect2D>& rects, vector<Matrix4x4>& modelMatrices, const Matrix4x4& modelMatrix, PTexture texture)
 {
 	size_t size = texcoordRanges.size();
 	m_SharedMesh->MakeInstanceBuffer(texcoordRanges, colors, rects, modelMatrices, size);
 	m_SharedMaterial->SetMainTexture(texture);
 	m_SharedMaterial->Bind();
+	m_SharedMaterial->SetParam("u_M", modelMatrix);
 	m_SharedMaterial->SetParam("u_V", m_ViewMatrix);
 	m_SharedMaterial->SetParam("u_P", m_ProjMatrix);
 	m_RI->RenderInstance(RenderingObject{ m_SharedMesh.get(), m_SharedMaterial.get() }, size);
+	m_DrawCalls++;
 }
 
 void UISystem::AddChild(PUIWidget widget)

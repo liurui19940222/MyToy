@@ -2,6 +2,7 @@
 
 #include<Windows.h>
 #include<gl\glew.h>
+#include<vector>
 
 using namespace std;
 
@@ -47,6 +48,7 @@ protected:
 	float			m_FPS;
 	const wchar_t*  m_ClassName;
 	const wchar_t*	m_WindowName;
+	vector<string>	m_ExtraInfo;
 
 public:
 	static GLAppBase* AppInstance;

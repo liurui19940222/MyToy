@@ -1,5 +1,7 @@
 #include "UITest.h"
 #include "SpCommon\Input.h"
+#include <string>
+#include <sstream>
 
 #define KeyState(keyword) 	if (CInput::GetMouseDown(keyword)) {\
 	mouseState.m_MouseKeyStates[keyword] = EKeyState::Down; }\
@@ -25,8 +27,9 @@ void UITest::OnInitialize()
 	SetBackgroundColor(color.r, color.g, color.b, color.a);
 	CInput::Init(GetModuleHandle(NULL), m_Hwnd);
 
-	PTexture2D tex = Texture2D::Create("D:\\GitHub\\MyToy\\GameEngine\\Assets\\gift_7.png");
-	PTexture2D tex2 = Texture2D::Create("D:\\GitHub\\MyToy\\GameEngine\\Assets\\addtext_19.png");
+	PSpriteSet set = make_shared<SpriteSet>("D:\\GitHub\\MyToy\\GameEngine\\Assets\\atlas.png", "D:\\GitHub\\MyToy\\GameEngine\\Assets\\atlas.xml");
+	//PTexture2D tex = Texture2D::Create("D:\\GitHub\\MyToy\\GameEngine\\Assets\\gift_7.png");
+	//PTexture2D tex2 = Texture2D::Create("D:\\GitHub\\MyToy\\GameEngine\\Assets\\addtext_19.png");
 
 	m_UISystem = new UISystem();
 	m_UISystem->StartUp(m_RI, m_WindowWidth, m_WindowHeight);
@@ -36,12 +39,14 @@ void UITest::OnInitialize()
 
 	view2->SetRect(SRect2D(0.0f, 0.0f, 120.0f, 55.0f));
 	view3->SetRect(SRect2D(0.0f, 0.0f, 50.0f, 30.0f));
-	view3->SetSprite(Sprite::CreateSprite(tex2, TexcoordRange::full), true);
-	view2->SetSprite(Sprite::CreateSprite(tex, TexcoordRange::full), true);
+	view3->SetSprite(set->GetSprite("addtext_19.png"));
+	view2->SetSprite(set->GetSprite("gift_7.png"));
+	//view3->SetSprite(Sprite::CreateSprite(tex2, TexcoordRange::full), true);
+	//view2->SetSprite(Sprite::CreateSprite(tex, TexcoordRange::full), true);
 
 	m_UISystem->AddChild(view2);
 
-	view2->AddChild(view3);
+	//view2->AddChild(view3);
 	m_MovedWidget = view2;
 	m_MovedWidget->SetInteract(true);
 
@@ -87,9 +92,10 @@ void UITest::OnInitialize()
 	m_SubWidget->AddMouseOverListener([](const Vector2& pos) {
 		Debug::Log(L"sub mouse over");
 	});*/
-
+	m_Label = m_UISystem->Create<UILabel>();
+	//m_UISystem->AddChild(m_Label);
 	PTrueTypeFont f = _FontManager->LoadFont(1, FONT_PATH);
-	m_FMG = new FontMeshGenerator();
+	m_FMG = dynamic_cast<FontMeshGenerator*>(m_Label.get());
 	m_FMG->SetFont(f);
 	m_FMG->SetFontSize(FONT_SIZE);
 	m_FMG->SetTextAlignment(EAlignment::CENTER_MIDDLE);
@@ -98,9 +104,12 @@ void UITest::OnInitialize()
 	m_FMG->SetIntervalX(0);
 	m_FMG->SetIntervalY(0);
 	m_FMG->SetPixelScale(1.0f);
-	m_FMG->BuildInstanceData(Matrix4x4::Translate(Vector3(0, -0, 0)) * Matrix4x4::Scale(Vector3::one));
+	m_MovedWidget->AddChild(m_SubWidget);
+	m_MovedWidget->AddChild(m_Label);
 
-	m_Texture = (f->GetAtlases(FONT_SIZE))[0]->m_Texture;
+	m_ExtraInfo.resize(2);
+
+
 }
 
 void UITest::OnUpdate(float deltaTime)
@@ -266,6 +275,14 @@ void UITest::OnUpdate(float deltaTime)
 	widget->SetLocalPosition(position);
 	widget->SetScale(scale);
 	widget->SetEulerAngles(eulerAngles);
+
+	static stringstream ss;
+	ss.str("");
+	ss << "ui instance:" << m_UISystem->instanceCount();
+	m_ExtraInfo[0] = std::move(ss.str());
+	ss.str("");
+	ss << "ui drawcalls:" << m_UISystem->drawcalls();
+	m_ExtraInfo[1] = std::move(ss.str());
 }
 
 void UITest::OnRender()
@@ -273,7 +290,6 @@ void UITest::OnRender()
 	GLAppBase::OnRender();
 
 	m_UISystem->RenderAll();
-	m_UISystem->DrawCall(m_FMG->texcoordRanges(), m_FMG->colors(), m_FMG->rects(), m_FMG->modelMatrices(), m_Texture);
 }
 
 void UITest::OnWindowSizeChanged(int width, int height)

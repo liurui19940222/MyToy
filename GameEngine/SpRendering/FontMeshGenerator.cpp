@@ -142,7 +142,7 @@ void FontMeshGenerator::RebuildShapes()
 	}
 }
 
-void FontMeshGenerator::BuildInstanceData(Matrix4x4& modelMatrix)
+void FontMeshGenerator::BuildInstanceData()
 {
 	Debug::BeginTiming(L"build textmesh cost of millisecond %d");
 	if (!m_bNeedRebuild)
@@ -174,7 +174,7 @@ void FontMeshGenerator::BuildInstanceData(Matrix4x4& modelMatrix)
 			m_TexcoordRanges[index] = m_LineDatas[i]->m_Primitives[j]->m_Sprite->m_Range;
 			m_Colors[index] = Color::white;
 			m_RectList[index] = m_LineDatas[i]->m_Primitives[j]->GetRect();
-			m_ModelMatrices[index] = modelMatrix * mat;
+			m_ModelMatrices[index] = mat;
 			index++;
 		}
 	}
@@ -191,4 +191,18 @@ void FontMeshGenerator::Init(PTrueTypeFont font, int font_size, float interval_x
 	this->m_Rect = rect;
 	SetFontSize(font_size);
 	SetTextAlignment(alignment);
+}
+
+PMaterial FontMeshGenerator::GetDefaultMaterial()
+{
+	static PMaterial material;
+	if (!material)
+	{
+		material = make_shared<Material>();
+		material->SetBlendFunc(EBlendFactor::SRC_ALPHA, EBlendFactor::ONE_MINUS_SRC_ALPHA);
+		material->SetShader(Shader::Get("ui_instance"));
+		material->SetState(statetype::DepthTest, false);
+		material->SetState(statetype::Blend, true);
+	}
+	return material;
 }

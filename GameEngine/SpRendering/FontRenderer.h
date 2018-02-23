@@ -42,7 +42,6 @@ public:
 	inline void SetEffectVector(const Vector3& v) { m_EffectVector = v; }
 	inline void SetEffectColor(const Color& color) { m_EffectColor = color; }
 	static PMeshBufferUIInstance GetDefaultBuffer();
-	static PMaterial GetDefaultMaterial();
 };
 
 END_NAMESPACE_ENGINE

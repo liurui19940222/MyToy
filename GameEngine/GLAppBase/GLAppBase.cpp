@@ -188,6 +188,11 @@ void GLAppBase::DrawInfo()
 	char text[128];
 	sprintf_s(text, "FPS:%d", (int)m_FPS);
 	DrawString(text);
+	for (int i = 0; i < m_ExtraInfo.size(); ++i)
+	{
+		glRasterPos2f(0.0f, m_WindowHeight - (i + 1) * 20 - 10);
+		DrawString(m_ExtraInfo[i].c_str());
+	}
 	EndOrtho();
 }
 

@@ -8,11 +8,12 @@
 #include"SpRendering\FontMeshGenerator.h"
 #include"SpGUISystem\UISystem.h"
 #include"SpGUISystem\UIImage.h"
+#include"SpGUISystem\UILabel.h"
 
 USING_NAMESPACE_GUI;
 
-#define SHOW_TEXT L"h新款MINI家族正式发布 handle to face object2018北美车展：新款MINI家族正式发布"
-//#define SHOW_TEXT L"Button"
+//#define SHOW_TEXT L"h新款MINI家族正式发布 handle to face object2018北美车展：新款MINI家族正式发布"
+#define SHOW_TEXT L"Button"
 #define FONT_SIZE 14
 #define FONT_PATH "../Assets/Arial.ttf"
 
@@ -35,6 +36,7 @@ private:
 
 	PUIImage				m_MovedWidget;
 	PUIImage				m_SubWidget;
+	PUILabel				m_Label;
 	GLuint					m_TexId;
 	PTexture				m_Texture;
 };

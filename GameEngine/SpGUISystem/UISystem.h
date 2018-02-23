@@ -30,7 +30,7 @@ public:
 	void UpdateAll(SMouseState mouseState);
 	void RenderAll();
 	void SubmitBatch(const vector<UIView*> list, PMaterial mat, PTexture texture, int startingIndex, int count);
-	void DrawCall(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors, vector<SRect2D>& rects, vector<Matrix4x4>& modelMatrices, PTexture texture);
+	void DrawInstance(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors, vector<SRect2D>& rects, vector<Matrix4x4>& modelMatrices, const Matrix4x4& modelMatrix, PTexture texture);
 	void AddChild(PUIWidget widget);
 	void RemoveChild(PUIWidget widget);
 	void Foreach(PUIWidget widget, ForeachCallback callback);
@@ -38,6 +38,8 @@ public:
 	void ForeachWithModelMatrix(PUIWidget widget, Matrix4x4& baseMatrix, ForeachCallback callback);
 	void ForeachAllWithModelMatrix(ForeachCallback callback);
 
+	inline ushort instanceCount() const { return m_InstanceCount; }
+	inline ushort drawcalls() const { return m_DrawCalls; }
 	inline PTexture GetSharedTexture() const { return m_SharedTexture; }
 	inline PMaterial GetSharedMaterial() const { return m_SharedMaterial; }
 	inline PUIWidget GetRoot() const { return m_Root; }
@@ -52,6 +54,8 @@ public:
 	}
 
 private:
+	ushort					m_InstanceCount;
+	ushort					m_DrawCalls;
 	IRenderingInterface*	m_RI;
 	Matrix4x4				m_ViewMatrix;
 	Matrix4x4				m_ProjMatrix;

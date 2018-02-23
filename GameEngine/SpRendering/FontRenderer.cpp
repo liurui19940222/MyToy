@@ -13,13 +13,14 @@ void FontRenderer::OnRender(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matri
 {
 	if (m_Primitives.empty())
 		return;
-	BuildInstanceData(modelMatrix);
+	BuildInstanceData();
 	PMaterial material = GetDefaultMaterial();
 	PMeshBufferUIInstance mesh = GetDefaultBuffer();
 	size_t size = m_TexcoordRanges.size();
 	mesh->MakeInstanceBuffer(m_TexcoordRanges, m_Colors, m_RectList, m_ModelMatrices, size);
 	material->SetMainTexture(m_Primitives[0]->m_Sprite->m_Texture);
 	material->Bind();
+	material->SetParam("u_M", modelMatrix);
 	material->SetParam("u_V", viewMatrix);
 	material->SetParam("u_P", projectionMatrix);
 	m_RI->RenderInstance(RenderingObject{ mesh.get(), material.get() }, size);
@@ -36,18 +37,4 @@ PMeshBufferUIInstance FontRenderer::GetDefaultBuffer()
 	if (!mesh)
 		mesh = _MeshFactory->CreateBuffer<MeshBufferUIInstance>(EMeshType::Quad);
 	return mesh;
-}
-
-PMaterial FontRenderer::GetDefaultMaterial()
-{
-	static PMaterial material;
-	if (!material)
-	{
-		material = make_shared<Material>();
-		material->SetBlendFunc(EBlendFactor::SRC_ALPHA, EBlendFactor::ONE_MINUS_SRC_ALPHA);
-		material->SetShader(Shader::Get("ui_instance"));
-		material->SetState(statetype::DepthTest, false);
-		material->SetState(statetype::Blend, true);
-	}
-	return material;
 }

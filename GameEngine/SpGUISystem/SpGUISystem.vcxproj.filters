@@ -18,9 +18,6 @@
     <ClInclude Include="GUIDefines.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="UISystem.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="IInteractable.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -33,15 +30,15 @@
     <ClInclude Include="UILabel.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="UISystem.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UIWidget.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="UIView.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="UISystem.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="UIInteractor.cpp">
@@ -51,6 +48,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="UILabel.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="UISystem.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

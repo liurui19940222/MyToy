@@ -512,6 +512,13 @@ void Matrix4x4::Lerp(Matrix4x4& mat, Matrix4x4& a, Matrix4x4& b, float t)
 	}
 }
 
+const Matrix4x4 Matrix4x4::identity = {
+	1.0f, 0.0f, 0.0f, 0.0f,
+	0.0f, 1.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 1.0f, 0.0f,
+	0.0f, 0.0f, 0.0f, 1.0f
+};
+
 #pragma endregion
 
 #pragma region ParameterizedLine2D

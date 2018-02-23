@@ -6,6 +6,7 @@ layout(location = 3) in vec4 a_Color;
 layout(location = 4) in vec4 a_Rect;
 layout(location = 5) in mat4 a_ModelMatrix;
 
+uniform mat4 u_M;
 uniform mat4 u_V;
 uniform mat4 u_P;
 
@@ -22,5 +23,5 @@ void main()
 	vertex.uv = a_Texcoord;
 	vertex.range = a_TexRange;
 	vertex.color = a_Color;
-	gl_Position = u_P * u_V * a_ModelMatrix * pos;
+	gl_Position = u_P * u_V * u_M * a_ModelMatrix * pos;
 }
