@@ -213,6 +213,8 @@ union TmpVector4
 	TmpVector4() :x(0), y(0), z(0), w(0) {}
 	TmpVector4(VType px, VType py, VType pz, VType pw) : x(px), y(py), z(pz), w(pw) {}
 	TmpVector4(const TmpVector3<VType>& v3, VType pw) :x(v3.x), y(v3.y), z(v3.z), w(pw) {}
+
+	static const TmpVector4<float> zero;
 };
 
 class Matrix4x4

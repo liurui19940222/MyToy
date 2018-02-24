@@ -20,6 +20,8 @@ protected:
 	virtual TexcoordRange GetTexcoordRange() override;
 	virtual uint GetTextureId() override;
 	virtual PTexture GetTexture() override;
+	virtual void MakeData(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors,
+		vector<SRect2D>& rectList, vector<Matrix4x4>& modelMatrices) override;
 
 private:
 	PSprite			m_Sprite;

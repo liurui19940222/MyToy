@@ -89,7 +89,6 @@ void UISystem::UpdateAll(SMouseState mouseState)
 void UISystem::RenderAll()
 {
 	int size = m_ForRenderList.size();
-
 	if (size == 0)
 		return;
 	m_DrawCalls = 0;
@@ -108,54 +107,38 @@ void UISystem::RenderAll()
 		textureId = m_ForRenderList[i]->GetTextureId();
 		if (materialId != beginMaterialId || textureId != beginTextureId)
 		{
-			//如果是字体渲染，先将之前的所有view提交，再提交字体的mesh，然后将begin跳到i+1的位置
-			if (IS_TYPE(UILabel, m_ForRenderList[i]))
-			{
-				SubmitBatch(m_ForRenderList, CHOOSE_MAT(beginMaterialId, beginIndex), CHOOSE_TEX(beginTextureId, beginIndex), beginIndex, i - beginIndex);
-				UILabel* label = dynamic_cast<UILabel*>(m_ForRenderList[i]);
-				label->BuildInstanceData();
-				DrawInstance(label->texcoordRanges(), label->colors(), label->rects(), label->modelMatrices(), label->m_ModelMatrix, label->GetMaterial(), label->GetTexture());
-				beginIndex = ++i;
-				if (i < size)
-				{
-					materialId = beginMaterialId = m_ForRenderList[i]->GetMaterialId();
-					textureId = beginTextureId = m_ForRenderList[i]->GetTextureId();
-				}
-			}
-			//如果是非字体渲染，将从begin开始到i-1的位置全部提交，重新记录开始点
-			else
-			{
-				SubmitBatch(m_ForRenderList, CHOOSE_MAT(beginMaterialId, beginIndex), CHOOSE_TEX(beginTextureId, beginIndex), beginIndex, i - beginIndex);
-				beginIndex = i;
-				beginMaterialId = materialId;
-				beginTextureId = textureId;
-			}
+			//将从begin开始到i-1的位置全部提交，重新记录开始点
+			SubmitBatch(m_ForRenderList, m_ForRenderList[beginIndex]->GetGlobalModelMatrix(),
+				CHOOSE_MAT(beginMaterialId, beginIndex), CHOOSE_TEX(beginTextureId, beginIndex), beginIndex, i - beginIndex);
+			beginIndex = i;
+			beginMaterialId = materialId;
+			beginTextureId = textureId;
 		}
 	}
 	//如果还有未提交的view，全部提交
 	if (beginIndex < size)
 	{
-		SubmitBatch(m_ForRenderList, CHOOSE_MAT(materialId, size - 1), CHOOSE_TEX(textureId, size - 1), beginIndex, size - beginIndex);
+		SubmitBatch(m_ForRenderList, m_ForRenderList[beginIndex]->GetGlobalModelMatrix(),
+			CHOOSE_MAT(materialId, size - 1), CHOOSE_TEX(textureId, size - 1), beginIndex, size - beginIndex);
 	}
 }
 
-void UISystem::SubmitBatch(const vector<UIView*> list, PMaterial mat, PTexture texture, int startingIndex, int count)
+void UISystem::SubmitBatch(const vector<UIView*> list, const Matrix4x4& globalModelMatrix, PMaterial mat,
+	PTexture texture, int startingIndex, int count)
 {
-	m_TexcoordRanges.resize(count);
-	m_Colors.resize(count);
-	m_RectList.resize(count);
-	m_ModelMatrices.resize(count);
-	for (int i = 0, j = startingIndex; i < count; ++i, ++j)
+	m_TexcoordRanges.clear();
+	m_Colors.clear();
+	m_RectList.clear();
+	m_ModelMatrices.clear();
+	for (int j = startingIndex; j < startingIndex + count; ++j)
 	{
-		m_TexcoordRanges[i] = list[j]->GetTexcoordRange();
-		m_Colors[i] = list[j]->GetColor();
-		m_RectList[i] = list[j]->m_Rect;
-		m_ModelMatrices[i] = list[j]->m_ModelMatrix;
+		list[j]->MakeData(m_TexcoordRanges, m_Colors, m_RectList, m_ModelMatrices);
 	}
+	count = m_TexcoordRanges.size();
 	m_SharedMesh->MakeInstanceBuffer(m_TexcoordRanges, m_Colors, m_RectList, m_ModelMatrices, count);
 	mat->SetMainTexture(texture);
 	mat->Bind();
-	mat->SetParam("u_M", Matrix4x4::identity);
+	mat->SetParam("u_M", globalModelMatrix);
 	mat->SetParam("u_V", m_ViewMatrix);
 	mat->SetParam("u_P", m_ProjMatrix);
 	m_RI->RenderInstance(RenderingObject{ m_SharedMesh.get(), mat.get() }, count);

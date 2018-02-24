@@ -24,6 +24,9 @@ protected:
 	virtual uint GetTextureId();
 	virtual PTexture GetTexture();
 	virtual PMaterial GetMaterial() const;
+	virtual const Matrix4x4& GetGlobalModelMatrix() const;
+	virtual void MakeData(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors,
+		vector<SRect2D>& rectList, vector<Matrix4x4>& modelMatrices);
 
 private:
 	Color				m_Color;

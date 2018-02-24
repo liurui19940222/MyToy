@@ -14,7 +14,10 @@ public:
 	TexcoordRange		m_Range;
 	ushort				m_Width;
 	ushort				m_Height;
+	BVector4			m_Border;
 	static PSprite CreateSprite(PTexture texture, TexcoordRange range, ushort width, ushort height);
+
+	inline void Slice(BVector4 border) { m_Border = border; }
 };
 
 SMART_CLASS(SpriteSet) class SpriteSet

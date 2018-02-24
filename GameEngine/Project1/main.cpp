@@ -1,14 +1,9 @@
 #include<iostream>
+#include<vector>
 #include"ArrayList.h"
 
 using namespace std;
 using namespace my_collection;
-
-void Print(ArrayList<int>& list)
-{
-	list.Foreach([](int& i) { cout << i << endl; return false; });
-	cout << "Capacity:" << list.capacity() << " Size:" << list.size() << endl;
-}
 
 int Add(int a, int b)
 {
@@ -47,30 +42,20 @@ int Div(int a, int b)
 
 int main()
 {
-	int a = 5, b = 6;
-	_asm {
-		mov eax, dword ptr ds:[a]
-		mov ebx, dword ptr ds:[b]
-		mov dword ptr ds:[b], eax
-		mov dword ptr ds:[a], ebx
+	vector<int> list;
+	vector<int> list2;
+	list.push_back(1);
+	list.push_back(2);
+	list.push_back(3);
+	list2.push_back(5);
+	list2.push_back(6);
+	list2.push_back(7);
+	list.insert(list.begin() + list.size(), list2.begin(), list2.end());
+	for each (int var in list)
+	{
+		cout << var << endl;
 	}
-	//int result = Div(5, 6);
-	//result = Div(5, 7);
-	//result = Div(5, 8);
-	//result = Div(5, 2);
-	//ArrayList<int> list;
-	//list.PushBack(10);
-	//list.PushBack(5);
-	//list.Insert(1, 3);
-	//list[1] = 4;
-	//Print(list);
-	//list.PushBack(99);
-	//list.PushBack(88);
-	//list.Erase(88);
-	//list.PushBack(77);
-	//list.PushBack(66);
-	//Print(list);
-	//cout << list[2] << endl;
+	cout << list.size() << " " << list.capacity() << endl;
 	system("pause");
 	return 0;
 }

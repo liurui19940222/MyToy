@@ -29,7 +29,8 @@ public:
 	void ShutDown();
 	void UpdateAll(SMouseState mouseState);
 	void RenderAll();
-	void SubmitBatch(const vector<UIView*> list, PMaterial mat, PTexture texture, int startingIndex, int count);
+	void SubmitBatch(const vector<UIView*> list, const Matrix4x4& globalModelMatrix, PMaterial mat, 
+		PTexture texture, int startingIndex, int count);
 	void DrawInstance(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors, vector<SRect2D>& rects, 
 		vector<Matrix4x4>& modelMatrices, const Matrix4x4& modelMatrix, PMaterial mat, PTexture texture);
 	void AddChild(PUIWidget widget);

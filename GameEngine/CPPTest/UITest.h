@@ -35,6 +35,7 @@ private:
 	FontMeshGenerator*		m_FMG;
 
 	PUIImage				m_MovedWidget;
+	PUIImage				m_Button;
 	PUIImage				m_SubWidget;
 	PUILabel				m_Label;
 	GLuint					m_TexId;

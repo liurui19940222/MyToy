@@ -39,3 +39,9 @@ void UIImage::SetRawSize()
 		SetHeight((float)m_Sprite->m_Height);
 	}
 }
+
+void UIImage::MakeData(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors,
+	vector<SRect2D>& rectList, vector<Matrix4x4>& modelMatrices)
+{
+	return UIView::MakeData(texcoordRanges, colors, rectList, modelMatrices);
+}
