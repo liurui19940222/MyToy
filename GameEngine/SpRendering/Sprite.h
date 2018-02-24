@@ -12,8 +12,9 @@ SMART_CLASS(Sprite) class Sprite
 public:
 	PTexture			m_Texture;
 	TexcoordRange		m_Range;
-
-	static PSprite CreateSprite(PTexture texture, TexcoordRange range);
+	ushort				m_Width;
+	ushort				m_Height;
+	static PSprite CreateSprite(PTexture texture, TexcoordRange range, ushort width, ushort height);
 };
 
 SMART_CLASS(SpriteSet) class SpriteSet

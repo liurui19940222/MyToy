@@ -14,7 +14,7 @@ public:
 	UIView();
 	inline void SetMaterial(PMaterial mat) { m_Material = mat; }
 	inline int GetMaterialId() { return m_Material ? m_Material->GetInstanceId() : 0; }
-	inline void SetColor(const Color& color) { m_Color = color; }
+	inline void SetColor(const Color& color) { m_Color = color; SECURITY(m_Material)->SetColor(color); }
 	inline Color GetColor() const { return m_Color; }
 
 protected:

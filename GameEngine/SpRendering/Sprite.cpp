@@ -8,11 +8,13 @@ using namespace rapidxml;
 
 USING_NAMESPACE_ENGINE;
 
-PSprite Sprite::CreateSprite(PTexture texture, TexcoordRange range)
+PSprite Sprite::CreateSprite(PTexture texture, TexcoordRange range, ushort width, ushort height)
 {
 	PSprite sprite = make_shared<Sprite>();
 	sprite->m_Texture = texture;
 	sprite->m_Range = range;
+	sprite->m_Width = width;
+	sprite->m_Height = height;
 	return sprite;
 }
 
@@ -82,6 +84,8 @@ void SpriteSet::LoadAtlas(const char* tex_filename, const char* xml_filename)
 		sprite->m_Range.m_StartingPoint.y = (atlas_height - y - h) / atlas_height;
 		sprite->m_Range.m_Size.x = w / atlas_width;
 		sprite->m_Range.m_Size.y = h / atlas_height;
+		sprite->m_Width = (ushort)w;
+		sprite->m_Height = (ushort)h;
 		m_Sprites.insert(make_pair(n, sprite));
 	}
 }

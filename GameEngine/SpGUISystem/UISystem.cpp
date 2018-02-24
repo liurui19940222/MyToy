@@ -114,7 +114,7 @@ void UISystem::RenderAll()
 				SubmitBatch(m_ForRenderList, CHOOSE_MAT(beginMaterialId, beginIndex), CHOOSE_TEX(beginTextureId, beginIndex), beginIndex, i - beginIndex);
 				UILabel* label = dynamic_cast<UILabel*>(m_ForRenderList[i]);
 				label->BuildInstanceData();
-				DrawInstance(label->texcoordRanges(), label->colors(), label->rects(), label->modelMatrices(), label->m_ModelMatrix, label->GetTexture());
+				DrawInstance(label->texcoordRanges(), label->colors(), label->rects(), label->modelMatrices(), label->m_ModelMatrix, label->GetMaterial(), label->GetTexture());
 				beginIndex = ++i;
 				if (i < size)
 				{
@@ -162,16 +162,17 @@ void UISystem::SubmitBatch(const vector<UIView*> list, PMaterial mat, PTexture t
 	m_DrawCalls++;
 }
 
-void UISystem::DrawInstance(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors, vector<SRect2D>& rects, vector<Matrix4x4>& modelMatrices, const Matrix4x4& modelMatrix, PTexture texture)
+void UISystem::DrawInstance(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors, vector<SRect2D>& rects,
+	vector<Matrix4x4>& modelMatrices, const Matrix4x4& modelMatrix, PMaterial mat, PTexture texture)
 {
 	size_t size = texcoordRanges.size();
 	m_SharedMesh->MakeInstanceBuffer(texcoordRanges, colors, rects, modelMatrices, size);
-	m_SharedMaterial->SetMainTexture(texture);
-	m_SharedMaterial->Bind();
-	m_SharedMaterial->SetParam("u_M", modelMatrix);
-	m_SharedMaterial->SetParam("u_V", m_ViewMatrix);
-	m_SharedMaterial->SetParam("u_P", m_ProjMatrix);
-	m_RI->RenderInstance(RenderingObject{ m_SharedMesh.get(), m_SharedMaterial.get() }, size);
+	mat->SetMainTexture(texture);
+	mat->Bind();
+	mat->SetParam("u_M", modelMatrix);
+	mat->SetParam("u_V", m_ViewMatrix);
+	mat->SetParam("u_P", m_ProjMatrix);
+	m_RI->RenderInstance(RenderingObject{ m_SharedMesh.get(), mat.get() }, size);
 	m_DrawCalls++;
 }
 

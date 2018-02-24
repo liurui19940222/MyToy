@@ -23,8 +23,7 @@ void UITest::InitGL(HWND hwnd)
 void UITest::OnInitialize()
 {
 	GLAppBase::OnInitialize();
-	Color color = Color::Hex(0x314D79FF);
-	SetBackgroundColor(color.r, color.g, color.b, color.a);
+	SetBackgroundColor(0.3f, 0.5f, 0.5f, 1.0f);
 	CInput::Init(GetModuleHandle(NULL), m_Hwnd);
 
 	PSpriteSet set = make_shared<SpriteSet>("D:\\GitHub\\MyToy\\GameEngine\\Assets\\atlas.png", "D:\\GitHub\\MyToy\\GameEngine\\Assets\\atlas.xml");
@@ -39,8 +38,8 @@ void UITest::OnInitialize()
 
 	view2->SetRect(SRect2D(0.0f, 0.0f, 120.0f, 55.0f));
 	view3->SetRect(SRect2D(0.0f, 0.0f, 50.0f, 30.0f));
-	view3->SetSprite(set->GetSprite("addtext_19.png"));
-	view2->SetSprite(set->GetSprite("gift_7.png"));
+	view3->SetSprite(set->GetSprite("sure.png"), true);
+	view2->SetSprite(set->GetSprite("btn_3.png"), true);
 	//view3->SetSprite(Sprite::CreateSprite(tex2, TexcoordRange::full), true);
 	//view2->SetSprite(Sprite::CreateSprite(tex, TexcoordRange::full), true);
 
@@ -93,6 +92,8 @@ void UITest::OnInitialize()
 		Debug::Log(L"sub mouse over");
 	});*/
 	m_Label = m_UISystem->Create<UILabel>();
+	m_Label->SetLocalPosition(Vector2(0, 200));
+	m_Label->SetColor(Color::cyan);
 	//m_UISystem->AddChild(m_Label);
 	PTrueTypeFont f = _FontManager->LoadFont(1, FONT_PATH);
 	m_FMG = dynamic_cast<FontMeshGenerator*>(m_Label.get());
@@ -100,7 +101,7 @@ void UITest::OnInitialize()
 	m_FMG->SetFontSize(FONT_SIZE);
 	m_FMG->SetTextAlignment(EAlignment::CENTER_MIDDLE);
 	m_FMG->SetTextRect(SRect2D(0, 0, 400, 100));
-	m_FMG->SetText(SHOW_TEXT);
+	m_FMG->SetText(L"UILabel");
 	m_FMG->SetIntervalX(0);
 	m_FMG->SetIntervalY(0);
 	m_FMG->SetPixelScale(1.0f);
