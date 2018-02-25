@@ -35,6 +35,78 @@ vector<SRect2D> SRect2D::Split(vector<float> weights)
 	return list;
 }
 
+void SRect2D::Slice(BVector4 border, vector<SRect2D>& out)
+{
+	out.resize(9);
+	float x1, x2, x3, y1, y2, y3, w1, w2, w3, h1, h2, h3;
+	float left, top;
+	left = center.x - halfSize.x;
+	top = center.y + halfSize.y;
+	w1 = border.left;
+	w2 = (halfSize.x * 2 - border.left - border.right);
+	w3 = border.right;
+	h1 = border.top;
+	h2 = (halfSize.y * 2 - border.top - border.bottom);
+	h3 = border.bottom;
+	x1 = left + w1 * 0.5f;
+	x2 = left + w1 + w2 * 0.5f;
+	x3 = left + w1 + w2 + w3 * 0.5f;
+	y1 = top - h1 * 0.5f;
+	y2 = top - h1 - h2 * 0.5f;
+	y3 = top - h1 - h2 - h3 * 0.5f;
+
+	w1 *= 0.5f;
+	w2 *= 0.5f;
+	w3 *= 0.5f;
+	h1 *= 0.5f;
+	h2 *= 0.5f;
+	h3 *= 0.5f;
+	out[0].center.x = x1;
+	out[0].center.y = y1;
+	out[0].halfSize.x = w1;
+	out[0].halfSize.y = h1;
+
+	out[1].center.x = x2;
+	out[1].center.y = y1;
+	out[1].halfSize.x = w2;
+	out[1].halfSize.y = h1;
+
+	out[2].center.x = x3;
+	out[2].center.y = y1;
+	out[2].halfSize.x = w3;
+	out[2].halfSize.y = h1;
+
+	out[3].center.x = x1;
+	out[3].center.y = y2;
+	out[3].halfSize.x = w1;
+	out[3].halfSize.y = h2;
+
+	out[4].center.x = x2;
+	out[4].center.y = y2;
+	out[4].halfSize.x = w2;
+	out[4].halfSize.y = h2;
+
+	out[5].center.x = x3;
+	out[5].center.y = y2;
+	out[5].halfSize.x = w3;
+	out[5].halfSize.y = h2;
+
+	out[6].center.x = x1;
+	out[6].center.y = y3;
+	out[6].halfSize.x = w1;
+	out[6].halfSize.y = h3;
+
+	out[7].center.x = x2;
+	out[7].center.y = y3;
+	out[7].halfSize.x = w2;
+	out[7].halfSize.y = h3;
+
+	out[8].center.x = x3;
+	out[8].center.y = y3;
+	out[8].halfSize.x = w3;
+	out[8].halfSize.y = h3;
+}
+
 bool SRect2D::operator==(const SRect2D& rect)
 {
 	return this->halfSize.x == rect.halfSize.x && this->halfSize.y == rect.halfSize.y 

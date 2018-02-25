@@ -40,22 +40,21 @@ int Div(int a, int b)
 	return result;
 }
 
+class AAA
+{
+public:
+	struct B{
+		int a;
+		int b;
+		int c;
+	};
+private:
+	int size;
+};
+
 int main()
 {
-	vector<int> list;
-	vector<int> list2;
-	list.push_back(1);
-	list.push_back(2);
-	list.push_back(3);
-	list2.push_back(5);
-	list2.push_back(6);
-	list2.push_back(7);
-	list.insert(list.begin() + list.size(), list2.begin(), list2.end());
-	for each (int var in list)
-	{
-		cout << var << endl;
-	}
-	cout << list.size() << " " << list.capacity() << endl;
+	cout << sizeof(AAA) << endl;
 	system("pause");
 	return 0;
 }

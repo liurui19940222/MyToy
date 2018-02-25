@@ -34,6 +34,9 @@ public:
 		m_ModelMatrix[3][1], m_ModelMatrix[3][2]); }
 
 protected:
+	Vector2 GetOffset() const;
+	virtual void CalcModelMatrix(Matrix4x4& baseMatrix);
+
 	EAlignment				m_Alignment;
 	Vector2					m_Pivot;
 	Vector2					m_LocalScale;
@@ -45,10 +48,6 @@ protected:
 	UIWidget*				m_Parent;
 	UISystem*				m_System;
 	vector<PUIWidget>		m_Childreen;
-
-private:
-	void CalcModelMatrix(Matrix4x4& baseMatrix);
-	Vector2 GetOffset() const;
 };
 
 END_NAMESPACE_GUI

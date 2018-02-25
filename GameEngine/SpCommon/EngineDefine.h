@@ -21,6 +21,7 @@ typedef unsigned int uint32, uint;
 BEGIN_NAMESPACE_ENGINE
 
 typedef TmpVector2<float> Vector2;
+typedef TmpVector4<byte> BVector4;
 
 struct Color;
 struct Color32
@@ -107,6 +108,7 @@ struct SRect2D
 
 	bool Overlay(const Vector2& pos) const;
 	vector<SRect2D> Split(vector<float> weights);
+	void Slice(BVector4 border, vector<SRect2D>& out);
 
 	bool operator==(const SRect2D& rect);
 	bool operator!=(const SRect2D& rect);

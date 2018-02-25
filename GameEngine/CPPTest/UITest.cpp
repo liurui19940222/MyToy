@@ -27,24 +27,36 @@ void UITest::OnInitialize()
 	CInput::Init(GetModuleHandle(NULL), m_Hwnd);
 
 	PSpriteSet set = make_shared<SpriteSet>("D:\\GitHub\\MyToy\\GameEngine\\Assets\\atlas.png", "D:\\GitHub\\MyToy\\GameEngine\\Assets\\atlas.xml");
-
+	PSprite bg = set->GetSprite("bg_1.png");
+	//PSprite bg = Sprite::CreateSprite(Texture2D::Create("D:\\GitHub\\MyToy\\GameEngine\\Assets\\bg.png"), TexcoordRange::full, 100, 100);
+	bg->SetBorder(/*BVector4(15, 15, 15, 15)*/BVector4(20, 20, 20, 20));
 	m_UISystem = new UISystem();
 	m_UISystem->StartUp(m_RI, m_WindowWidth, m_WindowHeight);
+
+	//TexcoordRange r = TexcoordRange::full;
+	//vector<TexcoordRange> list;
+	//r.Slice(BVector4(10, 10, 10, 10), list, 100, 100);
+
+	//SRect2D rect(0, 0, 150, 150);
+	//vector<SRect2D> list2;
+	//rect.Slice(BVector4(100, 100, 100, 100), list2);
 
 	m_MovedWidget = m_UISystem->Create<UIImage>();
 	m_SubWidget = m_UISystem->Create<UIImage>();
 	m_Button = m_UISystem->Create<UIImage>();
-
+	m_MovedWidget->SetWidth(400)->SetHeight(300);
+	m_MovedWidget->SetImageType(UIImage::Type::Slice);
 	m_UISystem->AddChild(m_MovedWidget);
 
-	m_Button->SetSprite(set->GetSprite("btn_3.png"), true);
+	m_Button->SetSprite(set->GetSprite("btn_2.png"), true);
 	m_SubWidget->SetSprite(set->GetSprite("sure.png"), true);
-	m_MovedWidget->SetSprite(set->GetSprite("bg_1.png"), false);
+	m_MovedWidget->SetSprite(bg, false);
 
 	m_MovedWidget->AddChild(m_Button);
 	m_Button->AddChild(m_SubWidget);
 	m_MovedWidget->SetInteract(true);
 
+	m_Button->SetLocalPosition(Vector2(0, -50));
 	m_SubWidget->SetInteract(true);
 
 	m_Label = m_UISystem->Create<UILabel>();
@@ -60,7 +72,7 @@ void UITest::OnInitialize()
 	m_FMG->SetIntervalX(0);
 	m_FMG->SetIntervalY(0);
 	m_FMG->SetPixelScale(1.0f);
-	m_MovedWidget->AddChild(m_Label);
+	m_UISystem->AddChild(m_Label);
 
 	m_ExtraInfo.resize(2);
 }

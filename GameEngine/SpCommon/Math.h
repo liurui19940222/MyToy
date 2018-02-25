@@ -207,12 +207,20 @@ union TmpVector4
 		VType z;
 		VType w;
 	};
+	struct
+	{
+		VType left;
+		VType top;
+		VType right;
+		VType bottom;
+	};
 
 	VType& operator[](size_t index) { return m[index]; }
 
 	TmpVector4() :x(0), y(0), z(0), w(0) {}
 	TmpVector4(VType px, VType py, VType pz, VType pw) : x(px), y(py), z(pz), w(pw) {}
 	TmpVector4(const TmpVector3<VType>& v3, VType pw) :x(v3.x), y(v3.y), z(v3.z), w(pw) {}
+	inline bool equaltozero() const { return x == VType(0) && y == VType(0) && z == VType(0) && w == VType(0); }
 
 	static const TmpVector4<float> zero;
 };

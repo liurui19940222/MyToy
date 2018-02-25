@@ -39,6 +39,8 @@ struct TexcoordRange
 
 	static const TexcoordRange none;
 	static const TexcoordRange full;
+
+	void Slice(BVector4 border, vector<TexcoordRange>& out, float internalWidth, float internalHeight, float rawWidth, float rawHeight);
 };
 
 SMART_CLASS(Texture) class Texture : public Object

@@ -114,7 +114,7 @@ void UISystem::RenderAll()
 			beginMaterialId = materialId;
 			beginTextureId = textureId;
 		}
-	}
+	} 
 	//如果还有未提交的view，全部提交
 	if (beginIndex < size)
 	{

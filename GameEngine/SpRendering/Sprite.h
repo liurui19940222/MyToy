@@ -17,7 +17,8 @@ public:
 	BVector4			m_Border;
 	static PSprite CreateSprite(PTexture texture, TexcoordRange range, ushort width, ushort height);
 
-	inline void Slice(BVector4 border) { m_Border = border; }
+	inline void SetBorder(BVector4 border) { m_Border = border; }
+	inline void Slice(vector<TexcoordRange>& out) { m_Range.Slice(m_Border, out, m_Width, m_Height, m_Texture->GetWidth(), m_Texture->GetHeight()); }
 };
 
 SMART_CLASS(SpriteSet) class SpriteSet

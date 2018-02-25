@@ -10,6 +10,65 @@ TexcoordRange::TexcoordRange(float startingX, float startingY, float sizeX, floa
 TexcoordRange::TexcoordRange(Vector2 staringPoint, Vector2 size)
 	: m_StartingPoint(staringPoint), m_Size(size) {}
 
+void TexcoordRange::Slice(BVector4 border, vector<TexcoordRange>& out, float internalWidth, float internalHeight, float rawWidth, float rawHeight)
+{
+	out.resize(9);
+	float w1, w2, w3, h1, h2, h3, t1, t2;
+	t1 = 1.0f / rawWidth;
+	t2 = 1.0f / rawHeight;
+	w1 = border.left * t1;
+	w2 = (internalWidth - border.left - border.right) * t1;
+	w3 = border.right * t1;
+	h1 = border.top * t2;
+	h2 = (internalHeight - border.top - border.bottom) * t2;
+	h3 = border.bottom * t2;
+
+	out[0].m_StartingPoint.x = m_StartingPoint.x;
+	out[0].m_StartingPoint.y = m_StartingPoint.y + m_Size.y - h1;
+	out[0].m_Size.x = w1;
+	out[0].m_Size.y = h1;
+
+	out[1].m_StartingPoint.x = m_StartingPoint.x + w1;
+	out[1].m_StartingPoint.y = m_StartingPoint.y + m_Size.y - h1;
+	out[1].m_Size.x = w2;
+	out[1].m_Size.y = h1;
+
+	out[2].m_StartingPoint.x = m_StartingPoint.x + w1 + w2;
+	out[2].m_StartingPoint.y = m_StartingPoint.y + m_Size.y - h1;
+	out[2].m_Size.x = w3;
+	out[2].m_Size.y = h1;
+
+	out[3].m_StartingPoint.x = m_StartingPoint.x;
+	out[3].m_StartingPoint.y = m_StartingPoint.y + h1;
+	out[3].m_Size.x = w1;
+	out[3].m_Size.y = h2;
+
+	out[4].m_StartingPoint.x = m_StartingPoint.x + w1;
+	out[4].m_StartingPoint.y = m_StartingPoint.y + h1;
+	out[4].m_Size.x = w2;
+	out[4].m_Size.y = h2;
+
+	out[5].m_StartingPoint.x = m_StartingPoint.x + w1 + w2;
+	out[5].m_StartingPoint.y = m_StartingPoint.y + h1;
+	out[5].m_Size.x = w3;
+	out[5].m_Size.y = h2;
+
+	out[6].m_StartingPoint.x = m_StartingPoint.x;
+	out[6].m_StartingPoint.y = m_StartingPoint.y;
+	out[6].m_Size.x = w1;
+	out[6].m_Size.y = h3;
+
+	out[7].m_StartingPoint.x = m_StartingPoint.x + w1;
+	out[7].m_StartingPoint.y = m_StartingPoint.y;
+	out[7].m_Size.x = w2;
+	out[7].m_Size.y = h3;
+
+	out[8].m_StartingPoint.x = m_StartingPoint.x + w1 + w2;
+	out[8].m_StartingPoint.y = m_StartingPoint.y;
+	out[8].m_Size.x = w3;
+	out[8].m_Size.y = h3;
+}
+
 const TexcoordRange TexcoordRange::none(0.0f, 0.0f, 0.0f, 0.0f);
 const TexcoordRange TexcoordRange::full(0.0f, 0.0f, 1.0f, 1.0f);
 
