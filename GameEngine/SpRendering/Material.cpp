@@ -130,12 +130,11 @@ void Material::Bind()
 	Light::SetUniformParams(m_Shader);
 }
 
-void Material::BindTexture(const char* paramName, uint texture)
+void Material::BindTexture(const char* paramName, uint texture, int pass)
 {
-	glEnable(GL_TEXTURE_2D);
-	glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0 + pass);
 	glBindTexture(GL_TEXTURE_2D, texture);
-	SetParam("u_MainTex", 0);
+	SetParam(paramName, pass);
 }
 
 void Material::Unbind()

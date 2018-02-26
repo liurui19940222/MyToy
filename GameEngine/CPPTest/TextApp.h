@@ -37,5 +37,7 @@ private:
 	FontRenderer*			font;
 	IRenderingInterface*	m_RI;
 	PTexture				m_Texture;
+	PMeshBufferTexcoord		m_Buffer;
+	PMaterial				m_Material;
 };
 

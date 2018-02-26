@@ -60,7 +60,7 @@ public:
 	Material* SetBlendFunc(EBlendFactor src, EBlendFactor dst);
 	PTexture GetMainTexture() const;
 	void Bind();
-	void BindTexture(const char* paramName, uint texture);
+	void BindTexture(const char* paramName, uint texture, int pass = 0);
 	void Unbind();
 
 	template<typename T>

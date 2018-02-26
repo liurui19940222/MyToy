@@ -1,4 +1,5 @@
 #include "TextApp.h"
+#include "SpRendering\MeshFactory.h"
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
@@ -23,6 +24,11 @@ void TextApp::OnInitialize()
 	Color color = Color::Hex(0x314D79FF);
 	SetBackgroundColor(color.r, color.g, color.b, color.a);
 	CInput::Init(GetModuleHandle(NULL), m_Hwnd);
+
+	m_Buffer = _MeshFactory->CreateBuffer<MeshBufferTexcoord>(EMeshType::Quad);
+	m_Material = make_shared<Material>();
+	m_Material->SetShader(Shader::Get("texture"));
+	m_Material->SetMainTexture(Texture2D::Create("../Assets/shake.png", ETexWrapMode::Clamp, ETexFilterMode::MipmapLinear, ETexEnvMode::Replace, true));
 
 	PTrueTypeFont f = _FontManager->LoadFont(1, FONT_PATH);
 	font = new FontRenderer(m_RI);
@@ -138,9 +144,18 @@ void TextApp::OnRender()
 {
 	GLAppBase::OnRender();
 
-	DrawAtlas();
+	//DrawAtlas();
 
-	font->OnRender(modelMat, viewMat, projectionMat);
+	//font->OnRender(modelMat, viewMat, projectionMat);
+
+	m_Material->Bind();
+	PTexture2D tex = Texture2D::Create("../Assets/fish.png");
+	//m_Material->SetParam("AddTex", 1);
+	m_Material->BindTexture("AddTex", tex->GetTextureId(), 1);
+	m_Material->SetParam("M", Matrix4x4::identity);
+	m_Material->SetParam("V", viewMat);
+	m_Material->SetParam("P", projectionMat);
+	m_RI->Render(RenderingObject{ m_Buffer.get(), m_Material.get() });
 }
 
 void TextApp::DrawAtlas()
