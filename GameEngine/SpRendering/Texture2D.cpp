@@ -23,11 +23,11 @@ PTexture2D Texture2D::Init(PTexture2D texture, ETexWrapMode wrapMode, ETexFilter
 	return texture;
 }
 
-PTexture2D Texture2D::Create(const char* filename)
+PTexture2D Texture2D::Create(const char* filename, bool mipmaps)
 {
 	if (!filename) return NULL;
 	ImageLoader* image = new ImageLoader(filename);
-	PTexture2D texture = Create(image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
+	PTexture2D texture = Create(image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, mipmaps);
 	image->ReleaseSource();
 	delete image;
 	return texture;

@@ -1,60 +1,19 @@
 #include<iostream>
 #include<vector>
 #include"ArrayList.h"
+#include<physx_3.2\PxPhysicsAPI.h>
+
+#pragma comment(lib, "legacy_stdio_definitions.lib")
 
 using namespace std;
 using namespace my_collection;
-
-int Add(int a, int b)
-{
-	int ra = a ^ b;
-	int rb = a & b;
-	return rb ? Add(ra, rb << 1) : ra;
-}
-
-int Sub(int a, int b)
-{
-	return Add(a, -b);
-}
-
-int Mul(int a, int b)
-{
-	int result = 0;
-	for (int i = 0; i < b; i = Add(i, 1))
-	{
-		result = Add(result, a);
-	}
-	return result;
-}
-
-int Div(int a, int b)
-{
-	if (b == 0)
-		assert(0);
-	int result = 0;
-	while(a > b)
-	{
-		a = Sub(a, b);
-		result = Add(result, 1);
-	}
-	return result;
-}
-
-class AAA
-{
-public:
-	struct B{
-		int a;
-		int b;
-		int c;
-	};
-private:
-	int size;
-};
+using namespace physx;
 
 int main()
 {
-	cout << sizeof(AAA) << endl;
+	PxDefaultAllocator* allocator = new PxDefaultAllocator();
+	PxDefaultErrorCallback* errorCallback = new PxDefaultErrorCallback();
+	PxFoundation* foundation = PxCreateFoundation(PX_PHYSICS_VERSION, *allocator, *errorCallback);
 	system("pause");
 	return 0;
 }

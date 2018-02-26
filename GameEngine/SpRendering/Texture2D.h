@@ -21,7 +21,7 @@ private:
 	static PTexture2D Init(PTexture2D texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data);
 
 public:
-	static PTexture2D Create(const char* filename);
+	static PTexture2D Create(const char* filename, bool mipmaps = false);
 	static PTexture2D Create(ImageLoader* image);
 	static PTexture2D Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
 	static PTexture2D Create(ImageLoader* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);

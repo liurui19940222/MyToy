@@ -14,4 +14,133 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PhysXApp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBodyGameObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PhysXApp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBodyGameObject.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3_x86.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3CharacterKinematic_x86.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3CharacterKinematicCHECKED_x86.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3CharacterKinematicPROFILE_x86.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3CHECKED_x86.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3Common_x86.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3CommonCHECKED_x86.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3CommonDEBUG_x86.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3CommonPROFILE_x86.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3Cooking_x86.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3CookingCHECKED_x86.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3CookingPROFILE_x86.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3Extensions.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3ExtensionsCHECKED.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3ExtensionsPROFILE.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3PROFILE_x86.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3Vehicle.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3VehicleCHECKED.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysX3VehiclePROFILE.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysXProfileSDK.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysXProfileSDKCHECKED.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysXProfileSDKPROFILE.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysXVisualDebuggerSDK.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysXVisualDebuggerSDKCHECKED.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PhysXVisualDebuggerSDKPROFILE.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PxTask.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PxTaskCHECKED.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\PxTaskPROFILE.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\RepX3.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\RepX3CHECKED.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\RepX3PROFILE.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\RepXUpgrader3.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\RepXUpgrader3CHECKED.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\..\PhysX-3.2\Lib\win32\RepXUpgrader3PROFILE.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+  </ItemGroup>
 </Project>

@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="InstanceDraw.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -33,9 +30,6 @@
     <ClCompile Include="TextApp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="PhysXApp.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InstanceDraw.h">
@@ -48,9 +42,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="TextApp.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysXApp.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

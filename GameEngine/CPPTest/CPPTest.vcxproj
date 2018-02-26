@@ -155,15 +155,12 @@
   <ItemGroup>
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="InstanceDraw.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="PhysXApp.cpp" />
     <ClCompile Include="TestApp.cpp" />
     <ClCompile Include="TextApp.cpp" />
     <ClCompile Include="UITest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InstanceDraw.h" />
-    <ClInclude Include="PhysXApp.h" />
     <ClInclude Include="TestApp.h" />
     <ClInclude Include="TextApp.h" />
     <ClInclude Include="UITest.h" />
