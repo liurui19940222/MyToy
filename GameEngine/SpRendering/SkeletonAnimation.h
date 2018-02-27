@@ -19,37 +19,37 @@ struct JointPose;
 
 SMART_STRUCT(Joint) struct Joint
 {
-	string m_name;				//关节名字
-	byte m_Index;				//在数组中的索引
-	byte m_iParent;				//父索引，或0xFF代表根关节
-	Matrix4x4 m_invBindPose;	//绑定姿势之逆变换
-	Matrix4x4 m_localMatrix;	//局部矩阵
+	string		m_Name;				//关节名字
+	byte		m_Index;				//在数组中的索引
+	byte		m_iParent;				//父索引，或0xFF代表根关节
+	Matrix4x4	m_InvBindPose;	//绑定姿势之逆变换
+	Matrix4x4	m_LocalMatrix;	//局部矩阵
 
 	Joint() {
-		m_invBindPose.MakeIdentity();
-		m_localMatrix.MakeIdentity();
+		m_InvBindPose.MakeIdentity();
+		m_LocalMatrix.MakeIdentity();
 	}
 };
 
 SMART_STRUCT(Skeleton) struct Skeleton
 {
-	vector<Joint> m_joints;
-	vector<JointPose> m_localPoses;
-	vector<Matrix4x4> m_globalPoses;
-	vector<Matrix4x4> m_skiningMatrices;
-	vector<Vector4> m_weights;
-	vector<BVector4> m_indices;
-	Matrix4x4 m_bindShapeMat;
+	vector<Joint>		m_Joints;
+	vector<JointPose>	m_LocalPoses;
+	vector<Matrix4x4>	m_GlobalPoses;
+	vector<Matrix4x4>	m_SkiningMatrices;
+	vector<Vector4>		m_Weights;
+	vector<BVector4>	m_Indices;
+	Matrix4x4			m_BindShapeMat;
 
 	inline void AddJoint(Joint& joint)
 	{
-		m_joints.push_back(joint);
+		m_Joints.push_back(joint);
 	}
 
 	inline Joint* GetJoint(const string& name)
 	{
-		for (Joint& joint : m_joints)
-			if (joint.m_name == name)
+		for (Joint& joint : m_Joints)
+			if (joint.m_Name == name)
 				return &joint;
 
 		return NULL;
@@ -57,60 +57,62 @@ SMART_STRUCT(Skeleton) struct Skeleton
 
 	inline Joint* GetJoint(int index)
 	{
-		return &m_joints[index];
+		return &m_Joints[index];
 	}
 
 	inline byte GetJointIndex(const string& name)
 	{
-		for (byte i = 0; i < m_joints.size(); ++i)
-			if (m_joints[i].m_name == name)
+		for (byte i = 0; i < m_Joints.size(); ++i)
+			if (m_Joints[i].m_Name == name)
 				return i;
 		return 0xFF;
 	}
 
 	inline vector<Joint>& GetJoints()
 	{
-		return m_joints;
+		return m_Joints;
 	}
 
 	//得到关节数量
 	inline int GetSize()
 	{
-		return m_joints.size();
+		return m_Joints.size();
 	}
 
 	//得到权重数量
 	inline int GetWeightSize()
 	{
-		return m_weights.size();
+		return m_Weights.size();
 	}
 };
 
 SMART_STRUCT(JointPose) struct JointPose
 {
-	Matrix4x4 m_matrix;			//变换矩阵
+	Matrix4x4 m_Matrix;			//变换矩阵
 };
 
 SMART_STRUCT(AnimationSample) struct AnimationSample
 {
-	float m_time;			//该采样的时间点
-	map<byte, JointPose> m_jointPoses;	//该采样所引用的关节和对应的局部姿势
+	float				 m_Time;			//该采样的时间点
+	map<byte, JointPose> m_JointPoses;		//该采样所引用的关节和对应的局部姿势
 };
 
 SMART_STRUCT(AnimationClip) struct AnimationClip
 {
 	vector<AnimationSample> m_aSamples;
-	float m_length;
-	bool m_isLooping;
+	float					m_Length;
+	bool					m_IsLooping;
 };
 
 SMART_STRUCT(Mesh) struct Mesh
 {
-	Vector3* m_vertices = NULL;
-	Vector3* m_normals = NULL;
-	Vector2* m_texcoords = NULL;
-	Color* m_colors = NULL;
-	int m_vertexCount = 0;
+	Vector3*	m_Vertices = NULL;
+	Vector3*	m_Normals = NULL;
+	Vector2*	m_Texcoords = NULL;
+	Color*		m_Colors = NULL;
+	ushort*		m_Indices = NULL;
+	int			m_VertexCount = 0;
+	int			m_TriangleCount = 0;
 
 	inline Mesh() {}
 	Mesh(const Mesh& mesh);
@@ -119,12 +121,12 @@ SMART_STRUCT(Mesh) struct Mesh
 
 SMART_STRUCT(Model) struct Model
 {
-	PSkeleton m_skeleton;
-	vector<PMesh> m_meshes;
-	vector<PAnimationClip> m_animations;
+	PSkeleton				m_Skeleton;
+	vector<PMesh>			m_Meshes;
+	vector<PAnimationClip>	m_Animations;
 
-	inline size_t meshesCount() { return m_meshes.size(); }
-	inline size_t animationsCount() { return m_animations.size(); }
+	inline size_t meshesCount() { return m_Meshes.size(); }
+	inline size_t animationsCount() { return m_Animations.size(); }
 };
 
 class SkeletonAnimation {

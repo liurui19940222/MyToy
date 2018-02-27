@@ -180,8 +180,8 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 	for (Joint& joint : skeleton.GetJoints())
 	{
 		JointVertex v;
-		v.m_matrix = skeleton.m_globalPoses[joint.m_Index];
-		v.m_pos = skeleton.m_globalPoses[joint.m_Index] * Vector4(0, 0, 0, 1);
+		v.m_matrix = skeleton.m_GlobalPoses[joint.m_Index];
+		v.m_pos = skeleton.m_GlobalPoses[joint.m_Index] * Vector4(0, 0, 0, 1);
 		v.m_parent = joint.m_iParent;
 		vertices[index++] = v;
 	}
@@ -264,23 +264,23 @@ void CEditorTool::WatchTarget(CGameObject& camera, const Vector3& targetPos)
 	static Vector2 lastMousePos(0.0f, 0.0f);
 	static Vector2 curMousePos(0.0f, 0.0f);
 	static float distance = (eyePos - targetPos).Magnitude();
-	if (CInput::GetMouseDown(EMouseKey::Right))
+	if (Input::GetMouseDown(EMouseKey::Right))
 	{
 		key_down = true;
-		lastMousePos = CInput::InputMousePosition();
+		lastMousePos = Input::InputMousePosition();
 		_Application->SetCursor(IDC_CROSS);
 	}
-	if (CInput::GetMouseUp(EMouseKey::Right))
+	if (Input::GetMouseUp(EMouseKey::Right))
 	{
 		key_down = false;
 		_Application->SetCursor(IDC_ARROW);
 	}
-	distance -= CInput::GetAxis("Scroll") * CTime::deltaTime;
+	distance -= Input::GetAxis("Scroll") * CTime::deltaTime;
 	distance = CMath::Clamp(distance, 8.0f, 20.0f);
 	Vector3 dir = (camera.GetLocalPosition() - targetPos).Normalize() * distance;
 	camera.SetLocalPosition(dir + targetPos);
 	if (!key_down) return;
-	curMousePos = CInput::InputMousePosition();
+	curMousePos = Input::InputMousePosition();
 	float h = (curMousePos.x - lastMousePos.x) * CTime::deltaTime * speed;
 	float v = (curMousePos.y - lastMousePos.y) * CTime::deltaTime * speed;
 	lastMousePos = curMousePos;

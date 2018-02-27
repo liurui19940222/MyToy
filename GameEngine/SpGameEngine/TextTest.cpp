@@ -11,82 +11,86 @@ void CTextTest::OnStart()
 	go->SetLocalPosition(Vector3(0, 0, 0));
 	go->SetLayer(Layer::Default);
 	text = go->AddComponent<CTextRenderer>();
-	text->SetFont(font)->SetFontSize(30)->SetTextRect(SRect2D{ 0, 0, 3, 1 })->SetColor(Color::green)->SetSingleLine(false);
+	text->SetFont(font);
+	text->SetFontSize(30);
+	text->SetTextRect(SRect2D{ 0, 0, 3, 1 });
+	text->SetColor(Color::green);
+	text->SetSingleLine(false);
 	text->SetText(L"那么照此格式输出的字母都能以基线对齐。但是所有的字都比设置的位置要低一些，想问一下我的计算方式是不是不对，网上都是这么计算的  ……");
 }
 
 void CTextTest::OnUpdate()
 {
-	if (CInput::GetKeyDown(DIK_NUMPAD1))
+	if (Input::GetKeyDown(DIK_NUMPAD1))
 	{
 		text->SetTextAlignment(EAlignment::LEFT_BOTTOM);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD2))
+	if (Input::GetKeyDown(DIK_NUMPAD2))
 	{
 		text->SetTextAlignment(EAlignment::CENTER_BOTTOM);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD3))
+	if (Input::GetKeyDown(DIK_NUMPAD3))
 	{
 		text->SetTextAlignment(EAlignment::RIGHT_BOTTOM);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD4))
+	if (Input::GetKeyDown(DIK_NUMPAD4))
 	{
 		text->SetTextAlignment(EAlignment::LEFT_MIDDLE);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD5))
+	if (Input::GetKeyDown(DIK_NUMPAD5))
 	{
 		text->SetTextAlignment(EAlignment::CENTER_MIDDLE);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD6))
+	if (Input::GetKeyDown(DIK_NUMPAD6))
 	{
 		text->SetTextAlignment(EAlignment::RIGHT_MIDDLE);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD7))
+	if (Input::GetKeyDown(DIK_NUMPAD7))
 	{
 		text->SetTextAlignment(EAlignment::LEFT_TOP);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD8))
+	if (Input::GetKeyDown(DIK_NUMPAD8))
 	{
 		text->SetTextAlignment(EAlignment::CENTER_TOP);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD9))
+	if (Input::GetKeyDown(DIK_NUMPAD9))
 	{
 		text->SetTextAlignment(EAlignment::RIGHT_TOP);
 	}
 	
-	if (CInput::GetKeyDown(DIK_1))
+	if (Input::GetKeyDown(DIK_1))
 	{
 		text->SetColor(Color::orange);
 	}
-	if (CInput::GetKeyDown(DIK_2))
+	if (Input::GetKeyDown(DIK_2))
 	{
 		text->SetColor(Color::cyan);
 	}
-	if (CInput::GetKeyDown(DIK_3))
+	if (Input::GetKeyDown(DIK_3))
 	{
 		text->SetColor(Color::green);
 	}
-	if (CInput::GetKeyDown(DIK_4))
+	if (Input::GetKeyDown(DIK_4))
 	{
 		text->SetColor(Color::red);
 	}
 
-	if (CInput::GetKey(DIK_N))
+	if (Input::GetKey(DIK_N))
 	{
 		SRect2D rect = text->GetTextRect();
 		rect.halfSize.x -= CTime::deltaTime * 10;
 		text->SetTextRect(rect);
 	}
 
-	if (CInput::GetKey(DIK_M))
+	if (Input::GetKey(DIK_M))
 	{
 		SRect2D rect = text->GetTextRect();
 		rect.halfSize.x += CTime::deltaTime * 10;
 		text->SetTextRect(rect);
 	}
 	
-	float h = CInput::GetAxis("Horizontal");
-	float v = CInput::GetAxis("Vertical");
+	float h = Input::GetAxis("Horizontal");
+	float v = Input::GetAxis("Vertical");
 	Vector3 euler = go->GetLocalEulerAngles();
 	euler.y += h * CTime::deltaTime * 60;
 	euler.x += v * CTime::deltaTime * 60;

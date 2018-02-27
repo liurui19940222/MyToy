@@ -6,158 +6,160 @@ USING_NAMESPACE_ENGINE
 PMesh MeshFactory::CreateCube()
 {
 	static const int VERTEX_NUM = 36;
-	static const Vector3 vertices[VERTEX_NUM] = {
-		//front
-		{ -0.5f, 0.5f, -0.5f },
-		{ -0.5f, -0.5f, -0.5f },
-		{ 0.5f, -0.5f, -0.5f },
-		{ -0.5f, 0.5f, -0.5f },
-		{ 0.5f, -0.5f, -0.5f },
-		{ 0.5f, 0.5f, -0.5f },
-		//back
-		{ 0.5f, 0.5f, 0.5f },
-		{ 0.5f, -0.5f, 0.5f },
-		{ -0.5f, -0.5f, 0.5f },
-		{ 0.5f, 0.5f, 0.5f },
-		{ -0.5f, -0.5f, 0.5f },
-		{ -0.5f, 0.5f, 0.5f },
-		//left
-		{ -0.5f, 0.5f, 0.5f },
-		{ -0.5f, -0.5f, 0.5f },
-		{ -0.5f, -0.5f, -0.5f },
-		{ -0.5f, 0.5f, 0.5f },
-		{ -0.5f, -0.5f, -0.5f },
-		{ -0.5f, 0.5f, -0.5f },
-		//right
-		{ 0.5f, 0.5f, -0.5f },
-		{ 0.5f, -0.5f, -0.5f },
-		{ 0.5f, -0.5f, 0.5f },
-		{ 0.5f, 0.5f, -0.5f },
-		{ 0.5f, -0.5f, 0.5f },
-		{ 0.5f, 0.5f, 0.5f },
-		//top
-		{ -0.5f, 0.5f, 0.5f },
-		{ -0.5f, 0.5f, -0.5f },
-		{ 0.5f, 0.5f, -0.5f },
-		{ -0.5f, 0.5f, 0.5f },
-		{ 0.5f, 0.5f, -0.5f },
-		{ 0.5f, 0.5f, 0.5f },
-		//bottom
-		{ -0.5f, -0.5f, -0.5f },
-		{ -0.5f, -0.5f, 0.5f },
-		{ 0.5f, -0.5f, 0.5f },
-		{ -0.5f, -0.5f, -0.5f },
-		{ 0.5f, -0.5f, 0.5f },
-		{ 0.5f, -0.5f, -0.5f },
+	static const float vertices[] = {
+		0.5f, -0.5f, 0.5f,
+		-0.5f, -0.5f, 0.5f,
+		0.5f, 0.5f, 0.5f,
+		-0.5f, 0.5f, 0.5f,
+		0.5f, 0.5f, -0.5f,
+		-0.5f, 0.5f, -0.5f,
+		0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+		0.5f, 0.5f, 0.5f,
+		-0.5f, 0.5f, 0.5f,
+		0.5f, 0.5f, -0.5f,
+		-0.5f, 0.5f, -0.5f,
+		0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f, 0.5f,
+		-0.5f, -0.5f, 0.5f,
+		-0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f, 0.5f,
+		-0.5f, 0.5f, 0.5f,
+		-0.5f, 0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f, -0.5f,
+		0.5f, 0.5f, -0.5f,
+		0.5f, 0.5f, 0.5f,
+		0.5f, -0.5f, 0.5f,
 	};
-	static const Vector3 normals[VERTEX_NUM] = {
-		//front
-		{ 0.0f, 0.0f, 1.0f },
-		{ 0.0f, 0.0f, 1.0f },
-		{ 0.0f, 0.0f, 1.0f },
-		{ 0.0f, 0.0f, 1.0f },
-		{ 0.0f, 0.0f, 1.0f },
-		{ 0.0f, 0.0f, 1.0f },
-		//back
-		{ 0.0f, 0.0f, -1.0f },
-		{ 0.0f, 0.0f, -1.0f },
-		{ 0.0f, 0.0f, -1.0f },
-		{ 0.0f, 0.0f, -1.0f },
-		{ 0.0f, 0.0f, -1.0f },
-		{ 0.0f, 0.0f, -1.0f },
-		//left
-		{ -1.0f, 0.0f, 0.0f },
-		{ -1.0f, 0.0f, 0.0f },
-		{ -1.0f, 0.0f, 0.0f },
-		{ -1.0f, 0.0f, 0.0f },
-		{ -1.0f, 0.0f, 0.0f },
-		{ -1.0f, 0.0f, 0.0f },
-		//right
-		{ 1.0f, 0.0f, 0.0f },
-		{ 1.0f, 0.0f, 0.0f },
-		{ 1.0f, 0.0f, 0.0f },
-		{ 1.0f, 0.0f, 0.0f },
-		{ 1.0f, 0.0f, 0.0f },
-		{ 1.0f, 0.0f, 0.0f },
-		//top
-		{ 0.0f, 1.0f, 0.0f },
-		{ 0.0f, 1.0f, 0.0f },
-		{ 0.0f, 1.0f, 0.0f },
-		{ 0.0f, 1.0f, 0.0f },
-		{ 0.0f, 1.0f, 0.0f },
-		{ 0.0f, 1.0f, 0.0f },
-		//bottom
-		{ 0.0f, -1.0f, 0.0f },
-		{ 0.0f, -1.0f, 0.0f },
-		{ 0.0f, -1.0f, 0.0f },
-		{ 0.0f, -1.0f, 0.0f },
-		{ 0.0f, -1.0f, 0.0f },
-		{ 0.0f, -1.0f, 0.0f },
+	static const float normals[] = {
+		0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, -1.0f,
+		0.0f, 0.0f, -1.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, -1.0f,
+		0.0f, 0.0f, -1.0f,
+		0.0f, -1.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		-1.0f, 0.0f, 0.0f,
+		-1.0f, 0.0f, 0.0f,
+		-1.0f, 0.0f, 0.0f,
+		-1.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
 	};
-	Vector2 texcoords[VERTEX_NUM];
-	for (int i = 0; i < VERTEX_NUM;)
-	{
-		texcoords[i++] = Vector2(0.0f, 1.0f);
-		texcoords[i++] = Vector2(0.0f, 0.0f);
-		texcoords[i++] = Vector2(1.0f, 0.0f);
-		texcoords[i++] = Vector2(0.0f, 1.0f);
-		texcoords[i++] = Vector2(1.0f, 0.0f);
-		texcoords[i++] = Vector2(1.0f, 1.0f);
-	}
-	return CreateMesh(vertices, texcoords, normals, VERTEX_NUM);
+	static const float texcoords[] = {
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		0.0f, 0.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		1.0f, 0.0f,
+		0.0f, 0.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		1.0f, 0.0f,
+		0.0f, 0.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		1.0f, 0.0f,
+	};
+	static const ushort indices[] = {
+		0, 2, 3,
+		0, 3, 1,
+		8, 4, 5,
+		8, 5, 9,
+		10, 6, 7,
+		10, 7, 11,
+		12, 13, 14,
+		12, 14, 15,
+		16, 17, 18,
+		16, 18, 19,
+		20, 21, 22,
+		20, 22, 23,
+	};
+	return CreateMesh((Vector3*)vertices, (Vector2*)texcoords, (Vector3*)normals, indices, VERTEX_NUM, 12);
 }
 
 PMesh MeshFactory::CreateQuad()
 {
-	static const int VERTEX_NUM = 6;
+	static const int VERTEX_NUM = 4;
 	static const Vector3 vertices[VERTEX_NUM] = {
 		{-0.5f, 0.5f, 0.0f},
 		{-0.5f, -0.5f, 0.0f},
 		{0.5f, -0.5f, 0.0f},
-		{0.5f, -0.5f, 0.0f},
 		{0.5f, 0.5f, 0.0f},
-		{-0.5f, 0.5f, 0.0f},
 	};
 	static const Vector2 texcoords[VERTEX_NUM] = {
 		{0.0f, 1.0f},
 		{0.0f, 0.0f},
 		{1.0f, 0.0f},
-		{1.0f, 0.0f},
 		{1.0f, 1.0f},
-		{0.0f, 1.0f},
 	};
 	static const Vector3 normals[VERTEX_NUM] = {
-		//front
-		{ 0.0f, 0.0f, 1.0f },
-		{ 0.0f, 0.0f, 1.0f },
 		{ 0.0f, 0.0f, 1.0f },
 		{ 0.0f, 0.0f, 1.0f },
 		{ 0.0f, 0.0f, 1.0f },
 		{ 0.0f, 0.0f, 1.0f },
 	};
-	return CreateMesh(vertices, texcoords, normals, VERTEX_NUM);
+	static const ushort indices[6] = 
+	{
+		0, 1, 2,
+		0, 2, 3
+	};
+	return CreateMesh(vertices, texcoords, normals, indices, VERTEX_NUM, 2);
 }
 
-PMesh MeshFactory::CreateMesh(const Vector3* vertices, const Vector2* texcoords, const Vector3* normals, int count)
+PMesh MeshFactory::CreateMesh(const Vector3* vertices, const Vector2* texcoords, const Vector3* normals, const ushort* indices, int vertexCount, int triangleCount)
 {
 	PMesh mesh(new Mesh);
-	mesh->m_vertexCount = count;
+	mesh->m_VertexCount = vertexCount;
+	mesh->m_TriangleCount = triangleCount;
+	size_t dataSize = 0;
 	if (vertices)
 	{
-		mesh->m_vertices = (Vector3*)malloc(sizeof(Vector3) * count);
-		memcpy(mesh->m_vertices, vertices, sizeof(Vector3) * count);
+		dataSize = sizeof(Vector3) * vertexCount;
+		mesh->m_Vertices = (Vector3*)malloc(dataSize);
+		memcpy(mesh->m_Vertices, vertices, dataSize);
 	}
 	if (texcoords)
 	{
-		mesh->m_texcoords = (Vector2*)malloc(sizeof(Vector2) * count);
-		memcpy(mesh->m_texcoords, texcoords, sizeof(Vector2) * count);
+		dataSize = sizeof(Vector2) * vertexCount;
+		mesh->m_Texcoords = (Vector2*)malloc(dataSize);
+		memcpy(mesh->m_Texcoords, texcoords, dataSize);
 	}
 	if (normals)
 	{
-		mesh->m_normals = (Vector3*)malloc(sizeof(Vector3) * count);
-		memcpy(mesh->m_normals, normals, sizeof(Vector3) * count);
+		dataSize = sizeof(Vector3) * vertexCount;
+		mesh->m_Normals = (Vector3*)malloc(dataSize);
+		memcpy(mesh->m_Normals, normals, dataSize);
 	}
-
+	if (indices)
+	{
+		dataSize = sizeof(ushort) * triangleCount * 3;
+		mesh->m_Indices = (ushort*)malloc(dataSize);
+		memcpy(mesh->m_Indices, indices, dataSize);
+	}
 	return mesh;
 }
 
@@ -182,7 +184,7 @@ PMesh MeshFactory::CreateRectMesh(float width, float height)
 		{ 1.0f, 1.0f },
 		{ 0.0f, 1.0f },
 	};
-	return CreateMesh(vertices, texcoords, NULL, VERTEX_NUM);
+	return CreateMesh(vertices, texcoords, NULL, NULL, VERTEX_NUM, 0);
 }
 
 PMesh MeshFactory::CreateMesh(EMeshType type)
@@ -199,11 +201,11 @@ PMesh MeshFactory::CreateMesh(EMeshType type)
 
 PMesh MeshFactory::SharedMesh(EMeshType type)
 {
-	auto it = m_meshes.find(type);
-	if (it == m_meshes.end())
+	auto it = m_Meshes.find(type);
+	if (it == m_Meshes.end())
 	{
 		PMesh mesh = CreateMesh(type);
-		m_meshes.insert(make_pair(type, mesh));
+		m_Meshes.insert(make_pair(type, mesh));
 		return mesh;
 	}
 	return it->second;

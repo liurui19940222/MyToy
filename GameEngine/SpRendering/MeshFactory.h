@@ -20,12 +20,12 @@ enum class EMeshType
 
 class MeshFactory : public Singleton<MeshFactory>
 {
-	map<EMeshType, PMesh> m_meshes;
+	map<EMeshType, PMesh> m_Meshes;
 	map<EMeshType, PMeshBuffer> m_buffers;
 
 	PMesh CreateCube();
 	PMesh CreateQuad();
-	PMesh CreateMesh(const Vector3* vertices, const Vector2* texcoords, const Vector3* normals, int count);
+	PMesh CreateMesh(const Vector3* vertices, const Vector2* texcoords, const Vector3* normals, const ushort* indices, int vertexCount, int triangleCount);
 
 public:
 	PMesh CreateRectMesh(float width, float height);

@@ -27,8 +27,8 @@ void CRelationshipTest::OnStart()
 void CRelationshipTest::OnUpdate()
 {
 	if (!go) return;
-	float h = CInput::GetAxis("Horizontal") * CTime::deltaTime * 50;
-	float v = CInput::GetAxis("Vertical") * CTime::deltaTime * 50;
+	float h = Input::GetAxis("Horizontal") * CTime::deltaTime * 50;
+	float v = Input::GetAxis("Vertical") * CTime::deltaTime * 50;
 	Vector3 euler = axis->GetLocalEulerAngles();
 	euler.x += v;
 	euler.y += h;

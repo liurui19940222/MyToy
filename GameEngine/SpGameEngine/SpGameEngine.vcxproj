@@ -158,7 +158,6 @@
     <ClInclude Include="DirectoryInfo.h" />
     <ClInclude Include="FileInfo.h" />
     <ClInclude Include="FileSystemInfo.h" />
-    <ClInclude Include="GUIDesigner.h" />
     <ClInclude Include="ImageHandle.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="LightTest.h" />
@@ -174,10 +173,6 @@
     <ClInclude Include="EngineSetting.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />
-    <ClInclude Include="GUIImage.h" />
-    <ClInclude Include="GUILabel.h" />
-    <ClInclude Include="GUISystem.h" />
-    <ClInclude Include="GUITest.h" />
     <ClInclude Include="ImageTest.h" />
     <ClInclude Include="Maker.h" />
     <ClInclude Include="PriorityQueue.h" />
@@ -200,8 +195,6 @@
     <ClCompile Include="DirectoryInfo.cpp" />
     <ClCompile Include="FileInfo.cpp" />
     <ClCompile Include="FileSystemInfo.cpp" />
-    <ClCompile Include="GUIDesigner.cpp" />
-    <ClCompile Include="GUITest.cpp" />
     <ClCompile Include="ImageHandle.cpp" />
     <ClCompile Include="ImageTest.cpp" />
     <ClCompile Include="LightComponent.cpp" />
@@ -217,9 +210,6 @@
     <ClCompile Include="EngineSetting.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
-    <ClCompile Include="GUIImage.cpp" />
-    <ClCompile Include="GUILabel.cpp" />
-    <ClCompile Include="GUISystem.cpp" />
     <ClCompile Include="Maker.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="RelationshipTest.cpp" />

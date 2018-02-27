@@ -23,7 +23,10 @@ void GLRendering::Render(RenderingObject obj)
 {
 	obj.material->Bind();
 	obj.mesh->BindBuffer();
-	glDrawArrays(GL_TRIANGLES, 0, obj.mesh->GetVertexNum());
+	if (obj.mesh->HasIndicesData())
+		glDrawElements(GL_TRIANGLES, obj.mesh->GetTriangleNum() * 3, GL_UNSIGNED_SHORT, (void*)0);
+	else
+		glDrawArrays(GL_TRIANGLES, 0, obj.mesh->GetVertexNum());
 	obj.material->Unbind();
 }
 

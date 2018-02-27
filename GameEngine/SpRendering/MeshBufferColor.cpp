@@ -13,7 +13,7 @@ MeshBufferColor::~MeshBufferColor()
 
 MeshBufferColor::MeshBufferColor(PMesh mesh) : MeshBuffer(mesh), m_VboColorHandle(0)
 {
-	MakeColorBuffer(mesh->m_colors, mesh->m_vertexCount);
+	MakeColorBuffer(mesh->m_Colors, mesh->m_VertexCount);
 }
 
 void MeshBufferColor::MakeColorBuffer(const Color* colors, int size)
@@ -26,5 +26,5 @@ void MeshBufferColor::MakeColorBuffer(const Color* colors, int size)
 void MeshBufferColor::MakeBuffer(PMesh mesh)
 {
 	MeshBuffer::MakeBuffer(mesh);
-	MakeColorBuffer(mesh->m_colors, mesh->m_vertexCount);
+	MakeColorBuffer(mesh->m_Colors, mesh->m_VertexCount);
 }

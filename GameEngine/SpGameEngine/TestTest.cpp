@@ -35,15 +35,15 @@ void CTestTest::OnStart() {
 void CTestTest::OnUpdate() 
 {
 	static float axis_x = 0, axis_y = 0, axis_z = 0;
-	float h = CInput::GetAxis("Horizontal") * CTime::deltaTime * 10;
-	float v = CInput::GetAxis("Vertical") * CTime::deltaTime * 10;
+	float h = Input::GetAxis("Horizontal") * CTime::deltaTime * 10;
+	float v = Input::GetAxis("Vertical") * CTime::deltaTime * 10;
 	axis_y += h;
 	axis_z += v;
-	if (CInput::GetKey(DIK_I))
+	if (Input::GetKey(DIK_I))
 	{
 		axis_x += CTime::deltaTime * 10;
 	}
-	if (CInput::GetKey(DIK_K))
+	if (Input::GetKey(DIK_K))
 	{
 		axis_x -= CTime::deltaTime * 10;
 	}

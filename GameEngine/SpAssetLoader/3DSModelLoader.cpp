@@ -50,11 +50,11 @@ void C3DSModelLoader::LoadFromFile(const char* filename)
 		memcpy(&m_normalArray[index++], &(normalBuffer[face->points[1]]), sizeof(Vector3));
 		memcpy(&m_normalArray[index++], &(normalBuffer[face->points[2]]), sizeof(Vector3));
 	}
-	m_model->m_meshes.push_back(make_shared<Mesh>());
-	m_model->m_meshes[0]->m_vertices = (Vector3*)m_triangleArray;
-	m_model->m_meshes[0]->m_normals = m_normalArray;
-	m_model->m_meshes[0]->m_texcoords = m_uvArray;
-	m_model->m_meshes[0]->m_vertexCount = m_vertexNum;
+	m_model->m_Meshes.push_back(make_shared<Mesh>());
+	m_model->m_Meshes[0]->m_Vertices = (Vector3*)m_triangleArray;
+	m_model->m_Meshes[0]->m_Normals = m_normalArray;
+	m_model->m_Meshes[0]->m_Texcoords = m_uvArray;
+	m_model->m_Meshes[0]->m_VertexCount = m_vertexNum;
 }
 
 void C3DSModelLoader::ReleaseSource()

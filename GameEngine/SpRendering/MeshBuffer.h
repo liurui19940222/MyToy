@@ -45,11 +45,14 @@ public:
 	virtual ~MeshBuffer();
 
 	void MakePositionBuffer(const Vector3* vertices, int size);
+	void MakeIndicesBuffer(const ushort* indices, int size);
 	void UpdateVertices(const Vector3* vertices, int offset, int size);
 	virtual void MakeBuffer(PMesh mesh);
 	virtual void BindBuffer() override;
 	inline void UnbindBuffer() { glBindVertexArray(0); }
 	inline int GetVertexNum() const { return m_VertexNum; }
+	inline int GetTriangleNum() const { return m_TriangleNum; }
+	inline bool HasIndicesData() const { return m_bHasIndicesData; }
 
 	static void MakeVertexBuffer(GLuint* bufferId, int dataSize, int componentCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType = EDataType::FLOAT);
 	static void MakeIntegerVertexBuffer(GLuint* bufferId, int dataSize, int componentCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType = EDataType::INT);
@@ -60,8 +63,11 @@ public:
 
 private:
 	int				m_VertexNum;
+	int				m_TriangleNum;
 	GLuint			m_VaoHandle;
 	GLuint			m_VboPositionHandle;
+	GLuint			m_VboIndexHandle;
+	bool			m_bHasIndicesData;
 };
 
 END_NAMESPACE_ENGINE

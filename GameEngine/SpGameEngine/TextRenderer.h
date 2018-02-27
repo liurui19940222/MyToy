@@ -14,12 +14,10 @@ class ENGINE_API CTextRenderer : public FontRenderer, public CComponent, public 
 private:
 
 public:
+	CTextRenderer();
 	virtual void OnStart() override;
 	virtual void OnUpdate() override;
 	virtual void OnDestroy() override;
-
-	virtual float GetPixelScale() override;
-
 	virtual void Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matrix4x4& projectionMatrix) override;
 	virtual void RenderDebug(Matrix4x4& modelMatrix) override;
 };

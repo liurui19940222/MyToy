@@ -25,19 +25,19 @@ void CColladaTest::OnStart()
 		->SetMainTexture(Texture2D::Create("textures/shake.png"));
 	collada = _Resources->Load<ColladaLoader>("models/shake_skin.xml");
 	m_model = collada->m_model;
-	//MeshBuffer* buffer = new MeshBuffer(m_model->m_meshes[0], m_model->m_skeleton->m_weights, m_model->m_skeleton->m_indices);
-	PMeshBufferSkinning buffer = make_shared<MeshBufferSkinning>(m_model->m_meshes[0]);
-	buffer->MakeJointBuffer(m_model->m_skeleton->m_weights, m_model->m_skeleton->m_indices);
+	//MeshBuffer* buffer = new MeshBuffer(m_model->m_Meshes[0], m_model->m_Skeleton->m_weights, m_model->m_Skeleton->m_indices);
+	PMeshBufferSkinning buffer = make_shared<MeshBufferSkinning>(m_model->m_Meshes[0]);
+	buffer->MakeJointBuffer(m_model->m_Skeleton->m_Weights, m_model->m_Skeleton->m_Indices);
 
-	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, m_model->m_skeleton)->SetMaterial(model_mat);
+	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, m_model->m_Skeleton)->SetMaterial(model_mat);
 	
 	_MainCameraGo->LookAt(model->GetLocalPosition());
 
 	m_clips.push_back(_Resources->LoadAnimation("models/shake_move.xml"));
 	m_clips.push_back(_Resources->LoadAnimation("models/shake_hit.xml"));
 	m_clips.push_back(_Resources->LoadAnimation("models/shake_death.xml"));
-	m_clips[1]->m_isLooping = true;
-	m_clips[2]->m_isLooping = false;
+	m_clips[1]->m_IsLooping = true;
+	m_clips[2]->m_IsLooping = false;
 
 	//box = SkyBox::Create("textures/skybox2/top.tga",
 	//	"textures/skybox2/bottom.tga",
@@ -58,10 +58,10 @@ void CColladaTest::OnUpdate()
 		v[1] = m_clips[1];
 		float times[] = { CTime::time, CTime::time };
 		float weights[] = { 1.0f, 0.0f };
-		vector<JointPose> jointPoses = SkeletonAnimation::Blend(&v[0], times, weights, 2, m_model->m_skeleton);
-		//vector<JointPose> jointPoses = SkeletonAnimation::Sample(*m_clips[1], m_model->m_skeleton, CTime::time, 1);
-		SkeletonAnimation::CalculateGlobalMatrix(m_model->m_skeleton, jointPoses);
-		SkeletonAnimation::CalculateSkinningMatrix(m_model->m_skeleton);
+		vector<JointPose> jointPoses = SkeletonAnimation::Blend(&v[0], times, weights, 2, m_model->m_Skeleton);
+		//vector<JointPose> jointPoses = SkeletonAnimation::Sample(*m_clips[1], m_model->m_Skeleton, CTime::time, 1);
+		SkeletonAnimation::CalculateGlobalMatrix(m_model->m_Skeleton, jointPoses);
+		SkeletonAnimation::CalculateSkinningMatrix(m_model->m_Skeleton);
 	}
 
 	CEditorTool::WatchTarget(*_MainCameraGo, model->GetLocalPosition());

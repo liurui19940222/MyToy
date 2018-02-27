@@ -3,21 +3,18 @@
 #include"Application.h"
 #include"Time.h"
 #include"SpCommon\Debug.h"
-#include"GUISystem.h"
 #include"GameObject.h"
 #include"Config.h"
 #include"EngineSetting.h"
 #include"LightComponent.h"
-#include"..\SpCommon\Input.h"
-
-using namespace guisystem;
+#include"SpCommon\Input.h"
 
 void CEngine::InitEngine(HINSTANCE instance, HWND hwnd, float clientWidth, float clientHeight)
 {
 	glewExperimental = GL_TRUE;
 	glewInit();
 	Debug::Init(hwnd);
-	CInput::Init(instance, hwnd);
+	Input::Init(instance, hwnd);
 	CTime::InitTime();
 	CTime::SetTargetFrameCount(60);
 	CEngineSetting::Init();
@@ -55,7 +52,6 @@ void CEngine::SetupProjection(int width, int height)
 
 	m_clientWidth = (float)width;
 	m_clientHeight = (float)height;
-	_GUISystem->InitGUI((float)width, (float)height);
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -121,8 +117,7 @@ void CEngine::EndOrtho()
 
 void CEngine::Update()
 {
-	CInput::GetState(ClientRect);
-	_GUISystem->OnUpdate();
+	Input::GetState(ClientRect);
 	CheckShortcuts();
 
 	_Maker->ForeachGameObject([](CGameObject* go, int depth) {
@@ -163,18 +158,14 @@ void CEngine::Render()
 
 void CEngine::Quit()
 {
-	_GUISystem->Quit();
-	CInput::ShutDown();
-	_Maker->ForeachGameObject([](CGameObject* go, int depth) {
-		//go->OnRelease();
-	});
+	Input::ShutDown();
 	wglMakeCurrent(m_hdc, NULL);
 	wglDeleteContext(m_hrc);
 }
 
 void CEngine::CheckShortcuts()
 {
-	if (CInput::GetKey(DIK_LALT) && CInput::GetKeyDown(DIKEYBOARD_RETURN))
+	if (Input::GetKey(DIK_LALT) && Input::GetKeyDown(DIKEYBOARD_RETURN))
 	{
 		_Application->ToggleFullOrWindow();
 	}

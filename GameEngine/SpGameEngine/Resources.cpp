@@ -7,7 +7,7 @@ PAnimationClip CResources::LoadAnimation(string path)
 	PModel model = modelFile->m_model;
 	PAnimationClip clip;
 	if (model->animationsCount() > 0)
-		clip = model->m_animations[0];
+		clip = model->m_Animations[0];
 	delete(modelFile);
 	return clip;
 }

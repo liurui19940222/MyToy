@@ -32,7 +32,7 @@ void CTestApp::OnStart()
 	model_mat->SetMainTexture(Texture2D::Create("textures/model.png"));
 
 	C3DSModelLoader* loader = _Resources->Load<C3DSModelLoader>("models/model.3DS");
-	PMeshBuffer buff(new MeshBuffer(loader->m_model->m_meshes[0]));
+	PMeshBuffer buff(new MeshBuffer(loader->m_model->m_Meshes[0]));
 	model->AddComponent<CMeshRenderer>()->SetModel(buff)->SetMaterial(model_mat);
 
 	PMaterial material(new Material());
@@ -58,8 +58,8 @@ void CTestApp::OnStart()
 
 void CTestApp::OnUpdate()
 {
-	float h = CInput::GetAxis("Horizontal") * CTime::deltaTime;
-	float v = CInput::GetAxis("Vertical") * CTime::deltaTime;
+	float h = Input::GetAxis("Horizontal") * CTime::deltaTime;
+	float v = Input::GetAxis("Vertical") * CTime::deltaTime;
 
 	Vector3 euler = go1->GetLocalEulerAngles();
 	euler.x += v * 300;
@@ -67,22 +67,22 @@ void CTestApp::OnUpdate()
 	go1->SetLocalEulerAngles(euler);
 	go1->SetRotation(go1->GetRotation());
 	euler = go3->GetLocalEulerAngles();
-	if (CInput::GetKey(DIK_NUMPAD8))
+	if (Input::GetKey(DIK_NUMPAD8))
 	{
 		euler.x += CTime::deltaTime * 300;
 	}
 
-	if (CInput::GetKey(DIK_NUMPAD2))
+	if (Input::GetKey(DIK_NUMPAD2))
 	{
 		euler.x -= CTime::deltaTime * 300;
 	}
 
-	if (CInput::GetKey(DIK_NUMPAD4))
+	if (Input::GetKey(DIK_NUMPAD4))
 	{
 		euler.y -= CTime::deltaTime * 300;
 	}
 
-	if (CInput::GetKey(DIK_NUMPAD6))
+	if (Input::GetKey(DIK_NUMPAD6))
 	{
 		euler.y += CTime::deltaTime * 300;
 	}

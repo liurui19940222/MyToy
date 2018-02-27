@@ -21,8 +21,8 @@ void LightTest::OnStart()
 	model_mat->SetShader(Shader::Get("light"));
 	collada = _Resources->Load<ColladaLoader>("models/scene07.xml");
 	m_model = PModel(collada->m_model);
-	PMeshBuffer buffer = make_shared<MeshBufferNormal>(m_model->m_meshes[0]);
-	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, m_model->m_skeleton)->SetMaterial(model_mat);
+	PMeshBuffer buffer = make_shared<MeshBufferNormal>(m_model->m_Meshes[0]);
+	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, m_model->m_Skeleton)->SetMaterial(model_mat);
 	_MainCameraGo->LookAt(model->GetLocalPosition());
 
 	directionalGo = _Maker->Instantiate(L"light0");
@@ -50,8 +50,8 @@ void LightTest::OnStart()
 
 void LightTest::OnUpdate()
 {
-	float h = CInput::GetAxis("Horizontal") * CTime::deltaTime * 30;
-	float v = CInput::GetAxis("Vertical") * CTime::deltaTime * 30;
+	float h = Input::GetAxis("Horizontal") * CTime::deltaTime * 30;
+	float v = Input::GetAxis("Vertical") * CTime::deltaTime * 30;
 
 	Vector3 pos = pointGo->GetLocalPosition();
 	pos.x += h;

@@ -2,14 +2,19 @@
 
 USING_NAMESPACE_ENGINE;
 
-MeshBuffer::MeshBuffer() : m_VaoHandle(0), m_VboPositionHandle(0), m_VertexNum(0)
+MeshBuffer::MeshBuffer() : m_VaoHandle(0), m_VboPositionHandle(0), m_VboIndexHandle(0), m_VertexNum(0), m_TriangleNum(0), m_bHasIndicesData(false)
 {
 	glGenVertexArrays(1, &m_VaoHandle);
 }
 
 MeshBuffer::MeshBuffer(PMesh mesh) : MeshBuffer()
 {
-	MakePositionBuffer(mesh->m_vertices, mesh->m_vertexCount);
+	MakePositionBuffer(mesh->m_Vertices, mesh->m_VertexCount);
+	if (mesh->m_Indices)
+	{
+		MakeIndicesBuffer(mesh->m_Indices, mesh->m_TriangleCount * 3 * sizeof(ushort));
+	}
+	m_TriangleNum = mesh->m_TriangleCount;
 }
 
 MeshBuffer::~MeshBuffer()
@@ -26,6 +31,19 @@ void MeshBuffer::MakePositionBuffer(const Vector3* vertices, int size)
 	UnbindBuffer();
 }
 
+void MeshBuffer::MakeIndicesBuffer(const ushort* indices, int size)
+{
+	if (!indices)
+	{
+		m_bHasIndicesData = false;
+		return;
+	}
+	m_bHasIndicesData = true;
+	BindBuffer();
+	MakeIndexBuffer(&m_VboIndexHandle, size, indices);
+	UnbindBuffer();
+}
+
 void MeshBuffer::UpdateVertices(const Vector3* vertices, int offset, int size)
 {
 	UpdateVertexBuffer(m_VboPositionHandle, offset, size * sizeof(Vector3), vertices);
@@ -33,12 +51,14 @@ void MeshBuffer::UpdateVertices(const Vector3* vertices, int offset, int size)
 
 void MeshBuffer::MakeBuffer(PMesh mesh)
 {
-	MakePositionBuffer(mesh->m_vertices, mesh->m_vertexCount);
+	MakePositionBuffer(mesh->m_Vertices, mesh->m_VertexCount);
 }
 
 void MeshBuffer::BindBuffer()
 {
 	glBindVertexArray(m_VaoHandle);
+	if (m_VboIndexHandle)
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_VboIndexHandle);
 }
 
 void MeshBuffer::MakeVertexBuffer(GLuint *bufferId, int size, int componentCount, const void* pointer, int attrPos, EBufferUsage usage, EDataType dataType)

@@ -17,7 +17,7 @@ class ENGINE_API CSkinnedMeshRenderer : public CComponent, public IRenderer
 {
 	REFLECT_CLASS(CSkinnedMeshRenderer)
 private:
-	PSkeleton m_skeleton;
+	PSkeleton m_Skeleton;
 	PMeshBuffer m_mesh;
 	PMaterial m_material;
 
