@@ -2,21 +2,21 @@
 
 USING_NAMESPACE_ENGINE
 
-EMouseMode CInput::Mode = EMouseMode::Relative;
-LPDIRECTINPUT8 CInput::lpDI;
-LPDIRECTINPUTDEVICE8 CInput::lpDIKeyboard;
-LPDIRECTINPUTDEVICE8 CInput::lpDIMouse;
-byte CInput::keyboard[256];
-byte CInput::keyboardHold[256];
-DIMOUSESTATE CInput::mouseStateData;
-DIMOUSESTATE CInput::mouseStateDataHold;
-bool CInput::isMouseKeyDown[3];
-bool CInput::isMouseKeyUp[3];
-bool CInput::isKeyboardDown[256];
-bool CInput::isKeyboardUp[256];
-RECT CInput::windowRect{0,0,0,0};
+EMouseMode Input::Mode = EMouseMode::Relative;
+LPDIRECTINPUT8 Input::lpDI;
+LPDIRECTINPUTDEVICE8 Input::lpDIKeyboard;
+LPDIRECTINPUTDEVICE8 Input::lpDIMouse;
+byte Input::keyboard[256];
+byte Input::keyboardHold[256];
+DIMOUSESTATE Input::mouseStateData;
+DIMOUSESTATE Input::mouseStateDataHold;
+bool Input::isMouseKeyDown[3];
+bool Input::isMouseKeyUp[3];
+bool Input::isKeyboardDown[256];
+bool Input::isKeyboardUp[256];
+RECT Input::windowRect{0,0,0,0};
 
-void CInput::Init(HINSTANCE instance, HWND hwnd)
+void Input::Init(HINSTANCE instance, HWND hwnd)
 {
 	DirectInput8Create(instance, DIRECTINPUT_VERSION, IID_IDirectInput8, (LPVOID *)&lpDI, NULL);
 	lpDI->CreateDevice(GUID_SysKeyboard, &lpDIKeyboard, NULL);
@@ -30,7 +30,7 @@ void CInput::Init(HINSTANCE instance, HWND hwnd)
 	lpDIMouse->Acquire();
 }
 
-void CInput::GetState(const RECT& rect)
+void Input::GetState(const RECT& rect)
 {
 	windowRect = rect;
 	lpDIKeyboard->GetDeviceState(256, (LPVOID)keyboard);
@@ -56,7 +56,7 @@ void CInput::GetState(const RECT& rect)
 	}
 }
 
-bool CInput::GetKey(byte key)
+bool Input::GetKey(byte key)
 {
 	if (keyboard[key] & 0x80)
 	{
@@ -66,17 +66,17 @@ bool CInput::GetKey(byte key)
 	return false;
 }
 
-bool CInput::GetKeyDown(byte key)
+bool Input::GetKeyDown(byte key)
 {
 	return isKeyboardDown[key];
 }
 
-bool CInput::GetKeyUp(byte key)
+bool Input::GetKeyUp(byte key)
 {
 	return isKeyboardUp[key];
 }
 
-bool CInput::GetKeyDownState(byte key)
+bool Input::GetKeyDownState(byte key)
 {
 	if ((keyboard[key] & 0x80) && keyboardHold[key] != 1)
 	{
@@ -86,7 +86,7 @@ bool CInput::GetKeyDownState(byte key)
 	return false;
 }
 
-bool CInput::GetKeyUpState(byte key)
+bool Input::GetKeyUpState(byte key)
 {
 	if ((keyboardHold[key] == 1 && !(keyboard[key] & 0x80)) || keyboardHold[key] == 2)
 	{
@@ -96,22 +96,22 @@ bool CInput::GetKeyUpState(byte key)
 	return false;
 }
 
-bool CInput::GetMouseDown(EMouseKey key)
+bool Input::GetMouseDown(EMouseKey key)
 {
 	return isMouseKeyDown[(EMouseKey)key];
 }
 
-bool CInput::GetMouseUp(EMouseKey key)
+bool Input::GetMouseUp(EMouseKey key)
 {
 	return isMouseKeyUp[(EMouseKey)key];
 }
 
-bool CInput::GetMouse(EMouseKey key)
+bool Input::GetMouse(EMouseKey key)
 {
 	return mouseStateData.rgbButtons[key];
 }
 
-bool CInput::GetMouseDownState(EMouseKey key)
+bool Input::GetMouseDownState(EMouseKey key)
 {
 	if (mouseStateData.rgbButtons[(int)key] && !mouseStateDataHold.rgbButtons[(int)key])
 	{
@@ -121,7 +121,7 @@ bool CInput::GetMouseDownState(EMouseKey key)
 	return false;
 }
 
-bool CInput::GetMouseUpState(EMouseKey key)
+bool Input::GetMouseUpState(EMouseKey key)
 {
 	if (mouseStateDataHold.rgbButtons[(int)key] && !mouseStateData.rgbButtons[(int)key] || mouseStateDataHold.rgbButtons[(int)key] == 2)
 	{
@@ -131,7 +131,7 @@ bool CInput::GetMouseUpState(EMouseKey key)
 	return false;
 }
 
-Vector2 CInput::InputMousePosition()
+Vector2 Input::InputMousePosition()
 {
 	POINT p;
 	GetCursorPos(&p);
@@ -144,7 +144,7 @@ Vector2 CInput::InputMousePosition()
 	return Vector2(p.x, p.y);
 }
 
-float CInput::GetAxis(string axis)
+float Input::GetAxis(string axis)
 {
 	float value = 0;
 	if (axis == "Horizontal")
@@ -176,7 +176,7 @@ float CInput::GetAxis(string axis)
 	return value;
 }
 
-void CInput::ShutDown()
+void Input::ShutDown()
 {
 	if (lpDIKeyboard)
 	{

@@ -16,16 +16,16 @@ public:
 
 	virtual void OnRender(IRenderingInterface& ri, const Matrix4x4& v, const Matrix4x4& p);
 	virtual void OnUpdate(float deltaTime);
-	inline void SetPosition(const Vector3& position) { m_Position = position; }
-	inline void SetScale(const Vector3& scale) { m_Scale = scale; }
-	inline void SetRotation(const Quaternion& rotation) { m_Rotation = rotation; }
-	inline void SetMaterial(PMaterial material) { m_Material = material; }
-	inline void SetMeshBuffer(PMeshBuffer meshbuffer) { m_MeshBuffer = meshbuffer; }
+	virtual void SetPosition(const Vector3& position) { m_Position = position; }
+	virtual void SetScale(const Vector3& scale) { m_Scale = scale; }
+	virtual void SetRotation(const Quaternion& rotation) { m_Rotation = rotation; }
+	virtual void SetMaterial(PMaterial material) { m_Material = material; }
+	virtual void SetMeshBuffer(PMeshBuffer meshbuffer) { m_MeshBuffer = meshbuffer; }
 	inline Vector3 position() const { return m_Position; }
 	inline Vector3 scale() const { return m_Scale; }
 	inline Quaternion rotation() const { return m_Rotation; }
-	inline PMaterial material() const { return m_Material; }
-	inline PMeshBuffer meshBuffer() const { return m_MeshBuffer; }
+	inline Material& material() const { return *m_Material; }
+	inline MeshBuffer& meshBuffer() const { return *m_MeshBuffer; }
 	void GetModelMatrix(Matrix4x4& out) const;
 
 protected:

@@ -1,7 +1,7 @@
 #include"RenderCamera.h"
 #include"RenderTexture.h"
 
-USING_NAMESPACE_ENGINE
+USING_NAMESPACE_ENGINE;
 
 RenderCamera::RenderCamera() : m_projectionType(EProjectionType::Perspective) , m_cameraClearFlag(ECameraClearFlag::SolidColor)
 , m_fov(0) , m_near(0) , m_far(0) , m_left(0) , m_right(0)

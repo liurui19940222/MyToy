@@ -27,7 +27,7 @@ enum EMouseMode : int
 	Relative,
 };
 
-class CInput
+class Input
 {
 private:
 	static LPDIRECTINPUT8 lpDI;

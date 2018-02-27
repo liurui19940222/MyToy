@@ -3,9 +3,9 @@
 #include <string>
 #include <sstream>
 
-#define KeyState(keyword) 	if (CInput::GetMouseDown(keyword)) {\
+#define KeyState(keyword) 	if (Input::GetMouseDown(keyword)) {\
 	mouseState.m_MouseKeyStates[keyword] = EKeyState::Down; }\
-else if (CInput::GetMouseUp(keyword)) {\
+else if (Input::GetMouseUp(keyword)) {\
 	mouseState.m_MouseKeyStates[keyword] = EKeyState::Up; }\
 else { mouseState.m_MouseKeyStates[keyword] = EKeyState::Normal; }
 
@@ -24,7 +24,7 @@ void UITest::OnInitialize()
 {
 	GLAppBase::OnInitialize();
 	SetBackgroundColor(0.3f, 0.5f, 0.5f, 1.0f);
-	CInput::Init(GetModuleHandle(NULL), m_Hwnd);
+	Input::Init(GetModuleHandle(NULL), m_Hwnd);
 
 	PSpriteSet set = make_shared<SpriteSet>("D:\\GitHub\\MyToy\\GameEngine\\Assets\\atlas.png", "D:\\GitHub\\MyToy\\GameEngine\\Assets\\atlas.xml");
 	PSprite bg = set->GetSprite("bg_1.png");
@@ -80,41 +80,41 @@ void UITest::OnInitialize()
 void UITest::OnUpdate(float deltaTime)
 {
 	GLAppBase::OnUpdate(deltaTime);
-	CInput::GetState(EngineToolkit::GetGlobalRect(m_Hwnd, m_WindowWidth, m_WindowHeight));
+	Input::GetState(EngineToolkit::GetGlobalRect(m_Hwnd, m_WindowWidth, m_WindowHeight));
 	static SMouseState mouseState;
-	mouseState.m_MousePosition = CInput::InputMousePosition();
+	mouseState.m_MousePosition = Input::InputMousePosition();
 	KeyState(EMouseKey::Left);
 	KeyState(EMouseKey::Center);
 	KeyState(EMouseKey::Right);
 	m_UISystem->UpdateAll(mouseState);
 
-	if (CInput::GetKeyDown(DIK_R))
+	if (Input::GetKeyDown(DIK_R))
 	{
 		m_MovedWidget->RemoveChild(m_SubWidget);
 	}
 
 	static bool shift = false, ctrl = false, rb = false;
-	if (CInput::GetKeyDown(DIK_LSHIFT))
+	if (Input::GetKeyDown(DIK_LSHIFT))
 	{
 		shift = true;
 	}
-	if (CInput::GetKeyUp(DIK_LSHIFT))
+	if (Input::GetKeyUp(DIK_LSHIFT))
 	{
 		shift = false;
 	}
-	if (CInput::GetKeyDown(DIK_LCONTROL))
+	if (Input::GetKeyDown(DIK_LCONTROL))
 	{
 		ctrl = true;
 	}
-	if (CInput::GetKeyUp(DIK_LCONTROL))
+	if (Input::GetKeyUp(DIK_LCONTROL))
 	{
 		ctrl = false;
 	}
-	if (CInput::GetMouseDown(EMouseKey::Right))
+	if (Input::GetMouseDown(EMouseKey::Right))
 	{
 		rb = true;
 	}
-	if (CInput::GetMouseUp(EMouseKey::Right))
+	if (Input::GetMouseUp(EMouseKey::Right))
 	{
 		rb = false;
 	}
@@ -124,115 +124,115 @@ void UITest::OnUpdate(float deltaTime)
 	Vector2 position = widget->GetLocalPosition();
 	Vector2 scale = widget->GetScale();
 	Vector3 eulerAngles = widget->GetEulerAngles();
-	if (CInput::GetKey(DIK_LEFT))
+	if (Input::GetKey(DIK_LEFT))
 	{
 		position.x -= moveSpeed * deltaTime;
 	}
-	if (CInput::GetKey(DIK_RIGHT))
+	if (Input::GetKey(DIK_RIGHT))
 	{
 		position.x += moveSpeed * deltaTime;
 	}
-	if (CInput::GetKey(DIK_UP))
+	if (Input::GetKey(DIK_UP))
 	{
 		position.y += moveSpeed * deltaTime;
 	}
-	if (CInput::GetKey(DIK_DOWN))
+	if (Input::GetKey(DIK_DOWN))
 	{
 		position.y -= moveSpeed * deltaTime;
 	}
-	if (CInput::GetKey(DIK_Z))
+	if (Input::GetKey(DIK_Z))
 	{
 		scale -= Vector2::one * scaleSpeed * deltaTime;
 	}
-	if (CInput::GetKey(DIK_X))
+	if (Input::GetKey(DIK_X))
 	{
 		scale += Vector2::one * scaleSpeed * deltaTime;
 	}
 
 	if (!shift)
 	{
-		if (CInput::GetKeyDown(DIK_NUMPAD7))
+		if (Input::GetKeyDown(DIK_NUMPAD7))
 		{
 			widget->SetPivot(Vector2(1.0f, 0.0f));
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD8))
+		if (Input::GetKeyDown(DIK_NUMPAD8))
 		{
 			widget->SetPivot(Vector2(0.5f, 0.0f));
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD9))
+		if (Input::GetKeyDown(DIK_NUMPAD9))
 		{
 			widget->SetPivot(Vector2(0.0f, 0.0f));
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD4))
+		if (Input::GetKeyDown(DIK_NUMPAD4))
 		{
 			widget->SetPivot(Vector2(1.0f, 0.5f));
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD5))
+		if (Input::GetKeyDown(DIK_NUMPAD5))
 		{
 			widget->SetPivot(Vector2(0.5f, 0.5f));
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD6))
+		if (Input::GetKeyDown(DIK_NUMPAD6))
 		{
 			widget->SetPivot(Vector2(0.0f, 0.5f));
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD1))
+		if (Input::GetKeyDown(DIK_NUMPAD1))
 		{
 			widget->SetPivot(Vector2(1.0f, 1.0f));
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD2))
+		if (Input::GetKeyDown(DIK_NUMPAD2))
 		{
 			widget->SetPivot(Vector2(0.5f, 1.0f));
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD3))
+		if (Input::GetKeyDown(DIK_NUMPAD3))
 		{
 			widget->SetPivot(Vector2(0.0f, 1.0f));
 		}
 	}
 	else
 	{
-		if (CInput::GetKeyDown(DIK_NUMPAD7))
+		if (Input::GetKeyDown(DIK_NUMPAD7))
 		{
 			widget->SetAlignment(EAlignment::LEFT_TOP);
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD8))
+		if (Input::GetKeyDown(DIK_NUMPAD8))
 		{
 			widget->SetAlignment(EAlignment::CENTER_TOP);
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD9))
+		if (Input::GetKeyDown(DIK_NUMPAD9))
 		{
 			widget->SetAlignment(EAlignment::RIGHT_TOP);
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD4))
+		if (Input::GetKeyDown(DIK_NUMPAD4))
 		{
 			widget->SetAlignment(EAlignment::LEFT_MIDDLE);
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD5))
+		if (Input::GetKeyDown(DIK_NUMPAD5))
 		{
 			widget->SetAlignment(EAlignment::CENTER_MIDDLE);
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD6))
+		if (Input::GetKeyDown(DIK_NUMPAD6))
 		{
 			widget->SetAlignment(EAlignment::RIGHT_MIDDLE);
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD1))
+		if (Input::GetKeyDown(DIK_NUMPAD1))
 		{
 			widget->SetAlignment(EAlignment::LEFT_BOTTOM);
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD2))
+		if (Input::GetKeyDown(DIK_NUMPAD2))
 		{
 			widget->SetAlignment(EAlignment::CENTER_BOTTOM);
 		}
-		if (CInput::GetKeyDown(DIK_NUMPAD3))
+		if (Input::GetKeyDown(DIK_NUMPAD3))
 		{
 			widget->SetAlignment(EAlignment::RIGHT_BOTTOM);
 		}
 	}
 
-	if (CInput::GetKey(DIK_N))
+	if (Input::GetKey(DIK_N))
 	{
 		eulerAngles.z -= deltaTime * rotateSpeed;
 	}
-	if (CInput::GetKey(DIK_M))
+	if (Input::GetKey(DIK_M))
 	{
 		eulerAngles.z += deltaTime * rotateSpeed;
 	}

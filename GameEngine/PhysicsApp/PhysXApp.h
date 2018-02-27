@@ -3,10 +3,9 @@
 #include<physx_3.2\PxPhysicsAPI.h>
 #include<iostream>
 #include"GLAppBase\GLAppBase.h"
+#include"SpRendering\RenderCamera.h"
 #include"GameObject.h"
 #include"RigidBodyGameObject.h"
-
-#define fatalError(error) std::cout << error << std::endl; assert(0);
 
 using namespace std;
 using namespace physx;
@@ -19,6 +18,7 @@ protected:
 	virtual void OnUpdate(float deltaTime) override;
 	virtual void OnRender() override;
 	virtual void OnWindowSizeChanged(int width, int height) override;
+	virtual void OnRelease() override;
 
 public:
 	PhysXApp(const wchar_t* className, const wchar_t* title, int width, int height);
@@ -27,6 +27,9 @@ private:
 	void InitCamera();
 	void InitPhysX();
 	void InitObjects();
+	void CreateBox(const Vector3& pos);
+	void SimulatePhysics(float deltaTime);
+	void HandleInput();
 
 	IRenderingInterface*	m_RI;
 	PxPhysics*				m_PhysX;
@@ -38,7 +41,6 @@ private:
 	PxMaterial*				m_PxMaterial;
 	vector<PGameObject>		m_GameObjects;
 
-	Matrix4x4				m_ViewMatrix;
-	Matrix4x4				m_ProjMatrix;
+	RenderCamera*			m_Camera;
 };
 

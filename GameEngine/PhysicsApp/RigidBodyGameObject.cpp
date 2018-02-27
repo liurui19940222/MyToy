@@ -1,55 +1,33 @@
-#include "RigidBodyGameObject.h"
+#include"RigidBodyGameObject.h"
+#include"SpCommon\EngineDefine.h"
+#include<assert.h>
 
-PxActor* RigidBodyFactory::Create(PxPhysics& sdk, PxTransform& pose, PxMaterial& material, ERigidBodyShape type, bool isStatic)
+PxRigidActor* RigidBodyFactory::CreateStaticRigidbody(PxPhysics& sdk, PxTransform& pose, PxMaterial& material, PxGeometry& geometry)
 {
-	PxRigidActor* actor = NULL;
-	if (isStatic)
-		actor = sdk.createRigidStatic(pose);
-	else
-		actor = sdk.createRigidDynamic(pose);
-	switch (type)
-	{
-	case ERigidBodyShape::Box:
-		actor->createShape(PxBoxGeometry(), material);
-		break;
-	case ERigidBodyShape::Capsule:
-		actor->createShape(PxCapsuleGeometry(), material);
-		break;
-	case ERigidBodyShape::Convex:
-		actor->createShape(PxConvexMeshGeometry(), material);
-		break;
-	case ERigidBodyShape::HeightField:
-		actor->createShape(PxHeightFieldGeometry(), material);
-		break;
-	case ERigidBodyShape::Plane:
-		actor->createShape(PxPlaneGeometry(), material);
-		break;
-	case ERigidBodyShape::Sphere:
-		actor->createShape(PxSphereGeometry(), material);
-		break;
-	case ERigidBodyShape::Triangle:
-		actor->createShape(PxTriangleMeshGeometry(), material);
-		break;
-	}
+	PxRigidActor* actor = sdk.createRigidStatic(pose);
+	actor->createShape(geometry, material);
 	return actor;
 }
 
-RigidBodyGameObject::RigidBodyGameObject(PxPhysics& physX, PxScene& scene, PxMaterial& mat, ERigidBodyShape shape, bool isStatic) : GameObject()
+PxRigidActor* RigidBodyFactory::CreateDynamicRigidbody(PxPhysics& sdk, PxTransform& pose, PxMaterial& material, PxGeometry& geometry, float density)
+{
+	PxRigidDynamic* actor = PxCreateDynamic(sdk, pose, geometry, material, density);
+	return actor;
+}
+
+RigidBodyGameObject::RigidBodyGameObject(const Vector3& pos, const Quaternion& rot, PxPhysics& physX, PxScene& scene, PxMaterial& mat, PxGeometry& shape, float density, bool isStatic) : GameObject()
 {
 	m_PxScene = &scene;
 	m_PxMaterial = &mat;
-	PxReal d = 0.0f;
-	PxU32 axis = 1;
-	PxTransform pose;
 
-	if (axis == 0)
-		pose = PxTransform(PxVec3(d, 0.0f, 0.0f));
-	else if (axis == 1)
-		pose = PxTransform(PxVec3(0.0f, d, 0.0f), PxQuat(PxHalfPi, PxVec3(0.0f, 0.0f, 1.0f)));
-	else if (axis == 2)
-		pose = PxTransform(PxVec3(0.0f, 0.0f, d), PxQuat(-PxHalfPi, PxVec3(0.0f, 1.0f, 0.0f)));
+	SetPosition(pos);
+	SetRotation(rot);
+	PxTransform pose(PxVec3(pos.x, pos.y, pos.z), PxQuat(PxHalfPi, PxVec3(0.0f, 0.0f, 1.0f)) * PxQuat(rot.x, rot.y, rot.z, rot.w));
 
-	m_PxActor = RigidBodyFactory::Create(physX, pose, *m_PxMaterial, shape, isStatic);
+	if (isStatic)
+		m_PxActor = RigidBodyFactory::CreateStaticRigidbody(physX, pose, *m_PxMaterial, shape);
+	else
+		m_PxActor = RigidBodyFactory::CreateDynamicRigidbody(physX, pose, *m_PxMaterial, shape, density);
 	m_PxScene->addActor(*m_PxActor);
 }
 
@@ -58,7 +36,12 @@ RigidBodyGameObject::~RigidBodyGameObject()
 	m_PxScene->removeActor(*m_PxActor);
 }
 
-void RigidBodyGameObject::SimulatePhysics(float deltaTime)
+PxShape& RigidBodyGameObject::GetShape(int index) const
 {
-	
+	if (index >= 16)
+		fatalError("rigidbody get shape index is out of range");
+
+	PxShape* buffer[16];
+	m_PxActor->getShapes(buffer, 16, 0);
+	return *buffer[index];
 }

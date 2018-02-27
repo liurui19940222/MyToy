@@ -4,6 +4,7 @@
 #include<Windows.h>
 #include<gl\glew.h>
 #include<vector>
+#include<iostream>
 #include"Math.h"
 #include"ApiDefine.h"
 
@@ -13,6 +14,7 @@ using namespace std;
 #define _ToCppBool(_boolean) _boolean != 0
 #define IS_TYPE(T, p) dynamic_cast<T*>(p) != NULL
 #define SECURITY(p) if(p) p
+#define fatalError(error) { std::cout << error << std::endl; assert(0); }
 
 typedef unsigned char uint8, byte;
 typedef unsigned short uint16, ushort;

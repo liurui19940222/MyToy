@@ -20,20 +20,27 @@ enum class ERigidBodyShape
 class RigidBodyFactory
 {
 public:
-	static PxActor* Create(PxPhysics& sdk, PxTransform& pose, PxMaterial& material, ERigidBodyShape type, bool isStatic);
+	static PxRigidActor* CreateStaticRigidbody(PxPhysics& sdk, PxTransform& pose, PxMaterial& material, PxGeometry& geometry);
+
+	static PxRigidActor* CreateDynamicRigidbody(PxPhysics& sdk, PxTransform& pose, PxMaterial& material, PxGeometry& geometry, float density);
 };
 
-class RigidBodyGameObject : public GameObject
+SMART_CLASS(RigidBodyGameObject) class RigidBodyGameObject : public GameObject
 {
 public:
-	RigidBodyGameObject(PxPhysics& physX, PxScene& scene, PxMaterial& mat, ERigidBodyShape shape, bool isStatic);
+	RigidBodyGameObject(const Vector3& pos, const Quaternion& rot, PxPhysics& physX, PxScene& scene, PxMaterial& mat, PxGeometry& shape, float density, bool isStatic);
 	virtual ~RigidBodyGameObject();
 
-	void SimulatePhysics(float deltaTime);
+	PxShape& GetShape(int index) const;
 
+	inline bool isStatic() const { return m_PxActor->isRigidStatic(); }
 protected:
+
+	inline PxRigidDynamic* GetDynamic() const { return dynamic_cast<PxRigidDynamic*>(m_PxActor); }
+	inline PxRigidStatic* GetStatic() const { return dynamic_cast<PxRigidStatic*>(m_PxActor); }
+
 	PxScene*				m_PxScene;
-	PxActor*				m_PxActor;
+	PxRigidActor*			m_PxActor;
 	PxMaterial*				m_PxMaterial;
 };
 

@@ -23,7 +23,7 @@ void TextApp::OnInitialize()
 	GLAppBase::OnInitialize();
 	Color color = Color::Hex(0x314D79FF);
 	SetBackgroundColor(color.r, color.g, color.b, color.a);
-	CInput::Init(GetModuleHandle(NULL), m_Hwnd);
+	Input::Init(GetModuleHandle(NULL), m_Hwnd);
 
 	m_Buffer = _MeshFactory->CreateBuffer<MeshBufferTexcoord>(EMeshType::Quad);
 	m_Material = make_shared<Material>();
@@ -70,64 +70,64 @@ void TextApp::OnUpdate(float deltaTime)
 	GLAppBase::OnUpdate(deltaTime);
 	m_Angle += deltaTime * 200;
 
-	CInput::GetState(RECT{});
+	Input::GetState(RECT{});
 
-	if (CInput::GetKeyDown(DIK_NUMPAD1))
+	if (Input::GetKeyDown(DIK_NUMPAD1))
 	{
 		font->SetTextAlignment(EAlignment::LEFT_BOTTOM);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD2))
+	if (Input::GetKeyDown(DIK_NUMPAD2))
 	{
 		font->SetTextAlignment(EAlignment::CENTER_BOTTOM);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD3))
+	if (Input::GetKeyDown(DIK_NUMPAD3))
 	{
 		font->SetTextAlignment(EAlignment::RIGHT_BOTTOM);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD4))
+	if (Input::GetKeyDown(DIK_NUMPAD4))
 	{
 		font->SetTextAlignment(EAlignment::LEFT_MIDDLE);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD5))
+	if (Input::GetKeyDown(DIK_NUMPAD5))
 	{
 		font->SetTextAlignment(EAlignment::CENTER_MIDDLE);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD6))
+	if (Input::GetKeyDown(DIK_NUMPAD6))
 	{
 		font->SetTextAlignment(EAlignment::RIGHT_MIDDLE);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD7))
+	if (Input::GetKeyDown(DIK_NUMPAD7))
 	{
 		font->SetTextAlignment(EAlignment::LEFT_TOP);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD8))
+	if (Input::GetKeyDown(DIK_NUMPAD8))
 	{
 		font->SetTextAlignment(EAlignment::CENTER_TOP);
 	}
-	if (CInput::GetKeyDown(DIK_NUMPAD9))
+	if (Input::GetKeyDown(DIK_NUMPAD9))
 	{
 		font->SetTextAlignment(EAlignment::RIGHT_TOP);
 	}
 
-	if (CInput::GetKeyDown(DIK_1))
+	if (Input::GetKeyDown(DIK_1))
 	{
 		font->SetColor(Color::orange);
 	}
-	if (CInput::GetKeyDown(DIK_2))
+	if (Input::GetKeyDown(DIK_2))
 	{
 		font->SetColor(Color::cyan);
 	}
-	if (CInput::GetKeyDown(DIK_3))
+	if (Input::GetKeyDown(DIK_3))
 	{
 		font->SetColor(Color::green);
 	}
-	if (CInput::GetKeyDown(DIK_4))
+	if (Input::GetKeyDown(DIK_4))
 	{
 		font->SetColor(Color::red);
 	}
 
-	float h = CInput::GetAxis("Horizontal");
-	float v = CInput::GetAxis("Vertical");
+	float h = Input::GetAxis("Horizontal");
+	float v = Input::GetAxis("Vertical");
 	if (h != 0.0f)
 	{
 		font_interval_x += h * 0.01f;
