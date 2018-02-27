@@ -28,7 +28,10 @@ void CSkinnedMeshRenderer::Render(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix,
 	m_material->SetParam("V", viewMatrix);
 	m_material->SetParam("P", projectionMatrix);
 	m_mesh->BindBuffer();
-	glDrawArrays(GL_TRIANGLES, 0, m_mesh->GetVertexNum());
+	if (m_mesh->HasIndicesData())
+		glDrawElements(GL_TRIANGLES, m_mesh->GetTriangleNum() * 3, GL_UNSIGNED_SHORT, (void*)0);
+	else
+		glDrawArrays(GL_TRIANGLES, 0, m_mesh->GetVertexNum());
 	m_material->Unbind();
 }
 

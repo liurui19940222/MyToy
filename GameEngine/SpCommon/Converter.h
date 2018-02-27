@@ -13,6 +13,7 @@ BEGIN_NAMESPACE_ENGINE
 class CConverter
 {
 private:
+	static inline void StringToValue(const string& str, unsigned short* to) { *to = (unsigned short)stoi(str); };
 	static inline void StringToValue(const string& str, int* to) { *to = stoi(str); }
 	static inline void StringToValue(const string& str, float* to) { *to = stof(str); }
 	static inline void StringToValue(const string& str, double* to) { *to = stod(str); }
