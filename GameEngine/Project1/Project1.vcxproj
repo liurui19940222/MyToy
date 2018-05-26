@@ -125,40 +125,7 @@
     <ClInclude Include="ArrayList.h" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3CharacterKinematicCHECKED_x86.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3CharacterKinematicPROFILE_x86.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3CharacterKinematic_x86.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3CHECKED_x86.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3CommonCHECKED_x86.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3CommonDEBUG_x86.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3CommonPROFILE_x86.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3Common_x86.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3CookingCHECKED_x86.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3CookingPROFILE_x86.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3Cooking_x86.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3Extensions.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3ExtensionsCHECKED.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3ExtensionsPROFILE.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3PROFILE_x86.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3Vehicle.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3VehicleCHECKED.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3VehiclePROFILE.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysX3_x86.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysXProfileSDK.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysXProfileSDKCHECKED.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysXProfileSDKPROFILE.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysXVisualDebuggerSDK.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysXVisualDebuggerSDKCHECKED.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PhysXVisualDebuggerSDKPROFILE.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PxTask.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PxTaskCHECKED.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\PxTaskPROFILE.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\RepX3.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\RepX3CHECKED.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\RepX3PROFILE.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\RepXUpgrader3.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\RepXUpgrader3CHECKED.lib" />
-    <Library Include="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\physx\win32\RepXUpgrader3PROFILE.lib" />
+    <Library Include="..\Build\SpCommon.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

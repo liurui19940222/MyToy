@@ -42,6 +42,9 @@
     <ClInclude Include="Object.hpp">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="BinaryHeap.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
