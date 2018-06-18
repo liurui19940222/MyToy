@@ -34,7 +34,10 @@ void GLRendering::RenderInstance(RenderingObject obj, uint instanceCount)
 {
 	obj.material->Bind();
 	obj.mesh->BindBuffer();
-	glDrawArraysInstanced(GL_TRIANGLES, 0, obj.mesh->GetVertexNum(), instanceCount);
+	if (obj.mesh->HasIndicesData())
+		glDrawElementsInstanced(GL_TRIANGLES, obj.mesh->GetTriangleNum() * 3, GL_UNSIGNED_SHORT, (void*)0, instanceCount);
+	else
+		glDrawArraysInstanced(GL_TRIANGLES, 0, obj.mesh->GetVertexNum(), instanceCount);
 	obj.material->Unbind();
 }
 
