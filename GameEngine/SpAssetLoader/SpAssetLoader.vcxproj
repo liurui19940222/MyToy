@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="3DSModelLoader.h" />
+    <ClInclude Include="AdvModelLoader.h" />
     <ClInclude Include="ColladaLoader.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="IAssetLoader.h" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DSModelLoader.cpp" />
+    <ClCompile Include="AdvModelLoader.cpp" />
     <ClCompile Include="ColladaLoader.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
   </ItemGroup>

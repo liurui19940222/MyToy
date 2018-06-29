@@ -26,7 +26,7 @@ void UITest::OnInitialize()
 	SetBackgroundColor(0.3f, 0.5f, 0.5f, 1.0f);
 	Input::Init(GetModuleHandle(NULL), m_Hwnd);
 
-	PSpriteSet set = make_shared<SpriteSet>("D:\\GitHub\\MyToy\\GameEngine\\Assets\\atlas.png", "D:\\GitHub\\MyToy\\GameEngine\\Assets\\atlas.xml");
+	PSpriteSet set = make_shared<SpriteSet>("..\\Assets\\atlas.png", "..\\Assets\\atlas.xml");
 	PSprite bg = set->GetSprite("bg_1.png");
 	//PSprite bg = Sprite::CreateSprite(Texture2D::Create("D:\\GitHub\\MyToy\\GameEngine\\Assets\\bg.png"), TexcoordRange::full, 100, 100);
 	bg->SetBorder(/*BVector4(15, 15, 15, 15)*/BVector4(20, 20, 20, 20));

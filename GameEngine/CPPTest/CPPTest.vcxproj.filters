@@ -30,6 +30,9 @@
     <ClCompile Include="TextApp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ModelApp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InstanceDraw.h">
@@ -44,5 +47,13 @@
     <ClInclude Include="TextApp.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ModelApp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\ExternLibrary\assimp-vc140-mt.lib">
+      <Filter>资源文件</Filter>
+    </Library>
   </ItemGroup>
 </Project>

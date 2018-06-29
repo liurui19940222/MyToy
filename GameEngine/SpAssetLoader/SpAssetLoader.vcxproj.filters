@@ -24,6 +24,9 @@
     <ClInclude Include="ModelLoader.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="AdvModelLoader.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImageLoader.cpp">
@@ -33,6 +36,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="ColladaLoader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="AdvModelLoader.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -96,7 +96,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\ExternLibrary;D:\GitHub\MyToy\GameEngine\Build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\ExternLibrary;..\Build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SpCommon.lib;SpRendering.lib;SpAssetLoader.lib;SpUISystem.lib;GLAppBase.lib;FreeImage.lib;freetype.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -155,15 +155,20 @@
   <ItemGroup>
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="InstanceDraw.cpp" />
+    <ClCompile Include="ModelApp.cpp" />
     <ClCompile Include="TestApp.cpp" />
     <ClCompile Include="TextApp.cpp" />
     <ClCompile Include="UITest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InstanceDraw.h" />
+    <ClInclude Include="ModelApp.h" />
     <ClInclude Include="TestApp.h" />
     <ClInclude Include="TextApp.h" />
     <ClInclude Include="UITest.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\ExternLibrary\assimp-vc140-mt.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
