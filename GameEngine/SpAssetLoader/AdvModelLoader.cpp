@@ -5,6 +5,8 @@ USING_NAMESPACE_ENGINE;
 void AdvModelLoader::LoadFromFile(const char* filename)
 {
 	const aiScene* scene = m_Importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals);
+	if (scene == NULL)
+		return;
 	//¶ÁÈ¡mesh
 	if (scene->HasMeshes())
 	{

@@ -189,6 +189,13 @@ class EngineToolkit
 {
 public:
 	static RECT GetGlobalRect(HWND& hwnd, int width, int height);
+
+	inline static void SetCursor(HWND& hwnd, LPWSTR cursorId)
+	{
+		SetClassLong(hwnd, GCL_HCURSOR, (LONG)::LoadCursor(NULL, cursorId));
+	}
+
+	static void WatchTarget(Vector3& camreaPos, Matrix4x4& viewMatrix, const Vector3& targetPos, float deltaTime, HWND hwnd = NULL);
 };
 
 END_NAMESPACE_ENGINE

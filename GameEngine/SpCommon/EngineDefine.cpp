@@ -1,5 +1,6 @@
 #include "EngineDefine.h"
 #include "Math.h"
+#include "Input.h"
 
 USING_NAMESPACE_ENGINE
 
@@ -314,4 +315,42 @@ RECT EngineToolkit::GetGlobalRect(HWND& hwnd, int width, int height)
 	rect.top = p.y;
 	rect.bottom = p.y + height;
 	return rect;
+}
+
+void EngineToolkit::WatchTarget(Vector3& camreaPos, Matrix4x4& viewMatrix, const Vector3& targetPos, float deltaTime, HWND hwnd)
+{
+	static Vector3 eyePos(0, 6.8, 10);
+	static float speed = 500.0f;
+	static bool key_down = false;
+	static Vector2 lastMousePos(0.0f, 0.0f);
+	static Vector2 curMousePos(0.0f, 0.0f);
+	static float distance = (eyePos - targetPos).Magnitude();
+	if (Input::GetMouseDown(EMouseKey::Right))
+	{
+		key_down = true;
+		lastMousePos = Input::InputMousePosition();
+		if (hwnd)
+			EngineToolkit::SetCursor(hwnd, IDC_CROSS);
+	}
+	if (Input::GetMouseUp(EMouseKey::Right))
+	{
+		key_down = false;
+		if (hwnd)
+			EngineToolkit::SetCursor(hwnd, IDC_ARROW);
+	}
+	distance -= Input::GetAxis("Scroll") * deltaTime;
+	distance = CMath::Clamp(distance, 8.0f, 20.0f);
+	Vector3 dir = (camreaPos - targetPos).Normalize() * distance;
+	camreaPos = dir + targetPos;
+	if (!key_down) return;
+	curMousePos = Input::InputMousePosition();
+	float h = (curMousePos.x - lastMousePos.x) * deltaTime * speed;
+	float v = (curMousePos.y - lastMousePos.y) * deltaTime * speed;
+	lastMousePos = curMousePos;
+	dir = Quaternion::AngleAxis(Vector3::up, -h) * Quaternion::AngleAxis(Vector3::Cross(dir, Vector3::up), -v) * dir;
+	float angle = Vector3::Angle(dir, Vector3::up);
+	if (angle  < 10.0f || angle > 170.0f) return;
+	camreaPos = dir + targetPos;
+
+	viewMatrix.MakeLookAt(camreaPos, targetPos, Vector3::up);
 }

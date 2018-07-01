@@ -34,4 +34,5 @@ private:
 	PMaterial				m_Material;
 	Importer				m_Importer;
 	PMesh					m_Mesh;
+	Vector3					m_CameraPos;
 };
