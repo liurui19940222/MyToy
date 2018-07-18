@@ -4,12 +4,9 @@ USING_NAMESPACE_ENGINE;
 
 MeshBufferSkinning::MeshBufferSkinning() : MeshBufferNormal(), m_VboJointIndexHandle(0), m_VboJointWeightHandle(0){}
 
-MeshBufferSkinning::MeshBufferSkinning(PMesh mesh) : MeshBufferNormal(mesh), m_VboJointIndexHandle(0), m_VboJointWeightHandle(0) {}
-
-MeshBufferSkinning::MeshBufferSkinning(PMesh mesh, const vector<Vector4>& weights, const vector<BVector4>& indices)
-	: MeshBufferNormal(mesh), m_VboJointIndexHandle(0), m_VboJointWeightHandle(0)
+MeshBufferSkinning::MeshBufferSkinning(PMesh mesh) : MeshBufferNormal(mesh), m_VboJointIndexHandle(0), m_VboJointWeightHandle(0) 
 {
-	MakeJointBuffer(weights, indices);
+	MakeJointBuffer(mesh->m_JointWeights, mesh->m_JointIndices, mesh->m_VertexCount);
 }
 
 MeshBufferSkinning::~MeshBufferSkinning()
@@ -18,10 +15,10 @@ MeshBufferSkinning::~MeshBufferSkinning()
 	DeleteBufer(&m_VboJointWeightHandle);
 }
 
-void MeshBufferSkinning::MakeJointBuffer(const vector<Vector4>& weights, const vector<BVector4>& indices)
+void MeshBufferSkinning::MakeJointBuffer(const Vector4* weights, const BVector4* indices, int count)
 {
 	BindBuffer();
-	MakeIntegerVertexBuffer(&m_VboJointIndexHandle, sizeof(BVector4) * indices.size(), 4, &indices[0], ATTR_POS_JOINT_INDEX, EBufferUsage::StaticDraw, EDataType::UNSIGNED_BYTE);
-	MakeVertexBuffer(&m_VboJointWeightHandle, sizeof(Vector4) * weights.size(), 4, &weights[0], ATTR_POS_JOINT_WEIGHT, EBufferUsage::StaticDraw);
+	MakeIntegerVertexBuffer(&m_VboJointIndexHandle, sizeof(BVector4) * count, 4, indices, ATTR_POS_JOINT_INDEX, EBufferUsage::StaticDraw, EDataType::UNSIGNED_BYTE);
+	MakeVertexBuffer(&m_VboJointWeightHandle, sizeof(Vector4) * count, 4, weights, ATTR_POS_JOINT_WEIGHT, EBufferUsage::StaticDraw);
 	UnbindBuffer();
 }

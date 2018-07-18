@@ -26,16 +26,18 @@ void ModelApp::OnInitialize()
 	SetBackgroundColor(color.r, color.g, color.b, color.a);
 	Input::Init(GetModuleHandle(NULL), m_Hwnd);
 
-	modelMat = Matrix4x4::Rotate(Vector3(-90, 20, 0)) * Matrix4x4::Scale(Vector3::one * 0.1f);
+	modelMat = Matrix4x4::Translate(Vector3(0, -3, 0)) * Matrix4x4::Rotate(Vector3(-90, 20, 0)) * Matrix4x4::Scale(Vector3::one * 0.5f);
 	m_CameraPos = Vector3(0, 3, 10);
 	viewMat = Matrix4x4::LookAt(m_CameraPos, Vector3::zero, Vector3::up);
 
 	m_Material = make_shared<Material>();
 	m_Material->SetShader(Shader::Get("texture"));
-	m_Material->SetMainTexture(Texture2D::Create("../Assets/shake.png"));
+	//m_Material->SetMainTexture(Texture2D::Create("../Assets/shake.png"));
+	m_Material->SetMainTexture(Texture2D::Create("D:/project/client_branch_1.3.5/UnityProj/Assets/ArtRawResources/Actors/XiaoQiao/Textures/XiaoQiao_ShaTan.png"));
 
 	AdvModelLoader loader;
-	loader.LoadFromFile("../Assets/models/shake.xml");
+	//loader.LoadFromFile("../Assets/models/shake.xml");
+	loader.LoadFromFile("D:/project/client_branch_1.3.5/UnityProj/Assets/ArtRawResources/Actors/XiaoQiao/xiaoqiao_shatan_idle.FBX");
 
 	m_MeshBuffer = make_shared<MeshBufferTexcoord>(loader.m_model->m_Meshes[0]);
 	m_Object.mesh = m_MeshBuffer.get();

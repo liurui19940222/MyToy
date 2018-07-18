@@ -19,6 +19,9 @@ public:
 private:
 	Importer		m_Importer;
 
+	void ReadMesh(const aiScene* scene);
+	void ReadSkeleton(const aiScene* scene);
+	void ReadAnimation(const aiScene* scene);
 };
 
 END_NAMESPACE_ENGINE

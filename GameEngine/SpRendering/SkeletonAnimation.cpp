@@ -4,6 +4,8 @@ USING_NAMESPACE_ENGINE
 
 Mesh::Mesh(const Mesh& mesh)
 {
+	m_VertexCount = mesh.m_VertexCount;
+	m_TriangleCount = mesh.m_TriangleCount;
 	if (mesh.m_Vertices)
 	{
 		m_Vertices = (Vector3*)malloc(sizeof(Vector3) * mesh.m_VertexCount);
@@ -24,6 +26,21 @@ Mesh::Mesh(const Mesh& mesh)
 		m_Colors = (Color*)malloc(sizeof(Color) * mesh.m_VertexCount);
 		memcpy(m_Colors, mesh.m_Colors, sizeof(Color) * mesh.m_VertexCount);
 	}
+	if (mesh.m_Indices)
+	{
+		m_Indices = (ushort*)malloc(sizeof(ushort) * mesh.m_TriangleCount * 3);
+		memcpy(m_Indices, mesh.m_Indices, sizeof(ushort) * mesh.m_TriangleCount * 3);
+	}
+	if (mesh.m_JointWeights)
+	{
+		m_JointWeights = (Vector4*)malloc(sizeof(Vector4) * mesh.m_VertexCount);
+		memcpy(m_JointWeights, mesh.m_JointWeights, sizeof(Vector4) * mesh.m_VertexCount);
+	}
+	if (mesh.m_JointIndices)
+	{
+		m_JointIndices = (BVector4*)malloc(sizeof(BVector4) * mesh.m_VertexCount);
+		memcpy(m_JointIndices, mesh.m_JointIndices, sizeof(BVector4) * mesh.m_VertexCount);
+	}
 }
 
 Mesh::~Mesh()
@@ -32,6 +49,9 @@ Mesh::~Mesh()
 	if (m_Normals) { free(m_Normals); m_Normals = NULL; }
 	if (m_Texcoords) { free(m_Texcoords); m_Texcoords = NULL; }
 	if (m_Colors) { free(m_Colors); m_Colors = NULL; }
+	if (m_Indices) { free(m_Indices); m_Indices = NULL; }
+	if (m_JointWeights) { free(m_JointWeights); m_JointWeights = NULL; }
+	if (m_JointIndices) { free(m_JointIndices); m_JointIndices = NULL; }
 }
 
 vector<JointPose> SkeletonAnimation::Sample(PAnimationClip clip, PSkeleton skeleton, float t, float weight)

@@ -20,10 +20,10 @@ struct JointPose;
 SMART_STRUCT(Joint) struct Joint
 {
 	string		m_Name;				//关节名字
-	byte		m_Index;				//在数组中的索引
-	byte		m_iParent;				//父索引，或0xFF代表根关节
-	Matrix4x4	m_InvBindPose;	//绑定姿势之逆变换
-	Matrix4x4	m_LocalMatrix;	//局部矩阵
+	byte		m_Index;			//在数组中的索引
+	byte		m_iParent;			//父索引，或0xFF代表根关节
+	Matrix4x4	m_InvBindPose;		//绑定姿势之逆变换
+	Matrix4x4	m_LocalMatrix;		//局部矩阵
 
 	Joint() {
 		m_InvBindPose.MakeIdentity();
@@ -37,8 +37,6 @@ SMART_STRUCT(Skeleton) struct Skeleton
 	vector<JointPose>	m_LocalPoses;
 	vector<Matrix4x4>	m_GlobalPoses;
 	vector<Matrix4x4>	m_SkiningMatrices;
-	vector<Vector4>		m_Weights;
-	vector<BVector4>	m_Indices;
 	Matrix4x4			m_BindShapeMat;
 
 	inline void AddJoint(Joint& joint)
@@ -78,12 +76,6 @@ SMART_STRUCT(Skeleton) struct Skeleton
 	{
 		return m_Joints.size();
 	}
-
-	//得到权重数量
-	inline int GetWeightSize()
-	{
-		return m_Weights.size();
-	}
 };
 
 SMART_STRUCT(JointPose) struct JointPose
@@ -111,6 +103,8 @@ SMART_STRUCT(Mesh) struct Mesh
 	Vector2*	m_Texcoords = NULL;
 	Color*		m_Colors = NULL;
 	ushort*		m_Indices = NULL;
+	Vector4*	m_JointWeights = NULL;
+	BVector4*	m_JointIndices = NULL;
 	int			m_VertexCount = 0;
 	int			m_TriangleCount = 0;
 

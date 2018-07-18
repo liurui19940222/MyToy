@@ -270,20 +270,5 @@
     <Library Include="..\ExternLibrary\assimp-vc140-mt.lib">
       <Filter>Library</Filter>
     </Library>
-    <Library Include="..\ExternLibrary\dinput8.lib">
-      <Filter>Library</Filter>
-    </Library>
-    <Library Include="..\ExternLibrary\dxguid.lib">
-      <Filter>Library</Filter>
-    </Library>
-    <Library Include="..\ExternLibrary\FreeImage.lib">
-      <Filter>Library</Filter>
-    </Library>
-    <Library Include="..\ExternLibrary\freetype.lib">
-      <Filter>Library</Filter>
-    </Library>
-    <Library Include="..\ExternLibrary\lib3ds.lib">
-      <Filter>Library</Filter>
-    </Library>
   </ItemGroup>
 </Project>

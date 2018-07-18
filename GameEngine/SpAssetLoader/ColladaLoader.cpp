@@ -307,9 +307,8 @@ void ColladaLoader::ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<
 	p_mesh->m_Vertices = (Vector3*)malloc(sizeof(Vector3) * p_mesh->m_VertexCount);
 	p_mesh->m_Normals = (Vector3*)malloc(sizeof(Vector3) * p_mesh->m_VertexCount);
 	p_mesh->m_Texcoords = (Vector2*)malloc(sizeof(Vector2) * p_mesh->m_VertexCount);
-
-	m_model->m_Skeleton->m_Weights.resize(p_mesh->m_VertexCount);
-	m_model->m_Skeleton->m_Indices.resize(p_mesh->m_VertexCount);
+	p_mesh->m_JointWeights = (Vector4*)malloc(sizeof(Vector4) * p_mesh->m_VertexCount);
+	p_mesh->m_JointIndices = (BVector4*)malloc(sizeof(BVector4) * p_mesh->m_VertexCount);
 
 	int index_num = 0;
 	bool hasSkeletonInfo = weights.size() > 0;
@@ -347,8 +346,8 @@ void ColladaLoader::ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<
 			int vi = indices[i + offsets[0]];
 			if (hasSkeletonInfo)
 			{
-				m_model->m_Skeleton->m_Weights[vertIndex] = weights[vi];
-				m_model->m_Skeleton->m_Indices[vertIndex] = weight_indices[vi];
+				p_mesh->m_JointWeights[vertIndex] = weights[vi];
+				p_mesh->m_JointIndices[vertIndex] = weight_indices[vi];
 			}
 			if (flags[0])
 				p_mesh->m_Vertices[vertIndex++] = ((Vector3*)source_map[sourceIds[0]].array)[vi];

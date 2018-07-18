@@ -12,10 +12,9 @@ protected:
 public:
 	MeshBufferSkinning();
 	MeshBufferSkinning(PMesh mesh);
-	MeshBufferSkinning(PMesh mesh, const vector<Vector4>& weights, const vector<BVector4>& indices);
 	virtual ~MeshBufferSkinning();
 
-	void MakeJointBuffer(const vector<Vector4>& weights, const vector<BVector4>& indices);
+	void MakeJointBuffer(const Vector4* weights, const BVector4* indices, int count);
 
 private:
 	GLuint		m_VboJointIndexHandle;

@@ -86,12 +86,15 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;WIN32RUN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\ExternLibrary;..\Build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SpCommon.lib;SpRendering.lib;SpAssetLoader.lib;SpUISystem.lib;GLAppBase.lib;FreeImage.lib;freetype.lib;dinput8.lib;lib3ds.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DLLEXPORT|Win32'">
@@ -231,11 +234,6 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\ExternLibrary\assimp-vc140-mt.lib" />
-    <Library Include="..\ExternLibrary\dinput8.lib" />
-    <Library Include="..\ExternLibrary\dxguid.lib" />
-    <Library Include="..\ExternLibrary\FreeImage.lib" />
-    <Library Include="..\ExternLibrary\freetype.lib" />
-    <Library Include="..\ExternLibrary\lib3ds.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

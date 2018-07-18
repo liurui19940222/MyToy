@@ -320,7 +320,7 @@ RECT EngineToolkit::GetGlobalRect(HWND& hwnd, int width, int height)
 void EngineToolkit::WatchTarget(Vector3& camreaPos, Matrix4x4& viewMatrix, const Vector3& targetPos, float deltaTime, HWND hwnd)
 {
 	static Vector3 eyePos(0, 6.8, 10);
-	static float speed = 500.0f;
+	static float speed = 100.0f;
 	static bool key_down = false;
 	static Vector2 lastMousePos(0.0f, 0.0f);
 	static Vector2 curMousePos(0.0f, 0.0f);

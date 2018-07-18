@@ -200,3 +200,4 @@ int CompareCamera(CCamera* a, CCamera* b)
 		return -1;
 	return 0;
 }
+

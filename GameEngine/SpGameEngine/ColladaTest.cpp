@@ -22,20 +22,19 @@ void CColladaTest::OnStart()
 	model->SetLocalEulerAngles(Vector3(0, -70, 0));
 	PMaterial model_mat = make_shared<Material>();
 	model_mat->SetShader(Shader::Get("skinning"))
-		->SetMainTexture(Texture2D::Create("textures/shake.png"));
-	collada = _Resources->Load<ColladaLoader>("models/shake_skin.xml");
+		->SetMainTexture(Texture2D::Create("../Assets/shake.png"));
+	collada = _Resources->Load<ColladaLoader>("../Assets/models/shake_skin.xml");
 	m_model = collada->m_model;
 	//MeshBuffer* buffer = new MeshBuffer(m_model->m_Meshes[0], m_model->m_Skeleton->m_weights, m_model->m_Skeleton->m_indices);
 	PMeshBufferSkinning buffer = make_shared<MeshBufferSkinning>(m_model->m_Meshes[0]);
-	buffer->MakeJointBuffer(m_model->m_Skeleton->m_Weights, m_model->m_Skeleton->m_Indices);
 
 	CSkinnedMeshRenderer* renderer = model->AddComponent<CSkinnedMeshRenderer>()->SetSkinningMesh(buffer, m_model->m_Skeleton)->SetMaterial(model_mat);
 	
 	_MainCameraGo->LookAt(model->GetLocalPosition());
 
-	m_clips.push_back(_Resources->LoadAnimation("models/shake_move.xml"));
-	m_clips.push_back(_Resources->LoadAnimation("models/shake_hit.xml"));
-	m_clips.push_back(_Resources->LoadAnimation("models/shake_death.xml"));
+	m_clips.push_back(_Resources->LoadAnimation("../Assets/models/shake_move.xml"));
+	m_clips.push_back(_Resources->LoadAnimation("../Assets/models/shake_hit.xml"));
+	m_clips.push_back(_Resources->LoadAnimation("../Assets/models/shake_death.xml"));
 	m_clips[1]->m_IsLooping = true;
 	m_clips[2]->m_IsLooping = false;
 
