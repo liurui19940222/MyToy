@@ -4,7 +4,22 @@ USING_NAMESPACE_ENGINE;
 
 void copyMatrix(aiMatrix4x4& m1, Matrix4x4& m2)
 {
-	memcpy_s(&m2, sizeof(Matrix4x4), &m1, sizeof(aiMatrix4x4));
+	memcpy_s(&m2, sizeof(Matrix4x4), &(m1.Transpose()), sizeof(aiMatrix4x4));
+}
+
+void copyVector3(aiVector3D& v1, Vector3& v2)
+{
+	v2.x = v1.x;
+	v2.y = v1.y;
+	v2.z = v1.z;
+}
+
+void copyQuaternion(aiQuaternion& q1, Quaternion& q2)
+{
+	q2.x = q1.x;
+	q2.y = q1.y;
+	q2.z = q1.z;
+	q2.w = q1.w;
 }
 
 void AdvModelLoader::LoadFromFile(const char* filename)
@@ -16,6 +31,8 @@ void AdvModelLoader::LoadFromFile(const char* filename)
 	ReadMesh(scene);
 	ReadSkeleton(scene);
 	ReadAnimation(scene);
+	SkeletonAnimation::CalculateGlobalMatrix(m_model->m_Skeleton);
+	SkeletonAnimation::CalculateSkinningMatrix(m_model->m_Skeleton);
 }
 
 void AdvModelLoader::ReleaseSource()
@@ -111,6 +128,9 @@ void AdvModelLoader::ReadMesh(const aiScene* scene)
 					_records[vertexId]++;
 				}
 			}
+			m_model->m_Skeleton->m_GlobalPoses.resize(m_model->m_Skeleton->GetSize());
+			m_model->m_Skeleton->m_LocalPoses.resize(m_model->m_Skeleton->GetSize());
+			m_model->m_Skeleton->m_SkiningMatrices.resize(m_model->m_Skeleton->GetSize());
 		}
 	}
 }
@@ -120,9 +140,160 @@ void AdvModelLoader::ReadSkeleton(const aiScene* scene)
 	if (!scene->mRootNode)
 		return;
 
+	aiNode* rootNode = scene->mRootNode;
+	copyMatrix(rootNode->mTransformation.Inverse(), m_model->m_Skeleton->m_BindShapeMat);
+	ReadNode(rootNode, 0);
+}
+
+void AdvModelLoader::ReadNode(aiNode* node, int depth)
+{
+	if (node->mNumChildren == 0)
+		return;
+	aiNode* temp = NULL;
+	Joint* joint = NULL;
+	Joint* parent = NULL;
+	for (int i = 0; i < node->mNumChildren; ++i)
+	{
+		temp = node->mChildren[i];
+		//从骨架中得到该ai节点对应的关节
+		joint = m_model->m_Skeleton->GetJoint(temp->mName.C_Str());
+		if (joint)
+		{
+			//读取局部变换
+			copyMatrix(temp->mTransformation, joint->m_LocalMatrix);
+			if (temp->mParent)
+			{
+				//如果该节点的父节点的父节点为空，说明父节点是根节点
+				if (!temp->mParent->mParent)
+				{
+					joint->m_iParent = JOINT_ROOT;
+				}
+				else
+				{
+					parent = m_model->m_Skeleton->GetJoint(temp->mParent->mName.C_Str());
+					if (parent)
+						joint->m_iParent = parent->m_Index;
+					else
+						joint->m_iParent = JOINT_ROOT;
+				}
+			}
+			else
+			{
+				//理论不会走到这里，每个节点都会有一个Parent
+				assert(0);
+				joint->m_iParent = JOINT_ROOT;
+			}
+			//--------------------打印关节树----------------------
+			/*string str;
+			for (int i = 0; i < depth; i++)
+			{
+				str += "   ";
+			}
+			Debug::Log("%s p:%d i:%d", (str + joint->m_Name).c_str(), joint->m_iParent, joint->m_Index);*/
+		}
+		ReadNode(temp, depth + 1);
+	}
 }
 
 void AdvModelLoader::ReadAnimation(const aiScene* scene)
 {
+	if (!scene->HasAnimations())
+		return;
+	aiAnimation* aiAnim = NULL;
+	aiNodeAnim* aiNodeAnim = NULL;
+	aiVectorKey aiVectorKey;
+	PAnimationClip anim = NULL;
+	const char* jointName = NULL;
+	double reciprocalOfTicks = 0.0;
 
+	for (int i = 0; i < scene->mNumAnimations; ++i)
+	{
+		anim = make_shared<AnimationClip>();
+		aiAnim = scene->mAnimations[i];
+		reciprocalOfTicks = 1.0 / aiAnim->mTicksPerSecond;
+		anim->m_Length = (float)(aiAnim->mDuration * reciprocalOfTicks);
+		anim->m_Name = aiAnim->mName.C_Str();
+
+		//读取所有的通道，按照关键帧位置对应每个关节和姿势整合起来
+		map<double, JointTransformation> samples;
+		for (int j = 0; j < aiAnim->mNumChannels; ++j)
+		{
+			aiNodeAnim = aiAnim->mChannels[j];
+			jointName = aiNodeAnim->mNodeName.C_Str();
+			for (int k = 0; k < aiNodeAnim->mNumPositionKeys; ++k)
+			{
+				AddPositionSample(samples, aiNodeAnim->mPositionKeys[k], jointName);
+			}
+			for (int k = 0; k < aiNodeAnim->mNumRotationKeys; ++k)
+			{
+				AddRotationSample(samples, aiNodeAnim->mRotationKeys[k], jointName);
+			}
+			for (int k = 0; k < aiNodeAnim->mNumScalingKeys; ++k)
+			{
+				AddScalingSample(samples, aiNodeAnim->mScalingKeys[k], jointName);
+			}
+		}
+		//转换成AnimationSample
+		for_each(samples.begin(), samples.end(), [&](pair<double, JointTransformation> pair) {
+			AnimationSample sample;
+			sample.m_Time = pair.first * reciprocalOfTicks;
+			CopySampleInfo(pair.second, sample);
+			anim->m_aSamples.push_back(sample);
+		});
+		m_model->m_Animations.push_back(anim);
+	}
+}
+
+void AdvModelLoader::AddPositionSample(map<double, JointTransformation>& samples, aiVectorKey& vectorKey, const char* jointName)
+{
+	Transformation* transformation = NULL;
+	if (!GetTransformation(samples, vectorKey.mTime, jointName, &transformation))
+		return;
+	transformation->position = vectorKey.mValue;
+}
+
+void AdvModelLoader::AddRotationSample(map<double, JointTransformation>& samples, aiQuatKey& quatKey, const char* jointName)
+{
+	Transformation* transformation = NULL;
+	if (!GetTransformation(samples, quatKey.mTime, jointName, &transformation))
+		return;
+	transformation->rotation = quatKey.mValue;
+}
+
+void AdvModelLoader::AddScalingSample(map<double, JointTransformation>& samples, aiVectorKey& vectorKey, const char* jointName)
+{
+	Transformation* transformation = NULL;
+	if (!GetTransformation(samples, vectorKey.mTime, jointName, &transformation))
+		return;
+	transformation->scaling = vectorKey.mValue;
+}
+
+bool AdvModelLoader::GetTransformation(map<double, JointTransformation>& samples, double time, const char* jointName, Transformation** trans)
+{
+	Joint* joint = m_model->m_Skeleton->GetJoint(jointName);
+	if (!joint)
+		return false;
+	auto it = samples.find(time);
+	if (it == samples.end())
+	{
+		samples.insert(make_pair(time, JointTransformation()));
+	}
+	JointTransformation& jtrans = samples[time];
+	auto jit = jtrans.transformations.find(joint->m_Index);
+	if (jit == jtrans.transformations.end())
+	{
+		jtrans.transformations.insert(make_pair(joint->m_Index, Transformation()));
+	}
+	*trans = &jtrans.transformations[joint->m_Index];
+	return true;
+}
+
+void AdvModelLoader::CopySampleInfo(JointTransformation& from, AnimationSample& to)
+{
+	for_each(from.transformations.begin(), from.transformations.end(), [&](pair<byte, Transformation> pair) {
+		aiMatrix4x4 mat(pair.second.scaling, pair.second.rotation, pair.second.position);
+		JointPose pose;
+		copyMatrix(mat, pose.m_Matrix);
+		to.m_JointPoses.insert(make_pair(pair.first, pose));
+	});
 }

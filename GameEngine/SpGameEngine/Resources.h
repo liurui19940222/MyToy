@@ -40,6 +40,18 @@ public:
 
 	PAnimationClip LoadAnimation(string path);
 
+	template<typename T>
+	PAnimationClip LoadAnimation(string path)
+	{
+		T* modelFile = _Resources->Load<T>(path);
+		PModel model = modelFile->m_model;
+		PAnimationClip clip;
+		if (model->animationsCount() > 0)
+			clip = model->m_Animations[0];
+		delete(modelFile);
+		return clip;
+	}
+
 	void Unload(string& path);
 };
 

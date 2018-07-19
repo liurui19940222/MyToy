@@ -164,7 +164,7 @@ struct JointVertex
 {
 	Matrix4x4 m_matrix;
 	Vector3 m_pos;
-	byte m_parent = 0xFF;
+	byte m_parent = JOINT_ROOT;
 };
 
 void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton)
@@ -197,7 +197,7 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 	for (int i = 0; i < skeleton.GetSize() - 1; i++)
 	{
 		JointVertex vertex = vertices[i];
-		if (vertex.m_parent != 0xFF)
+		if (vertex.m_parent != JOINT_ROOT)
 		{
 			JointVertex parent = vertices[vertex.m_parent];
 			Vector3 position = (vertex.m_pos - parent.m_pos) * 0.5f + parent.m_pos;
@@ -211,7 +211,7 @@ void CEditorTool::DrawSkeleton(Matrix4x4& modelToWorldMatrix, Skeleton& skeleton
 	for (int i = 0; i < skeleton.GetSize() - 1; i++)
 	{
 		JointVertex vertex = vertices[i];
-		if (vertex.m_parent != 0xFF)
+		if (vertex.m_parent != JOINT_ROOT)
 		{
 			JointVertex parent = vertices[vertex.m_parent]; 
 			glVertex3f(vertex.m_pos.x, vertex.m_pos.y, vertex.m_pos.z);

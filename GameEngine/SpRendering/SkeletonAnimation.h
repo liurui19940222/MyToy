@@ -17,6 +17,8 @@ BEGIN_NAMESPACE_ENGINE
 typedef TmpVector4<byte> BVector4;
 struct JointPose;
 
+#define JOINT_ROOT 0xFF
+
 SMART_STRUCT(Joint) struct Joint
 {
 	string		m_Name;				//关节名字
@@ -55,6 +57,8 @@ SMART_STRUCT(Skeleton) struct Skeleton
 
 	inline Joint* GetJoint(int index)
 	{
+		if (index >= m_Joints.size())
+			return NULL;
 		return &m_Joints[index];
 	}
 
@@ -63,7 +67,7 @@ SMART_STRUCT(Skeleton) struct Skeleton
 		for (byte i = 0; i < m_Joints.size(); ++i)
 			if (m_Joints[i].m_Name == name)
 				return i;
-		return 0xFF;
+		return JOINT_ROOT;
 	}
 
 	inline vector<Joint>& GetJoints()
@@ -80,7 +84,7 @@ SMART_STRUCT(Skeleton) struct Skeleton
 
 SMART_STRUCT(JointPose) struct JointPose
 {
-	Matrix4x4 m_Matrix;			//变换矩阵
+	Matrix4x4 m_Matrix;						//变换矩阵
 };
 
 SMART_STRUCT(AnimationSample) struct AnimationSample
@@ -94,6 +98,7 @@ SMART_STRUCT(AnimationClip) struct AnimationClip
 	vector<AnimationSample> m_aSamples;
 	float					m_Length;
 	bool					m_IsLooping;
+	string					m_Name;
 };
 
 SMART_STRUCT(Mesh) struct Mesh

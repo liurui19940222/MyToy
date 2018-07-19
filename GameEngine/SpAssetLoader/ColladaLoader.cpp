@@ -144,7 +144,7 @@ void ColladaLoader::ReadSkeleton(xml_node<>* node)
 	{
 		if (GetNodeByName(it, "matrix") != NULL)
 		{
-			ReadJoint(it, 0xFF, 0);
+			ReadJoint(it, JOINT_ROOT, 0);
 		}
 	}
 	m_model->m_Skeleton->m_GlobalPoses.resize(m_model->m_Skeleton->GetSize());

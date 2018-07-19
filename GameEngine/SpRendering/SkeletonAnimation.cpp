@@ -149,9 +149,11 @@ void SkeletonAnimation::CalculateGlobalMatrix(PSkeleton skeleton)
 		Joint* p = &joint;
 		do {
 			matj = p->m_LocalMatrix * matj;
-			if (p->m_iParent == 0xFF)
+			if (p->m_iParent == JOINT_ROOT)
 				break;
 			p = skeleton->GetJoint(p->m_iParent);
+			if (!p)
+				break;
 		} while (true);
 		skeleton->m_GlobalPoses[joint.m_Index] = matj;
 	}
@@ -167,7 +169,7 @@ void SkeletonAnimation::CalculateGlobalMatrix(PSkeleton skeleton, vector<JointPo
 		Joint* p = &joint;
 		do {
 			matj = localPoses[p->m_Index].m_Matrix * matj;
-			if (p->m_iParent == 0xFF)
+			if (p->m_iParent == JOINT_ROOT)
 				break;
 			p = skeleton->GetJoint(p->m_iParent);
 		} while (true);

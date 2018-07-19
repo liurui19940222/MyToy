@@ -33,6 +33,8 @@ private:
 	PMeshBuffer				m_MeshBuffer;
 	PMaterial				m_Material;
 	Importer				m_Importer;
+	PSkeleton				m_Skeleton;
 	PMesh					m_Mesh;
+	PAnimationClip			m_Clip;
 	Vector3					m_CameraPos;
 };

@@ -1,5 +1,6 @@
 #include"Resources.h"
 #include"SpAssetLoader\ColladaLoader.h"
+#include"SpAssetLoader\AdvModelLoader.h"
 
 PAnimationClip CResources::LoadAnimation(string path)
 {

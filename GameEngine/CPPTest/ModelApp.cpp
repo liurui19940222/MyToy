@@ -1,5 +1,6 @@
 #include "ModelApp.h"
 #include "SpRendering\MeshFactory.h"
+#include "SpRendering\MeshBufferSkinning.h"
 #include "SpAssetLoader\AdvModelLoader.h"
 
 #pragma comment(lib, "opengl32.lib")
@@ -31,15 +32,19 @@ void ModelApp::OnInitialize()
 	viewMat = Matrix4x4::LookAt(m_CameraPos, Vector3::zero, Vector3::up);
 
 	m_Material = make_shared<Material>();
-	m_Material->SetShader(Shader::Get("texture"));
+	m_Material->SetShader(Shader::Get("skinning"));
 	//m_Material->SetMainTexture(Texture2D::Create("../Assets/shake.png"));
-	m_Material->SetMainTexture(Texture2D::Create("D:/project/client_branch_1.3.5/UnityProj/Assets/ArtRawResources/Actors/XiaoQiao/Textures/XiaoQiao_ShaTan.png"));
+	m_Material->SetMainTexture(Texture2D::Create("D:/project/client_branch_1.3.5/UnityProj/Assets/ArtRawResources/Actors/basktball_Boy/Textures/2000.png"));
 
 	AdvModelLoader loader;
 	//loader.LoadFromFile("../Assets/models/shake.xml");
-	loader.LoadFromFile("D:/project/client_branch_1.3.5/UnityProj/Assets/ArtRawResources/Actors/XiaoQiao/xiaoqiao_shatan_idle.FBX");
+	loader.LoadFromFile("D:/1100.FBX");
+	m_Mesh = loader.m_model->m_Meshes[0];
+	m_Clip = loader.m_model->m_Animations[0];
+	m_Clip->m_IsLooping = true;
+	m_Skeleton = loader.m_model->m_Skeleton;
 
-	m_MeshBuffer = make_shared<MeshBufferTexcoord>(loader.m_model->m_Meshes[0]);
+	m_MeshBuffer = make_shared<MeshBufferSkinning>(m_Mesh);
 	m_Object.mesh = m_MeshBuffer.get();
 	m_Object.material = m_Material.get();
 }
@@ -49,7 +54,9 @@ void ModelApp::OnWindowSizeChanged(int width, int height)
 	GLAppBase::OnWindowSizeChanged(width, height);
 	projectionMat = Matrix4x4::Perspective(45, width / (float)height, 0.1, 1000);
 }
+
 float g_DeltaTime;
+float g_Time;
 void ModelApp::OnUpdate(float deltaTime)
 {
 	GLAppBase::OnUpdate(deltaTime);
@@ -57,6 +64,10 @@ void ModelApp::OnUpdate(float deltaTime)
 
 	g_DeltaTime = deltaTime;
 	EngineToolkit::WatchTarget(m_CameraPos, viewMat, Vector3::zero, g_DeltaTime);
+
+	vector<JointPose> jointPoses = SkeletonAnimation::Sample(m_Clip, m_Skeleton, this->m_TimeSinceStarUp, 1);
+	SkeletonAnimation::CalculateGlobalMatrix(m_Skeleton, jointPoses);
+	SkeletonAnimation::CalculateSkinningMatrix(m_Skeleton);
 }
 
 void ModelApp::OnRender()
@@ -64,6 +75,7 @@ void ModelApp::OnRender()
 	GLAppBase::OnRender();
 
 	m_Material->Bind();
+	m_Material->SetParam("GlobalPoseMatrices", &m_Skeleton->m_SkiningMatrices[0], m_Skeleton->GetSize());
 	m_Material->SetParam("M", modelMat);
 	m_Material->SetParam("V", viewMat);
 	m_Material->SetParam("P", projectionMat);

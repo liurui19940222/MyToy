@@ -18,12 +18,12 @@ void CColladaTest::OnStart()
 	model = _Maker->Instantiate(L"model");
 
 	model->SetLocalPosition(Vector3(0, 1, 0));
-	model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 1.8);
+	model->SetLocalScale(Vector3(0.1f, 0.1f, 0.1f) * 0.05f);
 	model->SetLocalEulerAngles(Vector3(0, -70, 0));
 	PMaterial model_mat = make_shared<Material>();
 	model_mat->SetShader(Shader::Get("skinning"))
 		->SetMainTexture(Texture2D::Create("../Assets/shake.png"));
-	collada = _Resources->Load<ColladaLoader>("../Assets/models/shake_skin.xml");
+	collada = _Resources->Load<AdvModelLoader>("../Assets/models/shake_skin.xml");
 	m_model = collada->m_model;
 	//MeshBuffer* buffer = new MeshBuffer(m_model->m_Meshes[0], m_model->m_Skeleton->m_weights, m_model->m_Skeleton->m_indices);
 	PMeshBufferSkinning buffer = make_shared<MeshBufferSkinning>(m_model->m_Meshes[0]);
@@ -32,9 +32,11 @@ void CColladaTest::OnStart()
 	
 	_MainCameraGo->LookAt(model->GetLocalPosition());
 
+	//m_clips.push_back(_Resources->LoadAnimation<AdvModelLoader>("../Assets/models/shake_move.xml"));
 	m_clips.push_back(_Resources->LoadAnimation("../Assets/models/shake_move.xml"));
 	m_clips.push_back(_Resources->LoadAnimation("../Assets/models/shake_hit.xml"));
 	m_clips.push_back(_Resources->LoadAnimation("../Assets/models/shake_death.xml"));
+	m_clips[0]->m_IsLooping = true;
 	m_clips[1]->m_IsLooping = true;
 	m_clips[2]->m_IsLooping = false;
 
@@ -57,8 +59,8 @@ void CColladaTest::OnUpdate()
 		v[1] = m_clips[1];
 		float times[] = { CTime::time, CTime::time };
 		float weights[] = { 1.0f, 0.0f };
-		vector<JointPose> jointPoses = SkeletonAnimation::Blend(&v[0], times, weights, 2, m_model->m_Skeleton);
-		//vector<JointPose> jointPoses = SkeletonAnimation::Sample(*m_clips[1], m_model->m_Skeleton, CTime::time, 1);
+		//vector<JointPose> jointPoses = SkeletonAnimation::Blend(&v[0], times, weights, 2, m_model->m_Skeleton);
+		vector<JointPose> jointPoses = SkeletonAnimation::Sample(v[0], m_model->m_Skeleton, CTime::time, 1);
 		SkeletonAnimation::CalculateGlobalMatrix(m_model->m_Skeleton, jointPoses);
 		SkeletonAnimation::CalculateSkinningMatrix(m_model->m_Skeleton);
 	}
@@ -68,7 +70,7 @@ void CColladaTest::OnUpdate()
 
 void CColladaTest::OnRender()
 {
-
+	CEditorTool::DrawSkeleton(Matrix4x4::Scale(Vector3::one * 0.3f), *m_model->m_Skeleton);
 }
 
 void CColladaTest::OnClose()

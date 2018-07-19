@@ -21,7 +21,7 @@ void main()
 	{
 		diffuse += (max(0, dot(normal, eyeLight[i])) + ambient) * diffuseColor;
 		vec3 halfVector = normalize(eyeLight[i] + eyeDir[i]);
-		specular += pow(max(0, dot(normal, halfVector)), 32) * specularColor;
+		specular += pow(max(0, dot(normal, halfVector)), 128) * specularColor;
 	}
 	color *= diffuse;
 	color += specular;
