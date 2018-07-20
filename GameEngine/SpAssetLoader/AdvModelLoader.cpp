@@ -1,4 +1,5 @@
 #include "AdvModelLoader.h"
+#include<assert.h>
 
 USING_NAMESPACE_ENGINE;
 

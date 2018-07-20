@@ -34,11 +34,12 @@ void ModelApp::OnInitialize()
 	m_Material = make_shared<Material>();
 	m_Material->SetShader(Shader::Get("skinning"));
 	//m_Material->SetMainTexture(Texture2D::Create("../Assets/shake.png"));
-	m_Material->SetMainTexture(Texture2D::Create("D:/project/client_branch_1.3.5/UnityProj/Assets/ArtRawResources/Actors/basktball_Boy/Textures/2000.png"));
+	m_Material->SetMainTexture(Texture2D::Create("D:/project/client_branch_1.3.5/UnityProj/Assets/ArtRawResources/Actors/XiaoQiao/Textures/XiaoQiao_ShaTan.png"));
 
 	AdvModelLoader loader;
 	//loader.LoadFromFile("../Assets/models/shake.xml");
 	loader.LoadFromFile("D:/1100.FBX");
+	//loader.LoadFromFile("D:/project/client_branch_1.3.5/UnityProj/Assets/ArtRawResources/Actors/XiaoQiao/xiaoqiao_shatan_idle.fbx");
 	m_Mesh = loader.m_model->m_Meshes[0];
 	m_Clip = loader.m_model->m_Animations[0];
 	m_Clip->m_IsLooping = true;

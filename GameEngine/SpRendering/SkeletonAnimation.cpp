@@ -1,4 +1,5 @@
 #include"SkeletonAnimation.h"
+#include<iostream>
 
 USING_NAMESPACE_ENGINE
 
@@ -61,29 +62,35 @@ vector<JointPose> SkeletonAnimation::Sample(PAnimationClip clip, PSkeleton skele
 	if (t > clip->m_Length || t < 0 || clip->m_aSamples.empty())
 		return poses;
 	poses.resize(skeleton->GetSize());
-	for (uint i = 0; i < clip->m_aSamples.size() - 1; i++)
+	for (uint sampleIndex = 0; sampleIndex < clip->m_aSamples.size() - 1; sampleIndex++)
 	{
-		AnimationSample& a = clip->m_aSamples[i];
-		AnimationSample& b = clip->m_aSamples[i + 1];
+		AnimationSample& a = clip->m_aSamples[sampleIndex];
+		AnimationSample& b = clip->m_aSamples[sampleIndex + 1];
 
 		if (a.m_Time <= t && b.m_Time >= t)
 		{
 			Matrix4x4 mat_a;
 			Matrix4x4 mat_b;
-			for (byte i = 0; i < skeleton->GetSize(); i++)
+			for (byte jointIndex = 0; jointIndex < skeleton->GetSize(); jointIndex++)
 			{
-				auto it_a = a.m_JointPoses.find(i);
-				auto it_b = b.m_JointPoses.find(i);
+				auto it_a = a.m_JointPoses.find(jointIndex);
+				auto it_b = b.m_JointPoses.find(jointIndex);
 				if (it_a != a.m_JointPoses.end())
 					mat_a = it_a->second.m_Matrix;
 				else
-					mat_a = skeleton->GetJoint(i)->m_LocalMatrix;
+				{
+					poses[jointIndex] = JointPose{ skeleton->GetJoint(jointIndex)->m_LocalMatrix };
+					continue;
+				}
 				if (it_b != b.m_JointPoses.end())
 					mat_b = it_b->second.m_Matrix;
 				else
-					mat_b = skeleton->GetJoint(i)->m_LocalMatrix;
+				{
+					poses[jointIndex] = JointPose{ skeleton->GetJoint(jointIndex)->m_LocalMatrix };
+					continue;
+				}
 
-				poses[i] = JointPose{ Matrix4x4::Lerp(mat_a, mat_b, (t - a.m_Time) / (b.m_Time - a.m_Time)) * weight };
+				poses[jointIndex] = JointPose{ Matrix4x4::Lerp(mat_a, mat_b, (t - a.m_Time) / (b.m_Time - a.m_Time)) * weight };
 			}
 		}
 	}
