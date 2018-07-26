@@ -1,4 +1,5 @@
 ﻿using Common;
+using Framework.Common.Message;
 using Framework.FSM;
 using System;
 using System.Collections;
@@ -19,11 +20,11 @@ namespace Game.Scene
         {
         }
 
-        public override void OnEnter()
+        public override void OnEnter(IMessage param = null)
         {
             base.OnEnter();
             m_HasLoaded = false;
-            m_CurCoroutine = GlobalMono.Instance.StartCoroutine(Initialize());
+            m_CurCoroutine = GlobalMono.Instance.StartCoroutine(Initialize(param));
         }
 
         public override void OnExit()
@@ -31,7 +32,10 @@ namespace Game.Scene
             base.OnExit();
             if (m_CurCoroutine != null)
             {
-                GlobalMono.Instance.StopCoroutine(m_CurCoroutine);
+                if (GlobalMono.Instance != null)
+                {
+                    GlobalMono.Instance.StopCoroutine(m_CurCoroutine);
+                }
                 m_CurCoroutine = null;
             }
             m_HasLoaded = false;
@@ -46,14 +50,14 @@ namespace Game.Scene
             return base.OnUpdate();
         }
 
-        private IEnumerator Initialize()
+        private IEnumerator Initialize(IMessage param)
         {
-            yield return OnInitialize();
+            yield return OnInitialize(param);
             m_HasLoaded = true;
             OnSceneInitialized();
         }
 
-        protected virtual IEnumerator OnInitialize() {
+        protected virtual IEnumerator OnInitialize(IMessage param) {
             yield return null;
         }
 

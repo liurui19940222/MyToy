@@ -20,7 +20,7 @@ namespace Framework.FSM
 
         public void HandleInput(InputMessage msg) { }
 
-        public virtual void OnEnter() { }
+        public virtual void OnEnter(IMessage param = null) { }
 
         public virtual void OnExit() { }
 

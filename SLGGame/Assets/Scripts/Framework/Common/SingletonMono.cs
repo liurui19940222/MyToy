@@ -8,11 +8,13 @@ namespace Framework.Common
     {
 
         private static T _instance;
+        private static bool _destroyed = false;
+
         public static T Instance
         {
             get
             {
-                if (_instance == null)
+                if (_instance == null && !_destroyed)
                 {
                     GameObject go = GameObject.Find(typeof(T).Name);
                     if (go == null)
@@ -33,6 +35,7 @@ namespace Framework.Common
         protected virtual void OnDestroy()
         {
             _instance = null;
+            _destroyed = true;
         }
     }
 }

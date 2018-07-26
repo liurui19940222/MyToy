@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,9 @@ namespace Game.Scene
         protected override void OnSceneInitialized()
         {
             Debug.Log("Start Scene OnSceneInitialized");
+            FightingSceneMsg msg = new FightingSceneMsg();
+            msg.TargetMapName = "Map_01";
+            GameManager.Instance.SwitchScene(SceneDefines.SCENE_FIGHTING, msg);
         }
 
         protected override void OnSceneUnload()
@@ -24,7 +28,7 @@ namespace Game.Scene
 
         protected override void OnSceneUpdate()
         {
-            Debug.Log("Start Scene OnSceneUpdate");
+            
         }
     }
 }

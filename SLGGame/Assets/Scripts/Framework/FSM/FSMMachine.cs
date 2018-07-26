@@ -53,14 +53,14 @@ namespace Framework.FSM
             m_DefaultState = GetState(id);
         }
 
-        public void SwitchToState(int id)
+        public void SwitchToState(int id, IMessage param)
         {
             if (m_CurState != null && m_CurState.Id != id)
             {
                 m_CurState.OnExit();
             }
             m_CurState = GetState(id);
-            m_CurState.OnEnter();
+            m_CurState.OnEnter(param);
         }
 
         public void HandleInput(InputMessage msg)
@@ -82,7 +82,7 @@ namespace Framework.FSM
                 int targetId = m_CurState.OnUpdate();
                 if (targetId != m_CurState.Id)
                 {
-                    SwitchToState(targetId);
+                    SwitchToState(targetId, null);
                 }
             }
         }

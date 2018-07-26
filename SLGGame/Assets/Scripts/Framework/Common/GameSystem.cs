@@ -16,6 +16,8 @@ namespace Framework.Common
     {
         public abstract Object LoadAsset(string path, string name);
 
+        public abstract GameObject LoadAndInstantiateAsset(string path, string name);
+
         public abstract Object LoadUIAsset(string assetName);
     }
 }
