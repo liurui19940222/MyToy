@@ -3,8 +3,26 @@
 
 USING_NAMESPACE_ENGINE;
 
-SkeletonAnimator::SkeletonAnimator() : m_CurPlayingIndex(-1), m_IsPlaying(false), 
-	m_FadingOutLength(INVALID_FADINGOUT_PARAM)
+SkeletonAnimator::AnimationState::AnimationState() :
+	state(State::SinglePlaying),
+	elapsedTime(0.0f),
+	speed(1.0f),
+	nextIndex(-1),
+	fadeOutLength(0.0f),
+	fadeOutElapsedTime(0.0f)
+{ }
+
+SkeletonAnimator::AnimationState::AnimationState(PAnimationClip clip, float speed) :
+	clip(clip),
+	state(State::SinglePlaying),
+	elapsedTime(0.0f),
+	speed(speed),
+	nextIndex(-1),
+	fadeOutLength(0.0f),
+	fadeOutElapsedTime(0.0f)
+{ }
+
+SkeletonAnimator::SkeletonAnimator() : m_CurPlayingIndex(-1), m_IsPlaying(false)
 {
 }
 
@@ -19,7 +37,7 @@ void SkeletonAnimator::Play(const string& name)
 	{
 		m_IsPlaying = true;
 	}
-	m_CurState = State::SinglePlaying;
+	m_States[m_CurPlayingIndex].state = State::SinglePlaying;
 }
 
 void SkeletonAnimator::FadeIn(const string& name, float fadingLength)
@@ -29,21 +47,22 @@ void SkeletonAnimator::FadeIn(const string& name, float fadingLength)
 		Play(name);
 		return;
 	}
-	m_FadingTargetIndex = GetStateIndex(name);
-	if (m_FadingTargetIndex == -1)
+	int fadingTargetIndex = GetStateIndex(name);
+	if (fadingTargetIndex == -1)
 		return;
+	AnimationState& animState = m_States[m_CurPlayingIndex];
+	animState.nextIndex = fadingTargetIndex;
+	animState.fadeOutLength = fadingLength;
+	animState.fadeOutElapsedTime = 0.0f;
+	animState.state = State::Fading;
 	m_IsPlaying = true;
-	m_FadingLength = fadingLength;
-	m_FadingElapsedTime = 0.0f;
-	m_States[m_FadingTargetIndex].elapsedTime = 0.0;
-	m_CurState = State::Fading;
 }
 
 void SkeletonAnimator::FadeInOut(const string& name, float fadingInLength, float fadingOutLength)
 {
-	FadeIn(name, fadingInLength);
-	m_FadingOutName = m_States[m_CurPlayingIndex].clip->m_Name;
-	m_FadingOutLength = fadingOutLength;
+	//FadeIn(name, fadingInLength);
+	//m_FadingOutName = m_States[m_CurPlayingIndex].clip->m_Name;
+	//m_FadingOutLength = fadingOutLength;
 }
 
 void SkeletonAnimator::Pause()
@@ -70,11 +89,12 @@ void SkeletonAnimator::OnUpdate(float deltaTime)
 	if (!m_IsPlaying || !m_Skeleton.get() || m_CurPlayingIndex == -1 || m_CurPlayingIndex >= m_States.size())
 		return;
 
-	if (m_CurState == State::SinglePlaying)
+	AnimationState& curState = m_States[m_CurPlayingIndex];
+	if (curState.state == State::SinglePlaying)
 		UpdateSinglePlaying(deltaTime);
-	else if (m_CurState == State::Fading)
+	else if (curState.state == State::Fading)
 		UpdateFading(deltaTime);
-	else if (m_CurState == State::Blending)
+	else if (curState.state == State::Blending)
 		UpdateBlending(deltaTime);
 }
 
@@ -89,12 +109,12 @@ void SkeletonAnimator::UpdateSinglePlaying(float deltaTime)
 
 void SkeletonAnimator::UpdateFading(float deltaTime)
 {
-	m_FadingElapsedTime += deltaTime;
 	AnimationState& curState = m_States[m_CurPlayingIndex];
-	AnimationState& targetState = m_States[m_FadingTargetIndex];
+	curState.fadeOutElapsedTime += deltaTime;
+	AnimationState& targetState = m_States[curState.nextIndex];
 	float fps = curState.clip->m_FrameCountPerSecond;
 	bool isOut = false;
-	if (m_FadingOutLength == INVALID_FADINGOUT_PARAM)
+	if (targetState.nextIndex == -1)
 		isOut = m_FadingElapsedTime * fps >= m_FadingLength;
 	else
 		isOut = m_FadingElapsedTime * fps + m_FadingOutLength >= m_FadingLength;
@@ -137,7 +157,7 @@ void SkeletonAnimator::UpdateFading(float deltaTime)
 
 void SkeletonAnimator::UpdateBlending(float deltaTime)
 {
-	
+
 }
 
 PAnimationClip SkeletonAnimator::GetClip() const
@@ -168,18 +188,18 @@ int SkeletonAnimator::GetStateIndex(const string& name) const
 	return index;
 }
 
-void SkeletonAnimator::AddClip(PAnimationClip clip) 
+void SkeletonAnimator::AddClip(PAnimationClip clip)
 {
 	AddClip(clip, 1.0f);
 }
 
 void SkeletonAnimator::AddClip(PAnimationClip clip, float speed)
 {
-	m_States.push_back(AnimationState{ clip, 0.0f, speed });
+	m_States.push_back(AnimationState(clip, speed));
 }
 
-void SkeletonAnimator::AddClips(const vector<PAnimationClip>& clips) 
-{ 
+void SkeletonAnimator::AddClips(const vector<PAnimationClip>& clips)
+{
 	for_each(clips.begin(), clips.end(), [&](PAnimationClip clip) {
 		AddClip(clip);
 	});

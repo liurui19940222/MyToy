@@ -7,18 +7,35 @@ BEGIN_NAMESPACE_ENGINE
 
 #define INVALID_FADINGOUT_PARAM -1.0f
 
-struct AnimationState {
-	PAnimationClip clip;
-	float elapsedTime;
-	float speed;
-};
-
 class SkeletonAnimator
 {
 	enum class State {
 		SinglePlaying,
 		Fading,
 		Blending,
+	};
+
+	class AnimationState {
+	public:
+		PAnimationClip	clip;
+		State			state;
+		float			elapsedTime;
+		float			speed;
+		int				nextIndex;
+		float			fadeOutLength;
+		float			fadeOutElapsedTime;
+
+		AnimationState();
+		AnimationState(PAnimationClip clip, float speed);
+
+		inline void Reset() 
+		{
+			state = State::SinglePlaying;
+			elapsedTime = 0.0f;
+			nextIndex = -1;
+			fadeOutLength = 0.0f;
+			fadeOutElapsedTime = 0.0f;
+		}
 	};
 
 public:
@@ -47,13 +64,7 @@ private:
 	void UpdateFading(float deltaTime);
 	void UpdateBlending(float deltaTime);
 
-	State					m_CurState;
 	int						m_CurPlayingIndex;
-	int						m_FadingTargetIndex;
-	float					m_FadingElapsedTime;
-	float					m_FadingLength;
-	float					m_FadingOutLength;
-	string					m_FadingOutName;
 	bool					m_IsPlaying;
 	vector<AnimationState>  m_States;
 	PSkeleton				m_Skeleton;
