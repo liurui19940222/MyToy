@@ -27,23 +27,25 @@ void ModelApp::OnInitialize()
 	SetBackgroundColor(color.r, color.g, color.b, color.a);
 	Input::Init(GetModuleHandle(NULL), m_Hwnd);
 
-	modelMat = Matrix4x4::Translate(Vector3(0, -3, 0)) * Matrix4x4::Rotate(Vector3(-90, 20, 0)) * Matrix4x4::Scale(Vector3::one * 0.5f);
+	modelMat = Matrix4x4::Translate(Vector3(0, -1, 0)) * Matrix4x4::Rotate(Vector3(-90, 20, 0)) * Matrix4x4::Scale(Vector3::one * 0.05f);
 	m_CameraPos = Vector3(0, 3, 10);
 	viewMat = Matrix4x4::LookAt(m_CameraPos, Vector3::zero, Vector3::up);
 
 	m_Material = make_shared<Material>();
 	m_Material->SetShader(Shader::Get("skinning"));
-	//m_Material->SetMainTexture(Texture2D::Create("../Assets/shake.png"));
-	m_Material->SetMainTexture(Texture2D::Create("D:/project/client_branch_1.3.5/UnityProj/Assets/ArtRawResources/Actors/XiaoQiao/Textures/XiaoQiao_ShaTan.png"));
+	m_Material->SetMainTexture(Texture2D::Create("../Assets/models/warrior/w2s_diffuse.tga"));
 
 	AdvModelLoader loader;
-	//loader.LoadFromFile("../Assets/models/shake.xml");
-	loader.LoadFromFile("D:/1100.FBX");
-	//loader.LoadFromFile("D:/project/client_branch_1.3.5/UnityProj/Assets/ArtRawResources/Actors/XiaoQiao/xiaoqiao_shatan_idle.fbx");
-	m_Mesh = loader.m_model->m_Meshes[0];
-	m_Clip = loader.m_model->m_Animations[0];
+	PModel model = loader.LoadFromFile("../Assets/models/warrior/w2s.FBX");
+	m_Mesh = model->m_Meshes[0];
+	m_Clip = model->m_Animations[0];
 	m_Clip->m_IsLooping = true;
-	m_Skeleton = loader.m_model->m_Skeleton;
+	m_Skeleton = model->m_Skeleton;
+
+	AdvModelLoader loader2;
+	PModel model2 = loader2.LoadAnimationFromFile("../Assets/models/warrior/w2s_walk.FBX", *m_Skeleton.get());
+	m_Clip = model2->m_Animations[0];
+	m_Clip->m_IsLooping = true;
 
 	m_MeshBuffer = make_shared<MeshBufferSkinning>(m_Mesh);
 	m_Object.mesh = m_MeshBuffer.get();

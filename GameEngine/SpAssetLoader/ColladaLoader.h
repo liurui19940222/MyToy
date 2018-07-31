@@ -28,22 +28,22 @@ class ColladaLoader : public ModelLoader
 #pragma region read_mesh
 
 	//读取整个骨架
-	void ReadSkeleton(xml_node<>* node);
+	void ReadSkeleton(xml_node<>* node, Model* model);
 
 	//读取关节信息,包括没有蒙皮信息的节点
-	void ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth);
+	void ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth, Model* model);
 
 	//读取蒙皮
-	void ReadSkin(xml_node<>* root, vector<Vector4>& weights, vector<BVector4>& indices);
+	void ReadSkin(xml_node<>* root, vector<Vector4>& weights, vector<BVector4>& indices, Model* model);
 
 	//按采样时间，把所有骨骼的采样分类
 	void AddSample(map<float, AnimationSample>& p_samples, float time, byte jointIndex, const JointPose& pose);
 
 	//读取Mesh
-	void ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<BVector4>& indices);
+	void ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<BVector4>& indices, Model* model);
 
 	//读取动画
-	void ReadAnimation(xml_node<>* root);
+	void ReadAnimation(xml_node<>* root, Model* model);
 
 #pragma endregion
 
@@ -138,7 +138,7 @@ class ColladaLoader : public ModelLoader
 #pragma endregion
 
 public:
-	virtual void LoadFromFile(const char* filename) override;
+	virtual PModel LoadFromFile(const char* filename) override;
 	virtual void ReleaseSource() override;
 };
 

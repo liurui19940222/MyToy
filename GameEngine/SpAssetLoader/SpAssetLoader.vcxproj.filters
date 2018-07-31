@@ -9,9 +9,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IAssetLoader.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="ImageLoader.h">
       <Filter>include</Filter>
     </ClInclude>

@@ -1,6 +1,6 @@
 #include "ImageLoader.h"
 
-USING_NAMESPACE_ENGINE
+USING_NAMESPACE_ENGINE;
 
 #ifndef GL_BGR_EXT
 #define GL_BGR_EXT                        0x80E0

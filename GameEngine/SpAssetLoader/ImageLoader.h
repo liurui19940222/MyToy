@@ -1,13 +1,12 @@
 #ifndef _BIT_IMAGE_H_
 #define _BIT_IMAGE_H_
 
-#include"IAssetLoader.h"
 #include"SpCommon\EngineDefine.h"
 #include<freeimage\FreeImage.h>
 
 BEGIN_NAMESPACE_ENGINE
 
-class ImageLoader : public IAssetLoader
+class ImageLoader
 {
 	FIBITMAP* m_pFI;
 
@@ -21,9 +20,9 @@ public:
 	ImageLoader(const char* filename);
 	~ImageLoader();
 
-	virtual void LoadFromFile(const char* filename) override;
+	virtual void LoadFromFile(const char* filename);
 
-	virtual void ReleaseSource() override;
+	virtual void ReleaseSource();
 
 	uint GetWidth();
 

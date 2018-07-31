@@ -21,7 +21,7 @@ private:
 
 public:
 
-	virtual void LoadFromFile(const char* filename) override;
+	virtual PModel LoadFromFile(const char* filename) override;
 
 	virtual void ReleaseSource() override;
 };

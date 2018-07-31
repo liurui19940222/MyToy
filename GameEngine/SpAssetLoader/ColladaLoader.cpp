@@ -136,23 +136,23 @@ map<string, vector<string>> ColladaLoader::ReadSources(xml_node<>* node)
 	return dic;
 }
 
-void ColladaLoader::ReadSkeleton(xml_node<>* node)
+void ColladaLoader::ReadSkeleton(xml_node<>* node, Model* model)
 {
-	m_model->m_Skeleton = make_shared<Skeleton>();
+	model->m_Skeleton = make_shared<Skeleton>();
 	xml_node<>* scene_root = GetNodeByName(node, "library_visual_scenes")->first_node();
 	for (xml_node<> *it = scene_root->first_node(); it; it = it->next_sibling())
 	{
 		if (GetNodeByName(it, "matrix") != NULL)
 		{
-			ReadJoint(it, JOINT_ROOT, 0);
+			ReadJoint(it, JOINT_ROOT, 0, model);
 		}
 	}
-	m_model->m_Skeleton->m_GlobalPoses.resize(m_model->m_Skeleton->GetSize());
-	m_model->m_Skeleton->m_LocalPoses.resize(m_model->m_Skeleton->GetSize());
-	m_model->m_Skeleton->m_SkiningMatrices.resize(m_model->m_Skeleton->GetSize());
+	model->m_Skeleton->m_GlobalPoses.resize(model->m_Skeleton->GetSize());
+	model->m_Skeleton->m_LocalPoses.resize(model->m_Skeleton->GetSize());
+	model->m_Skeleton->m_SkiningMatrices.resize(model->m_Skeleton->GetSize());
 }
 
-void ColladaLoader::ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth)
+void ColladaLoader::ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth, Model* model)
 {
 	string values = GetNodeByName(joint_node, "matrix")->value();
 	float* m = UnpackValues<float>(values, 16);
@@ -160,9 +160,9 @@ void ColladaLoader::ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth
 	joint.m_LocalMatrix = Matrix4x4(m);
 	joint.m_Name = GetAttribute(joint_node, "name");
 	joint.m_iParent = parent_ref;
-	joint.m_Index = m_model->m_Skeleton->GetSize();
-	m_model->m_Skeleton->AddJoint(joint);
-	byte index = m_model->m_Skeleton->GetSize() - 1;
+	joint.m_Index = model->m_Skeleton->GetSize();
+	model->m_Skeleton->AddJoint(joint);
+	byte index = model->m_Skeleton->GetSize() - 1;
 	//--------------------打印关节树----------------------
 	//string str;
 	//for (int i = 0; i < depth; i++)
@@ -175,12 +175,12 @@ void ColladaLoader::ReadJoint(xml_node<>* joint_node, byte parent_ref, int depth
 	{
 		if (GetNodeByName(it, "matrix") != NULL)
 		{
-			ReadJoint(it, index, depth + 1);
+			ReadJoint(it, index, depth + 1, model);
 		}
 	}
 }
 
-void ColladaLoader::ReadSkin(xml_node<>* root, vector<Vector4>& weights, vector<BVector4>& indices)
+void ColladaLoader::ReadSkin(xml_node<>* root, vector<Vector4>& weights, vector<BVector4>& indices, Model* model)
 {
 	//读取蒙皮
 	if (GetNodeByName(root, "library_controllers") == NULL)
@@ -188,7 +188,7 @@ void ColladaLoader::ReadSkin(xml_node<>* root, vector<Vector4>& weights, vector<
 	xml_node<>* skin_node = GetNodeByName(root, "library_controllers")->first_node()->first_node();
 	string mat_value = GetNodeByName(skin_node, "bind_shape_matrix")->value();
 	float* p_mat = UnpackValues<float>(mat_value, 16);
-	m_model->m_Skeleton->m_BindShapeMat = p_mat;
+	model->m_Skeleton->m_BindShapeMat = p_mat;
 	free(p_mat);
 	xml_node<>* joint_node = GetNodeByName(skin_node, "joints");
 	vector<xml_node<>*> joint_inputs = GetNodesByName(joint_node, "input");
@@ -260,7 +260,7 @@ void ColladaLoader::ReadSkin(xml_node<>* root, vector<Vector4>& weights, vector<
 		int num = vcount[i];
 		for (int j = 0; j < num; j++)
 		{
-			indices[i][j] = m_model->m_Skeleton->GetJointIndex(joint_source[v_array[weights_offsets[0] + v + j * 2]]);
+			indices[i][j] = model->m_Skeleton->GetJointIndex(joint_source[v_array[weights_offsets[0] + v + j * 2]]);
 			weights[i][j] = weight_source[v_array[weights_offsets[1] + v + j * 2]];
 		}
 		v += num * 2;
@@ -268,12 +268,12 @@ void ColladaLoader::ReadSkin(xml_node<>* root, vector<Vector4>& weights, vector<
 
 	for (uint i = 0; i < joint_source.size(); i++)
 	{
-		Joint& joint = *m_model->m_Skeleton->GetJoint(joint_source[i]);
+		Joint& joint = *model->m_Skeleton->GetJoint(joint_source[i]);
 		joint.m_InvBindPose = matrix_source[i];
 	}
 }
 
-void ColladaLoader::ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<BVector4>& weight_indices)
+void ColladaLoader::ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<BVector4>& weight_indices, Model* model)
 {
 	if (GetNodeByName(root, "library_geometries") == NULL)
 		return;
@@ -300,7 +300,7 @@ void ColladaLoader::ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<
 		m_triangleNum += GetAttribute<int>(*it, "count");
 	}
 	PMesh p_mesh = make_shared<Mesh>();
-	m_model->m_Meshes.push_back(p_mesh);
+	model->m_Meshes.push_back(p_mesh);
 	p_mesh->m_VertexCount = m_triangleNum * 3;
 
 	int vertIndex = 0, normalIndex = 0, uvIndex = 0; //读取时已到达的索引
@@ -360,7 +360,7 @@ void ColladaLoader::ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<
 	}
 }
 
-void ColladaLoader::ReadAnimation(xml_node<>* root)
+void ColladaLoader::ReadAnimation(xml_node<>* root, Model* model)
 {
 	xml_node<>* lib_animation_node = GetNodeByName(root, "library_animations");
 	if (!lib_animation_node)
@@ -376,7 +376,7 @@ void ColladaLoader::ReadAnimation(xml_node<>* root)
 		string channel_source_id = RemoveAtFirst(GetAttribute(channel_node, "source"));
 		string channel_target_joint = GetAttribute(channel_node, "target");
 		channel_target_joint = channel_target_joint.substr(0, channel_target_joint.find('/'));
-		byte joint_index = m_model->m_Skeleton->GetJointIndex(channel_target_joint);
+		byte joint_index = model->m_Skeleton->GetJointIndex(channel_target_joint);
 		Matrix4x4* matrices = NULL;
 		float* times = NULL;
 		int sample_count = 0;
@@ -412,7 +412,7 @@ void ColladaLoader::ReadAnimation(xml_node<>* root)
 		free(times);
 	}
 	PAnimationClip clip = make_shared<AnimationClip>();
-	m_model->m_Animations.push_back(clip);
+	model->m_Animations.push_back(clip);
 	clip->m_IsLooping = true;
 	clip->m_aSamples.clear();
 	int index = 0;
@@ -424,19 +424,21 @@ void ColladaLoader::ReadAnimation(xml_node<>* root)
 	}
 }
 
-void ColladaLoader::LoadFromFile(const char* filename)
+PModel ColladaLoader::LoadFromFile(const char* filename)
 {
+	PModel model = make_shared<Model>();
 	ReleaseSource();
 	LoadXmlDocument(filename);
 	xml_node<>* root = m_xmlDoc.first_node();
-	ReadSkeleton(root);
+	ReadSkeleton(root, model.get());
 	vector<Vector4> weights;
 	vector<BVector4> indices;
-	ReadSkin(root, weights, indices);
-	ReadMesh(root, weights, indices);
-	ReadAnimation(root);
-	SkeletonAnimation::CalculateGlobalMatrix(m_model->m_Skeleton);
-	SkeletonAnimation::CalculateSkinningMatrix(m_model->m_Skeleton);
+	ReadSkin(root, weights, indices, model.get());
+	ReadMesh(root, weights, indices, model.get());
+	ReadAnimation(root, model.get());
+	SkeletonAnimation::CalculateGlobalMatrix(model->m_Skeleton);
+	SkeletonAnimation::CalculateSkinningMatrix(model->m_Skeleton);
+	return model;
 }
 
 void ColladaLoader::ReleaseSource()

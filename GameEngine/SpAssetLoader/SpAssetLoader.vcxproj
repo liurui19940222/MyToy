@@ -155,7 +155,6 @@
     <ClInclude Include="AdvModelLoader.h" />
     <ClInclude Include="ColladaLoader.h" />
     <ClInclude Include="ImageLoader.h" />
-    <ClInclude Include="IAssetLoader.h" />
     <ClInclude Include="ModelLoader.h" />
   </ItemGroup>
   <ItemGroup>

@@ -2,9 +2,9 @@
 
 USING_NAMESPACE_ENGINE
 
-void C3DSModelLoader::LoadFromFile(const char* filename)
+PModel C3DSModelLoader::LoadFromFile(const char* filename)
 {
-	m_model = make_shared<Model>();
+	PModel m_model = make_shared<Model>();
 	lib3dsfile = lib3ds_file_load(filename);
 	int m_triangleNum = lib3dsfile->meshes->faces;
 	int m_vertexNum = m_triangleNum * 3;
@@ -55,6 +55,8 @@ void C3DSModelLoader::LoadFromFile(const char* filename)
 	m_model->m_Meshes[0]->m_Normals = m_normalArray;
 	m_model->m_Meshes[0]->m_Texcoords = m_uvArray;
 	m_model->m_Meshes[0]->m_VertexCount = m_vertexNum;
+
+	return m_model;
 }
 
 void C3DSModelLoader::ReleaseSource()

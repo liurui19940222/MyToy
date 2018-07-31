@@ -150,6 +150,8 @@ vector<JointPose> SkeletonAnimation::Blend(PAnimationClip* clips, float* timePos
 
 void SkeletonAnimation::CalculateGlobalMatrix(PSkeleton skeleton)
 {
+	if (!skeleton.get())
+		return;
 	for (Joint& joint : skeleton->GetJoints())
 	{
 		Matrix4x4 matj = Matrix4x4::Identity();
@@ -168,7 +170,7 @@ void SkeletonAnimation::CalculateGlobalMatrix(PSkeleton skeleton)
 
 void SkeletonAnimation::CalculateGlobalMatrix(PSkeleton skeleton, vector<JointPose> localPoses)
 {
-	if (!localPoses.size())
+	if (!skeleton.get() || !localPoses.size())
 		return;
 	for (Joint& joint : skeleton->GetJoints())
 	{

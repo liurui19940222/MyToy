@@ -2,15 +2,16 @@
 #define _CMODEL_FILE_
 
 #include"SpRendering\SkeletonAnimation.h"
-#include"IAssetLoader.h"
 
 BEGIN_NAMESPACE_ENGINE
 
-class ModelLoader : public IAssetLoader
+class ModelLoader
 {
 public:
-	ModelLoader() { m_model = make_shared<Model>(); }
-	PModel m_model = NULL;
+	ModelLoader() {  }
+
+	virtual PModel LoadFromFile(const char* filename) = 0;
+	virtual void ReleaseSource() = 0;
 };
 
 END_NAMESPACE_ENGINE

@@ -23,17 +23,33 @@ void copyQuaternion(aiQuaternion& q1, Quaternion& q2)
 	q2.w = q1.w;
 }
 
-void AdvModelLoader::LoadFromFile(const char* filename)
+PModel AdvModelLoader::LoadFromFile(const char* filename)
 {
+	PModel model = make_shared<Model>();
 	const aiScene* scene = m_Importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals);
 	if (scene == NULL)
-		return;
+		return model;
 
-	ReadMesh(scene);
-	ReadSkeleton(scene);
-	ReadAnimation(scene);
-	SkeletonAnimation::CalculateGlobalMatrix(m_model->m_Skeleton);
-	SkeletonAnimation::CalculateSkinningMatrix(m_model->m_Skeleton);
+	ReadMesh(scene, model.get());
+	ReadSkeleton(scene, model.get());
+	if (model->m_Skeleton.get())
+	{
+		ReadAnimation(scene, model.get(), *model->m_Skeleton.get());
+		SkeletonAnimation::CalculateGlobalMatrix(model->m_Skeleton);
+		SkeletonAnimation::CalculateSkinningMatrix(model->m_Skeleton);
+	}
+	return model;
+}
+
+PModel AdvModelLoader::LoadAnimationFromFile(const char* filename, Skeleton& skeleton)
+{
+	PModel model = make_shared<Model>();
+	const aiScene* scene = m_Importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals);
+	if (scene == NULL)
+		return model;
+
+	ReadAnimation(scene, model.get(), skeleton);
+	return model;
 }
 
 void AdvModelLoader::ReleaseSource()
@@ -41,21 +57,21 @@ void AdvModelLoader::ReleaseSource()
 
 }
 
-void AdvModelLoader::ReadMesh(const aiScene* scene)
+void AdvModelLoader::ReadMesh(const aiScene* scene, Model* model)
 {
 	//读取mesh
 	if (!scene->HasMeshes())
 		return;
 
-	m_model->m_Meshes.resize(scene->mNumMeshes);
+	model->m_Meshes.resize(scene->mNumMeshes);
 	Mesh* mesh = NULL;
 	aiMesh* aiMesh = NULL;
 	uint size = 0;
 	uint vertexNum = 0;
 	for (int meshIdx = 0; meshIdx < scene->mNumMeshes; meshIdx++)
 	{
-		m_model->m_Meshes[meshIdx] = make_shared<Mesh>();
-		mesh = m_model->m_Meshes[meshIdx].get();
+		model->m_Meshes[meshIdx] = make_shared<Mesh>();
+		mesh = model->m_Meshes[meshIdx].get();
 		aiMesh = scene->mMeshes[meshIdx];
 		vertexNum = aiMesh->mNumVertices;
 
@@ -110,7 +126,7 @@ void AdvModelLoader::ReadMesh(const aiScene* scene)
 			int compIndex = 0;
 			mesh->m_JointWeights = (Vector4*)malloc(sizeof(Vector4) * vertexNum);
 			mesh->m_JointIndices = (BVector4*)malloc(sizeof(BVector4) * vertexNum);
-			m_model->m_Skeleton = make_shared<Skeleton>();
+			model->m_Skeleton = make_shared<Skeleton>();
 			for (int i = 0; i < aiMesh->mNumBones; ++i)
 			{
 				bone = aiMesh->mBones[i];
@@ -118,35 +134,37 @@ void AdvModelLoader::ReadMesh(const aiScene* scene)
 				joint.m_Index = i;
 				joint.m_Name = bone->mName.C_Str();
 				copyMatrix(bone->mOffsetMatrix, joint.m_InvBindPose);
-				m_model->m_Skeleton->AddJoint(joint);
+				model->m_Skeleton->AddJoint(joint);
 				for (int j = 0; j < bone->mNumWeights; ++j)
 				{
 					vertexId = bone->mWeights[j].mVertexId;
 					compIndex = _records[vertexId];
-					assert(compIndex < 4);
-					mesh->m_JointWeights[vertexId][compIndex] = bone->mWeights[j].mWeight;
-					mesh->m_JointIndices[vertexId][compIndex] = i;
-					_records[vertexId]++;
+					if (compIndex < 4)
+					{
+						mesh->m_JointWeights[vertexId][compIndex] = bone->mWeights[j].mWeight;
+						mesh->m_JointIndices[vertexId][compIndex] = i;
+						_records[vertexId]++;
+					}
 				}
 			}
-			m_model->m_Skeleton->m_GlobalPoses.resize(m_model->m_Skeleton->GetSize());
-			m_model->m_Skeleton->m_LocalPoses.resize(m_model->m_Skeleton->GetSize());
-			m_model->m_Skeleton->m_SkiningMatrices.resize(m_model->m_Skeleton->GetSize());
+			model->m_Skeleton->m_GlobalPoses.resize(model->m_Skeleton->GetSize());
+			model->m_Skeleton->m_LocalPoses.resize(model->m_Skeleton->GetSize());
+			model->m_Skeleton->m_SkiningMatrices.resize(model->m_Skeleton->GetSize());
 		}
 	}
 }
 
-void AdvModelLoader::ReadSkeleton(const aiScene* scene)
+void AdvModelLoader::ReadSkeleton(const aiScene* scene, Model* model)
 {
-	if (!scene->mRootNode)
+	if (!scene->mRootNode || !model || !model->m_Skeleton.get())
 		return;
 
 	aiNode* rootNode = scene->mRootNode;
-	copyMatrix(rootNode->mTransformation.Inverse(), m_model->m_Skeleton->m_BindShapeMat);
-	ReadNode(rootNode, 0);
+	copyMatrix(rootNode->mTransformation.Inverse(), model->m_Skeleton->m_BindShapeMat);
+	ReadNode(rootNode, 0, model);
 }
 
-void AdvModelLoader::ReadNode(aiNode* node, int depth)
+void AdvModelLoader::ReadNode(aiNode* node, int depth, Model* model)
 {
 	if (node->mNumChildren == 0)
 		return;
@@ -157,7 +175,7 @@ void AdvModelLoader::ReadNode(aiNode* node, int depth)
 	{
 		temp = node->mChildren[i];
 		//从骨架中得到该ai节点对应的关节
-		joint = m_model->m_Skeleton->GetJoint(temp->mName.C_Str());
+		joint = model->m_Skeleton->GetJoint(temp->mName.C_Str());
 		if (joint)
 		{
 			//读取局部变换
@@ -171,7 +189,7 @@ void AdvModelLoader::ReadNode(aiNode* node, int depth)
 				}
 				else
 				{
-					parent = m_model->m_Skeleton->GetJoint(temp->mParent->mName.C_Str());
+					parent = model->m_Skeleton->GetJoint(temp->mParent->mName.C_Str());
 					if (parent)
 						joint->m_iParent = parent->m_Index;
 					else
@@ -192,11 +210,11 @@ void AdvModelLoader::ReadNode(aiNode* node, int depth)
 			}
 			Debug::Log("%s p:%d i:%d", (str + joint->m_Name).c_str(), joint->m_iParent, joint->m_Index);*/
 		}
-		ReadNode(temp, depth + 1);
+		ReadNode(temp, depth + 1, model);
 	}
 }
 
-void AdvModelLoader::ReadAnimation(const aiScene* scene)
+void AdvModelLoader::ReadAnimation(const aiScene* scene, Model* model, Skeleton& skeleton)
 {
 	if (!scene->HasAnimations())
 		return;
@@ -223,15 +241,15 @@ void AdvModelLoader::ReadAnimation(const aiScene* scene)
 			jointName = aiNodeAnim->mNodeName.C_Str();
 			for (int k = 0; k < aiNodeAnim->mNumPositionKeys; ++k)
 			{
-				AddPositionSample(samples, aiNodeAnim->mPositionKeys[k], jointName);
+				AddPositionSample(samples, aiNodeAnim->mPositionKeys[k], jointName, skeleton);
 			}
 			for (int k = 0; k < aiNodeAnim->mNumRotationKeys; ++k)
 			{
-				AddRotationSample(samples, aiNodeAnim->mRotationKeys[k], jointName);
+				AddRotationSample(samples, aiNodeAnim->mRotationKeys[k], jointName, skeleton);
 			}
 			for (int k = 0; k < aiNodeAnim->mNumScalingKeys; ++k)
 			{
-				AddScalingSample(samples, aiNodeAnim->mScalingKeys[k], jointName);
+				AddScalingSample(samples, aiNodeAnim->mScalingKeys[k], jointName, skeleton);
 			}
 		}
 		//转换成AnimationSample
@@ -241,37 +259,37 @@ void AdvModelLoader::ReadAnimation(const aiScene* scene)
 			CopySampleInfo(pair.second, sample);
 			anim->m_aSamples.push_back(sample);
 		});
-		m_model->m_Animations.push_back(anim);
+		model->m_Animations.push_back(anim);
 	}
 }
 
-void AdvModelLoader::AddPositionSample(map<double, JointTransformation>& samples, aiVectorKey& vectorKey, const char* jointName)
+void AdvModelLoader::AddPositionSample(map<double, JointTransformation>& samples, aiVectorKey& vectorKey, const char* jointName, Skeleton& skeleton)
 {
 	Transformation* transformation = NULL;
-	if (!GetTransformation(samples, vectorKey.mTime, jointName, &transformation))
+	if (!GetTransformation(samples, vectorKey.mTime, jointName, &transformation, skeleton))
 		return;
 	transformation->position = vectorKey.mValue;
 }
 
-void AdvModelLoader::AddRotationSample(map<double, JointTransformation>& samples, aiQuatKey& quatKey, const char* jointName)
+void AdvModelLoader::AddRotationSample(map<double, JointTransformation>& samples, aiQuatKey& quatKey, const char* jointName, Skeleton& skeleton)
 {
 	Transformation* transformation = NULL;
-	if (!GetTransformation(samples, quatKey.mTime, jointName, &transformation))
+	if (!GetTransformation(samples, quatKey.mTime, jointName, &transformation, skeleton))
 		return;
 	transformation->rotation = quatKey.mValue;
 }
 
-void AdvModelLoader::AddScalingSample(map<double, JointTransformation>& samples, aiVectorKey& vectorKey, const char* jointName)
+void AdvModelLoader::AddScalingSample(map<double, JointTransformation>& samples, aiVectorKey& vectorKey, const char* jointName, Skeleton& skeleton)
 {
 	Transformation* transformation = NULL;
-	if (!GetTransformation(samples, vectorKey.mTime, jointName, &transformation))
+	if (!GetTransformation(samples, vectorKey.mTime, jointName, &transformation, skeleton))
 		return;
 	transformation->scaling = vectorKey.mValue;
 }
 
-bool AdvModelLoader::GetTransformation(map<double, JointTransformation>& samples, double time, const char* jointName, Transformation** trans)
+bool AdvModelLoader::GetTransformation(map<double, JointTransformation>& samples, double time, const char* jointName, Transformation** trans, Skeleton& skeleton)
 {
-	Joint* joint = m_model->m_Skeleton->GetJoint(jointName);
+	Joint* joint = skeleton.GetJoint(jointName);
 	if (!joint)
 		return false;
 	auto it = samples.find(time);
