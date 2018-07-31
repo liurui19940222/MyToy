@@ -98,7 +98,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\ExternLibrary;..\Build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SpCommon.lib;SpRendering.lib;SpAssetLoader.lib;SpUISystem.lib;GLAppBase.lib;FreeImage.lib;freetype.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SpCommon.lib;SpRendering.lib;SpAssetLoader.lib;SpUISystem.lib;SpAnimation.lib;GLAppBase.lib;FreeImage.lib;freetype.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

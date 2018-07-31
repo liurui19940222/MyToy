@@ -38,18 +38,26 @@ void ModelApp::OnInitialize()
 	AdvModelLoader loader;
 	PModel model = loader.LoadFromFile("../Assets/models/warrior/w2s.FBX");
 	m_Mesh = model->m_Meshes[0];
-	m_Clip = model->m_Animations[0];
-	m_Clip->m_IsLooping = true;
 	m_Skeleton = model->m_Skeleton;
 
-	AdvModelLoader loader2;
-	PModel model2 = loader2.LoadAnimationFromFile("../Assets/models/warrior/w2s_walk.FBX", *m_Skeleton.get());
+	PModel model2 = loader.LoadAnimationFromFile("../Assets/models/warrior/w2s_walk.FBX", *m_Skeleton.get());
 	m_Clip = model2->m_Animations[0];
 	m_Clip->m_IsLooping = true;
+	m_Clip->m_Name = "walk";
+
+	PModel model3 = loader.LoadAnimationFromFile("../Assets/models/warrior/w2s_jump.FBX", *m_Skeleton.get());
+	m_Clip2 = model3->m_Animations[0];
+	m_Clip2->m_IsLooping = false;
+	m_Clip2->m_Name = "jump";
 
 	m_MeshBuffer = make_shared<MeshBufferSkinning>(m_Mesh);
 	m_Object.mesh = m_MeshBuffer.get();
 	m_Object.material = m_Material.get();
+
+	m_Animator.AddClip(m_Clip);
+	m_Animator.AddClip(m_Clip2);
+	m_Animator.SetSkeleton(m_Skeleton);
+	m_Animator.Play("walk");
 }
 
 void ModelApp::OnWindowSizeChanged(int width, int height)
@@ -58,19 +66,44 @@ void ModelApp::OnWindowSizeChanged(int width, int height)
 	projectionMat = Matrix4x4::Perspective(45, width / (float)height, 0.1, 1000);
 }
 
-float g_DeltaTime;
-float g_Time;
 void ModelApp::OnUpdate(float deltaTime)
 {
 	GLAppBase::OnUpdate(deltaTime);
 	Input::GetState(EngineToolkit::GetGlobalRect(m_Hwnd, m_WindowWidth, m_WindowHeight));
 
-	g_DeltaTime = deltaTime;
-	EngineToolkit::WatchTarget(m_CameraPos, viewMat, Vector3::zero, g_DeltaTime);
+	EngineToolkit::WatchTarget(m_CameraPos, viewMat, Vector3::zero, deltaTime);
 
-	vector<JointPose> jointPoses = SkeletonAnimation::Sample(m_Clip, m_Skeleton, this->m_TimeSinceStarUp, 1);
-	SkeletonAnimation::CalculateGlobalMatrix(m_Skeleton, jointPoses);
-	SkeletonAnimation::CalculateSkinningMatrix(m_Skeleton);
+	if (Input::GetKeyDown(DIK_1))
+	{
+		m_Animator.Play("walk");
+	}
+
+	if (Input::GetKeyDown(DIK_2))
+	{
+		m_Animator.Pause();
+	}
+
+	if (Input::GetKeyDown(DIK_3))
+	{
+		m_Animator.Continue();
+	}
+
+	if (Input::GetKeyDown(DIK_4))
+	{
+		m_Animator.Stop();
+	}
+
+	if (Input::GetKeyDown(DIK_5))
+	{
+		m_Animator.FadeIn("jump", 2.0f);
+	}
+
+	if (Input::GetKeyDown(DIK_6))
+	{
+		m_Animator.FadeInOut("jump", 2.0f, 2.0f);
+	}
+
+	m_Animator.OnUpdate(deltaTime);
 }
 
 void ModelApp::OnRender()

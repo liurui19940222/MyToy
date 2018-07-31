@@ -223,14 +223,13 @@ void AdvModelLoader::ReadAnimation(const aiScene* scene, Model* model, Skeleton&
 	aiVectorKey aiVectorKey;
 	PAnimationClip anim = NULL;
 	const char* jointName = NULL;
-	double reciprocalOfTicks = 0.0;
 
 	for (int i = 0; i < scene->mNumAnimations; ++i)
 	{
 		anim = make_shared<AnimationClip>();
 		aiAnim = scene->mAnimations[i];
-		reciprocalOfTicks = 1.0 / aiAnim->mTicksPerSecond;
-		anim->m_Length = (float)(aiAnim->mDuration * reciprocalOfTicks);
+		anim->m_FrameCountPerSecond = aiAnim->mTicksPerSecond;
+		anim->m_Length = (float)(aiAnim->mDuration);
 		anim->m_Name = aiAnim->mName.C_Str();
 
 		//读取所有的通道，按照关键帧位置对应每个关节和姿势整合起来
@@ -255,7 +254,7 @@ void AdvModelLoader::ReadAnimation(const aiScene* scene, Model* model, Skeleton&
 		//转换成AnimationSample
 		for_each(samples.begin(), samples.end(), [&](pair<double, JointTransformation> pair) {
 			AnimationSample sample;
-			sample.m_Time = pair.first * reciprocalOfTicks;
+			sample.m_Time = pair.first;
 			CopySampleInfo(pair.second, sample);
 			anim->m_aSamples.push_back(sample);
 		});

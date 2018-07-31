@@ -96,6 +96,7 @@ SMART_STRUCT(AnimationSample) struct AnimationSample
 SMART_STRUCT(AnimationClip) struct AnimationClip
 {
 	vector<AnimationSample> m_aSamples;
+	float					m_FrameCountPerSecond;
 	float					m_Length;
 	bool					m_IsLooping;
 	string					m_Name;

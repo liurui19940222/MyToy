@@ -3,6 +3,7 @@
 #include"SpRendering\GLRendering.h"
 #include"SpRendering\FontRenderer.h"
 #include"SpCommon\Input.h"
+#include"SpAnimation\SkeletonAnimator.h"
 #include <assimp\Importer.hpp>
 #include <assimp\postprocess.h>
 #include <assimp\scene.h>
@@ -34,7 +35,9 @@ private:
 	PMaterial				m_Material;
 	Importer				m_Importer;
 	PSkeleton				m_Skeleton;
+	SkeletonAnimator		m_Animator;
 	PMesh					m_Mesh;
 	PAnimationClip			m_Clip;
+	PAnimationClip			m_Clip2;
 	Vector3					m_CameraPos;
 };
