@@ -27,8 +27,8 @@ void ModelApp::OnInitialize()
 	SetBackgroundColor(color.r, color.g, color.b, color.a);
 	Input::Init(GetModuleHandle(NULL), m_Hwnd);
 
-	modelMat = Matrix4x4::Translate(Vector3(0, -1, 0)) * Matrix4x4::Rotate(Vector3(-90, 0, 0)) * Matrix4x4::Scale(Vector3::one * 0.02f);
-	m_CameraPos = Vector3(0, 3, 10);
+	modelMat = Matrix4x4::Translate(Vector3(0, -1, 0)) * Matrix4x4::Rotate(Vector3(-90, 0, 0)) * Matrix4x4::Scale(Vector3::one * 0.035f);
+	m_CameraPos = Vector3(0, 2, 10);
 	viewMat = Matrix4x4::LookAt(m_CameraPos, Vector3::zero, Vector3::up);
 
 	m_Material = make_shared<Material>();
@@ -66,6 +66,15 @@ void ModelApp::OnInitialize()
 	m_Animator.AddClip(attack_clip);
 	m_Animator.SetSkeleton(m_Skeleton);
 	m_Animator.Play("idle");
+
+	//创建地面
+	m_GroundMaterial = make_shared<Material>();
+	m_GroundMaterial->SetShader(Shader::Get("texture"));
+	m_GroundMaterial->SetMainTexture(Texture2D::Create("../Assets/wooden_case.jpg"));
+	m_GroundBuffer = _MeshFactory->CreateBuffer<MeshBufferTexcoord>(EMeshType::Quad);
+	m_Ground.mesh = m_GroundBuffer.get();
+	m_Ground.material = m_GroundMaterial.get();
+	groundMat = Matrix4x4::Translate(Vector3(0, -2.75, 0)) * Matrix4x4::Rotate(Vector3(-90, 0, 0)) * Matrix4x4::Scale(Vector3::one * 15);
 }
 
 void ModelApp::OnWindowSizeChanged(int width, int height)
@@ -136,4 +145,12 @@ void ModelApp::OnRender()
 	m_Material->SetParam("Color", Color::white);
 	m_RI->Render(m_Object);
 	m_Material->Unbind();
+
+	m_GroundMaterial->Bind();
+	m_GroundMaterial->SetParam("M", groundMat);
+	m_GroundMaterial->SetParam("V", viewMat);
+	m_GroundMaterial->SetParam("P", projectionMat);
+	m_GroundMaterial->SetParam("Color", Color::white);
+	m_RI->Render(m_Ground);
+	m_GroundMaterial->Unbind();
 }

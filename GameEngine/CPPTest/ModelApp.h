@@ -27,13 +27,16 @@ public:
 
 private:
 	Matrix4x4				modelMat;
+	Matrix4x4				groundMat;
 	Matrix4x4				viewMat;
 	Matrix4x4				projectionMat;
 	IRenderingInterface*	m_RI;
 	RenderingObject			m_Object;
+	RenderingObject			m_Ground;
 	PMeshBuffer				m_MeshBuffer;
+	PMeshBuffer				m_GroundBuffer;
 	PMaterial				m_Material;
-	Importer				m_Importer;
+	PMaterial				m_GroundMaterial;
 	PSkeleton				m_Skeleton;
 	SkeletonAnimator		m_Animator;
 	PMesh					m_Mesh;
