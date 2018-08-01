@@ -28,7 +28,9 @@ public:
 
 	virtual PModel LoadFromFile(const char* filename) override;
 
-	PModel LoadAnimationFromFile(const char* filename, Skeleton& skeleton);
+	PAnimationClip LoadAnimationFromFile(const char* filename, Skeleton& skeleton);
+
+	vector<PAnimationClip> LoadAnimationsFromFile(const char* filename, Skeleton& skeleton);
 
 	virtual void ReleaseSource() override;
 private:

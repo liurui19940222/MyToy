@@ -26,7 +26,7 @@ void copyQuaternion(aiQuaternion& q1, Quaternion& q2)
 PModel AdvModelLoader::LoadFromFile(const char* filename)
 {
 	PModel model = make_shared<Model>();
-	const aiScene* scene = m_Importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals);
+	const aiScene* scene = m_Importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_GlobalScale);
 	if (scene == NULL)
 		return model;
 
@@ -41,15 +41,21 @@ PModel AdvModelLoader::LoadFromFile(const char* filename)
 	return model;
 }
 
-PModel AdvModelLoader::LoadAnimationFromFile(const char* filename, Skeleton& skeleton)
+PAnimationClip AdvModelLoader::LoadAnimationFromFile(const char* filename, Skeleton& skeleton)
+{
+	vector<PAnimationClip> anims = LoadAnimationsFromFile(filename, skeleton);
+	return anims[0];
+}
+
+vector<PAnimationClip> AdvModelLoader::LoadAnimationsFromFile(const char* filename, Skeleton& skeleton)
 {
 	PModel model = make_shared<Model>();
 	const aiScene* scene = m_Importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals);
 	if (scene == NULL)
-		return model;
+		return model->m_Animations;
 
 	ReadAnimation(scene, model.get(), skeleton);
-	return model;
+	return model->m_Animations;
 }
 
 void AdvModelLoader::ReleaseSource()

@@ -27,7 +27,7 @@ void ModelApp::OnInitialize()
 	SetBackgroundColor(color.r, color.g, color.b, color.a);
 	Input::Init(GetModuleHandle(NULL), m_Hwnd);
 
-	modelMat = Matrix4x4::Translate(Vector3(0, -1, 0)) * Matrix4x4::Rotate(Vector3(-90, 20, 0)) * Matrix4x4::Scale(Vector3::one * 0.05f);
+	modelMat = Matrix4x4::Translate(Vector3(0, -1, 0)) * Matrix4x4::Rotate(Vector3(-90, 0, 0)) * Matrix4x4::Scale(Vector3::one * 0.02f);
 	m_CameraPos = Vector3(0, 3, 10);
 	viewMat = Matrix4x4::LookAt(m_CameraPos, Vector3::zero, Vector3::up);
 
@@ -40,24 +40,32 @@ void ModelApp::OnInitialize()
 	m_Mesh = model->m_Meshes[0];
 	m_Skeleton = model->m_Skeleton;
 
-	PModel model2 = loader.LoadAnimationFromFile("../Assets/models/warrior/w2s_walk.FBX", *m_Skeleton.get());
-	m_Clip = model2->m_Animations[0];
-	m_Clip->m_IsLooping = true;
-	m_Clip->m_Name = "walk";
+	PAnimationClip attack_clip = SkeletonAnimation::Slice(model->m_Animations[0], 100, 123, "attack");
+	PAnimationClip idle_clip = SkeletonAnimation::Slice(model->m_Animations[0], 0, 50, "idle");
+	PAnimationClip run_clip = SkeletonAnimation::Slice(model->m_Animations[0], 200, 220, "run");
+	idle_clip->m_IsLooping = true;
+	run_clip->m_IsLooping = true;
 
-	PModel model3 = loader.LoadAnimationFromFile("../Assets/models/warrior/w2s_jump.FBX", *m_Skeleton.get());
-	m_Clip2 = model3->m_Animations[0];
-	m_Clip2->m_IsLooping = false;
-	m_Clip2->m_Name = "jump";
+	PAnimationClip walk_clip = loader.LoadAnimationFromFile("../Assets/models/warrior/w2s_walk.FBX", *m_Skeleton.get());
+	walk_clip->m_IsLooping = true;
+	walk_clip->m_Name = "walk";
+
+	PAnimationClip jump_clip = loader.LoadAnimationFromFile("../Assets/models/warrior/w2s_jump.FBX", *m_Skeleton.get());
+	jump_clip->m_IsLooping = false;
+	jump_clip->m_Name = "jump";
+	jump_clip = SkeletonAnimation::Slice(jump_clip, 0, 16, "jump");
 
 	m_MeshBuffer = make_shared<MeshBufferSkinning>(m_Mesh);
 	m_Object.mesh = m_MeshBuffer.get();
 	m_Object.material = m_Material.get();
 
-	m_Animator.AddClip(m_Clip);
-	m_Animator.AddClip(m_Clip2);
+	m_Animator.AddClip(idle_clip);
+	m_Animator.AddClip(walk_clip);
+	m_Animator.AddClip(run_clip);
+	m_Animator.AddClip(jump_clip);
+	m_Animator.AddClip(attack_clip);
 	m_Animator.SetSkeleton(m_Skeleton);
-	m_Animator.Play("walk");
+	m_Animator.Play("idle");
 }
 
 void ModelApp::OnWindowSizeChanged(int width, int height)
@@ -75,7 +83,7 @@ void ModelApp::OnUpdate(float deltaTime)
 
 	if (Input::GetKeyDown(DIK_1))
 	{
-		m_Animator.Play("walk");
+		m_Animator.FadeIn("idle", 2.0f);
 	}
 
 	if (Input::GetKeyDown(DIK_2))
@@ -95,12 +103,22 @@ void ModelApp::OnUpdate(float deltaTime)
 
 	if (Input::GetKeyDown(DIK_5))
 	{
-		m_Animator.FadeIn("jump", 2.0f);
+		m_Animator.FadeIn("walk", 2.0f);
 	}
 
 	if (Input::GetKeyDown(DIK_6))
 	{
+		m_Animator.FadeIn("run", 2.0f);
+	}
+
+	if (Input::GetKeyDown(DIK_SPACE))
+	{
 		m_Animator.FadeInOut("jump", 2.0f, 2.0f);
+	}
+
+	if (Input::GetKeyDown(DIK_K))
+	{
+		m_Animator.FadeInOut("attack", 2.0f, 2.0f);
 	}
 
 	m_Animator.OnUpdate(deltaTime);

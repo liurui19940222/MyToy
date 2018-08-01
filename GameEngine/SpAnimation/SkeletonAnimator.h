@@ -68,6 +68,7 @@ private:
 	bool					m_IsPlaying;
 	vector<AnimationState>  m_States;
 	PSkeleton				m_Skeleton;
+	vector<JointPose>		m_TempJointPoses;
 };
 
 END_NAMESPACE_ENGINE

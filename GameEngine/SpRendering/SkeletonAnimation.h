@@ -91,6 +91,16 @@ SMART_STRUCT(AnimationSample) struct AnimationSample
 {
 	float				 m_Time;			//该采样的时间点
 	map<byte, JointPose> m_JointPoses;		//该采样所引用的关节和对应的局部姿势
+
+	inline void InitWithPose(vector<JointPose>& pose, float time) 
+	{
+		m_JointPoses.clear();
+		m_Time = time;
+		for (int i = 0; i < pose.size(); ++i)
+		{
+			m_JointPoses.insert(make_pair((byte)i, pose[i]));
+		}
+	}
 };
 
 SMART_STRUCT(AnimationClip) struct AnimationClip
@@ -132,9 +142,10 @@ SMART_STRUCT(Model) struct Model
 class SkeletonAnimation {
 
 public:
-	static vector<JointPose> Sample(PAnimationClip clip, PSkeleton skeleton, float t, float weight);
-	static vector<JointPose> FullMatchSample(PAnimationClip clip, PSkeleton skeleton, float t, float weight);
-	static vector<JointPose> Blend(PAnimationClip* clips, float* timePos, float* weights, int count, PSkeleton skeleton);
+	static bool Sample(vector<JointPose>& outPose, PAnimationClip clip, PSkeleton skeleton, float t, float weight);
+	static bool Blend(vector<JointPose>& outPose, PAnimationClip* clips, float* timePos, float* weights, int count, PSkeleton skeleton);
+	static PAnimationClip Slice(PAnimationClip srcClip, int ibegin, int iend, const string& newName);
+	static PAnimationClip Slice(PAnimationClip srcClip, PSkeleton skeleton, float begin, float end, const string& newName);
 	static void CalculateGlobalMatrix(PSkeleton skeleton);
 	static void CalculateGlobalMatrix(PSkeleton skeleton, vector<JointPose> localPoses);
 	static void CalculateSkinningMatrix(PSkeleton skeleton);

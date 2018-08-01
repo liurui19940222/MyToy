@@ -1,5 +1,6 @@
 #include"SkeletonAnimation.h"
 #include<iostream>
+#include<assert.h>
 
 USING_NAMESPACE_ENGINE
 
@@ -55,13 +56,15 @@ Mesh::~Mesh()
 	if (m_JointIndices) { free(m_JointIndices); m_JointIndices = NULL; }
 }
 
-vector<JointPose> SkeletonAnimation::Sample(PAnimationClip clip, PSkeleton skeleton, float t, float weight)
+bool SkeletonAnimation::Sample(vector<JointPose>& outPose, PAnimationClip clip, PSkeleton skeleton, float t, float weight)
 {
-	vector<JointPose> poses;
-	t = clip->m_IsLooping ? fmod(t, clip->m_Length) : t;
+	if (clip->m_IsLooping)
+		t = fmod(t, clip->m_Length);
+	else
+		t = CMath::Clamp(t, clip->m_aSamples[0].m_Time, clip->m_aSamples[clip->m_aSamples.size() - 1].m_Time);
 	if (t > clip->m_Length || t < 0 || clip->m_aSamples.empty())
-		return poses;
-	poses.resize(skeleton->GetSize());
+		return false;
+	outPose.resize(skeleton->GetSize());
 	for (uint sampleIndex = 0; sampleIndex < clip->m_aSamples.size() - 1; sampleIndex++)
 	{
 		AnimationSample& a = clip->m_aSamples[sampleIndex];
@@ -79,53 +82,25 @@ vector<JointPose> SkeletonAnimation::Sample(PAnimationClip clip, PSkeleton skele
 					mat_a = it_a->second.m_Matrix;
 				else
 				{
-					poses[jointIndex] = JointPose{ skeleton->GetJoint(jointIndex)->m_LocalMatrix };
+					outPose[jointIndex] = JointPose{ skeleton->GetJoint(jointIndex)->m_LocalMatrix };
 					continue;
 				}
 				if (it_b != b.m_JointPoses.end())
 					mat_b = it_b->second.m_Matrix;
 				else
 				{
-					poses[jointIndex] = JointPose{ skeleton->GetJoint(jointIndex)->m_LocalMatrix };
+					outPose[jointIndex] = JointPose{ skeleton->GetJoint(jointIndex)->m_LocalMatrix };
 					continue;
 				}
 
-				poses[jointIndex] = JointPose{ Matrix4x4::Lerp(mat_a, mat_b, (t - a.m_Time) / (b.m_Time - a.m_Time)) * weight };
+				outPose[jointIndex] = JointPose{ Matrix4x4::Lerp(mat_a, mat_b, (t - a.m_Time) / (b.m_Time - a.m_Time)) * weight };
 			}
 		}
 	}
-	return poses;
+	return true;
 }
 
-vector<JointPose> SkeletonAnimation::FullMatchSample(PAnimationClip clip, PSkeleton skeleton, float t, float weight)
-{
-	vector<JointPose> poses;
-	t = clip->m_IsLooping ? fmod(t, clip->m_Length) : t;
-	if (t > clip->m_Length || t < 0 || clip->m_aSamples.empty())
-		return poses;
-	poses.resize(skeleton->GetSize());
-	for (byte joint = 0, index = 0; joint < skeleton->GetSize(); joint++)
-	{
-		AnimationSample* a = NULL;
-		AnimationSample* b = NULL;
-		for (uint i = 0; i < clip->m_aSamples.size() && (!a || !b); i++)
-		{
-			index = (byte)(clip->m_aSamples.size() - i - 1);
-			if (!a && clip->m_aSamples[index].m_Time <= t && clip->m_aSamples[index].m_JointPoses.find(joint) != clip->m_aSamples[index].m_JointPoses.end())
-				a = &clip->m_aSamples[index];
-			if (!b && clip->m_aSamples[i].m_Time >= t && clip->m_aSamples[i].m_JointPoses.find(joint) != clip->m_aSamples[i].m_JointPoses.end())
-				b = &clip->m_aSamples[i];
-		}
-		Matrix4x4 mat_a = a ? a->m_JointPoses.find(joint)->second.m_Matrix : skeleton->GetJoint(joint)->m_LocalMatrix;
-		Matrix4x4 mat_b = b ? b->m_JointPoses.find(joint)->second.m_Matrix : skeleton->GetJoint(joint)->m_LocalMatrix;
-		float a_time = a ? a->m_Time : 0;
-		float b_time = b ? b->m_Time : 1;
-		poses[joint] = JointPose { Matrix4x4::Lerp(mat_a, mat_b, (t - a_time) / (b_time - a_time)) * weight };
-	}
-	return poses;
-}
-
-vector<JointPose> SkeletonAnimation::Blend(PAnimationClip* clips, float* timePos, float* weights, int count, PSkeleton skeleton)
+bool SkeletonAnimation::Blend(vector<JointPose>& outPose, PAnimationClip* clips, float* timePos, float* weights, int count, PSkeleton skeleton)
 {
 	float total_weight = 0;
 	for (int i = 0; i < count; ++i)
@@ -133,19 +108,21 @@ vector<JointPose> SkeletonAnimation::Blend(PAnimationClip* clips, float* timePos
 		total_weight += weights[i];
 	}
 	total_weight = 1.0f / total_weight;
-	vector<JointPose> jointPoses(skeleton->GetSize());
+	outPose.clear();
+	outPose.resize(skeleton->GetSize());
+	vector<JointPose> poses;
 	for (int i = 0; i < count; ++i)
 	{
-		vector<JointPose> poses = Sample(clips[i], skeleton, timePos[i], weights[i] * total_weight);
-		if(poses.size())
+		bool success = Sample(poses, clips[i], skeleton, timePos[i], weights[i] * total_weight);
+		if(success && poses.size())
 		{
 			for (uint j = 0; j < poses.size(); j++)
 			{
-				jointPoses[j].m_Matrix += poses[j].m_Matrix;
+				outPose[j].m_Matrix += poses[j].m_Matrix;
 			}
 		}
 	}
-	return jointPoses;
+	return true;
 }
 
 void SkeletonAnimation::CalculateGlobalMatrix(PSkeleton skeleton)
@@ -196,4 +173,99 @@ void SkeletonAnimation::CalculateSkinningMatrix(PSkeleton skeleton)
 		mat += skeleton->m_GlobalPoses[i] * joints[i].m_InvBindPose * skeleton->m_BindShapeMat;
 		skeleton->m_SkiningMatrices[i] = mat;
 	}
+}
+
+PAnimationClip SkeletonAnimation::Slice(PAnimationClip srcClip, int ibegin, int iend, const string& newName)
+{
+	float begin = (float)ibegin, end = (float)iend;
+	PAnimationClip clip = make_shared<AnimationClip>();
+	clip->m_Name = newName;
+	if (end <= begin)
+		return clip;
+	clip->m_FrameCountPerSecond = srcClip->m_FrameCountPerSecond;
+	clip->m_IsLooping = srcClip->m_IsLooping;
+	clip->m_Length = end - begin + 1.0f;
+	clip->m_aSamples.push_back(AnimationSample());
+	AnimationSample firstSample, lastSample;
+	bool hasFirstSample = false, hasLastSample = false;
+	AnimationSample* p = NULL;
+	for (int i = 0; i < srcClip->m_aSamples.size(); ++i)
+	{
+		p = &srcClip->m_aSamples[i];
+		if (p->m_Time == begin)
+		{
+			firstSample = *p;
+			firstSample.m_Time -= begin;
+			hasFirstSample = true;
+		}
+		if (p->m_Time == end)
+		{
+			lastSample = *p;
+			lastSample.m_Time -= begin;
+			hasLastSample = true;
+			break;
+		}
+		if (p->m_Time > begin && p->m_Time < end)
+		{
+			clip->m_aSamples.push_back(*p);
+			(clip->m_aSamples.end() - 1)->m_Time -= begin;
+		}
+	}
+	assert(hasFirstSample);
+	assert(hasLastSample);
+	clip->m_aSamples[0] = firstSample;
+	clip->m_aSamples.push_back(lastSample);
+	return clip;
+}
+
+PAnimationClip SkeletonAnimation::Slice(PAnimationClip srcClip, PSkeleton skeleton, float begin, float end, const string& newName)
+{
+	PAnimationClip clip = make_shared<AnimationClip>();
+	clip->m_Name = newName;
+	if (end <= begin)
+		return clip;
+	clip->m_FrameCountPerSecond = srcClip->m_FrameCountPerSecond;
+	clip->m_IsLooping = srcClip->m_IsLooping;
+	clip->m_Length = end - begin + 1.0f;
+	clip->m_aSamples.push_back(AnimationSample());
+	AnimationSample firstSample, lastSample;
+	bool hasFirstSample = false, hasLastSample = false;
+	AnimationSample* p = NULL;
+	for (int i = 0; i < srcClip->m_aSamples.size(); ++i)
+	{
+		p = &srcClip->m_aSamples[i];
+		if (p->m_Time == begin)
+		{
+			firstSample = *p;
+			firstSample.m_Time -= begin;
+			hasFirstSample = true;
+		}
+		if (p->m_Time == end)
+		{
+			lastSample = *p;
+			lastSample.m_Time -= begin;
+			hasLastSample = true;
+			break;
+		}
+		if (p->m_Time > begin && p->m_Time < end)
+		{
+			clip->m_aSamples.push_back(*p);
+			(clip->m_aSamples.end() - 1)->m_Time -= begin;
+		}
+	}
+	if (!hasFirstSample)
+	{
+		vector<JointPose> pose;
+		assert(Sample(pose, srcClip, skeleton, begin, 1.0f));
+		firstSample.InitWithPose(pose, begin);
+	}
+	if (!hasLastSample)
+	{
+		vector<JointPose> pose;
+		assert(Sample(pose, srcClip, skeleton, end, 1.0f));
+		lastSample.InitWithPose(pose, end);
+	}
+	clip->m_aSamples[0] = firstSample;
+	clip->m_aSamples.push_back(lastSample);
+	return clip;
 }

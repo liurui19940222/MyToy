@@ -1,5 +1,6 @@
 #include "SkeletonAnimator.h"
 #include "SpCommon\Math.h"
+#include "SpCommon\Debug.h"
 
 USING_NAMESPACE_ENGINE;
 
@@ -37,7 +38,10 @@ void SkeletonAnimator::Play(const string& name)
 	{
 		m_IsPlaying = true;
 	}
-	m_States[m_CurPlayingIndex].state = State::SinglePlaying;
+	AnimationState& curState = m_States[m_CurPlayingIndex];
+	if (!curState.clip->m_IsLooping)
+		curState.elapsedTime = 0.0f;
+	curState.state = State::SinglePlaying;
 }
 
 void SkeletonAnimator::FadeIn(const string& name, float fadingLength)
@@ -60,9 +64,15 @@ void SkeletonAnimator::FadeIn(const string& name, float fadingLength)
 
 void SkeletonAnimator::FadeInOut(const string& name, float fadingInLength, float fadingOutLength)
 {
-	//FadeIn(name, fadingInLength);
-	//m_FadingOutName = m_States[m_CurPlayingIndex].clip->m_Name;
-	//m_FadingOutLength = fadingOutLength;
+	FadeIn(name, fadingInLength);
+	AnimationState& curState = m_States[m_CurPlayingIndex];
+	if (curState.nextIndex != -1 && curState.nextIndex != m_CurPlayingIndex)
+	{
+		AnimationState& nextState = m_States[curState.nextIndex];
+		nextState.Reset();
+		nextState.nextIndex = m_CurPlayingIndex;
+		nextState.fadeOutLength = fadingOutLength;
+	}
 }
 
 void SkeletonAnimator::Pause()
@@ -101,39 +111,38 @@ void SkeletonAnimator::OnUpdate(float deltaTime)
 void SkeletonAnimator::UpdateSinglePlaying(float deltaTime)
 {
 	AnimationState& state = m_States[m_CurPlayingIndex];
-	state.elapsedTime += deltaTime;
-	vector<JointPose> jointPoses = SkeletonAnimation::Sample(state.clip, m_Skeleton, state.elapsedTime * state.clip->m_FrameCountPerSecond, 1.0f);
-	SkeletonAnimation::CalculateGlobalMatrix(m_Skeleton, jointPoses);
-	SkeletonAnimation::CalculateSkinningMatrix(m_Skeleton);
+	state.elapsedTime += deltaTime * state.speed;
+	if (state.nextIndex != -1 && state.elapsedTime * state.clip->m_FrameCountPerSecond + state.fadeOutLength >= state.clip->m_Length)
+	{
+		AnimationState& nextState = m_States[state.nextIndex];
+		nextState.Reset();
+		FadeIn(nextState.clip->m_Name, state.fadeOutLength);
+		UpdateFading(0.0f);
+	}
+	else
+	{
+		bool success = SkeletonAnimation::Sample(m_TempJointPoses, state.clip, m_Skeleton, state.elapsedTime * state.clip->m_FrameCountPerSecond, 1.0f);
+		if (success)
+		{
+			SkeletonAnimation::CalculateGlobalMatrix(m_Skeleton, m_TempJointPoses);
+			SkeletonAnimation::CalculateSkinningMatrix(m_Skeleton);
+		}
+	}
 }
 
 void SkeletonAnimator::UpdateFading(float deltaTime)
 {
 	AnimationState& curState = m_States[m_CurPlayingIndex];
-	curState.fadeOutElapsedTime += deltaTime;
+	curState.fadeOutElapsedTime += deltaTime * curState.speed;
 	AnimationState& targetState = m_States[curState.nextIndex];
 	float fps = curState.clip->m_FrameCountPerSecond;
-	bool isOut = false;
-	if (targetState.nextIndex == -1)
-		isOut = m_FadingElapsedTime * fps >= m_FadingLength;
-	else
-		isOut = m_FadingElapsedTime * fps + m_FadingOutLength >= m_FadingLength;
-	if (isOut)
+
+	if (curState.fadeOutElapsedTime * fps >= curState.fadeOutLength)
 	{
-		if (m_FadingOutLength == INVALID_FADINGOUT_PARAM)
-		{
-			m_States[m_CurPlayingIndex].elapsedTime = 0.0f;
-			m_CurPlayingIndex = m_FadingTargetIndex;
-			m_States[m_CurPlayingIndex].elapsedTime = m_FadingElapsedTime;
-			m_CurState = State::SinglePlaying;
-			UpdateSinglePlaying(0.0f);
-		}
-		else
-		{
-			FadeIn(m_FadingOutName, m_FadingOutLength);
-			m_FadingOutName.clear();
-			m_FadingOutLength = INVALID_FADINGOUT_PARAM;
-		}
+		m_CurPlayingIndex = curState.nextIndex;
+		curState.Reset();
+		targetState.state = State::SinglePlaying;
+		UpdateSinglePlaying(0.0f);
 	}
 	else
 	{
@@ -142,16 +151,21 @@ void SkeletonAnimator::UpdateFading(float deltaTime)
 		clips[1] = targetState.clip;
 		float weights[2];
 		float timePoss[2];
-		curState.elapsedTime += deltaTime;
-		targetState.elapsedTime += deltaTime;
-		float result = CMath::Lerp(1.0f, 0.0f, m_FadingElapsedTime * fps / m_FadingLength);
+		curState.elapsedTime += deltaTime * curState.speed;
+		targetState.elapsedTime += deltaTime * curState.speed;
+		float result = CMath::Lerp(1.0f, 0.0f, curState.fadeOutElapsedTime * fps / curState.fadeOutLength);
 		weights[0] = result;
 		weights[1] = 1.0f - result;
 		timePoss[0] = curState.elapsedTime * fps;
 		timePoss[1] = targetState.elapsedTime * fps;
-		vector<JointPose> jointPoses = SkeletonAnimation::Blend(clips, timePoss, weights, 2, m_Skeleton);
-		SkeletonAnimation::CalculateGlobalMatrix(m_Skeleton, jointPoses);
-		SkeletonAnimation::CalculateSkinningMatrix(m_Skeleton);
+		vector<JointPose> v1 = m_TempJointPoses, v2;
+		bool success = SkeletonAnimation::Blend(m_TempJointPoses, clips, timePoss, weights, 2, m_Skeleton);
+
+		if (success)
+		{
+			SkeletonAnimation::CalculateGlobalMatrix(m_Skeleton, m_TempJointPoses);
+			SkeletonAnimation::CalculateSkinningMatrix(m_Skeleton);
+		}
 	}
 }
 

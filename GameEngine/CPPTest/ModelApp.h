@@ -37,7 +37,5 @@ private:
 	PSkeleton				m_Skeleton;
 	SkeletonAnimator		m_Animator;
 	PMesh					m_Mesh;
-	PAnimationClip			m_Clip;
-	PAnimationClip			m_Clip2;
 	Vector3					m_CameraPos;
 };
