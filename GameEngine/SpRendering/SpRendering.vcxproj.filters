@@ -37,6 +37,15 @@
     <Filter Include="Buffer\src">
       <UniqueIdentifier>{947fea72-f0d9-424b-ab96-172c0dda0f51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Particle">
+      <UniqueIdentifier>{e2352960-6e42-46c3-8332-7e7d4394da1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\src">
+      <UniqueIdentifier>{f06bfa34-cdca-43c5-b56c-b63a813f98fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\include">
+      <UniqueIdentifier>{a7f67ec4-bcc2-4f00-acd9-f3095e01448a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rendering.h">
@@ -117,6 +126,15 @@
     <ClInclude Include="MeshBufferUIInstance.h">
       <Filter>Buffer\include</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Particle\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Particle\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleEmitter.h">
+      <Filter>Particle\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RenderTexture.cpp">
@@ -187,6 +205,15 @@
     </ClCompile>
     <ClCompile Include="MeshBufferUIInstance.cpp">
       <Filter>Buffer\src</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Particle\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Particle\src</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleEmitter.cpp">
+      <Filter>Particle\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

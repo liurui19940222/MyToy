@@ -1,7 +1,7 @@
 #pragma once
 
 #include<Windows.h>
-#include<gl\glew.h>
+#include"..\ExternInclude\GL\glew.h"
 #include<vector>
 
 using namespace std;

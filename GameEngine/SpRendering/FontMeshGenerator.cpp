@@ -1,5 +1,5 @@
 #include"FontMeshGenerator.h"
-#include"SpCommon\Debug.h"
+#include"..\SpCommon\Debug.h"
 #include<assert.h>
 #include<algorithm>
 

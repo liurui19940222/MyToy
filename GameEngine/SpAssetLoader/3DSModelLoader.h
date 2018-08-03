@@ -10,7 +10,7 @@
 #include<lib3ds/vector.h>
 #include<lib3ds/light.h>
 #include"ModelLoader.h"
-#include"SpCommon\ApiDefine.h"
+#include"..\SpCommon\ApiDefine.h"
 
 BEGIN_NAMESPACE_ENGINE
 

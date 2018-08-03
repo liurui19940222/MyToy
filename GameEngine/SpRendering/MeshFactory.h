@@ -4,7 +4,7 @@
 #define _MeshFactory MeshFactory::GetInstance()
 
 #include<map>
-#include"SpCommon\Singleton.h"
+#include"..\SpCommon\Singleton.h"
 #include"SkeletonAnimation.h"
 #include"MeshBuffer.h"
 

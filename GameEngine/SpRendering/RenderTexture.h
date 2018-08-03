@@ -1,7 +1,7 @@
 #ifndef _RENDER_TEXTURE_H_
 #define _RENDER_TEXTURE_H_
 
-#include<gl\glew.h>
+#include"..\ExternInclude\GL\glew.h"
 #include"Texture.h"
 #include"RenderBuffer.h"
 

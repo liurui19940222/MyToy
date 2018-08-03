@@ -1,5 +1,5 @@
 #include"RigidBodyGameObject.h"
-#include"SpCommon\EngineDefine.h"
+#include"..\SpCommon\EngineDefine.h"
 #include<assert.h>
 
 PxRigidActor* RigidBodyFactory::CreateStaticRigidbody(PxPhysics& sdk, PxTransform& pose, PxMaterial& material, PxGeometry& geometry)

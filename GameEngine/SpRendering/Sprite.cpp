@@ -1,7 +1,7 @@
 #include "Sprite.h"
 #include <fstream>
 #include <sstream>
-#include "SpCommon\Converter.h"
+#include "..\SpCommon\Converter.h"
 #include "Texture2D.h"
 
 using namespace rapidxml;

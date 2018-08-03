@@ -1,9 +1,9 @@
 #include<assert.h>
 #include"PhysXApp.h"
-#include"SpRendering\MeshFactory.h"
-#include"SpRendering\MeshBufferTexcoord.h"
-#include"SpRendering\Texture2D.h"
-#include"SpCommon\Input.h"
+#include"..\SpRendering\MeshFactory.h"
+#include"..\SpRendering\MeshBufferTexcoord.h"
+#include"..\SpRendering\Texture2D.h"
+#include"..\SpCommon\Input.h"
 
 #pragma comment(lib, "legacy_stdio_definitions.lib")
 

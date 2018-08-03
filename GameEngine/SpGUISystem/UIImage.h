@@ -1,7 +1,7 @@
 #pragma once
 
 #include"UIView.h"
-#include"SpRendering\Sprite.h"
+#include"..\SpRendering\Sprite.h"
 
 BEGIN_NAMESPACE_GUI
 

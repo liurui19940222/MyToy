@@ -1,9 +1,9 @@
 #ifndef _RENDER_CAMERA_H_
 #define _RENDER_CAMERA_H_
 
-#include"SpCommon\Math.h"
-#include"SpCommon\EngineDefine.h"
-#include"SpCommon\Object.hpp"
+#include"..\SpCommon\Math.h"
+#include"..\SpCommon\EngineDefine.h"
+#include"..\SpCommon\Object.hpp"
 
 BEGIN_NAMESPACE_ENGINE
 

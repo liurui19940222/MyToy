@@ -2,8 +2,8 @@
 #define _SYS_FONT_H_
 
 #include<Windows.h>
-#include"SpCommon\Math.h"
-#include"SpCommon\ApiDefine.h"
+#include"..\SpCommon\Math.h"
+#include"..\SpCommon\ApiDefine.h"
 
 BEGIN_NAMESPACE_ENGINE
 

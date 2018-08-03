@@ -1,9 +1,9 @@
 #ifndef _TEXTURE_H_
 #define _TEXTURE_H_
 
-#include<gl\glew.h>
-#include"SpCommon\EngineDefine.h"
-#include"SpCommon\Object.hpp"
+#include"..\ExternInclude\GL\glew.h"
+#include"..\SpCommon\EngineDefine.h"
+#include"..\SpCommon\Object.hpp"
 
 BEGIN_NAMESPACE_ENGINE
 

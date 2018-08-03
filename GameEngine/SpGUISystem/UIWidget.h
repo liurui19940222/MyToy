@@ -1,6 +1,6 @@
 #pragma once
-#include"SpCommon\EngineDefine.h"
-#include"SpCommon\Object.hpp"
+#include"..\SpCommon\EngineDefine.h"
+#include"..\SpCommon\Object.hpp"
 #include"GUIDefines.h"
 
 BEGIN_NAMESPACE_GUI

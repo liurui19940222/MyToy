@@ -1,5 +1,5 @@
 #include "TextApp.h"
-#include "SpRendering\MeshFactory.h"
+#include "..\SpRendering\MeshFactory.h"
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")

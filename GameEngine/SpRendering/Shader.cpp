@@ -4,11 +4,13 @@
 #include<string>
 #include<Windows.h>
 #include"Shader.h"
-#include "SpCommon\Debug.h"
-#include"SpCommon\Converter.h"
+#include "..\SpCommon\Debug.h"
+#include"..\SpCommon\Converter.h"
 
 using namespace std;
 USING_NAMESPACE_ENGINE
+
+#define ERROR_LOCATION(location) (location == 0 || location == 4294967295)
 
 map<string, PShader> Shader::m_store;
 
@@ -161,7 +163,7 @@ GLuint Shader::GetProgram()
 void Shader::SetUniformParam(const char* paramName, int value)
 {
 	GLuint location = UniformParamLocation(paramName);
-	if (location >= 0)
+	if (!ERROR_LOCATION(location))
 	{
 		glUniform1i(location, value);
 	}
@@ -170,7 +172,7 @@ void Shader::SetUniformParam(const char* paramName, int value)
 void Shader::SetUniformParam(const char* paramName, float value)
 {
 	GLuint location = UniformParamLocation(paramName);
-	if (location >= 0)
+	if (!ERROR_LOCATION(location))
 	{
 		glUniform1f(location, value);
 	}
@@ -179,7 +181,7 @@ void Shader::SetUniformParam(const char* paramName, float value)
 void Shader::SetUniformParam(const char* paramName, const Color& value)
 {
 	GLuint location = UniformParamLocation(paramName);
-	if (location >= 0)
+	if (!ERROR_LOCATION(location))
 	{
 		glUniform4f(location, value.r, value.g, value.b, value.a);
 	}
@@ -188,7 +190,7 @@ void Shader::SetUniformParam(const char* paramName, const Color& value)
 void Shader::SetUniformParam(const char* paramName, const Vector2& value)
 {
 	GLuint location = UniformParamLocation(paramName);
-	if (location >= 0)
+	if (!ERROR_LOCATION(location))
 	{
 		glUniform2f(location, value.x, value.y);
 	}
@@ -197,7 +199,7 @@ void Shader::SetUniformParam(const char* paramName, const Vector2& value)
 void Shader::SetUniformParam(const char* paramName, const Vector3& value)
 {
 	GLuint location = UniformParamLocation(paramName);
-	if (location >= 0)
+	if (!ERROR_LOCATION(location))
 	{
 		glUniform3f(location, value.x, value.y, value.z);
 	}
@@ -206,7 +208,7 @@ void Shader::SetUniformParam(const char* paramName, const Vector3& value)
 void Shader::SetUniformParam(const char* paramName, const Vector4& value)
 {
 	GLuint location = UniformParamLocation(paramName);
-	if (location >= 0)
+	if (!ERROR_LOCATION(location))
 	{
 		glUniform4f(location, value.x, value.y, value.z, value.w);
 	}
@@ -215,7 +217,7 @@ void Shader::SetUniformParam(const char* paramName, const Vector4& value)
 void Shader::SetUniformParam(const char* paramName, const Matrix4x4& value)
 {
 	GLuint location = UniformParamLocation(paramName);
-	if (location >= 0)
+	if (!ERROR_LOCATION(location))
 	{
 		glUniformMatrix4fv(location, 1, GL_FALSE, (float*)&value);
 	}
@@ -224,7 +226,7 @@ void Shader::SetUniformParam(const char* paramName, const Matrix4x4& value)
 void Shader::SetUniformParam(const char* paramName, int* value, int count)
 {
 	GLuint location = UniformParamLocation(paramName);
-	if (location >= 0)
+	if (!ERROR_LOCATION(location))
 	{
 		glUniform1iv(location, count, value);
 	}
@@ -233,7 +235,7 @@ void Shader::SetUniformParam(const char* paramName, int* value, int count)
 void Shader::SetUniformParam(const char* paramName, float* value, int count)
 {
 	GLuint location = UniformParamLocation(paramName);
-	if (location >= 0)
+	if (!ERROR_LOCATION(location))
 	{
 		glUniform1fv(location, count, value);
 	}
@@ -242,7 +244,7 @@ void Shader::SetUniformParam(const char* paramName, float* value, int count)
 void Shader::SetUniformParam(const char* paramName, const Color* value, int count)
 {
 	GLuint location = UniformParamLocation(paramName);
-	if (location >= 0)
+	if (!ERROR_LOCATION(location))
 	{
 		glUniform4fv(location, count, (float*)value);
 	}
@@ -251,7 +253,7 @@ void Shader::SetUniformParam(const char* paramName, const Color* value, int coun
 void Shader::SetUniformParam(const char* paramName, const Vector2* value, int count)
 {
 	GLuint location = UniformParamLocation(paramName);
-	if (location >= 0)
+	if (!ERROR_LOCATION(location))
 	{
 		glUniform2fv(location, count, (float*)value);
 	}
@@ -260,7 +262,7 @@ void Shader::SetUniformParam(const char* paramName, const Vector2* value, int co
 void Shader::SetUniformParam(const char* paramName, const Vector3* value, int count)
 {
 	GLuint location = UniformParamLocation(paramName);
-	if (location >= 0)
+	if (!ERROR_LOCATION(location))
 	{
 		glUniform3fv(location, count, (float*)value);
 	}
@@ -269,7 +271,7 @@ void Shader::SetUniformParam(const char* paramName, const Vector3* value, int co
 void Shader::SetUniformParam(const char* paramName, const Matrix4x4* value, int count)
 {
 	GLuint location = UniformParamLocation(paramName);
-	if (location >= 0)
+	if (!ERROR_LOCATION(location))
 	{
 		glUniformMatrix4fv(location, count, GL_FALSE, (float*)value);
 	}

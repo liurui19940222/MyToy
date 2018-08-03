@@ -1,10 +1,10 @@
 #pragma once
 
-#include<assimp\Importer.hpp>
-#include<assimp\postprocess.h>
-#include<assimp\scene.h>
+#include"..\ExternInclude\assimp\Importer.hpp"
+#include"..\ExternInclude\assimp\postprocess.h"
+#include"..\ExternInclude\assimp\scene.h"
+#include"..\SpCommon\ApiDefine.h"
 #include"ModelLoader.h"
-#include"SpCommon\ApiDefine.h"
 
 BEGIN_NAMESPACE_ENGINE
 using namespace Assimp;

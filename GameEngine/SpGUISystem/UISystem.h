@@ -1,8 +1,8 @@
 #pragma once
 
-#include"SpRendering\Material.h"
-#include"SpRendering\Rendering.h"
-#include"SpRendering\MeshBufferUIInstance.h"
+#include"..\SpRendering\Material.h"
+#include"..\SpRendering\Rendering.h"
+#include"..\SpRendering\MeshBufferUIInstance.h"
 #include"GUIDefines.h"
 #include"UIView.h"
 #include<functional>

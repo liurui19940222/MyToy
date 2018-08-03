@@ -3,10 +3,10 @@
 
 #include<map>
 #include<string>
-#include<gl\glew.h>
+#include"..\ExternInclude\GL\glew.h"
 #include"Math.h"
-#include"SpCommon\EngineDefine.h"
-#include"SpCommon\Object.hpp"
+#include"..\SpCommon\EngineDefine.h"
+#include"..\SpCommon\Object.hpp"
 
 using namespace std;
 

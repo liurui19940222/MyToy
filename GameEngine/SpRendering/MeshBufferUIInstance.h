@@ -1,7 +1,7 @@
 #pragma once
 
-#include"SpRendering\MeshBufferTexcoord.h"
-#include"SpRendering\Texture.h"
+#include"..\SpRendering\MeshBufferTexcoord.h"
+#include"..\SpRendering\Texture.h"
 
 BEGIN_NAMESPACE_ENGINE
 

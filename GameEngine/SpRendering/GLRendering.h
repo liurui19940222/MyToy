@@ -20,6 +20,7 @@ public:
 	virtual void RenderInstance(RenderingObject obj, uint instanceCount) override;
 	virtual void MakeRenderContext() override;
 	virtual void ShutDown() override;
+	inline void SwapBuffer() { SwapBuffers(m_HDC); }
 	
 private:
 	void SetupPixelFormat(HDC hDC);

@@ -1,7 +1,7 @@
 #include "UISystem.h"
-#include "SpRendering\MeshFactory.h"
-#include "SpCommon\EngineDefine.h"
-#include "SpCommon\Debug.h"
+#include "..\SpRendering\MeshFactory.h"
+#include "..\SpCommon\EngineDefine.h"
+#include "..\SpCommon\Debug.h"
 #include "UILabel.h"
 
 USING_NAMESPACE_GUI;

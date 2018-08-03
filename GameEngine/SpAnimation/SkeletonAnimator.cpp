@@ -1,6 +1,6 @@
 #include "SkeletonAnimator.h"
-#include "SpCommon\Math.h"
-#include "SpCommon\Debug.h"
+#include "..\SpCommon\Math.h"
+#include "..\SpCommon\Debug.h"
 
 USING_NAMESPACE_ENGINE;
 
