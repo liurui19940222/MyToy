@@ -20,6 +20,16 @@ const Vector3 Vector3::right(1.0f, 0.0f, 0.0f);
 const Vector3 Vector3::forward(0.0f, 0.0f, 1.0f);
 const Vector3 Vector3::back(0.0f, 0.0f, -1.0f);
 
+Vector3 CMath::RandomVec3()
+{
+	return Vector3(CMath::Random(), CMath::Random(), CMath::Random());
+}
+
+Vector3 CMath::RandomNormalizedVec3()
+{
+	return Vector3(CMath::Random(), CMath::Random(), CMath::Random()).Normalize();
+}
+
 #pragma region Matrix4x4
 
 Matrix4x4::Matrix4x4()
@@ -878,8 +888,8 @@ Vector3 Quaternion::ToEulerAngles() const
 		if (check > -0.999)
 		{
 			Vector3 v = Vector3(-asin(check),
-			atan2(2 * (x * z + w * y), 1 - 2 * (x * x + y * y)),
-			atan2(2 * (x * y + w * z), 1 - 2 * (x * x + z * z)));
+				atan2(2 * (x * z + w * y), 1 - 2 * (x * x + y * y)),
+				atan2(2 * (x * y + w * z), 1 - 2 * (x * x + z * z)));
 			SanitizeEuler(v);
 			return v * CMath::RadToDeg;
 		}
@@ -952,9 +962,9 @@ Vector3 Quaternion::Multiply(const Vector3& point) const
 
 Quaternion Quaternion::Multiply(const Quaternion& q) const
 {
-	return Quaternion((((this->w * q.x) + (this->x * q.w)) + (this->y * q.z)) - (this->z * q.y), 
-		(((this->w * q.y) + (this->y * q.w)) + (this->z * q.x)) - (this->x * q.z), 
-		(((this->w * q.z) + (this->z * q.w)) + (this->x * q.y)) - (this->y * q.x), 
+	return Quaternion((((this->w * q.x) + (this->x * q.w)) + (this->y * q.z)) - (this->z * q.y),
+		(((this->w * q.y) + (this->y * q.w)) + (this->z * q.x)) - (this->x * q.z),
+		(((this->w * q.z) + (this->z * q.w)) + (this->x * q.y)) - (this->y * q.x),
 		(((this->w * q.w) - (this->x * q.x)) - (this->y * q.y)) - (this->z * q.z));
 }
 

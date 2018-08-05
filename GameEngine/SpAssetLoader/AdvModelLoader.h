@@ -3,10 +3,7 @@
 #include<assimp\Importer.hpp>
 #include<assimp\postprocess.h>
 #include<assimp\scene.h>
-<<<<<<< HEAD
 #include"..\SpCommon\ApiDefine.h"
-=======
->>>>>>> parent of 1eedcca... .
 #include"ModelLoader.h"
 #include"SpCommon\ApiDefine.h"
 

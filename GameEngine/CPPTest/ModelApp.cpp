@@ -1,7 +1,7 @@
 #include "ModelApp.h"
-#include "SpRendering\MeshFactory.h"
-#include "SpRendering\MeshBufferSkinning.h"
-#include "SpAssetLoader\AdvModelLoader.h"
+#include "..\SpRendering\MeshFactory.h"
+#include "..\SpRendering\MeshBufferSkinning.h"
+#include "..\SpAssetLoader\AdvModelLoader.h"
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
@@ -37,7 +37,6 @@ void ModelApp::OnInitialize()
 
 	AdvModelLoader loader;
 	PModel model = loader.LoadFromFile("../Assets/models/warrior/w2s.FBX");
-	m_Mesh = model->m_Meshes[0];
 	m_Skeleton = model->m_Skeleton;
 
 	PAnimationClip attack_clip = SkeletonAnimation::Slice(model->m_Animations[0], 100, 123, "attack");
@@ -55,7 +54,7 @@ void ModelApp::OnInitialize()
 	jump_clip->m_Name = "jump";
 	jump_clip = SkeletonAnimation::Slice(jump_clip, 0, 16, "jump");
 
-	m_MeshBuffer = make_shared<MeshBufferSkinning>(m_Mesh);
+	m_MeshBuffer = make_shared<MeshBufferSkinning>(model->m_Meshes[0]);
 	m_Object.mesh = m_MeshBuffer.get();
 	m_Object.material = m_Material.get();
 
@@ -75,6 +74,23 @@ void ModelApp::OnInitialize()
 	m_Ground.mesh = m_GroundBuffer.get();
 	m_Ground.material = m_GroundMaterial.get();
 	groundMat = Matrix4x4::Translate(Vector3(0, -2.75, 0)) * Matrix4x4::Rotate(Vector3(-90, 0, 0)) * Matrix4x4::Scale(Vector3::one * 15);
+
+	//³õÊ¼»¯Á£×Ó
+	m_ParticleBuffer = _MeshFactory->CreateBuffer<MeshBufferParticle>(EMeshType::Quad);
+	ParticleDesc desc;
+	desc.m_AccelSpeed.set(1.0f);
+	desc.m_Life.set(5.0f);
+	desc.m_MaxNum = 100.0f;
+	desc.m_Speed.set(1.0f);
+
+	m_ParticleMat = make_shared<Material>();
+	m_ParticleMat->SetShader(Shader::Get("particle_blend"));
+	PTexture2D tex = Texture2D::Create("../Assets/FlameRoundParticleSheet.tif");
+	tex->SetWrapMode(ETexWrapMode::Repeat);
+	m_ParticleMat->SetMainTexture(tex);
+	m_ParticleEffect = make_shared<ParticleEffect>(desc);
+	m_ParticleEffect->CreateParticle();
+	m_ParticleEffect->SetMaterial(m_ParticleMat);
 }
 
 void ModelApp::OnWindowSizeChanged(int width, int height)
@@ -131,20 +147,21 @@ void ModelApp::OnUpdate(float deltaTime)
 	}
 
 	m_Animator.OnUpdate(deltaTime);
+	m_ParticleEffect->OnUpdate(deltaTime);
 }
 
 void ModelApp::OnRender()
 {
 	GLAppBase::OnRender();
 
-	m_Material->Bind();
-	m_Material->SetParam("GlobalPoseMatrices", &m_Skeleton->m_SkiningMatrices[0], m_Skeleton->GetSize());
-	m_Material->SetParam("M", modelMat);
-	m_Material->SetParam("V", viewMat);
-	m_Material->SetParam("P", projectionMat);
-	m_Material->SetParam("Color", Color::white);
-	m_RI->Render(m_Object);
-	m_Material->Unbind();
+	//m_Material->Bind();
+	//m_Material->SetParam("GlobalPoseMatrices", &m_Skeleton->m_SkiningMatrices[0], m_Skeleton->GetSize());
+	//m_Material->SetParam("M", modelMat);
+	//m_Material->SetParam("V", viewMat);
+	//m_Material->SetParam("P", projectionMat);
+	//m_Material->SetParam("Color", Color::white);
+	//m_RI->Render(m_Object);
+	//m_Material->Unbind();
 
 	m_GroundMaterial->Bind();
 	m_GroundMaterial->SetParam("M", groundMat);
@@ -153,4 +170,6 @@ void ModelApp::OnRender()
 	m_GroundMaterial->SetParam("Color", Color::white);
 	m_RI->Render(m_Ground);
 	m_GroundMaterial->Unbind();
+
+	m_ParticleEffect->OnRender(*m_RI, *m_ParticleBuffer.get(), viewMat, projectionMat);
 }

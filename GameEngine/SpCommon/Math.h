@@ -16,6 +16,137 @@ typedef TmpVector4<float> Vector4;
 
 class Matrix4x4;
 union Quaternion;
+
+class CMath
+{
+public:
+	static const float EPSILON;
+	static const float PI;
+	static const float TWO_PI;
+	static const float HALF_PI;
+	static const float QUARTER_PI;
+	static const float DegToRad;
+	static const float RadToDeg;
+	static const float HalfDegToRad;
+
+	inline static float Random()
+	{
+		static float max_rec = 1 / (float)RAND_MAX;
+		return rand() * max_rec;
+	}
+
+	static Vector3 RandomVec3();
+
+	static Vector3 RandomNormalizedVec3();
+
+	inline static float Random(float max) { return Random() * (max); }
+	inline static float Random(float min, float max) { return Random() * (max - min) + min; }
+	inline static int Random(int max) { return (int)(Random((float)max) + 0.5f); }
+	inline static int Random(int min, int max) { return (int)(Random((float)min, (float)max) + 0.5f); }
+
+	inline static bool Approximately(float f0, float f1)
+	{
+		return abs(f0 - f1) < 1e-6;
+	}
+
+	template<typename T>
+	inline static T Floor(T value)
+	{
+		return (T)((int)value);
+	}
+
+	template<typename T>
+	inline static T Ceil(T value)
+	{
+		return (T)((int)(value + (1 - EPSILON)));
+	}
+
+	template<typename T>
+	inline static T Abs(T value)
+	{
+		return value > 0 ? value : -value;
+	}
+
+	template<typename T>
+	inline static T Min(T a, T b)
+	{
+		return (a < b ? a : b);
+	}
+
+	template<typename T>
+	inline static T Max(T a, T b)
+	{
+		return (a > b ? a : b);
+	}
+
+	template<typename T>
+	inline static T Clamp(T value, T min, T max)
+	{
+		return Max(Min(value, max), min);
+	}
+
+	template<typename T>
+	inline static T Clamp01(T value)
+	{
+		return Max(Min(value, T(1)), T(0));
+	}
+
+	template<typename T>
+	inline static T Lerp(T a, T b, T t)
+	{
+		return (b - a) * t + a;
+	}
+
+	template<typename T>
+	inline static T Smooth(T a, T b, T t)
+	{
+		return -(b - a) * t * (t - 2) + a;
+	}
+
+	template<typename T>
+	inline static T Sin(T t)
+	{
+		return sin(t);
+	}
+
+	template<typename T>
+	inline static T Asin(T t)
+	{
+		return asin(t);
+	}
+
+	template<typename T>
+	inline static T Cos(T t)
+	{
+		return cos(t);
+	}
+
+	template<typename T>
+	inline static T Acos(T t)
+	{
+		return acos(t);
+	}
+
+	template<typename T>
+	inline static T Tan(T t)
+	{
+		return tan(t);
+	}
+
+	template<typename T>
+	inline static T Atan(T t)
+	{
+		return atan(t);
+	}
+
+	template<typename T>
+	inline static T Pow(T base, T exponent)
+	{
+		return pow(base, exponent);
+	}
+};
+
+
 template<typename VType>
 class TmpVector2
 {
@@ -397,130 +528,6 @@ struct STriangle
 	Vector3 verties[3];
 };
 
-class CMath
-{
-public:
-	static const float EPSILON;
-	static const float PI;
-	static const float TWO_PI;
-	static const float HALF_PI;
-	static const float QUARTER_PI;
-	static const float DegToRad;
-	static const float RadToDeg;
-	static const float HalfDegToRad;
-
-	inline static float Random()
-	{
-		static float max_rec = 1 / (float)RAND_MAX;
-		return rand() * max_rec;
-	}
-
-	inline static float Random(float max) { return Random() * (max); }
-	inline static float Random(float min, float max) { return Random() * (max - min) + min; }
-	inline static int Random(int max) { return (int)(Random((float)max) + 0.5f); }
-	inline static int Random(int min, int max) { return (int)(Random((float)min, (float)max) + 0.5f); }
-
-	inline static bool Approximately(float f0, float f1)
-	{
-		return abs(f0 - f1) < 1e-6;
-	}
-
-	template<typename T>
-	inline static T Floor(T value)
-	{
-		return (T)((int)value);
-	}
-
-	template<typename T>
-	inline static T Ceil(T value)
-	{
-		return (T)((int)(value + (1 - EPSILON)));
-	}
-
-	template<typename T>
-	inline static T Abs(T value)
-	{
-		return value > 0 ? value : -value;
-	}
-
-	template<typename T>
-	inline static T Min(T a, T b)
-	{
-		return (a < b ? a : b);
-	}
-
-	template<typename T>
-	inline static T Max(T a, T b)
-	{
-		return (a > b ? a : b);
-	}
-
-	template<typename T>
-	inline static T Clamp(T value, T min, T max)
-	{
-		return Max(Min(value, max), min);
-	}
-
-	template<typename T>
-	inline static T Clamp01(T value)
-	{
-		return Max(Min(value, T(1)), T(0));
-	}
-
-	template<typename T>
-	inline static T Lerp(T a, T b, T t)
-	{
-		return (b - a) * t + a;
-	}
-
-	template<typename T>
-	inline static T Smooth(T a, T b, T t)
-	{
-		return -(b - a) * t * (t - 2) + a;
-	}
-
-	template<typename T>
-	inline static T Sin(T t)
-	{
-		return sin(t);
-	}
-
-	template<typename T>
-	inline static T Asin(T t)
-	{
-		return asin(t);
-	}
-
-	template<typename T>
-	inline static T Cos(T t)
-	{
-		return cos(t);
-	}
-
-	template<typename T>
-	inline static T Acos(T t)
-	{
-		return acos(t);
-	}
-
-	template<typename T>
-	inline static T Tan(T t)
-	{
-		return tan(t);
-	}
-
-	template<typename T>
-	inline static T Atan(T t)
-	{
-		return atan(t);
-	}
-
-	template<typename T>
-	inline static T Pow(T base, T exponent)
-	{
-		return pow(base, exponent);
-	}
-};
 
 union Quaternion
 {

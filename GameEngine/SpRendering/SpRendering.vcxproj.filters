@@ -37,6 +37,15 @@
     <Filter Include="Buffer\src">
       <UniqueIdentifier>{947fea72-f0d9-424b-ab96-172c0dda0f51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Particle">
+      <UniqueIdentifier>{30211713-c5b4-413c-8940-ebc4c40d32e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\include">
+      <UniqueIdentifier>{6b048832-6c8c-4ccf-9b41-71e7e4b33be3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\src">
+      <UniqueIdentifier>{046de201-de88-4a69-9f2c-05e2407938df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rendering.h">
@@ -117,6 +126,30 @@
     <ClInclude Include="MeshBufferUIInstance.h">
       <Filter>Buffer\include</Filter>
     </ClInclude>
+    <ClInclude Include="MeshBufferParticle.h">
+      <Filter>Buffer\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Particle\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleBoxEmitter.h">
+      <Filter>Particle\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleEffect.h">
+      <Filter>Particle\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleEmitter.h">
+      <Filter>Particle\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleHemiSphereEmitter.h">
+      <Filter>Particle\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSphereEmitter.h">
+      <Filter>Particle\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Particle\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RenderTexture.cpp">
@@ -187,6 +220,30 @@
     </ClCompile>
     <ClCompile Include="MeshBufferUIInstance.cpp">
       <Filter>Buffer\src</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshBufferParticle.cpp">
+      <Filter>Buffer\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Particle\src</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleBoxEmitter.cpp">
+      <Filter>Particle\src</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleEffect.cpp">
+      <Filter>Particle\src</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleEmitter.cpp">
+      <Filter>Particle\src</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleHemiSphereEmitter.cpp">
+      <Filter>Particle\src</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSphereEmitter.cpp">
+      <Filter>Particle\src</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Particle\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

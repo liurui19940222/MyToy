@@ -12,6 +12,8 @@ MeshBufferUIInstance::~MeshBufferUIInstance()
 {
 	DeleteBufer(&m_VboTexRangeHandle);
 	DeleteBufer(&m_VboModelMatrixHandle);
+	DeleteBufer(&m_VboRectSizeHandle);
+	DeleteBufer(&m_VboColorHandle);
 }
 
 void MeshBufferUIInstance::MakeInstanceBuffer(vector<TexcoordRange>& ranges, vector<Color>& colors, vector<SRect2D>& sizelist, vector<Matrix4x4>& matrices, int instanceCount)

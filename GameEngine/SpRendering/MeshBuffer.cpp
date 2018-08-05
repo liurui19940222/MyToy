@@ -121,3 +121,14 @@ void MeshBuffer::DeleteBufer(GLuint* bufferId)
 	}
 	*bufferId = 0;
 }
+
+void* MeshBuffer::MapBuffer(GLuint bufferId)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, bufferId);
+	return glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+}
+
+void MeshBuffer::UnmapBuffer()
+{
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+}

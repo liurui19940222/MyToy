@@ -60,6 +60,8 @@ public:
 	static void MakeIndexBuffer(GLuint* bufferId, int dataSize, const void* pointer);
 	static void UpdateVertexBuffer(GLuint bufferId, int offset, int dataSize, const void* pointer);
 	static void DeleteBufer(GLuint* bufferId);
+	static void* MapBuffer(GLuint bufferId);
+	static void UnmapBuffer();
 
 private:
 	int				m_VertexNum;
