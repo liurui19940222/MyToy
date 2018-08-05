@@ -26,7 +26,7 @@ void copyQuaternion(aiQuaternion& q1, Quaternion& q2)
 PModel AdvModelLoader::LoadFromFile(const char* filename)
 {
 	PModel model = make_shared<Model>();
-	const aiScene* scene = m_Importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_GlobalScale);
+	const aiScene* scene = m_Importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals);
 	if (scene == NULL)
 		return model;
 

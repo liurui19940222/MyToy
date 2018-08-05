@@ -1,8 +1,8 @@
 #pragma once
 
-#include"..\ExternInclude\assimp\Importer.hpp"
-#include"..\ExternInclude\assimp\postprocess.h"
-#include"..\ExternInclude\assimp\scene.h"
+#include<assimp\Importer.hpp>
+#include<assimp\postprocess.h>
+#include<assimp\scene.h>
 #include"..\SpCommon\ApiDefine.h"
 #include"ModelLoader.h"
 
