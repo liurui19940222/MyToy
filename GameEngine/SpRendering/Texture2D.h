@@ -1,7 +1,7 @@
 #ifndef _TEXTURE2D_H_
 #define _TEXTURE2D_H_
 
-#include"..\SpAssetLoader\ImageLoader.h"
+#include"SpAssetLoader\ImageLoader.h"
 #include"Texture.h"
 
 BEGIN_NAMESPACE_ENGINE

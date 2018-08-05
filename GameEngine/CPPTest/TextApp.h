@@ -1,9 +1,9 @@
 #pragma once
 
 #include"GLAppBase\GLAppBase.h"
-#include"..\SpRendering\GLRendering.h"
-#include"..\SpRendering\FontRenderer.h"
-#include"..\SpCommon\Input.h"
+#include"SpRendering\GLRendering.h"
+#include"SpRendering\FontRenderer.h"
+#include"SpCommon\Input.h"
 
 USING_NAMESPACE_ENGINE;
 

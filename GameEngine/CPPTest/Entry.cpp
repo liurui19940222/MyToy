@@ -4,7 +4,7 @@
 #include"TextApp.h"
 #include"ModelApp.h"
 #include<iostream>
-#include"..\SpCommon\Math.h"
+#include"SpCommon\Math.h"
 //#include<physx_3.2\PxPhysicsAPI.h>
 
 //#pragma comment(lib, "legacy_stdio_definitions.lib")

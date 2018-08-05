@@ -1,7 +1,7 @@
 #ifndef _RENDER_BUFFER_H_
 #define _RENDER_BUFFER_H_
 
-#include"..\SpCommon\ApiDefine.h"
+#include"SpCommon\ApiDefine.h"
 
 BEGIN_NAMESPACE_ENGINE
 

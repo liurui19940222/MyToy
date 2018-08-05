@@ -2,10 +2,10 @@
 #define _MATERIAL_H_
 
 #include<map>
-#include"..\ExternInclude\GL\glew.h"
+#include<gl\glew.h>
 #include"Shader.h"
 #include"Texture.h"
-#include"..\SpCommon\Object.hpp"
+#include"SpCommon\Object.hpp"
 
 using namespace std;
 

@@ -5,8 +5,8 @@
 #include<vector>
 #include<ft2build.h>
 #include FT_FREETYPE_H
-#include"..\SpCommon\EngineDefine.h"
-#include"..\SpCommon\Atlas.h"
+#include"SpCommon\EngineDefine.h"
+#include"SpCommon\Atlas.h"
 #include"Texture2D.h"
 
 #define CH_MAP_BITMAP_SIZE_W 256

@@ -1,5 +1,5 @@
 #include"Light.h"
-#include"..\SpRendering\RenderTexture.h"
+#include"SpRendering\RenderTexture.h"
 
 USING_NAMESPACE_ENGINE
 

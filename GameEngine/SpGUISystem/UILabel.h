@@ -2,7 +2,7 @@
 
 #include"GUIDefines.h"
 #include"UIView.h"
-#include"..\SpRendering\FontMeshGenerator.h"
+#include"SpRendering\FontMeshGenerator.h"
 
 BEGIN_NAMESPACE_GUI
 

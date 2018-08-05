@@ -1,11 +1,16 @@
 #pragma once
 #include"GLAppBase\GLAppBase.h"
-#include"..\SpRendering\GLRendering.h"
-#include"..\SpRendering\FontRenderer.h"
-#include"..\SpCommon\Input.h"
-#include"..\SpAnimation\SkeletonAnimator.h"
+#include"SpRendering\GLRendering.h"
+#include"SpRendering\FontRenderer.h"
+#include"SpCommon\Input.h"
+#include"SpAnimation\SkeletonAnimator.h"
+#include <assimp\Importer.hpp>
+#include <assimp\postprocess.h>
+#include <assimp\scene.h>
+
 
 USING_NAMESPACE_ENGINE;
+using namespace Assimp;
 
 class ModelApp : public GLAppBase
 {
@@ -34,5 +39,6 @@ private:
 	PMaterial				m_GroundMaterial;
 	PSkeleton				m_Skeleton;
 	SkeletonAnimator		m_Animator;
+	PMesh					m_Mesh;
 	Vector3					m_CameraPos;
 };

@@ -3,7 +3,7 @@
 #include"Texture.h"
 #include<map>
 #include<functional>
-#include"..\ExternInclude\rapidxml\rapidxml.hpp"
+#include <ExternInclude\rapidxml\rapidxml.hpp>
 
 BEGIN_NAMESPACE_ENGINE
 

@@ -1,5 +1,5 @@
 #include "InstanceDraw.h"
-#include "..\SpRendering\MeshBuffer.h"
+#include "SpRendering\MeshBuffer.h"
 
 InstanceDraw::InstanceDraw(const wchar_t* className, const wchar_t* title, int width, int height)
 	: GLAppBase(className, title, width, height) {}

@@ -4,11 +4,11 @@
 #include<string>
 #include<vector>
 #include<map>
-#include"..\SpCommon\Object.hpp"
+#include"SpCommon\Object.hpp"
 #include"Math.h"
-#include"..\SpCommon\EngineDefine.h"
-#include"..\SpCommon\Debug.h"
-#include"..\SpCommon\ApiDefine.h"
+#include"SpCommon\EngineDefine.h"
+#include"SpCommon\Debug.h"
+#include"SpCommon\ApiDefine.h"
 
 using namespace std;
 

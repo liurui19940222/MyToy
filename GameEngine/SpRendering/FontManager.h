@@ -2,7 +2,7 @@
 #define _FONT_MANAGER_H_
 
 #include"TrueTypeFont.h"
-#include"..\SpCommon\Singleton.h"
+#include"SpCommon\Singleton.h"
 
 BEGIN_NAMESPACE_ENGINE
 

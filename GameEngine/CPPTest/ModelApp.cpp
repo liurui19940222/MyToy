@@ -1,7 +1,7 @@
 #include "ModelApp.h"
-#include "..\SpRendering\MeshFactory.h"
-#include "..\SpRendering\MeshBufferSkinning.h"
-#include "..\SpAssetLoader\AdvModelLoader.h"
+#include "SpRendering\MeshFactory.h"
+#include "SpRendering\MeshBufferSkinning.h"
+#include "SpAssetLoader\AdvModelLoader.h"
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
@@ -37,6 +37,7 @@ void ModelApp::OnInitialize()
 
 	AdvModelLoader loader;
 	PModel model = loader.LoadFromFile("../Assets/models/warrior/w2s.FBX");
+	m_Mesh = model->m_Meshes[0];
 	m_Skeleton = model->m_Skeleton;
 
 	PAnimationClip attack_clip = SkeletonAnimation::Slice(model->m_Animations[0], 100, 123, "attack");
@@ -54,7 +55,7 @@ void ModelApp::OnInitialize()
 	jump_clip->m_Name = "jump";
 	jump_clip = SkeletonAnimation::Slice(jump_clip, 0, 16, "jump");
 
-	m_MeshBuffer = make_shared<MeshBufferSkinning>(model->m_Meshes[0]);
+	m_MeshBuffer = make_shared<MeshBufferSkinning>(m_Mesh);
 	m_Object.mesh = m_MeshBuffer.get();
 	m_Object.material = m_Material.get();
 

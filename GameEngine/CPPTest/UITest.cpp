@@ -1,5 +1,5 @@
 #include "UITest.h"
-#include "..\SpCommon\Input.h"
+#include "SpCommon\Input.h"
 #include <string>
 #include <sstream>
 

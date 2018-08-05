@@ -3,10 +3,10 @@
 
 #include<vector>
 #include"ModelLoader.h"
-#include"..\SpCommon\Converter.h"
-#include"..\ExternInclude\rapidxml\rapidxml.hpp"
-#include"..\SpRendering\SkeletonAnimation.h"
-#include"..\SpCommon\Debug.h"
+#include"SpCommon\Converter.h"
+#include"ExternInclude\rapidxml\rapidxml.hpp"
+#include"SpRendering\SkeletonAnimation.h"
+#include"SpCommon\Debug.h"
 
 using namespace std;
 using namespace rapidxml;

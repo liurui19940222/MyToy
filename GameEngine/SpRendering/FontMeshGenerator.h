@@ -1,7 +1,7 @@
 #pragma once
 
 #include<vector>
-#include"..\SpCommon\EngineDefine.h"
+#include"SpCommon\EngineDefine.h"
 #include"FontManager.h"
 #include"Sprite.h"
 #include"Material.h"

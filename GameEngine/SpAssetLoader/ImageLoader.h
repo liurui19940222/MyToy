@@ -1,7 +1,7 @@
 #ifndef _BIT_IMAGE_H_
 #define _BIT_IMAGE_H_
 
-#include"..\SpCommon\EngineDefine.h"
+#include"SpCommon\EngineDefine.h"
 #include<freeimage\FreeImage.h>
 
 BEGIN_NAMESPACE_ENGINE

@@ -1,7 +1,7 @@
 #include"FontRenderer.h"
-#include"..\SpAssetLoader\ImageLoader.h"
-#include"..\SpRendering\MeshFactory.h"
-#include"..\SpCommon\FastPainter.h"
+#include"SpAssetLoader\ImageLoader.h"
+#include"SpRendering\MeshFactory.h"
+#include"SpCommon\FastPainter.h"
 #include"Texture2D.h"
 #include<iostream>
 

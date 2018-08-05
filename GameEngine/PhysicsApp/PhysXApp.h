@@ -3,7 +3,7 @@
 #include<physx_3.2\PxPhysicsAPI.h>
 #include<iostream>
 #include"GLAppBase\GLAppBase.h"
-#include"..\SpRendering\RenderCamera.h"
+#include"SpRendering\RenderCamera.h"
 #include"GameObject.h"
 #include"RigidBodyGameObject.h"
 

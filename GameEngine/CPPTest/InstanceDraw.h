@@ -1,9 +1,9 @@
 #pragma once
 
 #include"GLAppBase\GLAppBase.h"
-#include"..\SpRendering\Shader.h"
-#include"..\SpRendering\Material.h"
-#include"..\SpRendering\Texture2D.h"
+#include"SpRendering\Shader.h"
+#include"SpRendering\Material.h"
+#include"SpRendering\Texture2D.h"
 
 USING_NAMESPACE_ENGINE;
 

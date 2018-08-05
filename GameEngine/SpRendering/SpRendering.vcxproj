@@ -93,7 +93,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;SPRENDERING_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -164,9 +164,6 @@
     <ClInclude Include="MeshBufferTexcoord.h" />
     <ClInclude Include="MeshBufferUIInstance.h" />
     <ClInclude Include="MeshFactory.h" />
-    <ClInclude Include="Particle.h" />
-    <ClInclude Include="ParticleEmitter.h" />
-    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="RenderBuffer.h" />
     <ClInclude Include="RenderCamera.h" />
     <ClInclude Include="Renderer.h" />
@@ -195,9 +192,6 @@
     <ClCompile Include="MeshBufferTexcoord.cpp" />
     <ClCompile Include="MeshBufferUIInstance.cpp" />
     <ClCompile Include="MeshFactory.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="ParticleEmitter.cpp" />
-    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="RenderCamera.cpp" />
     <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="Shader.cpp" />

@@ -1,11 +1,11 @@
 #pragma once
 
 #include"GLAppBase\GLAppBase.h"
-#include"..\SpRendering\Shader.h"
-#include"..\SpRendering\Material.h"
-#include"..\SpRendering\Texture2D.h"
-#include"..\SpRendering\GLRendering.h"
-#include"..\SpRendering\FontMeshGenerator.h"
+#include"SpRendering\Shader.h"
+#include"SpRendering\Material.h"
+#include"SpRendering\Texture2D.h"
+#include"SpRendering\GLRendering.h"
+#include"SpRendering\FontMeshGenerator.h"
 #include"SpGUISystem\UISystem.h"
 #include"SpGUISystem\UIImage.h"
 #include"SpGUISystem\UILabel.h"

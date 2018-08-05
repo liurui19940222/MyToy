@@ -1,5 +1,5 @@
 #include"SysFont.h"
-#include"..\ExternInclude\GL\glew.h"
+#include<gl\glew.h>
 
 USING_NAMESPACE_ENGINE
 

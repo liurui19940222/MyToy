@@ -1,4 +1,4 @@
-#include"..\SpRendering\SkeletonAnimation.h"
+#include"SpRendering\SkeletonAnimation.h"
 #include<algorithm>
 
 #pragma once

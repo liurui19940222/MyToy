@@ -2,7 +2,7 @@
 #define _CENGINE_DEFINE_
 
 #include<Windows.h>
-#include"..\ExternInclude\GL\glew.h"
+#include<gl\glew.h>
 #include<vector>
 #include<iostream>
 #include"Math.h"

@@ -2,8 +2,8 @@
 
 #include"UIWidget.h"
 #include"UIInteractor.h"
-#include"..\SpRendering\Material.h"
-#include"..\SpRendering\MeshBuffer.h"
+#include"SpRendering\Material.h"
+#include"SpRendering\MeshBuffer.h"
 
 BEGIN_NAMESPACE_GUI
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include"GUIDefines.h"
-#include"..\SpCommon\Math.h"
+#include"SpCommon\Math.h"
 #include<functional>
 
 BEGIN_NAMESPACE_GUI

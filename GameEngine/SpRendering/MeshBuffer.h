@@ -1,11 +1,11 @@
 #ifndef _MESH_BUFFER_H_
 #define _MESH_BUFFER_H_
 
-#include"..\ExternInclude\GL\glew.h"
+#include<gl\glew.h>
 #include"RenderBuffer.h"
 #include"Math.h"
-#include"..\SpCommon\EngineDefine.h"
-#include"..\SpCommon\Object.hpp"
+#include"SpCommon\EngineDefine.h"
+#include"SpCommon\Object.hpp"
 #include"SkeletonAnimation.h"
 
 BEGIN_NAMESPACE_ENGINE

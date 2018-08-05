@@ -1,8 +1,8 @@
 #ifndef _FONT_RENDERER_H_
 #define _FONT_RENDERER_H_
 
-#include"..\SpCommon\Math.h"
-#include"..\SpCommon\EngineDefine.h"
+#include"SpCommon\Math.h"
+#include"SpCommon\EngineDefine.h"
 #include"FontManager.h"
 #include"Renderer.h"
 #include"MeshBufferTexcoord.h"

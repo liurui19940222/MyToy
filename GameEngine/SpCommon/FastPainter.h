@@ -2,7 +2,7 @@
 
 #include"Math.h"
 #include"EngineDefine.h"
-#include"..\ExternInclude\GL\glew.h"
+#include<gl\glew.h>
 
 BEGIN_NAMESPACE_ENGINE
 

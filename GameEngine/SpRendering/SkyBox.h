@@ -3,7 +3,7 @@
 
 #include"Texture2D.h"
 #include"MeshBufferTexcoord.h"
-#include"..\SpCommon\Object.hpp"
+#include"SpCommon\Object.hpp"
 
 BEGIN_NAMESPACE_ENGINE
 

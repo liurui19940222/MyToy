@@ -1,10 +1,10 @@
 #pragma once
 
 #include<physx_3.2\PxPhysicsAPI.h>
-#include"..\SpCommon\Math.h"
-#include"..\SpRendering\MeshBuffer.h"
-#include"..\SpRendering\Material.h"
-#include"..\SpRendering\GLRendering.h"
+#include"SpCommon\Math.h"
+#include"SpRendering\MeshBuffer.h"
+#include"SpRendering\Material.h"
+#include"SpRendering\GLRendering.h"
 
 USING_NAMESPACE_ENGINE;
 

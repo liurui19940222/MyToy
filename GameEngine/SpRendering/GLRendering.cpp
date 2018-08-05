@@ -1,5 +1,5 @@
 #include "GLRendering.h"
-#include "..\ExternInclude\GL\glew.h"
+#include <gl\glew.h>
 
 USING_NAMESPACE_ENGINE
 
@@ -11,10 +11,7 @@ void GLRendering::StartUp(const RenderingStartUpParams* params)
 	m_HRC = wglCreateContext(m_HDC);
 	MakeRenderContext();
 	glewExperimental = GL_TRUE;
-	GLenum err = glewInit();
-	if (GLEW_OK != err) {
-		std::cout << "[Error] GLEW failed to initialize. " << (const char*)glewGetErrorString(err);
-	}
+	glewInit();
 }
 
 void GLRendering::ShutDown()
