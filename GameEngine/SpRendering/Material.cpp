@@ -2,8 +2,11 @@
 #include"Texture2D.h"
 #include"Light.h"
 #include"SpCommon\EngineDefine.h"
+#include"SpCommon\Debug.h"
 
 USING_NAMESPACE_ENGINE
+
+#define ZWRITE 0xEE00
 
 GLenum statetype::type[] = {
 	GL_TEXTURE_2D,
@@ -12,12 +15,13 @@ GLenum statetype::type[] = {
 	GL_CULL_FACE,
 	GL_BLEND,
 	GL_FOG,
+	GL_DEPTH_WRITEMASK,
 };
 
 bool Material::m_PushStates[statetype::Count];
 PMaterial Material::m_DefaultMaterial = NULL;
 
-#define GL_ENABLE(type, enable) enable ? glEnable(type) : glDisable(type)
+#define GL_ENABLE(typ, enable) enable ? glEnable(typ) : glDisable(typ)
 
 Material::Material() : m_BlendFactorA(EBlendFactor::SRC_ALPHA), m_BlendFactorB(EBlendFactor::ONE_MINUS_SRC_ALPHA)
 {
@@ -30,6 +34,7 @@ Material::Material() : m_BlendFactorA(EBlendFactor::SRC_ALPHA), m_BlendFactorB(E
 	SetState(statetype::CullFace, false);
 	SetState(statetype::Texture2D, true);
 	SetState(statetype::Fog, false);
+	SetState(statetype::ZWrite, true);
 }
 
 void Material::OnInitialize()
@@ -39,8 +44,10 @@ void Material::OnInitialize()
 
 void Material::SaveState(statetype::EPiplelineStateType state)
 {
-	GLboolean bstate;
-	glGetBooleanv(statetype::type[state], &bstate);
+	if (state == statetype::ZWrite)
+		return;
+	GLboolean bstate = 0;
+	//glGetBooleanv(statetype::type[state], &bstate);
 	SetStateWithArray(m_PushStates, state, _ToCppBool(bstate));
 }
 
@@ -52,6 +59,9 @@ void Material::ApplyStates(bool states[statetype::Count])
 	GL_ENABLE(statetype::type[statetype::CullFace], states[statetype::CullFace]);
 	GL_ENABLE(statetype::type[statetype::Blend], states[statetype::Blend]);
 	GL_ENABLE(statetype::type[statetype::Fog], states[statetype::Fog]);
+	//GLboolean b = (GLboolean)states[statetype::ZWrite];
+	//Debug::Log(L"%ws %d", GetName().c_str(), (int)b);
+	glDepthMask((GLboolean)states[statetype::ZWrite]);
 }
 
 void Material::PushState()
@@ -62,6 +72,7 @@ void Material::PushState()
 	SaveState(statetype::CullFace);
 	SaveState(statetype::Texture2D);
 	SaveState(statetype::Fog);
+	//SaveState(statetype::ZWrite);
 	ApplyStates(m_States);
 }
 

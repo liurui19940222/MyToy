@@ -32,6 +32,7 @@ void ModelApp::OnInitialize()
 	viewMat = Matrix4x4::LookAt(m_CameraPos, Vector3::zero, Vector3::up);
 
 	m_Material = make_shared<Material>();
+	m_Material->SetName(L"role_mat");
 	m_Material->SetShader(Shader::Get("skinning"));
 	m_Material->SetMainTexture(Texture2D::Create("../Assets/models/warrior/w2s_diffuse.tga"));
 
@@ -68,6 +69,7 @@ void ModelApp::OnInitialize()
 
 	//创建地面
 	m_GroundMaterial = make_shared<Material>();
+	m_GroundMaterial->SetName(L"ground_mat");
 	m_GroundMaterial->SetShader(Shader::Get("texture"));
 	m_GroundMaterial->SetMainTexture(Texture2D::Create("../Assets/wooden_case.jpg"));
 	m_GroundBuffer = _MeshFactory->CreateBuffer<MeshBufferTexcoord>(EMeshType::Quad);
@@ -92,12 +94,13 @@ void ModelApp::OnInitialize()
 	desc.m_EndColor = Color(1.0f, 0.439f, 0.0f, 0.0f);
 
 	m_ParticleMat = make_shared<Material>();
+	m_ParticleMat->SetName(L"particle_mat");
 	m_ParticleMat->SetShader(Shader::Get("particle_blend"));
 	PTexture2D tex = Texture2D::Create("../Assets/Tex_Flame.jpg");
 	tex->SetWrapMode(ETexWrapMode::Repeat);
 	m_ParticleMat->SetMainTexture(tex);
 	m_ParticleMat->SetBlendFunc(EBlendFactor::SRC_ALPHA, EBlendFactor::ONE);
-	m_ParticleMat->SetState(statetype::EPiplelineStateType::DepthTest, false);
+	m_ParticleMat->SetState(statetype::EPiplelineStateType::ZWrite, false);
 	m_ParticleEffect = make_shared<ParticleEffect>(desc);
 	m_ParticleEffect->CreateParticle();
 	m_ParticleEffect->SetMaterial(m_ParticleMat);

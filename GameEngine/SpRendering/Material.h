@@ -21,6 +21,7 @@ namespace statetype
 		CullFace = 3,
 		Blend = 4,
 		Fog = 5,
+		ZWrite = 6,
 		Count,
 	};
 
