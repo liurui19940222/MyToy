@@ -87,6 +87,8 @@ struct Color
 
 	static Color Hex(int hex);
 
+	static Color Lerp(const Color& a, const Color& b, float t);
+
 	static const Color red;
 	static const Color blue;
 	static const Color green;

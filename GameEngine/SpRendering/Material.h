@@ -38,6 +38,7 @@ enum class EBlendFactor
 	DST_COLOR = GL_DST_COLOR,
 	ONE_MINUS_DST_COLOR = GL_ONE_MINUS_DST_COLOR,
 	SRC_ALPHA_SATURATE = GL_SRC_ALPHA_SATURATE,
+	ONE = GL_ONE,
 };
 
 SMART_CLASS(Material) class Material : public Object
@@ -80,6 +81,8 @@ public:
 private:
 	static PMaterial	m_DefaultMaterial;
 	static bool			m_PushStates[statetype::Count];
+	EBlendFactor		m_BlendFactorA;
+	EBlendFactor		m_BlendFactorB;
 	Color				m_Color = Color::white;
 	PShader				m_Shader = 0;
 	PTexture			m_MainTexture = 0;

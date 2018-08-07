@@ -7,9 +7,9 @@ BEGIN_NAMESPACE_ENGINE
 
 SMART_CLASS(MeshBufferParticle) class MeshBufferParticle : public MeshBufferTexcoord
 {
-	const int ATTR_POS_MODELMATRIX = 2;
-	const int ATTR_POS_COLOR = 3;
-	const int ATTR_POS_TEXRANGE = 4;
+	const int ATTR_POS_COLOR = 2;
+	const int ATTR_POS_TEXRANGE = 3;
+	const int ATTR_POS_MODELMATRIX = 4;
 
 public:
 	MeshBufferParticle();

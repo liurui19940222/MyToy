@@ -5,11 +5,11 @@
 
 USING_NAMESPACE_ENGINE;
 
-ParticleEffect::ParticleEffect()
+ParticleEffect::ParticleEffect() : m_Timer(0.0f)
 {
 }
 
-ParticleEffect::ParticleEffect(const ParticleDesc& desc)
+ParticleEffect::ParticleEffect(const ParticleDesc& desc) : m_Timer(0.0f)
 {
 	SetDesc(desc);
 }
@@ -45,21 +45,23 @@ void ParticleEffect::SetDesc(const ParticleDesc& desc)
 
 void ParticleEffect::CreateParticle()
 {
-	Particle particle;
-	m_Emitter->Emit(m_Desc, particle);
-	m_ActiveParticles.push_back(particle);
+	if (m_UnusedParticles.size() > 0)
+	{
+		Particle particle = m_UnusedParticles.back();
+		m_Emitter->Emit(m_Desc, particle);
+		m_ActiveParticles.push_back(particle);
+		m_UnusedParticles.pop_back();
+	}
+	else
+	{
+		Particle particle;
+		m_Emitter->Emit(m_Desc, particle);
+		m_ActiveParticles.push_back(particle);
+	}
 }
 
 void ParticleEffect::RestoreParticle(Particle& particle)
 {
-	//for (auto it = m_ActiveParticles.begin(); it != m_ActiveParticles.end(); ++it)
-	//{
-	//	if (it->m_Id == particle.m_Id)
-	//	{
-	//		m_ActiveParticles.erase(it);
-	//		break;
-	//	}
-	//}
 	m_UnusedParticles.push_back(particle);
 }
 
@@ -80,7 +82,14 @@ void ParticleEffect::UpdatePrimitives()
 
 void ParticleEffect::OnUpdate(float deltaTime)
 {
+	m_Timer += deltaTime;
+	while (m_Timer >= m_Desc.m_Rate && m_ActiveParticles.size() < m_Desc.m_MaxNum)
+	{
+		m_Timer -= m_Desc.m_Rate;
+		CreateParticle();
+	}
 	Particle* p = NULL;
+	float ratio = 0.0f;
 	for (auto it = m_ActiveParticles.begin(); it != m_ActiveParticles.end(); )
 	{
 		p = &*it;
@@ -91,8 +100,20 @@ void ParticleEffect::OnUpdate(float deltaTime)
 			continue;
 		}
 		p->m_ElapsedTime += deltaTime;
+		ratio = p->m_ElapsedTime / p->m_Life;
 		p->m_Velocity += p->m_Acceleration * deltaTime;
 		p->m_Position += p->m_Velocity * deltaTime;
+		p->m_Color = Color::Lerp(m_Desc.m_StartColor, m_Desc.m_EndColor, ratio);
+		if (m_Desc.m_UseFrameAnim)
+		{
+			float t = m_Desc.m_AnimSpeed * (p->m_ElapsedTime + p->m_RandomSeed);
+			float y = 1.0f - CMath::Floor(t / m_Desc.m_AnimCellX) / m_Desc.m_AnimCellY;
+			float x = floor(fmod(t, m_Desc.m_AnimCellX)) / m_Desc.m_AnimCellX;
+			p->m_TexRange.m_Size.x = m_Desc.m_AnimCellX;
+			p->m_TexRange.m_Size.y = m_Desc.m_AnimCellY;
+			p->m_TexRange.m_StartingPoint.x = x;
+			p->m_TexRange.m_StartingPoint.y = y;
+		}
 		it++;
 	}
 	UpdatePrimitives();

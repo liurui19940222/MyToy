@@ -1,5 +1,6 @@
 #include "ParticleHemiSphereEmitter.h"
 #include "..\SpCommon\Math.h"
+#include "..\SpCommon\Debug.h"
 
 USING_NAMESPACE_ENGINE;
 
@@ -15,4 +16,5 @@ void ParticleHemiSphereEmitter::Emit(const ParticleDesc& desc, Particle& particl
 	particle.m_Acceleration.y = CMath::Abs(particle.m_Acceleration.y);
 	particle.m_Position = Vector3::zero;
 	particle.m_ElapsedTime = 0.0f;
+	particle.m_RandomSeed = CMath::Random(0.0f, 1000.0f);
 }

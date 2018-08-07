@@ -19,7 +19,7 @@ PMaterial Material::m_DefaultMaterial = NULL;
 
 #define GL_ENABLE(type, enable) enable ? glEnable(type) : glDisable(type)
 
-Material::Material()
+Material::Material() : m_BlendFactorA(EBlendFactor::SRC_ALPHA), m_BlendFactorB(EBlendFactor::ONE_MINUS_SRC_ALPHA)
 {
 	m_Shader = Shader::GetDefault();
 	m_MainTexture = Texture2D::GetOneInStore(EStoreTexture2DId::White8x8);
@@ -106,7 +106,8 @@ Material* Material::SetMainTexture(PTexture texture)
 
 Material* Material::SetBlendFunc(EBlendFactor src, EBlendFactor dst)
 {
-	glBlendFunc((GLenum)src, (GLenum)dst);
+	m_BlendFactorA = src;
+	m_BlendFactorB = dst;
 	return this;
 }
 
@@ -128,6 +129,7 @@ void Material::Bind()
 	}
 	SetParam("Color", m_Color);
 	Light::SetUniformParams(m_Shader);
+	glBlendFunc((GLenum)m_BlendFactorA, (GLenum)m_BlendFactorB);
 }
 
 void Material::BindTexture(const char* paramName, uint texture, int pass)

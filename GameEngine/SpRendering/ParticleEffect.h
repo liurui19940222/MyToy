@@ -33,6 +33,7 @@ private:
 
 	PMaterial				m_Material;
 	ParticleDesc			m_Desc;
+	float					m_Timer;
 };
 
 END_NAMESPACE_ENGINE

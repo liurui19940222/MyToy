@@ -78,16 +78,26 @@ void ModelApp::OnInitialize()
 	//³õÊ¼»¯Á£×Ó
 	m_ParticleBuffer = _MeshFactory->CreateBuffer<MeshBufferParticle>(EMeshType::Quad);
 	ParticleDesc desc;
-	desc.m_AccelSpeed.set(1.0f);
-	desc.m_Life.set(5.0f);
+	desc.m_AccelSpeed.set(1.0f, 1.5f);
+	desc.m_Life.set(0.8f, 1.0f);
 	desc.m_MaxNum = 100.0f;
-	desc.m_Speed.set(1.0f);
+	desc.m_Speed.set(2.0f, 1.5f);
+	desc.m_Size.set(2.0f, 1.2f);
+	desc.m_UseFrameAnim = true;
+	desc.m_AnimCellX = 4;
+	desc.m_AnimCellY = 4;
+	desc.m_AnimSpeed = 50.0f;
+	desc.m_Rate = 0.03f;
+	desc.m_StartColor = Color(1.0f, 0.439f, 0.0f, 1.0f);
+	desc.m_EndColor = Color(1.0f, 0.439f, 0.0f, 0.0f);
 
 	m_ParticleMat = make_shared<Material>();
 	m_ParticleMat->SetShader(Shader::Get("particle_blend"));
-	PTexture2D tex = Texture2D::Create("../Assets/FlameRoundParticleSheet.tif");
+	PTexture2D tex = Texture2D::Create("../Assets/Tex_Flame.jpg");
 	tex->SetWrapMode(ETexWrapMode::Repeat);
 	m_ParticleMat->SetMainTexture(tex);
+	m_ParticleMat->SetBlendFunc(EBlendFactor::SRC_ALPHA, EBlendFactor::ONE);
+	m_ParticleMat->SetState(statetype::EPiplelineStateType::DepthTest, false);
 	m_ParticleEffect = make_shared<ParticleEffect>(desc);
 	m_ParticleEffect->CreateParticle();
 	m_ParticleEffect->SetMaterial(m_ParticleMat);

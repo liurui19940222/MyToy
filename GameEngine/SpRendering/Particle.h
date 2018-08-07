@@ -19,10 +19,12 @@ public:
 	Vector3		m_Velocity;
 	Vector3		m_Acceleration;
 	Color		m_Color;
+	TexcoordRange m_TexRange;
 	float		m_Angle;
 	float		m_Size;
 	float		m_ElapsedTime;
 	float		m_Life;
+	float		m_RandomSeed;
 	int			m_Id;
 };
 
@@ -80,10 +82,11 @@ public:
 	EParticleShape		m_Shape;
 	EParticleBillboard	m_Billboard;
 
-	int			m_AnimCellX;
-	int			m_AnimCellY;
-	bool		m_UseFrameAnim;
-	bool		m_UseGravity;
+	float				m_AnimCellX;
+	float				m_AnimCellY;
+	float				m_AnimSpeed;
+	bool				m_UseFrameAnim;
+	bool				m_UseGravity;
 };
 
 END_NAMESPACE_ENGINE;

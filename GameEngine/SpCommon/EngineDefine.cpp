@@ -227,6 +227,11 @@ Color Color::Hex(int hex)
 	return Color32::Hex(hex);
 }
 
+Color Color::Lerp(const Color& a, const Color& b, float t)
+{
+	return Color(CMath::Lerp(a.r, b.r, t), CMath::Lerp(a.g, b.g, t), CMath::Lerp(a.b, b.b, t), CMath::Lerp(a.a, b.a, t));
+}
+
 const Color Color::red(1.0f, 0.0f, 0.0f, 1.0f);
 const Color Color::blue(0.0f, 0.0f, 1.0f, 1.0f);
 const Color Color::green(0.0f, 1.0f, 0.0f, 1.0f);

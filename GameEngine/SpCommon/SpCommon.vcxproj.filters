@@ -45,6 +45,9 @@
     <ClInclude Include="BinaryHeap.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="Interpolator.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">
@@ -63,6 +66,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Interpolator.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

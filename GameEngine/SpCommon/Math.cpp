@@ -22,12 +22,12 @@ const Vector3 Vector3::back(0.0f, 0.0f, -1.0f);
 
 Vector3 CMath::RandomVec3()
 {
-	return Vector3(CMath::Random(), CMath::Random(), CMath::Random());
+	return Vector3(CMath::Random(-1.0f, 1.0f), CMath::Random(-1.0f, 1.0f), CMath::Random(-1.0f, 1.0f));
 }
 
 Vector3 CMath::RandomNormalizedVec3()
 {
-	return Vector3(CMath::Random(), CMath::Random(), CMath::Random()).Normalize();
+	return Vector3(CMath::Random(-1.0f, 1.0f), CMath::Random(-1.0f, 1.0f), CMath::Random(-1.0f, 1.0f)).Normalize();
 }
 
 #pragma region Matrix4x4
