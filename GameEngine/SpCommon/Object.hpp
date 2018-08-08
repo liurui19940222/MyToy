@@ -3,6 +3,8 @@
 #include<string>
 #include<memory>
 #include"ApiDefine.h"
+#include"Json.h"
+#include"Converter.h"
 using namespace std;
 
 #define SMART_CLASS(CLASS_NAME) class CLASS_NAME;  typedef std::shared_ptr<CLASS_NAME> P##CLASS_NAME;
@@ -38,6 +40,34 @@ public:
 	inline wstring& GetName() { return this->m_Name; }
 
 	virtual void OnInitialize() { }
+
+	virtual void AsJsonMember(rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator)
+	{
+		if (value.IsObject())
+		{
+			if (!value.HasMember("name"))
+			{
+				value.AddMember("name", "", allocator);
+			}
+			value["name"].SetString(CConverter::WStringToString(m_Name).c_str(), allocator);
+		}
+	}
+
+	virtual string ToJson()
+	{
+		rapidjson::Document document;
+		document.SetObject();
+		AsJsonMember(document, document.GetAllocator());
+		rapidjson::StringBuffer buffer;
+		rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+		document.Accept(writer);
+		return buffer.GetString();
+	}
+
+	virtual void FromJson(const string& json)
+	{
+		
+	}
 };
 
 END_NAMESPACE_ENGINE

@@ -48,6 +48,9 @@
     <ClInclude Include="Interpolator.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="Json.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math.cpp">

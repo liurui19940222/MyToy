@@ -61,7 +61,7 @@ public:
 	static inline string WStringToString(const wstring &wstr)
 	{
 		string str;
-		int nLen = (int)wstr.length();
+		int nLen = (int)wstr.length() * 2;
 		str.resize(nLen, ' ');
 		WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstr.c_str(), nLen, (LPSTR)str.c_str(), nLen, NULL, NULL);
 		return str;

@@ -28,6 +28,7 @@
     <ClInclude Include="FastPainter.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Interpolator.h" />
+    <ClInclude Include="Json.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="Property.h" />
