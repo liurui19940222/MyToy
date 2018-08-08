@@ -14,3 +14,7 @@
 *.lib
 *.exe
 *.db
+*.lib
+*.lib
+*.exe
+*.db
