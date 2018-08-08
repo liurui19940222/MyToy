@@ -21,6 +21,15 @@ public:
 		value.PushBack(b, allocator);
 		value.PushBack(a, allocator);
 	}
+
+	void FromJsonMember(Value& value)
+	{
+		auto& array= value.GetArray();
+		r = array[0].GetFloat();
+		g = array[1].GetFloat();
+		b = array[2].GetFloat();
+		a = array[3].GetFloat();
+	}
 };
 
 class Object {
@@ -34,6 +43,12 @@ public:
 			value.AddMember("id", 0, allocator);
 		}
 		value["id"].SetInt(id);
+	}
+
+	virtual void FromJsonMember(Value& value)
+	{
+		if (value.HasMember("id"))
+			id = value["id"].GetInt();
 	}
 
 	virtual string ToJson()
@@ -84,6 +99,22 @@ public:
 		document.Accept(writer);
 		return buffer.GetString();
 	}
+
+	virtual void FromJsonMember(Value& value)
+	{
+		Object::FromJsonMember(value);
+		if (value.HasMember("name"))
+			name = value["name"].GetString();
+		if (value.HasMember("diffuse"))
+			diffuse.FromJsonMember(value["diffuse"]);
+	}
+
+	virtual void FromJson(const string& json)
+	{
+		rapidjson::Document document;
+		document.Parse(json.c_str());
+		FromJsonMember(document);
+	}
 };
 
 int main()
@@ -97,6 +128,10 @@ int main()
 	mat.diffuse.a = 0.0f;
 	string json = mat.ToJson();
 	cout << json << endl;
+
+
+	Material mat2;
+	mat2.FromJson(json);
 	system("pause");
 	return 0;
 }
