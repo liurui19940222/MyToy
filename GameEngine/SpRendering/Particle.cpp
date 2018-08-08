@@ -10,6 +10,7 @@ Particle::Particle() :
 	m_TexRange(TexcoordRange::full),
 	m_Angle(0.0f),
 	m_Size(1.0f),
+	m_StartSize(1.0f),
 	m_ElapsedTime(0.0f),
 	m_Life(0.0f),
 	m_RandomSeed(0.0f)

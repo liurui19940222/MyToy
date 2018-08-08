@@ -44,17 +44,18 @@ public:
 		m_List.push_back(InterpolatorNode<T>(time, t));
 	}
 
-	T get(float time)
+	T get(float time) const
 	{
 		uint size = m_List.size();
 		if (size == 0)
 			return T{};
 		else if (size == 1)
 			return m_List[0].value;
-		for (uint sampleIndex = 0; sampleIndex <  - 1; sampleIndex++)
+		time = CMath::Clamp(time, m_List[0].time, m_List[m_List.size() - 1].time);
+		for (uint sampleIndex = 0; sampleIndex < size - 1; sampleIndex++)
 		{
-			InterpolatorNode<T>& a = m_List[sampleIndex];
-			InterpolatorNode<T>& b = m_List[sampleIndex + 1];
+			const InterpolatorNode<T>& a = m_List[sampleIndex];
+			const InterpolatorNode<T>& b = m_List[sampleIndex + 1];
 
 			if (a.time <= time && b.time >= time)
 			{
@@ -64,4 +65,17 @@ public:
 		}
 		return T{};
 	}
+
+	bool empty() const
+	{
+		return m_List.size() == 0;
+	}
 };
+
+typedef Interpolator<float> FloatInterpolator;
+typedef Interpolator<Color> ColorInterpolator;
+typedef Interpolator<Vector2> Vec2Interpolator;
+typedef Interpolator<Vector3> Vec3Interpolator;
+typedef Interpolator<Vector4> Vec4Interpolator;
+typedef Interpolator<Quaternion> QuatInterpolator;
+typedef Interpolator<Matrix4x4> Mat4Interpolator;

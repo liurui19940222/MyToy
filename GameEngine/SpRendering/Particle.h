@@ -23,6 +23,7 @@ public:
 	TexcoordRange m_TexRange;
 	float		m_Angle;
 	float		m_Size;
+	float		m_StartSize;
 	float		m_ElapsedTime;
 	float		m_Life;
 	float		m_RandomSeed;
@@ -78,7 +79,8 @@ public:
 	LimitedValue<float>	m_AccelSpeed;
 	LimitedValue<float>	m_Life;
 	LimitedValue<float> m_Size;
-	Interpolator<Color>	m_Color;
+	ColorInterpolator	m_ColorSequence;
+	FloatInterpolator	m_SizeSequence;
 	EParticleShape		m_Shape;
 	EParticleBillboard	m_Billboard;
 

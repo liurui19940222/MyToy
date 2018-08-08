@@ -103,7 +103,10 @@ void ParticleEffect::OnUpdate(float deltaTime)
 		ratio = p->m_ElapsedTime / p->m_Life;
 		p->m_Velocity += p->m_Acceleration * deltaTime;
 		p->m_Position += p->m_Velocity * deltaTime;
-		p->m_Color = m_Desc.m_Color.get(ratio);
+		if (!m_Desc.m_ColorSequence.empty())
+			p->m_Color = m_Desc.m_ColorSequence.get(ratio);
+		if (!m_Desc.m_SizeSequence.empty())
+			p->m_Size = p->m_StartSize * m_Desc.m_SizeSequence.get(ratio);
 		if (m_Desc.m_UseFrameAnim)
 		{
 			float t = m_Desc.m_AnimSpeed * (p->m_ElapsedTime + p->m_RandomSeed);
@@ -119,7 +122,7 @@ void ParticleEffect::OnUpdate(float deltaTime)
 	UpdatePrimitives();
 }
 
-void ParticleEffect::OnRender(IRenderingInterface& ri, MeshBufferParticle& sharedBuffer, Matrix4x4& viewMatrix, Matrix4x4& projMatrix)
+void ParticleEffect::OnRender(IRenderingInterface& ri, MeshBufferParticle& sharedBuffer, Matrix4x4& viewMatrix, Matrix4x4& projMatrix, const Vector3& cameraWorldPos)
 {
 	if (m_Material.get() == NULL)
 		return;
@@ -131,5 +134,6 @@ void ParticleEffect::OnRender(IRenderingInterface& ri, MeshBufferParticle& share
 	m_Material->SetParam("M", Matrix4x4::identity);
 	m_Material->SetParam("V", viewMatrix);
 	m_Material->SetParam("P", projMatrix);
+	m_Material->SetParam("CameraWorldPos", cameraWorldPos);
 	ri.RenderInstance(RenderingObject{ &sharedBuffer, m_Material.get() }, size);
 }

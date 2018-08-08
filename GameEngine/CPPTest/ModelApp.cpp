@@ -71,7 +71,7 @@ void ModelApp::OnInitialize()
 	m_GroundMaterial = make_shared<Material>();
 	m_GroundMaterial->SetName(L"ground_mat");
 	m_GroundMaterial->SetShader(Shader::Get("texture"));
-	m_GroundMaterial->SetMainTexture(Texture2D::Create("../Assets/wooden_case.jpg"));
+	m_GroundMaterial->SetMainTexture(Texture2D::Create("../Assets/textures/wooden_case.jpg"));
 	m_GroundBuffer = _MeshFactory->CreateBuffer<MeshBufferTexcoord>(EMeshType::Quad);
 	m_Ground.mesh = m_GroundBuffer.get();
 	m_Ground.material = m_GroundMaterial.get();
@@ -90,12 +90,17 @@ void ModelApp::OnInitialize()
 	desc.m_AnimCellY = 4;
 	desc.m_AnimSpeed = 50.0f;
 	desc.m_Rate = 0.03f;
-	desc.m_Color.insert(0.0f, Color(1.0f, 0.439f, 0.0f, 1.0f));
+	desc.m_SizeSequence.insert(0.0f, 0.4f);
+	desc.m_SizeSequence.insert(0.7f, 1.0f);
+	desc.m_SizeSequence.insert(1.0f, 0.0f);
+	desc.m_ColorSequence.insert(0.0f, Color(1.0f, 0.439f, 0.0f, 1.0f));
+	desc.m_ColorSequence.insert(0.45f, Color(1.0f, 0.439f, 0.0f, 1.0f));
+	desc.m_ColorSequence.insert(1.0f, Color(0.455f, 0.455f, 0.455f, 0.0f));
 
 	m_ParticleMat = make_shared<Material>();
 	m_ParticleMat->SetName(L"particle_mat");
 	m_ParticleMat->SetShader(Shader::Get("particle_blend"));
-	PTexture2D tex = Texture2D::Create("../Assets/Tex_Flame.jpg");
+	PTexture2D tex = Texture2D::Create("../Assets/textures/Tex_Flame.jpg");
 	tex->SetWrapMode(ETexWrapMode::Repeat);
 	m_ParticleMat->SetMainTexture(tex);
 	m_ParticleMat->SetBlendFunc(EBlendFactor::SRC_ALPHA, EBlendFactor::ONE);
@@ -183,5 +188,5 @@ void ModelApp::OnRender()
 	m_RI->Render(m_Ground);
 	m_GroundMaterial->Unbind();
 
-	m_ParticleEffect->OnRender(*m_RI, *m_ParticleBuffer.get(), viewMat, projectionMat);
+	m_ParticleEffect->OnRender(*m_RI, *m_ParticleBuffer.get(), viewMat, projectionMat, m_CameraPos);
 }

@@ -63,11 +63,6 @@ void Material::ApplyStates(bool states[statetype::Count])
 	glFuncEnable(statetype::type[statetype::CullFace], states[statetype::CullFace]);
 	glFuncEnable(statetype::type[statetype::Blend], states[statetype::Blend]);
 	glFuncEnable(statetype::type[statetype::Fog], states[statetype::Fog]);
-	GLboolean b = (GLboolean)states[statetype::ZWrite];
-	if (b == GL_TRUE)
-		Debug::Log(L"%ws %d true", GetName().c_str(), (int)b);
-	else
-		Debug::Log(L"%ws %d false", GetName().c_str(), (int)b);
 	glDepthMask((GLboolean)states[statetype::ZWrite]);
 }
 

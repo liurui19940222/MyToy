@@ -21,7 +21,7 @@ public:
 	void RestoreParticle(Particle& particle);
 	void UpdatePrimitives();
 	void OnUpdate(float deltaTime);
-	void OnRender(IRenderingInterface& ri, MeshBufferParticle& sharedBuffer, Matrix4x4& viewMatrix, Matrix4x4& projMatrix);
+	void OnRender(IRenderingInterface& ri, MeshBufferParticle& sharedBuffer, Matrix4x4& viewMatrix, Matrix4x4& projMatrix, const Vector3& cameraWorldPos);
 
 private:
 	PParticleEmitter		m_Emitter;
