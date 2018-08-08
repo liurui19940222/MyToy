@@ -90,8 +90,7 @@ void ModelApp::OnInitialize()
 	desc.m_AnimCellY = 4;
 	desc.m_AnimSpeed = 50.0f;
 	desc.m_Rate = 0.03f;
-	desc.m_StartColor = Color(1.0f, 0.439f, 0.0f, 1.0f);
-	desc.m_EndColor = Color(1.0f, 0.439f, 0.0f, 0.0f);
+	desc.m_Color.insert(0.0f, Color(1.0f, 0.439f, 0.0f, 1.0f));
 
 	m_ParticleMat = make_shared<Material>();
 	m_ParticleMat->SetName(L"particle_mat");

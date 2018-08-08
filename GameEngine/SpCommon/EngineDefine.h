@@ -194,7 +194,9 @@ public:
 
 	inline static void SetCursor(HWND& hwnd, LPWSTR cursorId)
 	{
+#ifdef UNICODE
 		SetClassLong(hwnd, GCL_HCURSOR, (LONG)::LoadCursor(NULL, cursorId));
+#endif
 	}
 
 	static void WatchTarget(Vector3& camreaPos, Matrix4x4& viewMatrix, const Vector3& targetPos, float deltaTime, HWND hwnd = NULL);

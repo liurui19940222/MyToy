@@ -37,8 +37,6 @@ void Particle::MakeInstanceData(vector<Matrix4x4>& matrices, vector<Color>& colo
 ParticleDesc::ParticleDesc() :
 	m_MaxNum(100.0f),
 	m_Rate(0.01f),
-	m_StartColor(Color::white),
-	m_EndColor(Color::white),
 	m_Shape(EParticleShape::HemiSphere),
 	m_Billboard(EParticleBillboard::Billboard),
 	m_AnimCellX(1),

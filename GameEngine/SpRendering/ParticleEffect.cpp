@@ -103,7 +103,7 @@ void ParticleEffect::OnUpdate(float deltaTime)
 		ratio = p->m_ElapsedTime / p->m_Life;
 		p->m_Velocity += p->m_Acceleration * deltaTime;
 		p->m_Position += p->m_Velocity * deltaTime;
-		p->m_Color = Color::Lerp(m_Desc.m_StartColor, m_Desc.m_EndColor, ratio);
+		p->m_Color = m_Desc.m_Color.get(ratio);
 		if (m_Desc.m_UseFrameAnim)
 		{
 			float t = m_Desc.m_AnimSpeed * (p->m_ElapsedTime + p->m_RandomSeed);

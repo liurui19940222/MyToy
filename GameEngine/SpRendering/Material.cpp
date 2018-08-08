@@ -6,8 +6,6 @@
 
 USING_NAMESPACE_ENGINE
 
-#define ZWRITE 0xEE00
-
 GLenum statetype::type[] = {
 	GL_TEXTURE_2D,
 	GL_DEPTH_TEST,
@@ -21,7 +19,13 @@ GLenum statetype::type[] = {
 bool Material::m_PushStates[statetype::Count];
 PMaterial Material::m_DefaultMaterial = NULL;
 
-#define GL_ENABLE(typ, enable) enable ? glEnable(typ) : glDisable(typ)
+inline void glFuncEnable(GLenum typ, GLboolean enable)
+{
+	if (enable)
+		glEnable(typ);
+	else
+		glDisable(typ);
+}
 
 Material::Material() : m_BlendFactorA(EBlendFactor::SRC_ALPHA), m_BlendFactorB(EBlendFactor::ONE_MINUS_SRC_ALPHA)
 {
@@ -47,20 +51,23 @@ void Material::SaveState(statetype::EPiplelineStateType state)
 	if (state == statetype::ZWrite)
 		return;
 	GLboolean bstate = 0;
-	//glGetBooleanv(statetype::type[state], &bstate);
+	glGetBooleanv(statetype::type[state], &bstate);
 	SetStateWithArray(m_PushStates, state, _ToCppBool(bstate));
 }
 
 void Material::ApplyStates(bool states[statetype::Count])
 {
-	GL_ENABLE(statetype::type[statetype::Texture2D], states[statetype::Texture2D]);
-	GL_ENABLE(statetype::type[statetype::DepthTest], states[statetype::DepthTest]);
-	GL_ENABLE(statetype::type[statetype::AlphaTest], states[statetype::AlphaTest]);
-	GL_ENABLE(statetype::type[statetype::CullFace], states[statetype::CullFace]);
-	GL_ENABLE(statetype::type[statetype::Blend], states[statetype::Blend]);
-	GL_ENABLE(statetype::type[statetype::Fog], states[statetype::Fog]);
-	//GLboolean b = (GLboolean)states[statetype::ZWrite];
-	//Debug::Log(L"%ws %d", GetName().c_str(), (int)b);
+	glFuncEnable(statetype::type[statetype::Texture2D], states[statetype::Texture2D]);
+	glFuncEnable(statetype::type[statetype::DepthTest], states[statetype::DepthTest]);
+	glFuncEnable(statetype::type[statetype::AlphaTest], states[statetype::AlphaTest]);
+	glFuncEnable(statetype::type[statetype::CullFace], states[statetype::CullFace]);
+	glFuncEnable(statetype::type[statetype::Blend], states[statetype::Blend]);
+	glFuncEnable(statetype::type[statetype::Fog], states[statetype::Fog]);
+	GLboolean b = (GLboolean)states[statetype::ZWrite];
+	if (b == GL_TRUE)
+		Debug::Log(L"%ws %d true", GetName().c_str(), (int)b);
+	else
+		Debug::Log(L"%ws %d false", GetName().c_str(), (int)b);
 	glDepthMask((GLboolean)states[statetype::ZWrite]);
 }
 
@@ -72,7 +79,7 @@ void Material::PushState()
 	SaveState(statetype::CullFace);
 	SaveState(statetype::Texture2D);
 	SaveState(statetype::Fog);
-	//SaveState(statetype::ZWrite);
+	SaveState(statetype::ZWrite);
 	ApplyStates(m_States);
 }
 

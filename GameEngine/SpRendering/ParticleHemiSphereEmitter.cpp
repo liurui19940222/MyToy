@@ -7,7 +7,6 @@ USING_NAMESPACE_ENGINE;
 void ParticleHemiSphereEmitter::Emit(const ParticleDesc& desc, Particle& particle)
 {
 	particle.m_Angle = desc.m_StartAngle.get();
-	particle.m_Color = desc.m_StartColor;
 	particle.m_Life = desc.m_Life.get();
 	particle.m_Size = desc.m_Size.get();
 	particle.m_Velocity = CMath::RandomNormalizedVec3() * desc.m_Speed.get();

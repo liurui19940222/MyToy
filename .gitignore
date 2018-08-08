@@ -11,3 +11,6 @@
 *.obj
 *.log
 *.tlog
+*.lib
+*.exe
+*.db

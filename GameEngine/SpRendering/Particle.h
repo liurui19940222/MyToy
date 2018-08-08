@@ -2,6 +2,7 @@
 
 #include"..\SpCommon\Math.h"
 #include"..\SpCommon\EngineDefine.h"
+#include"..\SpCommon\Interpolator.h"
 #include"Texture.h"
 
 BEGIN_NAMESPACE_ENGINE;
@@ -77,8 +78,7 @@ public:
 	LimitedValue<float>	m_AccelSpeed;
 	LimitedValue<float>	m_Life;
 	LimitedValue<float> m_Size;
-	Color				m_StartColor;
-	Color				m_EndColor;
+	Interpolator<Color>	m_Color;
 	EParticleShape		m_Shape;
 	EParticleBillboard	m_Billboard;
 

@@ -210,6 +210,7 @@ void GLAppBase::OnUpdate(float deltaTime)
 
 void GLAppBase::OnRender() 
 {
+	glDepthMask(GL_TRUE);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(m_BackgroundColor[0], m_BackgroundColor[1], m_BackgroundColor[2], m_BackgroundColor[3]);
 }

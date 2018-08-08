@@ -6,6 +6,7 @@ USING_NAMESPACE_ENGINE;
 
 class InterpolateHelper
 {
+public:
 	static float Interpolate(float a, float b, float t);
 	static Color Interpolate(const Color& a, const Color& b, float t);
 	static Vector2 Interpolate(const Vector2& a, const Vector2& b, float t);
@@ -30,27 +31,32 @@ private:
 	vector<InterpolatorNode<T>> m_List;
 
 public:
-	void Insert(float time, const T& t)
+	void insert(float time, const T& t)
 	{
 		for (auto it = m_List.begin(); it != m_List.end(); ++it)
 		{
 			if (time < it->time)
 			{
-				m_List.insert(it, InterpolatorNode(t, time));
+				m_List.insert(it, InterpolatorNode<T>(time, t));
 				return;
 			}
 		}
-		m_List.push_back(InterpolatorNode(t, time));
+		m_List.push_back(InterpolatorNode<T>(time, t));
 	}
 
-	T Get(float time)
+	T get(float time)
 	{
-		for (uint sampleIndex = 0; sampleIndex < m_List.size() - 1; sampleIndex++)
+		uint size = m_List.size();
+		if (size == 0)
+			return T{};
+		else if (size == 1)
+			return m_List[0].value;
+		for (uint sampleIndex = 0; sampleIndex <  - 1; sampleIndex++)
 		{
 			InterpolatorNode<T>& a = m_List[sampleIndex];
 			InterpolatorNode<T>& b = m_List[sampleIndex + 1];
 
-			if (a.time <= t && b.time >= t)
+			if (a.time <= time && b.time >= time)
 			{
 				float t = (time - a.time) / (b.time - a.time);
 				return InterpolateHelper::Interpolate(a.value, b.value, t);
