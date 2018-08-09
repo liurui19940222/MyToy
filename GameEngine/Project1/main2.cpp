@@ -1,3 +1,4 @@
+#if 0
 #include"..\ExternInclude\rapidjson\rapidjson.h"
 #include"..\ExternInclude\rapidjson\document.h"
 #include"..\ExternInclude\rapidjson\writer.h"
@@ -135,3 +136,5 @@ int main()
 	system("pause");
 	return 0;
 }
+
+#endif

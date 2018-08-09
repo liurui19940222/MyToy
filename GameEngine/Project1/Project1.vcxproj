@@ -121,12 +121,17 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main2.cpp" />
+    <ClCompile Include="main3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrayList.h" />
+    <ClInclude Include="RTTI.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\Build\SpCommon.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RTTI.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
