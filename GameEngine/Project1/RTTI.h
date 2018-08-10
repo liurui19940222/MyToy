@@ -21,10 +21,12 @@ namespace rtti {
 	typedef unsigned long int	UInt64;
 	typedef float				Float;
 	typedef double				Double;
+	typedef string				String;
+	typedef wstring				WString;
 
 	class Metadata;
-	typedef function<void(Metadata&)>		StaticInitHandler;
-	typedef function<void*(const string&)>	ClassCreateHandler;
+	typedef function<void(Metadata&)>	StaticInitHandler;
+	typedef function<void*()>			ClassCreateHandler;
 
 	enum class DataType {
 		Bool,
@@ -42,6 +44,8 @@ namespace rtti {
 		Struct,
 		Enum,
 		Pointer,
+		String,
+		WString,
 		UnkownType,
 	};
 
@@ -60,15 +64,20 @@ namespace rtti {
 		UInt32		m_Attitude;
 		DataType	m_DataType;
 
+
 		string		m_FieldName;
 		string		m_TypeName;
 
 	public:
+		const Metadata*	m_Metadata;
+
 		Property();
 		Property(const string& typeName, const string& fieldName, DataType dataType, UInt32 offsetAddr, UInt32 attitude = DEFAUTL_ATTITUDE);
+		Property(const string& typeName, const string& fieldName, DataType dataType, UInt32 offsetAddr, const Metadata*	metadata, UInt32 attitude = DEFAUTL_ATTITUDE);
 
 		template<typename T> T		GetValue(void* obj) const;
 		template<typename T> void	SetValue(void* obj, T value);
+		void*						GetAddress(void* obj) const;
 		bool		HasAttitude(UInt32 atti) const;
 		void		AddAttitude(UInt32 atti);
 		void		SetAttitude(UInt32 atti);
@@ -89,13 +98,23 @@ namespace rtti {
 		Metadata(const string& className, const Metadata* parentMeta, StaticInitHandler initHandler);
 		const Metadata*			GetParentMetaData() const;
 		string					GetClassName() const;
-		const vector<Property>&	GetProperties() const;
+		const vector<Property>*	GetProperties() const;
+		Property				GetProperty(const string& fieldName) const;
 		void					AddProperty(Property prop);
 	};
 
 	class RTTI {
 	private:
-		map<string, ClassCreateHandler> m_Creators;
+		static map<string, ClassCreateHandler> m_Creators;
+
+	public:
+		template<typename T>
+		static void RegisterCreatetor(ClassCreateHandler handler);
+
+		template<typename T>
+		static T* Instantiate(const string& className);
+
+		static bool HasRTTIInfo(const string& className) { return m_Creators.find(className) != m_Creators.end(); }
 	};
 }
 
