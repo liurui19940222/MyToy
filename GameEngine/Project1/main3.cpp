@@ -16,6 +16,18 @@ USING_NAMESPACE_ENGINE;
 #undef GetClassName
 #endif
 
+#define PROCESS_ARR(Type, Func) (dataType == DataType::Type)\
+{\
+	Type* pointer = (Type*)prop.GetAddress(obj);\
+	member[fieldName.c_str()].SetArray();\
+	for (int i = 0; i < prop.GetRepeatCount(); i++)\
+	{\
+		Value obj(kObjectType);\
+		obj.##Func##(pointer[i]);\
+		member[fieldName.c_str()].PushBack(obj, allocator);\
+	}\
+}\
+
 class SerilizeHelper {
 public:
 	inline static void CheckValueMember(Value& value, MemoryPoolAllocator<>& allocator, const char* name)
@@ -46,6 +58,56 @@ public:
 			fieldName = prop.GetFieldName();
 			dataType = prop.GetDataType();
 			CheckValueMember(member, allocator, fieldName.c_str());
+
+			//如果是数组
+			if (prop.GetRepeatCount() > 0)
+			{
+				if PROCESS_ARR(Int32, SetInt)
+				else if PROCESS_ARR(UInt32, SetUint)
+				else if PROCESS_ARR(Int64, SetInt64)
+				else if PROCESS_ARR(UInt64, SetUint64)
+				else if PROCESS_ARR(Short, SetInt)
+				else if PROCESS_ARR(UShort, SetUint)
+				else if PROCESS_ARR(Byte, SetUint)
+				else if PROCESS_ARR(Char, SetInt)
+				else if PROCESS_ARR(Float, SetFloat)
+				else if PROCESS_ARR(Double, SetDouble)
+				else if PROCESS_ARR(Bool, SetBool)
+				else if (dataType == DataType::String)
+				{
+					String* pointer = (String*)prop.GetAddress(obj);
+					member[fieldName.c_str()].SetArray();
+					for (int i = 0; i < prop.GetRepeatCount(); i++)
+					{
+						Value obj(kStringType);
+						obj.SetString(pointer[i].c_str(), allocator);
+						member[fieldName.c_str()].PushBack(obj, allocator);
+					}
+				}
+				else if (dataType == DataType::WString)
+				{
+					WString* pointer = (WString*)prop.GetAddress(obj);
+					member[fieldName.c_str()].SetArray();
+					for (int i = 0; i < prop.GetRepeatCount(); i++)
+					{
+						Value obj(kStringType);
+						obj.SetString(CConverter::WStringToString(pointer[i]).c_str(), allocator);
+						member[fieldName.c_str()].PushBack(obj, allocator);
+					}
+				}
+				else if ((dataType == DataType::Class || dataType == DataType::Struct) && RTTI::HasRTTIInfo(prop.GetTypeName()))
+				{
+					char* pointer = (char*)prop.GetAddress(obj);
+					member[fieldName.c_str()].SetArray();
+					for (int i = 0; i < prop.GetRepeatCount(); i++)
+					{
+						Value obj(kObjectType);
+						AsJsonMember(pointer + i * prop.m_Metadata->GetSize(), prop.m_Metadata, obj, allocator);
+						member[fieldName.c_str()].PushBack(obj, allocator);
+					}
+				}
+				continue;
+			}
 
 			//如果是类和结构体类型，递归进行序列化
 			if ((dataType == DataType::Class || dataType == DataType::Struct) && RTTI::HasRTTIInfo(prop.GetTypeName()))
@@ -83,16 +145,6 @@ public:
 				member[fieldName.c_str()].SetString(CConverter::WStringToString(prop.GetValue<WString>(obj)).c_str(), allocator);
 			else if (dataType == DataType::String)
 				member[fieldName.c_str()].SetString(prop.GetValue<String>(obj).c_str(), allocator);
-			else if (dataType == DataType::UnkownType)
-			{
-				member[fieldName.c_str()].SetArray();
-				for (int i = 0; i<3; i++)
-				{
-					Value int_object(kObjectType);
-					int_object.SetInt(i);
-					member[fieldName.c_str()].PushBack(int_object, allocator);
-				}
-			}
 		}
 	}
 
@@ -137,7 +189,7 @@ public:
 	static const Metadata* GetMetadata();
 };
 
-Metadata ColorB::_MetaData("ColorB", NULL, ColorB::Register);
+Metadata ColorB::_MetaData("ColorB", sizeof(ColorB), NULL, ColorB::Register);
 
 void ColorB::Register(Metadata& meta)
 {
@@ -166,6 +218,10 @@ public:
 	wstring name;
 	string en_name;
 	ColorB color = { 0.0f, 0.0f, 0.0f };
+	double coord[5] = { 1.1, 2.2, 3.3, 4.4, 5.5 };
+	string flags[4] = { "cheers", "hello", "welcome", "happy" };
+	wstring frieds[4] = { L"官全红", L"官全绿", L"官全黄", L"官全蓝" };
+	ColorB colors[2] = { ColorB{ 1.0f, 1.0f, 1.0f }, ColorB{ 0.5f, 0.5f, 0.5f } };
 
 	Person() : id(9), age(55), height(1.55f), name(L"刘睿"), en_name("Ray"), intelligent(true), identity(800) { }
 private:
@@ -176,11 +232,12 @@ public:
 	static const Metadata* GetMetadata();
 };
 
-Metadata Person::_MetaData("Person", NULL, Person::Register);
+Metadata Person::_MetaData("Person", sizeof(Person), NULL, Person::Register);
 
 void Person::Register(Metadata& meta)
 {
 	RTTI::RegisterCreatetor<Person>([]() { return new Person(); });
+	meta.AddProperty(Property("ColorB", "color", DataType::Class, offsetof(Person, color), ColorB::GetMetadata()));
 	meta.AddProperty(Property("", "id", DataType::Int32, offsetof(Person, id)));
 	meta.AddProperty(Property("", "age", DataType::Int32, offsetof(Person, age), rtti::OnlyRead));
 	meta.AddProperty(Property("", "height", DataType::Float, offsetof(Person, height)));
@@ -188,8 +245,10 @@ void Person::Register(Metadata& meta)
 	meta.AddProperty(Property("", "intelligent", DataType::Bool, offsetof(Person, intelligent)));
 	meta.AddProperty(Property("", "name", DataType::WString, offsetof(Person, name)));
 	meta.AddProperty(Property("", "en_name", DataType::String, offsetof(Person, en_name)));
-	meta.AddProperty(Property("ColorB", "color", DataType::Class, offsetof(Person, color), ColorB::GetMetadata()));
-	meta.AddProperty(Property("", "array", DataType::UnkownType, offsetof(Person, color)));
+	meta.AddProperty(Property("", "coord", DataType::Double, offsetof(Person, coord), NULL, _countof(Person::coord), DEFAUTL_ATTITUDE));
+	meta.AddProperty(Property("", "flags", DataType::String, offsetof(Person, flags), NULL, _countof(Person::flags), DEFAUTL_ATTITUDE));
+	meta.AddProperty(Property("", "frieds", DataType::WString, offsetof(Person, frieds), NULL, _countof(Person::frieds), DEFAUTL_ATTITUDE));
+	meta.AddProperty(Property("ColorB", "colors", DataType::Class, offsetof(Person, colors), ColorB::GetMetadata(), _countof(Person::colors), DEFAUTL_ATTITUDE));
 }
 
 const Metadata* Person::GetMetadata()
@@ -203,8 +262,15 @@ void main()
 {
 	Person* p = RTTI::Instantiate<Person>("Person");
 
-	string json = SerilizeHelper::Serilize(p);
-	cout << json.c_str() << endl;
+	// 反射遍历所有属性
+	const vector<Property>* props = p->GetMetadata()->GetProperties();
+	for each (Property prop in *props)
+	{
+		cout << prop.GetFieldName() << endl;
+	}
+
+	//string json = SerilizeHelper::Serilize(p);
+	//cout << json.c_str() << endl;
 
 	system("pause");
 }

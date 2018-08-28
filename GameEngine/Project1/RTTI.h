@@ -62,8 +62,8 @@ namespace rtti {
 	private:
 		UInt32		m_OffsetAddr;
 		UInt32		m_Attitude;
+		UInt32		m_RepeatCount;	//大于0时为数组
 		DataType	m_DataType;
-
 
 		string		m_FieldName;
 		string		m_TypeName;
@@ -74,6 +74,7 @@ namespace rtti {
 		Property();
 		Property(const string& typeName, const string& fieldName, DataType dataType, UInt32 offsetAddr, UInt32 attitude = DEFAUTL_ATTITUDE);
 		Property(const string& typeName, const string& fieldName, DataType dataType, UInt32 offsetAddr, const Metadata*	metadata, UInt32 attitude = DEFAUTL_ATTITUDE);
+		Property(const string& typeName, const string& fieldName, DataType dataType, UInt32 offsetAddr, const Metadata*	metadata, UInt32 repeatCount, UInt32 attitude = DEFAUTL_ATTITUDE);
 
 		template<typename T> T		GetValue(void* obj) const;
 		template<typename T> void	SetValue(void* obj, T value);
@@ -84,18 +85,21 @@ namespace rtti {
 		string		GetFieldName() const;
 		string		GetTypeName() const;
 		DataType	GetDataType() const;
+		UInt32		GetRepeatCount() const;
 	};
 
 	class Metadata {
 	private:
+		UInt32				m_Size;
 		string				m_ClassName;
 		const Metadata*		m_Parent;
 		vector<Property>	m_Properties;
 
 	public:
-		Metadata(const string& className);
-		Metadata(const string& className, const Metadata* parentMeta);
-		Metadata(const string& className, const Metadata* parentMeta, StaticInitHandler initHandler);
+		Metadata(const string& className, UInt32 size);
+		Metadata(const string& className, UInt32 size, const Metadata* parentMeta);
+		Metadata(const string& className, UInt32 size, const Metadata* parentMeta, StaticInitHandler initHandler);
+		UInt32					GetSize() const;
 		const Metadata*			GetParentMetaData() const;
 		string					GetClassName() const;
 		const vector<Property>*	GetProperties() const;
