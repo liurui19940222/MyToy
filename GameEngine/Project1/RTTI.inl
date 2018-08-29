@@ -3,13 +3,13 @@
 using namespace rtti;
 
 inline Property::Property() :
-	m_DataType(DataType::UnkownType),
+	m_DataType(EType::UnkownType),
 	m_OffsetAddr(0),
 	m_Attitude(0),
 	m_RepeatCount(0)
 { }
 
-inline Property::Property(const string& typeName, const string& fieldName, DataType dataType, UInt32 offsetAddr, UInt32 attitude) :
+inline Property::Property(const string& typeName, const string& fieldName, EType dataType, UInt32 offsetAddr, UInt32 attitude) :
 	m_TypeName(typeName),
 	m_FieldName(fieldName),
 	m_DataType(dataType),
@@ -18,7 +18,7 @@ inline Property::Property(const string& typeName, const string& fieldName, DataT
 	m_RepeatCount(0)
 { }
 
-inline Property::Property(const string& typeName, const string& fieldName, DataType dataType, UInt32 offsetAddr, const Metadata* metadata, UInt32 attitude) :
+inline Property::Property(const string& typeName, const string& fieldName, EType dataType, UInt32 offsetAddr, const Metadata* metadata, UInt32 attitude) :
 	m_TypeName(typeName),
 	m_FieldName(fieldName),
 	m_DataType(dataType),
@@ -28,7 +28,7 @@ inline Property::Property(const string& typeName, const string& fieldName, DataT
 	m_RepeatCount(0)
 { }
 
-inline Property::Property(const string& typeName, const string& fieldName, DataType dataType, UInt32 offsetAddr, const Metadata* metadata, UInt32 repeatCount, UInt32 attitude) :
+inline Property::Property(const string& typeName, const string& fieldName, EType dataType, UInt32 offsetAddr, const Metadata* metadata, UInt32 repeatCount, UInt32 attitude) :
 	m_TypeName(typeName),
 	m_FieldName(fieldName),
 	m_DataType(dataType),
@@ -54,13 +54,31 @@ inline string Property::GetFieldName() const { return m_FieldName; }
 
 inline string Property::GetTypeName() const { return m_TypeName; }
 
-inline DataType Property::GetDataType() const { return m_DataType; }
+inline EType Property::GetDataType() const { return m_DataType; }
 
 inline UInt32 Property::GetRepeatCount() const { return m_RepeatCount; }
 
+inline void	Property::SetSetAtFunc(SetAtFunc func) { m_SetAtFunc = func; }
+
+inline void	Property::SetGetAtFunc(GetAtFunc func) { m_GetAtFunc = func; }
+
+inline void	Property::SetResizeFunc(ResizeFunc func) { m_ResizeFunc = func; }
+
+inline void	Property::SetGetSizeFunc(GetSizeFunc func) { m_GetSizeFunc = func; }
+
+inline void	Property::SetAt(void* obj, UInt32 pos, void* value) { m_SetAtFunc(*this, obj, pos, value); }
+
+template<typename T> T Property::GetAt(void* obj, UInt32 pos) { return *(T*)m_GetAtFunc(*this, obj, pos); }
+
+inline void* Property::GetAt(void* obj, UInt32 pos) { return m_GetAtFunc(*this, obj, pos); }
+
+inline void	Property::Resize(void* obj, UInt32 size) { if (m_ResizeFunc) m_ResizeFunc(*this, obj, size); }
+
+inline UInt32 Property::GetSize(void* obj) { if (m_GetSizeFunc) return m_GetSizeFunc(*this, obj); else return m_RepeatCount; }
+
 inline Metadata::Metadata(const string& className, UInt32 size) : m_Parent(NULL), m_Size(size) {}
-inline Metadata::Metadata(const string& className, UInt32 size, const Metadata* parentMeta) : m_ClassName(className), m_Size(size), m_Parent(NULL) {}
-inline Metadata::Metadata(const string& className, UInt32 size, const Metadata* parentMeta, StaticInitHandler initHandler) : m_ClassName(className), m_Size(size), m_Parent(NULL)
+inline Metadata::Metadata(const string& className, UInt32 size, const Metadata* parentMeta) : m_ClassName(className), m_Size(size), m_Parent(parentMeta) {}
+inline Metadata::Metadata(const string& className, UInt32 size, const Metadata* parentMeta, StaticInitHandler initHandler) : m_ClassName(className), m_Size(size), m_Parent(parentMeta)
 {
 	if (initHandler)
 		initHandler(*this);

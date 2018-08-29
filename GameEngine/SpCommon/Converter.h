@@ -3,6 +3,7 @@
 
 #include<string>
 #include<Windows.h>
+#include"ApiDefine.h"
 
 using namespace std;
 
@@ -53,7 +54,7 @@ public:
 	{
 		wstring wstr;
 		int nLen = (int)str.length();
-		wstr.resize(nLen, L' ');
+		wstr.resize(nLen / 2, L' ');
 		MultiByteToWideChar(CP_ACP, 0, (LPCSTR)str.c_str(), nLen, (LPWSTR)wstr.c_str(), nLen);
 		return wstr;
 	}
