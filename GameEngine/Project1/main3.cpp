@@ -197,7 +197,7 @@ const Metadata* Man::GetMetadata()
 
 void main()
 {
-	//Man* p = RTTI::Instantiate<Man>("Man");
+	Man* p = RTTI::Instantiate<Man>("Man");
 
 	// 反射遍历所有属性
 	//const vector<Property>* props = p->GetMetadata()->GetProperties();
@@ -206,6 +206,7 @@ void main()
 	//	cout << prop.GetFieldName() << endl;
 	//}
 
+	// 序列化
 	//string json = SerilizeHelper::Serilize(p);
 	//cout << json.c_str() << endl;
 
@@ -213,6 +214,7 @@ void main()
 	//os.write(json.c_str(), json.size());
 	//os.close();
 
+	// 反序列化
 	ifstream is("D://man.json");
 	ostringstream os;
 	os << is.rdbuf();

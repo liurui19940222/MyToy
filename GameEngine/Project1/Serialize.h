@@ -55,14 +55,7 @@ public:
 	template<typename T>
 	static void AsJsonMember(T* obj, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator)
 	{
-		//序列化类名
-		CheckValueMember(value, allocator, "type");
-		value["type"].SetString(meta->GetClassName().c_str(), allocator);
-
-		//序列化成员变量
-		CheckValueMember(value, allocator, "member");
-		value["member"].SetObject();
-		Value& member = value["member"];
+		Value& member = value;
 
 		const vector<Property>* props = meta->GetProperties();
 		string fieldName;
@@ -183,14 +176,10 @@ public:
 	template<typename T>
 	static void FromJsonMember(T* obj, const Metadata* meta, Value& value)
 	{
-		//反序列化成员变量
-		if (!value.HasMember("member"))
-			return;
-
 		const vector<Property>* props = meta->GetProperties();
 		string fieldName;
 		EType dataType;
-		Value& member = value["member"];
+		Value& member = value;
 		for each (auto prop in *props)
 		{
 			if (!prop.HasAttitude(rtti::Serializable))
@@ -205,19 +194,6 @@ public:
 			//如果是数组
 			if (prop.GetRepeatCount() > 0)
 			{
-				//if (dataType == EType::Float)
-				//{
-				//	if (!member[fieldName.c_str()].IsArray())
-				//		continue;
-				//	auto& v = member[fieldName.c_str()].GetArray();
-				//	prop.Resize(obj, v.Size());
-				//	Float temp;
-				//	for (UInt32 i = 0; i < prop.GetSize(obj); i++)
-				//	{
-				//		temp = v[i].GetFloat();
-				//		prop.SetAt(obj, i, &temp);
-				//	}
-				//}
 				if DESER_BASE_TYPE(Int32, GetInt)
 				else if DESER_BASE_TYPE(UInt32, GetUint)
 				else if DESER_BASE_TYPE(Int64, GetInt64)
@@ -351,3 +327,6 @@ public:
 		FromJsonMember(obj, document);
 	}
 };
+
+#undef SER_BASE_TYPE
+#undef DESER_BASE_TYPE
