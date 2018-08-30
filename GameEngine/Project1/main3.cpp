@@ -24,7 +24,7 @@ Metadata ColorB::_MetaData("ColorB", sizeof(ColorB), NULL, ColorB::Register);
 
 void ColorB::Register(Metadata& meta)
 {
-	RTTI::RegisterCreatetor<ColorB>([]() { return new ColorB(); });
+	RTTI::RegisterCreatetor(typeid(ColorB).name(), []() { return new ColorB(); });
 	meta.AddProperty(Property("", "r", EType::Float, offsetof(ColorB, r)));
 	meta.AddProperty(Property("", "g", EType::Float, offsetof(ColorB, g)));
 	meta.AddProperty(Property("", "b", EType::Float, offsetof(ColorB, b)));
@@ -56,7 +56,7 @@ Metadata Pixel::_MetaData("Pixel", sizeof(Pixel), NULL, Pixel::Register);
 
 void Pixel::Register(Metadata& meta)
 {
-	RTTI::RegisterCreatetor<Pixel>([]() { return new Pixel(); });
+	RTTI::RegisterCreatetor(typeid(Pixel).name(), []() { return new Pixel(); });
 	PROP_CLS(Pixel, ColorB, a);
 	PROP_CLS(Pixel, ColorB, b);
 }
@@ -133,7 +133,7 @@ Metadata Person::_MetaData("Person", sizeof(Person), NULL, Person::Register);
 
 void Person::Register(Metadata& meta)
 {
-	RTTI::RegisterCreatetor<Person>([]() { return new Person(); });
+	RTTI::RegisterCreatetor(typeid(Person).name(), []() { return new Person(); });
 	meta.AddProperty(Property("", "id", EType::Int32, offsetof(Person, id)));
 	meta.AddProperty(Property("", "age", EType::Int32, offsetof(Person, age)));
 	meta.AddProperty(Property("", "height", EType::Float, offsetof(Person, height)));
@@ -184,7 +184,7 @@ Metadata Man::_MetaData("Man", sizeof(Man), Person::GetMetadata(), Man::Register
 
 void Man::Register(Metadata& meta)
 {
-	RTTI::RegisterCreatetor<Man>([]() { return new Man(); });
+	RTTI::RegisterCreatetor(typeid(Man).name(), []() { return new Man(); });
 	PROP(Man, length, EType::Float);
 }
 
@@ -207,21 +207,21 @@ void main()
 	//}
 
 	// 序列化
-	//string json = SerilizeHelper::Serilize(p);
-	//cout << json.c_str() << endl;
+	string json = SerilizeHelper::Serilize(p);
+	cout << json.c_str() << endl;
 
-	//ofstream os("D://man.json");
-	//os.write(json.c_str(), json.size());
-	//os.close();
+	ofstream os("D://man.json");
+	os.write(json.c_str(), json.size());
+	os.close();
 
 	// 反序列化
-	ifstream is("D://man.json");
-	ostringstream os;
-	os << is.rdbuf();
+	//ifstream is("D://man.json");
+	//ostringstream os;
+	//os << is.rdbuf();
 
-	Man* man = new Man();
-	man->clear();
-	SerilizeHelper::Deserilize(man, os.str());
+	//Man* man = new Man();
+	//man->clear();
+	//SerilizeHelper::Deserilize(man, os.str());
 
 	system("pause");
 }

@@ -42,7 +42,7 @@ template<typename T> T Property::GetValue(void* obj) const { return *((T*)(((cha
 
 template<typename T> void Property::SetValue(void* obj, T value) { *((T*)(((char*)obj) + m_OffsetAddr)) = value; }
 
-void* Property::GetAddress(void* obj) const { return (char*)obj + m_OffsetAddr; }
+inline void* Property::GetAddress(void* obj) const { return (char*)obj + m_OffsetAddr; }
 
 inline bool	Property::HasAttitude(UInt32 atti) const { return (m_Attitude & atti) > 0; }
 
@@ -98,34 +98,15 @@ inline Property					Metadata::GetProperty(const string& fieldName) const
 	return Property{};
 }
 
-map<string, ClassCreateHandler> RTTI::m_Creators;
+inline map<string, ClassCreateHandler>& RTTI::getMap() { static map<string, ClassCreateHandler> _map; return _map; }
 
 template<typename T>
-inline void RTTI::RegisterCreatetor(ClassCreateHandler handler)
+T* RTTI::Instantiate(const string& className)
 {
-	string name(typeid(T).name()), fullClassName, briefClassName;
-	fullClassName = name.substr(6, name.length() - 6);
-	int index = -1;
-	if ((index = fullClassName.find("::")) >= 0)
-		briefClassName = fullClassName.substr(index + 2, fullClassName.length() - index - 2);
-
-	auto func = [&](const string& s, ClassCreateHandler h) {
-		if (m_Creators.find(s) != m_Creators.end())
-			m_Creators[s] = h;
-		else
-			m_Creators.insert(make_pair(s, h));
-	};
-
-	func(fullClassName, handler);
-	if (briefClassName.length() > 0 && briefClassName != fullClassName)
-		func(briefClassName, handler);
-}
-
-template<typename T>
-inline T* RTTI::Instantiate(const string& className)
-{
-	auto it = m_Creators.find(className);
-	if (it != m_Creators.end())
+	auto it = getMap().find(className);
+	if (it != getMap().end())
 		return (T*)(it->second());
 	return NULL;
 }
+
+inline bool RTTI::HasRTTIInfo(const string& className) { return getMap().find(className) != getMap().end(); }

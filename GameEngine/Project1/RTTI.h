@@ -127,16 +127,15 @@ namespace rtti {
 
 	class RTTI {
 	private:
-		static map<string, ClassCreateHandler> m_Creators;
+		static map<string, ClassCreateHandler>& getMap();
 
 	public:
-		template<typename T>
-		static void RegisterCreatetor(ClassCreateHandler handler);
+		static void RegisterCreatetor(const char* clsName, ClassCreateHandler handler);
 
 		template<typename T>
 		static T* Instantiate(const string& className);
 
-		static bool HasRTTIInfo(const string& className) { return m_Creators.find(className) != m_Creators.end(); }
+		static bool HasRTTIInfo(const string& className);
 	};
 }
 
