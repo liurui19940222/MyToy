@@ -6,7 +6,7 @@
 #include<gl\glew.h>
 #include"Math.h"
 #include"SpCommon\EngineDefine.h"
-#include"SpCommon\Object.hpp"
+#include"SpCommon\Object.h"
 
 using namespace std;
 

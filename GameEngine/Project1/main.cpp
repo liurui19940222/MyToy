@@ -140,7 +140,7 @@ int FindAllFactors(unsigned int* arrayA, int sizeA,
 #include"..\ExternInclude\rapidjson\document.h"
 #include"..\ExternInclude\rapidjson\writer.h"
 #include"..\ExternInclude\rapidjson\stringbuffer.h"
-#include"..\SpCommon\Object.hpp"
+#include"..\SpCommon\Object.h"
 #include <iostream>
 #include <fstream>
 

@@ -245,5 +245,11 @@
     <ClCompile Include="ParticleSystem.cpp">
       <Filter>Particle\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\SpCommon\Serialize.cpp">
+      <Filter>Object\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SpCommon\RTTI.cpp">
+      <Filter>Object\src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

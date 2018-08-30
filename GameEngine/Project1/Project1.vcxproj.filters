@@ -29,18 +29,10 @@
     <ClInclude Include="ArrayList.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="RTTI.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\Build\SpCommon.lib">
       <Filter>资源文件</Filter>
     </Library>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="RTTI.inl">
-      <Filter>头文件</Filter>
-    </None>
   </ItemGroup>
 </Project>

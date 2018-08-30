@@ -4,7 +4,7 @@
 #include<string>
 #include<vector>
 #include<map>
-#include"SpCommon\Object.hpp"
+#include"SpCommon\Object.h"
 #include"Math.h"
 #include"SpCommon\EngineDefine.h"
 #include"SpCommon\Debug.h"

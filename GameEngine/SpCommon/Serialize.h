@@ -19,6 +19,13 @@ USING_NAMESPACE_ENGINE;
 #undef GetClassName
 #endif
 
+class SerilizableObject {
+	friend class SerilizeHelper;
+protected:
+	virtual void OnSerilize(const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator);
+	virtual void OnDeserialize(const Metadata* meta, Value& value);
+};
+
 class SerilizeHelper {
 private:
 	static void DeserClsFromJsonArray(void* obj, Property& prop, Value& member, const string& fieldName);

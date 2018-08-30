@@ -39,9 +39,6 @@
     <ClInclude Include="Input.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="Object.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="BinaryHeap.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -49,6 +46,15 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="Json.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="RTTI.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialize.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -74,5 +80,22 @@
     <ClCompile Include="Interpolator.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="RTTI.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Serialize.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RTTI.inl">
+      <Filter>include</Filter>
+    </None>
+    <None Include="Serialize.inl">
+      <Filter>include</Filter>
+    </None>
   </ItemGroup>
 </Project>

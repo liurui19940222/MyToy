@@ -30,8 +30,10 @@
     <ClInclude Include="Interpolator.h" />
     <ClInclude Include="Json.h" />
     <ClInclude Include="Math.h" />
-    <ClInclude Include="Object.hpp" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Property.h" />
+    <ClInclude Include="RTTI.h" />
+    <ClInclude Include="Serialize.h" />
     <ClInclude Include="Singleton.h" />
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +44,13 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Interpolator.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="RTTI.cpp" />
+    <ClCompile Include="Serialize.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RTTI.inl" />
+    <None Include="Serialize.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{43ED9727-74EE-4AEA-873F-50F8A7C1B09C}</ProjectGuid>

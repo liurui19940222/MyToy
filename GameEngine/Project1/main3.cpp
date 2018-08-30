@@ -1,5 +1,5 @@
-#include"RTTI.h"
-#include"Serialize.h"
+#include"..\SpCommon\RTTI.h"
+#include"..\SpCommon\Serialize.h"
 #include"..\SpCommon\Math.h"
 #include<fstream>
 #include<sstream>
@@ -9,67 +9,39 @@ using namespace std;
 #pragma region ColorB
 
 class ColorB {
+	DECLARE_RTTI_ROOT()
 public:
 	float r, g, b;
-
-private:
-	static Metadata _MetaData;
-	static void Register(Metadata& meta);
-
-public:
-	static const Metadata* GetMetadata();
 };
 
-Metadata ColorB::_MetaData("ColorB", sizeof(ColorB), NULL, ColorB::Register);
-
-void ColorB::Register(Metadata& meta)
-{
-	RTTI::RegisterCreatetor(typeid(ColorB).name(), []() { return new ColorB(); });
+IMPL_RTTI_ROOT(ColorB, NULL, {
 	meta.AddProperty(Property("", "r", EType::Float, offsetof(ColorB, r)));
 	meta.AddProperty(Property("", "g", EType::Float, offsetof(ColorB, g)));
 	meta.AddProperty(Property("", "b", EType::Float, offsetof(ColorB, b)));
-}
-
-const Metadata* ColorB::GetMetadata()
-{
-	return &_MetaData;
-}
+})
 
 #pragma endregion
 
 #pragma region Pixel
 
 class Pixel {
+	DECLARE_RTTI_ROOT()
 public:
 	ColorB a;
 	ColorB b;
-
-private:
-	static Metadata _MetaData;
-	static void Register(Metadata& meta);
-
-public:
-	static const Metadata* GetMetadata();
 };
 
-Metadata Pixel::_MetaData("Pixel", sizeof(Pixel), NULL, Pixel::Register);
-
-void Pixel::Register(Metadata& meta)
-{
-	RTTI::RegisterCreatetor(typeid(Pixel).name(), []() { return new Pixel(); });
-	PROP_CLS(Pixel, ColorB, a);
-	PROP_CLS(Pixel, ColorB, b);
-}
-
-const Metadata* Pixel::GetMetadata()
-{
-	return &_MetaData;
-}
+IMPL_RTTI_ROOT(Pixel, NULL, {
+	PROP_CLS(Pixel, ColorB, a)
+	PROP_CLS(Pixel, ColorB, b)
+})
 
 #pragma endregion
+
 #pragma region Person
 
 class Person {
+	DECLARE_RTTI_ROOT()
 public:
 	int id;
 	int age;
@@ -121,49 +93,35 @@ public:
 		diffuse = Vector3::zero;
 		pixels.clear();
 	}
-private:
-	static Metadata _MetaData;
-	static void Register(Metadata& meta);
-
-public:
-	static const Metadata* GetMetadata();
 };
 
-Metadata Person::_MetaData("Person", sizeof(Person), NULL, Person::Register);
-
-void Person::Register(Metadata& meta)
-{
-	RTTI::RegisterCreatetor(typeid(Person).name(), []() { return new Person(); });
+IMPL_RTTI_ROOT(Person, NULL, {
 	meta.AddProperty(Property("", "id", EType::Int32, offsetof(Person, id)));
 	meta.AddProperty(Property("", "age", EType::Int32, offsetof(Person, age)));
 	meta.AddProperty(Property("", "height", EType::Float, offsetof(Person, height)));
 	meta.AddProperty(Property("", "identity", EType::Int64, offsetof(Person, identity)));
 	meta.AddProperty(Property("", "intelligent", EType::Bool, offsetof(Person, intelligent)));
 	meta.AddProperty(Property("", "name", EType::WString, offsetof(Person, name)));
-	PROP(Person, en_name, EType::String);
-	PROP_CLS(Person, ColorB, color);
-	PROP_ARR(Person, double, coord, EType::Double);
-	PROP_ARR(Person, string, flags, EType::String);
-	PROP_ARR(Person, wstring, frieds, EType::WString);
-	PROP_ARR(Person, float, diffuse, EType::Float);
-	PROP_VEC(Person, wstring, friendList, EType::WString);
-	PROP_VEC(Person, string, flagList, EType::String);
-	PROP_VEC(Person, float, xyz, EType::Float);
-	PROP_ARR_CLS(Person, ColorB, colors);
-	PROP_VEC_CLS(Person, ColorB, colorList);
-	PROP_VEC_CLS(Person, Pixel, pixels);
-}
-
-const Metadata* Person::GetMetadata()
-{
-	return &_MetaData;
-}
+	PROP(Person, en_name, EType::String)
+	PROP_CLS(Person, ColorB, color)
+	PROP_ARR(Person, double, coord, EType::Double)
+	PROP_ARR(Person, string, flags, EType::String)
+	PROP_ARR(Person, wstring, frieds, EType::WString)
+	PROP_ARR(Person, float, diffuse, EType::Float)
+	PROP_VEC(Person, wstring, friendList, EType::WString)
+	PROP_VEC(Person, string, flagList, EType::String)
+	PROP_VEC(Person, float, xyz, EType::Float)
+	PROP_ARR_CLS(Person, ColorB, colors)
+	PROP_VEC_CLS(Person, ColorB, colorList)
+	PROP_VEC_CLS(Person, Pixel, pixels)
+})
 
 #pragma endregion
 
 #pragma region Man
 
 class Man : public Person {
+	DECLARE_RTTI_ROOT()
 public:
 	float length = 1.5f;
 
@@ -172,26 +130,11 @@ public:
 		Person::clear();
 		length = 0.0f;
 	}
-private:
-	static Metadata _MetaData;
-	static void Register(Metadata& meta);
-
-public:
-	static const Metadata* GetMetadata();
 };
 
-Metadata Man::_MetaData("Man", sizeof(Man), Person::GetMetadata(), Man::Register);
-
-void Man::Register(Metadata& meta)
-{
-	RTTI::RegisterCreatetor(typeid(Man).name(), []() { return new Man(); });
+IMPL_RTTI_ROOT(Man, Person::GetMetadata(), {
 	PROP(Man, length, EType::Float);
-}
-
-const Metadata* Man::GetMetadata()
-{
-	return &_MetaData;
-}
+})
 
 #pragma endregion
 
@@ -207,21 +150,21 @@ void main()
 	//}
 
 	// 序列化
-	string json = SerilizeHelper::Serilize(p);
-	cout << json.c_str() << endl;
+	//string json = SerilizeHelper::Serilize(p);
+	//cout << json.c_str() << endl;
 
-	ofstream os("D://man.json");
-	os.write(json.c_str(), json.size());
-	os.close();
+	//ofstream os("D://man.json");
+	//os.write(json.c_str(), json.size());
+	//os.close();
 
 	// 反序列化
-	//ifstream is("D://man.json");
-	//ostringstream os;
-	//os << is.rdbuf();
+	ifstream is("D://man.json");
+	ostringstream os;
+	os << is.rdbuf();
 
-	//Man* man = new Man();
-	//man->clear();
-	//SerilizeHelper::Deserilize(man, os.str());
+	Man* man = new Man();
+	man->clear();
+	SerilizeHelper::Deserilize(man, os.str());
 
 	system("pause");
 }

@@ -5,6 +5,7 @@
 #include"ApiDefine.h"
 #include"Json.h"
 #include"Converter.h"
+#include"Serialize.h"
 using namespace std;
 
 #define SMART_CLASS(CLASS_NAME) class CLASS_NAME;  typedef std::shared_ptr<CLASS_NAME> P##CLASS_NAME;
@@ -14,9 +15,10 @@ BEGIN_NAMESPACE_ENGINE
 
 class Object
 {
+	DECLARE_RTTI_ROOT()
 protected:
-	int m_InstanceId;
-	wstring m_Name;
+	int			m_InstanceId;
+	wstring		m_Name;
 
 public:
 	inline Object()
@@ -41,33 +43,9 @@ public:
 
 	virtual void OnInitialize() { }
 
-	virtual void AsJsonMember(rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator)
-	{
-		if (value.IsObject())
-		{
-			if (!value.HasMember("name"))
-			{
-				value.AddMember("name", "", allocator);
-			}
-			value["name"].SetString(CConverter::WStringToString(m_Name).c_str(), allocator);
-		}
-	}
+	virtual string Serialize();
 
-	virtual string ToJson()
-	{
-		rapidjson::Document document;
-		document.SetObject();
-		AsJsonMember(document, document.GetAllocator());
-		rapidjson::StringBuffer buffer;
-		rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-		document.Accept(writer);
-		return buffer.GetString();
-	}
-
-	virtual void FromJson(const string& json)
-	{
-		
-	}
+	virtual void Deserialize(const string& json);
 };
 
 END_NAMESPACE_ENGINE

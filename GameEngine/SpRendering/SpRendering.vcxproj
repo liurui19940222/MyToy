@@ -187,6 +187,8 @@
     <ClInclude Include="TrueTypeFont.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\SpCommon\RTTI.cpp" />
+    <ClCompile Include="..\SpCommon\Serialize.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="FontMeshGenerator.cpp" />
     <ClCompile Include="FontRenderer.cpp" />

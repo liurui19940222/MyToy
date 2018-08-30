@@ -3,7 +3,7 @@
 
 #include"SpCommon\Math.h"
 #include"SpCommon\EngineDefine.h"
-#include"SpCommon\Object.hpp"
+#include"SpCommon\Object.h"
 
 BEGIN_NAMESPACE_ENGINE
 

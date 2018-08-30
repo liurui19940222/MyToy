@@ -17,8 +17,8 @@ namespace rtti {
 	typedef unsigned short		UShort;
 	typedef int					Int32;
 	typedef unsigned int		UInt32;
-	typedef long int			Int64;
-	typedef unsigned long int	UInt64;
+	typedef long long			Int64;
+	typedef unsigned long long	UInt64;
 	typedef float				Float;
 	typedef double				Double;
 	typedef string				String;
@@ -139,7 +139,7 @@ namespace rtti {
 	};
 }
 
-
+// 设置访问Vector的代码
 #define SET_VECTOR_FUNC(CLASS, TMPCLASS, fieldName) \
 fieldName##Prop.SetSetAtFunc([](Property& prop, void* obj, UInt32 pos, void* value) {\
 	vector<TMPCLASS>& list = *(vector<TMPCLASS>*)prop.GetAddress(obj);\
@@ -159,14 +159,7 @@ fieldName##Prop.SetGetSizeFunc([](Property& prop, void* obj) {\
 });\
 meta.AddProperty(fieldName##Prop);\
 
-#define PROP_VEC_CLS(CLASS, TMPCLASS, fieldName) 	\
-Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, fieldName), TMPCLASS::GetMetadata(), 1, DEFAUTL_ATTITUDE);\
-SET_VECTOR_FUNC(CLASS, TMPCLASS, fieldName);
-
-#define PROP_VEC(CLASS, TMPCLASS, fieldName, TYPE) 	\
-Property fieldName##Prop = Property(#TMPCLASS, #fieldName, TYPE, offsetof(CLASS, fieldName), NULL, 1, DEFAUTL_ATTITUDE);\
-SET_VECTOR_FUNC(CLASS, TMPCLASS, fieldName);
-
+// 设置访问数组的代码
 #define SET_ARRAY_FUNC(CLASS, TMPCLASS, fieldName)\
 fieldName##Prop.SetSetAtFunc([](Property& prop, void* obj, UInt32 pos, void* value) {\
 	TMPCLASS* arr = (TMPCLASS*)prop.GetAddress(obj);\
@@ -181,18 +174,53 @@ fieldName##Prop.SetGetSizeFunc([](Property& prop, void* obj) {\
 });\
 meta.AddProperty(fieldName##Prop);\
 
-#define PROP_ARR_CLS(CLASS, TMPCLASS, fieldName) \
-Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, colors), TMPCLASS::GetMetadata(), /*_countof(CLASS::fieldName)*/sizeof(CLASS::fieldName) / sizeof(TMPCLASS), DEFAUTL_ATTITUDE);\
-SET_ARRAY_FUNC(CLASS, TMPCLASS, fieldName);
+// 注册基础类型
+#define PROP(CLASS, fieldName, TYPE) \
+meta.AddProperty(Property("", #fieldName, TYPE, offsetof(CLASS, fieldName)));
 
+// 注册类和结构体类型
+#define PROP_CLS(CLASS, TMPCLASS, fieldName) \
+meta.AddProperty(Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, fieldName), TMPCLASS::GetMetadata()));\
+
+// 注册std::vector<base type>类型
+#define PROP_VEC(CLASS, TMPCLASS, fieldName, TYPE) 	\
+Property fieldName##Prop = Property(#TMPCLASS, #fieldName, TYPE, offsetof(CLASS, fieldName), NULL, 1, DEFAUTL_ATTITUDE);\
+SET_VECTOR_FUNC(CLASS, TMPCLASS, fieldName);
+
+// 注册栈数组类型
 #define PROP_ARR(CLASS, TMPCLASS, fieldName, TYPE) \
 Property fieldName##Prop = Property("", #fieldName, TYPE, offsetof(CLASS, fieldName), NULL, /*_countof(CLASS::fieldName)*/sizeof(CLASS::fieldName) / sizeof(TMPCLASS), DEFAUTL_ATTITUDE);\
 SET_ARRAY_FUNC(CLASS, TMPCLASS, fieldName);
 
-#define PROP(CLASS, fieldName, TYPE) \
-meta.AddProperty(Property("", #fieldName, TYPE, offsetof(CLASS, fieldName)));
+// 注册std::vector<class type>类型
+#define PROP_VEC_CLS(CLASS, TMPCLASS, fieldName) 	\
+Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, fieldName), TMPCLASS::GetMetadata(), 1, DEFAUTL_ATTITUDE);\
+SET_VECTOR_FUNC(CLASS, TMPCLASS, fieldName);
 
-#define PROP_CLS(CLASS, TMPCLASS, fieldName) \
-meta.AddProperty(Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, fieldName), TMPCLASS::GetMetadata()));\
+// 注册类或结构体数组类型
+#define PROP_ARR_CLS(CLASS, TMPCLASS, fieldName) \
+Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, colors), TMPCLASS::GetMetadata(), /*_countof(CLASS::fieldName)*/sizeof(CLASS::fieldName) / sizeof(TMPCLASS), DEFAUTL_ATTITUDE);\
+SET_ARRAY_FUNC(CLASS, TMPCLASS, fieldName);
+
+// 定义RTTI代码
+#define DECLARE_RTTI_ROOT() \
+private:\
+static Metadata _MetaData;\
+static void Register(Metadata& meta);\
+public:\
+	static const Metadata* GetMetadata();
+
+// 实现RTTI代码
+#define IMPL_RTTI_ROOT(CLASS, PARENT_META, RegCode) \
+Metadata CLASS::_MetaData(#CLASS, sizeof(CLASS), PARENT_META, CLASS::Register);\
+void CLASS::Register(Metadata& meta)\
+{\
+	RTTI::RegisterCreatetor(typeid(CLASS).name(), []() { return new CLASS(); });\
+	RegCode\
+}\
+const Metadata* CLASS::GetMetadata()\
+{\
+	return &_MetaData;\
+}\
 
 #include"RTTI.inl"

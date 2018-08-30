@@ -5,7 +5,7 @@
 #include"RenderBuffer.h"
 #include"Math.h"
 #include"SpCommon\EngineDefine.h"
-#include"SpCommon\Object.hpp"
+#include"SpCommon\Object.h"
 #include"SkeletonAnimation.h"
 
 BEGIN_NAMESPACE_ENGINE
