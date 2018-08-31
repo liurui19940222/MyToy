@@ -2,17 +2,17 @@
 
 IMPL_RTTI_ROOT(SerializableObject, NULL, {})
 
-void SerializableObject::OnSerilize(const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator)
+void SerializableObject::OnSerilize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator)
 {
-	SerilizeHelper::AsJsonMember(this, meta, value, allocator);
+	SerilizeHelper::AsJsonMember(depth, this, meta, value, allocator);
 }
 
-void SerializableObject::OnDeserialize(const Metadata* meta, Value& value)
+void SerializableObject::OnDeserialize(int depth, const Metadata* meta, Value& value)
 {
-	SerilizeHelper::FromJsonMember(this, meta, value);
+	SerilizeHelper::FromJsonMember(depth, this, meta, value);
 }
 
-void SerilizeHelper::DeserClsFromJsonArray(SerializableObject* obj, Property& prop, Value& member, const string& fieldName)
+void SerilizeHelper::DeserClsFromJsonArray(int depth, SerializableObject* obj, Property& prop, Value& member, const string& fieldName)
 {
 	if (RTTI::HasRTTIInfo(prop.GetTypeName()))
 	{
@@ -23,13 +23,12 @@ void SerilizeHelper::DeserClsFromJsonArray(SerializableObject* obj, Property& pr
 		for (UInt32 i = 0; i < prop.GetSize(obj); i++)
 		{
 			Value& objValue = v[i];
-			//FromJsonMember((SerializableObject*)prop.GetAt(obj, i), prop.m_Metadata, objValue);
-			((SerializableObject*)prop.GetAt(obj, i))->OnDeserialize(prop.m_Metadata, objValue);
+			((SerializableObject*)prop.GetAt(obj, i))->OnDeserialize(depth, prop.m_Metadata, objValue);
 		}
 	}
 }
 
-void SerilizeHelper::SerClsToJsonArray(SerializableObject* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator)
+void SerilizeHelper::SerClsToJsonArray(int depth, SerializableObject* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator)
 {
 	if (RTTI::HasRTTIInfo(prop.GetTypeName()))
 	{
@@ -37,8 +36,7 @@ void SerilizeHelper::SerClsToJsonArray(SerializableObject* obj, Property& prop, 
 		for (UInt32 i = 0; i < prop.GetSize(obj); i++)
 		{
 			Value v(kObjectType);
-			//AsJsonMember((SerializableObject*)prop.GetAt(obj, i), prop.m_Metadata, v, allocator);
-			((SerializableObject*)prop.GetAt(obj, i))->OnSerilize(prop.m_Metadata, v, allocator);
+			((SerializableObject*)prop.GetAt(obj, i))->OnSerilize(depth, prop.m_Metadata, v, allocator);
 			member[fieldName.c_str()].PushBack(v, allocator);
 		}
 	}
@@ -66,7 +64,7 @@ void SerilizeHelper::SerWStrToJsonArray(SerializableObject* obj, Property& prop,
 	}
 }
 
-void SerilizeHelper::AsJsonMember(SerializableObject* obj, const Metadata* meta, Value& member, MemoryPoolAllocator<>& allocator)
+void SerilizeHelper::AsJsonMember(int depth, SerializableObject* obj, const Metadata* meta, Value& member, MemoryPoolAllocator<>& allocator)
 {
 	const vector<Property>* props = meta->GetProperties();
 	string fieldName;
@@ -119,7 +117,7 @@ void SerilizeHelper::AsJsonMember(SerializableObject* obj, const Metadata* meta,
 				break;
 			case rtti::EType::Class:
 			case rtti::EType::Struct:
-				SerClsToJsonArray(obj, prop, member, fieldName, allocator);
+				SerClsToJsonArray(depth + 1, obj, prop, member, fieldName, allocator);
 				break;
 			case rtti::EType::String:
 				SerStrToJsonArray(obj, prop, member, fieldName, allocator);
@@ -136,8 +134,7 @@ void SerilizeHelper::AsJsonMember(SerializableObject* obj, const Metadata* meta,
 		{
 			Value& classMember = member[fieldName.c_str()];
 			classMember.SetObject();
-			//AsJsonMember((SerializableObject*)prop.GetAddress(obj), prop.m_Metadata, classMember, allocator);
-			((SerializableObject*)prop.GetAddress(obj))->OnSerilize(prop.m_Metadata, classMember, allocator);
+			((SerializableObject*)prop.GetAddress(obj))->OnSerilize(depth + 1, prop.m_Metadata, classMember, allocator);
 			continue;
 		}
 
@@ -187,7 +184,7 @@ void SerilizeHelper::AsJsonMember(SerializableObject* obj, const Metadata* meta,
 	}
 }
 
-void SerilizeHelper::FromJsonMember(SerializableObject* obj, const Metadata* meta, Value& member)
+void SerilizeHelper::FromJsonMember(int depth, SerializableObject* obj, const Metadata* meta, Value& member)
 {
 	const vector<Property>* props = meta->GetProperties();
 	string fieldName;
@@ -249,7 +246,7 @@ void SerilizeHelper::FromJsonMember(SerializableObject* obj, const Metadata* met
 				break;
 			case rtti::EType::Class:
 			case rtti::EType::Struct:
-				DeserClsFromJsonArray(obj, prop, member, fieldName);
+				DeserClsFromJsonArray(depth + 1, obj, prop, member, fieldName);
 				break;
 			}
 			continue;
@@ -259,8 +256,7 @@ void SerilizeHelper::FromJsonMember(SerializableObject* obj, const Metadata* met
 		if ((dataType == EType::Class || dataType == EType::Struct) && RTTI::HasRTTIInfo(prop.GetTypeName()))
 		{
 			Value& classMember = member[fieldName.c_str()];
-			//FromJsonMember((SerializableObject*)prop.GetAddress(obj), prop.m_Metadata, classMember);
-			((SerializableObject*)prop.GetAddress(obj))->OnDeserialize(prop.m_Metadata, classMember);
+			((SerializableObject*)prop.GetAddress(obj))->OnDeserialize(depth + 1, prop.m_Metadata, classMember);
 			continue;
 		}
 

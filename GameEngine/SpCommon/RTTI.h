@@ -202,7 +202,7 @@ SET_VECTOR_FUNC(CLASS, TMPCLASS, fieldName);
 Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, colors), TMPCLASS::GetMetadata(), /*_countof(CLASS::fieldName)*/sizeof(CLASS::fieldName) / sizeof(TMPCLASS), DEFAUTL_ATTITUDE);\
 SET_ARRAY_FUNC(CLASS, TMPCLASS, fieldName);
 
-// 定义RTTI代码
+// 定义RTTI代码(基类)
 #define DECLARE_RTTI_ROOT() \
 private:\
 static Metadata _MetaData;\
@@ -212,7 +212,7 @@ public:\
 	virtual const Metadata* metadata() const;\
 private:
 
-// 实现RTTI代码
+// 实现RTTI代码(基类)
 #define IMPL_RTTI_ROOT(CLASS, PARENT_META, RegCode) \
 Metadata CLASS::_MetaData(#CLASS, sizeof(CLASS), PARENT_META, CLASS::Register);\
 void CLASS::Register(Metadata& meta)\
@@ -225,5 +225,11 @@ const Metadata* CLASS::GetMetadata()\
 	return &_MetaData;\
 }\
 const Metadata* CLASS::metadata() const { return &_MetaData; }
+
+// 定义RTTI代码(子类)
+#define DECLARE_RTTI DECLARE_RTTI_ROOT
+
+// 实现RTTI代码(子类)
+#define IMPL_RTTI IMPL_RTTI_ROOT
 
 #include"RTTI.inl"

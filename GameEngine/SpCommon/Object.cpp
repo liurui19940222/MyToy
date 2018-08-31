@@ -1,10 +1,29 @@
 #include"Object.h"
 
-IMPL_RTTI_ROOT(Object, NULL, {
-	PROP(Object, m_InstanceId, EType::Int32)
+IMPL_RTTI(Object, NULL, {
 	PROP(Object, m_Name, EType::WString)
 })
 
-string Object::Serialize() { return string(); }
+void Object::OnSerilize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator)
+{
+	if (m_Reference.empty() || depth == 0)
+	{
+		SerializableObject::OnSerilize(depth, meta, value, allocator);
+	}
+	else
+	{
+		
+	}
+}
 
-void Object::Deserialize(const string& json) {}
+void Object::OnDeserialize(int depth, const Metadata* meta, Value& value)
+{
+	if (m_Reference.empty() || depth == 0)
+	{
+		SerializableObject::OnDeserialize(depth, meta, value);
+	}
+	else
+	{
+
+	}
+}

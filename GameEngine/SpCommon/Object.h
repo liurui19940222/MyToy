@@ -3,7 +3,6 @@
 #include<string>
 #include<memory>
 #include"ApiDefine.h"
-#include"Json.h"
 #include"Converter.h"
 #include"Serialize.h"
 using namespace std;
@@ -13,12 +12,14 @@ using namespace std;
 
 BEGIN_NAMESPACE_ENGINE
 
-class Object
+class Object : public SerializableObject
 {
-	DECLARE_RTTI_ROOT()
+	DECLARE_RTTI()
+	friend class AssetUtility;
 protected:
 	int			m_InstanceId;
 	wstring		m_Name;
+	string		m_Reference;
 
 public:
 	inline Object()
@@ -41,11 +42,12 @@ public:
 
 	inline wstring& GetName() { return this->m_Name; }
 
-	virtual void OnInitialize() { }
+	virtual void OnInitialize() {}
 
-	virtual string Serialize();
+protected:
+	virtual void OnSerilize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator) override;
 
-	virtual void Deserialize(const string& json);
+	virtual void OnDeserialize(int depth, const Metadata* meta, Value& value) override;
 };
 
 END_NAMESPACE_ENGINE

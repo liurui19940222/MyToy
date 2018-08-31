@@ -23,15 +23,15 @@ class SerializableObject {
 	DECLARE_RTTI_ROOT()
 	friend class SerilizeHelper;
 protected:
-	virtual void OnSerilize(const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator);
-	virtual void OnDeserialize(const Metadata* meta, Value& value);
+	virtual void OnSerilize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator);
+	virtual void OnDeserialize(int depth, const Metadata* meta, Value& value);
 };
 
 class SerilizeHelper {
 private:
-	static void DeserClsFromJsonArray(SerializableObject* obj, Property& prop, Value& member, const string& fieldName);
+	static void DeserClsFromJsonArray(int depth, SerializableObject* obj, Property& prop, Value& member, const string& fieldName);
 
-	static void SerClsToJsonArray(SerializableObject* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator);
+	static void SerClsToJsonArray(int depth, SerializableObject* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator);
 
 	static void SerStrToJsonArray(SerializableObject* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator);
 
@@ -58,9 +58,9 @@ public:
 	template<typename T>
 	static void Deserilize(T* obj, const string& json);
 
-	static void AsJsonMember(SerializableObject* obj, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator);
+	static void AsJsonMember(int depth, SerializableObject* obj, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator);
 
-	static void FromJsonMember(SerializableObject* obj, const Metadata* meta, Value& value);
+	static void FromJsonMember(int depth, SerializableObject* obj, const Metadata* meta, Value& value);
 };
 
 

@@ -24,9 +24,6 @@
     <ClInclude Include="EngineDefine.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="Property.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -45,9 +42,6 @@
     <ClInclude Include="Interpolator.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="Json.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="RTTI.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -55,6 +49,15 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetUtility.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystemInfo.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="FileInfo.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -87,6 +90,15 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetUtility.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="FileInfo.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystemInfo.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

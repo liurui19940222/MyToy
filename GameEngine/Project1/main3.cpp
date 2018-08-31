@@ -1,6 +1,9 @@
 #include"..\SpCommon\RTTI.h"
 #include"..\SpCommon\Serialize.h"
 #include"..\SpCommon\Math.h"
+#include"..\SpCommon\FileInfo.h"
+#include"..\SpCommon\Object.h"
+#include"..\SpCommon\AssetUtility.h"
 #include<fstream>
 #include<sstream>
 
@@ -17,8 +20,6 @@ public:
 	ColorB(float r, float g, float b) : r(r), g(g), b(b) {}
 
 protected:
-	virtual void OnSerilize(const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator) override;
-	virtual void OnDeserialize(const Metadata* meta, Value& value) override;
 };
 
 IMPL_RTTI_ROOT(ColorB, NULL, {
@@ -26,16 +27,6 @@ IMPL_RTTI_ROOT(ColorB, NULL, {
 	meta.AddProperty(Property("", "g", EType::Float, offsetof(ColorB, g)));
 	meta.AddProperty(Property("", "b", EType::Float, offsetof(ColorB, b)));
 })
-
-void ColorB::OnSerilize(const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator)
-{
-	value.SetString("abcd", allocator);
-}
-
-void ColorB::OnDeserialize(const Metadata* meta, Value& value)
-{
-	cout << value.GetString() << endl;
-}
 
 #pragma endregion
 
@@ -158,6 +149,8 @@ IMPL_RTTI_ROOT(Man, Person::GetMetadata(), {
 
 #pragma endregion
 
+USING_NAMESPACE_ENGINE;
+
 void main()
 {
 	Man* p = RTTI::Instantiate<Man>("Man");
@@ -170,21 +163,30 @@ void main()
 	//}
 
 	// 序列化
-	string json = SerilizeHelper::Serilize(p);
-	cout << json.c_str() << endl;
+	//string json = SerilizeHelper::Serilize(p);
+	//cout << json.c_str() << endl;
 
-	ofstream os("D://man.json");
-	os.write(json.c_str(), json.size());
-	os.close();
+	//ofstream os("D://man.json");
+	//os.write(json.c_str(), json.size());
+	//os.close();
+
+
 
 	// 反序列化
-	//ifstream is("D://man.json");
-	//ostringstream os;
-	//os << is.rdbuf();
+	ifstream is("D://man.json");
+	ostringstream os;
+	os << is.rdbuf();
 
-	//Man* man = new Man();
-	//man->clear();
-	//SerilizeHelper::Deserilize(man, os.str());
+	Man* man = new Man();
+	man->clear();
+	SerilizeHelper::Deserilize(man, os.str());
+
+	//Object obj;
+	//obj.SetName(L"Game");
+	//AssetUtility::Save(&obj, "D://game.json");
+
+	//Object obj2;
+	//AssetUtility::Load(&obj2, "D://game.json");
 
 	system("pause");
 }

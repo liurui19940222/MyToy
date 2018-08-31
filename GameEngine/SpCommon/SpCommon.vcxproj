@@ -20,27 +20,31 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApiDefine.h" />
+    <ClInclude Include="AssetUtility.h" />
     <ClInclude Include="Atlas.h" />
     <ClInclude Include="BinaryHeap.h" />
     <ClInclude Include="Converter.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="EngineDefine.h" />
     <ClInclude Include="FastPainter.h" />
+    <ClInclude Include="FileInfo.h" />
+    <ClInclude Include="FileSystemInfo.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Interpolator.h" />
-    <ClInclude Include="Json.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="Property.h" />
     <ClInclude Include="RTTI.h" />
     <ClInclude Include="Serialize.h" />
     <ClInclude Include="Singleton.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AssetUtility.cpp" />
     <ClCompile Include="Atlas.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="EngineDefine.cpp" />
     <ClCompile Include="FastPainter.cpp" />
+    <ClCompile Include="FileInfo.cpp" />
+    <ClCompile Include="FileSystemInfo.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Interpolator.cpp" />
     <ClCompile Include="Math.cpp" />
