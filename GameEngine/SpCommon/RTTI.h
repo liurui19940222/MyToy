@@ -208,7 +208,9 @@ private:\
 static Metadata _MetaData;\
 static void Register(Metadata& meta);\
 public:\
-	static const Metadata* GetMetadata();
+	static const Metadata* GetMetadata();\
+	virtual const Metadata* metadata() const;\
+private:
 
 // ÊµÏÖRTTI´úÂë
 #define IMPL_RTTI_ROOT(CLASS, PARENT_META, RegCode) \
@@ -222,5 +224,6 @@ const Metadata* CLASS::GetMetadata()\
 {\
 	return &_MetaData;\
 }\
+const Metadata* CLASS::metadata() const { return &_MetaData; }
 
 #include"RTTI.inl"

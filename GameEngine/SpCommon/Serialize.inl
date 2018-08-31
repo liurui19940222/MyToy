@@ -6,7 +6,7 @@ string SerilizeHelper::Serilize(T* obj)
 	rapidjson::Document document;
 	document.SetObject();
 
-	AsJsonMember(obj, document, document.GetAllocator());
+	SerilizeAll(obj, document, document.GetAllocator());
 
 	rapidjson::StringBuffer buffer;
 	rapidjson::PrettyWriter<StringBuffer> writer(buffer);
@@ -20,11 +20,11 @@ void SerilizeHelper::Deserilize(T* obj, const string& json)
 	rapidjson::Document document;
 	document.Parse(json.c_str());
 
-	FromJsonMember(obj, document);
+	DeserilizeAll(obj, document);
 }
 
 template<typename T>
-void SerilizeHelper::FromJsonMember(T* obj, Value& value)
+void SerilizeHelper::DeserilizeAll(T* obj, Value& value)
 {
 	list<const Metadata*> metas;
 	const Metadata* meta = obj->GetMetadata();
@@ -43,7 +43,7 @@ void SerilizeHelper::FromJsonMember(T* obj, Value& value)
 }
 
 template<typename T>
-void SerilizeHelper::AsJsonMember(T* obj, Value& value, MemoryPoolAllocator<>& allocator)
+void SerilizeHelper::SerilizeAll(T* obj, Value& value, MemoryPoolAllocator<>& allocator)
 {
 	list<const Metadata*> metas;
 	const Metadata* meta = obj->GetMetadata();
@@ -62,7 +62,7 @@ void SerilizeHelper::AsJsonMember(T* obj, Value& value, MemoryPoolAllocator<>& a
 }
 
 template<typename T>
-void SerilizeHelper::DeserFromJsonArray(void* obj, Property& prop, Value& member, const string& fieldName, function<void(T* tempValue, Value& jsonValue)> func)
+void SerilizeHelper::DeserFromJsonArray(SerializableObject* obj, Property& prop, Value& member, const string& fieldName, function<void(T* tempValue, Value& jsonValue)> func)
 {
 	if (!member[fieldName.c_str()].IsArray())
 		return;
@@ -77,7 +77,7 @@ void SerilizeHelper::DeserFromJsonArray(void* obj, Property& prop, Value& member
 }
 
 template<typename T>
-void SerilizeHelper::SerToJsonArray(void* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator)
+void SerilizeHelper::SerToJsonArray(SerializableObject* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator)
 {
 	member[fieldName.c_str()].SetArray();
 	for (UInt32 i = 0; i < prop.GetSize(obj); i++)

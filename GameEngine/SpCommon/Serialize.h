@@ -19,7 +19,8 @@ USING_NAMESPACE_ENGINE;
 #undef GetClassName
 #endif
 
-class SerilizableObject {
+class SerializableObject {
+	DECLARE_RTTI_ROOT()
 	friend class SerilizeHelper;
 protected:
 	virtual void OnSerilize(const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator);
@@ -28,31 +29,27 @@ protected:
 
 class SerilizeHelper {
 private:
-	static void DeserClsFromJsonArray(void* obj, Property& prop, Value& member, const string& fieldName);
+	static void DeserClsFromJsonArray(SerializableObject* obj, Property& prop, Value& member, const string& fieldName);
 
-	static void SerClsToJsonArray(void* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator);
+	static void SerClsToJsonArray(SerializableObject* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator);
 
-	static void SerStrToJsonArray(void* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator);
+	static void SerStrToJsonArray(SerializableObject* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator);
 
-	static void SerWStrToJsonArray(void* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator);
-
-	static void AsJsonMember(void* obj, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator);
-
-	static void FromJsonMember(void* obj, const Metadata* meta, Value& value);
+	static void SerWStrToJsonArray(SerializableObject* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator);
 
 	inline static void CheckValueMember(rapidjson::Value& value, MemoryPoolAllocator<>& allocator, const char* name);
 
 	template<typename T>
-	static void SerToJsonArray(void* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator);
+	static void SerilizeAll(T* obj, Value& value, MemoryPoolAllocator<>& allocator);
 
 	template<typename T>
-	static void DeserFromJsonArray(void* obj, Property& prop, Value& member, const string& fieldName, function<void(T* tempValue, Value& jsonValue)> func);
+	static void DeserilizeAll(T* obj, Value& value);
 
 	template<typename T>
-	static void AsJsonMember(T* obj, Value& value, MemoryPoolAllocator<>& allocator);
+	static void SerToJsonArray(SerializableObject* obj, Property& prop, Value& member, const string& fieldName, MemoryPoolAllocator<>& allocator);
 
 	template<typename T>
-	static void FromJsonMember(T* obj, Value& value);
+	static void DeserFromJsonArray(SerializableObject* obj, Property& prop, Value& member, const string& fieldName, function<void(T* tempValue, Value& jsonValue)> func);
 
 public:
 	template<typename T>
@@ -60,6 +57,10 @@ public:
 
 	template<typename T>
 	static void Deserilize(T* obj, const string& json);
+
+	static void AsJsonMember(SerializableObject* obj, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator);
+
+	static void FromJsonMember(SerializableObject* obj, const Metadata* meta, Value& value);
 };
 
 

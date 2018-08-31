@@ -8,10 +8,17 @@ using namespace std;
 
 #pragma region ColorB
 
-class ColorB {
+class ColorB : public SerializableObject {
 	DECLARE_RTTI_ROOT()
 public:
 	float r, g, b;
+
+	ColorB() {}
+	ColorB(float r, float g, float b) : r(r), g(g), b(b) {}
+
+protected:
+	virtual void OnSerilize(const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator) override;
+	virtual void OnDeserialize(const Metadata* meta, Value& value) override;
 };
 
 IMPL_RTTI_ROOT(ColorB, NULL, {
@@ -20,15 +27,28 @@ IMPL_RTTI_ROOT(ColorB, NULL, {
 	meta.AddProperty(Property("", "b", EType::Float, offsetof(ColorB, b)));
 })
 
+void ColorB::OnSerilize(const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator)
+{
+	value.SetString("abcd", allocator);
+}
+
+void ColorB::OnDeserialize(const Metadata* meta, Value& value)
+{
+	cout << value.GetString() << endl;
+}
+
 #pragma endregion
 
 #pragma region Pixel
 
-class Pixel {
+class Pixel : public SerializableObject {
 	DECLARE_RTTI_ROOT()
 public:
 	ColorB a;
 	ColorB b;
+
+	Pixel() = default;
+	Pixel(ColorB a, ColorB b) : a(a), b(b) {}
 };
 
 IMPL_RTTI_ROOT(Pixel, NULL, {
@@ -40,7 +60,7 @@ IMPL_RTTI_ROOT(Pixel, NULL, {
 
 #pragma region Person
 
-class Person {
+class Person : public SerializableObject {
 	DECLARE_RTTI_ROOT()
 public:
 	int id;
@@ -150,21 +170,21 @@ void main()
 	//}
 
 	// 序列化
-	//string json = SerilizeHelper::Serilize(p);
-	//cout << json.c_str() << endl;
+	string json = SerilizeHelper::Serilize(p);
+	cout << json.c_str() << endl;
 
-	//ofstream os("D://man.json");
-	//os.write(json.c_str(), json.size());
-	//os.close();
+	ofstream os("D://man.json");
+	os.write(json.c_str(), json.size());
+	os.close();
 
 	// 反序列化
-	ifstream is("D://man.json");
-	ostringstream os;
-	os << is.rdbuf();
+	//ifstream is("D://man.json");
+	//ostringstream os;
+	//os << is.rdbuf();
 
-	Man* man = new Man();
-	man->clear();
-	SerilizeHelper::Deserilize(man, os.str());
+	//Man* man = new Man();
+	//man->clear();
+	//SerilizeHelper::Deserilize(man, os.str());
 
 	system("pause");
 }
