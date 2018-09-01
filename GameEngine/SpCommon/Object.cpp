@@ -1,4 +1,5 @@
 #include"Object.h"
+#include"AssetUtility.h"
 
 IMPL_RTTI(Object, NULL, {
 	PROP(Object, m_Name, EType::WString)
@@ -6,24 +7,24 @@ IMPL_RTTI(Object, NULL, {
 
 void Object::OnSerilize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator)
 {
-	if (m_Reference.empty() || depth == 0)
+	if (depth == 0 || m_Reference.empty() || !AssetUtility::CheckReference(this))
 	{
 		SerializableObject::OnSerilize(depth, meta, value, allocator);
 	}
 	else
 	{
-		
+		value.SetString(m_Reference.c_str(), allocator);
 	}
 }
 
 void Object::OnDeserialize(int depth, const Metadata* meta, Value& value)
 {
-	if (m_Reference.empty() || depth == 0)
+	if (depth == 0 || m_Reference.empty() || !AssetUtility::CheckReference(this))
 	{
 		SerializableObject::OnDeserialize(depth, meta, value);
 	}
 	else
 	{
-
+		AssetUtility::Load(this, m_Reference);
 	}
 }

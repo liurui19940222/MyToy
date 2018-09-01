@@ -52,20 +52,34 @@ public:
 
 	static inline wstring StringToWString(const string &str)
 	{
-		wstring wstr;
-		int nLen = (int)str.length();
-		wstr.resize(nLen / 2, L' ');
-		MultiByteToWideChar(CP_ACP, 0, (LPCSTR)str.c_str(), nLen, (LPWSTR)wstr.c_str(), nLen);
-		return wstr;
+		size_t i;
+		string curLocale = setlocale(LC_ALL, NULL);
+		setlocale(LC_ALL, "chs");
+		const char* _source = str.c_str();
+		size_t _dsize = str.size() + 1;
+		wchar_t* _dest = new wchar_t[_dsize];
+		wmemset(_dest, 0x0, _dsize);
+		mbstowcs_s(&i, _dest, _dsize, _source, _dsize);
+		wstring result = _dest;
+		delete[] _dest;
+		setlocale(LC_ALL, curLocale.c_str());
+		return result;
 	}
 
 	static inline string WStringToString(const wstring &wstr)
 	{
-		string str;
-		int nLen = (int)wstr.length() * 2;
-		str.resize(nLen, ' ');
-		WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstr.c_str(), nLen, (LPSTR)str.c_str(), nLen, NULL, NULL);
-		return str;
+		size_t i;
+		string curLocale = setlocale(LC_ALL, NULL);
+		setlocale(LC_ALL, "chs");
+		const wchar_t* _source = wstr.c_str();
+		size_t _dsize = 2 * wstr.size() + 1;
+		char* _dest = new char[_dsize];
+		memset(_dest, 0x0, _dsize);
+		wcstombs_s(&i, _dest, _dsize, _source, _dsize);
+		string result = _dest;
+		delete[] _dest;
+		setlocale(LC_ALL, curLocale.c_str());
+		return result;
 	}
 };
 

@@ -5,6 +5,10 @@
 #include<map>
 #include<functional>
 
+#ifdef GetClassName
+#undef GetClassName
+#endif
+
 #define DEFAUTL_ATTITUDE  (ReadAndWrite | Serializable | Editable)
 
 using namespace std;
@@ -68,7 +72,7 @@ namespace rtti {
 		UInt32		m_OffsetAddr;
 		UInt32		m_Attitude;
 		UInt32		m_RepeatCount;	//大于0时为数组, vector
-		EType	m_DataType;
+		EType		m_DataType;
 
 		string		m_FieldName;
 		string		m_TypeName;

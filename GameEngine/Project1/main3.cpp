@@ -163,23 +163,23 @@ void main()
 	//}
 
 	// 序列化
-	//string json = SerilizeHelper::Serilize(p);
-	//cout << json.c_str() << endl;
+	string json = SerilizeHelper::Serilize(p);
+	cout << json.c_str() << endl;
 
-	//ofstream os("D://man.json");
-	//os.write(json.c_str(), json.size());
-	//os.close();
+	ofstream os("D://man.json");
+	os.write(json.c_str(), json.size());
+	os.close();
 
 
 
 	// 反序列化
-	ifstream is("D://man.json");
-	ostringstream os;
-	os << is.rdbuf();
+	//ifstream is("D://man.json");
+	//ostringstream os;
+	//os << is.rdbuf();
 
-	Man* man = new Man();
-	man->clear();
-	SerilizeHelper::Deserilize(man, os.str());
+	//Man* man = new Man();
+	//man->clear();
+	//SerilizeHelper::Deserilize(man, os.str());
 
 	//Object obj;
 	//obj.SetName(L"Game");
