@@ -194,6 +194,7 @@ fieldName##Prop.SetInitPtrFunc([](Property& prop, void* obj) {\
 });\
 fieldName##Prop.SetGetPtrFunc([](Property& prop, void* obj) {\
 	shared_ptr<TMPCLASS>* ptr = (shared_ptr<TMPCLASS>*)obj;\
+	prop.InitPtr(obj);\
 	return (*ptr).get(); \
 });\
 
@@ -238,8 +239,15 @@ meta.AddProperty(fieldName##Prop);\
 
 // 注册类或结构体数组类型
 #define PROP_ARR_CLS(CLASS, TMPCLASS, fieldName) \
-Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, colors), TMPCLASS::GetMetadata(), /*_countof(CLASS::fieldName)*/sizeof(CLASS::fieldName) / sizeof(TMPCLASS), DEFAUTL_ATTITUDE);\
+Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, fieldName), TMPCLASS::GetMetadata(), /*_countof(CLASS::fieldName)*/sizeof(CLASS::fieldName) / sizeof(TMPCLASS), DEFAUTL_ATTITUDE);\
 SET_ARRAY_FUNC(CLASS, TMPCLASS, fieldName); \
+meta.AddProperty(fieldName##Prop); \
+
+// 注册类或结构体pointer数组类型
+#define PROP_ARR_SHARED_PTR_CLS(CLASS, TMPCLASS, fieldName) \
+Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, fieldName), TMPCLASS::GetMetadata(), /*_countof(CLASS::fieldName)*/sizeof(CLASS::fieldName) / sizeof(shared_ptr<TMPCLASS>), DEFAUTL_ATTITUDE);\
+SET_SHARED_PTR_FUNC(CLASS, TMPCLASS, fieldName)\
+SET_ARRAY_FUNC(CLASS, shared_ptr<TMPCLASS>, fieldName); \
 meta.AddProperty(fieldName##Prop); \
 
 // 定义RTTI代码(基类)

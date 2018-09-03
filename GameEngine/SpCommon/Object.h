@@ -12,7 +12,7 @@ using namespace std;
 
 BEGIN_NAMESPACE_ENGINE
 
-class Object : public SerializableObject
+class Object : public SerializableObject, public enable_shared_from_this<Object>
 {
 	DECLARE_RTTI()
 	friend class AssetUtility;

@@ -78,6 +78,7 @@ public:
 	};
 	shared_ptr<ColorB> colorPtr;
 	vector<shared_ptr<ColorB>> colorPtrList;
+	shared_ptr<ColorB> colorPtrArr[2];
 
 	Person() : id(9), age(55), height(1.55f), name(L"刘睿"), en_name("Ray"), intelligent(true), identity(800) {
 		colorPtr = make_shared<ColorB>(5, 6, 7);
@@ -85,6 +86,11 @@ public:
 		{
 			shared_ptr<ColorB> t = make_shared<ColorB>(i + 1, i + 1, i + 1);
 			colorPtrList.push_back(t);
+		}
+		for (int i = 0; i < 2; ++i)
+		{
+			shared_ptr<ColorB> t = make_shared<ColorB>(i + 1, i + 1, i + 1);
+			colorPtrArr[i] = t;
 		}
 	}
 
@@ -115,38 +121,38 @@ public:
 		pixels.clear();
 		colorPtr.reset();
 		colorPtrList.clear();
+		for (int i = 0; i < 2; ++i)
+		{
+			colorPtrArr[i].reset();
+		}
 	}
 };
 
 static void Init(Metadata& meta)
 {
-	/*Property prop = Property("ColorB", "colorPtrList", EType::Class, offsetof(Person, colorPtrList), ColorB::GetMetadata(), 1, DEFAUTL_ATTITUDE);
+	Property prop = Property("ColorB", "colorPtrArr", EType::Class, offsetof(Person, colorPtrArr), ColorB::GetMetadata(), /*_countof(CLASS::fieldName)*/sizeof(Person::colorPtrArr) / sizeof(shared_ptr<ColorB>), DEFAUTL_ATTITUDE);
 	prop.SetInitPtrFunc([](Property& prop, void* obj) {
-		shared_ptr<ColorB>* ptr = (shared_ptr<ColorB>*)prop.GetAddress(obj);
-		if (!(*ptr).get())
+	shared_ptr<ColorB>* ptr = (shared_ptr<ColorB>*)obj;
+		if (!(*ptr).get()) 
 			*ptr = make_shared<ColorB>();
 	});
 	prop.SetGetPtrFunc([](Property& prop, void* obj) {
-		shared_ptr<ColorB>* ptr = (shared_ptr<ColorB>*)(obj);
-		return (*ptr).get();
+		shared_ptr<ColorB>* ptr = (shared_ptr<ColorB>*)obj;
+		prop.InitPtr(obj);
+		return (*ptr).get(); 
 	});
 	prop.SetSetAtFunc([](Property& prop, void* obj, UInt32 pos, void* value) {
-		vector<shared_ptr<ColorB>>& list = *(vector<shared_ptr<ColorB>>*)prop.GetAddress(obj);
-		list[pos] = *(shared_ptr<ColorB>*)value;
+		shared_ptr<ColorB>* arr = (shared_ptr<ColorB>*)prop.GetAddress(obj);
+		arr[pos] = *(shared_ptr<ColorB>*)value;
 	});
 	prop.SetGetAtFunc([](Property& prop, void* obj, UInt32 pos) {
-		vector<shared_ptr<ColorB>>& list = *(vector<shared_ptr<ColorB>>*)prop.GetAddress(obj);
-		return (void*)&list[pos];
-	});
-	prop.SetResizeFunc([](Property& prop, void* obj, UInt32 size) {
-		vector<shared_ptr<ColorB>>& list = *(vector<shared_ptr<ColorB>>*)prop.GetAddress(obj);
-		list.resize(size);
+		shared_ptr<ColorB>* arr = (shared_ptr<ColorB>*)prop.GetAddress(obj);
+		return (void*)&arr[pos];
 	});
 	prop.SetGetSizeFunc([](Property& prop, void* obj) {
-		vector<shared_ptr<ColorB>>& list = *(vector<shared_ptr<ColorB>>*)prop.GetAddress(obj);
-		return list.size();
+		return prop.GetRepeatCount();
 	});
-	meta.AddProperty(prop);*/
+	meta.AddProperty(prop);
 }
 
 IMPL_RTTI_ROOT(Person, NULL, {
@@ -170,6 +176,7 @@ IMPL_RTTI_ROOT(Person, NULL, {
 	PROP_VEC_CLS(Person, Pixel, pixels)
 	PROP_SHARED_PTR_CLS(Person, ColorB, colorPtr)
 	PROP_VEC_SHARED_PTR_CLS(Person, ColorB, colorPtrList)
+	PROP_ARR_SHARED_PTR_CLS(Person, ColorB, colorPtrArr)
 	Init(meta);
 })
 
@@ -209,30 +216,30 @@ void main()
 	//}
 
 	// 序列化
-	//string json = SerilizeHelper::Serilize(p);
-	//cout << json.c_str() << endl;
+	string json = SerilizeHelper::Serilize(p);
+	cout << json.c_str() << endl;
 
-	//ofstream os("D://man.json");
-	//os.write(json.c_str(), json.size());
-	//os.close();
+	ofstream os("D://man.json");
+	os.write(json.c_str(), json.size());
+	os.close();
 
 
 
 	// 反序列化
 	ifstream is("D://man.json");
-	ostringstream os;
-	os << is.rdbuf();
+	ostringstream oss;
+	oss << is.rdbuf();
 
 	Man* man = new Man();
 	man->clear();
-	SerilizeHelper::Deserilize(man, os.str());
+	SerilizeHelper::Deserilize(man, oss.str());
 
-	//Object obj;
-	//obj.SetName(L"Game");
-	//AssetUtility::Save(&obj, "D://game.json");
+	Object obj;
+	obj.SetName(L"Game");
+	AssetUtility::Save(&obj, "D://game.json");
 
-	//Object obj2;
-	//AssetUtility::Load(&obj2, "D://game.json");
+	Object obj2;
+	AssetUtility::Load(&obj2, "D://game.json");
 
 	system("pause");
 }
