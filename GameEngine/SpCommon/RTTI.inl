@@ -66,15 +66,31 @@ inline void	Property::SetResizeFunc(ResizeFunc func) { m_ResizeFunc = func; }
 
 inline void	Property::SetGetSizeFunc(GetSizeFunc func) { m_GetSizeFunc = func; }
 
+inline void	Property::SetInitPtrFunc(InitPtrFunc func) { m_InitPtrFunc = func; }
+
+inline void	Property::SetGetPtrFunc(GetPtrFunc func) { m_GetPtrFunc = func; }
+
 inline void	Property::SetAt(void* obj, UInt32 pos, void* value) { m_SetAtFunc(*this, obj, pos, value); }
 
-template<typename T> T Property::GetAt(void* obj, UInt32 pos) { return *(T*)m_GetAtFunc(*this, obj, pos); }
+template<typename T> T Property::GetAt(void* obj, UInt32 pos) { return *(T*)GetAt(obj, pos); }
 
-inline void* Property::GetAt(void* obj, UInt32 pos) { return m_GetAtFunc(*this, obj, pos); }
+inline void* Property::GetAt(void* obj, UInt32 pos) { 
+	if (m_GetPtrFunc)
+	{
+		return  m_GetPtrFunc(*this, (m_GetAtFunc(*this, obj, pos)));
+	}
+	return m_GetAtFunc(*this, obj, pos); 
+}
 
 inline void	Property::Resize(void* obj, UInt32 size) { if (m_ResizeFunc) m_ResizeFunc(*this, obj, size); }
 
 inline UInt32 Property::GetSize(void* obj) { if (m_GetSizeFunc) return m_GetSizeFunc(*this, obj); else return m_RepeatCount; }
+
+inline void Property::InitPtr(void* obj) { 
+	if (m_InitPtrFunc) m_InitPtrFunc(*this, obj); 
+}
+
+inline void* Property::GetPtr(void* obj) { if (m_GetPtrFunc) return m_GetPtrFunc(*this, GetAddress(obj)); return GetAddress(obj); }
 
 inline Metadata::Metadata(const string& className, UInt32 size) : m_Parent(NULL), m_Size(size) {}
 inline Metadata::Metadata(const string& className, UInt32 size, const Metadata* parentMeta) : m_ClassName(className), m_Size(size), m_Parent(parentMeta) {}

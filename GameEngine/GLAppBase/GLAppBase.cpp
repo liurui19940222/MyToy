@@ -1,5 +1,6 @@
 #include"GLAppBase.h"
 #include<stdio.h>
+#include<assert.h>
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
@@ -71,7 +72,8 @@ void GLAppBase::InitGL(HWND hwnd)
 	m_HRC = wglCreateContext(m_HDC);
 	MakeRenderContext();
 	glewExperimental = GL_TRUE;
-	glewInit();
+	if (glewInit() != GLEW_OK)
+		assert(0);
 }
 
 void GLAppBase::MakeRenderContext()

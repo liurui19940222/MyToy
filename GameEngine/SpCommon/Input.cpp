@@ -131,7 +131,7 @@ bool Input::GetMouseUpState(EMouseKey key)
 	return false;
 }
 
-Vector2 Input::InputMousePosition()
+Vector2 Input::InputMousePosition(bool inverseY)
 {
 	POINT p;
 	GetCursorPos(&p);
@@ -139,6 +139,8 @@ Vector2 Input::InputMousePosition()
 	{
 		int left = windowRect.left;
 		int bottom = windowRect.bottom;
+		if (inverseY)
+			return Vector2(p.x - left, (bottom - windowRect.top) - (bottom - p.y));
 		return Vector2(p.x - left, bottom - p.y);
 	}
 	return Vector2(p.x, p.y);

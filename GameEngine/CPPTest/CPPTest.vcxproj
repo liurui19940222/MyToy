@@ -98,7 +98,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\ExternLibrary;..\Build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SpCommon.lib;SpRendering.lib;SpAssetLoader.lib;SpUISystem.lib;SpAnimation.lib;GLAppBase.lib;FreeImage.lib;freetype.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SpCommon.lib;SpRendering.lib;SpAssetLoader.lib;SpUISystem.lib;SpAnimation.lib;SpImGui.lib;GLAppBase.lib;FreeImage.lib;freetype.lib;imgui.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -169,6 +169,7 @@
     <ClInclude Include="UITest.h" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="..\Build\SpImGui.lib" />
     <Library Include="..\ExternLibrary\assimp-vc140-mt.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

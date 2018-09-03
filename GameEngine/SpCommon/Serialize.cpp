@@ -132,9 +132,10 @@ void SerilizeHelper::AsJsonMember(int depth, SerializableObject* obj, const Meta
 		//如果是类和结构体类型，递归进行序列化
 		if ((dataType == EType::Class || dataType == EType::Struct) && RTTI::HasRTTIInfo(prop.GetTypeName()))
 		{
+			prop.InitPtr(obj);
 			Value& classMember = member[fieldName.c_str()];
 			classMember.SetObject();
-			((SerializableObject*)prop.GetAddress(obj))->OnSerilize(depth + 1, prop.m_Metadata, classMember, allocator);
+			((SerializableObject*)prop.GetPtr(obj))->OnSerilize(depth + 1, prop.m_Metadata, classMember, allocator);
 			continue;
 		}
 
@@ -256,7 +257,8 @@ void SerilizeHelper::FromJsonMember(int depth, SerializableObject* obj, const Me
 		if ((dataType == EType::Class || dataType == EType::Struct) && RTTI::HasRTTIInfo(prop.GetTypeName()))
 		{
 			Value& classMember = member[fieldName.c_str()];
-			((SerializableObject*)prop.GetAddress(obj))->OnDeserialize(depth + 1, prop.m_Metadata, classMember);
+			prop.InitPtr(obj);
+			((SerializableObject*)prop.GetPtr(obj))->OnDeserialize(depth + 1, prop.m_Metadata, classMember);
 			continue;
 		}
 

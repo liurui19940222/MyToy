@@ -55,5 +55,8 @@
     <Library Include="..\ExternLibrary\assimp-vc140-mt.lib">
       <Filter>资源文件</Filter>
     </Library>
+    <Library Include="..\Build\SpImGui.lib">
+      <Filter>资源文件</Filter>
+    </Library>
   </ItemGroup>
 </Project>

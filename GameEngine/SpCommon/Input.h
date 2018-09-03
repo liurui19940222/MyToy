@@ -57,7 +57,7 @@ public:
 	static bool GetMouseDown(EMouseKey key);
 	static bool GetMouseUp(EMouseKey key);
 	static bool GetMouse(EMouseKey key);
-	static Vector2 InputMousePosition();
+	static Vector2 InputMousePosition(bool inverseY = false);
 	static float GetAxis(string axis);
 	static void ShutDown();
 };

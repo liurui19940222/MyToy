@@ -32,10 +32,12 @@ namespace rtti {
 	class Property;
 	typedef function<void(Metadata&)>	StaticInitHandler;
 	typedef function<void*()>			ClassCreateHandler;
-	typedef function<void(Property& prop, void* obj, UInt32 pos, void* value)> SetAtFunc;
-	typedef function<void*(Property& prop, void* obj, UInt32 pos)> GetAtFunc;
-	typedef function<UInt32(Property& prop, void* obj)> GetSizeFunc;
-	typedef function<void(Property& prop, void* obj, UInt32 size)> ResizeFunc;
+	typedef function<void(Property& prop, void* obj, UInt32 pos, void* value)>	SetAtFunc;
+	typedef function<void*(Property& prop, void* obj, UInt32 pos)>				GetAtFunc;
+	typedef function<UInt32(Property& prop, void* obj)>							GetSizeFunc;
+	typedef function<void(Property& prop, void* obj, UInt32 size)>				ResizeFunc;
+	typedef function<void(Property& prop, void* obj)>							InitPtrFunc;
+	typedef function<void*(Property& prop, void* obj)>							GetPtrFunc;
 
 	enum class EType {
 		Bool,
@@ -51,8 +53,6 @@ namespace rtti {
 		Double,
 		Class,
 		Struct,
-		Enum,
-		Pointer,
 		String,
 		WString,
 		UnkownType,
@@ -64,6 +64,8 @@ namespace rtti {
 		ReadAndWrite = 1 << 2,
 		Serializable = 1 << 3,
 		Editable = 1 << 4,
+		Pointer = 1 << 5,
+		SharedPtr = 1 << 6,
 	};
 
 	class Property
@@ -80,6 +82,8 @@ namespace rtti {
 		GetAtFunc	m_GetAtFunc;
 		GetSizeFunc m_GetSizeFunc;
 		ResizeFunc	m_ResizeFunc;
+		InitPtrFunc	m_InitPtrFunc;
+		GetPtrFunc  m_GetPtrFunc;
 
 	public:
 		const Metadata*	m_Metadata;
@@ -97,17 +101,21 @@ namespace rtti {
 		void		SetAttitude(UInt32 atti);
 		string		GetFieldName() const;
 		string		GetTypeName() const;
-		EType	GetDataType() const;
+		EType		GetDataType() const;
 		UInt32		GetRepeatCount() const;
 		void		SetSetAtFunc(SetAtFunc func);
 		void		SetGetAtFunc(GetAtFunc func);
 		void		SetResizeFunc(ResizeFunc func);
 		void		SetGetSizeFunc(GetSizeFunc func);
+		void		SetInitPtrFunc(InitPtrFunc func);
+		void		SetGetPtrFunc(GetPtrFunc func);
 		void		SetAt(void* obj, UInt32 pos, void* value);
 		template<typename T> T GetAt(void* obj, UInt32 pos);
 		void*		GetAt(void* obj, UInt32 pos);
 		void		Resize(void* obj, UInt32 size);
 		UInt32		GetSize(void* obj);
+		void		InitPtr(void* obj);
+		void*		GetPtr(void* obj);
 	};
 
 	class Metadata {
@@ -161,7 +169,7 @@ fieldName##Prop.SetGetSizeFunc([](Property& prop, void* obj) {\
 	vector<TMPCLASS>& list = *(vector<TMPCLASS>*)prop.GetAddress(obj);\
 	return list.size();\
 });\
-meta.AddProperty(fieldName##Prop);\
+
 
 // 设置访问数组的代码
 #define SET_ARRAY_FUNC(CLASS, TMPCLASS, fieldName)\
@@ -176,7 +184,18 @@ fieldName##Prop.SetGetAtFunc([](Property& prop, void* obj, UInt32 pos) {\
 fieldName##Prop.SetGetSizeFunc([](Property& prop, void* obj) {\
 	return prop.GetRepeatCount();\
 });\
-meta.AddProperty(fieldName##Prop);\
+
+// 设置初始化指针的代码
+#define SET_SHARED_PTR_FUNC(CLASS, TMPCLASS, fieldName)\
+fieldName##Prop.SetInitPtrFunc([](Property& prop, void* obj) {\
+	shared_ptr<TMPCLASS>* ptr = (shared_ptr<TMPCLASS>*)obj;\
+	if (!(*ptr).get()) \
+		*ptr = make_shared<TMPCLASS>();\
+});\
+fieldName##Prop.SetGetPtrFunc([](Property& prop, void* obj) {\
+	shared_ptr<TMPCLASS>* ptr = (shared_ptr<TMPCLASS>*)obj;\
+	return (*ptr).get(); \
+});\
 
 // 注册基础类型
 #define PROP(CLASS, fieldName, TYPE) \
@@ -186,25 +205,42 @@ meta.AddProperty(Property("", #fieldName, TYPE, offsetof(CLASS, fieldName)));
 #define PROP_CLS(CLASS, TMPCLASS, fieldName) \
 meta.AddProperty(Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, fieldName), TMPCLASS::GetMetadata()));\
 
+// 注册类和结构体类型shared_ptr
+#define PROP_SHARED_PTR_CLS(CLASS, TMPCLASS, fieldName) \
+Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, fieldName), TMPCLASS::GetMetadata());\
+SET_SHARED_PTR_FUNC(CLASS, TMPCLASS, fieldName)\
+meta.AddProperty(fieldName##Prop);\
+
 // 注册std::vector<base type>类型
 #define PROP_VEC(CLASS, TMPCLASS, fieldName, TYPE) 	\
 Property fieldName##Prop = Property(#TMPCLASS, #fieldName, TYPE, offsetof(CLASS, fieldName), NULL, 1, DEFAUTL_ATTITUDE);\
-SET_VECTOR_FUNC(CLASS, TMPCLASS, fieldName);
+SET_VECTOR_FUNC(CLASS, TMPCLASS, fieldName); \
+meta.AddProperty(fieldName##Prop);\
 
 // 注册栈数组类型
 #define PROP_ARR(CLASS, TMPCLASS, fieldName, TYPE) \
 Property fieldName##Prop = Property("", #fieldName, TYPE, offsetof(CLASS, fieldName), NULL, /*_countof(CLASS::fieldName)*/sizeof(CLASS::fieldName) / sizeof(TMPCLASS), DEFAUTL_ATTITUDE);\
-SET_ARRAY_FUNC(CLASS, TMPCLASS, fieldName);
+SET_ARRAY_FUNC(CLASS, TMPCLASS, fieldName);\
+meta.AddProperty(fieldName##Prop); \
 
 // 注册std::vector<class type>类型
 #define PROP_VEC_CLS(CLASS, TMPCLASS, fieldName) 	\
 Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, fieldName), TMPCLASS::GetMetadata(), 1, DEFAUTL_ATTITUDE);\
-SET_VECTOR_FUNC(CLASS, TMPCLASS, fieldName);
+SET_VECTOR_FUNC(CLASS, TMPCLASS, fieldName); \
+meta.AddProperty(fieldName##Prop);\
+
+// 注册std::vector<shared_ptr<class type>>类型
+#define PROP_VEC_SHARED_PTR_CLS(CLASS, TMPCLASS, fieldName) 	\
+Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, fieldName), TMPCLASS::GetMetadata(), 1, DEFAUTL_ATTITUDE);\
+SET_SHARED_PTR_FUNC(CLASS, TMPCLASS, fieldName)\
+SET_VECTOR_FUNC(CLASS, shared_ptr<TMPCLASS>, fieldName); \
+meta.AddProperty(fieldName##Prop);\
 
 // 注册类或结构体数组类型
 #define PROP_ARR_CLS(CLASS, TMPCLASS, fieldName) \
 Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, colors), TMPCLASS::GetMetadata(), /*_countof(CLASS::fieldName)*/sizeof(CLASS::fieldName) / sizeof(TMPCLASS), DEFAUTL_ATTITUDE);\
-SET_ARRAY_FUNC(CLASS, TMPCLASS, fieldName);
+SET_ARRAY_FUNC(CLASS, TMPCLASS, fieldName); \
+meta.AddProperty(fieldName##Prop); \
 
 // 定义RTTI代码(基类)
 #define DECLARE_RTTI_ROOT() \
