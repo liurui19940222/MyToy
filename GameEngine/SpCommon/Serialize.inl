@@ -37,7 +37,7 @@ void SerilizeHelper::DeserilizeAll(T* obj, Value& value)
 	std::for_each(metas.begin(), metas.end(), [&](const Metadata* m) {
 		if (value.HasMember(m->GetClassName().c_str()))
 		{
-			FromJsonMember(0, obj, m, value[m->GetClassName().c_str()]);
+			((SerializableObject*)obj)->OnDeserialize(0, m, value[m->GetClassName().c_str()]);
 		}
 	});
 }
@@ -57,7 +57,7 @@ void SerilizeHelper::SerilizeAll(T* obj, Value& value, MemoryPoolAllocator<>& al
 		CheckValueMember(value, allocator, m->GetClassName().c_str());
 		value[m->GetClassName().c_str()].SetObject();
 		Value& member = value[m->GetClassName().c_str()];
-		AsJsonMember(0, obj, m, member, allocator);
+		((SerializableObject*)obj)->OnSerialize(0, m, member, allocator);
 	});
 }
 

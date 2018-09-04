@@ -28,14 +28,16 @@ public:
 	template<typename T>
 	static bool Save(T* obj, const string& path)
 	{
+		obj->m_Reference = path;
 		string json = SerilizeHelper::Serilize(obj);
-
 		ofstream os(path.c_str());
 		if (!os.is_open())
+		{
+			obj->m_Reference.clear();
 			return false;
+		}
 		os.write(json.c_str(), json.size());
 		os.close();
-		obj->m_Reference = path;
 		return true;
 	}
 

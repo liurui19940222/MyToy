@@ -3,6 +3,9 @@
 #include"..\SpCommon\EngineDefine.h"
 #include"..\imgui\imgui.h"
 #include"..\SpImGui\SpImGui.h"
+#include"..\SpRendering\Texture2D.h"
+#include"..\SpRendering\Shader.h"
+#include"..\SpCommon\AssetUtility.h"
 #include<iostream>
 
 USING_NAMESPACE_ENGINE;
@@ -21,6 +24,20 @@ void TestApp::OnInitialize()
 {
 	GLAppBase::OnInitialize();
 	Input::Init(GetModuleHandle(NULL), m_Hwnd);
+
+	PTexture2D texture = Texture2D::Create("../Assets/textures/wooden_case.jpg", true);
+	AssetUtility::Save(texture.get(), "D:/tex.json");
+
+	PTexture2D tex = make_shared<Texture2D>();
+	AssetUtility::Load(tex.get(), "D:/tex.json");
+
+	PShader shader1 = Shader::Get("texture");
+	AssetUtility::Save(shader1.get(), "D:/shader.json");
+
+	PShader shader2 = make_shared<Shader>();
+	AssetUtility::Load(shader2.get(), "D:/shader.json");
+
+	cout << "" << endl;
 }
 
 void TestApp::OnUpdate(float deltaTime)

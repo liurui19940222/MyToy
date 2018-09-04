@@ -45,6 +45,7 @@ struct TexcoordRange
 
 SMART_CLASS(Texture) class Texture : public Object
 {
+	DECLARE_RTTI()
 protected:
 	uint m_texId;
 	int m_width;
@@ -54,6 +55,7 @@ protected:
 	ETexEnvMode m_envMode = ETexEnvMode::Replace;
 	ETexFilterMode m_filterMode = ETexFilterMode::Linear;
 	ETexWrapMode m_wrapMode = ETexWrapMode::ClampToEdge;
+	bool m_mipmaps;
 
 public:
 	virtual ~Texture();

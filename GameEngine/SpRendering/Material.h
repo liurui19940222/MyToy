@@ -44,6 +44,7 @@ enum class EBlendFactor
 
 SMART_CLASS(Material) class Material : public Object
 {
+	DECLARE_RTTI()
 private:
 	virtual void OnInitialize() override;
 	void SaveState(statetype::EPiplelineStateType state);

@@ -4,7 +4,23 @@
 #include"SpCommon\EngineDefine.h"
 #include"SpCommon\Debug.h"
 
-USING_NAMESPACE_ENGINE
+USING_NAMESPACE_ENGINE;
+
+//EBlendFactor		m_BlendFactorA;
+//EBlendFactor		m_BlendFactorB;
+//Color				m_Color = Color::white;
+//PShader				m_Shader = 0;
+//PTexture			m_MainTexture = 0;
+//bool				m_States[statetype::Count];
+
+IMPL_RTTI(Material, Object::GetMetadata(), {
+	PROP(Material, m_BlendFactorA, EType::Int32)
+	PROP(Material, m_BlendFactorB, EType::Int32)
+	PROP_ARR(Material, Bool, m_States, EType::Bool)
+	PROP_ARR(Material, Float, m_Color, EType::Float)
+	PROP_SHARED_PTR_CLS(Material, Shader, m_Shader)
+	PROP_SHARED_PTR_CLS(Material, Texture, m_MainTexture)
+})
 
 GLenum statetype::type[] = {
 	GL_TEXTURE_2D,

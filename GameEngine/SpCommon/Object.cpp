@@ -5,11 +5,11 @@ IMPL_RTTI(Object, NULL, {
 	PROP(Object, m_Name, EType::WString)
 })
 
-void Object::OnSerilize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator)
+void Object::OnSerialize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator)
 {
 	if (depth == 0 || m_Reference.empty() || !AssetUtility::CheckReference(this))
 	{
-		SerializableObject::OnSerilize(depth, meta, value, allocator);
+		SerializableObject::OnSerialize(depth, meta, value, allocator);
 	}
 	else
 	{

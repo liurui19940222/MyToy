@@ -72,6 +72,13 @@ void TexcoordRange::Slice(BVector4 border, vector<TexcoordRange>& out, float int
 const TexcoordRange TexcoordRange::none(0.0f, 0.0f, 0.0f, 0.0f);
 const TexcoordRange TexcoordRange::full(0.0f, 0.0f, 1.0f, 1.0f);
 
+IMPL_RTTI(Texture, Object::GetMetadata(), {
+	PROP(Texture, m_envMode, EType::Int32)
+	PROP(Texture, m_filterMode, EType::Int32)
+	PROP(Texture, m_wrapMode, EType::Int32)
+	PROP(Texture, m_mipmaps, EType::Bool)
+})
+
 Texture::~Texture()
 {
 	Release();
@@ -110,6 +117,7 @@ Texture* Texture::SetFilterMode(ETexFilterMode mode)
 
 Texture* Texture::UpdateData(int width, int height, int format, int internalFormat, UCHAR* data, bool mipmaps)
 {
+	m_mipmaps = mipmaps;
 	glBindTexture(GL_TEXTURE_2D, m_texId);
 	if (mipmaps)
 	{

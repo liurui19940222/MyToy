@@ -1,6 +1,10 @@
 #include "Texture2D.h"
 
-USING_NAMESPACE_ENGINE
+USING_NAMESPACE_ENGINE;
+
+IMPL_RTTI(Texture2D, Texture::GetMetadata(), {
+	PROP(Texture2D, m_AssetRef, EType::String)
+})
 
 PTexture2D Texture2D::m_store[2] = { NULL, NULL };
 
@@ -26,10 +30,9 @@ PTexture2D Texture2D::Init(PTexture2D texture, ETexWrapMode wrapMode, ETexFilter
 PTexture2D Texture2D::Create(const char* filename, bool mipmaps)
 {
 	if (!filename) return NULL;
-	ImageLoader* image = new ImageLoader(filename);
-	PTexture2D texture = Create(image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, mipmaps);
-	image->ReleaseSource();
-	delete image;
+	ImageLoader image(filename);
+	PTexture2D texture = Create(&image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, mipmaps);
+	texture->m_AssetRef = filename;
 	return texture;
 }
 
@@ -41,10 +44,9 @@ PTexture2D Texture2D::Create(ImageLoader* image)
 PTexture2D Texture2D::Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
 {
 	if (!filename) return NULL;
-	ImageLoader* image = new ImageLoader(filename);
-	PTexture2D texture = Create(image, wrapMode, filterMode, envMode, mipmaps);
-	image->ReleaseSource();
-	delete image;
+	ImageLoader image(filename);
+	PTexture2D texture = Create(&image, wrapMode, filterMode, envMode, mipmaps);
+	texture->m_AssetRef = filename;
 	return texture;
 }
 
@@ -81,4 +83,21 @@ PTexture2D Texture2D::GetOneInStore(EStoreTexture2DId id)
 		free(pixels);
 	}
 	return m_store[id];
+}
+
+void Texture2D::OnSerialize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator)
+{
+	Texture::OnSerialize(depth, meta, value, allocator);
+}
+
+void Texture2D::OnDeserialize(int depth, const Metadata* meta, Value& value)
+{
+	Texture::OnDeserialize(depth, meta, value);
+	Release();
+	if (!m_AssetRef.empty())
+	{
+		ImageLoader loader(m_AssetRef.c_str());
+		Init(dynamic_pointer_cast<Texture2D>(shared_from_this()), m_wrapMode, m_filterMode, m_envMode, m_mipmaps, loader.GetWidth(), 
+			loader.GetHeight(), loader.GetFormat(), loader.GetInternalFormat(), loader.GetBytes());
+	}
 }

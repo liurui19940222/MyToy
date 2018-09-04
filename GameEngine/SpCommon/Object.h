@@ -45,8 +45,7 @@ public:
 	virtual void OnInitialize() {}
 
 protected:
-	virtual void OnSerilize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator) override;
-
+	virtual void OnSerialize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator) override;
 	virtual void OnDeserialize(int depth, const Metadata* meta, Value& value) override;
 };
 

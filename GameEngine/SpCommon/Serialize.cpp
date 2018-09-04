@@ -2,7 +2,7 @@
 
 IMPL_RTTI_ROOT(SerializableObject, NULL, {})
 
-void SerializableObject::OnSerilize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator)
+void SerializableObject::OnSerialize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator)
 {
 	SerilizeHelper::AsJsonMember(depth, this, meta, value, allocator);
 }
@@ -36,7 +36,7 @@ void SerilizeHelper::SerClsToJsonArray(int depth, SerializableObject* obj, Prope
 		for (UInt32 i = 0; i < prop.GetSize(obj); i++)
 		{
 			Value v(kObjectType);
-			((SerializableObject*)prop.GetAt(obj, i))->OnSerilize(depth, prop.m_Metadata, v, allocator);
+			((SerializableObject*)prop.GetAt(obj, i))->OnSerialize(depth, prop.m_Metadata, v, allocator);
 			member[fieldName.c_str()].PushBack(v, allocator);
 		}
 	}
@@ -132,10 +132,10 @@ void SerilizeHelper::AsJsonMember(int depth, SerializableObject* obj, const Meta
 		//如果是类和结构体类型，递归进行序列化
 		if ((dataType == EType::Class || dataType == EType::Struct) && RTTI::HasRTTIInfo(prop.GetTypeName()))
 		{
-			prop.InitPtr(obj);
+			prop.InitPtr(prop.GetAddress(obj));
 			Value& classMember = member[fieldName.c_str()];
 			classMember.SetObject();
-			((SerializableObject*)prop.GetPtr(obj))->OnSerilize(depth + 1, prop.m_Metadata, classMember, allocator);
+			((SerializableObject*)prop.GetPtr(obj))->OnSerialize(depth + 1, prop.m_Metadata, classMember, allocator);
 			continue;
 		}
 
@@ -257,7 +257,7 @@ void SerilizeHelper::FromJsonMember(int depth, SerializableObject* obj, const Me
 		if ((dataType == EType::Class || dataType == EType::Struct) && RTTI::HasRTTIInfo(prop.GetTypeName()))
 		{
 			Value& classMember = member[fieldName.c_str()];
-			prop.InitPtr(obj);
+			prop.InitPtr(prop.GetAddress(obj));
 			((SerializableObject*)prop.GetPtr(obj))->OnDeserialize(depth + 1, prop.m_Metadata, classMember);
 			continue;
 		}

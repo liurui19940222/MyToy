@@ -8,11 +8,16 @@
 #include"SpCommon\Converter.h"
 
 using namespace std;
-USING_NAMESPACE_ENGINE
+USING_NAMESPACE_ENGINE;
+
+IMPL_RTTI(Shader, Object::GetMetadata(), {
+	PROP(Shader, m_vtfilename, EType::String)
+	PROP(Shader, m_fgfilename, EType::String)
+})
 
 map<string, PShader> Shader::m_store;
 
-Shader::Shader() : m_vtfilename(NULL), m_fgfilename(NULL), m_program(0)
+Shader::Shader() : Object(), m_program(0), m_vt(0), m_fg(0)
 {
 
 }
@@ -307,7 +312,7 @@ PShader Shader::Get(const string& shaderName)
 	{
 		string vt = "../Shaders/" + shaderName + ".vert";
 		string fg = "../Shaders/" + shaderName + ".frag";
-		shader.reset(new Shader(vt.c_str(), fg.c_str()));
+		shader = make_shared<Shader>(vt.c_str(), fg.c_str());
 		m_store.insert(make_pair(shaderName, shader));
 	}
 	else
@@ -320,4 +325,19 @@ PShader Shader::Get(const string& shaderName)
 PShader Shader::GetDefault()
 {
 	return Get("basic");
+}
+
+void Shader::OnSerialize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator)
+{
+	Object::OnSerialize(depth, meta, value, allocator);
+}
+
+void Shader::OnDeserialize(int depth, const Metadata* meta, Value& value)
+{
+	Object::OnDeserialize(depth, meta, value);
+	Release();
+	if (!m_vtfilename.empty() && !m_fgfilename.empty())
+	{
+		MakeShader(m_vtfilename.c_str(), m_fgfilename.c_str());
+	}
 }

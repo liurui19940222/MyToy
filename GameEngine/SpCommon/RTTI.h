@@ -185,7 +185,7 @@ fieldName##Prop.SetGetSizeFunc([](Property& prop, void* obj) {\
 	return prop.GetRepeatCount();\
 });\
 
-// 设置初始化指针的代码
+// 设置初始化shared_ptr<>的代码
 #define SET_SHARED_PTR_FUNC(CLASS, TMPCLASS, fieldName)\
 fieldName##Prop.SetInitPtrFunc([](Property& prop, void* obj) {\
 	shared_ptr<TMPCLASS>* ptr = (shared_ptr<TMPCLASS>*)obj;\
@@ -198,6 +198,19 @@ fieldName##Prop.SetGetPtrFunc([](Property& prop, void* obj) {\
 	return (*ptr).get(); \
 });\
 
+// 设置初始化指针的代码
+#define SET_PTR_FUNC(CLASS, TMPCLASS, fieldName)\
+fieldName##Prop.SetInitPtrFunc([](Property& prop, void* obj) {\
+	TMPCLASS* p = (TMPCLASS*)*(int*)obj;\
+	if (p == NULL)\
+		*(int*)(int)obj = (int)new TMPCLASS;\
+});\
+fieldName##Prop.SetGetPtrFunc([](Property& prop, void* obj) {\
+	TMPCLASS* p = (TMPCLASS*)*(int*)obj;\
+	prop.InitPtr(obj);\
+	return p;\
+});\
+
 // 注册基础类型
 #define PROP(CLASS, fieldName, TYPE) \
 meta.AddProperty(Property("", #fieldName, TYPE, offsetof(CLASS, fieldName)));
@@ -205,6 +218,12 @@ meta.AddProperty(Property("", #fieldName, TYPE, offsetof(CLASS, fieldName)));
 // 注册类和结构体类型
 #define PROP_CLS(CLASS, TMPCLASS, fieldName) \
 meta.AddProperty(Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, fieldName), TMPCLASS::GetMetadata()));\
+
+// 注册类和结构体类型ptr (不建议使用)
+#define PROP_PTR_CLS(CLASS, TMPCLASS, fieldName) \
+Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, fieldName), TMPCLASS::GetMetadata());\
+SET_PTR_FUNC(CLASS, TMPCLASS, fieldName)\
+meta.AddProperty(fieldName##Prop);\
 
 // 注册类和结构体类型shared_ptr
 #define PROP_SHARED_PTR_CLS(CLASS, TMPCLASS, fieldName) \
@@ -243,7 +262,7 @@ Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offseto
 SET_ARRAY_FUNC(CLASS, TMPCLASS, fieldName); \
 meta.AddProperty(fieldName##Prop); \
 
-// 注册类或结构体pointer数组类型
+// 注册类或结构体shared_ptr<> arr[]数组类型
 #define PROP_ARR_SHARED_PTR_CLS(CLASS, TMPCLASS, fieldName) \
 Property fieldName##Prop = Property(#TMPCLASS, #fieldName, EType::Class, offsetof(CLASS, fieldName), TMPCLASS::GetMetadata(), /*_countof(CLASS::fieldName)*/sizeof(CLASS::fieldName) / sizeof(shared_ptr<TMPCLASS>), DEFAUTL_ATTITUDE);\
 SET_SHARED_PTR_FUNC(CLASS, TMPCLASS, fieldName)\

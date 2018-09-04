@@ -79,6 +79,7 @@ public:
 	shared_ptr<ColorB> colorPtr;
 	vector<shared_ptr<ColorB>> colorPtrList;
 	shared_ptr<ColorB> colorPtrArr[2];
+	ColorB* pColor;
 
 	Person() : id(9), age(55), height(1.55f), name(L"Αυξ£"), en_name("Ray"), intelligent(true), identity(800) {
 		colorPtr = make_shared<ColorB>(5, 6, 7);
@@ -92,6 +93,7 @@ public:
 			shared_ptr<ColorB> t = make_shared<ColorB>(i + 1, i + 1, i + 1);
 			colorPtrArr[i] = t;
 		}
+		pColor = new ColorB(0.2, 0.2, 0.2);
 	}
 
 	virtual void clear()
@@ -125,32 +127,25 @@ public:
 		{
 			colorPtrArr[i].reset();
 		}
+		delete pColor;
+		pColor = NULL;
 	}
 };
 
+class Man;
+
 static void Init(Metadata& meta)
 {
-	Property prop = Property("ColorB", "colorPtrArr", EType::Class, offsetof(Person, colorPtrArr), ColorB::GetMetadata(), /*_countof(CLASS::fieldName)*/sizeof(Person::colorPtrArr) / sizeof(shared_ptr<ColorB>), DEFAUTL_ATTITUDE);
+	Property prop = Property("ColorB", "pColor", EType::Class, offsetof(Person, pColor), ColorB::GetMetadata());
 	prop.SetInitPtrFunc([](Property& prop, void* obj) {
-	shared_ptr<ColorB>* ptr = (shared_ptr<ColorB>*)obj;
-		if (!(*ptr).get()) 
-			*ptr = make_shared<ColorB>();
+		ColorB* p = (ColorB*)*(int*)obj;
+		if (p == NULL)
+			*(int*)(int)obj = (int)new ColorB;
 	});
 	prop.SetGetPtrFunc([](Property& prop, void* obj) {
-		shared_ptr<ColorB>* ptr = (shared_ptr<ColorB>*)obj;
+		ColorB* p = (ColorB*)*(int*)obj;
 		prop.InitPtr(obj);
-		return (*ptr).get(); 
-	});
-	prop.SetSetAtFunc([](Property& prop, void* obj, UInt32 pos, void* value) {
-		shared_ptr<ColorB>* arr = (shared_ptr<ColorB>*)prop.GetAddress(obj);
-		arr[pos] = *(shared_ptr<ColorB>*)value;
-	});
-	prop.SetGetAtFunc([](Property& prop, void* obj, UInt32 pos) {
-		shared_ptr<ColorB>* arr = (shared_ptr<ColorB>*)prop.GetAddress(obj);
-		return (void*)&arr[pos];
-	});
-	prop.SetGetSizeFunc([](Property& prop, void* obj) {
-		return prop.GetRepeatCount();
+		return p;
 	});
 	meta.AddProperty(prop);
 }
@@ -177,7 +172,8 @@ IMPL_RTTI_ROOT(Person, NULL, {
 	PROP_SHARED_PTR_CLS(Person, ColorB, colorPtr)
 	PROP_VEC_SHARED_PTR_CLS(Person, ColorB, colorPtrList)
 	PROP_ARR_SHARED_PTR_CLS(Person, ColorB, colorPtrArr)
-	Init(meta);
+	PROP_PTR_CLS(Person, ColorB, pColor)
+	//Init(meta);
 })
 
 #pragma endregion
@@ -188,16 +184,29 @@ class Man : public Person {
 	DECLARE_RTTI_ROOT()
 public:
 	float length = 1.5f;
+	ColorB* pColorArr[2];
+
+	Man() {
+		for (int i = 0; i < 2; ++i)
+		{
+			pColorArr[i] = new ColorB(i * 2, i * 2, i * 2);
+		}
+	}
 
 	virtual void clear()
 	{
 		Person::clear();
 		length = 0.0f;
+		for (int i = 0; i < 2; ++i)
+		{
+			delete pColorArr[i];
+			pColorArr[i] = NULL;
+		}
 	}
 };
 
 IMPL_RTTI_ROOT(Man, Person::GetMetadata(), {
-	PROP(Man, length, EType::Float);
+	PROP(Man, length, EType::Float)
 })
 
 #pragma endregion
@@ -234,12 +243,12 @@ void main()
 	man->clear();
 	SerilizeHelper::Deserilize(man, oss.str());
 
-	Object obj;
-	obj.SetName(L"Game");
-	AssetUtility::Save(&obj, "D://game.json");
+	//Object obj;
+	//obj.SetName(L"Game");
+	//AssetUtility::Save(&obj, "D://game.json");
 
-	Object obj2;
-	AssetUtility::Load(&obj2, "D://game.json");
+	//Object obj2;
+	//AssetUtility::Load(&obj2, "D://game.json");
 
 	system("pause");
 }

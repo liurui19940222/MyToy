@@ -38,17 +38,15 @@ enum class EShaderParamType
 };
 
 SMART_CLASS(Shader) class Shader : public Object {
+	DECLARE_RTTI()
 private:
 	static map<string, PShader> m_store;
 
 	GLuint m_program;
 	GLuint m_vt;
 	GLuint m_fg;
-	const char* m_vtfilename;
-	const char* m_fgfilename;
-
-	Shader();
-	Shader(const char* vtfilename, const char* fgfilename);
+	string m_vtfilename;
+	string m_fgfilename;
 
 	void ShowShaderLog(GLuint shader);
 	void ShowProgramLog();
@@ -57,6 +55,8 @@ private:
 	GLuint UniformParamLocation(const char* paramName);
 	void Release();
 public:
+	Shader();
+	Shader(const char* vtfilename, const char* fgfilename);
 	virtual ~Shader();
 	bool MakeShader(const char* vtfilename, const char* fgfilename);
 	void Run();
@@ -80,6 +80,10 @@ public:
 
 	static PShader Get(const string& shaderName);
 	static PShader GetDefault();
+
+protected:
+	virtual void OnSerialize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator) override;
+	virtual void OnDeserialize(int depth, const Metadata* meta, Value& value) override;
 };
 
 END_NAMESPACE_ENGINE

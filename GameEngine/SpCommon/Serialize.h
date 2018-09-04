@@ -23,7 +23,7 @@ class SerializableObject {
 	DECLARE_RTTI_ROOT()
 	friend class SerilizeHelper;
 protected:
-	virtual void OnSerilize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator);
+	virtual void OnSerialize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator);
 	virtual void OnDeserialize(int depth, const Metadata* meta, Value& value);
 };
 
