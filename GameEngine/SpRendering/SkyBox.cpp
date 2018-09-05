@@ -3,7 +3,7 @@
 
 USING_NAMESPACE_ENGINE
 
-PSkyBox SkyBox::Create(const char* top, const char* bottom, const char* front, const char* back, const char* left, const char* right)
+SkyBoxPtr SkyBox::Create(const char* top, const char* bottom, const char* front, const char* back, const char* left, const char* right)
 {
 	SkyBox* box = new SkyBox();
 	box->m_textures[(int)ESkyBoxFace::Top] = Texture2D::Create(top, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
@@ -12,7 +12,7 @@ PSkyBox SkyBox::Create(const char* top, const char* bottom, const char* front, c
 	box->m_textures[(int)ESkyBoxFace::Back] = Texture2D::Create(back, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
 	box->m_textures[(int)ESkyBoxFace::Left] = Texture2D::Create(left, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
 	box->m_textures[(int)ESkyBoxFace::Right] = Texture2D::Create(right, ETexWrapMode::Clamp, ETexFilterMode::Point, ETexEnvMode::Replace, true);
-	return PSkyBox(box);
+	return SkyBoxPtr(box);
 }
 
 SkyBox::SkyBox()
@@ -123,7 +123,7 @@ void SkyBox::Render(const Matrix4x4& model, const Matrix4x4& view, const Matrix4
 {
 	glDisable(GL_DEPTH_TEST);
 
-	PShader shader = Shader::Get("texture");
+	ShaderPtr shader = Shader::Get("texture");
 	for (int i = 0; i < 6; ++i)
 	{
 		if (!m_textures[i]) continue;

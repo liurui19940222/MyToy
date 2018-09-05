@@ -51,7 +51,7 @@ void RenderCamera::SetDepth(int depth)
 	m_depth = depth;
 }
 
-RenderCamera* RenderCamera::SetRenderTexture(PRenderTexture texture)
+RenderCamera* RenderCamera::SetRenderTexture(RenderTexturePtr texture)
 {
 	m_renderTexture = texture;
 	if (m_renderTexture)
@@ -64,12 +64,12 @@ RenderCamera* RenderCamera::SetRenderTexture(PRenderTexture texture)
 	return this;
 }
 
-RenderCamera* RenderCamera::SetSkyBox(PSkyBox skybox) { m_skybox = skybox; m_cameraClearFlag = ECameraClearFlag::SkyBox; return this; }
+RenderCamera* RenderCamera::SetSkyBox(SkyBoxPtr skybox) { m_skybox = skybox; m_cameraClearFlag = ECameraClearFlag::SkyBox; return this; }
 RenderCamera* RenderCamera::SetCameraClearFlag(ECameraClearFlag flag) { m_cameraClearFlag = flag; return this; }
 RenderCamera* RenderCamera::SetCameraClearColor(const Color& color) { m_clearColor = color; return this; }
 EProjectionType RenderCamera::GetProjectionType() const { return m_projectionType; }
 ECameraClearFlag RenderCamera::GetCameraClearFlag() const { return m_cameraClearFlag; }
-PRenderTexture RenderCamera::GetRenderTexture() const { return m_renderTexture; }
+RenderTexturePtr RenderCamera::GetRenderTexture() const { return m_renderTexture; }
 const Color& RenderCamera::GetCameraClearColor() const { return m_clearColor; }
 float RenderCamera::GetFov() const { return m_fov; }
 float RenderCamera::GetAspect() const { return m_aspect; }

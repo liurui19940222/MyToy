@@ -20,7 +20,7 @@ public:
 
 	virtual void BindBuffer() override;
 
-	static PRenderTexture Create(int width, int height, bool depthBuffer);
+	static RenderTexturePtr Create(int width, int height, bool depthBuffer);
 };
 
 END_NAMESPACE_ENGINE

@@ -13,12 +13,12 @@ BEGIN_NAMESPACE_ENGINE
 class FontManager : public Singleton<FontManager>
 {
 private:
-	map<int, PTrueTypeFont> fontMap;
+	map<int, TrueTypeFontPtr> fontMap;
 
 public:
-	PTrueTypeFont LoadFont(int fontId, const char* file_name);
+	TrueTypeFontPtr LoadFont(int fontId, const char* file_name);
 
-	PTrueTypeFont GetFont(int fontId);
+	TrueTypeFontPtr GetFont(int fontId);
 };
 
 END_NAMESPACE_ENGINE

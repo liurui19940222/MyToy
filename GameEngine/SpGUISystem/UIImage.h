@@ -23,9 +23,9 @@ public:
 
 	UIImage();
 
-	inline PSprite GetSprite() const { return m_Sprite; }
+	inline SpritePtr GetSprite() const { return m_Sprite; }
 
-	void SetSprite(PSprite sprite, bool setToRawSize = false);
+	void SetSprite(SpritePtr sprite, bool setToRawSize = false);
 	void SetRawSize();
 	void SetImageType(Type type);
 
@@ -34,14 +34,14 @@ protected:
 	virtual const Matrix4x4& GetGlobalModelMatrix() const;
 	virtual TexcoordRange GetTexcoordRange() override;
 	virtual uint GetTextureId() override;
-	virtual PTexture GetTexture() override;
+	virtual TexturePtr GetTexture() override;
 	virtual void MakeData(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors,
 		vector<SRect2D>& rectList, vector<Matrix4x4>& modelMatrices) override;
 
 private:
 	void BuildSliceData();
 
-	PSprite					m_Sprite;
+	SpritePtr					m_Sprite;
 	Type					m_Type;
 	shared_ptr<SliceData>	m_SliceData;
 };

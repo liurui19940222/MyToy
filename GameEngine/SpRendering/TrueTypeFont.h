@@ -17,8 +17,8 @@ BEGIN_NAMESPACE_ENGINE
 
 SMART_STRUCT(CharacterAtlas) struct CharacterAtlas
 {
-	PAtlas					m_Atlas;
-	PTexture				m_Texture;
+	AtlasPtr					m_Atlas;
+	TexturePtr				m_Texture;
 
 	inline int width() const { return m_Atlas->GetWidth(); }
 	inline int height() const { return m_Atlas->GetHeight(); }
@@ -37,7 +37,7 @@ SMART_STRUCT(CharacterAtlas) struct CharacterAtlas
 SMART_CLASS(CharacterInfo) class CharacterInfo
 {
 public:
-	PCharacterAtlas			m_Atlas;
+	CharacterAtlasPtr			m_Atlas;
 	int						m_Code;
 	Rect2D					m_Rect;
 	int						m_LeftPadding;
@@ -57,17 +57,17 @@ private:
 	int							m_FontSize;
 	FT_Library*					m_FtLib;
 	FT_Face*					m_FtFace;
-	vector<PCharacterAtlas>		m_Atlases;
-	map<int, PCharacterInfo>	m_Characters;
+	vector<CharacterAtlasPtr>		m_Atlases;
+	map<int, CharacterInfoPtr>	m_Characters;
 
-	PCharacterAtlas GetEnoughAtlas(int width, int height, int max_height);
+	CharacterAtlasPtr GetEnoughAtlas(int width, int height, int max_height);
 
 public:
 	TrueTypeFontSize(int size, FT_Library* ft_lib, FT_Face* ft_face);
 
-	PCharacterInfo GetCharacter(int code);
+	CharacterInfoPtr GetCharacter(int code);
 
-	vector<PCharacterAtlas>& GetAtlases();
+	vector<CharacterAtlasPtr>& GetAtlases();
 };
 
 //一个字体类
@@ -79,7 +79,7 @@ private:
 	const char*						m_Name;
 	FT_Library						m_FtLib;
 	FT_Face							m_FtFace;
-	map<int, PTrueTypeFontSize>	m_SizeMap;
+	map<int, TrueTypeFontSizePtr>	m_SizeMap;
 
 public:
 	TrueTypeFont(int id);
@@ -88,9 +88,9 @@ public:
 
 	bool LoadFromPath(const char* file_name);
 
-	PCharacterInfo GetCharacter(wchar_t ch, int size);
+	CharacterInfoPtr GetCharacter(wchar_t ch, int size);
 
-	vector<PCharacterAtlas>& GetAtlases(int size);
+	vector<CharacterAtlasPtr>& GetAtlases(int size);
 };
 
 END_NAMESPACE_ENGINE

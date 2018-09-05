@@ -6,7 +6,7 @@ MeshBufferParticle::MeshBufferParticle() : MeshBufferTexcoord(), m_VboMatrixHand
 {
 }
 
-MeshBufferParticle::MeshBufferParticle(PMesh mesh) : MeshBufferTexcoord(mesh), m_VboMatrixHandle(0), m_VboColorHandle(0), m_VboTexRangeHandle(0)
+MeshBufferParticle::MeshBufferParticle(MeshPtr mesh) : MeshBufferTexcoord(mesh), m_VboMatrixHandle(0), m_VboColorHandle(0), m_VboTexRangeHandle(0)
 {
 }
 

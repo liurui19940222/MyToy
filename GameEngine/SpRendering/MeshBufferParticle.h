@@ -13,7 +13,7 @@ SMART_CLASS(MeshBufferParticle) class MeshBufferParticle : public MeshBufferTexc
 
 public:
 	MeshBufferParticle();
-	MeshBufferParticle(PMesh mesh);
+	MeshBufferParticle(MeshPtr mesh);
 	virtual ~MeshBufferParticle();
 	void MakeInstanceBuffer(vector<Matrix4x4>& matrices, vector<Color>& colors, vector<TexcoordRange>& ranges, int instanceCount);
 

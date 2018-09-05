@@ -55,7 +55,7 @@ void UISystem::UpdateAll(SMouseState mouseState)
 	m_ForRenderList.clear();
 	m_ForInteractList.clear();
 	m_InstanceCount = -1;
-	ForeachAllWithModelMatrix([this](PUIWidget widget) {
+	ForeachAllWithModelMatrix([this](UIWidgetPtr widget) {
 		if (IS_TYPE(UIView, widget.get()))
 			m_ForRenderList.push_back((UIView*)widget.get());
 		if (IS_TYPE(IInteractable, widget.get()))
@@ -123,8 +123,8 @@ void UISystem::RenderAll()
 	}
 }
 
-void UISystem::SubmitBatch(const vector<UIView*> list, const Matrix4x4& globalModelMatrix, PMaterial mat,
-	PTexture texture, int startingIndex, int count)
+void UISystem::SubmitBatch(const vector<UIView*> list, const Matrix4x4& globalModelMatrix, MaterialPtr mat,
+	TexturePtr texture, int startingIndex, int count)
 {
 	m_TexcoordRanges.clear();
 	m_Colors.clear();
@@ -146,7 +146,7 @@ void UISystem::SubmitBatch(const vector<UIView*> list, const Matrix4x4& globalMo
 }
 
 void UISystem::DrawInstance(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors, vector<SRect2D>& rects,
-	vector<Matrix4x4>& modelMatrices, const Matrix4x4& modelMatrix, PMaterial mat, PTexture texture)
+	vector<Matrix4x4>& modelMatrices, const Matrix4x4& modelMatrix, MaterialPtr mat, TexturePtr texture)
 {
 	size_t size = texcoordRanges.size();
 	m_SharedMesh->MakeInstanceBuffer(texcoordRanges, colors, rects, modelMatrices, size);
@@ -159,20 +159,20 @@ void UISystem::DrawInstance(vector<TexcoordRange>& texcoordRanges, vector<Color>
 	m_DrawCalls++;
 }
 
-void UISystem::AddChild(PUIWidget widget)
+void UISystem::AddChild(UIWidgetPtr widget)
 {
 	m_Root->AddChild(widget);
 }
 
-void UISystem::RemoveChild(PUIWidget widget)
+void UISystem::RemoveChild(UIWidgetPtr widget)
 {
 	m_Root->RemoveChild(widget);
 }
 
-void UISystem::Foreach(PUIWidget widget, ForeachCallback callback)
+void UISystem::Foreach(UIWidgetPtr widget, ForeachCallback callback)
 {
 	callback(widget);
-	for (PUIWidget w : widget->m_Childreen)
+	for (UIWidgetPtr w : widget->m_Childreen)
 	{
 		Foreach(w, callback);
 	}
@@ -183,11 +183,11 @@ void UISystem::ForeachAll(ForeachCallback callback)
 	Foreach(m_Root, callback);
 }
 
-void UISystem::ForeachWithModelMatrix(PUIWidget widget, Matrix4x4& baseMatrix, ForeachCallback callback)
+void UISystem::ForeachWithModelMatrix(UIWidgetPtr widget, Matrix4x4& baseMatrix, ForeachCallback callback)
 {
 	widget->CalcModelMatrix(baseMatrix);
 	callback(widget);
-	for (PUIWidget w : widget->m_Childreen)
+	for (UIWidgetPtr w : widget->m_Childreen)
 	{
 		ForeachWithModelMatrix(w, widget->m_ModelMatrix, callback);
 	}

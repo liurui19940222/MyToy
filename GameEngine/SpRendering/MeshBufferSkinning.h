@@ -11,7 +11,7 @@ protected:
 
 public:
 	MeshBufferSkinning();
-	MeshBufferSkinning(PMesh mesh);
+	MeshBufferSkinning(MeshPtr mesh);
 	virtual ~MeshBufferSkinning();
 
 	void MakeJointBuffer(const Vector4* weights, const BVector4* indices, int count);

@@ -29,15 +29,15 @@ private:
 	IRenderingInterface*	m_RI;
 	RenderingObject			m_Object;
 	RenderingObject			m_Ground;
-	PMeshBuffer				m_MeshBuffer;
-	PMeshBuffer				m_GroundBuffer;
-	PMaterial				m_Material;
-	PMaterial				m_GroundMaterial;
-	PSkeleton				m_Skeleton;
+	MeshBufferPtr			m_MeshBuffer;
+	MeshBufferPtr			m_GroundBuffer;
+	MaterialPtr				m_Material;
+	MaterialPtr				m_GroundMaterial;
+	SkeletonPtr				m_Skeleton;
 	SkeletonAnimator		m_Animator;
 	Vector3					m_CameraPos;
 
-	PParticleEffect			m_ParticleEffect;
-	PMeshBufferParticle		m_ParticleBuffer;
-	PMaterial				m_ParticleMat;
+	ParticleEffectPtr		m_ParticleEffect;
+	MeshBufferParticlePtr	m_ParticleBuffer;
+	MaterialPtr				m_ParticleMat;
 };

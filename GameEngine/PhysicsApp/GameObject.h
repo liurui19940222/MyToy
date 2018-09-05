@@ -19,8 +19,8 @@ public:
 	virtual void SetPosition(const Vector3& position) { m_Position = position; }
 	virtual void SetScale(const Vector3& scale) { m_Scale = scale; }
 	virtual void SetRotation(const Quaternion& rotation) { m_Rotation = rotation; }
-	virtual void SetMaterial(PMaterial material) { m_Material = material; }
-	virtual void SetMeshBuffer(PMeshBuffer meshbuffer) { m_MeshBuffer = meshbuffer; }
+	virtual void SetMaterial(MaterialPtr material) { m_Material = material; }
+	virtual void SetMeshBuffer(MeshBufferPtr meshbuffer) { m_MeshBuffer = meshbuffer; }
 	inline Vector3 position() const { return m_Position; }
 	inline Vector3 scale() const { return m_Scale; }
 	inline Quaternion rotation() const { return m_Rotation; }
@@ -32,8 +32,8 @@ protected:
 	Vector3			m_Position;
 	Vector3			m_Scale;
 	Quaternion		m_Rotation;
-	PMaterial		m_Material;
-	PMeshBuffer		m_MeshBuffer;
+	MaterialPtr		m_Material;
+	MeshBufferPtr		m_MeshBuffer;
 	Matrix4x4		m_ModelMatrix;
 };
 

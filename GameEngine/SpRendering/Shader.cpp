@@ -15,7 +15,7 @@ IMPL_RTTI(Shader, Object::GetMetadata(), {
 	PROP(Shader, m_fgfilename, EType::String)
 })
 
-map<string, PShader> Shader::m_store;
+map<string, ShaderPtr> Shader::m_store;
 
 Shader::Shader() : Object(), m_program(0), m_vt(0), m_fg(0)
 {
@@ -152,10 +152,11 @@ void Shader::Release()
 			glDetachShader(m_program, m_fg);
 		glDeleteProgram(m_program);
 	}
-	if (m_vt)
-		glDeleteShader(m_vt);
-	if (m_fg)
-		glDeleteShader(m_fg);
+	if (m_vt) glDeleteShader(m_vt);
+	if (m_fg) glDeleteShader(m_fg);
+	m_program = 0;
+	m_vt = 0;
+	m_fg = 0;
 }
 
 GLuint Shader::GetProgram()
@@ -304,9 +305,9 @@ map<string, EShaderParamType> Shader::GetAllOfUniformParams()
 	return list;
 }
 
-PShader Shader::Get(const string& shaderName)
+ShaderPtr Shader::Get(const string& shaderName)
 {
-	PShader shader;
+	ShaderPtr shader;
 	auto it = m_store.find(shaderName);
 	if (it == m_store.end())
 	{
@@ -322,7 +323,7 @@ PShader Shader::Get(const string& shaderName)
 	return shader;
 }
 
-PShader Shader::GetDefault()
+ShaderPtr Shader::GetDefault()
 {
 	return Get("basic");
 }

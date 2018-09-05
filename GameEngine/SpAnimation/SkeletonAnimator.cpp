@@ -13,7 +13,7 @@ SkeletonAnimator::AnimationState::AnimationState() :
 	fadeOutElapsedTime(0.0f)
 { }
 
-SkeletonAnimator::AnimationState::AnimationState(PAnimationClip clip, float speed) :
+SkeletonAnimator::AnimationState::AnimationState(AnimationClipPtr clip, float speed) :
 	clip(clip),
 	state(State::SinglePlaying),
 	elapsedTime(0.0f),
@@ -146,7 +146,7 @@ void SkeletonAnimator::UpdateFading(float deltaTime)
 	}
 	else
 	{
-		PAnimationClip clips[2];
+		AnimationClipPtr clips[2];
 		clips[0] = curState.clip;
 		clips[1] = targetState.clip;
 		float weights[2];
@@ -174,9 +174,9 @@ void SkeletonAnimator::UpdateBlending(float deltaTime)
 
 }
 
-PAnimationClip SkeletonAnimator::GetClip() const
+AnimationClipPtr SkeletonAnimator::GetClip() const
 {
-	PAnimationClip clip;
+	AnimationClipPtr clip;
 	std::find_if(m_States.begin(), m_States.end(), [&](AnimationState c) {
 		if (clip->m_Name == c.clip->m_Name)
 		{
@@ -202,19 +202,19 @@ int SkeletonAnimator::GetStateIndex(const string& name) const
 	return index;
 }
 
-void SkeletonAnimator::AddClip(PAnimationClip clip)
+void SkeletonAnimator::AddClip(AnimationClipPtr clip)
 {
 	AddClip(clip, 1.0f);
 }
 
-void SkeletonAnimator::AddClip(PAnimationClip clip, float speed)
+void SkeletonAnimator::AddClip(AnimationClipPtr clip, float speed)
 {
 	m_States.push_back(AnimationState(clip, speed));
 }
 
-void SkeletonAnimator::AddClips(const vector<PAnimationClip>& clips)
+void SkeletonAnimator::AddClips(const vector<AnimationClipPtr>& clips)
 {
-	for_each(clips.begin(), clips.end(), [&](PAnimationClip clip) {
+	for_each(clips.begin(), clips.end(), [&](AnimationClipPtr clip) {
 		AddClip(clip);
 	});
 }

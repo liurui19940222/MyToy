@@ -1,34 +1,33 @@
 {
-    "Object": {
-        "m_Name": "ground_mat"
+    "m_Name": "ground_mat",
+    "m_BlendFactorA": 770,
+    "m_BlendFactorB": 771,
+    "m_States": [
+        true,
+        true,
+        false,
+        false,
+        true,
+        false,
+        true
+    ],
+    "m_Color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+    ],
+    "m_Shader": {
+        "m_Name": "",
+        "m_vtfilename": "../Shaders/texture.vert",
+        "m_fgfilename": "../Shaders/texture.frag"
     },
-    "Material": {
-        "m_BlendFactorA": 770,
-        "m_BlendFactorB": 771,
-        "m_States": [
-            true,
-            true,
-            false,
-            false,
-            true,
-            false,
-            true
-        ],
-        "m_Color": [
-            1.0,
-            1.0,
-            1.0,
-            1.0
-        ],
-        "m_Shader": {
-            "m_vtfilename": "../Shaders/texture.vert",
-            "m_fgfilename": "../Shaders/texture.frag"
-        },
-        "m_MainTexture": {
-            "m_envMode": 7681,
-            "m_filterMode": 9729,
-            "m_wrapMode": 33071,
-            "m_mipmaps": false
-        }
+    "m_MainTexture": {
+        "m_Name": "",
+        "m_envMode": 7681,
+        "m_filterMode": 9729,
+        "m_wrapMode": 33071,
+        "m_mipmaps": false,
+        "m_AssetRef": "../Assets/textures/wooden_case.jpg"
     }
 }

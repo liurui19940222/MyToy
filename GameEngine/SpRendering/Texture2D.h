@@ -18,19 +18,19 @@ SMART_CLASS(Texture2D) class Texture2D : public Texture
 private:
 	string	m_AssetRef;
 
-	static PTexture2D m_store[2];
+	static Texture2DPtr m_store[2];
 
-	static PTexture2D Init(PTexture2D texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data);
+	static Texture2DPtr Init(Texture2DPtr texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data);
 
 public:
-	static PTexture2D Create(const char* filename, bool mipmaps = false);
-	static PTexture2D Create(ImageLoader* image);
-	static PTexture2D Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-	static PTexture2D Create(ImageLoader* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-	static PTexture2D Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
-	static PTexture2D Create(UCHAR* pixels, int width, int height, bool mipmaps = false);
+	static Texture2DPtr Create(const char* filename, bool mipmaps = false);
+	static Texture2DPtr Create(ImageLoader* image);
+	static Texture2DPtr Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
+	static Texture2DPtr Create(ImageLoader* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
+	static Texture2DPtr Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps);
+	static Texture2DPtr Create(UCHAR* pixels, int width, int height, bool mipmaps = false);
 
-	static PTexture2D GetOneInStore(EStoreTexture2DId id);
+	static Texture2DPtr GetOneInStore(EStoreTexture2DId id);
 
 protected:
 	virtual void OnSerialize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator) override;

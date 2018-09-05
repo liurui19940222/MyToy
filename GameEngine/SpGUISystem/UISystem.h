@@ -17,7 +17,7 @@ struct UIBatch
 
 class UISystem
 {
-	typedef function<void(PUIWidget)> ForeachCallback;
+	typedef function<void(UIWidgetPtr)> ForeachCallback;
 	const float ZNEAR = 0.001f;
 	const float ZFAR = 1000.0f;
 public:
@@ -29,22 +29,22 @@ public:
 	void ShutDown();
 	void UpdateAll(SMouseState mouseState);
 	void RenderAll();
-	void SubmitBatch(const vector<UIView*> list, const Matrix4x4& globalModelMatrix, PMaterial mat, 
-		PTexture texture, int startingIndex, int count);
+	void SubmitBatch(const vector<UIView*> list, const Matrix4x4& globalModelMatrix, MaterialPtr mat, 
+		TexturePtr texture, int startingIndex, int count);
 	void DrawInstance(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors, vector<SRect2D>& rects, 
-		vector<Matrix4x4>& modelMatrices, const Matrix4x4& modelMatrix, PMaterial mat, PTexture texture);
-	void AddChild(PUIWidget widget);
-	void RemoveChild(PUIWidget widget);
-	void Foreach(PUIWidget widget, ForeachCallback callback);
+		vector<Matrix4x4>& modelMatrices, const Matrix4x4& modelMatrix, MaterialPtr mat, TexturePtr texture);
+	void AddChild(UIWidgetPtr widget);
+	void RemoveChild(UIWidgetPtr widget);
+	void Foreach(UIWidgetPtr widget, ForeachCallback callback);
 	void ForeachAll(ForeachCallback callback);
-	void ForeachWithModelMatrix(PUIWidget widget, Matrix4x4& baseMatrix, ForeachCallback callback);
+	void ForeachWithModelMatrix(UIWidgetPtr widget, Matrix4x4& baseMatrix, ForeachCallback callback);
 	void ForeachAllWithModelMatrix(ForeachCallback callback);
 
 	inline ushort instanceCount() const { return m_InstanceCount; }
 	inline ushort drawcalls() const { return m_DrawCalls; }
-	inline PTexture GetSharedTexture() const { return m_SharedTexture; }
-	inline PMaterial GetSharedMaterial() const { return m_SharedMaterial; }
-	inline PUIWidget GetRoot() const { return m_Root; }
+	inline TexturePtr GetSharedTexture() const { return m_SharedTexture; }
+	inline MaterialPtr GetSharedMaterial() const { return m_SharedMaterial; }
+	inline UIWidgetPtr GetRoot() const { return m_Root; }
 	inline Vector2 ScreenPointToView(const Vector2& point) { return point - m_Root->GetHalfSize(); }
 	inline Vector2 ViewPointToScreen(const Vector2& point) { return point + m_Root->GetHalfSize(); }
 
@@ -61,10 +61,10 @@ private:
 	IRenderingInterface*	m_RI;
 	Matrix4x4				m_ViewMatrix;
 	Matrix4x4				m_ProjMatrix;
-	PMeshBufferUIInstance	m_SharedMesh;
-	PTexture				m_SharedTexture;
-	PMaterial				m_SharedMaterial;
-	PUIWidget				m_Root;
+	MeshBufferUIInstancePtr	m_SharedMesh;
+	TexturePtr				m_SharedTexture;
+	MaterialPtr				m_SharedMaterial;
+	UIWidgetPtr				m_Root;
 	IInteractable*			m_LastIntracted;
 	vector<UIView*>			m_ForRenderList;
 	vector<IInteractable*>	m_ForInteractList;

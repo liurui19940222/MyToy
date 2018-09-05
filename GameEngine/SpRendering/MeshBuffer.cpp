@@ -7,7 +7,7 @@ MeshBuffer::MeshBuffer() : m_VaoHandle(0), m_VboPositionHandle(0), m_VboIndexHan
 	glGenVertexArrays(1, &m_VaoHandle);
 }
 
-MeshBuffer::MeshBuffer(PMesh mesh) : MeshBuffer()
+MeshBuffer::MeshBuffer(MeshPtr mesh) : MeshBuffer()
 {
 	MakePositionBuffer(mesh->m_Vertices, mesh->m_VertexCount);
 	if (mesh->m_Indices)
@@ -49,7 +49,7 @@ void MeshBuffer::UpdateVertices(const Vector3* vertices, int offset, int size)
 	UpdateVertexBuffer(m_VboPositionHandle, offset, size * sizeof(Vector3), vertices);
 }
 
-void MeshBuffer::MakeBuffer(PMesh mesh)
+void MeshBuffer::MakeBuffer(MeshPtr mesh)
 {
 	MakePositionBuffer(mesh->m_Vertices, mesh->m_VertexCount);
 }

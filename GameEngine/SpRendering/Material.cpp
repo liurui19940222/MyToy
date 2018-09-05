@@ -26,7 +26,7 @@ GLenum statetype::type[] = {
 };
 
 bool Material::m_PushStates[statetype::Count];
-PMaterial Material::m_DefaultMaterial = NULL;
+MaterialPtr Material::m_DefaultMaterial = NULL;
 
 inline void glFuncEnable(GLenum typ, GLboolean enable)
 {
@@ -114,13 +114,13 @@ Material* Material::SetColor(const Color& color)
 	return this;
 }
 
-Material* Material::SetShader(PShader shader)
+Material* Material::SetShader(ShaderPtr shader)
 {
 	m_Shader = shader;
 	return this;
 }
 
-Material* Material::SetMainTexture(PTexture texture)
+Material* Material::SetMainTexture(TexturePtr texture)
 {
 	m_MainTexture = texture;
 	return this;
@@ -133,7 +133,7 @@ Material* Material::SetBlendFunc(EBlendFactor src, EBlendFactor dst)
 	return this;
 }
 
-PTexture Material::GetMainTexture() const
+TexturePtr Material::GetMainTexture() const
 {
 	return m_MainTexture;
 }
@@ -173,7 +173,7 @@ void Material::Unbind()
 	PopState();
 }
 
-PMaterial Material::GetDefaltMaterial()
+MaterialPtr Material::GetDefaltMaterial()
 {
 	if (m_DefaultMaterial.get() == NULL)
 	{

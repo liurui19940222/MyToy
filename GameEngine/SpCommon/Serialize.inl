@@ -26,39 +26,13 @@ void SerilizeHelper::Deserilize(T* obj, const string& json)
 template<typename T>
 void SerilizeHelper::DeserilizeAll(T* obj, Value& value)
 {
-	list<const Metadata*> metas;
-	const Metadata* meta = obj->GetMetadata();
-	while (meta)
-	{
-		metas.push_front(meta);
-		meta = meta->GetParentMetaData();
-	}
-
-	std::for_each(metas.begin(), metas.end(), [&](const Metadata* m) {
-		if (value.HasMember(m->GetClassName().c_str()))
-		{
-			((SerializableObject*)obj)->OnDeserialize(0, m, value[m->GetClassName().c_str()]);
-		}
-	});
+	((SerializableObject*)obj)->OnDeserialize(0, obj->metadata(), value);
 }
 
 template<typename T>
 void SerilizeHelper::SerilizeAll(T* obj, Value& value, MemoryPoolAllocator<>& allocator)
 {
-	list<const Metadata*> metas;
-	const Metadata* meta = obj->GetMetadata();
-	while (meta)
-	{
-		metas.push_front(meta);
-		meta = meta->GetParentMetaData();
-	}
-
-	std::for_each(metas.begin(), metas.end(), [&](const Metadata* m) {
-		CheckValueMember(value, allocator, m->GetClassName().c_str());
-		value[m->GetClassName().c_str()].SetObject();
-		Value& member = value[m->GetClassName().c_str()];
-		((SerializableObject*)obj)->OnSerialize(0, m, member, allocator);
-	});
+	((SerializableObject*)obj)->OnSerialize(0, obj->metadata(), value, allocator);
 }
 
 template<typename T>

@@ -73,7 +73,7 @@ void PhysXApp::InitObjects()
 {
 	CreateBox(Vector3(0, 10, 0));
 
-	PRigidBodyGameObject plane = make_shared<RigidBodyGameObject>(Vector3::zero, Quaternion::Euler(Vector3(-90, 0, 0)), *m_PhysX, *m_PxScene, *m_PxMaterial, PxPlaneGeometry(), 0.0f, true);
+	RigidBodyGameObjectPtr plane = make_shared<RigidBodyGameObject>(Vector3::zero, Quaternion::Euler(Vector3(-90, 0, 0)), *m_PhysX, *m_PxScene, *m_PxMaterial, PxPlaneGeometry(), 0.0f, true);
 	plane->SetMaterial(make_shared<Material>());
 	plane->material().SetShader(Shader::Get("texture"));
 	plane->SetMeshBuffer(_MeshFactory->CreateBuffer<MeshBufferTexcoord>(EMeshType::Quad));
@@ -83,7 +83,7 @@ void PhysXApp::InitObjects()
 
 void PhysXApp::CreateBox(const Vector3& pos)
 {
-	PRigidBodyGameObject box = make_shared<RigidBodyGameObject>(Vector3(pos.x, pos.y, pos.z), Quaternion::identity, *m_PhysX, *m_PxScene, *m_PxMaterial, PxBoxGeometry(PxVec3(0.5f, 0.5f, 0.5f)), 1.0f, false);
+	RigidBodyGameObjectPtr box = make_shared<RigidBodyGameObject>(Vector3(pos.x, pos.y, pos.z), Quaternion::identity, *m_PhysX, *m_PxScene, *m_PxMaterial, PxBoxGeometry(PxVec3(0.5f, 0.5f, 0.5f)), 1.0f, false);
 	box->SetMaterial(make_shared<Material>());
 	box->material().SetShader(Shader::Get("texture"));
 	box->material().SetMainTexture(Texture2D::Create("../Assets/wooden_case.jpg"));
@@ -98,7 +98,7 @@ void PhysXApp::OnUpdate(float deltaTime)
 	HandleInput();
 	SimulatePhysics(deltaTime);
 
-	for (PGameObject& go : m_GameObjects)
+	for (GameObjectPtr& go : m_GameObjects)
 	{
 		go->OnUpdate(deltaTime);
 	}
@@ -117,7 +117,7 @@ void PhysXApp::SimulatePhysics(float deltaTime)
 	m_PxScene->fetchResults(true);
 
 	RigidBodyGameObject* rigid = NULL;
-	for (PGameObject& go : m_GameObjects)
+	for (GameObjectPtr& go : m_GameObjects)
 	{
 		if (!IS_TYPE(RigidBodyGameObject, go.get()))
 			continue;
@@ -134,7 +134,7 @@ void PhysXApp::OnRender()
 {
 	GLAppBase::OnRender();
 
-	for (PGameObject& go : m_GameObjects)
+	for (GameObjectPtr& go : m_GameObjects)
 	{
 		go->OnRender(*m_RI, m_Camera->GetViewMatrix(), m_Camera->GetProjectionMatrix());
 	}

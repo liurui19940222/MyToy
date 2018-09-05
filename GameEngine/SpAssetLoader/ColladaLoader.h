@@ -138,7 +138,7 @@ class ColladaLoader : public ModelLoader
 #pragma endregion
 
 public:
-	virtual PModel LoadFromFile(const char* filename) override;
+	virtual ModelPtr LoadFromFile(const char* filename) override;
 	virtual void ReleaseSource() override;
 };
 

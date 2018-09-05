@@ -28,8 +28,8 @@ protected:
 	static float intensity_buffer[LIGHT_MAX_NUM];
 	static int type_buffer[LIGHT_MAX_NUM];
 	static Matrix4x4 shadowMapMatrix;
-	static PRenderTexture shadowMap;
-	static vector<PLight> lights;
+	static RenderTexturePtr shadowMap;
+	static vector<LightPtr> lights;
 	static int shadowCasterIndex;
 
 protected:
@@ -41,10 +41,10 @@ protected:
 public:
 
 	static void SetShadowMapSize(int width, int height);
-	static PRenderTexture GetShadowMap();
+	static RenderTexturePtr GetShadowMap();
 	static Matrix4x4 GetShadowMapMatrix();
-	static void SetUniformParams(PShader shader);
-	static PLight PrepareLight();
+	static void SetUniformParams(ShaderPtr shader);
+	static LightPtr PrepareLight();
 	inline virtual void SetColor(Color color) { m_color = color; }
 	inline virtual void SetIntensity(float intensity) { m_intensity = intensity; }
 	inline virtual void SetType(ELightType type) { m_type = type; }

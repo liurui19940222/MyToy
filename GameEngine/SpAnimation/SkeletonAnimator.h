@@ -17,7 +17,7 @@ class SkeletonAnimator
 
 	class AnimationState {
 	public:
-		PAnimationClip	clip;
+		AnimationClipPtr	clip;
 		State			state;
 		float			elapsedTime;
 		float			speed;
@@ -26,7 +26,7 @@ class SkeletonAnimator
 		float			fadeOutElapsedTime;
 
 		AnimationState();
-		AnimationState(PAnimationClip clip, float speed);
+		AnimationState(AnimationClipPtr clip, float speed);
 
 		inline void Reset() 
 		{
@@ -50,15 +50,15 @@ public:
 	void Stop();
 	void OnUpdate(float deltaTime);
 
-	PAnimationClip GetClip() const;
+	AnimationClipPtr GetClip() const;
 	int GetStateIndex(const string& name) const;
-	void AddClip(PAnimationClip clip);
-	void AddClip(PAnimationClip clip, float speed);
-	void AddClips(const vector<PAnimationClip>& clips);
+	void AddClip(AnimationClipPtr clip);
+	void AddClip(AnimationClipPtr clip, float speed);
+	void AddClips(const vector<AnimationClipPtr>& clips);
 	void SetClipSpeed(const string& name, float speed);
 	inline bool IsPlaying() const { return m_IsPlaying; }
-	inline void SetSkeleton(PSkeleton skeleton) { m_Skeleton = skeleton; }
-	inline PSkeleton GetSkeleton() const { return m_Skeleton; }
+	inline void SetSkeleton(SkeletonPtr skeleton) { m_Skeleton = skeleton; }
+	inline SkeletonPtr GetSkeleton() const { return m_Skeleton; }
 private:
 	void UpdateSinglePlaying(float deltaTime);
 	void UpdateFading(float deltaTime);
@@ -67,7 +67,7 @@ private:
 	int						m_CurPlayingIndex;
 	bool					m_IsPlaying;
 	vector<AnimationState>  m_States;
-	PSkeleton				m_Skeleton;
+	SkeletonPtr				m_Skeleton;
 	vector<JointPose>		m_TempJointPoses;
 };
 

@@ -39,7 +39,7 @@ private:
 	PxCooking*				m_Cooking;
 	PxScene*				m_PxScene;
 	PxMaterial*				m_PxMaterial;
-	vector<PGameObject>		m_GameObjects;
+	vector<GameObjectPtr>		m_GameObjects;
 
 	RenderCamera*			m_Camera;
 };

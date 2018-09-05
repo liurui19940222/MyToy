@@ -7,7 +7,7 @@ USING_NAMESPACE_ENGINE;
 
 CharacterPrimitive::CharacterPrimitive() : m_Left(0), m_Top(0), m_AdvanceX(0), m_Width(0), m_Height(0) { }
 
-CharacterPrimitive::CharacterPrimitive(int left_padding, int top, int advance_x, int width, int height, PSprite sprite) : 
+CharacterPrimitive::CharacterPrimitive(int left_padding, int top, int advance_x, int width, int height, SpritePtr sprite) : 
 	m_Left(left_padding), m_Top(top), m_AdvanceX(advance_x), m_Width(width), m_Height(height), m_Sprite(sprite) { }
 
 TextLineData::TextLineData() : m_LineWidth(0), m_LineHeight(0) { }
@@ -57,23 +57,23 @@ void FontMeshGenerator::RebuildShapes()
 	if (!m_Font || m_Text.empty()) return;
 	ClearLineData();
 	ClearPrimitive();
-	m_Primitives.assign(m_Text.size(), PCharacterPrimitive());
+	m_Primitives.assign(m_Text.size(), CharacterPrimitivePtr());
 	for_each(m_Text.begin(), m_Text.end(), [&](wchar_t ch) {
-		PCharacterInfo chInfo = m_Font->GetCharacter(ch, m_FontSize);
-		PSprite sprite = make_shared<Sprite>();
+		CharacterInfoPtr chInfo = m_Font->GetCharacter(ch, m_FontSize);
+		SpritePtr sprite = make_shared<Sprite>();
 		sprite->m_Texture = chInfo->m_Atlas->m_Texture;
 		sprite->m_Range.m_StartingPoint.x = chInfo->m_Rect.x / (float)chInfo->m_Atlas->width();
 		sprite->m_Range.m_StartingPoint.y = chInfo->m_Rect.y / (float)chInfo->m_Atlas->height();
 		sprite->m_Range.m_Size.x = chInfo->m_Rect.width / (float)chInfo->m_Atlas->width();
 		sprite->m_Range.m_Size.y = chInfo->m_Rect.height / (float)chInfo->m_Atlas->height();
-		PCharacterPrimitive smart = make_shared<CharacterPrimitive>(chInfo->m_LeftPadding, chInfo->m_Top,
+		CharacterPrimitivePtr smart = make_shared<CharacterPrimitive>(chInfo->m_LeftPadding, chInfo->m_Top,
 			chInfo->m_AdvanceX, chInfo->m_Rect.width * GetPixelScale(), chInfo->m_Rect.height * GetPixelScale(), sprite);
 		m_Primitives[i++] = smart;
 	});
 
 	start_x = -m_Rect.halfSize.x;
 	start_y = +m_Rect.halfSize.y;
-	PTextLineData lineData = make_shared<TextLineData>();
+	TextLineDataPtr lineData = make_shared<TextLineData>();
 	lineData->m_LineWidth = -m_Interval_x;
 	m_LineDatas.push_back(lineData);
 	pixelScale = GetPixelScale();
@@ -131,7 +131,7 @@ void FontMeshGenerator::RebuildShapes()
 		halfLineHeight = m_LineDatas[i]->m_LineHeight * 0.5f;
 		for (size_t j = 0; j < m_LineDatas[i]->m_Primitives.size(); ++j)
 		{
-			PCharacterPrimitive smart = m_LineDatas[i]->m_Primitives[j];
+			CharacterPrimitivePtr smart = m_LineDatas[i]->m_Primitives[j];
 			pos_y = m_LineDatas[i]->m_Primitives[j]->m_Position.y + offset_y;
 			if (pos_y + halfLineHeight > m_Rect.halfSize.y || pos_y - halfLineHeight < -m_Rect.halfSize.y)
 			{
@@ -183,7 +183,7 @@ void FontMeshGenerator::BuildInstanceData()
 	Debug::EndTiming();
 }
 
-void FontMeshGenerator::Init(PTrueTypeFont font, int font_size, float interval_x, EAlignment alignment, SRect2D rect)
+void FontMeshGenerator::Init(TrueTypeFontPtr font, int font_size, float interval_x, EAlignment alignment, SRect2D rect)
 {
 	this->m_Font = font;
 	this->m_Interval_x = interval_x;
@@ -193,9 +193,9 @@ void FontMeshGenerator::Init(PTrueTypeFont font, int font_size, float interval_x
 	SetTextAlignment(alignment);
 }
 
-PMaterial FontMeshGenerator::GetDefaultMaterial()
+MaterialPtr FontMeshGenerator::GetDefaultMaterial()
 {
-	static PMaterial material;
+	static MaterialPtr material;
 	if (!material)
 	{
 		material = make_shared<Material>();

@@ -12,12 +12,12 @@ SMART_CLASS(UILabel) class UILabel : public UIView, public FontMeshGenerator
 public:
 	UILabel();
 
-	inline PSprite GetSprite() const { return m_Primitives.empty() ? PSprite() : m_Primitives[0]->m_Sprite; }
+	inline SpritePtr GetSprite() const { return m_Primitives.empty() ? SpritePtr() : m_Primitives[0]->m_Sprite; }
 	virtual void MakeData(vector<TexcoordRange>& texcoordRanges, vector<Color>& colors,
 		vector<SRect2D>& rectList, vector<Matrix4x4>& modelMatrices) override;
 protected:
 	virtual uint GetTextureId() override;
-	virtual PTexture GetTexture() override;
+	virtual TexturePtr GetTexture() override;
 	virtual const Matrix4x4& GetGlobalModelMatrix() const override;
 };
 

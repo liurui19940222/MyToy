@@ -11,7 +11,7 @@ MeshBufferColor::~MeshBufferColor()
 	DeleteBufer(&m_VboColorHandle);
 }
 
-MeshBufferColor::MeshBufferColor(PMesh mesh) : MeshBuffer(mesh), m_VboColorHandle(0)
+MeshBufferColor::MeshBufferColor(MeshPtr mesh) : MeshBuffer(mesh), m_VboColorHandle(0)
 {
 	MakeColorBuffer(mesh->m_Colors, mesh->m_VertexCount);
 }
@@ -23,7 +23,7 @@ void MeshBufferColor::MakeColorBuffer(const Color* colors, int size)
 	UnbindBuffer();
 }
 
-void MeshBufferColor::MakeBuffer(PMesh mesh)
+void MeshBufferColor::MakeBuffer(MeshPtr mesh)
 {
 	MeshBuffer::MakeBuffer(mesh);
 	MakeColorBuffer(mesh->m_Colors, mesh->m_VertexCount);

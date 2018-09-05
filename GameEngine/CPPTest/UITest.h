@@ -15,7 +15,7 @@ USING_NAMESPACE_GUI;
 //#define SHOW_TEXT L"h新款MINI家族正式发布 handle to face object2018北美车展：新款MINI家族正式发布"
 #define SHOW_TEXT L"Button"
 #define FONT_SIZE 14
-#define FONT_PATH "../Assets/Arial.ttf"
+#define FONT_PATH "../Assets/fonts/Arial.ttf"
 
 class UITest : public GLAppBase
 {
@@ -34,11 +34,11 @@ private:
 	IRenderingInterface*	m_RI;
 	FontMeshGenerator*		m_FMG;
 
-	PUIImage				m_MovedWidget;
-	PUIImage				m_Button;
-	PUIImage				m_SubWidget;
-	PUILabel				m_Label;
+	UIImagePtr				m_MovedWidget;
+	UIImagePtr				m_Button;
+	UIImagePtr				m_SubWidget;
+	UILabelPtr				m_Label;
 	GLuint					m_TexId;
-	PTexture				m_Texture;
+	TexturePtr				m_Texture;
 };
 

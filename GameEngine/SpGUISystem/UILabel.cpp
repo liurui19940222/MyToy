@@ -15,7 +15,7 @@ uint UILabel::GetTextureId()
 	return UIView::GetTextureId();
 }
 
-PTexture UILabel::GetTexture()
+TexturePtr UILabel::GetTexture()
 {
 	return m_Primitives.empty() ? UIView::GetTexture() : GetSprite()->m_Texture;
 }

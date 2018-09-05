@@ -10,10 +10,10 @@ SMART_CLASS(MeshBufferColor) class MeshBufferColor : public MeshBuffer
 public:
 	MeshBufferColor();
 	virtual ~MeshBufferColor();
-	MeshBufferColor(PMesh mesh);
+	MeshBufferColor(MeshPtr mesh);
 
 	void MakeColorBuffer(const Color* colors, int size);
-	virtual void MakeBuffer(PMesh mesh) override;
+	virtual void MakeBuffer(MeshPtr mesh) override;
 
 private:
 	GLuint		m_VboColorHandle;

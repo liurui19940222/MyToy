@@ -27,8 +27,8 @@ private:
 	GLuint			m_TexcoordRangeHandle;
 	GLuint			m_ModelMatrixHandle;
 	GLuint			m_IndicesHandle;
-	PShader			m_Shader;
-	PTexture		m_Texture;
+	ShaderPtr			m_Shader;
+	TexturePtr		m_Texture;
 	Matrix4x4		m_ModelMatrix;
 	Matrix4x4		m_ViewMatrix;
 	Matrix4x4		m_ProjMatrix;

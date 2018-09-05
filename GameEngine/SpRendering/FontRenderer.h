@@ -41,7 +41,7 @@ public:
 	inline void SetEffect(EFontEffect effect) { m_Effect = effect; }
 	inline void SetEffectVector(const Vector3& v) { m_EffectVector = v; }
 	inline void SetEffectColor(const Color& color) { m_EffectColor = color; }
-	static PMeshBufferUIInstance GetDefaultBuffer();
+	static MeshBufferUIInstancePtr GetDefaultBuffer();
 };
 
 END_NAMESPACE_ENGINE

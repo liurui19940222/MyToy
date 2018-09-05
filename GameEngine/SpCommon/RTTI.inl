@@ -1,4 +1,6 @@
 #include "RTTI.h"
+#include<list>
+#include<algorithm>
 
 using namespace rtti;
 

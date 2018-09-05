@@ -6,7 +6,7 @@ MeshBufferTexcoord::MeshBufferTexcoord() : MeshBuffer(), m_VboTexcoordHandle(0)
 {
 }
 
-MeshBufferTexcoord::MeshBufferTexcoord(PMesh mesh) : MeshBuffer(mesh), m_VboTexcoordHandle(0)
+MeshBufferTexcoord::MeshBufferTexcoord(MeshPtr mesh) : MeshBuffer(mesh), m_VboTexcoordHandle(0)
 {
 	MakeTexcoordBuffer(mesh->m_Texcoords, mesh->m_VertexCount);
 }
@@ -23,7 +23,7 @@ void MeshBufferTexcoord::MakeTexcoordBuffer(const Vector2* uvs, int size)
 	UnbindBuffer();
 }
 
-void MeshBufferTexcoord::MakeBuffer(PMesh mesh)
+void MeshBufferTexcoord::MakeBuffer(MeshPtr mesh)
 {
 	MeshBuffer::MakeBuffer(mesh);
 	MakeTexcoordBuffer(mesh->m_Texcoords, mesh->m_VertexCount);

@@ -11,11 +11,11 @@ protected:
 
 public:
 	MeshBufferTexcoord();
-	MeshBufferTexcoord(PMesh mesh);
+	MeshBufferTexcoord(MeshPtr mesh);
 	virtual ~MeshBufferTexcoord();
 
 	void MakeTexcoordBuffer(const Vector2* uvs, int size);
-	virtual void MakeBuffer(PMesh mesh) override;
+	virtual void MakeBuffer(MeshPtr mesh) override;
 
 private:
 	GLuint		 m_VboTexcoordHandle;

@@ -25,16 +25,16 @@ void TestApp::OnInitialize()
 	GLAppBase::OnInitialize();
 	Input::Init(GetModuleHandle(NULL), m_Hwnd);
 
-	PTexture2D texture = Texture2D::Create("../Assets/textures/wooden_case.jpg", true);
+	Texture2DPtr texture = Texture2D::Create("../Assets/textures/wooden_case.jpg", true);
 	AssetUtility::Save(texture.get(), "D:/tex.json");
 
-	PTexture2D tex = make_shared<Texture2D>();
+	Texture2DPtr tex = make_shared<Texture2D>();
 	AssetUtility::Load(tex.get(), "D:/tex.json");
 
-	PShader shader1 = Shader::Get("texture");
+	ShaderPtr shader1 = Shader::Get("texture");
 	AssetUtility::Save(shader1.get(), "D:/shader.json");
 
-	PShader shader2 = make_shared<Shader>();
+	ShaderPtr shader2 = make_shared<Shader>();
 	AssetUtility::Load(shader2.get(), "D:/shader.json");
 
 	cout << "" << endl;

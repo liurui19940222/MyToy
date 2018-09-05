@@ -27,11 +27,11 @@ class AdvModelLoader : public ModelLoader
 
 public:
 
-	virtual PModel LoadFromFile(const char* filename) override;
+	virtual ModelPtr LoadFromFile(const char* filename) override;
 
-	PAnimationClip LoadAnimationFromFile(const char* filename, Skeleton& skeleton);
+	AnimationClipPtr LoadAnimationFromFile(const char* filename, Skeleton& skeleton);
 
-	vector<PAnimationClip> LoadAnimationsFromFile(const char* filename, Skeleton& skeleton);
+	vector<AnimationClipPtr> LoadAnimationsFromFile(const char* filename, Skeleton& skeleton);
 
 	virtual void ReleaseSource() override;
 private:

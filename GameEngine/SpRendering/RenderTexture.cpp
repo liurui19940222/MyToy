@@ -47,9 +47,9 @@ void RenderTexture::BindBuffer()
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FboHandle);
 }
 
-PRenderTexture RenderTexture::Create(int width, int height, bool depthBuffer)
+RenderTexturePtr RenderTexture::Create(int width, int height, bool depthBuffer)
 {
-	PRenderTexture texture(new RenderTexture());
+	RenderTexturePtr texture(new RenderTexture());
 	texture->m_width = width;
 	texture->m_height = height;
 	texture->MakeBuffer(width, height, depthBuffer);

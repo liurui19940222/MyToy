@@ -28,8 +28,8 @@ SMART_CLASS(RenderCamera) class RenderCamera
 protected:
 	EProjectionType m_projectionType;
 	ECameraClearFlag m_cameraClearFlag;
-	PRenderTexture m_renderTexture;
-	PSkyBox m_skybox;
+	RenderTexturePtr m_renderTexture;
+	SkyBoxPtr m_skybox;
 	float m_fov;
 	float m_aspect;
 	float m_near;
@@ -58,11 +58,11 @@ public:
 	virtual void SetDepth(int depth);
 	RenderCamera* SetCameraClearFlag(ECameraClearFlag flag);
 	RenderCamera* SetCameraClearColor(const Color& color);
-	RenderCamera* SetRenderTexture(PRenderTexture texture);
-	RenderCamera* SetSkyBox(PSkyBox skybox);
+	RenderCamera* SetRenderTexture(RenderTexturePtr texture);
+	RenderCamera* SetSkyBox(SkyBoxPtr skybox);
 	EProjectionType GetProjectionType() const;
 	ECameraClearFlag GetCameraClearFlag() const;
-	PRenderTexture GetRenderTexture() const;
+	RenderTexturePtr GetRenderTexture() const;
 	const Color& GetCameraClearColor() const;
 	float GetFov() const;
 	float GetAspect() const;

@@ -11,11 +11,11 @@ protected:
 
 public:
 	MeshBufferNormal();
-	MeshBufferNormal(PMesh mesh);
+	MeshBufferNormal(MeshPtr mesh);
 	virtual ~MeshBufferNormal();
 
 	void MakeNormalBuffer(const Vector3* normals, int size);
-	virtual void MakeBuffer(PMesh mesh) override;
+	virtual void MakeBuffer(MeshPtr mesh) override;
 
 private:
 	GLuint			m_VboNormalHandle;

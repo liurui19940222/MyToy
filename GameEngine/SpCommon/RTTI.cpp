@@ -19,3 +19,20 @@ void RTTI::RegisterCreatetor(const char* clsName, ClassCreateHandler handler)
 	if (briefClassName.length() > 0 && briefClassName != fullClassName)
 		func(briefClassName, handler);
 }
+
+
+vector<Property> Metadata::GetAllProperties() const
+{
+	list<const Metadata*> metas;
+	const Metadata* meta = this;
+	while (meta)
+	{
+		metas.push_front(meta);
+		meta = meta->GetParentMetaData();
+	}
+	vector<Property> props;
+	std::for_each(metas.begin(), metas.end(), [&](const Metadata* m) {
+		props.insert(props.end(), m->GetProperties()->begin(), m->GetProperties()->end());
+	});
+	return std::move(props);
+}

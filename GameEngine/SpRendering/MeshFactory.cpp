@@ -3,7 +3,7 @@
 
 USING_NAMESPACE_ENGINE
 
-PMesh MeshFactory::CreateCube()
+MeshPtr MeshFactory::CreateCube()
 {
 	static const int VERTEX_NUM = 36;
 	static const float vertices[] = {
@@ -101,7 +101,7 @@ PMesh MeshFactory::CreateCube()
 	return CreateMesh((Vector3*)vertices, (Vector2*)texcoords, (Vector3*)normals, indices, VERTEX_NUM, 12);
 }
 
-PMesh MeshFactory::CreateQuad()
+MeshPtr MeshFactory::CreateQuad()
 {
 	static const int VERTEX_NUM = 4;
 	static const Vector3 vertices[VERTEX_NUM] = {
@@ -130,9 +130,9 @@ PMesh MeshFactory::CreateQuad()
 	return CreateMesh(vertices, texcoords, normals, indices, VERTEX_NUM, 2);
 }
 
-PMesh MeshFactory::CreateMesh(const Vector3* vertices, const Vector2* texcoords, const Vector3* normals, const ushort* indices, int vertexCount, int triangleCount)
+MeshPtr MeshFactory::CreateMesh(const Vector3* vertices, const Vector2* texcoords, const Vector3* normals, const ushort* indices, int vertexCount, int triangleCount)
 {
-	PMesh mesh(new Mesh);
+	MeshPtr mesh(new Mesh);
 	mesh->m_VertexCount = vertexCount;
 	mesh->m_TriangleCount = triangleCount;
 	size_t dataSize = 0;
@@ -163,7 +163,7 @@ PMesh MeshFactory::CreateMesh(const Vector3* vertices, const Vector2* texcoords,
 	return mesh;
 }
 
-PMesh MeshFactory::CreateRectMesh(float width, float height)
+MeshPtr MeshFactory::CreateRectMesh(float width, float height)
 {
 	float half_w = width * 0.5f;
 	float half_h = height * 0.5f;
@@ -187,7 +187,7 @@ PMesh MeshFactory::CreateRectMesh(float width, float height)
 	return CreateMesh(vertices, texcoords, NULL, NULL, VERTEX_NUM, 0);
 }
 
-PMesh MeshFactory::CreateMesh(EMeshType type)
+MeshPtr MeshFactory::CreateMesh(EMeshType type)
 {
 	switch (type)
 	{
@@ -199,25 +199,25 @@ PMesh MeshFactory::CreateMesh(EMeshType type)
 	return NULL;
 }
 
-PMesh MeshFactory::SharedMesh(EMeshType type)
+MeshPtr MeshFactory::SharedMesh(EMeshType type)
 {
 	auto it = m_Meshes.find(type);
 	if (it == m_Meshes.end())
 	{
-		PMesh mesh = CreateMesh(type);
+		MeshPtr mesh = CreateMesh(type);
 		m_Meshes.insert(make_pair(type, mesh));
 		return mesh;
 	}
 	return it->second;
 }
 
-PMeshBuffer MeshFactory::SharedBuffer(EMeshType type)
+MeshBufferPtr MeshFactory::SharedBuffer(EMeshType type)
 {
-	PMesh mesh = SharedMesh(type);
+	MeshPtr mesh = SharedMesh(type);
 	auto it = m_buffers.find(type);
 	if (it == m_buffers.end())
 	{
-		PMeshBufferNormal buffer(new MeshBufferNormal(mesh));
+		MeshBufferNormalPtr buffer(new MeshBufferNormal(mesh));
 		m_buffers.insert(make_pair(type, buffer));
 		return buffer;
 	}

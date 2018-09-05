@@ -10,7 +10,7 @@ class ModelLoader
 public:
 	ModelLoader() {  }
 
-	virtual PModel LoadFromFile(const char* filename) = 0;
+	virtual ModelPtr LoadFromFile(const char* filename) = 0;
 	virtual void ReleaseSource() = 0;
 };
 

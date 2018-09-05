@@ -14,8 +14,8 @@ void FontRenderer::OnRender(Matrix4x4& modelMatrix, Matrix4x4& viewMatrix, Matri
 	if (m_Primitives.empty())
 		return;
 	BuildInstanceData();
-	PMaterial material = GetDefaultMaterial();
-	PMeshBufferUIInstance mesh = GetDefaultBuffer();
+	MaterialPtr material = GetDefaultMaterial();
+	MeshBufferUIInstancePtr mesh = GetDefaultBuffer();
 	size_t size = m_TexcoordRanges.size();
 	mesh->MakeInstanceBuffer(m_TexcoordRanges, m_Colors, m_RectList, m_ModelMatrices, size);
 	material->SetMainTexture(m_Primitives[0]->m_Sprite->m_Texture);
@@ -31,9 +31,9 @@ void FontRenderer::OnRenderDebug(Matrix4x4& modelMatrix)
 
 }
 
-PMeshBufferUIInstance FontRenderer::GetDefaultBuffer()
+MeshBufferUIInstancePtr FontRenderer::GetDefaultBuffer()
 {
-	static PMeshBufferUIInstance mesh;
+	static MeshBufferUIInstancePtr mesh;
 	if (!mesh)
 		mesh = _MeshFactory->CreateBuffer<MeshBufferUIInstance>(EMeshType::Quad);
 	return mesh;

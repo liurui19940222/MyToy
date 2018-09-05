@@ -30,7 +30,7 @@ void TextApp::OnInitialize()
 	m_Material->SetShader(Shader::Get("texture"));
 	m_Material->SetMainTexture(Texture2D::Create("../Assets/shake.png", ETexWrapMode::Clamp, ETexFilterMode::MipmapLinear, ETexEnvMode::Replace, true));
 
-	PTrueTypeFont f = _FontManager->LoadFont(1, FONT_PATH);
+	TrueTypeFontPtr f = _FontManager->LoadFont(1, FONT_PATH);
 	font = new FontRenderer(m_RI);
 	font->SetFont(f);
 	font->SetColor(Color::white);
@@ -149,7 +149,7 @@ void TextApp::OnRender()
 	//font->OnRender(modelMat, viewMat, projectionMat);
 
 	m_Material->Bind();
-	PTexture2D tex = Texture2D::Create("../Assets/fish.png");
+	Texture2DPtr tex = Texture2D::Create("../Assets/fish.png");
 	//m_Material->SetParam("AddTex", 1);
 	m_Material->BindTexture("AddTex", tex->GetTextureId(), 1);
 	m_Material->SetParam("M", Matrix4x4::identity);

@@ -56,7 +56,7 @@ Mesh::~Mesh()
 	if (m_JointIndices) { free(m_JointIndices); m_JointIndices = NULL; }
 }
 
-bool SkeletonAnimation::Sample(vector<JointPose>& outPose, PAnimationClip clip, PSkeleton skeleton, float t, float weight)
+bool SkeletonAnimation::Sample(vector<JointPose>& outPose, AnimationClipPtr clip, SkeletonPtr skeleton, float t, float weight)
 {
 	if (clip->m_IsLooping)
 		t = fmod(t, clip->m_Length);
@@ -100,7 +100,7 @@ bool SkeletonAnimation::Sample(vector<JointPose>& outPose, PAnimationClip clip, 
 	return true;
 }
 
-bool SkeletonAnimation::Blend(vector<JointPose>& outPose, PAnimationClip* clips, float* timePos, float* weights, int count, PSkeleton skeleton)
+bool SkeletonAnimation::Blend(vector<JointPose>& outPose, AnimationClipPtr* clips, float* timePos, float* weights, int count, SkeletonPtr skeleton)
 {
 	float total_weight = 0;
 	for (int i = 0; i < count; ++i)
@@ -125,7 +125,7 @@ bool SkeletonAnimation::Blend(vector<JointPose>& outPose, PAnimationClip* clips,
 	return true;
 }
 
-void SkeletonAnimation::CalculateGlobalMatrix(PSkeleton skeleton)
+void SkeletonAnimation::CalculateGlobalMatrix(SkeletonPtr skeleton)
 {
 	if (!skeleton.get())
 		return;
@@ -145,7 +145,7 @@ void SkeletonAnimation::CalculateGlobalMatrix(PSkeleton skeleton)
 	}
 }
 
-void SkeletonAnimation::CalculateGlobalMatrix(PSkeleton skeleton, vector<JointPose> localPoses)
+void SkeletonAnimation::CalculateGlobalMatrix(SkeletonPtr skeleton, vector<JointPose> localPoses)
 {
 	if (!skeleton.get() || !localPoses.size())
 		return;
@@ -163,7 +163,7 @@ void SkeletonAnimation::CalculateGlobalMatrix(PSkeleton skeleton, vector<JointPo
 	}
 }
 
-void SkeletonAnimation::CalculateSkinningMatrix(PSkeleton skeleton)
+void SkeletonAnimation::CalculateSkinningMatrix(SkeletonPtr skeleton)
 {
 	Matrix4x4 mat;
 	vector<Joint>& joints = skeleton->GetJoints();
@@ -175,10 +175,10 @@ void SkeletonAnimation::CalculateSkinningMatrix(PSkeleton skeleton)
 	}
 }
 
-PAnimationClip SkeletonAnimation::Slice(PAnimationClip srcClip, int ibegin, int iend, const string& newName)
+AnimationClipPtr SkeletonAnimation::Slice(AnimationClipPtr srcClip, int ibegin, int iend, const string& newName)
 {
 	float begin = (float)ibegin, end = (float)iend;
-	PAnimationClip clip = make_shared<AnimationClip>();
+	AnimationClipPtr clip = make_shared<AnimationClip>();
 	clip->m_Name = newName;
 	if (end <= begin)
 		return clip;
@@ -218,9 +218,9 @@ PAnimationClip SkeletonAnimation::Slice(PAnimationClip srcClip, int ibegin, int 
 	return clip;
 }
 
-PAnimationClip SkeletonAnimation::Slice(PAnimationClip srcClip, PSkeleton skeleton, float begin, float end, const string& newName)
+AnimationClipPtr SkeletonAnimation::Slice(AnimationClipPtr srcClip, SkeletonPtr skeleton, float begin, float end, const string& newName)
 {
-	PAnimationClip clip = make_shared<AnimationClip>();
+	AnimationClipPtr clip = make_shared<AnimationClip>();
 	clip->m_Name = newName;
 	if (end <= begin)
 		return clip;

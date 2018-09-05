@@ -8,9 +8,9 @@ using namespace rapidxml;
 
 USING_NAMESPACE_ENGINE;
 
-PSprite Sprite::CreateSprite(PTexture texture, TexcoordRange range, ushort width, ushort height)
+SpritePtr Sprite::CreateSprite(TexturePtr texture, TexcoordRange range, ushort width, ushort height)
 {
-	PSprite sprite = make_shared<Sprite>();
+	SpritePtr sprite = make_shared<Sprite>();
 	sprite->m_Texture = texture;
 	sprite->m_Range = range;
 	sprite->m_Width = width;
@@ -25,20 +25,20 @@ SpriteSet::SpriteSet(const char* tex_filename, const char* xml_filename)
 	LoadAtlas(tex_filename, xml_filename);
 }
 
-PSprite SpriteSet::GetSprite(const string& name) const
+SpritePtr SpriteSet::GetSprite(const string& name) const
 {
 	auto it = m_Sprites.find(name);
 	if (it != m_Sprites.end())
 	{
 		return it->second;
 	}
-	return PSprite();
+	return SpritePtr();
 }
 
 void SpriteSet::LoadAtlas(const char* tex_filename, const char* xml_filename)
 {
 	//º”‘ÿÃ˘Õº
-	PTexture texture = Texture2D::Create(tex_filename);
+	TexturePtr texture = Texture2D::Create(tex_filename);
 	//º”‘ÿxml
 	ifstream is(xml_filename);
 	stringstream ss;
@@ -78,7 +78,7 @@ void SpriteSet::LoadAtlas(const char* tex_filename, const char* xml_filename)
 			else if (key == "h")
 				h = CConverter::ToValue<float>(value);
 		});
-		PSprite sprite = make_shared<Sprite>();
+		SpritePtr sprite = make_shared<Sprite>();
 		sprite->m_Texture = texture;
 		sprite->m_Range.m_StartingPoint.x = x / atlas_width;
 		sprite->m_Range.m_StartingPoint.y = (atlas_height - y - h) / atlas_height;

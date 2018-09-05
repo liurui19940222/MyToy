@@ -45,12 +45,12 @@ uint UIImage::GetTextureId()
 	return UIView::GetTextureId();
 }
 
-PTexture UIImage::GetTexture()
+TexturePtr UIImage::GetTexture()
 {
 	return m_Sprite ? m_Sprite->m_Texture : UIView::GetTexture();
 }
 
-void UIImage::SetSprite(PSprite sprite, bool setToRawSize)
+void UIImage::SetSprite(SpritePtr sprite, bool setToRawSize)
 {
 	m_Sprite = sprite;
 	if (!sprite)

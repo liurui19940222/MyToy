@@ -133,6 +133,7 @@ namespace rtti {
 		const Metadata*			GetParentMetaData() const;
 		string					GetClassName() const;
 		const vector<Property>*	GetProperties() const;
+		vector<Property>		GetAllProperties() const;
 		Property				GetProperty(const string& fieldName) const;
 		void					AddProperty(Property prop);
 	};

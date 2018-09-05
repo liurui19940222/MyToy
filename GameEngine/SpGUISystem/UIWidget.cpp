@@ -46,7 +46,7 @@ UIWidget* UIWidget::SetLocalPosition(const Vector2& pos)
 	return this;
 }
 
-UIWidget* UIWidget::AddChild(PUIWidget widget)
+UIWidget* UIWidget::AddChild(UIWidgetPtr widget)
 {
 	m_Childreen.push_back(widget);
 	widget->m_Parent = this;
@@ -59,11 +59,11 @@ UIWidget* UIWidget::SetAlignment(EAlignment alignment)
 	return this;
 }
 
-UIWidget* UIWidget::RemoveChild(PUIWidget widget)
+UIWidget* UIWidget::RemoveChild(UIWidgetPtr widget)
 {
 	if (widget.get())
 	{
-		auto it = find_if(m_Childreen.begin(), m_Childreen.end(), [&widget](PUIWidget item) { return item.get() == widget.get(); });
+		auto it = find_if(m_Childreen.begin(), m_Childreen.end(), [&widget](UIWidgetPtr item) { return item.get() == widget.get(); });
 		if (it != m_Childreen.end())
 		{
 			m_Childreen.erase(it);

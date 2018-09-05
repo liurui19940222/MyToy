@@ -299,7 +299,7 @@ void ColladaLoader::ReadMesh(xml_node<>* root, vector<Vector4>& weights, vector<
 	{
 		m_triangleNum += GetAttribute<int>(*it, "count");
 	}
-	PMesh p_mesh = make_shared<Mesh>();
+	MeshPtr p_mesh = make_shared<Mesh>();
 	model->m_Meshes.push_back(p_mesh);
 	p_mesh->m_VertexCount = m_triangleNum * 3;
 
@@ -411,7 +411,7 @@ void ColladaLoader::ReadAnimation(xml_node<>* root, Model* model)
 		free(matrices);
 		free(times);
 	}
-	PAnimationClip clip = make_shared<AnimationClip>();
+	AnimationClipPtr clip = make_shared<AnimationClip>();
 	model->m_Animations.push_back(clip);
 	clip->m_IsLooping = true;
 	clip->m_aSamples.clear();
@@ -424,9 +424,9 @@ void ColladaLoader::ReadAnimation(xml_node<>* root, Model* model)
 	}
 }
 
-PModel ColladaLoader::LoadFromFile(const char* filename)
+ModelPtr ColladaLoader::LoadFromFile(const char* filename)
 {
-	PModel model = make_shared<Model>();
+	ModelPtr model = make_shared<Model>();
 	ReleaseSource();
 	LoadXmlDocument(filename);
 	xml_node<>* root = m_xmlDoc.first_node();

@@ -8,8 +8,8 @@ Vector3 Light::pos_buffer[LIGHT_MAX_NUM];
 float Light::intensity_buffer[LIGHT_MAX_NUM];
 int Light::type_buffer[LIGHT_MAX_NUM];
 Matrix4x4 Light::shadowMapMatrix;
-PRenderTexture Light::shadowMap;
-vector<PLight> Light::lights;
+RenderTexturePtr Light::shadowMap;
+vector<LightPtr> Light::lights;
 int Light::shadowCasterIndex;
 
 void Light::SetShadowMapSize(int width, int height)
@@ -19,13 +19,13 @@ void Light::SetShadowMapSize(int width, int height)
 	shadowMap = RenderTexture::Create(1024, 1024, true);
 }
 
-PLight Light::PrepareLight()
+LightPtr Light::PrepareLight()
 {
 	memset(color_buffer, 0, sizeof(Color) * LIGHT_MAX_NUM);
 	memset(pos_buffer, 0, sizeof(Vector3) * LIGHT_MAX_NUM);
 	memset(intensity_buffer, 0, sizeof(float) * LIGHT_MAX_NUM);
 	memset(type_buffer, 0, sizeof(int) * LIGHT_MAX_NUM);
-	PLight light;
+	LightPtr light;
 	shadowCasterIndex = -1;
 	for (uint i = 0; i < lights.size(); ++i)
 	{
@@ -42,7 +42,7 @@ PLight Light::PrepareLight()
 	return light;
 }
 
-PRenderTexture Light::GetShadowMap()
+RenderTexturePtr Light::GetShadowMap()
 {
 	return shadowMap;
 }
@@ -52,7 +52,7 @@ Matrix4x4 Light::GetShadowMapMatrix()
 	return shadowMapMatrix;
 }
 
-void Light::SetUniformParams(PShader shader)
+void Light::SetUniformParams(ShaderPtr shader)
 {
 	if (shadowMap == NULL)
 		return;

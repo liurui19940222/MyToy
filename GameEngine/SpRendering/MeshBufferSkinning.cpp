@@ -4,7 +4,7 @@ USING_NAMESPACE_ENGINE;
 
 MeshBufferSkinning::MeshBufferSkinning() : MeshBufferNormal(), m_VboJointIndexHandle(0), m_VboJointWeightHandle(0){}
 
-MeshBufferSkinning::MeshBufferSkinning(PMesh mesh) : MeshBufferNormal(mesh), m_VboJointIndexHandle(0), m_VboJointWeightHandle(0) 
+MeshBufferSkinning::MeshBufferSkinning(MeshPtr mesh) : MeshBufferNormal(mesh), m_VboJointIndexHandle(0), m_VboJointWeightHandle(0) 
 {
 	MakeJointBuffer(mesh->m_JointWeights, mesh->m_JointIndices, mesh->m_VertexCount);
 }

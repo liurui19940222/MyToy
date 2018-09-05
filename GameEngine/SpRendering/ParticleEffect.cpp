@@ -18,7 +18,7 @@ ParticleEffect::~ParticleEffect()
 {
 }
 
-void ParticleEffect::SetMaterial(PMaterial material)
+void ParticleEffect::SetMaterial(MaterialPtr material)
 {
 	m_Material = material;
 }

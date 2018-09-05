@@ -13,7 +13,7 @@ SMART_CLASS(MeshBufferUIInstance) class MeshBufferUIInstance : public MeshBuffer
 	const int ATTR_POS_MODELMATRIX = 5;
 public:
 	MeshBufferUIInstance();
-	MeshBufferUIInstance(PMesh mesh);
+	MeshBufferUIInstance(MeshPtr mesh);
 	virtual ~MeshBufferUIInstance();
 	void MakeInstanceBuffer(vector<TexcoordRange>& ranges, vector<Color>& colors, 
 		vector<SRect2D>& sizelist, vector<Matrix4x4>& matrices, int instanceCount);

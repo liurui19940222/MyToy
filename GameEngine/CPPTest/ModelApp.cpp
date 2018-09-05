@@ -40,20 +40,20 @@ void ModelApp::OnInitialize()
 	m_Material->SetMainTexture(Texture2D::Create("../Assets/models/warrior/w2s_diffuse.tga"));
 
 	AdvModelLoader loader;
-	PModel model = loader.LoadFromFile("../Assets/models/warrior/w2s.FBX");
+	ModelPtr model = loader.LoadFromFile("../Assets/models/warrior/w2s.FBX");
 	m_Skeleton = model->m_Skeleton;
 
-	PAnimationClip attack_clip = SkeletonAnimation::Slice(model->m_Animations[0], 100, 123, "attack");
-	PAnimationClip idle_clip = SkeletonAnimation::Slice(model->m_Animations[0], 0, 50, "idle");
-	PAnimationClip run_clip = SkeletonAnimation::Slice(model->m_Animations[0], 200, 220, "run");
+	AnimationClipPtr attack_clip = SkeletonAnimation::Slice(model->m_Animations[0], 100, 123, "attack");
+	AnimationClipPtr idle_clip = SkeletonAnimation::Slice(model->m_Animations[0], 0, 50, "idle");
+	AnimationClipPtr run_clip = SkeletonAnimation::Slice(model->m_Animations[0], 200, 220, "run");
 	idle_clip->m_IsLooping = true;
 	run_clip->m_IsLooping = true;
 
-	PAnimationClip walk_clip = loader.LoadAnimationFromFile("../Assets/models/warrior/w2s_walk.FBX", *m_Skeleton.get());
+	AnimationClipPtr walk_clip = loader.LoadAnimationFromFile("../Assets/models/warrior/w2s_walk.FBX", *m_Skeleton.get());
 	walk_clip->m_IsLooping = true;
 	walk_clip->m_Name = "walk";
 
-	PAnimationClip jump_clip = loader.LoadAnimationFromFile("../Assets/models/warrior/w2s_jump.FBX", *m_Skeleton.get());
+	AnimationClipPtr jump_clip = loader.LoadAnimationFromFile("../Assets/models/warrior/w2s_jump.FBX", *m_Skeleton.get());
 	jump_clip->m_IsLooping = false;
 	jump_clip->m_Name = "jump";
 	jump_clip = SkeletonAnimation::Slice(jump_clip, 0, 16, "jump");
@@ -75,13 +75,14 @@ void ModelApp::OnInitialize()
 	//m_GroundMaterial->SetName(L"ground_mat");
 	//m_GroundMaterial->SetShader(Shader::Get("texture"));
 	//m_GroundMaterial->SetMainTexture(Texture2D::Create("../Assets/textures/wooden_case.jpg"));
-	m_GroundBuffer = _MeshFactory->CreateBuffer<MeshBufferTexcoord>(EMeshType::Quad);
+	//AssetUtility::Save(m_GroundMaterial.get(), "../Assets/materials/ground.mat");
 	AssetUtility::Load(m_GroundMaterial.get(), "../Assets/materials/ground.mat");
+	m_GroundBuffer = _MeshFactory->CreateBuffer<MeshBufferTexcoord>(EMeshType::Quad);
 	m_Ground.mesh = m_GroundBuffer.get();
 	m_Ground.material = m_GroundMaterial.get();
 	groundMat = Matrix4x4::Translate(Vector3(0, -2.75, 0)) * Matrix4x4::Rotate(Vector3(-90, 0, 0)) * Matrix4x4::Scale(Vector3::one * 15);
 
-	//AssetUtility::Save(m_GroundMaterial.get(), "../Assets/materials/ground.mat");
+
 
 	//³õÊ¼»¯Á£×Ó
 	m_ParticleBuffer = _MeshFactory->CreateBuffer<MeshBufferParticle>(EMeshType::Quad);
@@ -106,7 +107,7 @@ void ModelApp::OnInitialize()
 	m_ParticleMat = make_shared<Material>();
 	m_ParticleMat->SetName(L"particle_mat");
 	m_ParticleMat->SetShader(Shader::Get("particle_blend"));
-	PTexture2D tex = Texture2D::Create("../Assets/textures/Tex_Flame.jpg");
+	Texture2DPtr tex = Texture2D::Create("../Assets/textures/Tex_Flame.jpg");
 	tex->SetWrapMode(ETexWrapMode::Repeat);
 	m_ParticleMat->SetMainTexture(tex);
 	m_ParticleMat->SetBlendFunc(EBlendFactor::SRC_ALPHA, EBlendFactor::ONE);
@@ -177,14 +178,14 @@ void ModelApp::OnRender()
 {
 	GLAppBase::OnRender();
 
-	//m_Material->Bind();
-	//m_Material->SetParam("GlobalPoseMatrices", &m_Skeleton->m_SkiningMatrices[0], m_Skeleton->GetSize());
-	//m_Material->SetParam("M", modelMat);
-	//m_Material->SetParam("V", viewMat);
-	//m_Material->SetParam("P", projectionMat);
-	//m_Material->SetParam("Color", Color::white);
-	//m_RI->Render(m_Object);
-	//m_Material->Unbind();
+	m_Material->Bind();
+	m_Material->SetParam("GlobalPoseMatrices", &m_Skeleton->m_SkiningMatrices[0], m_Skeleton->GetSize());
+	m_Material->SetParam("M", modelMat);
+	m_Material->SetParam("V", viewMat);
+	m_Material->SetParam("P", projectionMat);
+	m_Material->SetParam("Color", Color::white);
+	m_RI->Render(m_Object);
+	m_Material->Unbind();
 
 	m_GroundMaterial->Bind();
 	m_GroundMaterial->SetParam("M", groundMat);

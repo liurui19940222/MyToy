@@ -40,7 +40,7 @@ enum class EShaderParamType
 SMART_CLASS(Shader) class Shader : public Object {
 	DECLARE_RTTI()
 private:
-	static map<string, PShader> m_store;
+	static map<string, ShaderPtr> m_store;
 
 	GLuint m_program;
 	GLuint m_vt;
@@ -78,8 +78,8 @@ public:
 	void SetUniformParam(const char* paramName, const Matrix4x4* value, int count);
 	map<string, EShaderParamType> GetAllOfUniformParams();
 
-	static PShader Get(const string& shaderName);
-	static PShader GetDefault();
+	static ShaderPtr Get(const string& shaderName);
+	static ShaderPtr GetDefault();
 
 protected:
 	virtual void OnSerialize(int depth, const Metadata* meta, Value& value, MemoryPoolAllocator<>& allocator) override;

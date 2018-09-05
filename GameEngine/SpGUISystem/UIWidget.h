@@ -15,8 +15,8 @@ public:
 	UIWidget* SetHeight(float height);
 	UIWidget* SetRect(const SRect2D& rect);
 	UIWidget* SetLocalPosition(const Vector2& pos);
-	UIWidget* AddChild(PUIWidget widget);
-	UIWidget* RemoveChild(PUIWidget widget);
+	UIWidget* AddChild(UIWidgetPtr widget);
+	UIWidget* RemoveChild(UIWidgetPtr widget);
 	UIWidget* SetAlignment(EAlignment alignment);
 	bool Overlay(const Vector2& point);
 	inline float GetWidth() const { return m_Width; }
@@ -47,7 +47,7 @@ protected:
 	Matrix4x4				m_ModelMatrix;
 	UIWidget*				m_Parent;
 	UISystem*				m_System;
-	vector<PUIWidget>		m_Childreen;
+	vector<UIWidgetPtr>		m_Childreen;
 };
 
 END_NAMESPACE_GUI

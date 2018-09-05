@@ -32,9 +32,9 @@ bool CharacterInfo::GetBitmap(SBitmapData* out_bitmap, Color color)
 TrueTypeFontSize::TrueTypeFontSize(int size, FT_Library* ft_lib, FT_Face* ft_face) 
 	: m_FontSize(size), m_FtLib(ft_lib), m_FtFace(ft_face) {}
 
-PCharacterInfo TrueTypeFontSize::GetCharacter(int code)
+CharacterInfoPtr TrueTypeFontSize::GetCharacter(int code)
 {
-	PCharacterInfo chInfo;
+	CharacterInfoPtr chInfo;
 	if (m_Characters.find(code) == m_Characters.end())
 	{
 		chInfo = make_shared<CharacterInfo>(code);
@@ -55,7 +55,7 @@ PCharacterInfo TrueTypeFontSize::GetCharacter(int code)
 		chInfo->m_LeftPadding = slot->bitmap_left;
 		chInfo->m_Top = slot->bitmap_top;
 		chInfo->m_AdvanceX = slot->advance.x >> 6;
-		PCharacterAtlas atlas = GetEnoughAtlas(width, height, max_height);
+		CharacterAtlasPtr atlas = GetEnoughAtlas(width, height, max_height);
 		atlas->Push(width, height, max_height + 5, slot->bitmap.buffer, RGB{ 255, 255, 255 }, &(chInfo->m_Rect));
 		chInfo->m_Atlas = atlas;
 	}
@@ -67,17 +67,17 @@ PCharacterInfo TrueTypeFontSize::GetCharacter(int code)
 	return chInfo;
 }
 
-PCharacterAtlas TrueTypeFontSize::GetEnoughAtlas(int width, int height, int max_height)
+CharacterAtlasPtr TrueTypeFontSize::GetEnoughAtlas(int width, int height, int max_height)
 {
-	for (vector<PCharacterAtlas>::iterator it = m_Atlases.begin(); it != m_Atlases.end(); ++it)
+	for (vector<CharacterAtlasPtr>::iterator it = m_Atlases.begin(); it != m_Atlases.end(); ++it)
 	{
 		if ((*it)->TryPush(width, height, max_height))
 		{
 			return *it;
 		}
 	}
-	PAtlas atlas = make_shared<Atlas>(CH_MAP_BITMAP_SIZE_W, CH_MAP_BITMAP_SIZE_H, 1);
-	PCharacterAtlas catlas = make_shared<CharacterAtlas>();
+	AtlasPtr atlas = make_shared<Atlas>(CH_MAP_BITMAP_SIZE_W, CH_MAP_BITMAP_SIZE_H, 1);
+	CharacterAtlasPtr catlas = make_shared<CharacterAtlas>();
 	catlas->m_Atlas = atlas;
 	catlas->m_Texture = Texture2D::Create(NULL, atlas->GetWidth(), atlas->GetHeight(), true);
 	catlas->m_Texture->SetWrapMode(ETexWrapMode::Clamp)->SetFilterMode(ETexFilterMode::Linear);
@@ -85,7 +85,7 @@ PCharacterAtlas TrueTypeFontSize::GetEnoughAtlas(int width, int height, int max_
 	return catlas;
 }
 
-vector<PCharacterAtlas>& TrueTypeFontSize::GetAtlases()
+vector<CharacterAtlasPtr>& TrueTypeFontSize::GetAtlases()
 {
 	return m_Atlases;
 }
@@ -113,24 +113,24 @@ bool TrueTypeFont::LoadFromPath(const char* file_name)
 	return true;
 }
 
-PCharacterInfo TrueTypeFont::GetCharacter(wchar_t ch, int size)
+CharacterInfoPtr TrueTypeFont::GetCharacter(wchar_t ch, int size)
 {
 	if (m_SizeMap.find(size) == m_SizeMap.end())
 	{
-		PTrueTypeFontSize fontSize = make_shared<TrueTypeFontSize>(size, &m_FtLib, &m_FtFace);
+		TrueTypeFontSizePtr fontSize = make_shared<TrueTypeFontSize>(size, &m_FtLib, &m_FtFace);
 		m_SizeMap.insert(make_pair( size, fontSize));
 	}
 	long code = FT_Get_Char_Index(m_FtFace, ch);
 	return m_SizeMap[size]->GetCharacter(code);
 }
 
-vector<PCharacterAtlas>& TrueTypeFont::GetAtlases(int size)
+vector<CharacterAtlasPtr>& TrueTypeFont::GetAtlases(int size)
 {
 	if (m_SizeMap.find(size) != m_SizeMap.end())
 	{
 		return m_SizeMap[size]->GetAtlases();
 	}
-	return vector<PCharacterAtlas>();
+	return vector<CharacterAtlasPtr>();
 }
 
 #pragma endregion

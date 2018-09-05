@@ -6,9 +6,9 @@ IMPL_RTTI(Texture2D, Texture::GetMetadata(), {
 	PROP(Texture2D, m_AssetRef, EType::String)
 })
 
-PTexture2D Texture2D::m_store[2] = { NULL, NULL };
+Texture2DPtr Texture2D::m_store[2] = { NULL, NULL };
 
-PTexture2D Texture2D::Init(PTexture2D texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data)
+Texture2DPtr Texture2D::Init(Texture2DPtr texture, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps, int width, int height, int format, int internalFormat, UCHAR* data)
 {
 	glEnable(GL_TEXTURE_2D);
 	texture->m_wrapMode = wrapMode;
@@ -27,49 +27,49 @@ PTexture2D Texture2D::Init(PTexture2D texture, ETexWrapMode wrapMode, ETexFilter
 	return texture;
 }
 
-PTexture2D Texture2D::Create(const char* filename, bool mipmaps)
+Texture2DPtr Texture2D::Create(const char* filename, bool mipmaps)
 {
 	if (!filename) return NULL;
 	ImageLoader image(filename);
-	PTexture2D texture = Create(&image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, mipmaps);
+	Texture2DPtr texture = Create(&image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, mipmaps);
 	texture->m_AssetRef = filename;
 	return texture;
 }
 
-PTexture2D Texture2D::Create(ImageLoader* image)
+Texture2DPtr Texture2D::Create(ImageLoader* image)
 {
 	return Create(image, ETexWrapMode::ClampToEdge, ETexFilterMode::Linear, ETexEnvMode::Replace, false);
 }
 
-PTexture2D Texture2D::Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
+Texture2DPtr Texture2D::Create(const char* filename, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
 {
 	if (!filename) return NULL;
 	ImageLoader image(filename);
-	PTexture2D texture = Create(&image, wrapMode, filterMode, envMode, mipmaps);
+	Texture2DPtr texture = Create(&image, wrapMode, filterMode, envMode, mipmaps);
 	texture->m_AssetRef = filename;
 	return texture;
 }
 
-PTexture2D Texture2D::Create(ImageLoader* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
+Texture2DPtr Texture2D::Create(ImageLoader* image, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
 {
-	PTexture2D texture(new Texture2D());
+	Texture2DPtr texture(new Texture2D());
 	Init(texture, wrapMode, filterMode, envMode, mipmaps, image->GetWidth(), image->GetHeight(), image->GetFormat(), image->GetInternalFormat(), image->GetBytes());
 	return texture;
 }
 
-PTexture2D Texture2D::Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
+Texture2DPtr Texture2D::Create(UCHAR* pixels, int width, int height, ETexWrapMode wrapMode, ETexFilterMode filterMode, ETexEnvMode envMode, bool mipmaps)
 {
-	PTexture2D texture(new Texture2D());
+	Texture2DPtr texture(new Texture2D());
 	Init(texture, wrapMode, filterMode, envMode, mipmaps, width, height, GL_RGBA, GL_RGBA, pixels);
 	return texture;
 }
 
-PTexture2D Texture2D::Create(UCHAR* pixels, int width, int height, bool mipmaps)
+Texture2DPtr Texture2D::Create(UCHAR* pixels, int width, int height, bool mipmaps)
 {
 	return Create(pixels, width, height, ETexWrapMode::Repeat, ETexFilterMode::Linear, ETexEnvMode::Replace, mipmaps);
 }
 
-PTexture2D Texture2D::GetOneInStore(EStoreTexture2DId id)
+Texture2DPtr Texture2D::GetOneInStore(EStoreTexture2DId id)
 {
 	if (m_store[id] == NULL)
 	{

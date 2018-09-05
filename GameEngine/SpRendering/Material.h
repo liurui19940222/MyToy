@@ -58,10 +58,10 @@ public:
 
 	Material* SetState(statetype::EPiplelineStateType state, bool open);
 	Material* SetColor(const Color& color);
-	Material* SetShader(PShader shader);
-	Material* SetMainTexture(PTexture texture);
+	Material* SetShader(ShaderPtr shader);
+	Material* SetMainTexture(TexturePtr texture);
 	Material* SetBlendFunc(EBlendFactor src, EBlendFactor dst);
-	PTexture GetMainTexture() const;
+	TexturePtr GetMainTexture() const;
 	void Bind();
 	void BindTexture(const char* paramName, uint texture, int pass = 0);
 	void Unbind();
@@ -79,15 +79,15 @@ public:
 		return *this;
 	}
 
-	static PMaterial GetDefaltMaterial();
+	static MaterialPtr GetDefaltMaterial();
 private:
-	static PMaterial	m_DefaultMaterial;
+	static MaterialPtr	m_DefaultMaterial;
 	static bool			m_PushStates[statetype::Count];
 	EBlendFactor		m_BlendFactorA;
 	EBlendFactor		m_BlendFactorB;
 	Color				m_Color = Color::white;
-	PShader				m_Shader = 0;
-	PTexture			m_MainTexture = 0;
+	ShaderPtr				m_Shader = 0;
+	TexturePtr			m_MainTexture = 0;
 	bool				m_States[statetype::Count];
 };
 

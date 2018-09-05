@@ -15,12 +15,12 @@ uint UIView::GetTextureId()
 	return 0;
 }
 
-PTexture UIView::GetTexture()
+TexturePtr UIView::GetTexture()
 {
 	return m_System->GetSharedTexture();
 }
 
-PMaterial UIView::GetMaterial() const 
+MaterialPtr UIView::GetMaterial() const 
 { 
 	return m_Material ? m_Material : m_System->GetSharedMaterial(); 
 }

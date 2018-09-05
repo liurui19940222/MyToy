@@ -5,7 +5,7 @@ USING_NAMESPACE_ENGINE;
 MeshBufferUIInstance::MeshBufferUIInstance() : 
 	MeshBufferTexcoord(), m_VboTexRangeHandle(0), m_VboModelMatrixHandle(0), m_VboColorHandle(0), m_VboRectSizeHandle(0) {}
 
-MeshBufferUIInstance::MeshBufferUIInstance(PMesh mesh) : 
+MeshBufferUIInstance::MeshBufferUIInstance(MeshPtr mesh) : 
 	MeshBufferTexcoord(mesh), m_VboTexRangeHandle(0), m_VboModelMatrixHandle(0), m_VboColorHandle(0), m_VboRectSizeHandle(0) {}
 
 MeshBufferUIInstance::~MeshBufferUIInstance()

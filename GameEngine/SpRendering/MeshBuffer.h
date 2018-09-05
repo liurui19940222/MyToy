@@ -41,13 +41,13 @@ SMART_CLASS(MeshBuffer) class MeshBuffer : public Object, public IRenderBuffer
 {
 public:
 	MeshBuffer();
-	MeshBuffer(PMesh mesh);
+	MeshBuffer(MeshPtr mesh);
 	virtual ~MeshBuffer();
 
 	void MakePositionBuffer(const Vector3* vertices, int size);
 	void MakeIndicesBuffer(const ushort* indices, int size);
 	void UpdateVertices(const Vector3* vertices, int offset, int size);
-	virtual void MakeBuffer(PMesh mesh);
+	virtual void MakeBuffer(MeshPtr mesh);
 	virtual void BindBuffer() override;
 	inline void UnbindBuffer() { glBindVertexArray(0); }
 	inline int GetVertexNum() const { return m_VertexNum; }

@@ -36,8 +36,8 @@ private:
 	Matrix4x4				projectionMat;
 	FontRenderer*			font;
 	IRenderingInterface*	m_RI;
-	PTexture				m_Texture;
-	PMeshBufferTexcoord		m_Buffer;
-	PMaterial				m_Material;
+	TexturePtr				m_Texture;
+	MeshBufferTexcoordPtr		m_Buffer;
+	MaterialPtr				m_Material;
 };
 

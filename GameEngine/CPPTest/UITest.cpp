@@ -26,9 +26,9 @@ void UITest::OnInitialize()
 	SetBackgroundColor(0.3f, 0.5f, 0.5f, 1.0f);
 	Input::Init(GetModuleHandle(NULL), m_Hwnd);
 
-	PSpriteSet set = make_shared<SpriteSet>("..\\Assets\\atlas.png", "..\\Assets\\atlas.xml");
-	PSprite bg = set->GetSprite("bg_1.png");
-	//PSprite bg = Sprite::CreateSprite(Texture2D::Create("D:\\GitHub\\MyToy\\GameEngine\\Assets\\bg.png"), TexcoordRange::full, 100, 100);
+	SpriteSetPtr set = make_shared<SpriteSet>("..\\Assets\\textures\\atlas.png", "..\\Assets\\textures\\atlas.xml");
+	SpritePtr bg = set->GetSprite("bg_1.png");
+	//SpritePtr bg = Sprite::CreateSprite(Texture2D::Create("D:\\GitHub\\MyToy\\GameEngine\\Assets\\bg.png"), TexcoordRange::full, 100, 100);
 	bg->SetBorder(/*BVector4(15, 15, 15, 15)*/BVector4(20, 20, 20, 20));
 	m_UISystem = new UISystem();
 	m_UISystem->StartUp(m_RI, m_WindowWidth, m_WindowHeight);
@@ -62,7 +62,7 @@ void UITest::OnInitialize()
 	m_Label = m_UISystem->Create<UILabel>();
 	m_Label->SetLocalPosition(Vector2(0, 200));
 	m_Label->SetColor(Color::cyan);
-	PTrueTypeFont f = _FontManager->LoadFont(1, FONT_PATH);
+	TrueTypeFontPtr f = _FontManager->LoadFont(1, FONT_PATH);
 	m_FMG = dynamic_cast<FontMeshGenerator*>(m_Label.get());
 	m_FMG->SetFont(f);
 	m_FMG->SetFontSize(FONT_SIZE);
@@ -118,7 +118,7 @@ void UITest::OnUpdate(float deltaTime)
 	{
 		rb = false;
 	}
-	PUIWidget widget = ctrl ? m_SubWidget : m_MovedWidget;
+	UIWidgetPtr widget = ctrl ? m_SubWidget : m_MovedWidget;
 
 	float moveSpeed = 100.0f, scaleSpeed = 10.0f, rotateSpeed = 50.0f;
 	Vector2 position = widget->GetLocalPosition();

@@ -131,9 +131,9 @@ SMART_STRUCT(Mesh) struct Mesh
 
 SMART_STRUCT(Model) struct Model
 {
-	PSkeleton				m_Skeleton;
-	vector<PMesh>			m_Meshes;
-	vector<PAnimationClip>	m_Animations;
+	SkeletonPtr				m_Skeleton;
+	vector<MeshPtr>			m_Meshes;
+	vector<AnimationClipPtr>	m_Animations;
 
 	inline size_t meshesCount() { return m_Meshes.size(); }
 	inline size_t animationsCount() { return m_Animations.size(); }
@@ -142,13 +142,13 @@ SMART_STRUCT(Model) struct Model
 class SkeletonAnimation {
 
 public:
-	static bool Sample(vector<JointPose>& outPose, PAnimationClip clip, PSkeleton skeleton, float t, float weight);
-	static bool Blend(vector<JointPose>& outPose, PAnimationClip* clips, float* timePos, float* weights, int count, PSkeleton skeleton);
-	static PAnimationClip Slice(PAnimationClip srcClip, int ibegin, int iend, const string& newName);
-	static PAnimationClip Slice(PAnimationClip srcClip, PSkeleton skeleton, float begin, float end, const string& newName);
-	static void CalculateGlobalMatrix(PSkeleton skeleton);
-	static void CalculateGlobalMatrix(PSkeleton skeleton, vector<JointPose> localPoses);
-	static void CalculateSkinningMatrix(PSkeleton skeleton);
+	static bool Sample(vector<JointPose>& outPose, AnimationClipPtr clip, SkeletonPtr skeleton, float t, float weight);
+	static bool Blend(vector<JointPose>& outPose, AnimationClipPtr* clips, float* timePos, float* weights, int count, SkeletonPtr skeleton);
+	static AnimationClipPtr Slice(AnimationClipPtr srcClip, int ibegin, int iend, const string& newName);
+	static AnimationClipPtr Slice(AnimationClipPtr srcClip, SkeletonPtr skeleton, float begin, float end, const string& newName);
+	static void CalculateGlobalMatrix(SkeletonPtr skeleton);
+	static void CalculateGlobalMatrix(SkeletonPtr skeleton, vector<JointPose> localPoses);
+	static void CalculateSkinningMatrix(SkeletonPtr skeleton);
 };
 
 END_NAMESPACE_ENGINE
