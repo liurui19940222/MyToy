@@ -143,5 +143,7 @@ void Texture::Release()
 	{
 		glDeleteTextures(1, &m_texId);
 		m_texId = 0;
+		m_width = 0;
+		m_height = 0;
 	}
 }

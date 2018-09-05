@@ -6,13 +6,6 @@
 
 USING_NAMESPACE_ENGINE;
 
-//EBlendFactor		m_BlendFactorA;
-//EBlendFactor		m_BlendFactorB;
-//Color				m_Color = Color::white;
-//PShader				m_Shader = 0;
-//PTexture			m_MainTexture = 0;
-//bool				m_States[statetype::Count];
-
 IMPL_RTTI(Material, Object::GetMetadata(), {
 	PROP(Material, m_BlendFactorA, EType::Int32)
 	PROP(Material, m_BlendFactorB, EType::Int32)

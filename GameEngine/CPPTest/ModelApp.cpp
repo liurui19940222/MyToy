@@ -1,7 +1,10 @@
-#include "ModelApp.h"
-#include "..\SpRendering\MeshFactory.h"
-#include "..\SpRendering\MeshBufferSkinning.h"
-#include "..\SpAssetLoader\AdvModelLoader.h"
+#include"ModelApp.h"
+#include"..\SpRendering\MeshFactory.h"
+#include"..\SpRendering\MeshBufferSkinning.h"
+#include"..\SpAssetLoader\AdvModelLoader.h"
+#include"..\imgui\imgui.h"
+#include"..\SpImGui\SpImGui.h"
+#include"..\SpCommon\AssetUtility.h"
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
@@ -69,13 +72,16 @@ void ModelApp::OnInitialize()
 
 	//创建地面
 	m_GroundMaterial = make_shared<Material>();
-	m_GroundMaterial->SetName(L"ground_mat");
-	m_GroundMaterial->SetShader(Shader::Get("texture"));
-	m_GroundMaterial->SetMainTexture(Texture2D::Create("../Assets/textures/wooden_case.jpg"));
+	//m_GroundMaterial->SetName(L"ground_mat");
+	//m_GroundMaterial->SetShader(Shader::Get("texture"));
+	//m_GroundMaterial->SetMainTexture(Texture2D::Create("../Assets/textures/wooden_case.jpg"));
 	m_GroundBuffer = _MeshFactory->CreateBuffer<MeshBufferTexcoord>(EMeshType::Quad);
+	AssetUtility::Load(m_GroundMaterial.get(), "../Assets/materials/ground.mat");
 	m_Ground.mesh = m_GroundBuffer.get();
 	m_Ground.material = m_GroundMaterial.get();
 	groundMat = Matrix4x4::Translate(Vector3(0, -2.75, 0)) * Matrix4x4::Rotate(Vector3(-90, 0, 0)) * Matrix4x4::Scale(Vector3::one * 15);
+
+	//AssetUtility::Save(m_GroundMaterial.get(), "../Assets/materials/ground.mat");
 
 	//初始化粒子
 	m_ParticleBuffer = _MeshFactory->CreateBuffer<MeshBufferParticle>(EMeshType::Quad);
