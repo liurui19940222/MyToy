@@ -26,6 +26,14 @@ public:
 	}
 
 	template<typename T>
+	static shared_ptr<T> Load(const string& path)
+	{
+		shared_ptr<T> ptr = make_shared<T>();
+		Load(ptr.get(), path);
+		return ptr;
+	}
+
+	template<typename T>
 	static bool Save(T* obj, const string& path)
 	{
 		obj->m_Reference = path;

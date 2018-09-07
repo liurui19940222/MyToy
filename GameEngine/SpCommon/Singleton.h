@@ -2,7 +2,7 @@
 #define _SINGLETON_H_
 
 #include<Windows.h>
-#include"ApiDefine.h"
+#include"defs.h"
 
 BEGIN_NAMESPACE_ENGINE
 

@@ -105,13 +105,15 @@ void ModelApp::OnInitialize()
 	desc.m_ColorSequence.insert(1.0f, Color(0.455f, 0.455f, 0.455f, 0.0f));
 
 	m_ParticleMat = make_shared<Material>();
-	m_ParticleMat->SetName(L"particle_mat");
-	m_ParticleMat->SetShader(Shader::Get("particle_blend"));
-	Texture2DPtr tex = Texture2D::Create("../Assets/textures/Tex_Flame.jpg");
-	tex->SetWrapMode(ETexWrapMode::Repeat);
-	m_ParticleMat->SetMainTexture(tex);
-	m_ParticleMat->SetBlendFunc(EBlendFactor::SRC_ALPHA, EBlendFactor::ONE);
-	m_ParticleMat->SetState(statetype::EPiplelineStateType::ZWrite, false);
+	//m_ParticleMat->SetName(L"particle_mat");
+	//m_ParticleMat->SetShader(Shader::Get("particle_blend"));
+	//Texture2DPtr tex = Texture2D::Create("../Assets/textures/Tex_Flame.jpg");
+	//tex->SetWrapMode(ETexWrapMode::Repeat);
+	//m_ParticleMat->SetMainTexture(tex);
+	//m_ParticleMat->SetBlendFunc(EBlendFactor::SRC_ALPHA, EBlendFactor::ONE);
+	//m_ParticleMat->SetState(statetype::EPiplelineStateType::ZWrite, false);
+	//AssetUtility::Save(m_ParticleMat.get(), "../Assets/materials/fire.mat");
+	AssetUtility::Load(m_ParticleMat.get(), "../Assets/materials/fire.mat");
 	m_ParticleEffect = make_shared<ParticleEffect>(desc);
 	m_ParticleEffect->CreateParticle();
 	m_ParticleEffect->SetMaterial(m_ParticleMat);

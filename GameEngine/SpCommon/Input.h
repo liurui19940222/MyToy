@@ -8,7 +8,7 @@
 #include<string>
 #include<dinput.h>
 #include"Math.h"
-#include"ApiDefine.h"
+#include"defs.h"
 
 using namespace std;
 

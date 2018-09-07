@@ -3,7 +3,7 @@
 
 #include<math.h>
 #include<string>
-#include"ApiDefine.h"
+#include"defs.h"
 
 BEGIN_NAMESPACE_ENGINE
 

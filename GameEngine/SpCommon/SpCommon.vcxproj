@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ApiDefine.h" />
+    <ClInclude Include="defs.h" />
     <ClInclude Include="AssetUtility.h" />
     <ClInclude Include="Atlas.h" />
     <ClInclude Include="BinaryHeap.h" />

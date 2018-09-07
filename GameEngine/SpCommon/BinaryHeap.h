@@ -1,6 +1,6 @@
 #pragma once
 
-#include"ApiDefine.h"
+#include"defs.h"
 #include"EngineDefine.h"
 #include<functional>
 
@@ -56,7 +56,7 @@ public:
 		{
 			if (Compare(curIndex, parentIndex) == -1)
 			{
-				Change(parentIndex, curIndex);
+				Switch(parentIndex, curIndex);
 				curIndex = parentIndex;
 				parentIndex = GetParent(curIndex);
 			}
@@ -84,7 +84,7 @@ public:
 				int r = Compare(leftChild, rightChild) == 1 ? rightChild : leftChild;
 				if (Compare(curIndex, r) == 1)
 				{
-					Change(curIndex, r);
+					Switch(curIndex, r);
 					curIndex = r;
 				}
 				else break;
@@ -93,7 +93,7 @@ public:
 			{
 				if (Compare(curIndex, leftChild) == 1)
 				{
-					Change(curIndex, leftChild);
+					Switch(curIndex, leftChild);
 					curIndex = leftChild;
 				}
 				else break;
@@ -143,7 +143,7 @@ private:
 	inline bool CheckAvailableIndex(int index) { return index >= 0 && index < m_Size; }
 
 	//交换两个索引对应的数据
-	inline void Change(int a, int b)
+	inline void Switch(int a, int b)
 	{
 		T temp = m_Array[a];
 		m_Array[a] = m_Array[b];

@@ -12,9 +12,6 @@
     <ClInclude Include="Math.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="ApiDefine.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="Converter.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -58,6 +55,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="FileInfo.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="defs.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

@@ -38,8 +38,11 @@ inline void glFuncEnable(GLenum typ, GLboolean enable)
 
 Material::Material() : m_BlendFactorA(EBlendFactor::SRC_ALPHA), m_BlendFactorB(EBlendFactor::ONE_MINUS_SRC_ALPHA)
 {
-	m_Shader = Shader::GetDefault();
-	m_MainTexture = Texture2D::GetOneInStore(EStoreTexture2DId::White8x8);
+	// 这里有一些问题，反序列化的时候Defualt Shader会被影响，而不是重新创建，从而影响所有的Material
+	// Texture 默认创建一个空2D对象，序列化的时候才能Texture指向Texture2D 
+	//m_Shader = Shader::GetDefault();
+	//m_MainTexture = Texture2D::GetOneInStore(EStoreTexture2DId::White8x8);
+	m_MainTexture = make_shared<Texture2D>();
 
 	SetState(statetype::AlphaTest, false);
 	SetState(statetype::DepthTest, true);

@@ -1,0 +1,33 @@
+{
+    "m_Name": "particle_mat",
+    "m_BlendFactorA": 770,
+    "m_BlendFactorB": 1,
+    "m_States": [
+        true,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false
+    ],
+    "m_Color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+    ],
+    "m_Shader": {
+        "m_Name": "",
+        "m_vtfilename": "../Shaders/particle_blend.vert",
+        "m_fgfilename": "../Shaders/particle_blend.frag"
+    },
+    "m_MainTexture": {
+        "m_Name": "",
+        "m_envMode": 7681,
+        "m_filterMode": 9729,
+        "m_wrapMode": 10497,
+        "m_mipmaps": false,
+        "m_AssetRef": "../Assets/textures/Tex_Flame.jpg"
+    }
+}

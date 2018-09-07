@@ -3,9 +3,9 @@
 #include<assimp\Importer.hpp>
 #include<assimp\postprocess.h>
 #include<assimp\scene.h>
-#include"..\SpCommon\ApiDefine.h"
+#include"..\SpCommon\defs.h"
 #include"ModelLoader.h"
-#include"SpCommon\ApiDefine.h"
+#include"SpCommon\defs.h"
 
 BEGIN_NAMESPACE_ENGINE
 using namespace Assimp;
