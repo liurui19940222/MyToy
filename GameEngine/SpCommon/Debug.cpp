@@ -26,6 +26,7 @@ void Debug::Log(const string str, ...)
 	OutputDebugStringA(c_buffer);
 	OutputDebugStringA("\n");
 	va_end(ap);
+	cout << c_buffer << endl;
 }
 
 void Debug::Log(const wstring str, ...)
@@ -37,6 +38,7 @@ void Debug::Log(const wstring str, ...)
 	OutputDebugStringW(w_buffer);
 	OutputDebugStringW(L"\n");
 	va_end(ap);
+	wcout << w_buffer << endl;
 }
 
 void Debug::Log(const char* text, ...)
@@ -48,6 +50,7 @@ void Debug::Log(const char* text, ...)
 	OutputDebugStringA(c_buffer);
 	OutputDebugStringA("\n");
 	va_end(ap);
+	cout << c_buffer << endl;
 }
 
 void Debug::Log(const wchar_t* text, ...)
@@ -59,6 +62,7 @@ void Debug::Log(const wchar_t* text, ...)
 	OutputDebugStringW(w_buffer);
 	OutputDebugStringW(L"\n");
 	va_end(ap);
+	wcout << w_buffer << endl;
 }
 
 void Debug::Log(Matrix4x4& mat)
