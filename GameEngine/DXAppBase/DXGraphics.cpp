@@ -1,0 +1,157 @@
+#include "DXGraphics.h"
+#include "..\SpCommon\Debug.h"
+#include "defs.h"
+#include <exception>
+
+using namespace dxgame;
+
+#pragma comment(lib, "d3d11.lib")
+
+DXGraphics::DXGraphics()
+{
+}
+
+
+DXGraphics::~DXGraphics()
+{
+}
+
+void DXGraphics::init(HWND hwnd)
+{
+	HRESULT result;
+	D3D_FEATURE_LEVEL featureLevel;
+	unsigned int createDeviceFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+#ifdef _DEBUG
+	createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
+	result = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, createDeviceFlags,
+			nullptr, 0, D3D11_SDK_VERSION, &m_D3D11Device, &featureLevel, &m_D3D11DeviceContext);
+	if (FAILED(result))
+	{
+		throw_and_log("d3d11 create device was failed.");
+	}
+	
+	if (featureLevel < D3D_FEATURE_LEVEL_11_0)
+	{
+		throw_and_log("d3d11 is not supported by your gpu.");
+	}
+
+	createResources(hwnd);
+
+	spgameengine::Debug::Log("d3d11 init was successful.");
+}
+
+void DXGraphics::createResources(HWND hwnd)
+{
+	ComPtr<IDXGIDevice>		dxgiDevice;
+	ComPtr<IDXGIAdapter>	dxgiAdapter;
+	ComPtr<IDXGIFactory>	dxgiFactory;
+
+	if (FAILED(m_D3D11Device.As(&dxgiDevice)))
+	{
+		throw_and_log("tried get dxgidevice was failed.");
+	}
+
+	if (FAILED(dxgiDevice->GetAdapter(&dxgiAdapter)))
+	{
+		throw_and_log("tried get dxgiadapter was failed.");
+	}
+
+	if (FAILED(dxgiAdapter->GetParent(__uuidof(IDXGIFactory), &dxgiFactory)))
+	{
+		throw_and_log("tried get dxgifactory was failed.");
+	}
+
+	DXGI_SWAP_CHAIN_DESC swapDesc;
+	swapDesc.BufferCount = 3;
+	swapDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	swapDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+	swapDesc.OutputWindow = hwnd;
+	swapDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
+	swapDesc.Windowed = true;
+	swapDesc.SampleDesc.Count = 1;
+	swapDesc.SampleDesc.Quality = 0;
+	swapDesc.BufferDesc.Width = 0;
+	swapDesc.BufferDesc.Height = 0;
+	swapDesc.BufferDesc.RefreshRate.Numerator = 0;
+	swapDesc.BufferDesc.RefreshRate.Denominator = 1;
+	swapDesc.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+	swapDesc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+	if (FAILED(dxgiFactory->CreateSwapChain(m_D3D11Device.Get(), &swapDesc, &m_SwapShain)))
+	{
+		throw_and_log("create swapchain was failed.");
+	}
+
+	resize(0, 0);
+}
+
+void DXGraphics::shutdown()
+{
+	spgameengine::Debug::Log("d3d11 shutdown.");
+}
+
+void DXGraphics::clearBuffers()
+{
+	m_D3D11DeviceContext->ClearState();
+	float color[4] = { 0.1f, 0.0f, 0.0f, 0.0f };
+	m_D3D11DeviceContext->ClearRenderTargetView(m_RenderTargetView.Get(), color);
+	m_D3D11DeviceContext->ClearDepthStencilView(m_DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+}
+
+void DXGraphics::present()
+{
+	if (FAILED(m_SwapShain->Present(0, DXGI_PRESENT_DO_NOT_WAIT)))
+	{
+		throw_and_log("swapchain->present was failed.");
+	}
+}
+
+void DXGraphics::resize(int width, int height)
+{
+	// the both view must be release before swapchain resize 
+	m_RenderTargetView = nullptr;
+	m_DepthStencilView = nullptr;
+
+	if (FAILED(m_SwapShain->ResizeBuffers(0, width, height, DXGI_FORMAT_UNKNOWN, 0)))
+	{
+		throw_and_log("swapchain->resizeBuffers was failed.");
+	}
+
+	ComPtr<ID3D11Texture2D> backBuffer;
+	if (FAILED(m_SwapShain->GetBuffer(0, __uuidof(ID3D11Texture2D), &backBuffer)))
+	{
+		throw_and_log("swapchain->getBuffer was failed.");
+	}
+
+	if (FAILED(m_D3D11Device->CreateRenderTargetView(backBuffer.Get(), NULL, &m_RenderTargetView)))
+	{
+		throw_and_log("create render target view was failed.");
+	}
+
+	ComPtr<ID3D11Texture2D> dsBuffer;
+	D3D11_TEXTURE2D_DESC dsTexDesc;
+	backBuffer->GetDesc(&dsTexDesc);
+	dsTexDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	dsTexDesc.Usage = D3D11_USAGE_DEFAULT;
+	dsTexDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	if (FAILED(m_D3D11Device->CreateTexture2D(&dsTexDesc, NULL, dsBuffer.GetAddressOf())))
+	{
+		throw_and_log("create depth and stencil texture2d was failed.");
+	}
+
+	if (FAILED(m_D3D11Device->CreateDepthStencilView(dsBuffer.Get(), NULL, &m_DepthStencilView)))
+	{
+		throw_and_log("create depth stencil view was failed.");
+	}
+
+	m_D3D11DeviceContext->OMSetRenderTargets(1, m_RenderTargetView.GetAddressOf(), m_DepthStencilView.Get());
+
+	D3D11_VIEWPORT viewport;
+	viewport.Width = dsTexDesc.Width;
+	viewport.Height = dsTexDesc.Height;
+	viewport.TopLeftX = 0.0f;
+	viewport.TopLeftY = 0.0f;
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+	m_D3D11DeviceContext->RSSetViewports(1, &viewport);
+}

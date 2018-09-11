@@ -70,6 +70,11 @@ void Window::close() noexcept
 	PostQuitMessage(0);
 }
 
+void Window::setTitle(const std::wstring& str) noexcept
+{
+	SetWindowTextW(m_Hwnd, str.c_str());
+}
+
 int Window::getWidth() const noexcept
 {
 	RECT rect;
@@ -109,8 +114,6 @@ LRESULT CALLBACK Window::procMsg(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lpar
 			m_Active = activeFlag != WA_INACTIVE;
 			if (m_EventHandler) m_EventHandler->OnActivate(m_Active);
 		}
-		return 0;
-	case WM_PAINT:
 		return 0;
 	case WM_SIZE:
 		if (wparam == SIZE_MINIMIZED)
@@ -153,6 +156,7 @@ LRESULT CALLBACK Window::procMsg(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lpar
 	case WM_EXITSIZEMOVE:
 		m_IsResizing = false;
 		m_Active = true;
+		onResize();
 		return 0;
 	case WM_DESTROY:
 		PostQuitMessage(0);

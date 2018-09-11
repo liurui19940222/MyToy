@@ -54,6 +54,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpAnimation", "SpAnimation\SpAnimation.vcxproj", "{19BA4C99-9CD0-4282-B8AB-9D6FD5AC80C6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extern", "Extern", "{EDA62D00-4369-455F-8212-8CF85A7E29EC}"
+	ProjectSection(SolutionItems) = preProject
+		DXAppBase\Timer.h = DXAppBase\Timer.h
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imgui", "imgui\imgui.vcxproj", "{918CC486-3477-4903-98CB-DFB1635AB9B6}"
 EndProject

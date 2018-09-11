@@ -2,6 +2,8 @@
 
 #include"Application.h"
 #include"Window.h"
+#include"Timer.h"
+#include"DXGraphics.h"
 
 namespace dxgame
 {
@@ -26,6 +28,8 @@ namespace dxgame
 
 	private:
 		std::shared_ptr<Window>		m_Window;
+		std::shared_ptr<ITimer>		m_Timer;
+		std::shared_ptr<DXGraphics>	m_DXGraphics;
 		bool						m_Running;
 		bool						m_Exiting;
 	};

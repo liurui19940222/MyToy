@@ -149,11 +149,17 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="defs.h" />
     <ClInclude Include="DXApplication.h" />
+    <ClInclude Include="DXGraphics.h" />
+    <ClInclude Include="string_ext.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXApplication.cpp" />
+    <ClCompile Include="DXGraphics.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="string_ext.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>

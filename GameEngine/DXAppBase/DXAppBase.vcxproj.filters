@@ -22,7 +22,18 @@
     <ClInclude Include="Application.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="DXApplication.h" />
+    <ClInclude Include="DXApplication.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="string_ext.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGraphics.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -31,7 +42,18 @@
     <ClCompile Include="main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="DXApplication.cpp" />
+    <ClCompile Include="DXApplication.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="string_ext.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="DXGraphics.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\Build\SpCommon.lib">

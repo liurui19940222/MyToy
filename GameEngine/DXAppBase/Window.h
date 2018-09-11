@@ -25,6 +25,7 @@ namespace dxgame
 
 		void init() except;
 		void close() noexcept;
+		void setTitle(const std::wstring& str) noexcept;
 		int getWidth() const noexcept;
 		int getHeight() const noexcept;
 		void getRect(RECT& rect) const noexcept;
