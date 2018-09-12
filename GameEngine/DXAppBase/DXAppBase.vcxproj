@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="D2DGraphics.h" />
     <ClInclude Include="defs.h" />
     <ClInclude Include="DXApplication.h" />
     <ClInclude Include="DXGraphics.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="D2DGraphics.cpp" />
     <ClCompile Include="DXApplication.cpp" />
     <ClCompile Include="DXGraphics.cpp" />
     <ClCompile Include="main.cpp" />

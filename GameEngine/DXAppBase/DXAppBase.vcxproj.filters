@@ -34,6 +34,9 @@
     <ClInclude Include="DXGraphics.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="D2DGraphics.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -52,6 +55,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="DXGraphics.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D2DGraphics.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

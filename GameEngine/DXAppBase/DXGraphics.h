@@ -3,6 +3,8 @@
 #include<wrl\client.h>
 #include<d3d11.h>
 #include<dxgi.h>
+#include<memory>
+#include"D2DGraphics.h"
 
 using namespace Microsoft::WRL;
 
@@ -28,6 +30,8 @@ namespace dxgame {
 		ComPtr<IDXGISwapChain>			m_SwapShain;
 		ComPtr<ID3D11RenderTargetView>	m_RenderTargetView;
 		ComPtr<ID3D11DepthStencilView>	m_DepthStencilView;
+
+		std::shared_ptr<D2DGraphics>	m_D2DGraphics;
 	};
 
 }

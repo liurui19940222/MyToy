@@ -38,6 +38,21 @@ void DXGraphics::init(HWND hwnd)
 
 	createResources(hwnd);
 
+	m_D2DGraphics = make_shared<D2DGraphics>();
+	try 
+	{
+		ComPtr<IDXGIDevice> dxgiDevice;
+		m_D3D11Device.Get()->QueryInterface(__uuidof(IDXGIDevice), &dxgiDevice);
+
+		ComPtr<IDXGISurface> dxgiSurface;
+		m_SwapShain->GetBuffer(0, __uuidof(IDXGISurface), &dxgiSurface);
+		m_D2DGraphics->init(dxgiDevice, dxgiSurface);
+	}
+	catch (std::exception ex)
+	{
+		spgameengine::Debug::Log(ex.what());
+	}
+
 	spgameengine::Debug::Log("d3d11 init was successful.");
 }
 
@@ -87,6 +102,7 @@ void DXGraphics::createResources(HWND hwnd)
 
 void DXGraphics::shutdown()
 {
+	m_D2DGraphics->shutdown();
 	spgameengine::Debug::Log("d3d11 shutdown.");
 }
 
@@ -96,6 +112,8 @@ void DXGraphics::clearBuffers()
 	float color[4] = { 0.1f, 0.0f, 0.0f, 0.0f };
 	m_D3D11DeviceContext->ClearRenderTargetView(m_RenderTargetView.Get(), color);
 	m_D3D11DeviceContext->ClearDepthStencilView(m_DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+	m_D2DGraphics->clearBuffers();
 }
 
 void DXGraphics::present()
@@ -104,6 +122,8 @@ void DXGraphics::present()
 	{
 		throw_and_log("swapchain->present was failed.");
 	}
+
+	m_D2DGraphics->present();
 }
 
 void DXGraphics::resize(int width, int height)
@@ -154,4 +174,6 @@ void DXGraphics::resize(int width, int height)
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 	m_D3D11DeviceContext->RSSetViewports(1, &viewport);
+
+	m_D2DGraphics->resize(width, height);
 }
