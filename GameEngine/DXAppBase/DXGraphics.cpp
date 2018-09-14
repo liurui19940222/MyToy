@@ -16,7 +16,7 @@ DXGraphics::~DXGraphics()
 {
 }
 
-void DXGraphics::init(HWND hwnd)
+void DXGraphics::init(shared_ptr<Window> window)
 {
 	HRESULT result;
 	D3D_FEATURE_LEVEL featureLevel;
@@ -25,21 +25,21 @@ void DXGraphics::init(HWND hwnd)
 	createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
 	result = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, createDeviceFlags,
-			nullptr, 0, D3D11_SDK_VERSION, &m_D3D11Device, &featureLevel, &m_D3D11DeviceContext);
+		nullptr, 0, D3D11_SDK_VERSION, &m_D3D11Device, &featureLevel, &m_D3D11DeviceContext);
 	if (FAILED(result))
 	{
 		throw_and_log("d3d11 create device was failed.");
 	}
-	
+
 	if (featureLevel < D3D_FEATURE_LEVEL_11_0)
 	{
 		throw_and_log("d3d11 is not supported by your gpu.");
 	}
 
-	createResources(hwnd);
+	createResources(window->getHwnd());
 
 	m_D2DGraphics = make_shared<D2DGraphics>();
-	try 
+	try
 	{
 		ComPtr<IDXGIDevice> dxgiDevice;
 		m_D3D11Device.Get()->QueryInterface(__uuidof(IDXGIDevice), &dxgiDevice);
@@ -47,6 +47,8 @@ void DXGraphics::init(HWND hwnd)
 		ComPtr<IDXGISurface> dxgiSurface;
 		m_SwapShain->GetBuffer(0, __uuidof(IDXGISurface), &dxgiSurface);
 		m_D2DGraphics->init(dxgiDevice, dxgiSurface);
+
+		m_D2DGraphics->resize(window->getWidth(), window->getHeight());
 	}
 	catch (std::exception ex)
 	{
@@ -98,6 +100,15 @@ void DXGraphics::createResources(HWND hwnd)
 	}
 
 	resize(0, 0);
+
+	// init shader
+	m_ShaderProgram = make_shared<ShaderProgram>("../Debug/VertexShader.cso", "../Debug/PixelShader.cso", m_D3D11Device);
+	vector<D3D11_INPUT_ELEMENT_DESC> inputDescs = { { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 } };
+	m_ShaderProgram->CreateLayout(m_D3D11Device, inputDescs);
+
+	// init buffer
+	Vertex mesh[3] = { { 0.0f, 1.0f, 0.3f },{ 1.0f, -1.0f, 0.3f },{ -1.0f, -1.0f, 0.3f } };
+	m_GPUBuffer = make_shared<GPUBuffer>((char*)mesh, sizeof(mesh), sizeof(Vertex), m_D3D11Device);
 }
 
 void DXGraphics::shutdown()
@@ -110,10 +121,22 @@ void DXGraphics::clearBuffers()
 {
 	m_D3D11DeviceContext->ClearState();
 	float color[4] = { 0.1f, 0.0f, 0.0f, 0.0f };
+	m_D3D11DeviceContext->RSSetViewports(1, &m_Viewport);
+	m_D3D11DeviceContext->OMSetRenderTargets(1, m_RenderTargetView.GetAddressOf(), m_DepthStencilView.Get());
 	m_D3D11DeviceContext->ClearRenderTargetView(m_RenderTargetView.Get(), color);
 	m_D3D11DeviceContext->ClearDepthStencilView(m_DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	m_D2DGraphics->clearBuffers();
+}
+
+void DXGraphics::render()
+{
+	//m_D2DGraphics->render();
+
+	m_GPUBuffer->activeBuffer(m_D3D11DeviceContext);
+	m_ShaderProgram->ActiveProgram(m_D3D11DeviceContext);
+	m_D3D11DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_D3D11DeviceContext->Draw(3, 0);
 }
 
 void DXGraphics::present()
@@ -123,7 +146,7 @@ void DXGraphics::present()
 		throw_and_log("swapchain->present was failed.");
 	}
 
-	m_D2DGraphics->present();
+	m_D3D11DeviceContext->OMSetRenderTargets(1, m_RenderTargetView.GetAddressOf(), m_DepthStencilView.Get());
 }
 
 void DXGraphics::resize(int width, int height)
@@ -131,6 +154,8 @@ void DXGraphics::resize(int width, int height)
 	// the both view must be release before swapchain resize 
 	m_RenderTargetView = nullptr;
 	m_DepthStencilView = nullptr;
+	if (m_D2DGraphics)
+		m_D2DGraphics->destroyRenderTarget();
 
 	if (FAILED(m_SwapShain->ResizeBuffers(0, width, height, DXGI_FORMAT_UNKNOWN, 0)))
 	{
@@ -138,7 +163,7 @@ void DXGraphics::resize(int width, int height)
 	}
 
 	ComPtr<ID3D11Texture2D> backBuffer;
-	if (FAILED(m_SwapShain->GetBuffer(0, __uuidof(ID3D11Texture2D), &backBuffer)))
+	if (FAILED(m_SwapShain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer)))
 	{
 		throw_and_log("swapchain->getBuffer was failed.");
 	}
@@ -164,16 +189,21 @@ void DXGraphics::resize(int width, int height)
 		throw_and_log("create depth stencil view was failed.");
 	}
 
+	m_Viewport.Width = dsTexDesc.Width;
+	m_Viewport.Height = dsTexDesc.Height;
+	m_Viewport.TopLeftX = 0.0f;
+	m_Viewport.TopLeftY = 0.0f;
+	m_Viewport.MinDepth = 0.0f;
+	m_Viewport.MaxDepth = 1.0f;
+	m_D3D11DeviceContext->RSSetViewports(1, &m_Viewport);
+
 	m_D3D11DeviceContext->OMSetRenderTargets(1, m_RenderTargetView.GetAddressOf(), m_DepthStencilView.Get());
 
-	D3D11_VIEWPORT viewport;
-	viewport.Width = dsTexDesc.Width;
-	viewport.Height = dsTexDesc.Height;
-	viewport.TopLeftX = 0.0f;
-	viewport.TopLeftY = 0.0f;
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;
-	m_D3D11DeviceContext->RSSetViewports(1, &viewport);
-
-	m_D2DGraphics->resize(width, height);
+	if (m_D2DGraphics)
+	{
+		ComPtr<IDXGISurface> dxgiSurface;
+		m_SwapShain->GetBuffer(0, __uuidof(IDXGISurface), &dxgiSurface);
+		m_D2DGraphics->createRenderTarget(dxgiSurface);
+		m_D2DGraphics->resize(width, height);
+	}
 }

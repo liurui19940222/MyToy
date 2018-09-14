@@ -5,10 +5,18 @@
 #include<dxgi.h>
 #include<memory>
 #include"D2DGraphics.h"
+#include"Window.h"
+#include"ShaderProgram.h"
+#include"GPUBuffer.h"
 
 using namespace Microsoft::WRL;
+using namespace std;
 
 namespace dxgame {
+
+	struct Vertex {
+		float x, y, z;
+	};
 
 	class DXGraphics
 	{
@@ -16,9 +24,10 @@ namespace dxgame {
 		explicit DXGraphics();
 		virtual ~DXGraphics();
 
-		void init(HWND hwnd);
+		void init(shared_ptr<Window> window);
 		void shutdown();
 		void clearBuffers();
+		void render();
 		void present();
 		void resize(int width, int height);
 
@@ -30,7 +39,11 @@ namespace dxgame {
 		ComPtr<IDXGISwapChain>			m_SwapShain;
 		ComPtr<ID3D11RenderTargetView>	m_RenderTargetView;
 		ComPtr<ID3D11DepthStencilView>	m_DepthStencilView;
+		shared_ptr<Window>				m_Window;
+		shared_ptr<ShaderProgram>		m_ShaderProgram;
+		shared_ptr<GPUBuffer>			m_GPUBuffer;
 
+		D3D11_VIEWPORT					m_Viewport;
 		std::shared_ptr<D2DGraphics>	m_D2DGraphics;
 	};
 

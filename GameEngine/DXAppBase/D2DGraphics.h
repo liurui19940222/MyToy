@@ -18,15 +18,17 @@ namespace dxgame {
 		virtual ~D2DGraphics() = default;
 
 		void init(ComPtr<IDXGIDevice> dxgiDevice, ComPtr<IDXGISurface> dxgiSurface);
+		void createRenderTarget(ComPtr<IDXGISurface> dxgiSurface);
 		void shutdown();
 		void clearBuffers();
-		void present();
+		void render();
 		void resize(int width, int height);
+		void destroyRenderTarget();
 
 	private:
 		void createDevice(ComPtr<IDXGIDevice> dxgiDevice);
-		void createRenderTarget(ComPtr<IDXGISurface> dxgiSurface);
 		void initTextFormats();
+		void updateTextLayout();
 
 		ComPtr<IDWriteFactory>			m_WriteFactory;
 		ComPtr<ID2D1Factory2>			m_D2DFactory;
@@ -39,6 +41,9 @@ namespace dxgame {
 
 		ComPtr<IDWriteTextFormat>		m_FormatFps;
 		ComPtr<IDWriteTextLayout>		m_LayoutFps;
+
+		int		m_Width;
+		int		m_Height;
 	};
 
 }

@@ -45,7 +45,7 @@ void DXApplication::init()
 	m_DXGraphics = make_shared<DXGraphics>();
 	try 
 	{
-		m_DXGraphics->init(m_Window->getHwnd());
+		m_DXGraphics->init(m_Window);
 	}
 	catch (std::exception ex)
 	{
@@ -92,6 +92,7 @@ void DXApplication::update(float deltaTime)
 void DXApplication::render()
 {
 	m_DXGraphics->clearBuffers();
+	m_DXGraphics->render();
 	m_DXGraphics->present();
 }
 

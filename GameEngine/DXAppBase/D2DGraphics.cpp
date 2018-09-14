@@ -1,6 +1,9 @@
 #include "D2DGraphics.h"
 #include "defs.h"
 #include "../SpCommon/Debug.h"
+#include "Timer.h"
+#include <iostream>
+#include <sstream>
 
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")
@@ -12,11 +15,13 @@ void D2DGraphics::init(ComPtr<IDXGIDevice> dxgiDevice, ComPtr<IDXGISurface> dxgi
 	createDevice(dxgiDevice);
 	createRenderTarget(dxgiSurface);
 	initTextFormats();
+
+	spgameengine::Debug::Log("d2d graphics init was successful.");
 }
 
 void D2DGraphics::shutdown()
 {
-
+	spgameengine::Debug::Log("d2d graphics shutdown.");
 }
 
 void D2DGraphics::clearBuffers()
@@ -24,14 +29,20 @@ void D2DGraphics::clearBuffers()
 
 }
 
-void D2DGraphics::present()
+void D2DGraphics::render()
 {
-	
+	m_D2DDeviceContext->BeginDraw();
+
+	updateTextLayout();
+	m_D2DDeviceContext->DrawTextLayout(D2D1::Point2F(2.0f, 5.0f), m_LayoutFps.Get(), m_BrushYellow.Get());
+
+	m_D2DDeviceContext->EndDraw();
 }
 
 void D2DGraphics::resize(int width, int height)
 {
-	
+	m_Width = width;
+	m_Height = height;
 }
 
 void D2DGraphics::createDevice(ComPtr<IDXGIDevice> dxgiDevice)
@@ -83,14 +94,27 @@ void D2DGraphics::createRenderTarget(ComPtr<IDXGISurface> dxgiSurface)
 	m_D2DDeviceContext->SetTarget(targetBitmap.Get());
 }
 
+void D2DGraphics::destroyRenderTarget()
+{
+	m_D2DDeviceContext->SetTarget(nullptr);
+}
+
 void D2DGraphics::initTextFormats()
 {
 	m_D2DDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Yellow), &m_BrushYellow);
 	m_D2DDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::White), &m_BrushWhite);
 	m_D2DDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black), &m_BrushBlack);
 
-	m_WriteFactory->CreateTextFormat(L"", nullptr, DWRITE_FONT_WEIGHT_LIGHT, DWRITE_FONT_STYLE_NORMAL, 
+	m_WriteFactory->CreateTextFormat(L"Lucida Console", nullptr, DWRITE_FONT_WEIGHT_LIGHT, DWRITE_FONT_STYLE_NORMAL, 
 		DWRITE_FONT_STRETCH_NORMAL, 12.0f, L"en-GB", &m_FormatFps);
 
 	m_FormatFps->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+}
+
+void D2DGraphics::updateTextLayout()
+{
+	float fps = TimerService::getTimer()->getFps();
+	std::wostringstream os;
+	os << "fps:" << fps << endl;
+	m_WriteFactory->CreateTextLayout(os.str().c_str(), os.str().size(), m_FormatFps.Get(), m_Width, m_Height, &m_LayoutFps);
 }
