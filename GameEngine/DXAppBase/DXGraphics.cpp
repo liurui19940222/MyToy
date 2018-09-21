@@ -1,11 +1,13 @@
 #include "DXGraphics.h"
 #include "..\SpCommon\Debug.h"
 #include "defs.h"
+#include "string_ext.h"
 #include <exception>
 
 using namespace dxgame;
 
 #pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "dxgi.lib")
 
 DXGraphics::DXGraphics()
 {
@@ -24,6 +26,20 @@ void DXGraphics::init(shared_ptr<Window> window)
 #ifdef _DEBUG
 	createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
+
+	ComPtr<IDXGIFactory> factory;
+	if (FAILED(CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory)))
+	{
+		spgameengine::Debug::Log("create failed.");
+	}
+
+	ComPtr<IDXGIAdapter> adapter;
+	factory->EnumAdapters(0, &adapter);
+
+	DXGI_ADAPTER_DESC desc;
+	adapter->GetDesc(&desc);
+	window->setTitle(format_wstr(L"DXGame %s RAM:%dMB", desc.Description, desc.DedicatedVideoMemory / 1024 / 1024));
+
 	result = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, createDeviceFlags,
 		nullptr, 0, D3D11_SDK_VERSION, &m_D3D11Device, &featureLevel, &m_D3D11DeviceContext);
 	if (FAILED(result))
