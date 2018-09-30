@@ -27,13 +27,13 @@ namespace dxgame {
 		explicit ShaderProgram(const string& vertPath, const string& fragPath, ComPtr<ID3D11Device> device);
 		virtual ~ShaderProgram();
 
-		void LoadShader(const string& vertPath, const string& fragPath);
-		void CreateProgram(ComPtr<ID3D11Device> device);
-		void CreateLayout(ComPtr<ID3D11Device> device, vector<D3D11_INPUT_ELEMENT_DESC>& pInputElementDescs);
-		void ActiveProgram(ComPtr<ID3D11DeviceContext> context);
+		void loadShader(const string& vertPath, const string& fragPath);
+		void createProgram(ComPtr<ID3D11Device> device);
+		void createLayout(ComPtr<ID3D11Device> device, vector<D3D11_INPUT_ELEMENT_DESC>& pInputElementDescs);
+		void activeProgram(ComPtr<ID3D11DeviceContext> context);
 
 	private:
-		bool LoadFromFile(const string& path, ShaderBuffer& buffer);
+		bool loadFromFile(const string& path, ShaderBuffer& buffer);
 
 		ShaderBuffer				m_VertexBuffer;
 		ShaderBuffer				m_FragmentBuffer;

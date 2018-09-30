@@ -13,16 +13,18 @@ namespace dxgame {
 	class GPUBuffer
 	{
 	public:
-		explicit GPUBuffer(const char* data, uint32_t size, uint32_t sizePerVertex, ComPtr<ID3D11Device> device);
+		explicit GPUBuffer(const char* data, uint32_t size, uint32_t sizePerVertex, ComPtr<ID3D11Device> device, D3D11_BIND_FLAG bindBuffer, D3D11_USAGE usage = D3D11_USAGE_DEFAULT, UINT cpuAccessFlag = 0);
 		virtual ~GPUBuffer();
 
-		void activeBuffer(ComPtr<ID3D11DeviceContext> context);
+		void activeVertexBuffer(ComPtr<ID3D11DeviceContext> context);
 
 	private:
-		void createBuffer(const char* data, uint32_t size, ComPtr<ID3D11Device> device);
+		void createBuffer(const char* data, uint32_t size, ComPtr<ID3D11Device> device, D3D11_BIND_FLAG bindBuffer, D3D11_USAGE usage = D3D11_USAGE_DEFAULT, UINT cpuAccessFlag = 0);
 
-		ComPtr<ID3D11Buffer>	m_Buffer;
 		uint32_t				m_SizePerVertex;
+
+	protected:
+		ComPtr<ID3D11Buffer>	m_Buffer;
 	};
 
 }

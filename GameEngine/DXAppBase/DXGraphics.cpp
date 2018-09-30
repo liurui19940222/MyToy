@@ -3,8 +3,10 @@
 #include "defs.h"
 #include "string_ext.h"
 #include <exception>
+#include <DirectXMath.h>
 
 using namespace dxgame;
+using namespace DirectX;
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
@@ -120,11 +122,14 @@ void DXGraphics::createResources(HWND hwnd)
 	// init shader
 	m_ShaderProgram = make_shared<ShaderProgram>("../Debug/VertexShader.cso", "../Debug/PixelShader.cso", m_D3D11Device);
 	vector<D3D11_INPUT_ELEMENT_DESC> inputDescs = { { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 } };
-	m_ShaderProgram->CreateLayout(m_D3D11Device, inputDescs);
+	m_ShaderProgram->createLayout(m_D3D11Device, inputDescs);
 
 	// init buffer
 	Vertex mesh[3] = { { 0.0f, 1.0f, 0.3f },{ 1.0f, -1.0f, 0.3f },{ -1.0f, -1.0f, 0.3f } };
-	m_GPUBuffer = make_shared<GPUBuffer>((char*)mesh, sizeof(mesh), sizeof(Vertex), m_D3D11Device);
+	m_MeshBuffer = make_shared<GPUBuffer>((char*)mesh, sizeof(mesh), sizeof(Vertex), m_D3D11Device, D3D11_BIND_VERTEX_BUFFER);
+
+	// init constant buffer
+	m_ConstantBuffer = make_shared<ConstantBuffer>(sizeof(DirectX::XMFLOAT4), m_D3D11Device);
 }
 
 void DXGraphics::shutdown()
@@ -149,8 +154,12 @@ void DXGraphics::render()
 {
 	//m_D2DGraphics->render();
 
-	m_GPUBuffer->activeBuffer(m_D3D11DeviceContext);
-	m_ShaderProgram->ActiveProgram(m_D3D11DeviceContext);
+	XMFLOAT4 float4 = { 1.0f, 0.5f, 1.0f, 1.0f };
+	m_ConstantBuffer->setUniformParams(float4, m_D3D11DeviceContext);
+
+	m_MeshBuffer->activeVertexBuffer(m_D3D11DeviceContext);
+	m_ConstantBuffer->activeConstantBuffer(m_D3D11DeviceContext);
+	m_ShaderProgram->activeProgram(m_D3D11DeviceContext);
 	m_D3D11DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_D3D11DeviceContext->Draw(3, 0);
 }

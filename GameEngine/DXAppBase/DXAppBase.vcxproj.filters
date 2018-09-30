@@ -5,76 +5,89 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="src">
+    <Filter Include="framework">
+      <UniqueIdentifier>{8b8b947a-a139-47cb-83df-26711716d025}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\src">
       <UniqueIdentifier>{f08b2073-269e-4c54-9ca2-be45b04ea1fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include">
+    <Filter Include="framework\include">
       <UniqueIdentifier>{f56e1cfb-a2f4-4447-8a80-6fb10b274ee7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="shader">
+    <Filter Include="framework\shader">
       <UniqueIdentifier>{c5eb5618-8702-4294-9d55-1022b6232609}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
-      <Filter>include</Filter>
+      <Filter>framework\include</Filter>
     </ClInclude>
     <ClInclude Include="defs.h">
-      <Filter>include</Filter>
+      <Filter>framework\include</Filter>
     </ClInclude>
     <ClInclude Include="Application.h">
-      <Filter>include</Filter>
+      <Filter>framework\include</Filter>
     </ClInclude>
     <ClInclude Include="DXApplication.h">
-      <Filter>include</Filter>
+      <Filter>framework\include</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>include</Filter>
+      <Filter>framework\include</Filter>
     </ClInclude>
     <ClInclude Include="string_ext.h">
-      <Filter>include</Filter>
+      <Filter>framework\include</Filter>
     </ClInclude>
     <ClInclude Include="DXGraphics.h">
-      <Filter>include</Filter>
+      <Filter>framework\include</Filter>
     </ClInclude>
     <ClInclude Include="D2DGraphics.h">
-      <Filter>include</Filter>
+      <Filter>framework\include</Filter>
     </ClInclude>
     <ClInclude Include="ShaderProgram.h">
-      <Filter>include</Filter>
+      <Filter>framework\include</Filter>
     </ClInclude>
     <ClInclude Include="GPUBuffer.h">
-      <Filter>include</Filter>
+      <Filter>framework\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>framework\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBuffer.h">
+      <Filter>framework\include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>src</Filter>
+      <Filter>framework\src</Filter>
     </ClCompile>
     <ClCompile Include="DXApplication.cpp">
-      <Filter>src</Filter>
+      <Filter>framework\src</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>src</Filter>
+      <Filter>framework\src</Filter>
     </ClCompile>
     <ClCompile Include="string_ext.cpp">
-      <Filter>src</Filter>
+      <Filter>framework\src</Filter>
     </ClCompile>
     <ClCompile Include="DXGraphics.cpp">
-      <Filter>src</Filter>
+      <Filter>framework\src</Filter>
     </ClCompile>
     <ClCompile Include="D2DGraphics.cpp">
-      <Filter>src</Filter>
+      <Filter>framework\src</Filter>
     </ClCompile>
     <ClCompile Include="ShaderProgram.cpp">
-      <Filter>src</Filter>
+      <Filter>framework\src</Filter>
     </ClCompile>
     <ClCompile Include="GPUBuffer.cpp">
-      <Filter>src</Filter>
+      <Filter>framework\src</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>framework\src</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantBuffer.cpp">
+      <Filter>framework\src</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\Build\SpCommon.lib">
@@ -83,10 +96,10 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">
-      <Filter>shader</Filter>
+      <Filter>framework\shader</Filter>
     </FxCompile>
     <FxCompile Include="PixelShader.hlsl">
-      <Filter>shader</Filter>
+      <Filter>framework\shader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

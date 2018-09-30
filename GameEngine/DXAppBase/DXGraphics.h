@@ -8,6 +8,7 @@
 #include"Window.h"
 #include"ShaderProgram.h"
 #include"GPUBuffer.h"
+#include"ConstantBuffer.h"
 
 using namespace Microsoft::WRL;
 using namespace std;
@@ -41,7 +42,8 @@ namespace dxgame {
 		ComPtr<ID3D11DepthStencilView>	m_DepthStencilView;
 		shared_ptr<Window>				m_Window;
 		shared_ptr<ShaderProgram>		m_ShaderProgram;
-		shared_ptr<GPUBuffer>			m_GPUBuffer;
+		shared_ptr<GPUBuffer>			m_MeshBuffer;
+		shared_ptr<ConstantBuffer>		m_ConstantBuffer;
 
 		D3D11_VIEWPORT					m_Viewport;
 		std::shared_ptr<D2DGraphics>	m_D2DGraphics;

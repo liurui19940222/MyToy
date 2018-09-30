@@ -29,24 +29,24 @@ ShaderProgram::ShaderProgram()
 
 ShaderProgram::ShaderProgram(const string& vertPath, const string& fragPath, ComPtr<ID3D11Device> device)
 {
-	LoadShader(vertPath, fragPath);
-	CreateProgram(device);
+	loadShader(vertPath, fragPath);
+	createProgram(device);
 }
 
 ShaderProgram::~ShaderProgram()
 {
 }
 
-void ShaderProgram::LoadShader(const string& vertPath, const string& fragPath)
+void ShaderProgram::loadShader(const string& vertPath, const string& fragPath)
 {
-	if (!LoadFromFile(vertPath, m_VertexBuffer))
+	if (!loadFromFile(vertPath, m_VertexBuffer))
 		throw_and_log(format_str("load vertex shader was failed. please check the path:%s", vertPath.c_str()).c_str());
 
-	if (!LoadFromFile(fragPath, m_FragmentBuffer))
+	if (!loadFromFile(fragPath, m_FragmentBuffer))
 		throw_and_log(format_str("load fragment shader was failed. please check the path:%s", fragPath.c_str()).c_str());
 }
 
-void ShaderProgram::CreateProgram(ComPtr<ID3D11Device> device)
+void ShaderProgram::createProgram(ComPtr<ID3D11Device> device)
 {
 	if (FAILED(device->CreateVertexShader(m_VertexBuffer.bytes, m_VertexBuffer.size, nullptr, &m_VertexProgram)))
 	{
@@ -59,14 +59,14 @@ void ShaderProgram::CreateProgram(ComPtr<ID3D11Device> device)
 	}
 }
 
-void ShaderProgram::ActiveProgram(ComPtr<ID3D11DeviceContext> context)
+void ShaderProgram::activeProgram(ComPtr<ID3D11DeviceContext> context)
 {
 	context->VSSetShader(m_VertexProgram.Get(), nullptr, 0);
 	context->PSSetShader(m_FragmentProgram.Get(), nullptr, 0);
 	context->IASetInputLayout(m_InputLayout.Get());
 }
 
-void ShaderProgram::CreateLayout(ComPtr<ID3D11Device> device, vector<D3D11_INPUT_ELEMENT_DESC>& pInputElementDescs)
+void ShaderProgram::createLayout(ComPtr<ID3D11Device> device, vector<D3D11_INPUT_ELEMENT_DESC>& pInputElementDescs)
 {
 	if (FAILED(device->CreateInputLayout(&pInputElementDescs[0], pInputElementDescs.size(), m_VertexBuffer.bytes, m_VertexBuffer.size, &m_InputLayout)))
 	{
@@ -74,7 +74,7 @@ void ShaderProgram::CreateLayout(ComPtr<ID3D11Device> device, vector<D3D11_INPUT
 	}
 }
 
-bool ShaderProgram::LoadFromFile(const string& path, ShaderBuffer& outBuffer)
+bool ShaderProgram::loadFromFile(const string& path, ShaderBuffer& outBuffer)
 {
 	std::ifstream csoFile(path, std::ios::in | std::ios::binary | std::ios::ate);
 	if (!csoFile.is_open())
